@@ -34,6 +34,8 @@ namespace DoubleDouble {
 
         public static bool IsFinite(ddouble v) => double.IsFinite(v.hi);
 
+        public static bool IsZero(ddouble v) => v.hi == 0;
+
         internal static bool IsRegulared(ddouble v) {
             if (v.lo < 0) { 
                 double vd = Math.BitDecrement(v.hi) - v.hi;

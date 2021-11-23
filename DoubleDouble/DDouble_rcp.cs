@@ -13,11 +13,7 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            int v_exponent = Math.ILogB(v.hi);
-            ddouble v_frac = new ddouble(
-                Math.ScaleB(v.hi, -v_exponent),
-                Math.ScaleB(v.lo, -v_exponent)
-            );
+            (int v_exponent, ddouble v_frac) = Frexp(v);
 
             ddouble a = 1 / (double)v_frac;
             ddouble h = 1 - v_frac * a;

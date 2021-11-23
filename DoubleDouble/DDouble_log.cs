@@ -13,11 +13,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            int n = Math.ILogB(v.hi);
-            ddouble f = new ddouble(
-                Math.ScaleB(v.hi, -n),
-                Math.ScaleB(v.lo, -n)
-            );
+            (int n, ddouble f) = Frexp(v);
 
             ddouble y = n;
             ddouble p = 0.5;
