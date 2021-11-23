@@ -15,6 +15,10 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator +(ddouble a, double b) {
+            if (IsInfinity(a) || double.IsInfinity(b)) {
+                return a.hi + b;
+            }
+
             double hi = a.hi + b;
             double lo = a.lo + (b - (hi - a.hi));
 
@@ -23,6 +27,10 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator +(double a, ddouble b) {
+            if (double.IsInfinity(a) || IsInfinity(b)) {
+                return a + b.hi;
+            }
+            
             double hi = a + b.hi;
             double lo = b.lo + (b.hi - (hi - a));
 
@@ -31,6 +39,10 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator +(ddouble a, ddouble b) {
+            if (IsInfinity(a) || IsInfinity(b)) {
+                return a.hi + b.hi;
+            }
+
             double hi = a.hi + b.hi;
             double lo = a.lo + (b.lo + (b.hi - (hi - a.hi)));
 
@@ -54,6 +66,10 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator *(ddouble a, double b) {
+            if (IsInfinity(a) || double.IsInfinity(b)) {
+                return a.hi * b;
+            }
+
             ddouble y = MultiplyAdd(Zero, a.hi, b);
             y = MultiplyAdd(y, a.lo, b);
 
@@ -67,6 +83,10 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator *(ddouble a, ddouble b) {
+            if (IsInfinity(a) || IsInfinity(b)) {
+                return a.hi * b.hi;
+            }
+
             ddouble y = MultiplyAdd(Zero, a.hi, b.hi);
             y = MultiplyAdd(y, a.hi, b.lo);
             y = MultiplyAdd(y, a.lo, b.hi);

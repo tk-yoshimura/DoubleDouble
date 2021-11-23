@@ -90,5 +90,44 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(log2_ninf), nameof(log2_ninf));
             Assert.IsTrue(ddouble.IsNaN(log2_nan), nameof(log2_nan));
         }
+
+        [TestMethod]
+        public void Log10Test() {
+            for (decimal d = 0.01m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Log10(v);
+
+                Assert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            for (decimal d = 10m; d <= +10000m; d += 10m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Log10(v);
+
+                Assert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble log10_pzero = ddouble.Log10(0d);
+            ddouble log10_mzero = ddouble.Log10(-0d);
+            ddouble log10_pinf = ddouble.Log10(double.PositiveInfinity);
+            ddouble log10_ninf = ddouble.Log10(double.NegativeInfinity);
+            ddouble log10_nan = ddouble.Log10(double.NaN);
+
+            Assert.IsTrue(ddouble.IsInfinity(log10_pzero) && Math.CopySign(1, (double)(log10_pzero)) < 0, nameof(log10_pzero));
+            Assert.IsTrue(ddouble.IsInfinity(log10_mzero) && Math.CopySign(1, (double)(log10_mzero)) < 0, nameof(log10_mzero));
+            Assert.IsTrue(ddouble.IsInfinity(log10_pinf) && Math.CopySign(1, (double)(log10_pinf)) > 0, nameof(log10_pinf));
+            Assert.IsTrue(ddouble.IsNaN(log10_ninf), nameof(log10_ninf));
+            Assert.IsTrue(ddouble.IsNaN(log10_nan), nameof(log10_nan));
+        }
     }
 }

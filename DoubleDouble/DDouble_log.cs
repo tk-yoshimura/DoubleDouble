@@ -38,5 +38,13 @@ namespace DoubleDouble {
 
             return y;
         }
+
+        public static ddouble Log10(ddouble v) {
+            return Log2(v) * Consts.Lg2;
+        }
+
+        private static partial class Consts {
+            public static ddouble Lg2 { private set; get; } = Rcp(Log2(10));
+        }
     }
 }
