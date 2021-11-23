@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.Intrinsics.X86;
 
 namespace DoubleDouble {
     public partial struct ddouble {

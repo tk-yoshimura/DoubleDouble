@@ -1,6 +1,5 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DoubleDouble;
-using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DoubleDoubleTest {
     [TestClass]

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.Intrinsics.X86;
 
 namespace DoubleDouble {
 
@@ -11,7 +10,7 @@ namespace DoubleDouble {
         private ddouble(double hi, double lo) {
             this.hi = hi + lo;
             this.lo = lo - (this.hi - hi);
-            
+
             if (double.IsNaN(this.lo)) {
                 this.lo = 0;
             }
