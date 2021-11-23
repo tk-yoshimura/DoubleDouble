@@ -63,20 +63,6 @@ namespace DoubleDouble {
             return y;
         }
 
-        public static ddouble MultiplyAdd(ddouble v, double a, double b) {
-            double hi = Math.FusedMultiplyAdd(a, b, v.hi);
-            double lo = v.lo + Math.FusedMultiplyAdd(a, b, v.hi - hi);
-
-            return new ddouble(hi, lo);
-        }
-
-        public static ddouble MultiplySub(ddouble v, double a, double b) {
-            double hi = Math.FusedMultiplyAdd(-a, b, v.hi);
-            double lo = v.lo - Math.FusedMultiplyAdd(a, b, hi - v.hi);
-
-            return new ddouble(hi, lo);
-        }
-
         public static ddouble operator /(ddouble a, double b) {
             return a * Rcp(b);
         }
@@ -87,6 +73,13 @@ namespace DoubleDouble {
 
         public static ddouble operator /(ddouble a, ddouble b) {
             return a * Rcp(b);
+        }
+               
+        private static ddouble MultiplyAdd(ddouble v, double a, double b) {
+            double hi = Math.FusedMultiplyAdd(a, b, v.hi);
+            double lo = v.lo + Math.FusedMultiplyAdd(a, b, v.hi - hi);
+
+            return new ddouble(hi, lo);
         }
     }
 }
