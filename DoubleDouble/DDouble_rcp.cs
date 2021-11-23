@@ -3,21 +3,17 @@
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Rcp(ddouble v) {
-            double w = (double)v;
-
-            double sign = Math.CopySign(1, w);
-
-            if (w == 0) {
-                return Math.CopySign(double.PositiveInfinity, w);
+            if (v.hi == 0) {
+                return Math.CopySign(double.PositiveInfinity, v.hi);
             }
-            if (double.IsInfinity(w)) {
-                return w > 0d ? 0d : -0d;
+            if (IsInfinity(v)) {
+                return v.hi > 0d ? 0d : -0d;
             }
-            if (double.IsNaN(w)) {
+            if (IsNaN(v.hi)) {
                 return NaN;
             }
 
-            int v_exponent = Math.ILogB(w);
+            int v_exponent = Math.ILogB(v.hi);
             ddouble v_frac = new ddouble(
                 Math.ScaleB(v.hi, -v_exponent),
                 Math.ScaleB(v.lo, -v_exponent)
