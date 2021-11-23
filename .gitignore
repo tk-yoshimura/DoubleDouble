@@ -1,0 +1,56 @@
+﻿# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.webp
+
+# WinMarge backups
+*.bak
+
+# Cache/Options directory
+/.vs
+/dll
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+/**/[Pp]ackages/*
+
+# Build results
+/**/[Bb]in/
+/**/[Oo]bj/
+/**/[Ll]og/
+/**/[Ll]ogs/
+/**/bld/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Publish
+/**/publish/
+/**/PublishProfiles
+*.[Pp]ublish.xml
+*.azurePubxml
+*.pubxml
+*.publishproj
+
+# Python cache
+/**/__pycache__
+*.pyc
+
+# Other
+nuget.exe
+/**/*.nuspec
+/**/*.nupkg
+
+# Safelist
