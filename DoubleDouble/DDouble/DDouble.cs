@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 
 namespace DoubleDouble {
@@ -59,6 +60,37 @@ namespace DoubleDouble {
 
         public static explicit operator double(ddouble v) {
             return v.hi;
+        }
+
+        public static implicit operator ddouble(BigInteger n) {
+            // C# is IEEE754 compliant.
+            const UInt64 mantissa_mask = 0x000FFFFFFFFFFFFFuL;
+            const int mantissa_bits = 52;
+
+            int sign = n.Sign;
+            if (sign == 0) {
+                return Zero;
+            }
+            if (sign == -1) {
+                n = BigInteger.Negate(n);
+            }
+
+            int bits = checked((int)n.GetBitLength());
+            int sfts = mantissa_bits * 2 - bits;
+
+            if (sfts > 0) {
+                n <<= sfts;
+            }
+            else if(sfts < 0) {
+                n >>= -sfts;
+            }
+
+            UInt64 hi = unchecked((UInt64)(n >> mantissa_bits));
+            UInt64 lo = unchecked((UInt64)(n & mantissa_mask));
+
+            ddouble v = Ldexp(new ddouble(Math.ScaleB((double)hi, mantissa_bits), lo), -sfts);
+
+            return sign > 0 ? v : -v;
         }
     }
 }

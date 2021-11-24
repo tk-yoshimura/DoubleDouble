@@ -21,9 +21,9 @@
 
                 if (f >= 2) {
                     y += p;
-                    f = new ddouble(f.hi / 2, f.lo / 2);
+                    f = Ldexp(f, -1);
                 }
-                p = new ddouble(p.hi / 2, p.lo / 2);
+                p = Ldexp(p, -1);
 
                 if (y == (y + p) || f == 1) {
                     break;
