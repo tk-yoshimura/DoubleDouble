@@ -14,9 +14,10 @@ namespace DoubleDouble {
             }
 
             (int v_exponent, ddouble v_frac) = Frexp(v);
+            int exponent_rem = Math.Abs(v_exponent) % 2;
 
-            if ((v_exponent & 1) == 1) {
-                v_frac = Ldexp(v_frac, 1);
+            if (exponent_rem != 0) {
+                v_frac = Ldexp(v_frac, exponent_rem);
             }
 
             ddouble a = 1 / Math.Sqrt(v_frac.hi);
@@ -27,9 +28,9 @@ namespace DoubleDouble {
             h = 1 - v_frac * a * a;
             a *= 1 + Ldexp(h * (4 + h * 3), -3);
 
-            a = Ldexp(v_frac * a, (v_exponent - (Math.Abs(v_exponent) % 2)) / 2);
+            ddouble y = Ldexp(v_frac * a, (v_exponent - exponent_rem) / 2);
 
-            return a;
+            return y;
         }
     }
 }

@@ -21,9 +21,9 @@ namespace DoubleDouble {
             ddouble squa_h = h * h;
             a *= 1 + (1 + squa_h) * (h + squa_h);
 
-            a = Ldexp(a, -v_exponent);
+            ddouble y = Ldexp(a, -v_exponent);
 
-            return a;
+            return y;
         }
     }
 }

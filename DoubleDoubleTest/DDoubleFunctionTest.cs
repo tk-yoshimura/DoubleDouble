@@ -351,5 +351,40 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(sqrt_ninf), nameof(sqrt_ninf));
             Assert.IsTrue(ddouble.IsNaN(sqrt_nan), nameof(sqrt_nan));
         }
+
+        [TestMethod]
+        public void CbrtTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (double)d;
+                ddouble w = ddouble.Cbrt(v);
+                ddouble u = w * w * w - (double)d;
+
+                Assert.AreEqual(0, (double)u, Math.Abs((double)d) * 8e-31, $"{d}");
+                Assert.IsTrue(ddouble.IsRegulared(v));
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            for (decimal d = -10000m; d <= +10000m; d += 10m) {
+                ddouble v = (double)d;
+                ddouble w = ddouble.Cbrt(v);
+                ddouble u = w * w * w - (double)d;
+
+                Assert.AreEqual(0, (double)u, Math.Abs((double)d) * 8e-31, $"{d}");
+                Assert.IsTrue(ddouble.IsRegulared(v));
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble cbrt_pzero = ddouble.Cbrt(0d);
+            ddouble cbrt_mzero = ddouble.Cbrt(-0d);
+            ddouble cbrt_pinf = ddouble.Cbrt(double.PositiveInfinity);
+            ddouble cbrt_ninf = ddouble.Cbrt(double.NegativeInfinity);
+            ddouble cbrt_nan = ddouble.Cbrt(double.NaN);
+
+            Assert.IsTrue(ddouble.IsZero(cbrt_pzero) && cbrt_pzero.Sign == +1, nameof(cbrt_pzero));
+            Assert.IsTrue(ddouble.IsZero(cbrt_mzero) && cbrt_mzero.Sign == -1, nameof(cbrt_mzero));
+            Assert.IsTrue(ddouble.IsInfinity(cbrt_pinf) && Math.CopySign(1, (double)(cbrt_pinf)) > 0, nameof(cbrt_pinf));
+            Assert.IsTrue(ddouble.IsInfinity(cbrt_ninf) && Math.CopySign(1, (double)(cbrt_ninf)) < 0, nameof(cbrt_ninf));
+            Assert.IsTrue(ddouble.IsNaN(cbrt_nan), nameof(cbrt_nan));
+        }
     }
 }
