@@ -38,7 +38,7 @@
         }
 
         private static partial class Consts {
-            public static ddouble Lg2 { private set; get; } = Rcp(Log2(10));
+            public static ddouble Lg2 { get; } = Rcp(Log2(10));
         }
     }
 }

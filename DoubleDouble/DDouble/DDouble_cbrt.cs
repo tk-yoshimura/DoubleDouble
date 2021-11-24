@@ -38,7 +38,7 @@ namespace DoubleDouble {
         }
 
         private static partial class Consts {
-            public static ddouble Rcp81 { private set; get; } = Rcp(81);
+            public static ddouble Rcp81 { get; } = Rcp(81);
         }
     }
 }
