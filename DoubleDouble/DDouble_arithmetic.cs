@@ -30,7 +30,7 @@ namespace DoubleDouble {
             if (double.IsInfinity(a) || IsInfinity(b)) {
                 return a + b.hi;
             }
-            
+
             double hi = a + b.hi;
             double lo = b.lo + (b.hi - (hi - a));
 
@@ -109,7 +109,7 @@ namespace DoubleDouble {
         public static ddouble operator /(ddouble a, ddouble b) {
             return a * Rcp(b);
         }
-               
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ddouble MultiplyAdd(ddouble v, double a, double b) {
             double hi = Math.FusedMultiplyAdd(a, b, v.hi);

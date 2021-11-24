@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Log2(ddouble v) {
             if (v.hi < 0 || IsNaN(v)) {
@@ -26,7 +24,7 @@ namespace DoubleDouble {
                     f = new ddouble(f.hi / 2, f.lo / 2);
                 }
                 p = new ddouble(p.hi / 2, p.lo / 2);
-                
+
                 if (y == (y + p) || f == 1) {
                     break;
                 }

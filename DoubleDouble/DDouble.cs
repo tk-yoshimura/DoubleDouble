@@ -36,8 +36,11 @@ namespace DoubleDouble {
 
         public static bool IsZero(ddouble v) => v.hi == 0;
 
+        internal double Hi => hi;
+        internal double Lo => lo;
+
         internal static bool IsRegulared(ddouble v) {
-            if (v.lo < 0) { 
+            if (v.lo < 0) {
                 double vd = Math.BitDecrement(v.hi) - v.hi;
                 return vd < v.lo;
             }
