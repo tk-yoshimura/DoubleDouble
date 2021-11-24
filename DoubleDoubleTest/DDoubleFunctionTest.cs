@@ -386,5 +386,12 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsInfinity(cbrt_ninf) && Math.CopySign(1, (double)(cbrt_ninf)) < 0, nameof(cbrt_ninf));
             Assert.IsTrue(ddouble.IsNaN(cbrt_nan), nameof(cbrt_nan));
         }
+
+        [TestMethod]
+        public void PowTest() {
+            ddouble v = ddouble.Pow(5, 308);
+
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.917614634881924434803035919916513923037e215" - v) < "1e185");
+        }
     }
 }

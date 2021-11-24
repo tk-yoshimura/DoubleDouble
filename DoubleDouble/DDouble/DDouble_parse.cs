@@ -5,10 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-
         private static readonly Regex parse_regex = new(@"^[\+-]?\d+(\.\d+)?([eE][\+-]?\d+)?$");
 
         public static implicit operator ddouble(string num) {
+            const int truncate_digits = 36;
+
             if (!parse_regex.IsMatch(num)) {
                 throw new FormatException();
             }
@@ -42,8 +43,8 @@ namespace DoubleDouble {
 
             string mantissa_withoutpoint = mantissa.Replace(".", string.Empty);
 
-            if (mantissa_withoutpoint.Length > DecimalDigits) {
-                mantissa_withoutpoint = mantissa_withoutpoint[..DecimalDigits];
+            if (mantissa_withoutpoint.Length > truncate_digits) {
+                mantissa_withoutpoint = mantissa_withoutpoint[..truncate_digits];
             }
 
             BigInteger mantissa_dec = BigInteger.Parse(mantissa_withoutpoint);
