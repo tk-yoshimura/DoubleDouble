@@ -15,16 +15,13 @@ namespace DoubleDouble {
 
             (int v_exponent, ddouble v_frac) = Frexp(v);
 
-            ddouble a = 1 / (double)v_frac;
+            ddouble a = 1 / v_frac.hi;
             ddouble h = 1 - v_frac * a;
 
             ddouble squa_h = h * h;
             a *= 1 + (1 + squa_h) * (h + squa_h);
 
-            a = new ddouble(
-                Math.ScaleB(a.hi, -v_exponent),
-                Math.ScaleB(a.lo, -v_exponent)
-            );
+            a = Ldexp(a, -v_exponent);
 
             return a;
         }
