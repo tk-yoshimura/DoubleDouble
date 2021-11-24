@@ -20,10 +20,6 @@ namespace DoubleDouble {
 
             ddouble squa_h = h * h;
             a *= 1 + (1 + squa_h) * (h + squa_h);
-            h = 1 - v_frac * a;
-
-            squa_h = h * h;
-            a *= 1 + (1 + squa_h) * (h + squa_h);
 
             a = new ddouble(
                 Math.ScaleB(a.hi, -v_exponent),
