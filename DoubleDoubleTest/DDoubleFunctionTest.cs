@@ -129,5 +129,192 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(log10_ninf), nameof(log10_ninf));
             Assert.IsTrue(ddouble.IsNaN(log10_nan), nameof(log10_nan));
         }
+
+        [TestMethod]
+        public void AbsTest() {
+            foreach (ddouble v in new ddouble[] { 1, 2, ddouble.Rcp(3), ddouble.Rcp(5), ddouble.Rcp(7), ddouble.Rcp(9), ddouble.Rcp(11) }) {
+                ddouble v_dec = ddouble.BitDecrement(v), v_inc = ddouble.BitIncrement(v);
+                
+                Assert.IsTrue(v_dec < v && v < v_inc);
+                
+                Assert.IsTrue(ddouble.Abs(v_dec) < ddouble.Abs(v) && ddouble.Abs(v) < ddouble.Abs(v_inc));
+
+                Assert.IsTrue(ddouble.Abs(-v_dec) > ddouble.Abs(-v) && ddouble.Abs(-v) > ddouble.Abs(-v_inc));
+            }
+
+            Assert.IsTrue(ddouble.Abs(ddouble.BitDecrement(0)) == ddouble.Abs(ddouble.BitIncrement(0)));
+        }
+
+        [TestMethod]
+        public void FloorTest() {
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(0));
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(ddouble.BitDecrement(0)));
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.BitIncrement(0)));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Floor(1));
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.BitDecrement(1)));
+            Assert.AreEqual((ddouble)(1), ddouble.Floor(ddouble.BitIncrement(1)));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.BitDecrement(ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.BitIncrement(ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.BitDecrement(ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(0), ddouble.Floor(ddouble.BitIncrement(ddouble.Rcp(7))));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Floor(1 + ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(1), ddouble.Floor(ddouble.BitDecrement(1 + ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(1), ddouble.Floor(ddouble.BitIncrement(1 + ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)("1e20"), ddouble.Floor("1e20"));
+            Assert.AreEqual((ddouble)("0.99999999999999999999e20"), ddouble.Floor(ddouble.BitDecrement("1e20")));
+            Assert.AreEqual((ddouble)("1e20"), ddouble.Floor(ddouble.BitIncrement("1e20")));
+
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(-1));
+            Assert.AreEqual((ddouble)(-2), ddouble.Floor(ddouble.BitDecrement(-1)));
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(ddouble.BitIncrement(-1)));
+
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(-ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(ddouble.BitDecrement(-ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(ddouble.BitIncrement(-ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(-ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(ddouble.BitDecrement(-ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(-1), ddouble.Floor(ddouble.BitIncrement(-ddouble.Rcp(7))));
+
+            Assert.AreEqual((ddouble)(-2), ddouble.Floor(-1 - ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(-2), ddouble.Floor(ddouble.BitDecrement(-1 - ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(-2), ddouble.Floor(ddouble.BitIncrement(-1 - ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)("-1e20"), ddouble.Floor("-1e20"));
+            Assert.AreEqual((ddouble)("-1.00000000000000000001e20"), ddouble.Floor(ddouble.BitDecrement("-1e20")));
+            Assert.AreEqual((ddouble)("-1e20"), ddouble.Floor(ddouble.BitIncrement("-1e20")));
+        }
+
+        [TestMethod]
+        public void CeilingTest() {
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(0));
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(ddouble.BitDecrement(0)));
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.BitIncrement(0)));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(1));
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.BitDecrement(1)));
+            Assert.AreEqual((ddouble)(2), ddouble.Ceiling(ddouble.BitIncrement(1)));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.BitDecrement(ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.BitIncrement(ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.BitDecrement(ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(1), ddouble.Ceiling(ddouble.BitIncrement(ddouble.Rcp(7))));
+
+            Assert.AreEqual((ddouble)(2), ddouble.Ceiling(1 + ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(2), ddouble.Ceiling(ddouble.BitDecrement(1 + ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(2), ddouble.Ceiling(ddouble.BitIncrement(1 + ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)("1e20"), ddouble.Ceiling("1e20"));
+            Assert.AreEqual((ddouble)("1e20"), ddouble.Ceiling(ddouble.BitDecrement("1e20")));
+            Assert.AreEqual((ddouble)("1.00000000000000000001e20"), ddouble.Ceiling(ddouble.BitIncrement("1e20")));
+
+            Assert.AreEqual((ddouble)(-1), ddouble.Ceiling(-1));
+            Assert.AreEqual((ddouble)(-1), ddouble.Ceiling(ddouble.BitDecrement(-1)));
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(ddouble.BitIncrement(-1)));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(-ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(ddouble.BitDecrement(-ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(ddouble.BitIncrement(-ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(-ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(ddouble.BitDecrement(-ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(0), ddouble.Ceiling(ddouble.BitIncrement(-ddouble.Rcp(7))));
+
+            Assert.AreEqual((ddouble)(-1), ddouble.Ceiling(-1 - ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(-1), ddouble.Ceiling(ddouble.BitDecrement(-1 - ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(-1), ddouble.Ceiling(ddouble.BitIncrement(-1 - ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)("-1e20"), ddouble.Ceiling("-1e20"));
+            Assert.AreEqual((ddouble)("-1e20"), ddouble.Ceiling(ddouble.BitDecrement("-1e20")));
+            Assert.AreEqual((ddouble)("-0.99999999999999999999e20"), ddouble.Ceiling(ddouble.BitIncrement("-1e20")));
+        }
+
+        [TestMethod]
+        public void RoundTest() {
+            Assert.AreEqual((ddouble)(0), ddouble.Round(0));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(0)));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(0)));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Round(1));
+            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.BitDecrement(1)));
+            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.BitIncrement(1)));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.Rcp(2)));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(ddouble.Rcp(2))));
+            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.BitIncrement(ddouble.Rcp(2))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(ddouble.Rcp(7))));
+
+            Assert.AreEqual((ddouble)(-1), ddouble.Round(-1));
+            Assert.AreEqual((ddouble)(-1), ddouble.Round(ddouble.BitDecrement(-1)));
+            Assert.AreEqual((ddouble)(-1), ddouble.Round(ddouble.BitIncrement(-1)));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Round(-ddouble.Rcp(2)));
+            Assert.AreEqual((ddouble)(-1), ddouble.Round(ddouble.BitDecrement(-ddouble.Rcp(2))));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(-ddouble.Rcp(2))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Round(-ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(-ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(-ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Round(-ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(-ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(-ddouble.Rcp(7))));
+        }
+
+        [TestMethod]
+        public void TruncateTest() {
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(0));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(0)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(0)));
+
+            Assert.AreEqual((ddouble)(1), ddouble.Truncate(1));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(1)));
+            Assert.AreEqual((ddouble)(1), ddouble.Truncate(ddouble.BitIncrement(1)));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.Rcp(2)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(ddouble.Rcp(2))));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(ddouble.Rcp(2))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(ddouble.Rcp(7))));
+
+            Assert.AreEqual((ddouble)(-1), ddouble.Truncate(-1));
+            Assert.AreEqual((ddouble)(-1), ddouble.Truncate(ddouble.BitDecrement(-1)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(-1)));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(-ddouble.Rcp(2)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(-ddouble.Rcp(2))));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(-ddouble.Rcp(2))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(-ddouble.Rcp(3)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(-ddouble.Rcp(3))));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(-ddouble.Rcp(3))));
+
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(-ddouble.Rcp(7)));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitDecrement(-ddouble.Rcp(7))));
+            Assert.AreEqual((ddouble)(0), ddouble.Truncate(ddouble.BitIncrement(-ddouble.Rcp(7))));
+        }
     }
 }

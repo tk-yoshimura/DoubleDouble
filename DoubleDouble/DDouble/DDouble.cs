@@ -104,9 +104,7 @@ namespace DoubleDouble {
             UInt64 hi = unchecked((UInt64)(n >> mantissa_bits));
             UInt64 lo = unchecked((UInt64)(n & mantissa_mask));
 
-            ddouble v = Ldexp(new ddouble(
-                Math.ScaleB((double)hi, mantissa_bits), 
-                (double)lo), -sfts);
+            ddouble v = Ldexp(new ddouble(Math.ScaleB((double)hi, mantissa_bits), (double)lo), -sfts);
 
             return sign > 0 ? v : -v;
         }
