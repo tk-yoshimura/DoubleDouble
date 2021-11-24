@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace DoubleDouble {
 
-    [DebuggerDisplay("{hi}")]
+    [DebuggerDisplay("{ToString()}")]
     public partial struct ddouble {
         private readonly double hi, lo;
 
@@ -35,6 +35,8 @@ namespace DoubleDouble {
         public static bool IsFinite(ddouble v) => double.IsFinite(v.hi);
 
         public static bool IsZero(ddouble v) => v.hi == 0;
+
+        public int Sign => (int)Math.CopySign(1, hi);
 
         internal double Hi => hi;
         internal double Lo => lo;

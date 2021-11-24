@@ -55,7 +55,7 @@ namespace DoubleDoubleTest {
 
                 (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatConverter.Split(v);
 
-                Console.WriteLine((double)v);
+                Console.WriteLine(v);
                 Console.WriteLine($"  {sign} {exponent} 0x{mantissa:X27} iszero:{iszero}");
 
                 Assert.AreEqual((int)Math.CopySign(1, v.Hi), sign, nameof(sign));
