@@ -62,6 +62,22 @@ namespace DoubleDouble {
             return v.hi;
         }
 
+        public static implicit operator ddouble(int n) {
+            return (BigInteger)n;
+        }
+
+        public static implicit operator ddouble(uint n) {
+            return (BigInteger)n;
+        }
+
+        public static implicit operator ddouble(long n) {
+            return (BigInteger)n;
+        }
+
+        public static implicit operator ddouble(ulong n) {
+            return (BigInteger)n;
+        }
+
         public static implicit operator ddouble(BigInteger n) {
             // C# is IEEE754 compliant.
             const UInt64 mantissa_mask = 0x000FFFFFFFFFFFFFuL;
@@ -88,7 +104,9 @@ namespace DoubleDouble {
             UInt64 hi = unchecked((UInt64)(n >> mantissa_bits));
             UInt64 lo = unchecked((UInt64)(n & mantissa_mask));
 
-            ddouble v = Ldexp(new ddouble(Math.ScaleB((double)hi, mantissa_bits), lo), -sfts);
+            ddouble v = Ldexp(new ddouble(
+                Math.ScaleB((double)hi, mantissa_bits), 
+                (double)lo), -sfts);
 
             return sign > 0 ? v : -v;
         }
