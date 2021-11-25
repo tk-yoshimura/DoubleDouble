@@ -94,7 +94,7 @@ namespace DoubleDouble {
         }
 
         internal (int sign, int exponent_dec, BigInteger mantissa_dec) ToStringCore(int digits) {
-            const int presicion = 6;
+            const int presicion = 2;
 
             if (digits > DecimalDigits) {
                 throw new ArgumentOutOfRangeException(nameof(digits));
