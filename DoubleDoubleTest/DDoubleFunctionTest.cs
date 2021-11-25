@@ -146,6 +146,8 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void Log10Test() {
+            Assert.AreEqual(0, (double)(ddouble.Log10(10) - 1), 1e-32);
+
             for (decimal d = 0.01m; d <= +10m; d += 0.01m) {
                 if (d == 0) {
                     continue;
@@ -181,6 +183,45 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsInfinity(log10_pinf) && Math.CopySign(1, (double)(log10_pinf)) > 0, nameof(log10_pinf));
             Assert.IsTrue(ddouble.IsNaN(log10_ninf), nameof(log10_ninf));
             Assert.IsTrue(ddouble.IsNaN(log10_nan), nameof(log10_nan));
+        }
+
+        [TestMethod]
+        public void LogTest() {
+            for (decimal d = 0.01m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Log(v);
+
+                Assert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            for (decimal d = 10m; d <= +10000m; d += 10m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Log(v);
+
+                Assert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble Log_pzero = ddouble.Log(0d);
+            ddouble Log_mzero = ddouble.Log(-0d);
+            ddouble Log_pinf = ddouble.Log(double.PositiveInfinity);
+            ddouble Log_ninf = ddouble.Log(double.NegativeInfinity);
+            ddouble Log_nan = ddouble.Log(double.NaN);
+
+            Assert.IsTrue(ddouble.IsInfinity(Log_pzero) && Math.CopySign(1, (double)(Log_pzero)) < 0, nameof(Log_pzero));
+            Assert.IsTrue(ddouble.IsInfinity(Log_mzero) && Math.CopySign(1, (double)(Log_mzero)) < 0, nameof(Log_mzero));
+            Assert.IsTrue(ddouble.IsInfinity(Log_pinf) && Math.CopySign(1, (double)(Log_pinf)) > 0, nameof(Log_pinf));
+            Assert.IsTrue(ddouble.IsNaN(Log_ninf), nameof(Log_ninf));
+            Assert.IsTrue(ddouble.IsNaN(Log_nan), nameof(Log_nan));
         }
 
         [TestMethod]

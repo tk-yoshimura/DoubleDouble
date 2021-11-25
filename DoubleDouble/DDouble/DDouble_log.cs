@@ -23,13 +23,11 @@ namespace DoubleDouble {
             ddouble w = x / x_offset - 1, squa_w = w * w, r = Consts.Log.LbE * w;
 
             ddouble y = y_offset;
-            for (int i = 0; i < 8; i++) {
-                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * w) / ((2 * i + 1) * (2 * i + 2));
+            for (int i = 0; i < Consts.Log.Log2ConvergenceRemTable.Count; i++) {
+                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * w) * Consts.Log.Log2ConvergenceRemTable[i];
                 ddouble y_next = y + dy;
 
                 if (y == y_next) {
-                    Console.WriteLine("conv " + i);
-
                     break;
                 }
 
@@ -42,6 +40,10 @@ namespace DoubleDouble {
 
         public static ddouble Log10(ddouble v) {
             return Log2(v) * Consts.Log.Lg2;
+        }
+
+        public static ddouble Log(ddouble v) {
+            return Log2(v) * Consts.Log.Ln2;
         }
 
         private static partial class Consts {
@@ -70,6 +72,8 @@ namespace DoubleDouble {
 
                 public static readonly int Log2TableN = Log2Table.Count;
 
+                public static readonly IReadOnlyList<ddouble> Log2ConvergenceRemTable = GenerateLog2ConvergenceRemTable();
+
                 public static ddouble[] GenerateLog2Table() { 
                     const int n = 2048;
                     ddouble dx = Rcp(n);
@@ -89,7 +93,7 @@ namespace DoubleDouble {
                     }
 
                     ddouble y = 0;
-                    ddouble p = 0.5;
+                    ddouble p = Ldexp(1, -1);
 
                     for (int i = 128; i > 0; i--) {
                         x *= x;
@@ -106,6 +110,17 @@ namespace DoubleDouble {
                     }
 
                     return y;
+                }
+
+                private static IReadOnlyList<ddouble> GenerateLog2ConvergenceRemTable() {
+                    const int n = 16;
+                    ddouble[] table = new ddouble[n];
+
+                    for (int i = 0; i < n; i++) {
+                        table[i] = Rcp(checked((2 * i + 1) * (2 * i + 2)));
+                    }
+
+                    return table;
                 }
             }
         }
