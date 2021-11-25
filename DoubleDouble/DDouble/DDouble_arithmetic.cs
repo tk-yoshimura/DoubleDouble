@@ -97,17 +97,30 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(ddouble a, double b) {
-            return a * Rcp(b);
+            return a / (ddouble)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(double a, ddouble b) {
-            return a * Rcp(b);
+            return (ddouble)a / b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(ddouble a, ddouble b) {
-            return a * Rcp(b);
+            double hi = a.hi / b.hi;
+            if (!IsFinite(hi)) {
+                return hi;
+            }
+
+            ddouble hirem = a - hi * b;
+
+            double lo = hirem.hi / b.hi;
+
+            ddouble lorem = hirem - lo * b;
+
+            double c = lorem.hi / b.hi;
+
+            return new ddouble(hi, lo) + c;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
