@@ -37,6 +37,10 @@ namespace DoubleDoubleTest {
                 Assert.AreEqual($"1.00e{i}", p.ToString("e2"));
                 Assert.AreEqual($"1.00e-{i}", n.ToString("e2"));
             }
+
+            for (int i = 90; i <= 110; i++) {
+                Console.WriteLine($"exp {-i} {(1 - ddouble.Ldexp(1, -i))}");
+            }
         }
 
         [TestMethod]

@@ -120,6 +120,28 @@ namespace DoubleDoubleTest {
 
                 near2 -= ddouble.Ldexp(1, -50);
             }
+
+            ddouble near1 = 1;
+            for (int i = 0; i < 256; i++) {
+                ddouble u = ddouble.Log2(near1);
+                Assert.AreEqual(0, (double)u, 1e-12);
+
+                Console.WriteLine($"{near1} {near1.Hi} {near1.Lo}");
+                Console.WriteLine($"{u} {u.Hi} {u.Lo}");
+
+                near1 -= ddouble.Ldexp(1, -100);
+            }
+
+            near1 = 1;
+            for (int i = 0; i < 256; i++) {
+                ddouble u = ddouble.Log2(near1);
+                Assert.AreEqual(0, (double)u, 1e-12);
+
+                Console.WriteLine($"{near1} {near1.Hi} {near1.Lo}");
+                Console.WriteLine($"{u} {u.Hi} {u.Lo}");
+
+                near1 += ddouble.Ldexp(1, -100);
+            }
         }
 
         [TestMethod]

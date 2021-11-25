@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
@@ -93,7 +94,7 @@ namespace DoubleDouble {
         }
 
         internal (int sign, int exponent_dec, BigInteger mantissa_dec) ToStringCore(int digits) {
-            const int presicion = 2;
+            const int presicion = 6;
 
             if (digits > DecimalDigits) {
                 throw new ArgumentOutOfRangeException(nameof(digits));
@@ -119,12 +120,12 @@ namespace DoubleDouble {
             mantissa = (mantissa * Tostr.Decimal(digits + presicion)) >> (FloatConverter.MantissaBits * 2);
             mantissa = (mantissa * (mantissa_frac << exponent_frac)) >> (FloatConverter.MantissaBits * 2);
 
-            if (mantissa >= Tostr.Decimal(digits + presicion + 1)) {
-                exponent_dec = checked(exponent_dec + 1);
-                mantissa = Tostr.RoundDiv(mantissa, Tostr.Decimal(presicion + 1));
-            }
-            else {
-                mantissa = Tostr.RoundDiv(mantissa, Tostr.Decimal(presicion));
+            int mantissa_length = mantissa.ToString().Length;
+
+            if (mantissa_length > (digits + 1)) {
+                int trunc_digits = mantissa_length - (digits + 1);
+                exponent_dec = checked(exponent_dec + trunc_digits - presicion);
+                mantissa = Tostr.RoundDiv(mantissa, Tostr.Decimal(trunc_digits));
             }
             if (mantissa == Tostr.Decimal(digits + 1)) {
                 exponent_dec = checked(exponent_dec + 1);
@@ -132,7 +133,8 @@ namespace DoubleDouble {
             }
 
 #if DEBUG
-            Debug<ArithmeticException>.Assert(mantissa < Tostr.Decimal(digits + 1));
+            Debug<ArithmeticException>.Assert(mantissa < Tostr.Decimal(digits + 1), "overflow");
+            Debug<ArithmeticException>.Assert(mantissa.ToString().Length == (digits + 1), "mismatch length");
 #endif
 
             return (sign, exponent_dec, mantissa);
