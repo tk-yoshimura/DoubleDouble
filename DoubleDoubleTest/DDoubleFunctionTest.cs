@@ -100,6 +100,15 @@ namespace DoubleDoubleTest {
                 Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
 
+                near2 = ddouble.BitDecrement(near2);
+            }
+            for (int i = 0; i < 256; i++) {
+                ddouble u = ddouble.Log2(near2);
+                Assert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+
+                Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
+                Console.WriteLine($"{u} {u.Hi} {u.Lo}");
+
                 near2 -= ddouble.Ldexp(1, -100);
             }
             for (int i = 0; i < 256; i++) {

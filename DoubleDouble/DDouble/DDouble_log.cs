@@ -16,7 +16,7 @@ namespace DoubleDouble {
 
             (int n, ddouble x) = Frexp(v);
 
-            int index = Math.Max(0, (int)ddouble.Floor((x - 1) * Consts.Log.Log2TableN));
+            int index = (int)ddouble.Floor((x - 1) * Consts.Log.Log2TableN);
             ddouble x_offset = 1 + Consts.Log.Log2TableDx * index;
             ddouble y_offset = n + Consts.Log.Log2Table[index];
 
