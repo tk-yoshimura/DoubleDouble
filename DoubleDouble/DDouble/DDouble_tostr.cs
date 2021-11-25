@@ -105,7 +105,7 @@ namespace DoubleDouble {
 
             (int sign, int exponent, BigInteger mantissa, _) = FloatConverter.Split(this);
 
-            ddouble exponent_log10 = Consts.Lg2 * exponent;
+            ddouble exponent_log10 = Consts.Log.Lg2 * exponent;
             ddouble exponent_int = Floor(exponent_log10);
             int exponent_dec = (int)exponent_int;
 
