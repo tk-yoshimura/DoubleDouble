@@ -91,6 +91,26 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsInfinity(log2_pinf) && Math.CopySign(1, (double)(log2_pinf)) > 0, nameof(log2_pinf));
             Assert.IsTrue(ddouble.IsNaN(log2_ninf), nameof(log2_ninf));
             Assert.IsTrue(ddouble.IsNaN(log2_nan), nameof(log2_nan));
+
+            ddouble near2 = 2;
+            for (int i = 0; i < 256; i++) {
+                ddouble u = ddouble.Log2(near2);
+                Assert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+
+                Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
+                Console.WriteLine($"{u} {u.Hi} {u.Lo}");
+
+                near2 -= ddouble.Ldexp(1, -100);
+            }
+            for (int i = 0; i < 256; i++) {
+                ddouble u = ddouble.Log2(near2);
+                Assert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+
+                Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
+                Console.WriteLine($"{u} {u.Hi} {u.Lo}");
+
+                near2 -= ddouble.Ldexp(1, -50);
+            }
         }
 
         [TestMethod]

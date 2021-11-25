@@ -16,15 +16,15 @@ namespace DoubleDouble {
 
             (int n, ddouble x) = Frexp(v);
 
-            int index = (int)ddouble.Floor((x - 1) * Consts.Log.Log2TableN);
+            int index = Math.Max(0, (int)ddouble.Floor((x - 1) * Consts.Log.Log2TableN));
             ddouble x_offset = 1 + Consts.Log.Log2TableDx * index;
             ddouble y_offset = n + Consts.Log.Log2Table[index];
 
             ddouble w = x / x_offset - 1, squa_w = w * w, r = Consts.Log.LbE * w;
 
             ddouble y = y_offset;
-            for (int i = 1; i < 17; i += 2) {
-                ddouble dy = r * ((i + 1) - i * w) / (i * (i + 1));
+            for (int i = 0; i < 8; i++) {
+                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * w) / ((2 * i + 1) * (2 * i + 2));
                 ddouble y_next = y + dy;
 
                 if (y == y_next) {
@@ -71,7 +71,7 @@ namespace DoubleDouble {
                 public static readonly int Log2TableN = Log2Table.Count;
 
                 public static ddouble[] GenerateLog2Table() { 
-                    const int n = 1024;
+                    const int n = 2048;
                     ddouble dx = Rcp(n);
                     ddouble[] table = new ddouble[n];
 
