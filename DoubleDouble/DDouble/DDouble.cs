@@ -19,6 +19,12 @@ namespace DoubleDouble {
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private ddouble(double v) {
+            this.hi = v;
+            this.lo = 0;
+        }
+
         public static ddouble Zero { private set; get; } = new ddouble(0d, 0d);
         public static ddouble Epsilon { private set; get; } = double.Epsilon;
         public static ddouble MaxValue { private set; get; } = double.MaxValue;
@@ -55,7 +61,7 @@ namespace DoubleDouble {
         }
 
         public static implicit operator ddouble(double v) {
-            return new ddouble(v, Math.CopySign(0d, v));
+            return new ddouble(v);
         }
 
         public static explicit operator double(ddouble v) {

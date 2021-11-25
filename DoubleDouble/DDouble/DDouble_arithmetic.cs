@@ -107,18 +107,21 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(ddouble a, ddouble b) {
-            double hi = a.hi / b.hi;
-            if (!IsFinite(hi)) {
-                return hi;
+            if (IsInfinity(a) || IsInfinity(b) || b == 0) {
+                return a.hi / b.hi;
             }
 
+            double hi = a.hi / b.hi;
             ddouble hirem = a - hi * b;
 
             double lo = hirem.hi / b.hi;
-
             ddouble lorem = hirem - lo * b;
 
             double c = lorem.hi / b.hi;
+
+            if (double.IsInfinity(hi)) {
+                return hi;
+            }
 
             return new ddouble(hi, lo) + c;
         }

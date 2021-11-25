@@ -32,7 +32,7 @@ namespace DoubleDoubleTest {
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
-
+            
             ddouble rcp_pzero = ddouble.Rcp(0d);
             ddouble rcp_mzero = ddouble.Rcp(-0d);
             ddouble rcp_pinf = ddouble.Rcp(double.PositiveInfinity);
@@ -40,7 +40,8 @@ namespace DoubleDoubleTest {
             ddouble rcp_nan = ddouble.Rcp(double.NaN);
             ddouble rcp_pval = ddouble.Rcp(double.MaxValue);
             ddouble rcp_mval = ddouble.Rcp(double.MinValue);
-            ddouble rcp_eps = ddouble.Rcp(double.Epsilon);
+            ddouble rcp_peps = ddouble.Rcp(double.Epsilon);
+            ddouble rcp_meps = ddouble.Rcp(-double.Epsilon);
 
             Assert.IsTrue(ddouble.IsInfinity(rcp_pzero) && Math.CopySign(1, (double)(rcp_pzero)) > 0, nameof(rcp_pzero));
             Assert.IsTrue(ddouble.IsInfinity(rcp_mzero) && Math.CopySign(1, (double)(rcp_mzero)) < 0, nameof(rcp_mzero));
@@ -49,7 +50,8 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(rcp_nan), nameof(rcp_nan));
             Assert.AreEqual(1 / double.MaxValue, (double)rcp_pval, double.Epsilon, nameof(rcp_pval));
             Assert.AreEqual(1 / double.MinValue, (double)rcp_mval, double.Epsilon, nameof(rcp_mval));
-            Assert.IsTrue(ddouble.IsInfinity(rcp_eps) && Math.CopySign(1, (double)(rcp_eps)) > 0, nameof(rcp_eps));
+            Assert.IsTrue(ddouble.IsInfinity(rcp_peps) && Math.CopySign(1, (double)(rcp_peps)) > 0, nameof(rcp_peps));
+            Assert.IsTrue(ddouble.IsInfinity(rcp_meps) && Math.CopySign(1, (double)(rcp_meps)) < 0, nameof(rcp_meps));
         }
 
         [TestMethod]
