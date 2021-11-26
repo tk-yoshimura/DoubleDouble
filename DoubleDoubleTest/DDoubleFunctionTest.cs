@@ -528,6 +528,22 @@ namespace DoubleDoubleTest {
         }
 
         [TestMethod]
+        public void PowTest() {
+            for (decimal y = -10m; y <= +10m; y += 0.1m) {
+                for (decimal x = 0.1m; x <= +10m; x += 0.1m) {
+                    if (y == 0) {
+                        continue;
+                    }
+
+                    ddouble u = ddouble.Pow((double)x, (double)y);
+
+                    Assert.AreEqual(Math.Pow((double)x, (double)y), (double)u, (double)u * 1e-12);
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+            }
+        }
+
+        [TestMethod]
         public void Pow10Test() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
                 if (d == 0) {
