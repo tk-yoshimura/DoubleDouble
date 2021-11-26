@@ -5,7 +5,17 @@ using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static readonly ReadOnlyCollection<ddouble> TaylorSequence = GenerateTaylorSequence();
+        private static ReadOnlyCollection<ddouble> taylor_sequence = null;
+
+        public static ReadOnlyCollection<ddouble> TaylorSequence {
+            get {
+                if (taylor_sequence is null) {
+                    taylor_sequence = GenerateTaylorSequence();
+                }
+
+                return taylor_sequence;
+            }
+        }
 
         private static ReadOnlyCollection<ddouble> GenerateTaylorSequence() {
             List<ddouble> table = new() {

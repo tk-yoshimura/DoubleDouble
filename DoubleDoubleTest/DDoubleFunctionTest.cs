@@ -482,7 +482,7 @@ namespace DoubleDoubleTest {
         }
 
         [TestMethod]
-        public void PowTest() {
+        public void PowNTest() {
             ddouble v = ddouble.Pow(5, 308);
 
             Assert.IsTrue(ddouble.Abs((ddouble)"1.917614634881924434803035919916513923037e215" - v) < "1e185");
@@ -525,6 +525,64 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsInfinity(pow2_pinf) && Math.CopySign(1, (double)(pow2_pinf)) > 0, nameof(pow2_pinf));
             Assert.IsTrue(pow2_ninf == 0, nameof(pow2_ninf));
             Assert.IsTrue(ddouble.IsNaN(pow2_nan), nameof(pow2_nan));
+        }
+
+        [TestMethod]
+        public void Pow10Test() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Pow10(v);
+
+                Assert.AreEqual(Math.Pow(10, (double)d), (double)u, (double)u * 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            Assert.IsTrue(ddouble.Abs(10 - ddouble.Pow10(1)) < 1e-31);
+
+            ddouble pow10_pzero = ddouble.Pow10(0d);
+            ddouble pow10_mzero = ddouble.Pow10(-0d);
+            ddouble pow10_pinf = ddouble.Pow10(double.PositiveInfinity);
+            ddouble pow10_ninf = ddouble.Pow10(double.NegativeInfinity);
+            ddouble pow10_nan = ddouble.Pow10(double.NaN);
+
+            Assert.IsTrue(pow10_pzero == 1, nameof(pow10_pzero));
+            Assert.IsTrue(pow10_mzero == 1, nameof(pow10_mzero));
+            Assert.IsTrue(ddouble.IsInfinity(pow10_pinf) && Math.CopySign(1, (double)(pow10_pinf)) > 0, nameof(pow10_pinf));
+            Assert.IsTrue(pow10_ninf == 0, nameof(pow10_ninf));
+            Assert.IsTrue(ddouble.IsNaN(pow10_nan), nameof(pow10_nan));
+        }
+
+        [TestMethod]
+        public void ExpTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Exp(v);
+
+                Assert.AreEqual(Math.Exp((double)d), (double)u, (double)u * 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            Assert.IsTrue(ddouble.Abs(ddouble.E - ddouble.Exp(1)) < 1e-31);
+
+            ddouble exp_pzero = ddouble.Pow10(0d);
+            ddouble exp_mzero = ddouble.Pow10(-0d);
+            ddouble exp_pinf = ddouble.Pow10(double.PositiveInfinity);
+            ddouble exp_ninf = ddouble.Pow10(double.NegativeInfinity);
+            ddouble exp_nan = ddouble.Pow10(double.NaN);
+
+            Assert.IsTrue(exp_pzero == 1, nameof(exp_pzero));
+            Assert.IsTrue(exp_mzero == 1, nameof(exp_mzero));
+            Assert.IsTrue(ddouble.IsInfinity(exp_pinf) && Math.CopySign(1, (double)(exp_pinf)) > 0, nameof(exp_pinf));
+            Assert.IsTrue(exp_ninf == 0, nameof(exp_ninf));
+            Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
         }
     }
 }

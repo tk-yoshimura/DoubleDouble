@@ -67,6 +67,32 @@ namespace DoubleDouble {
             return c * y * r;
         }
 
+        public static ddouble Pow(ddouble x, ddouble y) {
+            if (x.Sign < 0) {
+                return NaN;
+            }
+
+            if (IsZero(y)) {
+                return IsNaN(x) ? NaN : 1;
+            }
+
+            ddouble z = Pow2(y * Log2(x));
+
+            return z;
+        }
+
+        public static ddouble Pow10(ddouble x) {
+            ddouble z = Pow2(x * Consts.Log.Lb10);
+
+            return z;
+        }
+
+        public static ddouble Exp(ddouble x) {
+            ddouble z = Pow2(x * Consts.Log.LbE);
+
+            return z;
+        }
+
         private static partial class Consts {
             public static class Pow {
 

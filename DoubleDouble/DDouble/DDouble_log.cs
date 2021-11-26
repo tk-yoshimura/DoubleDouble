@@ -51,6 +51,7 @@ namespace DoubleDouble {
                 public static readonly ddouble Lg2 = Rcp(3 + Log2(Ldexp(5, -2)));
                 public static readonly ddouble Ln2 = GenerateLn2();
                 public static readonly ddouble LbE = Rcp(Ln2);
+                public static readonly ddouble Lb10 = Rcp(Lg2);
 
                 private static ddouble GenerateLn2() {
                     int n = 3;
