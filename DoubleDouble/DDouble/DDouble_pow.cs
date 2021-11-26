@@ -1,7 +1,9 @@
-﻿namespace DoubleDouble {
+﻿using System.Linq;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Pow(ddouble x, long n) {
-            if (ddouble.IsNaN(x)) {
+            if (IsNaN(x)) {
                 return NaN;
             }
 
@@ -22,6 +24,41 @@
             }
 
             return (n > 0) ? y : Rcp(y);
+        }
+
+        public static ddouble Pow2(ddouble x) { 
+            if (IsNaN(x)) {
+                return NaN;
+            }
+            if (IsZero(x)) {
+                return 1d;
+            }
+            if (IsInfinity(x)) {
+                return (x.Sign < 0) ? 0 : PositiveInfinity;
+            }
+            if (x >= 1024) {
+                return PositiveInfinity;
+            }
+
+            int exp = (int)Floor(x);
+            ddouble v = (x - exp) * Consts.Log.Ln2;
+
+            ddouble y = 1, c = Ldexp(1, exp);
+            ddouble w = v;
+
+            foreach (ddouble f in TaylorSequence.Skip(1)) {
+                ddouble dy = f * w;
+                ddouble y_next = y + dy;
+                
+                if (y == y_next) {
+                    break;
+                }
+
+                w *= v;
+                y = y_next;
+            }
+
+            return c * y;
         }
     }
 }

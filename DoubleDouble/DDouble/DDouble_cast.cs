@@ -118,7 +118,7 @@ namespace DoubleDouble {
         public static implicit operator ddouble(BigInteger n) {
             (int sign, UInt64 hi, UInt64 lo, int sfts) = IntegerSplitter.Split(n);
 
-            ddouble v = Ldexp(new ddouble(Math.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo), -sfts);
+            ddouble v = Ldexp(new ddouble(Math.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo), sfts);
 
             return sign > 0 ? v : -v;
         }

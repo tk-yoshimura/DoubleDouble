@@ -14,6 +14,7 @@ namespace DoubleDouble {
             this.lo = lo - (this.hi - hi);
 
             if (!double.IsFinite(this.lo)) {
+                this.hi = hi;
                 this.lo = 0;
             }
         }

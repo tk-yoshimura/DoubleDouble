@@ -487,5 +487,44 @@ namespace DoubleDoubleTest {
 
             Assert.IsTrue(ddouble.Abs((ddouble)"1.917614634881924434803035919916513923037e215" - v) < "1e185");
         }
+
+        [TestMethod]
+        public void Pow2Test() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Pow2(v);
+
+                Assert.AreEqual(Math.Pow(2, (double)d), (double)u, 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            for (decimal d = -10000m; d <= +10000m; d += 10m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.Pow2(v);
+
+                Assert.AreEqual(Math.Pow(2, (double)d), (double)u, 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble pow2_pzero = ddouble.Pow2(0d);
+            ddouble pow2_mzero = ddouble.Pow2(-0d);
+            ddouble pow2_pinf = ddouble.Pow2(double.PositiveInfinity);
+            ddouble pow2_ninf = ddouble.Pow2(double.NegativeInfinity);
+            ddouble pow2_nan = ddouble.Pow2(double.NaN);
+
+            Assert.IsTrue(pow2_pzero == 1, nameof(pow2_pzero));
+            Assert.IsTrue(pow2_mzero == 1, nameof(pow2_mzero));
+            Assert.IsTrue(ddouble.IsInfinity(pow2_pinf) && Math.CopySign(1, (double)(pow2_pinf)) > 0, nameof(pow2_pinf));
+            Assert.IsTrue(pow2_ninf == 0, nameof(pow2_ninf));
+            Assert.IsTrue(ddouble.IsNaN(pow2_nan), nameof(pow2_nan));
+        }
     }
 }
