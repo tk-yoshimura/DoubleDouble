@@ -9,7 +9,7 @@
             ddouble t = Ldexp(1, -2);
             ddouble p = 1;
 
-            for (long i = 1; i <= 128; i *= 2) {
+            for (int i = 1; i <= 128; i *= 2) {
                 ddouble a_next = (a + b) / 2;
                 ddouble b_next = Sqrt(a * b);
                 ddouble t_next = t - p * (a - a_next) * (a - a_next);
