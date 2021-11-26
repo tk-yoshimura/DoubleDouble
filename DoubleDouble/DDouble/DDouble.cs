@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace DoubleDouble {
 
-    [DebuggerDisplay("{ToString()}")]
+    [DebuggerDisplay("{ToString(),nq}")]
     public partial struct ddouble {
         private readonly double hi, lo;
 

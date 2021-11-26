@@ -9,12 +9,13 @@ namespace DoubleDouble {
 
         private static ReadOnlyCollection<ddouble> GenerateTaylorSequence() {
             List<ddouble> table = new() {
-                1, 1
+                1,
+                1
             };
 
             BigInteger v = 2;
 
-            for(int d = 3; d <= 256; d++) {
+            for (int d = 3; d <= 256; d++) {
                 if (d == 250) {
                     Console.WriteLine("koko");
                 }
@@ -22,7 +23,7 @@ namespace DoubleDouble {
                 ddouble t = 1 / (ddouble)v;
 
                 table.Add(t);
-                
+
                 if (IsZero(t)) {
                     break;
                 }

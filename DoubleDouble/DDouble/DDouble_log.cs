@@ -54,14 +54,14 @@ namespace DoubleDouble {
 
                 private static ddouble GenerateLn2() {
                     int n = 3;
-                    ddouble x = 0, dx = Rcp(3);
-                    while (x != (x + dx)) {
-                        x += dx;
-                        dx = Rcp(n * Pow(3, n));
+                    KahanSum x = Rcp(3);
+
+                    while (!x.IsConvergence) {
+                        x.Add(Rcp(n * Pow(3, n)));
                         n += 2;
                     }
 
-                    ddouble y = Ldexp(x, 1);
+                    ddouble y = Ldexp(x.Sum, 1);
 
                     return y;
                 }

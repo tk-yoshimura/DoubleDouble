@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -26,7 +28,7 @@ namespace DoubleDouble {
             return (n > 0) ? y : Rcp(y);
         }
 
-        public static ddouble Pow2(ddouble x) { 
+        public static ddouble Pow2(ddouble x) {
             if (IsNaN(x)) {
                 return NaN;
             }
@@ -41,15 +43,19 @@ namespace DoubleDouble {
             }
 
             int exp = (int)Floor(x);
-            ddouble v = (x - exp) * Consts.Log.Ln2;
+            ddouble s = x - exp, c = Ldexp(1, exp);
 
-            ddouble y = 1, c = Ldexp(1, exp);
+            int index = (int)ddouble.Floor(s * Consts.Log.Log2TableN);
+            ddouble v = (s - Consts.Pow.Pow2TableDx * index) * Consts.Log.Ln2;
+            ddouble r = Consts.Pow.Pow2Table[index];
+
+            ddouble y = 1;
             ddouble w = v;
 
             foreach (ddouble f in TaylorSequence.Skip(1)) {
                 ddouble dy = f * w;
                 ddouble y_next = y + dy;
-                
+
                 if (y == y_next) {
                     break;
                 }
@@ -58,7 +64,54 @@ namespace DoubleDouble {
                 y = y_next;
             }
 
-            return c * y;
+            return c * y * r;
+        }
+
+        private static partial class Consts {
+            public static class Pow {
+
+                public static readonly IReadOnlyList<ddouble> Pow2Table = GeneratePow2Table();
+
+                public static readonly ddouble Pow2TableDx = Rcp(Pow2Table.Count);
+
+                public static readonly int Pow2TableN = Pow2Table.Count;
+
+                public static ddouble[] GeneratePow2Table() {
+                    const int n = 2048;
+                    ddouble dx = Rcp(n);
+                    ddouble[] table = new ddouble[n];
+
+                    for (int i = 0; i < table.Length; i++) {
+                        ddouble x = dx * i;
+                        table[i] = KahanPow2(x);
+                    }
+
+                    return table;
+                }
+
+                private static ddouble KahanPow2(ddouble x) {
+                    if (!(x >= 0) && x < 1) {
+                        throw new ArgumentOutOfRangeException(nameof(x));
+                    }
+
+                    ddouble v = x * Consts.Log.Ln2;
+
+                    KahanSum y = (ddouble)1;
+                    ddouble w = v;
+
+                    foreach (ddouble f in TaylorSequence.Skip(1)) {
+                        y.Add(f * w);
+
+                        if (y.IsConvergence) {
+                            break;
+                        }
+
+                        w *= v;
+                    }
+
+                    return y.Sum;
+                }
+            }
         }
     }
 }
