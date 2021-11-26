@@ -63,7 +63,7 @@ namespace DoubleDouble {
 
                     ddouble y = Ldexp(x, 1);
 
-                    return y; 
+                    return y;
                 }
 
                 public static readonly IReadOnlyList<ddouble> Log2Table = GenerateLog2Table();
@@ -74,7 +74,7 @@ namespace DoubleDouble {
 
                 public static readonly IReadOnlyList<ddouble> Log2ConvergenceRemTable = GenerateLog2ConvergenceRemTable();
 
-                public static ddouble[] GenerateLog2Table() { 
+                public static ddouble[] GenerateLog2Table() {
                     const int n = 2048;
                     ddouble dx = Rcp(n);
                     ddouble[] table = new ddouble[n];

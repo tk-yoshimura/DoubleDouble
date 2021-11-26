@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -17,7 +16,7 @@ namespace DoubleDouble {
                 result = (ddouble)s;
                 return true;
             }
-            catch (FormatException){
+            catch (FormatException) {
                 result = 0;
                 return false;
             }
@@ -76,22 +75,22 @@ namespace DoubleDouble {
 
             return FromStringCore(sign, exponent_dec, mantissa_dec, digits);
         }
-        
+
         internal static ddouble FromStringCore(int sign, int exponent_dec, BigInteger mantissa_dec, int digits) {
 #if DEBUG
             Debug<ArithmeticException>.Assert(mantissa_dec.Sign >= 0);
 #endif
 
             int p = checked(exponent_dec - digits);
-            
+
             ddouble mantissa = (sign >= 0 ? mantissa_dec : BigInteger.Negate(mantissa_dec));
-            
+
             if (p == 0) {
                 return mantissa;
             }
-            
-            ddouble exponent = ddouble.Pow(5, p);
-            
+
+            ddouble exponent = Consts.Dec.Pow5(p);
+
             return Ldexp(mantissa * exponent, p);
         }
     }

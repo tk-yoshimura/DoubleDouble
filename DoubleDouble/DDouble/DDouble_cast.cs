@@ -2,8 +2,8 @@
 using System.Numerics;
 
 namespace DoubleDouble {
-    public partial struct ddouble { 
-        
+    public partial struct ddouble {
+
 
         public static implicit operator ddouble(double v) {
             return new ddouble(v);
@@ -63,7 +63,7 @@ namespace DoubleDouble {
             }
 
             (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
-                   
+
             if (iszero) {
                 return 0L;
             }
@@ -96,7 +96,7 @@ namespace DoubleDouble {
             }
 
             (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
-                        
+
             if (sign < 0) {
                 throw new OverflowException();
             }
@@ -108,7 +108,7 @@ namespace DoubleDouble {
             }
 
             BigInteger n = BigIntegerUtil.LeftShift(mantissa, exponent - FloatSplitter.MantissaBits * 2);
-            if (n > ulong.MaxValue) { 
+            if (n > ulong.MaxValue) {
                 throw new OverflowException();
             }
 

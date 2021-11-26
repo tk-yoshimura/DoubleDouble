@@ -21,7 +21,7 @@ namespace DoubleDouble {
             }
 
             ddouble a = 1 / Math.Sqrt(v_frac.hi);
-            
+
             ddouble h = 1 - v_frac * a * a;
             a *= 1 + Ldexp(h * (4 + h * 3), -3);
 

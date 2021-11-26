@@ -54,6 +54,9 @@ namespace DoubleDoubleTest {
             Assert.AreEqual(long.MaxValue, (long)(ddouble)long.MaxValue);
             Assert.AreEqual(long.MinValue, (long)(ddouble)long.MinValue);
 
+            Assert.AreEqual((ddouble)0, ((ddouble)long.MaxValue) - ddouble.Floor((ddouble)long.MaxValue));
+            Assert.AreEqual((ddouble)0, ((ddouble)long.MinValue) - ddouble.Floor((ddouble)long.MinValue));
+
             Assert.ThrowsException<OverflowException>(() => {
                 long n = (long)ddouble.PositiveInfinity;
             });
@@ -84,6 +87,9 @@ namespace DoubleDoubleTest {
 
             Assert.AreEqual(ulong.MaxValue, (ulong)(ddouble)ulong.MaxValue);
             Assert.AreEqual(ulong.MinValue, (ulong)(ddouble)ulong.MinValue);
+
+            Assert.AreEqual((ddouble)0, ((ddouble)ulong.MaxValue) - ddouble.Floor((ddouble)ulong.MaxValue));
+            Assert.AreEqual((ddouble)0, ((ddouble)ulong.MinValue) - ddouble.Floor((ddouble)ulong.MinValue));
 
             Assert.ThrowsException<OverflowException>(() => {
                 ulong n = (ulong)ddouble.PositiveInfinity;
@@ -123,6 +129,9 @@ namespace DoubleDoubleTest {
             Assert.AreEqual(int.MaxValue, (int)(ddouble)int.MaxValue);
             Assert.AreEqual(int.MinValue, (int)(ddouble)int.MinValue);
 
+            Assert.AreEqual((ddouble)0, ((ddouble)int.MaxValue) - ddouble.Floor((ddouble)int.MaxValue));
+            Assert.AreEqual((ddouble)0, ((ddouble)int.MinValue) - ddouble.Floor((ddouble)int.MinValue));
+
             Assert.ThrowsException<OverflowException>(() => {
                 int n = (int)ddouble.PositiveInfinity;
             });
@@ -153,6 +162,9 @@ namespace DoubleDoubleTest {
 
             Assert.AreEqual(uint.MaxValue, (uint)(ddouble)uint.MaxValue);
             Assert.AreEqual(uint.MinValue, (uint)(ddouble)uint.MinValue);
+
+            Assert.AreEqual((ddouble)0, ((ddouble)uint.MaxValue) - ddouble.Floor((ddouble)uint.MaxValue));
+            Assert.AreEqual((ddouble)0, ((ddouble)uint.MinValue) - ddouble.Floor((ddouble)uint.MinValue));
 
             Assert.ThrowsException<OverflowException>(() => {
                 uint n = (uint)ddouble.PositiveInfinity;

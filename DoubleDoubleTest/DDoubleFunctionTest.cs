@@ -32,7 +32,7 @@ namespace DoubleDoubleTest {
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
-            
+
             ddouble rcp_pzero = ddouble.Rcp(0d);
             ddouble rcp_mzero = ddouble.Rcp(-0d);
             ddouble rcp_pinf = ddouble.Rcp(double.PositiveInfinity);
@@ -228,9 +228,9 @@ namespace DoubleDoubleTest {
         public void AbsTest() {
             foreach (ddouble v in new ddouble[] { 1, 2, ddouble.Rcp(3), ddouble.Rcp(5), ddouble.Rcp(7), ddouble.Rcp(9), ddouble.Rcp(11) }) {
                 ddouble v_dec = ddouble.BitDecrement(v), v_inc = ddouble.BitIncrement(v);
-                
+
                 Assert.IsTrue(v_dec < v && v < v_inc);
-                
+
                 Assert.IsTrue(ddouble.Abs(v_dec) < ddouble.Abs(v) && ddouble.Abs(v) < ddouble.Abs(v_inc));
 
                 Assert.IsTrue(ddouble.Abs(-v_dec) > ddouble.Abs(-v) && ddouble.Abs(-v) > ddouble.Abs(-v_inc));

@@ -1,7 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Numerics;
 
 namespace DoubleDoubleTest {
     [TestClass]
@@ -47,7 +46,7 @@ namespace DoubleDoubleTest {
         public void ParseTest() {
             Random random = new Random(1234);
             for (int i = 0; i < 2048; i++) {
-                string v = 
+                string v =
                     $"{random.Next(1000000000):D9}" +
                     $"{random.Next(1000000000):D9}" +
                     $"{random.Next(1000000000):D9}" +

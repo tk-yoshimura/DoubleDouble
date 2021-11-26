@@ -6,7 +6,7 @@ namespace DoubleDouble {
             if (v.Sign < 0) {
                 return -Cbrt(-v);
             }
-            
+
             if (IsNaN(v)) {
                 return NaN;
             }
@@ -25,7 +25,7 @@ namespace DoubleDouble {
             }
 
             ddouble a = 1 / Math.Cbrt(v_frac.hi);
-            
+
             ddouble h = 1 - v_frac * a * a * a;
             a *= 1 + h * (27 + h * (18 + h * 14)) * Consts.Rcp81;
 

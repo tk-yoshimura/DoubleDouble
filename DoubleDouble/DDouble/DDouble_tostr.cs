@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
@@ -110,14 +109,14 @@ namespace DoubleDouble {
             ddouble exponent_int = Floor(exponent_log10);
             int exponent_dec = (int)exponent_int;
 
-            ddouble log10_frac = Ldexp(Pow(5, -exponent_dec), checked(exponent - exponent_dec));
+            ddouble log10_frac = Ldexp(Consts.Dec.Pow5(-exponent_dec), checked(exponent - exponent_dec));
             (_, int exponent_frac, BigInteger mantissa_frac, _) = FloatSplitter.Split(log10_frac);
 
 #if DEBUG
             Debug<ArithmeticException>.Assert(log10_frac >= 1 && log10_frac < 10);
 #endif
 
-            mantissa = (mantissa * Tostr.Decimal(digits + presicion)) >> (FloatSplitter.MantissaBits * 2);
+            mantissa = (mantissa * Consts.Dec.Decimal(digits + presicion)) >> (FloatSplitter.MantissaBits * 2);
             mantissa = (mantissa * (mantissa_frac << exponent_frac)) >> (FloatSplitter.MantissaBits * 2);
 
             int mantissa_length = mantissa.ToString().Length;
@@ -125,45 +124,50 @@ namespace DoubleDouble {
             if (mantissa_length > (digits + 1)) {
                 int trunc_digits = mantissa_length - (digits + 1);
                 exponent_dec = checked(exponent_dec + trunc_digits - presicion);
-                mantissa = Tostr.RoundDiv(mantissa, Tostr.Decimal(trunc_digits));
+                mantissa = BigIntegerUtil.RoundDiv(mantissa, Consts.Dec.Decimal(trunc_digits));
             }
-            if (mantissa == Tostr.Decimal(digits + 1)) {
+            if (mantissa == Consts.Dec.Decimal(digits + 1)) {
                 exponent_dec = checked(exponent_dec + 1);
-                mantissa = Tostr.Decimal(digits);
+                mantissa = Consts.Dec.Decimal(digits);
             }
 
 #if DEBUG
-            Debug<ArithmeticException>.Assert(mantissa < Tostr.Decimal(digits + 1), "overflow");
+            Debug<ArithmeticException>.Assert(mantissa < Consts.Dec.Decimal(digits + 1), "overflow");
             Debug<ArithmeticException>.Assert(mantissa.ToString().Length == (digits + 1), "mismatch length");
 #endif
 
             return (sign, exponent_dec, mantissa);
         }
 
-        private static class Tostr {
-            static readonly Dictionary<int, BigInteger> decimals = new();
+        private static partial class Consts {
 
-            public static BigInteger Decimal(int n) {
-                if (!decimals.ContainsKey(n)) {
-                    BigInteger num = 1;
-                    for (int i = 0; i < n; i++) {
-                        num *= 10;
+            public static class Dec {
+
+                static readonly Dictionary<int, BigInteger> decimals = new();
+                static readonly Dictionary<int, ddouble> pow5s = new();
+
+                public static BigInteger Decimal(int n) {
+                    if (!decimals.ContainsKey(n)) {
+                        BigInteger num = 1;
+                        for (int i = 0; i < n; i++) {
+                            num *= 10;
+                        }
+
+                        decimals.Add(n, num);
                     }
 
-                    decimals.Add(n, num);
+                    return decimals[n];
                 }
 
-                return decimals[n];
-            }
+                public static ddouble Pow5(int n) {
+                    if (!pow5s.ContainsKey(n)) {
+                        ddouble pow5 = Pow(5, n);
 
-            public static BigInteger RoundDiv(BigInteger x, BigInteger y) {
-                BigInteger n = x / y, r = x - y * n;
+                        pow5s.Add(n, pow5);
+                    }
 
-                if (r >= y / 2) {
-                    n += 1;
+                    return pow5s[n];
                 }
-
-                return n;
             }
         }
     }
