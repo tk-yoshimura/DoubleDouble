@@ -104,21 +104,21 @@ namespace DoubleDouble {
                 return ((int)Math.CopySign(1, hi), 0, 0);
             }
 
-            (int sign, int exponent, BigInteger mantissa, _) = FloatConverter.Split(this);
+            (int sign, int exponent, BigInteger mantissa, _) = FloatSplitter.Split(this);
 
             ddouble exponent_log10 = Consts.Log.Lg2 * exponent;
             ddouble exponent_int = Floor(exponent_log10);
             int exponent_dec = (int)exponent_int;
 
             ddouble log10_frac = Ldexp(Pow(5, -exponent_dec), checked(exponent - exponent_dec));
-            (_, int exponent_frac, BigInteger mantissa_frac, _) = FloatConverter.Split(log10_frac);
+            (_, int exponent_frac, BigInteger mantissa_frac, _) = FloatSplitter.Split(log10_frac);
 
 #if DEBUG
             Debug<ArithmeticException>.Assert(log10_frac >= 1 && log10_frac < 10);
 #endif
 
-            mantissa = (mantissa * Tostr.Decimal(digits + presicion)) >> (FloatConverter.MantissaBits * 2);
-            mantissa = (mantissa * (mantissa_frac << exponent_frac)) >> (FloatConverter.MantissaBits * 2);
+            mantissa = (mantissa * Tostr.Decimal(digits + presicion)) >> (FloatSplitter.MantissaBits * 2);
+            mantissa = (mantissa * (mantissa_frac << exponent_frac)) >> (FloatSplitter.MantissaBits * 2);
 
             int mantissa_length = mantissa.ToString().Length;
 

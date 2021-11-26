@@ -25,6 +25,22 @@ namespace DoubleDouble {
             return new ddouble(hi, lo);
         }
 
+        public static ddouble operator +(ddouble a, int b) {
+            return a + (ddouble)b;
+        }
+
+        public static ddouble operator +(ddouble a, uint b) {
+            return a + (ddouble)b;
+        }
+
+        public static ddouble operator +(ddouble a, long b) {
+            return a + (ddouble)b;
+        }
+
+        public static ddouble operator +(ddouble a, ulong b) {
+            return a + (ddouble)b;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator +(double a, ddouble b) {
             if (double.IsInfinity(a) || IsInfinity(b)) {
@@ -35,6 +51,22 @@ namespace DoubleDouble {
             double lo = b.lo + (b.hi - (hi - a));
 
             return new ddouble(hi, lo);
+        }
+
+        public static ddouble operator +(int a, ddouble b) {
+            return (ddouble)a + b;
+        }
+
+        public static ddouble operator +(uint a, ddouble b) {
+            return (ddouble)a + b;
+        }
+
+        public static ddouble operator +(long a, ddouble b) {
+            return (ddouble)a + b;
+        }
+
+        public static ddouble operator +(ulong a, ddouble b) {
+            return (ddouble)a + b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -54,9 +86,41 @@ namespace DoubleDouble {
             return a + (-b);
         }
 
+        public static ddouble operator -(ddouble a, int b) {
+            return a - (ddouble)b;
+        }
+
+        public static ddouble operator -(ddouble a, uint b) {
+            return a - (ddouble)b;
+        }
+
+        public static ddouble operator -(ddouble a, long b) {
+            return a - (ddouble)b;
+        }
+
+        public static ddouble operator -(ddouble a, ulong b) {
+            return a - (ddouble)b;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator -(double a, ddouble b) {
             return a + (-b);
+        }
+
+        public static ddouble operator -(int a, ddouble b) {
+            return (ddouble)a - b;
+        }
+
+        public static ddouble operator -(uint a, ddouble b) {
+            return (ddouble)a - b;
+        }
+
+        public static ddouble operator -(long a, ddouble b) {
+            return (ddouble)a - b;
+        }
+
+        public static ddouble operator -(ulong a, ddouble b) {
+            return (ddouble)a - b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -76,9 +140,41 @@ namespace DoubleDouble {
             return y;
         }
 
+        public static ddouble operator *(ddouble a, int b) {
+            return a * (ddouble)b;
+        }
+
+        public static ddouble operator *(ddouble a, uint b) {
+            return a * (ddouble)b;
+        }
+
+        public static ddouble operator *(ddouble a, long b) {
+            return a * (ddouble)b;
+        }
+
+        public static ddouble operator *(ddouble a, ulong b) {
+            return a * (ddouble)b;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator *(double a, ddouble b) {
             return b * a;
+        }
+
+        public static ddouble operator *(int a, ddouble b) {
+            return (ddouble)a * b;
+        }
+
+        public static ddouble operator *(uint a, ddouble b) {
+            return (ddouble)a * b;
+        }
+
+        public static ddouble operator *(long a, ddouble b) {
+            return (ddouble)a * b;
+        }
+
+        public static ddouble operator *(ulong a, ddouble b) {
+            return (ddouble)a * b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -100,8 +196,40 @@ namespace DoubleDouble {
             return a / (ddouble)b;
         }
 
+        public static ddouble operator /(ddouble a, int b) {
+            return a / (ddouble)b;
+        }
+
+        public static ddouble operator /(ddouble a, uint b) {
+            return a / (ddouble)b;
+        }
+
+        public static ddouble operator /(ddouble a, long b) {
+            return a / (ddouble)b;
+        }
+
+        public static ddouble operator /(ddouble a, ulong b) {
+            return a / (ddouble)b;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(double a, ddouble b) {
+            return (ddouble)a / b;
+        }
+
+        public static ddouble operator /(int a, ddouble b) {
+            return (ddouble)a / b;
+        }
+
+        public static ddouble operator /(uint a, ddouble b) {
+            return (ddouble)a / b;
+        }
+
+        public static ddouble operator /(long a, ddouble b) {
+            return (ddouble)a / b;
+        }
+
+        public static ddouble operator /(ulong a, ddouble b) {
             return (ddouble)a / b;
         }
 

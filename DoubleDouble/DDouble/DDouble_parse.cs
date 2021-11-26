@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -6,6 +7,21 @@ using System.Text.RegularExpressions;
 namespace DoubleDouble {
     public partial struct ddouble {
         private static readonly Regex parse_regex = new(@"^[\+-]?\d+(\.\d+)?([eE][\+-]?\d+)?$");
+
+        public static ddouble Parse(string s) {
+            return (ddouble)s;
+        }
+
+        public static bool TryParse(string s, out ddouble result) {
+            try {
+                result = (ddouble)s;
+                return true;
+            }
+            catch (FormatException){
+                result = 0;
+                return false;
+            }
+        }
 
         public static implicit operator ddouble(string num) {
             const int truncate_digits = 36;

@@ -2,7 +2,7 @@
 using System.Numerics;
 
 namespace DoubleDouble {
-    internal static class FloatConverter {
+    internal static class FloatSplitter {
         // C# is IEEE754 compliant.
 
         private const UInt64 bitshifts = 0x100000000uL;
@@ -55,26 +55,10 @@ namespace DoubleDouble {
             int sfts = hi.exponent - lo.exponent - MantissaBits;
 
             if (hi.sign == lo.sign) {
-                if (sfts > 0 && sfts <= MantissaBits) {
-                    mantissa += new BigInteger(lo.mantissa) >> sfts;
-                }
-                else if (sfts < 0) {
-                    mantissa += new BigInteger(lo.mantissa) << -sfts;
-                }
-                else if (sfts == 0) {
-                    mantissa += new BigInteger(lo.mantissa);
-                }
+                mantissa += BigIntegerUtil.RightShift(lo.mantissa, sfts);
             }
             else {
-                if (sfts > 0 && sfts <= MantissaBits) {
-                    mantissa -= new BigInteger(lo.mantissa) >> sfts;
-                }
-                else if (sfts < 0) {
-                    mantissa -= new BigInteger(lo.mantissa) << -sfts;
-                }
-                else if (sfts == 0) {
-                    mantissa -= new BigInteger(lo.mantissa);
-                }
+                mantissa -= BigIntegerUtil.RightShift(lo.mantissa, sfts);
             }
 
             return (hi.sign, hi.exponent, mantissa, iszero: false);
