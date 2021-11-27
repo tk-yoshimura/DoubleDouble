@@ -684,10 +684,6 @@ namespace DoubleDoubleTest {
         [TestMethod]
         public void SinPITest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
-                if (d == 0) {
-                    continue;
-                }
-
                 ddouble v = (double)d;
                 ddouble u = ddouble.SinPI(v);
 
@@ -711,10 +707,6 @@ namespace DoubleDoubleTest {
         [TestMethod]
         public void CosPITest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
-                if (d == 0) {
-                    continue;
-                }
-
                 ddouble v = (double)d;
                 ddouble u = ddouble.CosPI(v);
 
@@ -733,6 +725,35 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(cos_pinf), nameof(cos_pinf));
             Assert.IsTrue(ddouble.IsNaN(cos_ninf), nameof(cos_ninf));
             Assert.IsTrue(ddouble.IsNaN(cos_nan), nameof(cos_nan));
+        }
+
+        [TestMethod]
+        public void TanPITest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (Math.Abs(d) % 1m == 0.5m) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.TanPI(v);
+
+                double w = Math.Tan((double)d * Math.PI);
+
+                Assert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13), d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble tan_pzero = ddouble.TanPI(0d);
+            ddouble tan_mzero = ddouble.TanPI(-0d);
+            ddouble tan_pinf = ddouble.TanPI(double.PositiveInfinity);
+            ddouble tan_ninf = ddouble.TanPI(double.NegativeInfinity);
+            ddouble tan_nan = ddouble.TanPI(double.NaN);
+
+            Assert.IsTrue(tan_pzero == 0, nameof(tan_pzero));
+            Assert.IsTrue(tan_mzero == 0, nameof(tan_mzero));
+            Assert.IsTrue(ddouble.IsNaN(tan_pinf), nameof(tan_pinf));
+            Assert.IsTrue(ddouble.IsNaN(tan_ninf), nameof(tan_ninf));
+            Assert.IsTrue(ddouble.IsNaN(tan_nan), nameof(tan_nan));
         }
     }
 }

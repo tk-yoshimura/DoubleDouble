@@ -13,8 +13,24 @@ namespace DoubleDouble {
         }
 
         public static ddouble TanPI(ddouble x) {
+            if (x.Sign < 0) {
+                return -TanPI(-x);
+            }
 
-            return SinPIHalf(Ldexp(x, 1) + 1d);
+            ddouble s = x - Floor(x);
+
+            if (s <= 0.25d) {
+                ddouble sn = SinPI(s), cn = Sqrt(1 - sn * sn);
+                return sn / cn;
+            }
+            else if (s <= 0.75d) {
+                ddouble cn = CosPI(s), sn = Sqrt(1 - cn * cn);
+                return sn / cn;
+            }
+            else {
+                ddouble sn = SinPI(s), cn = -Sqrt(1 - sn * sn);
+                return sn / cn;
+            }
         }
 
         internal static ddouble SinPIHalf(ddouble x) { 
