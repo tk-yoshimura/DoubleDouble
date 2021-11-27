@@ -608,16 +608,66 @@ namespace DoubleDoubleTest {
 
             Assert.IsTrue(ddouble.Abs(ddouble.E - ddouble.Exp(1)) < 1e-31);
 
-            ddouble exp_pzero = ddouble.Pow10(0d);
-            ddouble exp_mzero = ddouble.Pow10(-0d);
-            ddouble exp_pinf = ddouble.Pow10(double.PositiveInfinity);
-            ddouble exp_ninf = ddouble.Pow10(double.NegativeInfinity);
-            ddouble exp_nan = ddouble.Pow10(double.NaN);
+            ddouble exp_pzero = ddouble.Exp(0d);
+            ddouble exp_mzero = ddouble.Exp(-0d);
+            ddouble exp_pinf = ddouble.Exp(double.PositiveInfinity);
+            ddouble exp_ninf = ddouble.Exp(double.NegativeInfinity);
+            ddouble exp_nan = ddouble.Exp(double.NaN);
 
             Assert.IsTrue(exp_pzero == 1, nameof(exp_pzero));
             Assert.IsTrue(exp_mzero == 1, nameof(exp_mzero));
             Assert.IsTrue(ddouble.IsPositiveInfinity(exp_pinf), nameof(exp_pinf));
             Assert.IsTrue(ddouble.IsPlusZero(exp_ninf), nameof(exp_ninf));
+            Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
+        }
+
+        [TestMethod]
+        public void Expm1Test() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Expm1(v);
+
+                Assert.AreEqual(Math.Exp((double)d) - 1, (double)u, Math.Abs((double)u) * 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            Assert.AreEqual(0, (double)ddouble.Expm1(ddouble.BitDecrement(0)), 1e-300);
+            Assert.AreEqual(0, (double)ddouble.Expm1(ddouble.BitIncrement(0)), 1e-300);
+
+            Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(0)));
+            Console.WriteLine(ddouble.Expm1(0));
+            Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(0)));
+
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(-0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(-0.25d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(-0.25d))).mantissa);
+
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(0.25d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(0.25d))).mantissa);
+
+            Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(-0.25d)));
+            Console.WriteLine(ddouble.Expm1(-0.25d));
+            Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(-0.25d)));
+
+            Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(0.25d)));
+            Console.WriteLine(ddouble.Expm1(0.25d));
+            Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(0.25d)));
+            
+            ddouble exp_pzero = ddouble.Expm1(0d);
+            ddouble exp_mzero = ddouble.Expm1(-0d);
+            ddouble exp_pinf = ddouble.Expm1(double.PositiveInfinity);
+            ddouble exp_ninf = ddouble.Expm1(double.NegativeInfinity);
+            ddouble exp_nan = ddouble.Expm1(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(exp_pzero), nameof(exp_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(exp_mzero), nameof(exp_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(exp_pinf), nameof(exp_pinf));
+            Assert.IsTrue(exp_ninf == -1, nameof(exp_ninf));
             Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
         }
 

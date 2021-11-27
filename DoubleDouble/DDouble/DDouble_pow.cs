@@ -93,6 +93,35 @@ namespace DoubleDouble {
             return z;
         }
 
+        public static ddouble Expm1(ddouble x) {
+            if (x < -0.25d || x > 0.25d) {
+                return Exp(x) - 1;
+            }
+            if (IsPlusZero(x)) {
+                return PlusZero;
+            }
+            if (IsMinusZero(x)) {
+                return MinusZero;
+            }
+
+            ddouble z = x;
+            ddouble y = 0;
+
+            foreach (ddouble f in TaylorSequence.Skip(1)) {
+                ddouble dy = f * z;
+                ddouble y_next = y + dy;
+
+                if (y == y_next) {
+                    break;
+                }
+
+                z *= x;
+                y = y_next;
+            }
+
+            return y;
+        }
+
         private static partial class Consts {
             public static class Pow {
 
