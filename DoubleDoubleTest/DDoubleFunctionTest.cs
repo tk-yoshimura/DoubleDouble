@@ -913,5 +913,27 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(atan_ninf == -ddouble.PI / 2, nameof(atan_ninf));
             Assert.IsTrue(ddouble.IsNaN(atan_nan), nameof(atan_nan));
         }
+
+        [TestMethod]
+        public void Atan2Test() {
+            for (decimal y = -10m; y <= +10m; y += 0.1m) {
+                for (decimal x = -10m; x <= +10m; x += 0.1m) {
+                    if (x == 0m && y == 0m) {
+                        continue;
+                    }
+
+                    ddouble u = ddouble.Atan2((ddouble)y, (ddouble)x);
+                    double v = Math.Atan2((double)y, (double)x);
+
+                    if (u == ddouble.PI) {
+                        Assert.IsTrue(Math.Abs(v) == Math.PI);
+                    }
+                    else {
+                        Assert.AreEqual(v, (double)u, 1e-15, $"{y}, {x}");
+                    }
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+            }
+        }
     }
 }
