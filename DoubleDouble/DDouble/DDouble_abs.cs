@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 namespace DoubleDouble {
     public partial struct ddouble {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ddouble Abs(ddouble v) {
-            return new ddouble(Math.Abs(v.hi), v.lo);
+        public static ddouble Abs(ddouble x) {
+            return new ddouble(Math.Abs(x.hi), x.hi >= 0 ? x.lo : -x.lo);
         }
     }
 }

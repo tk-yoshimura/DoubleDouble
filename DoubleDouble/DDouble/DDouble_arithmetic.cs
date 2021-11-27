@@ -293,13 +293,18 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator %(ddouble a, ddouble b) {
-            ddouble y = a - ddouble.Truncate(a / b) * b;
-            if (y.Sign != a.Sign) {
-                y += a.Sign * Abs(b);
-                if (y == b) {
-                    return 0;
-                }
+            if (IsInfinity(a) || IsInfinity(b) || IsZero(b)) {
+                return a.hi % b.hi;
             }
+
+            ddouble abs_a = Abs(a), abs_b = Abs(b);
+
+            ddouble abs_y = abs_a - ddouble.Truncate(abs_a / abs_b) * abs_b;
+            if (abs_y.Sign < 0 || abs_y >= abs_b) {
+                abs_y = 0;
+            }
+
+            ddouble y = a.Sign >= 0 ? abs_y : -abs_y;
 
             return y;
         }

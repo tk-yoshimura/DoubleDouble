@@ -192,5 +192,56 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / double.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / double.NaN));
         }
+
+        [TestMethod]
+        public void RemTest() {
+            foreach (double m in new double[] { -0d, -1, -2, -3, -5, -6, -7, -9, -10, 0d, 1, 2, 3, 5, 6, 7, 9, 10 }) {
+                foreach (double n in new double[] { -3, -7, -13, -17, -257, 3, 7, 13, 17, 257 }) {
+                    ddouble v = (ddouble)m % (ddouble)n;
+                    double u = m % n;
+
+                    Console.WriteLine($"{(Math.CopySign(1, m) >= 0 ? m : "-" + Math.Abs(m))} % {(Math.CopySign(1, n) >= 0 ? n : "-" + Math.Abs(n))}");
+
+                    Console.WriteLine($"= sign {v.Sign}");
+                    Console.WriteLine($"= sign {Math.CopySign(1, u)}");
+
+                    Assert.AreEqual(0, u - (double)v, 1e-30);
+                    Assert.AreEqual((int)Math.CopySign(1, u), v.Sign);
+                    Assert.IsTrue(ddouble.IsRegulared(v));
+
+                    if (m == 0) {
+                        continue;
+                    }
+
+                    ddouble mdec = ddouble.BitDecrement(m), minc = ddouble.BitIncrement(m);
+                    ddouble ndec = ddouble.BitDecrement(n), ninc = ddouble.BitIncrement(n);
+
+                    Assert.AreEqual((int)Math.CopySign(1, u), (mdec % ndec).Sign);
+                    Assert.AreEqual((int)Math.CopySign(1, u), (mdec % ninc).Sign);
+                    Assert.AreEqual((int)Math.CopySign(1, u), (minc % ndec).Sign);
+                    Assert.AreEqual((int)Math.CopySign(1, u), (minc % ninc).Sign);
+
+                    ddouble dd = mdec % ndec;
+                    ddouble di = mdec % ninc;
+                    ddouble id = minc % ndec;
+                    ddouble ii = minc % ninc;
+
+                    Assert.IsTrue(ddouble.Abs(dd) < ddouble.Abs(ndec));
+                    Assert.IsTrue(ddouble.Abs(di) < ddouble.Abs(ninc));
+                    Assert.IsTrue(ddouble.Abs(id) < ddouble.Abs(ndec));
+                    Assert.IsTrue(ddouble.Abs(ii) < ddouble.Abs(ninc));
+                }
+            }
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity % ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity % ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity % ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity % ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity % ddouble.NaN));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity % ddouble.NaN));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN % ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN % ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN % ddouble.NaN));
+        }
     }
 }

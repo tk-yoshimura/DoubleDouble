@@ -233,7 +233,7 @@ namespace DoubleDoubleTest {
 
                 Assert.IsTrue(ddouble.Abs(v_dec) < ddouble.Abs(v) && ddouble.Abs(v) < ddouble.Abs(v_inc));
 
-                Assert.IsTrue(ddouble.Abs(-v_dec) > ddouble.Abs(-v) && ddouble.Abs(-v) > ddouble.Abs(-v_inc));
+                Assert.IsTrue(ddouble.Abs(-v_dec) < ddouble.Abs(-v) && ddouble.Abs(-v) < ddouble.Abs(-v_inc));
             }
 
             Assert.IsTrue(ddouble.Abs(ddouble.BitDecrement(0)) == ddouble.Abs(ddouble.BitIncrement(0)));
