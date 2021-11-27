@@ -246,6 +246,14 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(pn == pn_equal);
             Assert.IsFalse(pn == pn_bitinc);
 
+            Assert.IsTrue(pn_bitdec != pn);
+            Assert.IsFalse(pn_equal != pn);
+            Assert.IsTrue(pn_bitinc != pn);
+
+            Assert.IsFalse(pn_bitdec == pn);
+            Assert.IsTrue(pn_equal == pn);
+            Assert.IsFalse(pn_bitinc == pn);
+
             Assert.IsTrue(nn < nn_bitdec);
             Assert.IsFalse(nn >= nn_bitdec);
             Assert.IsTrue(nn > nn_bitinc);
@@ -282,6 +290,14 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(pn == pn_equal);
             Assert.IsFalse(pn == pn_bitinc);
 
+            Assert.IsTrue(pn_bitdec != pn);
+            Assert.IsFalse(pn_equal != pn);
+            Assert.IsTrue(pn_bitinc != pn);
+
+            Assert.IsFalse(pn_bitdec == pn);
+            Assert.IsTrue(pn_equal == pn);
+            Assert.IsFalse(pn_bitinc == pn);
+
             Assert.IsFalse(pn_bitdec > pn);
             Assert.IsTrue(pn_bitdec <= pn);
             Assert.IsFalse(pn_bitinc < pn);
@@ -310,6 +326,14 @@ namespace DoubleDoubleTest {
             Assert.IsFalse(pn == pn_bitdec);
             Assert.IsTrue(pn == pn_equal);
             Assert.IsFalse(pn == pn_bitinc);
+
+            Assert.IsTrue(pn_bitdec != pn);
+            Assert.IsFalse(pn_equal != pn);
+            Assert.IsTrue(pn_bitinc != pn);
+
+            Assert.IsFalse(pn_bitdec == pn);
+            Assert.IsTrue(pn_equal == pn);
+            Assert.IsFalse(pn_bitinc == pn);
 
             Assert.IsTrue(nn < nn_bitdec);
             Assert.IsFalse(nn >= nn_bitdec);
@@ -346,6 +370,14 @@ namespace DoubleDoubleTest {
             Assert.IsFalse(pn == pn_bitdec);
             Assert.IsTrue(pn == pn_equal);
             Assert.IsFalse(pn == pn_bitinc);
+
+            Assert.IsTrue(pn_bitdec != pn);
+            Assert.IsFalse(pn_equal != pn);
+            Assert.IsTrue(pn_bitinc != pn);
+
+            Assert.IsFalse(pn_bitdec == pn);
+            Assert.IsTrue(pn_equal == pn);
+            Assert.IsFalse(pn_bitinc == pn);
 
             Assert.IsFalse(pn_bitdec > pn);
             Assert.IsTrue(pn_bitdec <= pn);
