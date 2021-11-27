@@ -54,7 +54,7 @@ namespace DoubleDouble {
 
             ddouble v = new ddouble(Math.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo);
 
-            return sign > 0 ? v : -v;
+            return sign >= 0 ? v : -v;
         }
 
         public static explicit operator long(ddouble v) {
