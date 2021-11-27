@@ -3,6 +3,20 @@ using System.Collections.Generic;
 
 namespace DoubleDouble {
     public partial struct ddouble {
+
+        public static ddouble SinPI(ddouble x) {
+            return SinPIHalf(Ldexp(x, 1));
+        }
+
+        public static ddouble CosPI(ddouble x) {
+            return SinPIHalf(Ldexp(x, 1) + 1d);
+        }
+
+        public static ddouble TanPI(ddouble x) {
+
+            return SinPIHalf(Ldexp(x, 1) + 1d);
+        }
+
         internal static ddouble SinPIHalf(ddouble x) { 
             if (!IsFinite(x)) {
                 return NaN;

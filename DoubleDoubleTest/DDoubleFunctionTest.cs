@@ -226,17 +226,37 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void AbsTest() {
-            foreach (ddouble v in new ddouble[] { 1, 2, ddouble.Rcp(3), ddouble.Rcp(5), ddouble.Rcp(7), ddouble.Rcp(9), ddouble.Rcp(11) }) {
+            foreach (ddouble v in new ddouble[] { 1, 2, 
+                ddouble.Rcp(3), ddouble.Rcp(5), ddouble.Rcp(7), ddouble.Rcp(9), ddouble.Rcp(11) }) {
+
                 ddouble v_dec = ddouble.BitDecrement(v), v_inc = ddouble.BitIncrement(v);
 
                 Assert.IsTrue(v_dec < v && v < v_inc);
 
                 Assert.IsTrue(ddouble.Abs(v_dec) < ddouble.Abs(v) && ddouble.Abs(v) < ddouble.Abs(v_inc));
-
                 Assert.IsTrue(ddouble.Abs(-v_dec) < ddouble.Abs(-v) && ddouble.Abs(-v) < ddouble.Abs(-v_inc));
+
+                Assert.AreEqual(ddouble.Abs(v_dec), ddouble.Abs(-v_dec));
+                Assert.AreEqual(ddouble.Abs(v), ddouble.Abs(-v));
+                Assert.AreEqual(ddouble.Abs(v_inc), ddouble.Abs(-v_inc));
             }
 
-            Assert.IsTrue(ddouble.Abs(ddouble.BitDecrement(0)) == ddouble.Abs(ddouble.BitIncrement(0)));
+            foreach (ddouble v in new ddouble[] { -1, -2, 
+                -ddouble.Rcp(3), -ddouble.Rcp(5), -ddouble.Rcp(7), -ddouble.Rcp(9), -ddouble.Rcp(11) }) {
+
+                ddouble v_dec = ddouble.BitDecrement(v), v_inc = ddouble.BitIncrement(v);
+
+                Assert.IsTrue(v_dec < v && v < v_inc);
+
+                Assert.IsTrue(ddouble.Abs(v_dec) > ddouble.Abs(v) && ddouble.Abs(v) > ddouble.Abs(v_inc));
+                Assert.IsTrue(ddouble.Abs(-v_dec) > ddouble.Abs(-v) && ddouble.Abs(-v) > ddouble.Abs(-v_inc));
+
+                Assert.AreEqual(ddouble.Abs(v_dec), ddouble.Abs(-v_dec));
+                Assert.AreEqual(ddouble.Abs(v), ddouble.Abs(-v));
+                Assert.AreEqual(ddouble.Abs(v_inc), ddouble.Abs(-v_inc));
+            }
+
+            Assert.AreEqual(ddouble.Abs(ddouble.BitDecrement(0)), ddouble.Abs(ddouble.BitIncrement(0)));
         }
 
         [TestMethod]
@@ -659,6 +679,60 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(sin_pinf), nameof(sin_pinf));
             Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
             Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
+        }
+
+        [TestMethod]
+        public void SinPITest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.SinPI(v);
+
+                Assert.AreEqual(Math.Sin((double)d * Math.PI), (double)u, 1e-14, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble sin_pzero = ddouble.SinPI(0d);
+            ddouble sin_mzero = ddouble.SinPI(-0d);
+            ddouble sin_pinf = ddouble.SinPI(double.PositiveInfinity);
+            ddouble sin_ninf = ddouble.SinPI(double.NegativeInfinity);
+            ddouble sin_nan = ddouble.SinPI(double.NaN);
+
+            Assert.IsTrue(sin_pzero == 0, nameof(sin_pzero));
+            Assert.IsTrue(sin_mzero == 0, nameof(sin_mzero));
+            Assert.IsTrue(ddouble.IsNaN(sin_pinf), nameof(sin_pinf));
+            Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
+            Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
+        }
+
+        [TestMethod]
+        public void CosPITest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.CosPI(v);
+
+                Assert.AreEqual(Math.Cos((double)d * Math.PI), (double)u, 1e-14, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble cos_pzero = ddouble.CosPI(0d);
+            ddouble cos_mzero = ddouble.CosPI(-0d);
+            ddouble cos_pinf = ddouble.CosPI(double.PositiveInfinity);
+            ddouble cos_ninf = ddouble.CosPI(double.NegativeInfinity);
+            ddouble cos_nan = ddouble.CosPI(double.NaN);
+
+            Assert.IsTrue(cos_pzero == 1, nameof(cos_pzero));
+            Assert.IsTrue(cos_mzero == 1, nameof(cos_mzero));
+            Assert.IsTrue(ddouble.IsNaN(cos_pinf), nameof(cos_pinf));
+            Assert.IsTrue(ddouble.IsNaN(cos_ninf), nameof(cos_ninf));
+            Assert.IsTrue(ddouble.IsNaN(cos_nan), nameof(cos_nan));
         }
     }
 }
