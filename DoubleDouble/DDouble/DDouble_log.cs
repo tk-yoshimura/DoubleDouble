@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -76,6 +77,10 @@ namespace DoubleDouble {
                 public static readonly IReadOnlyList<ddouble> Log2ConvergenceRemTable = GenerateLog2ConvergenceRemTable();
 
                 public static ddouble[] GenerateLog2Table() {
+#if DEBUG
+                    Trace.WriteLine($"Log2 initialize.");
+#endif
+
                     const int n = 2048;
                     ddouble dx = Rcp(n);
                     ddouble[] table = new ddouble[n + 1];

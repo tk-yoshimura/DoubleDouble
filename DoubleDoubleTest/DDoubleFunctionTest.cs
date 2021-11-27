@@ -758,8 +758,6 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void SinTest() {
-            ddouble.Sin(ddouble.MinusZero);
-
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Sin(v);
@@ -827,6 +825,33 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(tan_pinf), nameof(tan_pinf));
             Assert.IsTrue(ddouble.IsNaN(tan_ninf), nameof(tan_ninf));
             Assert.IsTrue(ddouble.IsNaN(tan_nan), nameof(tan_nan));
+        }
+
+        [TestMethod]
+        public void AsinTest() {
+            for (decimal d = -1m; d <= +1m; d += 0.001m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Asin(v);
+
+                Assert.AreEqual(Math.Asin((double)d), (double)u, 1e-15, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble asin_pzero = ddouble.Asin(0d);
+            ddouble asin_mzero = ddouble.Asin(-0d);
+            ddouble asin_pinf = ddouble.Asin(double.PositiveInfinity);
+            ddouble asin_ninf = ddouble.Asin(double.NegativeInfinity);
+            ddouble asin_pout = ddouble.Asin(ddouble.BitIncrement(1));
+            ddouble asin_nout = ddouble.Asin(ddouble.BitDecrement(-1));
+            ddouble asin_nan = ddouble.Asin(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(asin_pzero), nameof(asin_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(asin_mzero), nameof(asin_mzero));
+            Assert.IsTrue(ddouble.IsNaN(asin_pinf), nameof(asin_pinf));
+            Assert.IsTrue(ddouble.IsNaN(asin_ninf), nameof(asin_ninf));
+            Assert.IsTrue(ddouble.IsNaN(asin_pout), nameof(asin_pout));
+            Assert.IsTrue(ddouble.IsNaN(asin_nout), nameof(asin_nout));
+            Assert.IsTrue(ddouble.IsNaN(asin_nan), nameof(asin_nan));
         }
     }
 }

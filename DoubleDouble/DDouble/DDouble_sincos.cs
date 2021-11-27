@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -115,6 +116,10 @@ namespace DoubleDouble {
                 public static readonly ddouble RcpPI = Rcp(PI);
 
                 public static ddouble[] GenerateSinPITable() {
+#if DEBUG
+                    Trace.WriteLine($"SinCos initialize.");
+#endif
+
                     const int n = 2048;
                     ddouble dx = Rcp(n);
                     ddouble[] table = new ddouble[n + 1];

@@ -10,7 +10,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleDoubleTest", "DoubleDoubleTest\DoubleDoubleTest.csproj", "{6D870EF9-32E9-4FF4-B8D6-6924CA9A4F34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoubleDoubleTest", "DoubleDoubleTest\DoubleDoubleTest.csproj", "{6D870EF9-32E9-4FF4-B8D6-6924CA9A4F34}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B4B4FCBB-1F1D-4E40-8B1F-6194FC707518} = {B4B4FCBB-1F1D-4E40-8B1F-6194FC707518}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleDoubleSandbox", "DoubleDoubleSandbox\DoubleDoubleSandbox.csproj", "{23EFB3DF-6274-4B3A-B8D0-61BF998B17C9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B4B4FCBB-1F1D-4E40-8B1F-6194FC707518} = {B4B4FCBB-1F1D-4E40-8B1F-6194FC707518}
 	EndProjectSection
@@ -29,6 +34,10 @@ Global
 		{6D870EF9-32E9-4FF4-B8D6-6924CA9A4F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D870EF9-32E9-4FF4-B8D6-6924CA9A4F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D870EF9-32E9-4FF4-B8D6-6924CA9A4F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23EFB3DF-6274-4B3A-B8D0-61BF998B17C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23EFB3DF-6274-4B3A-B8D0-61BF998B17C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23EFB3DF-6274-4B3A-B8D0-61BF998B17C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23EFB3DF-6274-4B3A-B8D0-61BF998B17C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
