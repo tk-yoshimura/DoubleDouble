@@ -8,8 +8,16 @@ namespace DoubleDouble {
             return SinPIHalf(Ldexp(x, 1));
         }
 
+        public static ddouble Sin(ddouble x) {
+            return SinPI(x * Consts.SinCos.RcpPI);
+        }
+
         public static ddouble CosPI(ddouble x) {
             return SinPIHalf(Ldexp(x, 1) + 1d);
+        }
+
+        public static ddouble Cos(ddouble x) {
+            return CosPI(x * Consts.SinCos.RcpPI);
         }
 
         public static ddouble TanPI(ddouble x) {
@@ -31,6 +39,10 @@ namespace DoubleDouble {
                 ddouble sn = SinPI(s), cn = -Sqrt(1 - sn * sn);
                 return sn / cn;
             }
+        }
+
+        public static ddouble Tan(ddouble x) {
+            return TanPI(x * Consts.SinCos.RcpPI);
         }
 
         internal static ddouble SinPIHalf(ddouble x) { 
@@ -58,10 +70,10 @@ namespace DoubleDouble {
 
             ddouble s = x - Floor(x);
 
-            int index = (int)ddouble.Floor(s * Consts.Sin.SinPIHalfTableN);
-            ddouble v = (s - Consts.Sin.SinPIHalfTableDx * index) * PI;
-            ddouble sna = Consts.Sin.SinPIHalfTable[index];
-            ddouble cna = Consts.Sin.SinPIHalfTable[Consts.Sin.SinPIHalfTableN - index];
+            int index = (int)ddouble.Floor(s * Consts.SinCos.SinPIHalfTableN);
+            ddouble v = (s - Consts.SinCos.SinPIHalfTableDx * index) * PI;
+            ddouble sna = Consts.SinCos.SinPIHalfTable[index];
+            ddouble cna = Consts.SinCos.SinPIHalfTable[Consts.SinCos.SinPIHalfTableN - index];
 
             ddouble w = v * v, u = w;
             ddouble y = Ldexp(1d, -1);
@@ -92,13 +104,15 @@ namespace DoubleDouble {
         }
 
         private static partial class Consts {
-            public static class Sin {
+            public static class SinCos {
 
                 public static readonly IReadOnlyList<ddouble> SinPIHalfTable = GenerateSinPITable();
 
                 public static readonly ddouble SinPIHalfTableDx = Rcp(SinPIHalfTable.Count - 1);
 
                 public static readonly int SinPIHalfTableN = SinPIHalfTable.Count - 1;
+
+                public static readonly ddouble RcpPI = Rcp(PI);
 
                 public static ddouble[] GenerateSinPITable() {
                     const int n = 2048;

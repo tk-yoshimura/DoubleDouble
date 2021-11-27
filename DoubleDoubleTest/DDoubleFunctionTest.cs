@@ -755,5 +755,76 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(tan_ninf), nameof(tan_ninf));
             Assert.IsTrue(ddouble.IsNaN(tan_nan), nameof(tan_nan));
         }
+
+        [TestMethod]
+        public void SinTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (double)d;
+                ddouble u = ddouble.Sin(v);
+
+                Assert.AreEqual(Math.Sin((double)d), (double)u, 1e-14, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble sin_pzero = ddouble.Sin(0d);
+            ddouble sin_mzero = ddouble.Sin(-0d);
+            ddouble sin_pinf = ddouble.Sin(double.PositiveInfinity);
+            ddouble sin_ninf = ddouble.Sin(double.NegativeInfinity);
+            ddouble sin_nan = ddouble.Sin(double.NaN);
+
+            Assert.IsTrue(sin_pzero == 0, nameof(sin_pzero));
+            Assert.IsTrue(sin_mzero == 0, nameof(sin_mzero));
+            Assert.IsTrue(ddouble.IsNaN(sin_pinf), nameof(sin_pinf));
+            Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
+            Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
+        }
+
+        [TestMethod]
+        public void CosTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (double)d;
+                ddouble u = ddouble.Cos(v);
+
+                Assert.AreEqual(Math.Cos((double)d), (double)u, 1e-14, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble cos_pzero = ddouble.Cos(0d);
+            ddouble cos_mzero = ddouble.Cos(-0d);
+            ddouble cos_pinf = ddouble.Cos(double.PositiveInfinity);
+            ddouble cos_ninf = ddouble.Cos(double.NegativeInfinity);
+            ddouble cos_nan = ddouble.Cos(double.NaN);
+
+            Assert.IsTrue(cos_pzero == 1, nameof(cos_pzero));
+            Assert.IsTrue(cos_mzero == 1, nameof(cos_mzero));
+            Assert.IsTrue(ddouble.IsNaN(cos_pinf), nameof(cos_pinf));
+            Assert.IsTrue(ddouble.IsNaN(cos_ninf), nameof(cos_ninf));
+            Assert.IsTrue(ddouble.IsNaN(cos_nan), nameof(cos_nan));
+        }
+
+        [TestMethod]
+        public void TanTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (double)d;
+                ddouble u = ddouble.Tan(v);
+
+                double w = Math.Tan((double)d);
+
+                Assert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13), d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble tan_pzero = ddouble.Tan(0d);
+            ddouble tan_mzero = ddouble.Tan(-0d);
+            ddouble tan_pinf = ddouble.Tan(double.PositiveInfinity);
+            ddouble tan_ninf = ddouble.Tan(double.NegativeInfinity);
+            ddouble tan_nan = ddouble.Tan(double.NaN);
+
+            Assert.IsTrue(tan_pzero == 0, nameof(tan_pzero));
+            Assert.IsTrue(tan_mzero == 0, nameof(tan_mzero));
+            Assert.IsTrue(ddouble.IsNaN(tan_pinf), nameof(tan_pinf));
+            Assert.IsTrue(ddouble.IsNaN(tan_ninf), nameof(tan_ninf));
+            Assert.IsTrue(ddouble.IsNaN(tan_nan), nameof(tan_nan));
+        }
     }
 }

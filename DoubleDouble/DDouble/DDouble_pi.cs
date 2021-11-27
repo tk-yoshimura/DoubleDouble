@@ -1,7 +1,6 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static readonly ddouble PI = GeneratePI();
-        public static readonly ddouble RcpPI = Rcp(PI);
 
         private static ddouble GeneratePI() {
             ddouble a = 1;
