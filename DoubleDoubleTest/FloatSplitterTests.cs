@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace DoubleDoubleTest {
     [TestClass]
-    public class FloatSplitterTest {
+    public class FloatSplitterTests {
         [TestMethod]
         public void SplitDoubleTest() {
             foreach (double v in new double[] {

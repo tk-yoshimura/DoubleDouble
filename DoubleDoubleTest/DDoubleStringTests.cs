@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest {
     [TestClass]
-    public class DDoubleStringTest {
+    public class DDoubleStringTests {
         [TestMethod]
         public void ToStringTest() {
             Assert.AreEqual("0", (ddouble)(0).ToString());

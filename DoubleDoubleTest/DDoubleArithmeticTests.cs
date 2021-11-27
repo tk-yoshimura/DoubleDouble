@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest {
     [TestClass]
-    public class DDoubleArithmeticTest {
+    public class DDoubleArithmeticTests {
         [TestMethod]
         public void AddTest() {
             foreach (int n in new int[] { 7, 13, 17 }) {

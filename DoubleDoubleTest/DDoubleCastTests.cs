@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace DoubleDoubleTest {
     [TestClass]
-    public class DDoubleCastTest {
+    public class DDoubleCastTests {
         [TestMethod]
         public void BigIntegerTest() {
             Assert.AreEqual(0d, (double)(ddouble)(BigInteger)(0));

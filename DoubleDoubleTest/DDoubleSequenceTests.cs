@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest {
     [TestClass]
-    public class DDoubleSequenceTest {
+    public class DDoubleSequenceTests {
         [TestMethod]
         public void TaylorTest() {
             for (int n = 0; n < ddouble.TaylorSequence.Count; n++) {

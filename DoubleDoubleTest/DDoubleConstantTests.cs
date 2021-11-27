@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest {
     [TestClass]
-    public class DDoubleConstantTest {
+    public class DDoubleConstantTests {
         [TestMethod]
         public void ETest() {
             ddouble expected = (ddouble)"2.71828182845904523536028747135266250";
