@@ -25,7 +25,9 @@ namespace DoubleDouble {
             this.lo = 0;
         }
 
-        public static ddouble Zero { private set; get; } = new ddouble(0d, 0d);
+        public static ddouble Zero { private set; get; } = new ddouble(0d);
+        public static ddouble PlusZero => Zero;
+        public static ddouble MinusZero { private set; get; } = new ddouble(-0d);
         public static ddouble Epsilon { private set; get; } = double.Epsilon;
         public static ddouble MaxValue { private set; get; } = double.MaxValue;
         public static ddouble MinValue { private set; get; } = double.MinValue;
@@ -37,11 +39,20 @@ namespace DoubleDouble {
 
         public static bool IsInfinity(ddouble v) => double.IsInfinity(v.hi);
 
+        public static bool IsPositiveInfinity(ddouble v) => double.IsPositiveInfinity(v.hi);
+
+        public static bool IsNegativeInfinity(ddouble v) => double.IsNegativeInfinity(v.hi);
+
         public static bool IsNormal(ddouble v) => double.IsNormal(v.hi);
 
         public static bool IsFinite(ddouble v) => double.IsFinite(v.hi);
 
         public static bool IsZero(ddouble v) => v.hi == 0;
+
+        public static bool IsPlusZero(ddouble v) => IsZero(v) && v.Sign > 0;
+
+        public static bool IsMinusZero(ddouble v) => IsZero(v) && v.Sign < 0;
+
 
         public int Sign => (int)Math.CopySign(1, hi);
 

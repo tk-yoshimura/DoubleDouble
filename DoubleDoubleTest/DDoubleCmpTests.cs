@@ -8,7 +8,7 @@ namespace DoubleDoubleTest {
         [TestMethod]
         public void BitIncrementTest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
-                ddouble v = (double)d;
+                ddouble v = (ddouble)d;
                 ddouble u = ddouble.BitIncrement(v);
 
                 Assert.IsTrue(v < u);
@@ -16,7 +16,7 @@ namespace DoubleDoubleTest {
             }
 
             for (decimal d = -10000m; d <= +10000m; d += 10m) {
-                ddouble v = (double)d;
+                ddouble v = (ddouble)d;
                 ddouble u = ddouble.BitIncrement(v);
 
                 Assert.IsTrue(v < u);
@@ -27,7 +27,7 @@ namespace DoubleDoubleTest {
         [TestMethod]
         public void BitDecrementTest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
-                ddouble v = (double)d;
+                ddouble v = (ddouble)d;
                 ddouble u = ddouble.BitDecrement(v);
 
                 Assert.IsTrue(v > u);
@@ -35,7 +35,7 @@ namespace DoubleDoubleTest {
             }
 
             for (decimal d = -10000m; d <= +10000m; d += 10m) {
-                ddouble v = (double)d;
+                ddouble v = (ddouble)d;
                 ddouble u = ddouble.BitDecrement(v);
 
                 Assert.IsTrue(v > u);

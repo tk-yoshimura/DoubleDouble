@@ -120,7 +120,7 @@ namespace DoubleDouble {
 
             ddouble v = Ldexp(new ddouble(Math.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo), sfts);
 
-            return sign > 0 ? v : -v;
+            return sign >= 0 ? v : -v;
         }
 
         public static explicit operator ddouble(decimal v) {

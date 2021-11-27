@@ -69,16 +69,16 @@ namespace DoubleDouble {
 
                 public static readonly IReadOnlyList<ddouble> Log2Table = GenerateLog2Table();
 
-                public static readonly ddouble Log2TableDx = Rcp(Log2Table.Count);
+                public static readonly ddouble Log2TableDx = Rcp(Log2Table.Count - 1);
 
-                public static readonly int Log2TableN = Log2Table.Count;
+                public static readonly int Log2TableN = Log2Table.Count - 1;
 
                 public static readonly IReadOnlyList<ddouble> Log2ConvergenceRemTable = GenerateLog2ConvergenceRemTable();
 
                 public static ddouble[] GenerateLog2Table() {
                     const int n = 2048;
                     ddouble dx = Rcp(n);
-                    ddouble[] table = new ddouble[n];
+                    ddouble[] table = new ddouble[n + 1];
 
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = 1 + dx * i;
@@ -89,8 +89,12 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble Log2Prime(ddouble x) {
-                    if (!(x >= 1) || x >= 2) {
+                    if (!(x >= 1d) || x > 2d) {
                         throw new ArgumentOutOfRangeException(nameof(x));
+                    }
+
+                    if (x == 2d) {
+                        return 1d;
                     }
 
                     ddouble y = 0;

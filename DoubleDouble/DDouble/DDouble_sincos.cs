@@ -45,7 +45,7 @@ namespace DoubleDouble {
             return TanPI(x * Consts.SinCos.RcpPI);
         }
 
-        internal static ddouble SinPIHalf(ddouble x) { 
+        internal static ddouble SinPIHalf(ddouble x) {
             if (!IsFinite(x)) {
                 return NaN;
             }
@@ -128,7 +128,7 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble SinPIPrime(ddouble x) {
-                    if (!(x >= 0) || x > 1) {
+                    if (!(x >= 0d) || x > 1d) {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
 

@@ -69,6 +69,8 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void MulTest() {
+            ddouble.IsMinusZero(ddouble.PlusZero * ddouble.MinusZero);
+
             foreach (int n in new int[] { -7, -13, -17, -257, 7, 13, 17, 257 }) {
                 ddouble u = (ddouble.Rcp(n)) * (ddouble)n;
                 double v = (1d / n) * n;
@@ -87,6 +89,23 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN * ddouble.PositiveInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN * ddouble.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN * ddouble.NaN));
+
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PlusZero * ddouble.PlusZero));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.PlusZero * ddouble.MinusZero));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.MinusZero * ddouble.PlusZero));
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.MinusZero * ddouble.MinusZero));
+
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PlusZero * 1d));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.MinusZero * 1d));
+
+            Assert.IsTrue(ddouble.IsPlusZero(1d * ddouble.PlusZero));
+            Assert.IsTrue(ddouble.IsMinusZero(1d * ddouble.MinusZero));
+
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PlusZero * ddouble.PI));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.MinusZero * ddouble.PI));
+
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PI * ddouble.PlusZero));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.PI * ddouble.MinusZero));
 
             foreach (int n in new int[] { -7, -13, -17, -257, 7, 13, 17, 257 }) {
                 ddouble u = (ddouble.Rcp(n)) * (double)n;
@@ -149,6 +168,9 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / ddouble.PositiveInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / ddouble.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / ddouble.NaN));
+
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PlusZero / 1));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.MinusZero / 1));
 
             foreach (int m in new int[] { -1, -3, -5, -7, -9, 1, 3, 5, 7, 9 }) {
                 foreach (int n in new int[] { -3, -7, -13, -17, -257, 3, 7, 13, 17, 257 }) {

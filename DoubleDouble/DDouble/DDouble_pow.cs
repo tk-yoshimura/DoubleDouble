@@ -98,14 +98,14 @@ namespace DoubleDouble {
 
                 public static readonly IReadOnlyList<ddouble> Pow2Table = GeneratePow2Table();
 
-                public static readonly ddouble Pow2TableDx = Rcp(Pow2Table.Count);
+                public static readonly ddouble Pow2TableDx = Rcp(Pow2Table.Count - 1);
 
-                public static readonly int Pow2TableN = Pow2Table.Count;
+                public static readonly int Pow2TableN = Pow2Table.Count - 1;
 
                 public static ddouble[] GeneratePow2Table() {
                     const int n = 2048;
                     ddouble dx = Rcp(n);
-                    ddouble[] table = new ddouble[n];
+                    ddouble[] table = new ddouble[n + 1];
 
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = dx * i;
@@ -116,8 +116,12 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble Pow2Prime(ddouble x) {
-                    if (!(x >= 0) || x >= 1) {
+                    if (!(x >= 0d) || x > 1d) {
                         throw new ArgumentOutOfRangeException(nameof(x));
+                    }
+
+                    if (x == 1d) {
+                        return 2;
                     }
 
                     ddouble v = x * Consts.Log.Ln2;
