@@ -15,7 +15,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Round(ddouble v) {
-            return Floor(v + 0.5);
+            return Floor(v + 0.5d);
         }
 
         public static ddouble Truncate(ddouble v) {

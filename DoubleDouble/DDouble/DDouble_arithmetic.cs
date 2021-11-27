@@ -235,7 +235,7 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(ddouble a, ddouble b) {
-            if (IsInfinity(a) || IsInfinity(b) || b == 0) {
+            if (IsInfinity(a) || IsInfinity(b) || IsZero(b)) {
                 return a.hi / b.hi;
             }
 

@@ -26,10 +26,6 @@ namespace DoubleDouble {
             BigInteger v = 2;
 
             for (int d = 3; d <= 256; d++) {
-                if (d == 250) {
-                    Console.WriteLine("koko");
-                }
-
                 ddouble t = 1 / (ddouble)v;
 
                 table.Add(t);

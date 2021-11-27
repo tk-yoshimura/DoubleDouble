@@ -104,7 +104,7 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(nrcp3 != ddouble.NegativeInfinity);
 
             Assert.IsTrue(prcp3.Equals(prcp3));
-            Assert.IsFalse(prcp3.Equals(null));
+            Assert.IsFalse(prcp3.Equals((object)null));
 
             Assert.IsTrue(prcp3.GetHashCode() == ddouble.Rcp(3).GetHashCode());
         }

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Log2(ddouble v) {
-            if (v.hi < 0 || IsNaN(v)) {
+            if (v.Sign < 0 || IsNaN(v)) {
                 return NaN;
             }
-            if (v.hi == 0) {
+            if (IsZero(v)) {
                 return NegativeInfinity;
             }
             if (IsInfinity(v)) {
@@ -48,7 +48,7 @@ namespace DoubleDouble {
 
         private static partial class Consts {
             public static class Log {
-                public static readonly ddouble Lg2 = Rcp(3 + Log2(Ldexp(5, -2)));
+                public static readonly ddouble Lg2 = Rcp(3 + PrimeLog2(Ldexp(5, -2)));
                 public static readonly ddouble Ln2 = GenerateLn2();
                 public static readonly ddouble LbE = Rcp(Ln2);
                 public static readonly ddouble Lb10 = Rcp(Lg2);
@@ -82,13 +82,13 @@ namespace DoubleDouble {
 
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = 1 + dx * i;
-                        table[i] = Log2(x);
+                        table[i] = PrimeLog2(x);
                     }
 
                     return table;
                 }
 
-                private static ddouble Log2(ddouble x) {
+                private static ddouble PrimeLog2(ddouble x) {
                     if (!(x >= 1) && x < 2) {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }

@@ -87,7 +87,7 @@ namespace DoubleDoubleTest {
             ddouble log2_nan = ddouble.Log2(double.NaN);
 
             Assert.IsTrue(ddouble.IsInfinity(log2_pzero) && Math.CopySign(1, (double)(log2_pzero)) < 0, nameof(log2_pzero));
-            Assert.IsTrue(ddouble.IsInfinity(log2_mzero) && Math.CopySign(1, (double)(log2_mzero)) < 0, nameof(log2_mzero));
+            Assert.IsTrue(ddouble.IsNaN(log2_mzero), nameof(log2_mzero));
             Assert.IsTrue(ddouble.IsInfinity(log2_pinf) && Math.CopySign(1, (double)(log2_pinf)) > 0, nameof(log2_pinf));
             Assert.IsTrue(ddouble.IsNaN(log2_ninf), nameof(log2_ninf));
             Assert.IsTrue(ddouble.IsNaN(log2_nan), nameof(log2_nan));
@@ -179,7 +179,7 @@ namespace DoubleDoubleTest {
             ddouble log10_nan = ddouble.Log10(double.NaN);
 
             Assert.IsTrue(ddouble.IsInfinity(log10_pzero) && Math.CopySign(1, (double)(log10_pzero)) < 0, nameof(log10_pzero));
-            Assert.IsTrue(ddouble.IsInfinity(log10_mzero) && Math.CopySign(1, (double)(log10_mzero)) < 0, nameof(log10_mzero));
+            Assert.IsTrue(ddouble.IsNaN(log10_mzero), nameof(log10_mzero));
             Assert.IsTrue(ddouble.IsInfinity(log10_pinf) && Math.CopySign(1, (double)(log10_pinf)) > 0, nameof(log10_pinf));
             Assert.IsTrue(ddouble.IsNaN(log10_ninf), nameof(log10_ninf));
             Assert.IsTrue(ddouble.IsNaN(log10_nan), nameof(log10_nan));
@@ -218,7 +218,7 @@ namespace DoubleDoubleTest {
             ddouble Log_nan = ddouble.Log(double.NaN);
 
             Assert.IsTrue(ddouble.IsInfinity(Log_pzero) && Math.CopySign(1, (double)(Log_pzero)) < 0, nameof(Log_pzero));
-            Assert.IsTrue(ddouble.IsInfinity(Log_mzero) && Math.CopySign(1, (double)(Log_mzero)) < 0, nameof(Log_mzero));
+            Assert.IsTrue(ddouble.IsNaN(Log_mzero), nameof(Log_mzero));
             Assert.IsTrue(ddouble.IsInfinity(Log_pinf) && Math.CopySign(1, (double)(Log_pinf)) > 0, nameof(Log_pinf));
             Assert.IsTrue(ddouble.IsNaN(Log_ninf), nameof(Log_ninf));
             Assert.IsTrue(ddouble.IsNaN(Log_nan), nameof(Log_nan));

@@ -6,7 +6,7 @@ namespace DoubleDouble {
             if (v.Sign < 0 || IsNaN(v)) {
                 return NaN;
             }
-            if (v.hi == 0) {
+            if (IsZero(v)) {
                 return 0;
             }
             if (IsInfinity(v)) {
