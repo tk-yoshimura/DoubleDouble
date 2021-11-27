@@ -1,7 +1,7 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble Rcp(ddouble v) {
-            return 1d / v;
+        public static ddouble Rcp(ddouble x) {
+            return 1d / x;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace DoubleDouble {
             int exp = (int)Floor(x);
             ddouble s = x - exp, c = Ldexp(1, exp);
 
-            int index = (int)ddouble.Floor(s * Consts.Log.Log2TableN);
+            int index = (int)ddouble.Floor(s * Consts.Pow.Pow2TableN);
             ddouble v = (s - Consts.Pow.Pow2TableDx * index) * Consts.Log.Ln2;
             ddouble r = Consts.Pow.Pow2Table[index];
 
@@ -109,14 +109,14 @@ namespace DoubleDouble {
 
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = dx * i;
-                        table[i] = KahanPow2(x);
+                        table[i] = Pow2Prime(x);
                     }
 
                     return table;
                 }
 
-                private static ddouble KahanPow2(ddouble x) {
-                    if (!(x >= 0) && x < 1) {
+                private static ddouble Pow2Prime(ddouble x) {
+                    if (!(x >= 0) || x >= 1) {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
 

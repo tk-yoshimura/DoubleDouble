@@ -5,16 +5,16 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static (int exp, ddouble value) Frexp(ddouble v) {
-            if (!IsFinite(v)) {
+        public static (int exp, ddouble value) Frexp(ddouble x) {
+            if (!IsFinite(x)) {
                 return (0, NaN);
             }
-            if (IsZero(v)) {
+            if (IsZero(x)) {
                 return (0, Zero);
             }
 
-            int n = Math.ILogB(v.hi);
-            ddouble f = new ddouble(Math.ScaleB(v.hi, -n), Math.ScaleB(v.lo, -n));
+            int n = Math.ILogB(x.hi);
+            ddouble f = new ddouble(Math.ScaleB(x.hi, -n), Math.ScaleB(x.lo, -n));
 
             if (f.hi == 1 && f.lo < 0) {
                 n -= 1;

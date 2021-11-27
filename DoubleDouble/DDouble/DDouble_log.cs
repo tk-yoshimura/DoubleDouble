@@ -3,24 +3,24 @@ using System.Collections.Generic;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble Log2(ddouble v) {
-            if (v.Sign < 0 || IsNaN(v)) {
+        public static ddouble Log2(ddouble x) {
+            if (x.Sign < 0 || IsNaN(x)) {
                 return NaN;
             }
-            if (IsZero(v)) {
+            if (IsZero(x)) {
                 return NegativeInfinity;
             }
-            if (IsInfinity(v)) {
+            if (IsInfinity(x)) {
                 return PositiveInfinity;
             }
 
-            (int n, ddouble x) = Frexp(v);
+            (int n, ddouble v) = Frexp(x);
 
-            int index = (int)ddouble.Floor((x - 1) * Consts.Log.Log2TableN);
-            ddouble x_offset = 1 + Consts.Log.Log2TableDx * index;
+            int index = (int)ddouble.Floor((v - 1) * Consts.Log.Log2TableN);
+            ddouble v_offset = 1 + Consts.Log.Log2TableDx * index;
             ddouble y_offset = n + Consts.Log.Log2Table[index];
 
-            ddouble w = x / x_offset - 1, squa_w = w * w, r = Consts.Log.LbE * w;
+            ddouble w = v / v_offset - 1, squa_w = w * w, r = Consts.Log.LbE * w;
 
             ddouble y = y_offset;
             for (int i = 0; i < Consts.Log.Log2ConvergenceRemTable.Count; i++) {
@@ -38,17 +38,17 @@ namespace DoubleDouble {
             return y;
         }
 
-        public static ddouble Log10(ddouble v) {
-            return Log2(v) * Consts.Log.Lg2;
+        public static ddouble Log10(ddouble x) {
+            return Log2(x) * Consts.Log.Lg2;
         }
 
-        public static ddouble Log(ddouble v) {
-            return Log2(v) * Consts.Log.Ln2;
+        public static ddouble Log(ddouble x) {
+            return Log2(x) * Consts.Log.Ln2;
         }
 
         private static partial class Consts {
             public static class Log {
-                public static readonly ddouble Lg2 = Rcp(3 + PrimeLog2(Ldexp(5, -2)));
+                public static readonly ddouble Lg2 = Rcp(3 + Log2Prime(Ldexp(5, -2)));
                 public static readonly ddouble Ln2 = GenerateLn2();
                 public static readonly ddouble LbE = Rcp(Ln2);
                 public static readonly ddouble Lb10 = Rcp(Lg2);
@@ -82,14 +82,14 @@ namespace DoubleDouble {
 
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = 1 + dx * i;
-                        table[i] = PrimeLog2(x);
+                        table[i] = Log2Prime(x);
                     }
 
                     return table;
                 }
 
-                private static ddouble PrimeLog2(ddouble x) {
-                    if (!(x >= 1) && x < 2) {
+                private static ddouble Log2Prime(ddouble x) {
+                    if (!(x >= 1) || x >= 2) {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
 

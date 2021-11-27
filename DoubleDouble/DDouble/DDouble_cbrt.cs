@@ -2,36 +2,36 @@
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble Cbrt(ddouble v) {
-            if (v.Sign < 0) {
-                return -Cbrt(-v);
+        public static ddouble Cbrt(ddouble x) {
+            if (x.Sign < 0) {
+                return -Cbrt(-x);
             }
-            if (IsNaN(v)) {
+            if (IsNaN(x)) {
                 return NaN;
             }
-            if (IsZero(v)) {
+            if (IsZero(x)) {
                 return 0;
             }
-            if (IsInfinity(v)) {
+            if (IsInfinity(x)) {
                 return PositiveInfinity;
             }
 
-            (int v_exponent, ddouble v_frac) = Frexp(v);
-            int exponent_rem = (v_exponent >= 0) ? v_exponent % 3 : ((3 - (-v_exponent) % 3) % 3);
+            (int x_exponent, ddouble x_frac) = Frexp(x);
+            int exponent_rem = (x_exponent >= 0) ? x_exponent % 3 : ((3 - (-x_exponent) % 3) % 3);
 
             if (exponent_rem != 0) {
-                v_frac = Ldexp(v_frac, exponent_rem);
+                x_frac = Ldexp(x_frac, exponent_rem);
             }
 
-            ddouble a = 1 / Math.Cbrt(v_frac.hi);
+            ddouble a = 1 / Math.Cbrt(x_frac.hi);
 
-            ddouble h = 1 - v_frac * a * a * a;
+            ddouble h = 1 - x_frac * a * a * a;
             a *= 1 + h * (27 + h * (18 + h * 14)) * Consts.Rcp81;
 
-            h = 1 - v_frac * a * a * a;
+            h = 1 - x_frac * a * a * a;
             a *= 1 + h * (27 + h * (18 + h * 14)) * Consts.Rcp81;
 
-            ddouble y = Ldexp(v_frac * a * a, (v_exponent - exponent_rem) / 3);
+            ddouble y = Ldexp(x_frac * a * a, (x_exponent - exponent_rem) / 3);
 
             return y;
         }

@@ -600,5 +600,65 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(exp_ninf == 0, nameof(exp_ninf));
             Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
         }
+
+        [TestMethod]
+        public void SinPIHalfTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (double)d;
+                ddouble u = ddouble.SinPIHalf(v);
+
+                Assert.AreEqual(Math.Sin((double)d * Math.PI / 2), (double)u, 1e-14, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            for (int n = -8; n <= 8; n++) {
+                ddouble nearn = n;
+
+                for (int i = 0; i < 64; i++) {
+                    ddouble u = ddouble.SinPIHalf(nearn);
+
+                    Console.WriteLine($"{nearn} {nearn.Hi} {nearn.Lo}");
+                    Console.WriteLine($"{u} {u.Hi} {u.Lo}");
+                    
+                    Assert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
+
+                    nearn = ddouble.BitDecrement(nearn);
+                }
+
+                nearn = n;
+
+                for (int i = 0; i < 64; i++) {
+                    ddouble u = ddouble.SinPIHalf(nearn);
+
+                    Console.WriteLine($"{nearn} {nearn.Hi} {nearn.Lo}");
+                    Console.WriteLine($"{u} {u.Hi} {u.Lo}");
+
+                    Assert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
+
+                    nearn = ddouble.BitIncrement(nearn);
+                }
+            }
+
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.56434465040230869010105319467166892e-1" - ddouble.SinPIHalf(ddouble.Rcp(10))) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"9.87688340595137726190040247693437261e-1" - ddouble.SinPIHalf(9 * ddouble.Rcp(10))) < 1e-31);
+            Assert.IsTrue(ddouble.Abs(0.5d - ddouble.SinPIHalf(ddouble.Rcp(3))) < 1e-31);
+            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(3) / 2 - ddouble.SinPIHalf(2 * ddouble.Rcp(3))) < 1e-31);
+
+            ddouble sin_pzero = ddouble.SinPIHalf(0d);
+            ddouble sin_mzero = ddouble.SinPIHalf(-0d);
+            ddouble sin_pinf = ddouble.SinPIHalf(double.PositiveInfinity);
+            ddouble sin_ninf = ddouble.SinPIHalf(double.NegativeInfinity);
+            ddouble sin_nan = ddouble.SinPIHalf(double.NaN);
+
+            Assert.IsTrue(sin_pzero == 0, nameof(sin_pzero));
+            Assert.IsTrue(sin_mzero == 0, nameof(sin_mzero));
+            Assert.IsTrue(ddouble.IsNaN(sin_pinf), nameof(sin_pinf));
+            Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
+            Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
+        }
     }
 }

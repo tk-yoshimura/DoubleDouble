@@ -191,7 +191,6 @@ namespace DoubleDouble {
             return y;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(ddouble a, double b) {
             return a / (ddouble)b;
         }
@@ -212,7 +211,6 @@ namespace DoubleDouble {
             return a / (ddouble)b;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator /(double a, ddouble b) {
             return (ddouble)a / b;
         }
@@ -252,6 +250,58 @@ namespace DoubleDouble {
             }
 
             return new ddouble(hi, lo) + c;
+        }
+
+        public static ddouble operator %(ddouble a, double b) {
+            return a % (ddouble)b;
+        }
+
+        public static ddouble operator %(ddouble a, int b) {
+            return a % (ddouble)b;
+        }
+
+        public static ddouble operator %(ddouble a, uint b) {
+            return a % (ddouble)b;
+        }
+
+        public static ddouble operator %(ddouble a, long b) {
+            return a % (ddouble)b;
+        }
+
+        public static ddouble operator %(ddouble a, ulong b) {
+            return a % (ddouble)b;
+        }
+
+        public static ddouble operator %(double a, ddouble b) {
+            return (ddouble)a % b;
+        }
+
+        public static ddouble operator %(int a, ddouble b) {
+            return (ddouble)a % b;
+        }
+
+        public static ddouble operator %(uint a, ddouble b) {
+            return (ddouble)a % b;
+        }
+
+        public static ddouble operator %(long a, ddouble b) {
+            return (ddouble)a % b;
+        }
+
+        public static ddouble operator %(ulong a, ddouble b) {
+            return (ddouble)a % b;
+        }
+
+        public static ddouble operator %(ddouble a, ddouble b) {
+            ddouble y = a - ddouble.Truncate(a / b) * b;
+            if (y.Sign != a.Sign) {
+                y += a.Sign * Abs(b);
+                if (y == b) {
+                    return 0;
+                }
+            }
+
+            return y;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
