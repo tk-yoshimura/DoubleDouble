@@ -837,6 +837,13 @@ namespace DoubleDoubleTest {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
+            Assert.IsTrue(ddouble.Abs(ddouble.PI / 6 - ddouble.Asin(ddouble.Rcp(2))) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.11976951499863418668667705584539962" - ddouble.Asin((ddouble)9 / 10)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.42925685347046940048553233466472443" - ddouble.Asin((ddouble)99 / 100)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.52607123962616318798162545896820037" - ddouble.Asin((ddouble)999 / 1000)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.55665407331738374163508146582209533" - ddouble.Asin((ddouble)9999 / 10000)) < 1e-30);
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.56632418711310869205898202533489875" - ddouble.Asin((ddouble)99999 / 100000)) < 1e-30);
+
             ddouble asin_pzero = ddouble.Asin(0d);
             ddouble asin_mzero = ddouble.Asin(-0d);
             ddouble asin_pinf = ddouble.Asin(double.PositiveInfinity);
@@ -852,6 +859,59 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(asin_pout), nameof(asin_pout));
             Assert.IsTrue(ddouble.IsNaN(asin_nout), nameof(asin_nout));
             Assert.IsTrue(ddouble.IsNaN(asin_nan), nameof(asin_nan));
+        }
+
+        [TestMethod]
+        public void AcosTest() {
+            for (decimal d = -1m; d <= +1m; d += 0.001m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Acos(v);
+
+                Assert.AreEqual(Math.Acos((double)d), (double)u, 1e-15, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble acos_pinf = ddouble.Acos(double.PositiveInfinity);
+            ddouble acos_ninf = ddouble.Acos(double.NegativeInfinity);
+            ddouble acos_pout = ddouble.Acos(ddouble.BitIncrement(1));
+            ddouble acos_nout = ddouble.Acos(ddouble.BitDecrement(-1));
+            ddouble acos_nan = ddouble.Acos(double.NaN);
+
+            Assert.IsTrue(ddouble.IsNaN(acos_pinf), nameof(acos_pinf));
+            Assert.IsTrue(ddouble.IsNaN(acos_ninf), nameof(acos_ninf));
+            Assert.IsTrue(ddouble.IsNaN(acos_pout), nameof(acos_pout));
+            Assert.IsTrue(ddouble.IsNaN(acos_nout), nameof(acos_nout));
+            Assert.IsTrue(ddouble.IsNaN(acos_nan), nameof(acos_nan));
+        }
+
+        [TestMethod]
+        public void AtanTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Atan(v);
+
+                Assert.AreEqual(Math.Atan((double)d), (double)u, 1e-15, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            Assert.IsTrue(ddouble.Abs(ddouble.PI / 4 - ddouble.Atan(1)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs(-ddouble.PI / 4 - ddouble.Atan(-1)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.10714871779409050301706546017853704" - ddouble.Atan(2)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"-1.10714871779409050301706546017853704" - ddouble.Atan(-2)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"1.24904577239825442582991707728109012" - ddouble.Atan(3)) < 1e-31);
+            Assert.IsTrue(ddouble.Abs((ddouble)"-1.24904577239825442582991707728109012" - ddouble.Atan(-3)) < 1e-31);
+
+            ddouble atan_pzero = ddouble.Atan(0d);
+            ddouble atan_mzero = ddouble.Atan(-0d);
+            ddouble atan_pinf = ddouble.Atan(double.PositiveInfinity);
+            ddouble atan_ninf = ddouble.Atan(double.NegativeInfinity);
+            ddouble atan_nan = ddouble.Atan(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(atan_pzero), nameof(atan_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(atan_mzero), nameof(atan_mzero));
+            Assert.IsTrue(atan_pinf == ddouble.PI / 2, nameof(atan_pinf));
+            Assert.IsTrue(atan_ninf == -ddouble.PI / 2, nameof(atan_ninf));
+            Assert.IsTrue(ddouble.IsNaN(atan_nan), nameof(atan_nan));
         }
     }
 }

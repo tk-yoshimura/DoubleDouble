@@ -66,10 +66,10 @@ namespace DoubleDoubleSandbox {
 
         static ddouble AtanPrototype(ddouble x) {
             if (x > 1) {
-                return ddouble.PI - AtanPrototype(1 / x);
+                return ddouble.PI / 2 - AtanPrototype(1 / x);
             }
             if (x < -1) {
-                return -ddouble.PI - AtanPrototype(1 / x);
+                return -ddouble.PI / 2 - AtanPrototype(1 / x);
             }
             if (x < -0.25d || x > 0.25d) {
                 return ddouble.Ldexp(AtanPrototype(x / (1 + ddouble.Sqrt(1 + x * x))), 1);
