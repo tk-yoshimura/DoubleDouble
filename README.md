@@ -7,6 +7,7 @@
 ## Install
 
 [Download DLL](https://github.com/tk-yoshimura/DoubleDouble/releases)  
+[Download Nuget](https://www.nuget.org/packages/tyoshimura.doubledouble/)  
 
 - To install, just import the DLL.
 - This library does not change the environment at all.
