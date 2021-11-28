@@ -1,6 +1,7 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Numerics;
 
 namespace DoubleDoubleTest {
     [TestClass]
@@ -1200,9 +1201,39 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void GammaTest() {
-            ddouble x = ddouble.Gamma(16);
+            for (BigInteger i = 1, y = 1; i <= 35; i++, y = y * (i - 1)) {
+                ddouble x = ddouble.Gamma(i);
 
-            Console.WriteLine(x);
+                Assert.AreEqual(y, x);
+            }
+
+            ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
+
+            for (BigInteger i = 1, y = 1, z = 1; i <= 30; i++, y *= 2, z *= 2 * i - 3) {
+                ddouble x = ddouble.Gamma((2 * (int)i - 1) * 0.5d);
+                ddouble v = sqrtpi * z / y;
+
+                DDoubleAssert.NeighborBits(v, x, 128);
+            }
+
+            DDoubleAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 128);
+            DDoubleAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 128);
+
+            DDoubleAssert.NeighborBits("1.22541670246517764512909830336289052685123924810807", ddouble.Gamma(0.75), 128);
+
+            ddouble gamma_pzero = ddouble.Gamma(0d);
+            ddouble gamma_mzero = ddouble.Gamma(-0d);
+            ddouble gamma_mone = ddouble.Gamma(-1d);
+            ddouble gamma_pinf = ddouble.Gamma(double.PositiveInfinity);
+            ddouble gamma_ninf = ddouble.Gamma(double.NegativeInfinity);
+            ddouble gamma_nan = ddouble.Gamma(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_pzero), nameof(gamma_pzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_mzero), nameof(gamma_mzero));
+            Assert.IsTrue(ddouble.IsNaN(gamma_mone), nameof(gamma_mone));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_pinf), nameof(gamma_pinf));
+            Assert.IsTrue(ddouble.IsNaN(gamma_ninf), nameof(gamma_ninf));
+            Assert.IsTrue(ddouble.IsNaN(gamma_nan), nameof(gamma_nan));
         }
     }
 }

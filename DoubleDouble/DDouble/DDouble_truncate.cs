@@ -38,5 +38,22 @@ namespace DoubleDouble {
 
             return new ddouble(hi, lo);
         }
+
+        public static ddouble RoundMantissa(ddouble x, int keep_bits) {
+            if (keep_bits <= 0) {
+                throw new ArgumentOutOfRangeException(nameof(keep_bits));
+            }
+            if (!IsFinite(x) || IsZero(x)) {
+                return x;
+            }
+
+            int exponent = Math.ILogB(x.hi);
+            double rem = Math.ScaleB(1, exponent - keep_bits);
+
+            double hi = Math.Round(x.hi / rem) * rem;
+            double lo = Math.Round(x.lo / rem) * rem;
+
+            return new ddouble(hi, lo);
+        }
     }
 }

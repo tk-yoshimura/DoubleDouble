@@ -52,6 +52,7 @@
 |arsinh|&#40;-inf,+inf&#41;|2||ddouble.Arsinh(x)|
 |arcosh|&#91;1,+inf&#41;|2||ddouble.Arcosh(x)|
 |artanh|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|ddouble.Artanh(x)|
+|gamma|&#40;-inf,+inf&#41;|6|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
