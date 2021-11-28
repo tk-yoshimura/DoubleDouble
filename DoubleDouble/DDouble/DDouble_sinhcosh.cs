@@ -1,6 +1,13 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Sinh(ddouble x) {
+            if (IsPlusZero(x)) {
+                return PlusZero;
+            }
+            if (IsMinusZero(x)) {
+                return MinusZero;
+            }
+
             return Ldexp(Expm1(x) - Expm1(-x), -1);
         }
 

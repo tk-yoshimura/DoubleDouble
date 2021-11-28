@@ -1035,5 +1035,74 @@ namespace DoubleDoubleTest {
                 }
             }
         }
+
+        [TestMethod]
+        public void SinhTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Sinh(v);
+
+                Assert.AreEqual(Math.Sinh((double)d), (double)u, Math.Abs(Math.Sinh((double)d)) * 1e-15, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble sinh_pzero = ddouble.Sinh(0d);
+            ddouble sinh_mzero = ddouble.Sinh(-0d);
+            ddouble sinh_pinf = ddouble.Sinh(double.PositiveInfinity);
+            ddouble sinh_ninf = ddouble.Sinh(double.NegativeInfinity);
+            ddouble sinh_nan = ddouble.Sinh(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(sinh_pzero), nameof(sinh_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(sinh_mzero), nameof(sinh_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(sinh_pinf), nameof(sinh_pinf));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(sinh_ninf), nameof(sinh_ninf));
+            Assert.IsTrue(ddouble.IsNaN(sinh_nan), nameof(sinh_nan));
+        }
+
+        [TestMethod]
+        public void CoshTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Cosh(v);
+
+                Assert.AreEqual(Math.Cosh((double)d), (double)u, Math.Abs(Math.Cosh((double)d)) * 1e-12, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble cosh_pzero = ddouble.Cosh(0d);
+            ddouble cosh_mzero = ddouble.Cosh(-0d);
+            ddouble cosh_pinf = ddouble.Cosh(double.PositiveInfinity);
+            ddouble cosh_ninf = ddouble.Cosh(double.NegativeInfinity);
+            ddouble cosh_nan = ddouble.Cosh(double.NaN);
+
+            Assert.IsTrue(cosh_pzero == 1, nameof(cosh_pzero));
+            Assert.IsTrue(cosh_mzero == 1, nameof(cosh_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(cosh_pinf), nameof(cosh_pinf));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(cosh_ninf), nameof(cosh_ninf));
+            Assert.IsTrue(ddouble.IsNaN(cosh_nan), nameof(cosh_nan));
+        }
+
+        [TestMethod]
+        public void TanhTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Tanh(v);
+
+                Assert.AreEqual(Math.Tanh((double)d), (double)u, 1e-15, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble tanh_pzero = ddouble.Tanh(0d);
+            ddouble tanh_mzero = ddouble.Tanh(-0d);
+            ddouble tanh_pinf = ddouble.Tanh(double.PositiveInfinity);
+            ddouble tanh_ninf = ddouble.Tanh(double.NegativeInfinity);
+            ddouble tanh_nan = ddouble.Tanh(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(tanh_pzero), nameof(tanh_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(tanh_mzero), nameof(tanh_mzero));
+            Assert.IsTrue(tanh_pinf == 1d, nameof(tanh_pinf));
+            Assert.IsTrue(tanh_ninf == -1d, nameof(tanh_ninf));
+            Assert.IsTrue(ddouble.IsNaN(tanh_nan), nameof(tanh_nan));
+        }
     }
 }
