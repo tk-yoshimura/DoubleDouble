@@ -1219,7 +1219,9 @@ namespace DoubleDoubleTest {
             DDoubleAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 128);
             DDoubleAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 128);
 
-            DDoubleAssert.NeighborBits("1.22541670246517764512909830336289052685123924810807", ddouble.Gamma(0.75), 128);
+            DDoubleAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 128);
+            DDoubleAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 128);
+            DDoubleAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 160);
 
             ddouble gamma_pzero = ddouble.Gamma(0d);
             ddouble gamma_mzero = ddouble.Gamma(-0d);
