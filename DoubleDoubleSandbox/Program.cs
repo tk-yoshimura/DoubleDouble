@@ -1,87 +1,49 @@
 ﻿using DoubleDouble;
+using System;
 using System.IO;
 
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            using (StreamWriter sw1 = new StreamWriter("../../atan_convergence.csv")) {
-                using (StreamWriter sw2 = new StreamWriter("../../atan_convergence_n2.csv")) {
-                    sw1.WriteLine($"x,x_init,n,y");
-                    sw2.WriteLine($"x,x_init,n,y,y_prototype");
+            ddouble pi_prev = 0;
 
-                    for (decimal x = 0; x <= 1; x += 1 / 128m) {
-                        (ddouble min_y, int min_n, decimal min_x_init) = (0d, int.MaxValue, 0m);
+            for (int n = 1; n < 8; n++) {
+                ddouble pi = GeneratePI(n);
 
-                        for (decimal x_init = 1; x_init <= 128m; x_init += 1 / 4m) {
-                            (ddouble y, int n) = AtanCfracConvergence((ddouble)x, (ddouble)x_init);
+                Console.WriteLine(n);
+                Console.WriteLine(pi - pi_prev);
+                Console.WriteLine(pi - ddouble.PI);
+                Console.WriteLine(pi);
 
-                            if (min_n > n) {
-                                (min_y, min_n, min_x_init) = (y, n, x_init);
-                            }
-
-                            sw1.WriteLine($"{x},{x_init},{n},{y}");
-                        }
-
-                        ddouble y_prototype = AtanPrototype((ddouble)x);
-                        ddouble error = min_y - y_prototype;
-
-                        sw2.WriteLine($"{x},{min_x_init},{min_n},{min_y},{y_prototype},{error}");
-                    }
-                }
+                pi_prev = pi;
             }
+
+            Console.WriteLine();
+            Console.Read();
         }
 
-        static (ddouble value, int n) AtanCfracConvergence(ddouble x, ddouble x_init) {
-            ddouble y = AtanCfracConvergence(x, 4, x_init);
+        private static ddouble GeneratePI(int n) {
+            ddouble a = 1;
+            ddouble b = ddouble.Ldexp(ddouble.Sqrt(2), -1);
+            ddouble t = ddouble.Ldexp(1, -2);
+            ddouble p = 1;
 
-            for (int n = 5; n <= 128; n++) {
-                ddouble y_test = AtanCfracConvergence(x, n, x_init);
-                if (y == y_test) {
-                    return (y_test, n - 1);
-                }
+            for (int i = 0; i < n; i++) {
+                ddouble a_next = ddouble.Ldexp(a + b, -1);
+                ddouble b_next = ddouble.Sqrt(a * b);
+                ddouble t_next = t - p * (a - a_next) * (a - a_next);
+                ddouble p_next = ddouble.Ldexp(p, 1);
 
-                y = y_test;
+                a = a_next;
+                b = b_next;
+                t = t_next;
+                p = p_next;
             }
 
-            return (y, int.MaxValue);
-        }
+            ddouble c = a + b;
+            ddouble y = c * c / ddouble.Ldexp(t, 2);
 
-        static ddouble AtanCfracConvergence(ddouble x, int n, ddouble x_init) {
-            if (x > 1) {
-                return ddouble.PI - AtanCfracConvergence(1 / x, n, x_init);
-            }
-            if (x < -1) {
-                return -ddouble.PI - AtanCfracConvergence(1 / x, n, x_init);
-            }
-
-            ddouble f = x_init;
-
-            for (int i = n; i >= 1; i--) {
-                f = (2 * i - 1) + (i * i) * x * x / f;
-            }
-
-            return x / f;
-        }
-
-        static ddouble AtanPrototype(ddouble x) {
-            if (x > 1) {
-                return ddouble.PI / 2 - AtanPrototype(1 / x);
-            }
-            if (x < -1) {
-                return -ddouble.PI / 2 - AtanPrototype(1 / x);
-            }
-            if (x < -0.25d || x > 0.25d) {
-                return ddouble.Ldexp(AtanPrototype(x / (1 + ddouble.Sqrt(1 + x * x))), 1);
-            }
-
-            ddouble f = 86d * x + 13.5d;
-            int n = (int)ddouble.Floor(33.5d * x + 9d);
-
-            for (int i = n; i >= 1; i--) {
-                f = (2 * i - 1) + (i * i) * x * x / f;
-            }
-
-            return x / f;
+            return y;
         }
     }
 }
