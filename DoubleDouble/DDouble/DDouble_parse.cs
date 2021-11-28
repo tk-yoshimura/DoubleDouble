@@ -23,7 +23,7 @@ namespace DoubleDouble {
         }
 
         public static implicit operator ddouble(string num) {
-            const int truncate_digits = 36;
+            const int truncate_digits = 40;
 
             if (!parse_regex.IsMatch(num)) {
                 throw new FormatException();

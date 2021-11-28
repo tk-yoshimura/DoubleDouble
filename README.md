@@ -82,6 +82,7 @@
 |----|----|----|
 |Taylor|1/n!|ddouble.TaylorSequence|
 |Bernoulli|B(2k)|ddouble.BernoulliSequence|
+|HarmonicNumber|H_n|ddouble.HarmonicNumber|
 
 ## Coefficient
 
