@@ -9,7 +9,7 @@ namespace DoubleDouble {
         private readonly double hi, lo;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ddouble(double hi, double lo) {
+        internal ddouble(double hi, double lo) {
             this.hi = hi + lo;
             this.lo = lo - (this.hi - hi);
 
@@ -20,7 +20,7 @@ namespace DoubleDouble {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ddouble(double v) {
+        internal ddouble(double v) {
             this.hi = v;
             this.lo = 0;
         }
