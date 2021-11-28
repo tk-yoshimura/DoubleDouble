@@ -10,7 +10,6 @@ namespace DoubleDouble {
             if (IsNaN(x) || IsNegativeInfinity(x)) {
                 return NaN;
             }
-
             if (IsZero(x) || IsPositiveInfinity(x)) {
                 return PositiveInfinity;
             }
@@ -45,7 +44,7 @@ namespace DoubleDouble {
                     ddouble p = ddouble.Pow(x / ddouble.E, x);
                     ddouble s = ddouble.Exp(SterlingTerm(x));
 
-                    ddouble y = RoundMantissa(r * p * s, 96);
+                    ddouble y = RoundMantissa(r * p * s, Consts.Gamma.SterlingPrecision);
 
                     return y;
                 }
@@ -75,6 +74,7 @@ namespace DoubleDouble {
         private static partial class Consts {
             public static class Gamma {
                 public const int Threshold = 16;
+                public const int SterlingPrecision = 96;
                 public static readonly ddouble LanczosG = 15;
                 public static readonly ReadOnlyCollection<ddouble> SterlingTable = GenerateSterlingTable();
 
