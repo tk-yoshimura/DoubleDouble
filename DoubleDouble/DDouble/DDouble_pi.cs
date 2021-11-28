@@ -8,11 +8,11 @@
             ddouble t = Ldexp(1, -2);
             ddouble p = 1;
 
-            for (int i = 1; i <= 128; i *= 2) {
-                ddouble a_next = (a + b) / 2;
+            for (int i = 0; i < 4; i++) {
+                ddouble a_next = Ldexp(a + b, -1);
                 ddouble b_next = Sqrt(a * b);
                 ddouble t_next = t - p * (a - a_next) * (a - a_next);
-                ddouble p_next = p * 2;
+                ddouble p_next = Ldexp(p, 1);
 
                 a = a_next;
                 b = b_next;
@@ -21,7 +21,7 @@
             }
 
             ddouble c = a + b;
-            ddouble y = c * c / (t * 4);
+            ddouble y = c * c / Ldexp(t, 2);
 
             return y;
         }
