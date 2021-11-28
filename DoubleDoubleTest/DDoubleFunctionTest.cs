@@ -1197,5 +1197,12 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(artanh_ninf), nameof(artanh_ninf));
             Assert.IsTrue(ddouble.IsNaN(artanh_nan), nameof(artanh_nan));
         }
+
+        [TestMethod]
+        public void GammaTest() {
+            ddouble x = ddouble.Gamma(16);
+
+            Console.WriteLine(x);
+        }
     }
 }
