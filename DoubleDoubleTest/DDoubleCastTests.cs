@@ -185,21 +185,23 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void DecimalTest() {
-            for (decimal x = 0.01m; x <= 0.01m; x += 0.00001m) {
+            ddouble w = (ddouble)0.0625m;
+
+            for (decimal x = -0.01m; x <= 0.01m; x += 0.00001m) {
                 ddouble y = (ddouble)x;
                 decimal z = (decimal)y;
 
                 Assert.AreEqual(x, z, x.ToString());
             }
 
-            for (decimal x = 10m; x <= 10m; x += 0.01m) {
+            for (decimal x = -10.00m; x <= 10.00m; x += 0.01m) {
                 ddouble y = (ddouble)x;
                 decimal z = (decimal)y;
 
                 Assert.AreEqual(x, z, x.ToString());
             }
 
-            for (decimal x = 10000m; x <= 10000m; x += 10m) {
+            for (decimal x = -10000m; x <= 10000m; x += 10m) {
                 ddouble y = (ddouble)x;
                 decimal z = (decimal)y;
 
@@ -215,6 +217,18 @@ namespace DoubleDoubleTest {
                 Console.WriteLine(y);
 
                 Assert.AreEqual(x, z, x.ToString());
+            }
+
+            double v = 1;
+            decimal d = 1;
+            for (int i = 0; i < 24; i++) {
+                ddouble x = (ddouble)d;
+                ddouble zero = x - v;
+
+                Assert.IsTrue(ddouble.IsZero(zero), $"{d}, {v}, {zero}");
+
+                v /= 2;
+                d /= 2;
             }
         }
     }

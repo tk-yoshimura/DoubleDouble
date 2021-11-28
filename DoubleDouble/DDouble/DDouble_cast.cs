@@ -124,15 +124,57 @@ namespace DoubleDouble {
         }
 
         public static explicit operator ddouble(decimal v) {
-            if (Math.Truncate(v) == v) {
-                return (BigInteger)v;
+            int[] arr = decimal.GetBits(v);
+
+            int sign = arr[3] >= 0 ? 1 : -1;
+            int exponent = (arr[3] >> 16) & 0xFF;
+
+            UInt32[] mantissa = new UInt32[3];
+
+            mantissa[0] = (uint)arr[0];
+            mantissa[1] = (uint)arr[1];
+            mantissa[2] = (uint)arr[2];
+
+            BigInteger num =
+                (BigInteger)mantissa[0] |
+                ((BigInteger)mantissa[1]) << 32 |
+                ((BigInteger)mantissa[2]) << 64;
+
+            while (exponent > 0 && num % 10 == 0) {
+                exponent--;
+                num /= 10;
             }
 
-            return $"{v:e32}";
+            ddouble x = TruncateMantissa(FromStringCore(sign, 0, num, exponent), 100);
+
+            return x;
         }
 
         public static explicit operator decimal(ddouble v) {
-            return decimal.Parse($"{v}");
+            const int digits = 28;
+
+            (int sign, int exponent, BigInteger num) = v.ToStringCore(digits);
+
+            exponent -= digits;
+
+            while (exponent < 0 && num % 10 == 0) {
+                exponent++;
+                num /= 10;
+            }
+
+            UInt32[] mantissa = new UInt32[3];
+            mantissa[0] = (UInt32)(num & (BigInteger)~0u);
+            mantissa[1] = (UInt32)((num >> 32) & (BigInteger)~0u);
+            mantissa[2] = (UInt32)(num >> 64);
+
+            decimal d = new decimal(
+                unchecked((int)mantissa[0]), 
+                unchecked((int)mantissa[1]), 
+                unchecked((int)mantissa[2]), 
+                isNegative: sign < 0, scale: checked((byte)(-exponent))
+            );
+
+            return d;
         }
     }
 }

@@ -482,6 +482,22 @@ namespace DoubleDoubleTest {
         }
 
         [TestMethod]
+        public void TruncateMantissaTest() {
+            foreach (ddouble v in new ddouble[] { 
+                -1, -ddouble.Rcp(3), -ddouble.Rcp(7), -ddouble.BitDecrement(2), 
+                1, ddouble.Rcp(3), ddouble.Rcp(7), ddouble.BitDecrement(2) }){
+                
+                for (int keep_bits = 1; keep_bits <= 110; keep_bits++) {
+                    ddouble v_round = ddouble.TruncateMantissa(v, keep_bits);
+
+                    Console.WriteLine(v_round);
+                    Console.WriteLine($"0x{FloatSplitter.Split(v_round).mantissa:X14}");
+                    Console.WriteLine(v_round - v);
+                }
+            }
+        }
+
+        [TestMethod]
         public void SqrtTest() {
             for (decimal d = 0; d <= +10m; d += 0.01m) {
                 ddouble v = (ddouble)d;
