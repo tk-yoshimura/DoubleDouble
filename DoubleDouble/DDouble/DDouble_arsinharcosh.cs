@@ -1,5 +1,5 @@
 ﻿namespace DoubleDouble {
-    public partial struct ddouble { 
+    public partial struct ddouble {
         public static ddouble Arsinh(ddouble x) {
             if (x.Sign < 0) {
                 return -Arsinh(Abs(x));
@@ -23,6 +23,9 @@
         public static ddouble Artanh(ddouble x) {
             if (IsNaN(x) || x > 1d || x < -1d) {
                 return NaN;
+            }
+            if (IsZero(x)) {
+                return x.Sign > 0 ? PlusZero : MinusZero;
             }
 
             if (x == -1d) {

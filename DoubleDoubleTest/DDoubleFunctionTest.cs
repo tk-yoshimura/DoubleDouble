@@ -707,7 +707,7 @@ namespace DoubleDoubleTest {
             Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(0.25d)));
             Console.WriteLine(ddouble.Expm1(0.25d));
             Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(0.25d)));
-            
+
             ddouble exp_pzero = ddouble.Expm1(0d);
             ddouble exp_mzero = ddouble.Expm1(-0d);
             ddouble exp_pinf = ddouble.Expm1(double.PositiveInfinity);
@@ -1061,6 +1061,10 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void CoshTest() {
+            Console.WriteLine($"{Math.Cosh(9.04):F16}");
+            Console.WriteLine($"{ddouble.Cosh((ddouble)9.04m)}");
+            Console.WriteLine("4.21688858728823488742026530603182233");
+
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Cosh(v);
@@ -1103,6 +1107,79 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(tanh_pinf == 1d, nameof(tanh_pinf));
             Assert.IsTrue(tanh_ninf == -1d, nameof(tanh_ninf));
             Assert.IsTrue(ddouble.IsNaN(tanh_nan), nameof(tanh_nan));
+        }
+
+        [TestMethod]
+        public void ArsinhTest() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Arsinh(v);
+
+                Assert.AreEqual(Math.Asinh((double)d), (double)u, Math.Abs(Math.Asinh((double)d)) * 1e-12, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble arsinh_pzero = ddouble.Arsinh(0d);
+            ddouble arsinh_mzero = ddouble.Arsinh(-0d);
+            ddouble arsinh_pinf = ddouble.Arsinh(double.PositiveInfinity);
+            ddouble arsinh_ninf = ddouble.Arsinh(double.NegativeInfinity);
+            ddouble arsinh_nan = ddouble.Arsinh(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(arsinh_pzero), nameof(arsinh_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(arsinh_mzero), nameof(arsinh_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(arsinh_pinf), nameof(arsinh_pinf));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(arsinh_ninf), nameof(arsinh_ninf));
+            Assert.IsTrue(ddouble.IsNaN(arsinh_nan), nameof(arsinh_nan));
+        }
+
+        [TestMethod]
+        public void ArcoshTest() {
+            for (decimal d = 1m; d <= +10m; d += 0.01m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Arcosh(v);
+
+                Assert.AreEqual(Math.Acosh((double)d), (double)u, Math.Abs(Math.Acosh((double)d)) * 1e-12, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble arcosh_pzero = ddouble.Arcosh(0d);
+            ddouble arcosh_mzero = ddouble.Arcosh(-0d);
+            ddouble arcosh_pinf = ddouble.Arcosh(double.PositiveInfinity);
+            ddouble arcosh_ninf = ddouble.Arcosh(double.NegativeInfinity);
+            ddouble arcosh_nan = ddouble.Arcosh(double.NaN);
+
+            Assert.IsTrue(ddouble.IsNaN(arcosh_pzero), nameof(arcosh_pzero));
+            Assert.IsTrue(ddouble.IsNaN(arcosh_mzero), nameof(arcosh_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(arcosh_pinf), nameof(arcosh_pinf));
+            Assert.IsTrue(ddouble.IsNaN(arcosh_ninf), nameof(arcosh_ninf));
+            Assert.IsTrue(ddouble.IsNaN(arcosh_nan), nameof(arcosh_nan));
+        }
+
+        [TestMethod]
+        public void ArtanhTest() {
+            for (decimal d = -0.99m; d <= +0.99m; d += 0.01m) {
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Artanh(v);
+
+                Assert.AreEqual(Math.Atanh((double)d), (double)u, Math.Abs(Math.Atanh((double)d)) * 1e-12, d.ToString());
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            ddouble artanh_pzero = ddouble.Artanh(0d);
+            ddouble artanh_mzero = ddouble.Artanh(-0d);
+            ddouble artanh_pone = ddouble.Artanh(1d);
+            ddouble artanh_mone = ddouble.Artanh(-1d);
+            ddouble artanh_pinf = ddouble.Artanh(double.PositiveInfinity);
+            ddouble artanh_ninf = ddouble.Artanh(double.NegativeInfinity);
+            ddouble artanh_nan = ddouble.Artanh(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(artanh_pzero), nameof(artanh_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(artanh_mzero), nameof(artanh_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(artanh_pone), nameof(artanh_pone));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(artanh_mone), nameof(artanh_mone));
+            Assert.IsTrue(ddouble.IsNaN(artanh_pinf), nameof(artanh_pinf));
+            Assert.IsTrue(ddouble.IsNaN(artanh_ninf), nameof(artanh_ninf));
+            Assert.IsTrue(ddouble.IsNaN(artanh_nan), nameof(artanh_nan));
         }
     }
 }

@@ -124,6 +124,10 @@ namespace DoubleDouble {
         }
 
         public static explicit operator ddouble(decimal v) {
+            if (Math.Truncate(v) == v) {
+                return (BigInteger)v;
+            }
+
             return $"{v:e32}";
         }
 
