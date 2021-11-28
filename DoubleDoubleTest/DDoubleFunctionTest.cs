@@ -225,6 +225,56 @@ namespace DoubleDoubleTest {
         }
 
         [TestMethod]
+        public void Log1pTest() {
+            for (decimal d = -0.99m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Log1p(v);
+
+                Assert.AreEqual(Math.Log(1 + (double)d), (double)u, 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            Assert.AreEqual(0, (double)ddouble.Log1p(ddouble.BitDecrement(0)), 1e-300);
+            Assert.AreEqual(0, (double)ddouble.Log1p(ddouble.BitIncrement(0)), 1e-300);
+
+            Console.WriteLine(ddouble.Log1p(ddouble.BitDecrement(0)));
+            Console.WriteLine(ddouble.Log1p(0));
+            Console.WriteLine(ddouble.Log1p(ddouble.BitIncrement(0)));
+
+            Console.WriteLine(FloatSplitter.Split(ddouble.Log1p(ddouble.BitDecrement(-0.0625d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Log1p(-0.0625d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Log1p(ddouble.BitIncrement(-0.0625d))).mantissa);
+
+            Console.WriteLine(FloatSplitter.Split(ddouble.Log1p(ddouble.BitDecrement(0.0625d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Log1p(0.0625d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Log1p(ddouble.BitIncrement(0.0625d))).mantissa);
+
+            Console.WriteLine(ddouble.Log1p(ddouble.BitDecrement(-0.0625d)));
+            Console.WriteLine(ddouble.Log1p(-0.0625d));
+            Console.WriteLine(ddouble.Log1p(ddouble.BitIncrement(-0.0625d)));
+
+            Console.WriteLine(ddouble.Log1p(ddouble.BitDecrement(0.0625d)));
+            Console.WriteLine(ddouble.Log1p(0.0625d));
+            Console.WriteLine(ddouble.Log1p(ddouble.BitIncrement(0.0625d)));
+
+            ddouble log_pzero = ddouble.Log1p(0d);
+            ddouble log_mzero = ddouble.Log1p(-0d);
+            ddouble log_pinf = ddouble.Log(double.PositiveInfinity);
+            ddouble log_ninf = ddouble.Log(double.NegativeInfinity);
+            ddouble log_nan = ddouble.Log(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(log_pzero), nameof(log_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(log_mzero), nameof(log_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(log_pinf), nameof(log_pinf));
+            Assert.IsTrue(ddouble.IsNaN(log_ninf), nameof(log_ninf));
+            Assert.IsTrue(ddouble.IsNaN(log_nan), nameof(log_nan));
+        }
+
+        [TestMethod]
         public void AbsTest() {
             foreach (ddouble v in new ddouble[] { 1, 2,
                 ddouble.Rcp(3), ddouble.Rcp(5), ddouble.Rcp(7), ddouble.Rcp(9), ddouble.Rcp(11) }) {

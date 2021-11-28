@@ -24,8 +24,8 @@ namespace DoubleDouble {
             ddouble w = v / v_offset - 1, squa_w = w * w, r = Consts.Log.LbE * w;
 
             ddouble y = y_offset;
-            for (int i = 0; i < Consts.Log.Log2ConvergenceRemTable.Count; i++) {
-                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * w) * Consts.Log.Log2ConvergenceRemTable[i];
+            for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
+                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * w) * Consts.Log.LogConvergenceRemTable[i];
                 ddouble y_next = y + dy;
 
                 if (y == y_next) {
@@ -45,6 +45,35 @@ namespace DoubleDouble {
 
         public static ddouble Log(ddouble x) {
             return Log2(x) * Consts.Log.Ln2;
+        }
+
+        public static ddouble Log1p(ddouble x) {
+            if (!(x >= -0.0625d) || x > 0.0625d) {
+                return Log(1d + x);
+            }
+            if (IsPlusZero(x)) {
+                return PlusZero;
+            }
+            if (IsMinusZero(x)) {
+                return MinusZero;
+            }
+
+            ddouble squa_x = x * x, r = x;
+            ddouble y = 0;
+
+            for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
+                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * x) * Consts.Log.LogConvergenceRemTable[i];
+                ddouble y_next = y + dy;
+
+                if (y == y_next) {
+                    break;
+                }
+
+                r *= squa_x;
+                y = y_next;
+            }
+
+            return y;
         }
 
         private static partial class Consts {
@@ -74,7 +103,7 @@ namespace DoubleDouble {
 
                 public static readonly int Log2TableN = Log2Table.Count - 1;
 
-                public static readonly IReadOnlyList<ddouble> Log2ConvergenceRemTable = GenerateLog2ConvergenceRemTable();
+                public static readonly IReadOnlyList<ddouble> LogConvergenceRemTable = GenerateLog2ConvergenceRemTable();
 
                 public static ddouble[] GenerateLog2Table() {
 #if DEBUG
