@@ -15,6 +15,12 @@ namespace DoubleDoubleTest {
             Console.WriteLine(error);
 
             Assert.IsTrue(ddouble.Abs(error) < 1e-31);
+
+            Console.WriteLine(ddouble.BitDecrement(expected) - actual);
+            Console.WriteLine(ddouble.BitIncrement(expected) - actual);
+
+            Console.WriteLine($"0x{FloatSplitter.Split(expected).mantissa:X14}");
+            Console.WriteLine($"0x{FloatSplitter.Split(actual).mantissa:X14}");
         }
 
         [TestMethod]
@@ -27,6 +33,12 @@ namespace DoubleDoubleTest {
             Console.WriteLine(error);
 
             Assert.IsTrue(ddouble.Abs(error) < 1e-31);
+
+            Console.WriteLine(ddouble.BitDecrement(expected) - actual);
+            Console.WriteLine(ddouble.BitIncrement(expected) - actual);
+
+            Console.WriteLine($"0x{FloatSplitter.Split(expected).mantissa:X14}");
+            Console.WriteLine($"0x{FloatSplitter.Split(actual).mantissa:X14}");
         }
     }
 }

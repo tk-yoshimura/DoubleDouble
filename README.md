@@ -70,12 +70,18 @@
 |----|----|----|----|
 |Pi|3.141592653589793238462...||ddouble.PI|
 |Napier's E|2.718281828459045235360...||ddouble.E|
+|Euler's Gamma|0.577215664901532860606...||ddouble.EulerGamma|
+|&zeta;(3)|1.202056903159594285399...|Apery const.|ddouble.Zeta3|
+|&zeta;(5)|1.036927755143369926331...||ddouble.Zeta5|
+|&zeta;(7)|1.008349277381922826839...||ddouble.Zeta7|
+|&zeta;(9)|1.002008392826082214418...||ddouble.Zeta9|
 
 ## Sequence
 
 |sequence|note|usage|
 |----|----|----|
 |Taylor|1/n!|ddouble.TaylorSequence|
+|Bernoulli|B(2k)|ddouble.BernoulliSequence|
 
 ## Coefficient
 

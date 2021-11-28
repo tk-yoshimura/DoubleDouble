@@ -70,5 +70,32 @@ namespace DoubleDoubleTest {
                 Assert.AreEqual(double.Parse(w5), (double)(ddouble)(w5));
             }
         }
+
+        [TestMethod]
+        public void ParseLimitTest() {
+            string p9 = "0.9";
+
+            for (int i = 0; i < 38; i++) {
+                ddouble v = p9;
+
+                Console.WriteLine(p9);
+                Console.WriteLine(v);
+                Console.WriteLine($"0x{FloatSplitter.Split(v).mantissa:X14}");
+
+                p9 += "9";  
+            }
+
+            string p3 = "0.3";
+
+            for (int i = 0; i < 38; i++) {
+                ddouble v = p3;
+
+                Console.WriteLine(p3);
+                Console.WriteLine(v);
+                Console.WriteLine($"0x{FloatSplitter.Split(v).mantissa:X14}");
+
+                p3 += "3";  
+            }
+        }
     }
 }
