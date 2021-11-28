@@ -168,9 +168,9 @@ namespace DoubleDouble {
             mantissa[2] = (UInt32)(num >> 64);
 
             decimal d = new decimal(
-                unchecked((int)mantissa[0]), 
-                unchecked((int)mantissa[1]), 
-                unchecked((int)mantissa[2]), 
+                unchecked((int)mantissa[0]),
+                unchecked((int)mantissa[1]),
+                unchecked((int)mantissa[2]),
                 isNegative: sign < 0, scale: checked((byte)(-exponent))
             );
 

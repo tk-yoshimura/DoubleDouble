@@ -483,10 +483,10 @@ namespace DoubleDoubleTest {
 
         [TestMethod]
         public void TruncateMantissaTest() {
-            foreach (ddouble v in new ddouble[] { 
-                -1, -ddouble.Rcp(3), -ddouble.Rcp(7), -ddouble.BitDecrement(2), 
-                1, ddouble.Rcp(3), ddouble.Rcp(7), ddouble.BitDecrement(2) }){
-                
+            foreach (ddouble v in new ddouble[] {
+                -1, -ddouble.Rcp(3), -ddouble.Rcp(7), -ddouble.BitDecrement(2),
+                1, ddouble.Rcp(3), ddouble.Rcp(7), ddouble.BitDecrement(2) }) {
+
                 for (int keep_bits = 1; keep_bits <= 110; keep_bits++) {
                     ddouble v_round = ddouble.TruncateMantissa(v, keep_bits);
 
