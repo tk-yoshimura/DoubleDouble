@@ -7,7 +7,7 @@ namespace DoubleDoubleSandbox {
         static void Main(string[] args) {
             using (StreamWriter sw = new StreamWriter("ddouble_convterms.csv")) {
                 sw.WriteLine($"z,terms,approx gamma(z),expected gamma(z)");
-                
+
                 for (ddouble z = 1; z <= 32; z += 0.5) {
                     int terms = SterlingApprox.SterlingTermConvergence(z);
                     ddouble y_approx = terms < 32 ? SterlingApprox.Gamma(z, terms) : ddouble.NaN;

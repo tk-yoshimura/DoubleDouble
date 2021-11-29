@@ -1261,11 +1261,11 @@ namespace DoubleDoubleTest {
             DDoubleAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 128);
             DDoubleAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 160);
 
-            foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] { 
-                (0.999755859375d, "1.409708218759223705137152436852900411083e-4"), 
-                (1.000244140625d, "-1.408727761632663509703058417841195184579e-4"), 
-                (1.999755859375d, "-1.0319961029799208618175017469614360195e-4"), 
-                (2.000244140625d, "1.032380513640963581901732440393341810164e-4"), 
+            foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
+                (0.999755859375d, "1.409708218759223705137152436852900411083e-4"),
+                (1.000244140625d, "-1.408727761632663509703058417841195184579e-4"),
+                (1.999755859375d, "-1.0319961029799208618175017469614360195e-4"),
+                (2.000244140625d, "1.032380513640963581901732440393341810164e-4"),
             }) {
                 ddouble x_dec = ddouble.BitDecrement(x), x_dec2 = ddouble.BitDecrement(x_dec), x_dec3 = ddouble.BitDecrement(x_dec2);
                 ddouble x_inc = ddouble.BitIncrement(x), x_inc2 = ddouble.BitIncrement(x_inc), x_inc3 = ddouble.BitIncrement(x_inc2);
@@ -1296,6 +1296,42 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsPositiveInfinity(loggamma_pinf), nameof(loggamma_pinf));
             Assert.IsTrue(ddouble.IsNaN(loggamma_ninf), nameof(loggamma_ninf));
             Assert.IsTrue(ddouble.IsNaN(loggamma_nan), nameof(loggamma_nan));
+        }
+
+        [TestMethod]
+        public void DigammaTest() {
+            for (int i = 1; i <= 35; i++) {
+                ddouble x = ddouble.Digamma(i);
+                ddouble y = ddouble.HarmonicNumber(i - 1) - ddouble.EulerGamma;
+
+                DDoubleAssert.NeighborBits(y, x, 128);
+            }
+
+            DDoubleAssert.NeighborBits("-2.8941202000429320747561968127633502440339e0", ddouble.Digamma(-0.75), 128);
+            DDoubleAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(-0.5), 128);
+            DDoubleAssert.NeighborBits("2.9141391202135278303731132371828193068299e0", ddouble.Digamma(-0.25), 128);
+            DDoubleAssert.NeighborBits("-4.2274535333762654080895301460966835773672e0", ddouble.Digamma(0.25), 128);
+            DDoubleAssert.NeighborBits("-1.9635100260214234794409763329987555671932e0", ddouble.Digamma(0.5), 128);
+            DDoubleAssert.NeighborBits("-1.0858608797864721696268867628171806931701e0", ddouble.Digamma(0.75), 128);
+            DDoubleAssert.NeighborBits("-2.2745353337626540808953014609668357736724e-1", ddouble.Digamma(1.25), 128);
+            DDoubleAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(1.5), 128);
+            DDoubleAssert.NeighborBits("2.4747245354686116370644657051615264016326e-1", ddouble.Digamma(1.75), 128);
+            DDoubleAssert.NeighborBits("4.6001618527380874001986055855758507268668e0", ddouble.Digamma(100), 128);
+            DDoubleAssert.NeighborBits("5.2958152832199116154508743070484592057952e0", ddouble.Digamma(200), 160);
+
+            ddouble digamma_pzero = ddouble.Digamma(0d);
+            ddouble digamma_mzero = ddouble.Digamma(-0d);
+            ddouble digamma_mone = ddouble.Digamma(-1d);
+            ddouble digamma_pinf = ddouble.Digamma(double.PositiveInfinity);
+            ddouble digamma_ninf = ddouble.Digamma(double.NegativeInfinity);
+            ddouble digamma_nan = ddouble.Digamma(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_pzero), nameof(digamma_pzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_mzero), nameof(digamma_mzero));
+            Assert.IsTrue(ddouble.IsNaN(digamma_mone), nameof(digamma_mone));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_pinf), nameof(digamma_pinf));
+            Assert.IsTrue(ddouble.IsNaN(digamma_ninf), nameof(digamma_ninf));
+            Assert.IsTrue(ddouble.IsNaN(digamma_nan), nameof(digamma_nan));
         }
     }
 }

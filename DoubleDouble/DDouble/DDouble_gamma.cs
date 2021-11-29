@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -25,29 +24,28 @@ namespace DoubleDouble {
 
                 return y;
             }
+
+            if (x < Consts.Gamma.Threshold) {
+                int n = (int)Floor(x);
+                ddouble f = x - n;
+                ddouble z = f + Consts.Gamma.Threshold;
+                ddouble v = Gamma(z);
+
+                ddouble w = f + n;
+                for (int i = n + 1; i < Consts.Gamma.Threshold; i++) {
+                    w *= f + i;
+                }
+
+                return v / w;
+            }
             else {
-                if (x < Consts.Gamma.Threshold) {
-                    int n = (int)Floor(x);
-                    ddouble f = x - n;
-                    ddouble z = f + Consts.Gamma.Threshold;
-                    ddouble v = Gamma(z);
+                ddouble r = ddouble.Sqrt(Ldexp(ddouble.PI, 1) / x);
+                ddouble p = ddouble.Pow(x / ddouble.E, x);
+                ddouble s = ddouble.Exp(SterlingTerm(x));
 
-                    ddouble w = f + n;
-                    for (int i = n + 1; i < Consts.Gamma.Threshold; i++) {
-                        w *= f + i;
-                    }
+                ddouble y = RoundMantissa(r * p * s, Consts.Gamma.SterlingPrecision);
 
-                    return v / w;
-                }
-                else {
-                    ddouble r = ddouble.Sqrt(Ldexp(ddouble.PI, 1) / x);
-                    ddouble p = ddouble.Pow(x / ddouble.E, x);
-                    ddouble s = ddouble.Exp(SterlingTerm(x));
-
-                    ddouble y = RoundMantissa(r * p * s, Consts.Gamma.SterlingPrecision);
-
-                    return y;
-                }
+                return y;
             }
         }
 
@@ -88,7 +86,7 @@ namespace DoubleDouble {
                         + x * (3 * (Pow(PI, 8) - 9450))))))))) / 226800;
             }
 
-            static KahanSum sterling_loggamma(ddouble x) { 
+            static KahanSum sterling_loggamma(ddouble x) {
                 ddouble p = (x - 0.5d) * ddouble.Log(x);
                 ddouble s = SterlingTerm(x);
 
@@ -104,16 +102,14 @@ namespace DoubleDouble {
                 int n = (int)Floor(x);
                 ddouble f = x - n;
                 ddouble z = f + Consts.Gamma.Threshold;
-                KahanSum v = sterling_loggamma(z).Sum;
+                ddouble v = sterling_loggamma(z).Sum;
 
                 ddouble w = f + n;
                 for (int i = n + 1; i < Consts.Gamma.Threshold; i++) {
                     w *= f + i;
                 }
 
-                v.Add(-Log(w));
-
-                ddouble y = v.Sum;
+                ddouble y = v - Log(w);
 
                 return y;
             }
@@ -124,11 +120,64 @@ namespace DoubleDouble {
             }
         }
 
-        private static ddouble SterlingTerm(ddouble z) {
-            KahanSum x = Consts.Gamma.SterlingTable[0];
+        public static ddouble Digamma(ddouble x) {
+            if (IsNaN(x) || IsNegativeInfinity(x)) {
+                return NaN;
+            }
+            if (IsZero(x) || IsPositiveInfinity(x)) {
+                return PositiveInfinity;
+            }
 
+
+            if (x < 0.5d) {
+                ddouble tanpi = TanPI(x);
+
+                if (IsZero(tanpi)) {
+                    return NaN;
+                }
+
+                ddouble y = Digamma(1 - x) - PI / tanpi;
+
+                return y;
+            }
+
+            static KahanSum sterling_digamma(ddouble x) {
+                KahanSum s = KahanSum.Negate(DiffLogSterlingTerm(x));
+                ddouble p = ddouble.Log(x);
+                ddouble c = Rcp(Ldexp(x, 1));
+
+                s.Add(p);
+                s.Add(-c);
+
+                return s;
+            }
+
+            if (x < Consts.Digamma.Threshold) {
+                int n = (int)Floor(x);
+                ddouble f = x - n;
+                ddouble z = f + Consts.Digamma.Threshold;
+                KahanSum v = sterling_digamma(z);
+
+                for (int i = n; i < Consts.Digamma.Threshold; i++) {
+                    ddouble w = Rcp(f + i);
+                    v.Add(-w);
+                }
+
+                ddouble y = v.Sum;
+
+                return y;
+            }
+            else {
+                ddouble y = sterling_digamma(x).Sum;
+
+                return y;
+            }
+        }
+
+        private static ddouble SterlingTerm(ddouble z) {
             ddouble v = Rcp(z), w = v * v, u = w;
 
+            KahanSum x = Consts.Gamma.SterlingTable[0];
             foreach (ddouble s in Consts.Gamma.SterlingTable.Skip(1)) {
                 x.Add(u * s);
 
@@ -144,6 +193,17 @@ namespace DoubleDouble {
             return y;
         }
 
+        private static KahanSum DiffLogSterlingTerm(ddouble z) {
+            ddouble v = Rcp(z), w = v * v, u = w * w;
+            KahanSum x = Consts.Digamma.SterlingTable[0] * w;
+            foreach (ddouble s in Consts.Digamma.SterlingTable.Skip(1)) {
+                x.Add(u * s);
+                u *= w;
+            }
+
+            return x.Sum;
+        }
+
         private static partial class Consts {
             public static class Gamma {
                 public const int Threshold = 16;
@@ -153,9 +213,25 @@ namespace DoubleDouble {
 
                 private static ReadOnlyCollection<ddouble> GenerateSterlingTable() {
                     List<ddouble> table = new();
-                    
+
                     for (int k = 1; k <= 24; k++) {
                         ddouble c = ddouble.BernoulliSequence[k] / checked((2 * k) * (2 * k - 1));
+                        table.Add(c);
+                    }
+
+                    return table.AsReadOnly();
+                }
+            }
+
+            public static class Digamma {
+                public const int Threshold = 18;
+                public static readonly ReadOnlyCollection<ddouble> SterlingTable = GenerateSterlingTable();
+
+                private static ReadOnlyCollection<ddouble> GenerateSterlingTable() {
+                    List<ddouble> table = new();
+
+                    for (int k = 1; k <= 24; k++) {
+                        ddouble c = ddouble.BernoulliSequence[k] / checked((2 * k));
                         table.Add(c);
                     }
 

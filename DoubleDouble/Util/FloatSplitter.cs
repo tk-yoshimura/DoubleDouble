@@ -63,5 +63,30 @@ namespace DoubleDouble {
 
             return (hi.sign, hi.exponent, mantissa, iszero: false);
         }
+
+        public static (int sign, int exponent, BigInteger mantissa, bool iszero) Split(qdouble v) {
+            (int sign, int exponent, BigInteger mantissa, bool iszero) hi = Split(v.Hi);
+            (int sign, int exponent, BigInteger mantissa, bool iszero) lo = Split(v.Lo);
+
+            if (hi.iszero) {
+                return (hi.sign, 0, 0, iszero: true);
+            }
+
+            BigInteger mantissa = hi.mantissa << (MantissaBits * 2);
+            if (lo.iszero) {
+                return (hi.sign, hi.exponent, mantissa, iszero: false);
+            }
+
+            int sfts = hi.exponent - lo.exponent - (MantissaBits * 2);
+
+            if (hi.sign == lo.sign) {
+                mantissa += BigIntegerUtil.RightShift(lo.mantissa, sfts);
+            }
+            else {
+                mantissa -= BigIntegerUtil.RightShift(lo.mantissa, sfts);
+            }
+
+            return (hi.sign, hi.exponent, mantissa, iszero: false);
+        }
     }
 }

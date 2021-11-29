@@ -15,14 +15,14 @@ namespace DoubleDouble {
 
             if (!double.IsFinite(this.lo)) {
                 this.hi = hi;
-                this.lo = 0;
+                this.lo = 0d;
             }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal ddouble(double v) {
             this.hi = v;
-            this.lo = 0;
+            this.lo = 0d;
         }
 
         public static ddouble Zero { private set; get; } = new ddouble(0d);
@@ -47,7 +47,7 @@ namespace DoubleDouble {
 
         public static bool IsFinite(ddouble v) => double.IsFinite(v.hi);
 
-        public static bool IsZero(ddouble v) => v.hi == 0;
+        public static bool IsZero(ddouble v) => v.hi == 0d;
 
         public static bool IsPlusZero(ddouble v) => IsZero(v) && v.Sign > 0;
 

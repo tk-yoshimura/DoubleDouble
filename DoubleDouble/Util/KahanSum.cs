@@ -12,6 +12,12 @@ namespace DoubleDouble {
             this.IsConvergence = false;
         }
 
+        private KahanSum(ddouble x, ddouble c) {
+            this.Sum = x;
+            this.C = c;
+            this.IsConvergence = false;
+        }
+
         public static implicit operator KahanSum(ddouble x) {
             return new KahanSum(x);
         }
@@ -24,6 +30,10 @@ namespace DoubleDouble {
             C = (t - Sum) - y;
             IsConvergence = Sum == t;
             Sum = t;
+        }
+
+        public static KahanSum Negate(KahanSum x) {
+            return new KahanSum(-x.Sum, -x.C);
         }
 
         public override string ToString() {

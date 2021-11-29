@@ -78,7 +78,7 @@ namespace DoubleDouble {
 
         private static partial class Consts {
             public static class Log {
-                public static readonly ddouble Lg2 = Rcp(3 + Log2Prime(Ldexp(5, -2)));
+                public static readonly ddouble Lg2 = Rcp(3d + Log2Prime(Ldexp(5d, -2)));
                 public static readonly ddouble Ln2 = GenerateLn2();
                 public static readonly ddouble LbE = Rcp(Ln2);
                 public static readonly ddouble Lb10 = Rcp(Lg2);
@@ -88,7 +88,7 @@ namespace DoubleDouble {
                     KahanSum x = Rcp(3);
 
                     while (!x.IsConvergence) {
-                        x.Add(Rcp(n * Pow(3, n)));
+                        x.Add(Rcp(n * Pow(3d, n)));
                         n += 2;
                     }
 
@@ -103,7 +103,7 @@ namespace DoubleDouble {
 
                 public static readonly int Log2TableN = Log2Table.Count - 1;
 
-                public static readonly IReadOnlyList<ddouble> LogConvergenceRemTable = GenerateLog2ConvergenceRemTable();
+                public static readonly IReadOnlyList<ddouble> LogConvergenceRemTable = GenerateLogConvergenceRemTable();
 
                 public static ddouble[] GenerateLog2Table() {
 #if DEBUG
@@ -131,8 +131,8 @@ namespace DoubleDouble {
                         return 1d;
                     }
 
-                    ddouble y = 0;
-                    ddouble p = Ldexp(1, -1);
+                    ddouble y = 0d;
+                    ddouble p = Ldexp(1d, -1);
 
                     for (int i = 128; i > 0; i--) {
                         x *= x;
@@ -151,7 +151,7 @@ namespace DoubleDouble {
                     return y;
                 }
 
-                private static IReadOnlyList<ddouble> GenerateLog2ConvergenceRemTable() {
+                private static IReadOnlyList<ddouble> GenerateLogConvergenceRemTable() {
                     const int n = 16;
                     ddouble[] table = new ddouble[n];
 
