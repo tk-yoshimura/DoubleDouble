@@ -4,6 +4,22 @@ using System.Numerics;
 namespace DoubleDouble {
     internal partial struct qdouble {
 
+        public static implicit operator qdouble(int v) {
+            return new qdouble(v);
+        }
+
+        public static implicit operator qdouble(uint v) {
+            return new qdouble(v);
+        }
+
+        public static implicit operator qdouble(long v) {
+            return new qdouble(v);
+        }
+
+        public static implicit operator qdouble(ulong v) {
+            return new qdouble(v);
+        }
+
         public static implicit operator qdouble(double v) {
             return new qdouble(v);
         }

@@ -121,5 +121,22 @@ namespace DoubleDouble {
 
             return new qdouble(hi, lo) + c;
         }
+
+        public static qdouble operator %(qdouble a, qdouble b) {
+            if (IsInfinity(a) || IsInfinity(b) || IsZero(b)) {
+                return a.hi % b.hi;
+            }
+
+            qdouble abs_a = Abs(a), abs_b = Abs(b);
+
+            qdouble abs_y = abs_a - qdouble.Truncate(abs_a / abs_b) * abs_b;
+            if (abs_y.Sign < 0 || abs_y >= abs_b) {
+                abs_y = 0;
+            }
+
+            qdouble y = a.Sign >= 0 ? abs_y : -abs_y;
+
+            return y;
+        }
     }
 }
