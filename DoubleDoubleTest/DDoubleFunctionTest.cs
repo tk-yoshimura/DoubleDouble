@@ -1237,5 +1237,65 @@ namespace DoubleDoubleTest {
             Assert.IsTrue(ddouble.IsNaN(gamma_ninf), nameof(gamma_ninf));
             Assert.IsTrue(ddouble.IsNaN(gamma_nan), nameof(gamma_nan));
         }
+
+        [TestMethod]
+        public void LogGammaTest() {
+            for (BigInteger i = 1, y = 1; i <= 35; i++, y = y * (i - 1)) {
+                ddouble x = ddouble.LogGamma(i);
+                ddouble v = ddouble.Log(y);
+
+                DDoubleAssert.NeighborBits(v, x, 128);
+            }
+
+            ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
+
+            for (BigInteger i = 1, y = 1, z = 1; i <= 30; i++, y *= 2, z *= 2 * i - 3) {
+                ddouble x = ddouble.LogGamma((2 * (int)i - 1) * 0.5d);
+                ddouble v = ddouble.Log(sqrtpi * z / y);
+
+                DDoubleAssert.NeighborBits(v, x, 128);
+            }
+
+            DDoubleAssert.NeighborBits("1.288022524698077457370610440219717295925", ddouble.LogGamma(0.25), 128);
+            DDoubleAssert.NeighborBits("2.032809514312953714814329718624296997597e-1", ddouble.LogGamma(0.75), 128);
+            DDoubleAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 128);
+            DDoubleAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 160);
+
+            foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] { 
+                (0.999755859375d, "1.409708218759223705137152436852900411083e-4"), 
+                (1.000244140625d, "-1.408727761632663509703058417841195184579e-4"), 
+                (1.999755859375d, "-1.0319961029799208618175017469614360195e-4"), 
+                (2.000244140625d, "1.032380513640963581901732440393341810164e-4"), 
+            }) {
+                ddouble x_dec = ddouble.BitDecrement(x), x_dec2 = ddouble.BitDecrement(x_dec), x_dec3 = ddouble.BitDecrement(x_dec2);
+                ddouble x_inc = ddouble.BitIncrement(x), x_inc2 = ddouble.BitIncrement(x_inc), x_inc3 = ddouble.BitIncrement(x_inc2);
+
+                Console.WriteLine(ddouble.LogGamma(x_dec3));
+                Console.WriteLine(ddouble.LogGamma(x_dec2));
+                Console.WriteLine(ddouble.LogGamma(x_dec));
+                Console.WriteLine(ddouble.LogGamma(x));
+                Console.WriteLine(ddouble.LogGamma(x_inc));
+                Console.WriteLine(ddouble.LogGamma(x_inc2));
+                Console.WriteLine(ddouble.LogGamma(x_inc3));
+
+                DDoubleAssert.AreEqual(expected, ddouble.LogGamma(x_dec), 1e-29);
+                DDoubleAssert.AreEqual(expected, ddouble.LogGamma(x), 1e-29);
+                DDoubleAssert.AreEqual(expected, ddouble.LogGamma(x_inc), 1e-29);
+            }
+
+            ddouble loggamma_pzero = ddouble.LogGamma(0d);
+            ddouble loggamma_mzero = ddouble.LogGamma(-0d);
+            ddouble loggamma_mone = ddouble.LogGamma(-1d);
+            ddouble loggamma_pinf = ddouble.LogGamma(double.PositiveInfinity);
+            ddouble loggamma_ninf = ddouble.LogGamma(double.NegativeInfinity);
+            ddouble loggamma_nan = ddouble.LogGamma(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(loggamma_pzero), nameof(loggamma_pzero));
+            Assert.IsTrue(ddouble.IsNaN(loggamma_mzero), nameof(loggamma_mzero));
+            Assert.IsTrue(ddouble.IsNaN(loggamma_mone), nameof(loggamma_mone));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(loggamma_pinf), nameof(loggamma_pinf));
+            Assert.IsTrue(ddouble.IsNaN(loggamma_ninf), nameof(loggamma_ninf));
+            Assert.IsTrue(ddouble.IsNaN(loggamma_nan), nameof(loggamma_nan));
+        }
     }
 }
