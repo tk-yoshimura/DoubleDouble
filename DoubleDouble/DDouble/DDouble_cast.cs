@@ -145,7 +145,7 @@ namespace DoubleDouble {
                 num /= 10;
             }
 
-            ddouble x = TruncateMantissa(FromStringCore(sign, 0, num, exponent), 100);
+            ddouble x = RoundMantissa(FromStringCore(sign, 0, num, exponent), 100);
 
             return x;
         }
