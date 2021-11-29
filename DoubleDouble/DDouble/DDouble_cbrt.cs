@@ -10,7 +10,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsZero(x)) {
-                return x.Sign > 0 ? PlusZero : MinusZero;
+                return Zero;
             }
             if (IsInfinity(x)) {
                 return PositiveInfinity;

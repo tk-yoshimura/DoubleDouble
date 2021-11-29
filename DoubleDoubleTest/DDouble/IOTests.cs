@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public partial class DDoubleIOTests {
+    public partial class IOTests {
         [TestMethod]
         public void IOTest() {
             const string filename_bin = "dd_iotest.bin";

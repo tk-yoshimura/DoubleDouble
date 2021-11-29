@@ -2,9 +2,9 @@ using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class DDoubleCmpTests {
+    public class CmpTests {
         [TestMethod]
         public void BitIncrementTest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {

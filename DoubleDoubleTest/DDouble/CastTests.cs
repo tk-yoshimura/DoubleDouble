@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Numerics;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class DDoubleCastTests {
+    public class CastTests {
         [TestMethod]
         public void BigIntegerTest() {
             Assert.AreEqual(0d, (double)(ddouble)(BigInteger)(0));

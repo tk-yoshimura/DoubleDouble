@@ -25,7 +25,7 @@ namespace DoubleDouble {
             BigInteger v = 2;
 
             for (int d = 3; d <= 256; d++) {
-                qdouble t = 1 / (qdouble)v;
+                qdouble t = Rcp((qdouble)v);
 
                 table.Add(t);
 

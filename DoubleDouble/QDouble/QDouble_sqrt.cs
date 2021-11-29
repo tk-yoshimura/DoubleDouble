@@ -7,7 +7,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsZero(x)) {
-                return 0;
+                return Zero;
             }
             if (IsInfinity(x)) {
                 return PositiveInfinity;

@@ -9,7 +9,7 @@ namespace DoubleDouble {
                 return (0, NaN);
             }
             if (IsZero(x)) {
-                return (0, Zero);
+                return (0, x.Sign > 0 ? PlusZero : MinusZero);
             }
 
             (int n, ddouble f) = ddouble.Frexp(x.hi);

@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace DoubleDoubleTest {
 
-    public static class DDoubleAssert {
+    public static class HPAssert {
 
         public static void AreEqual(ddouble expected, ddouble actual, ddouble delta) {
             if (ddouble.Abs(expected - actual) > delta) {

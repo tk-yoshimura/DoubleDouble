@@ -2,9 +2,9 @@ using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class DDoubleArithmeticTests {
+    public class ArithmeticTests {
         [TestMethod]
         public void AddTest() {
             foreach (int n in new int[] { 7, 13, 17 }) {

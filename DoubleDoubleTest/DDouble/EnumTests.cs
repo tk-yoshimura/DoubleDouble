@@ -1,9 +1,9 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public partial class DDoubleEnumTests {
+    public partial class EnumTests {
         [TestMethod]
         public void EnumStatsTest() {
             ddouble[] xs = new ddouble[] { 1, 3, 6, 2, 4 };

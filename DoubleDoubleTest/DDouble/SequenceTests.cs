@@ -2,9 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class DDoubleSequenceTests {
+    public class SequenceTests {
         [TestMethod]
         public void TaylorTest() {
             for (int n = 0; n < ddouble.TaylorSequence.Count; n++) {
@@ -31,13 +31,13 @@ namespace DoubleDoubleTest {
             }
 
             Assert.AreEqual(1, ddouble.BernoulliSequence[0]);
-            DDoubleAssert.NeighborBits(ddouble.Rcp(6), ddouble.BernoulliSequence[1]);
-            DDoubleAssert.NeighborBits((ddouble)(-1) / 30, ddouble.BernoulliSequence[2]);
-            DDoubleAssert.NeighborBits((ddouble)(1) / 42, ddouble.BernoulliSequence[3]);
-            DDoubleAssert.NeighborBits((ddouble)(-1) / 30, ddouble.BernoulliSequence[4]);
-            DDoubleAssert.NeighborBits((ddouble)(5) / 66, ddouble.BernoulliSequence[5]);
-            DDoubleAssert.NeighborBits((ddouble)(-691) / 2730, ddouble.BernoulliSequence[6]);
-            DDoubleAssert.NeighborBits((ddouble)(7) / 6, ddouble.BernoulliSequence[7]);
+            HPAssert.NeighborBits(ddouble.Rcp(6), ddouble.BernoulliSequence[1]);
+            HPAssert.NeighborBits((ddouble)(-1) / 30, ddouble.BernoulliSequence[2]);
+            HPAssert.NeighborBits((ddouble)(1) / 42, ddouble.BernoulliSequence[3]);
+            HPAssert.NeighborBits((ddouble)(-1) / 30, ddouble.BernoulliSequence[4]);
+            HPAssert.NeighborBits((ddouble)(5) / 66, ddouble.BernoulliSequence[5]);
+            HPAssert.NeighborBits((ddouble)(-691) / 2730, ddouble.BernoulliSequence[6]);
+            HPAssert.NeighborBits((ddouble)(7) / 6, ddouble.BernoulliSequence[7]);
         }
 
         [TestMethod]
@@ -52,9 +52,9 @@ namespace DoubleDoubleTest {
 
             Assert.AreEqual(0, ddouble.HarmonicNumber(0));
             Assert.AreEqual(1, ddouble.HarmonicNumber(1));
-            DDoubleAssert.NeighborBits((ddouble)(3) / 2, ddouble.HarmonicNumber(2));
-            DDoubleAssert.NeighborBits((ddouble)(11) / 6, ddouble.HarmonicNumber(3));
-            DDoubleAssert.NeighborBits((ddouble)(25) / 12, ddouble.HarmonicNumber(4));
+            HPAssert.NeighborBits((ddouble)(3) / 2, ddouble.HarmonicNumber(2));
+            HPAssert.NeighborBits((ddouble)(11) / 6, ddouble.HarmonicNumber(3));
+            HPAssert.NeighborBits((ddouble)(25) / 12, ddouble.HarmonicNumber(4));
         }
     }
 }

@@ -2,9 +2,9 @@ using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class DDoubleStringTests {
+    public class StringTests {
         [TestMethod]
         public void ToStringTest() {
             Assert.AreEqual("0", (ddouble)(0).ToString());

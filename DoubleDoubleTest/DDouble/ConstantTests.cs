@@ -2,9 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace DoubleDoubleTest {
+namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class DDoubleConstantTests {
+    public class ConstantTests {
         [TestMethod]
         public void ETest() {
             ddouble expected = (ddouble)"2.71828182845904523536028747135266250";
