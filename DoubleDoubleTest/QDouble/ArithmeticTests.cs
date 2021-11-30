@@ -9,7 +9,7 @@ namespace DoubleDoubleTest.QDouble {
         public void AddTest() {
             foreach (int n in new int[] { 7, 13, 17 }) {
                 qdouble u = qdouble.Rcp(n);
-                ddouble v = 1d / n;
+                ddouble v = ddouble.Rcp(n);
 
                 qdouble su = 0;
                 ddouble sv = 0;
@@ -19,7 +19,7 @@ namespace DoubleDoubleTest.QDouble {
                     sv += v;
                 }
 
-                Assert.IsTrue(ddouble.Abs(100 - (ddouble)su) <= ddouble.Abs(100 - sv));
+                Assert.IsTrue(qdouble.Abs(100 - su) <= qdouble.Abs(100 - sv));
                 HPAssert.AreEqual(100, (ddouble)su, 1e-60);
             }
 
@@ -38,7 +38,7 @@ namespace DoubleDoubleTest.QDouble {
         public void SubTest() {
             foreach (int n in new int[] { 7, 13, 17 }) {
                 qdouble u = qdouble.Rcp(n);
-                ddouble v = 1d / n;
+                ddouble v = ddouble.Rcp(n);
 
                 qdouble su = 0;
                 ddouble sv = 0;
@@ -69,7 +69,7 @@ namespace DoubleDoubleTest.QDouble {
 
             foreach (int n in new int[] { -7, -13, -17, -257, 7, 13, 17, 257 }) {
                 qdouble u = (qdouble.Rcp(n)) * (qdouble)n;
-                ddouble v = (1d / n) * n;
+                ddouble v = ((ddouble)(1d) / n) * n;
 
                 Assert.IsTrue(ddouble.Abs((ddouble)(1 - u)) <= ddouble.Abs(1 - v));
                 HPAssert.AreEqual(0, (ddouble)(1 - u), 1e-60);
@@ -122,7 +122,7 @@ namespace DoubleDoubleTest.QDouble {
 
             foreach (int n in new int[] { -7, -13, -17, -257, 7, 13, 17, 257 }) {
                 qdouble u = (ddouble)n * (qdouble.Rcp(n));
-                ddouble v = (1d / n) * n;
+                ddouble v = ((ddouble)(1d) / n) * n;
 
                 Assert.IsTrue(ddouble.Abs((ddouble)(1 - u)) <= ddouble.Abs(1 - v));
                 HPAssert.AreEqual(0, (ddouble)(1 - u), 1e-60);

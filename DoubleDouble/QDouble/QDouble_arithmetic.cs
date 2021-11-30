@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace DoubleDouble {
     internal partial struct qdouble {
@@ -69,10 +70,12 @@ namespace DoubleDouble {
                 return a.hi * b;
             }
 
-            ddouble hh = (ddouble)a.hi * (ddouble)b;
-            ddouble lh = (ddouble)a.lo * (ddouble)b;
+            qdouble y = MultiplyAdd(Zero, a.hi.Hi, b.Hi);
+            y = MultiplyAdd(y, a.hi.Hi, b.Lo);
+            y = MultiplyAdd(y, a.hi.Lo, b.Hi);
+            y = MultiplyAdd(y, a.hi.Lo, b.Lo);
 
-            return new qdouble(hh, lh);
+            return y;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -81,10 +84,12 @@ namespace DoubleDouble {
                 return a * b.hi;
             }
 
-            ddouble hh = (ddouble)a * (ddouble)b.hi;
-            ddouble hl = (ddouble)a * (ddouble)b.lo;
+            qdouble y = MultiplyAdd(Zero, a.Hi, b.hi.Hi);
+            y = MultiplyAdd(y, a.Hi, b.hi.Lo);
+            y = MultiplyAdd(y, a.Lo, b.hi.Hi);
+            y = MultiplyAdd(y, a.Lo, b.hi.Lo);
 
-            return new qdouble(hh, hl);
+            return y;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -93,12 +98,16 @@ namespace DoubleDouble {
                 return a.hi * b.hi;
             }
 
-            ddouble hh = (ddouble)a.hi * (ddouble)b.hi;
-            ddouble hl = (ddouble)a.hi * (ddouble)b.lo;
-            ddouble lh = (ddouble)a.lo * (ddouble)b.hi;
-            ddouble ll = (ddouble)a.lo * (ddouble)b.lo;
+            qdouble y = MultiplyAdd(Zero, a.hi.Hi, b.hi.Hi);
+            y = MultiplyAdd(y, a.hi.Hi, b.hi.Lo);
+            y = MultiplyAdd(y, a.hi.Lo, b.hi.Hi);
+            y = MultiplyAdd(y, a.hi.Lo, b.hi.Lo);
+            y = MultiplyAdd(y, a.lo.Hi, b.lo.Hi);
+            y = MultiplyAdd(y, a.lo.Hi, b.lo.Lo);
+            y = MultiplyAdd(y, a.lo.Lo, b.lo.Hi);
+            y = MultiplyAdd(y, a.lo.Lo, b.lo.Lo);
 
-            return (new qdouble(hh, hl) + lh) + ll;
+            return y;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -137,6 +146,11 @@ namespace DoubleDouble {
             qdouble y = a.Sign >= 0 ? abs_y : -abs_y;
 
             return y;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static qdouble MultiplyAdd(qdouble v, double a, double b) {
+            return v + (ddouble)a * b;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 
 namespace DoubleDouble {
-    [DebuggerDisplay("{ToString(),nq}")]
+    [DebuggerDisplay("{hi},{lo}")]
     internal partial struct qdouble {
         private readonly ddouble hi, lo;
 
