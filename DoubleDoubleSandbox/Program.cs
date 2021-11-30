@@ -8,8 +8,8 @@ namespace DoubleDoubleSandbox {
         static void Main(string[] args) {
             Random random = new Random(1234);
 
-            ddouble[] vs = (new ddouble[256]).Select((_)=>
-                (random.Next(2) == 0 ? +1 : -1) * ddouble.Rcp(0.1 + random.NextDouble())).ToArray();
+            ddouble[] vs = (new ddouble[512]).Select((_)=>
+                (random.Next(2) == 0 ? +1 : -1) * ddouble.Rcp(0.0625d + random.NextDouble() * 1.9375d)).ToArray();
 
             KahanSum h1 = ddouble.Zero;
             ddouble h2 = 0;
