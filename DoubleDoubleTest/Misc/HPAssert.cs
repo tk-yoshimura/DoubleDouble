@@ -47,47 +47,5 @@ namespace DoubleDoubleTest {
                 throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}\n{message}");
             }
         }
-
-        public static void AreEqual(qdouble expected, qdouble actual, qdouble delta) {
-            if (qdouble.Abs(expected - actual) > delta) {
-                throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}");
-            }
-        }
-
-        public static void AreEqual(qdouble expected, qdouble actual, qdouble delta, string message) {
-            if (qdouble.Abs(expected - actual) > delta) {
-                throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}\n{message}");
-            }
-        }
-
-        public static void AreNotEqual(qdouble notExpected, qdouble actual, qdouble delta) {
-            if (qdouble.Abs(notExpected - actual) <= delta) {
-                throw new AssertFailedException($"{nameof(notExpected)}:{notExpected}\n{nameof(actual)}:  {actual}");
-            }
-        }
-
-        public static void AreNotEqual(qdouble notExpected, qdouble actual, qdouble delta, string message) {
-            if (qdouble.Abs(notExpected - actual) <= delta) {
-                throw new AssertFailedException($"{nameof(notExpected)}:{notExpected}\n{nameof(actual)}:  {actual}\n{message}");
-            }
-        }
-
-        public static void NeighborBits(qdouble expected, qdouble actual, int dist = 1) {
-            BigInteger n_expected = FloatSplitter.Split(expected).mantissa;
-            BigInteger n_actual = FloatSplitter.Split(actual).mantissa;
-
-            if (BigInteger.Abs(n_expected - n_actual) > dist) {
-                throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}");
-            }
-        }
-
-        public static void NeighborBits(qdouble expected, qdouble actual, string message, int dist = 1) {
-            BigInteger n_expected = FloatSplitter.Split(expected).mantissa;
-            BigInteger n_actual = FloatSplitter.Split(actual).mantissa;
-
-            if (BigInteger.Abs(n_expected - n_actual) > dist) {
-                throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}\n{message}");
-            }
-        }
     }
 }

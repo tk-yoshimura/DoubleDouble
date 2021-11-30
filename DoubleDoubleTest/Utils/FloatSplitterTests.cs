@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Numerics;
 
-namespace DoubleDoubleTest.Util {
+namespace DoubleDoubleTest.Utils {
     [TestClass]
     public class FloatSplitterTests {
         [TestMethod]
