@@ -5,16 +5,13 @@ namespace DoubleDouble {
 
     public static class DoubleDoubleEnumerableExpand {
         public static ddouble Sum(this IEnumerable<ddouble> source) {
-            ddouble sum = ddouble.Zero, c = ddouble.Zero;
+            Accumulator acc = 0d;
 
             foreach (var v in source) {
-                ddouble y = v - c;
-                ddouble t = sum + y;
-                c = (t - sum) - y;
-                sum = t;
+                acc += v;
             }
 
-            return sum;
+            return acc.Sum;
         }
 
         public static ddouble Average(this IEnumerable<ddouble> source) {

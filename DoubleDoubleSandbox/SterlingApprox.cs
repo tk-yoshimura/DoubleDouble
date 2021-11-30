@@ -58,14 +58,14 @@ namespace DoubleDoubleSandbox {
             ddouble v = 1 / z;
             ddouble w = v * v;
 
-            KahanSum x = (ddouble)0d;
+            Accumulator x = 0d;
             ddouble u = w;
 
             for (int k = 1; k <= terms; k++) {
                 ddouble f = DiSterlingCoef(k);
                 ddouble dx = u * f;
 
-                x.Add(dx);
+                x += dx;
 
                 if (x.IsConvergence) {
                     break;
@@ -83,13 +83,13 @@ namespace DoubleDoubleSandbox {
             ddouble v = 1 / z;
             ddouble w = v * v;
 
-            KahanSum x = (ddouble)0d;
+            Accumulator x = 0d;
             ddouble u = 1;
 
             for (int terms = 1; terms < ddouble.BernoulliSequence.Count; terms++) {
                 ddouble dx = u * SterlingCoef(terms);
 
-                x.Add(dx);
+                x += dx;
 
                 if (x.IsConvergence) {
                     return terms;
@@ -105,14 +105,14 @@ namespace DoubleDoubleSandbox {
             ddouble v = 1 / z;
             ddouble w = v * v;
 
-            KahanSum x = (ddouble)0d;
+            Accumulator x = 0d;
             ddouble u = 1;
 
             for (int terms = 1; terms < ddouble.BernoulliSequence.Count; terms++) {
                 ddouble f = DiSterlingCoef(terms);
                 ddouble dx = u * f;
 
-                x.Add(dx);
+                x += dx;
 
                 if (ddouble.Ldexp(ddouble.Abs(x.Sum), -128) > ddouble.Abs(dx)) {
                     return terms;

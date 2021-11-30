@@ -139,7 +139,7 @@ namespace DoubleDouble {
 
                     if (x < 0.5d) {
                         ddouble v = x * PI, w = v * v, u = w;
-                        KahanSum y = Ldexp(1d, -1);
+                        Accumulator y = Ldexp(1d, -1);
 
                         for (int i = 3, n = TaylorSequence.Count - 1; i < n; i += 2) {
                             ddouble f = TaylorSequence[i];
@@ -149,7 +149,7 @@ namespace DoubleDouble {
                                 dy = -dy;
                             }
 
-                            y.Add(dy);
+                            y += dy;
 
                             if (y.IsConvergence) {
                                 break;
@@ -162,7 +162,7 @@ namespace DoubleDouble {
                     }
                     else {
                         ddouble v = (x - 1) * PI, w = v * v, r = w;
-                        KahanSum y = (ddouble)1;
+                        Accumulator y = (ddouble)1;
 
                         for (int i = 2, n = TaylorSequence.Count - 1; i < n; i += 2) {
                             ddouble f = TaylorSequence[i];
@@ -172,7 +172,7 @@ namespace DoubleDouble {
                                 dy = -dy;
                             }
 
-                            y.Add(dy);
+                            y += dy;
 
                             if (y.IsConvergence) {
                                 break;

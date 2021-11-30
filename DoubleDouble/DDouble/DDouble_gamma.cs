@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -86,14 +87,14 @@ namespace DoubleDouble {
                         + x * (3 * (Pow(PI, 8) - 9450))))))))) / 226800;
             }
 
-            static KahanSum sterling_loggamma(ddouble x) {
+            static Accumulator sterling_loggamma(ddouble x) {
                 ddouble p = (x - 0.5d) * ddouble.Log(x);
                 ddouble s = SterlingTerm(x);
 
-                KahanSum k = Consts.Gamma.SterlingLogBias;
-                k.Add(p);
-                k.Add(s);
-                k.Add(-x);
+                Accumulator k = Consts.Gamma.SterlingLogBias;
+                k += p;
+                k += s;
+                k -= x;
 
                 return k;
             }
@@ -102,14 +103,14 @@ namespace DoubleDouble {
                 int n = (int)Floor(x);
                 ddouble f = x - n;
                 ddouble z = f + Consts.Gamma.Threshold;
-                KahanSum v = sterling_loggamma(z);
+                Accumulator v = sterling_loggamma(z);
 
                 ddouble w = f + n;
                 for (int i = n + 1; i < Consts.Gamma.Threshold; i++) {
                     w *= f + i;
                 }
 
-                v.Add(-Log(w));
+                v -= Log(w);
 
                 ddouble y = v.Sum;
 
@@ -130,7 +131,6 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-
             if (x < 0.5d) {
                 ddouble tanpi = TanPI(x);
 
@@ -143,13 +143,25 @@ namespace DoubleDouble {
                 return y;
             }
 
-            static KahanSum sterling_digamma(ddouble x) {
-                KahanSum s = KahanSum.Negate(DiffLogSterlingTerm(x));
+            ddouble x_zsft = x - Consts.Digamma.ZeroPoint;
+            if (Abs(x_zsft) < 9.765625e-4d) {
+                return x_zsft * (Consts.Digamma.DiffCoefTable[0]
+                     + x_zsft * (Consts.Digamma.DiffCoefTable[1]
+                     + x_zsft * (Consts.Digamma.DiffCoefTable[2]
+                     + x_zsft * (Consts.Digamma.DiffCoefTable[3]
+                     + x_zsft * (Consts.Digamma.DiffCoefTable[4]
+                     + x_zsft * (Consts.Digamma.DiffCoefTable[5]
+                     + x_zsft * (Consts.Digamma.DiffCoefTable[6]
+                     + x_zsft * (Consts.Digamma.DiffCoefTable[7]))))))));
+            }
+
+            static Accumulator sterling_digamma(ddouble x) {
+                Accumulator s = -DiffLogSterlingTerm(x);
                 ddouble p = ddouble.Log(x);
                 ddouble c = Ldexp(Rcp(x), -1);
 
-                s.Add(p);
-                s.Add(-c);
+                s += p;
+                s -= c;
 
                 return s;
             }
@@ -158,8 +170,8 @@ namespace DoubleDouble {
                 int n = (int)Floor(x);
                 ddouble f = x - n;
                 ddouble z = f + Consts.Digamma.Threshold;
-                KahanSum v = sterling_digamma(z);
-                KahanSum s = SumFraction(KahanSum.Negate(v), f + n, Consts.Digamma.Threshold - n);
+                Accumulator v = sterling_digamma(z);
+                Accumulator s = SumFraction(-v, f + n, Consts.Digamma.Threshold - n);
 
                 ddouble y = -s.Sum;
 
@@ -175,7 +187,7 @@ namespace DoubleDouble {
         private static ddouble SterlingTerm(ddouble z) {
             ddouble v = Rcp(z), w = v * v, u = w, dx_prev = PositiveInfinity;
 
-            KahanSum x = Consts.Gamma.SterlingTable[0];
+            Accumulator x = Consts.Gamma.SterlingTable[0];
             foreach (ddouble s in Consts.Gamma.SterlingTable.Skip(1)) {
                 ddouble dx = u * s;
 
@@ -183,7 +195,7 @@ namespace DoubleDouble {
                     break;
                 }
 
-                x.Add(dx);
+                x += dx;
                 if (x.IsConvergence) {
                     break;
                 }
@@ -196,10 +208,10 @@ namespace DoubleDouble {
             return y;
         }
 
-        private static KahanSum DiffLogSterlingTerm(ddouble z) {
+        private static Accumulator DiffLogSterlingTerm(ddouble z) {
             ddouble v = Rcp(z), w = v * v, u = w * w, dx_prev = PositiveInfinity;
 
-            KahanSum x = Consts.Digamma.SterlingTable[0] * w;
+            Accumulator x = Consts.Digamma.SterlingTable[0] * w;
             foreach (ddouble s in Consts.Digamma.SterlingTable.Skip(1)) {
                 ddouble dx = u * s;
 
@@ -207,7 +219,7 @@ namespace DoubleDouble {
                     break;
                 }
 
-                x.Add(dx);
+                x += dx;
                 if (Ldexp(Abs(x.Sum), -128) > Abs(dx)) {
                     break;
                 }
@@ -219,21 +231,21 @@ namespace DoubleDouble {
             return x;
         }
 
-        private static KahanSum SumFraction(KahanSum s, ddouble x, int n) {
+        private static Accumulator SumFraction(Accumulator s, ddouble x, int n) {
             // sum( 1 / (x + i) , i = 0, n)
-            
-            static KahanSum sum1(KahanSum s, ddouble x) {
-                s.Add(Rcp(x));
+
+            static Accumulator sum1(Accumulator s, ddouble x) {
+                s += Rcp(x);
                 return s;
             }
 
-            static KahanSum sum2(KahanSum s, ddouble x) {
-                s.Add((2d * x + 1d) / (x * (x + 1d)));
+            static Accumulator sum2(Accumulator s, ddouble x) {
+                s += (2d * x + 1d) / (x * (x + 1d));
                 return s;
             }
 
-            static KahanSum sum4(KahanSum s, ddouble x) {
-                s.Add((2d * (2d * x + 3d) * (x * (x + 3d) + 1d)) / (x * (x + 1) * (x + 2) * (x + 3)));
+            static Accumulator sum4(Accumulator s, ddouble x) {
+                s += (2d * (2d * x + 3d) * (x * (x + 3d) + 1d)) / (x * (x + 1) * (x + 2) * (x + 3));
                 return s;
             }
 
@@ -274,6 +286,9 @@ namespace DoubleDouble {
                 public const int Threshold = 18;
                 public static readonly ReadOnlyCollection<ddouble> SterlingTable = GenerateSterlingTable();
 
+                public static readonly ddouble ZeroPoint = "1.4616321449683623412626595423257213284682";
+                public static readonly ReadOnlyCollection<ddouble> DiffCoefTable = GenerateDiffCoefTable();
+
                 private static ReadOnlyCollection<ddouble> GenerateSterlingTable() {
                     List<ddouble> table = new();
 
@@ -283,6 +298,21 @@ namespace DoubleDouble {
                     }
 
                     return table.AsReadOnly();
+                }
+
+                private static ReadOnlyCollection<ddouble> GenerateDiffCoefTable() {
+                    ddouble[] table = new ddouble[] {
+                        (ddouble)"+9.6767224544762117042744476170965074041126e-1",
+                        (ddouble)"-8.8552633796718421218573056370501849971117e-1" / 2,
+                        (ddouble)"+1.5509985657339060637464083142057253695141e0" / 6,
+                        (ddouble)"-3.9346249306177566601020310259197534207074e0" / 24,
+                        (ddouble)"+1.2938886082951483890861953864010836503653e1" / 120,
+                        (ddouble)"-5.1983684104647391866807684195680694924837e1" / 720,
+                        (ddouble)"+2.4597361234728126041446632855985086913704e2" / 5040,
+                        (ddouble)"-1.3370566194658455266638586236684393915528e3" / 40320
+                    };
+
+                    return Array.AsReadOnly(table);
                 }
             }
         }

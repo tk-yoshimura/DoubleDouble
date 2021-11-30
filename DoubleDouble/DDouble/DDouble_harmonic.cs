@@ -12,12 +12,12 @@ namespace DoubleDouble {
         private static partial class Consts {
             public static class Harmonic {
                 private static readonly List<ddouble> a_table = new();
-                private static KahanSum kahan_sum;
+                private static Accumulator acc;
 
                 static Harmonic() {
                     a_table.Add(0);
                     a_table.Add(1);
-                    kahan_sum = (ddouble)1d;
+                    acc = 1d;
                 }
 
                 public static ddouble Value(int n) {
@@ -30,8 +30,8 @@ namespace DoubleDouble {
                     }
 
                     for (int k = a_table.Count; k <= n; k++) {
-                        kahan_sum.Add(Rcp(k));
-                        a_table.Add(kahan_sum.Sum);
+                        acc += Rcp(k);
+                        a_table.Add(acc.Sum);
                     }
 
                     return a_table[n];

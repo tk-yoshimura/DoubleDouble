@@ -19,10 +19,10 @@ namespace DoubleDouble {
                 return a.hi + b;
             }
 
-            (double z1, double z2) = TwoSum(a.hi, b);
-            z2 += a.lo;
+            (double hi, double lo) = TwoSum(a.hi, b);
+            lo += a.lo;
 
-            return new ddouble(z1, z2);
+            return new ddouble(hi, lo);
         }
 
         public static ddouble operator +(ddouble a, int b) {
@@ -47,10 +47,10 @@ namespace DoubleDouble {
                 return a + b.hi;
             }
 
-            (double z1, double z2) = TwoSum(a, b.hi);
-            z2 += b.lo;
+            (double hi, double lo) = TwoSum(a, b.hi);
+            lo += b.lo;
 
-            return new ddouble(z1, z2);
+            return new ddouble(hi, lo);
         }
 
         public static ddouble operator +(int a, ddouble b) {
@@ -75,15 +75,22 @@ namespace DoubleDouble {
                 return a.hi + b.hi;
             }
 
-            (double z1, double z2) = TwoSum(a.hi, b.hi);
-            z2 += a.lo + b.lo;
+            (double hi, double lo) = TwoSum(a.hi, b.hi);
+            lo += a.lo + b.lo;
 
-            return new ddouble(z1, z2);
+            return new ddouble(hi, lo);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator -(ddouble a, double b) {
-            return a + (-b);
+            if (IsInfinity(a) || double.IsInfinity(b)) {
+                return a.hi - b;
+            }
+
+            (double hi, double lo) = TwoSum(a.hi, -b);
+            lo += a.lo;
+
+            return new ddouble(hi, lo);
         }
 
         public static ddouble operator -(ddouble a, int b) {
@@ -104,7 +111,14 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator -(double a, ddouble b) {
-            return a + (-b);
+            if (double.IsInfinity(a) || IsInfinity(b)) {
+                return a - b.hi;
+            }
+
+            (double hi, double lo) = TwoSum(a, -b.hi);
+            lo -= b.lo;
+
+            return new ddouble(hi, lo);
         }
 
         public static ddouble operator -(int a, ddouble b) {
@@ -125,7 +139,14 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator -(ddouble a, ddouble b) {
-            return a + (-b);
+            if (IsInfinity(a) || IsInfinity(b)) {
+                return a.hi - b.hi;
+            }
+
+            (double hi, double lo) = TwoSum(a.hi, -b.hi);
+            lo += a.lo - b.lo;
+
+            return new ddouble(hi, lo);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -322,7 +343,7 @@ namespace DoubleDouble {
             double s = a + b;
             double t = s - a;
             double c = (a - (s - t)) + (b - t);
-            
+
             return (s, c);
         }
     }

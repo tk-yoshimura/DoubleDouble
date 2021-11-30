@@ -644,7 +644,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            Assert.IsTrue(ddouble.Abs(10 - ddouble.Pow10(1)) < 1e-31);
+            Assert.AreEqual((ddouble)10, ddouble.Pow10(1));
 
             ddouble pow10_pzero = ddouble.Pow10(0d);
             ddouble pow10_mzero = ddouble.Pow10(-0d);
@@ -1303,7 +1303,7 @@ namespace DoubleDoubleTest.DDouble {
             for (int i = 1; i <= 35; i++) {
                 ddouble x = ddouble.Digamma(i);
                 ddouble y = ddouble.HarmonicNumber(i - 1) - ddouble.EulerGamma;
-            
+
                 HPAssert.NeighborBits(y, x, 128);
             }
 
@@ -1325,6 +1325,30 @@ namespace DoubleDoubleTest.DDouble {
             HPAssert.NeighborBits("2.4747245354686116370644657051615264016326e-1", ddouble.Digamma(1.75), 128);
             HPAssert.NeighborBits("4.6001618527380874001986055855758507268668e0", ddouble.Digamma(100), 128);
             HPAssert.NeighborBits("5.2958152832199116154508743070484592057952e0", ddouble.Digamma(200), 160);
+
+            ddouble zeropoint = "1.461632144968362341262659542325721328468196204006446351295988408598";
+
+            Console.WriteLine(ddouble.Digamma(zeropoint));
+
+            foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
+                (zeropoint - 9.765625e-4d, "-9.4541491995331660375624084239222499346063e-4"),
+                (zeropoint + 9.765625e-4d, "+9.4457041593008585021273363326293833498992e-4"),
+            }) {
+                ddouble x_dec = ddouble.BitDecrement(x), x_dec2 = ddouble.BitDecrement(x_dec), x_dec3 = ddouble.BitDecrement(x_dec2);
+                ddouble x_inc = ddouble.BitIncrement(x), x_inc2 = ddouble.BitIncrement(x_inc), x_inc3 = ddouble.BitIncrement(x_inc2);
+
+                Console.WriteLine(ddouble.Digamma(x_dec3));
+                Console.WriteLine(ddouble.Digamma(x_dec2));
+                Console.WriteLine(ddouble.Digamma(x_dec));
+                Console.WriteLine(ddouble.Digamma(x));
+                Console.WriteLine(ddouble.Digamma(x_inc));
+                Console.WriteLine(ddouble.Digamma(x_inc2));
+                Console.WriteLine(ddouble.Digamma(x_inc3));
+
+                HPAssert.AreEqual(expected, ddouble.Digamma(x_dec), 1e-28);
+                HPAssert.AreEqual(expected, ddouble.Digamma(x), 1e-28);
+                HPAssert.AreEqual(expected, ddouble.Digamma(x_inc), 1e-28);
+            }
 
             ddouble digamma_pzero = ddouble.Digamma(0d);
             ddouble digamma_mzero = ddouble.Digamma(-0d);

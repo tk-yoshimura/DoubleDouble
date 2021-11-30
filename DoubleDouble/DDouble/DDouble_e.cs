@@ -3,10 +3,10 @@
         public static readonly ddouble E = GenerateE();
 
         private static ddouble GenerateE() {
-            KahanSum x = ddouble.Zero;
+            Accumulator x = 0d;
 
             foreach (ddouble f in TaylorSequence) {
-                x.Add(f);
+                x += f;
 
                 if (x.IsConvergence) {
                     break;

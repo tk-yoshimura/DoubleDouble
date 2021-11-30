@@ -82,7 +82,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow10(ddouble x) {
-            ddouble z = Pow2(x * Consts.Log.Lb10);
+            ddouble z = RoundMantissa(Pow2(x * Consts.Log.Lb10), 100);
 
             return z;
         }
@@ -155,11 +155,11 @@ namespace DoubleDouble {
 
                     ddouble v = x * Consts.Log.Ln2;
 
-                    KahanSum y = (ddouble)1;
+                    Accumulator y = 1d;
                     ddouble w = v;
 
                     foreach (ddouble f in TaylorSequence.Skip(1)) {
-                        y.Add(f * w);
+                        y += f * w;
 
                         if (y.IsConvergence) {
                             break;

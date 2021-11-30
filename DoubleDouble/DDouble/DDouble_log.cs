@@ -85,10 +85,10 @@ namespace DoubleDouble {
 
                 private static ddouble GenerateLn2() {
                     int n = 3;
-                    KahanSum x = Rcp(3);
+                    Accumulator x = Rcp(3);
 
                     while (!x.IsConvergence) {
-                        x.Add(Rcp(n * Pow(3d, n)));
+                        x += Rcp(n * Pow(3d, n));
                         n += 2;
                     }
 
