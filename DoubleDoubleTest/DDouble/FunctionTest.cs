@@ -1300,12 +1300,19 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void DigammaTest() {
-            for (int i = 1; i <= 35; i++) {
-                ddouble x = ddouble.Digamma(i);
-                ddouble y = ddouble.HarmonicNumber(i - 1) - ddouble.EulerGamma;
+            //for (int i = 1; i <= 35; i++) {
+            //    ddouble x = ddouble.Digamma(i);
+            //    ddouble y = ddouble.HarmonicNumber(i - 1) - ddouble.EulerGamma;
+            //
+            //    HPAssert.NeighborBits(y, x, 128);
+            //}
 
-                HPAssert.NeighborBits(y, x, 128);
-            }
+            HPAssert.NeighborBits(-2 * ddouble.Log(2) - ddouble.EulerGamma, ddouble.Digamma(0.5d), 128);
+            HPAssert.NeighborBits(2 * (ddouble)340028535787 / 145568097675
+                - 2 * ddouble.Log(2) - ddouble.EulerGamma, ddouble.Digamma(15.5d), 128);
+
+            HPAssert.NeighborBits(2 * (ddouble)10686452707072 / 4512611027925
+                - 2 * ddouble.Log(2) - ddouble.EulerGamma, ddouble.Digamma(16.5d), 128);
 
             HPAssert.NeighborBits("-2.8941202000429320747561968127633502440339e0", ddouble.Digamma(-0.75), 128);
             HPAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(-0.5), 128);

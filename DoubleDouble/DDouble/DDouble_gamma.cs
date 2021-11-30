@@ -144,7 +144,7 @@ namespace DoubleDouble {
             static KahanSum sterling_digamma(ddouble x) {
                 KahanSum s = KahanSum.Negate(DiffLogSterlingTerm(x));
                 ddouble p = ddouble.Log(x);
-                ddouble c = Rcp(Ldexp(x, 1));
+                ddouble c = Ldexp(Rcp(x), -1);
 
                 s.Add(p);
                 s.Add(-c);
@@ -157,13 +157,9 @@ namespace DoubleDouble {
                 ddouble f = x - n;
                 ddouble z = f + Consts.Digamma.Threshold;
                 KahanSum v = sterling_digamma(z);
+                KahanSum s = SumFraction(KahanSum.Negate(v), f + n, Consts.Digamma.Threshold - n);
 
-                for (int i = n; i < Consts.Digamma.Threshold; i++) {
-                    ddouble w = Rcp(f + i);
-                    v.Add(-w);
-                }
-
-                ddouble y = v.Sum;
+                ddouble y = -s.Sum;
 
                 return y;
             }
@@ -175,12 +171,17 @@ namespace DoubleDouble {
         }
 
         private static ddouble SterlingTerm(ddouble z) {
-            ddouble v = Rcp(z), w = v * v, u = w;
+            ddouble v = Rcp(z), w = v * v, u = w, dx_prev = PositiveInfinity;
 
             KahanSum x = Consts.Gamma.SterlingTable[0];
             foreach (ddouble s in Consts.Gamma.SterlingTable.Skip(1)) {
-                x.Add(u * s);
+                ddouble dx = u * s;
 
+                if (Abs(dx) > Abs(dx_prev) || x.IsConvergence) {
+                    break;
+                }
+
+                x.Add(dx);
                 if (x.IsConvergence) {
                     break;
                 }
@@ -194,14 +195,58 @@ namespace DoubleDouble {
         }
 
         private static KahanSum DiffLogSterlingTerm(ddouble z) {
-            ddouble v = Rcp(z), w = v * v, u = w * w;
+            ddouble v = Rcp(z), w = v * v, u = w * w, dx_prev = PositiveInfinity;
+
             KahanSum x = Consts.Digamma.SterlingTable[0] * w;
             foreach (ddouble s in Consts.Digamma.SterlingTable.Skip(1)) {
-                x.Add(u * s);
+                ddouble dx = u * s;
+
+                if (Abs(dx) > Abs(dx_prev)) {
+                    break;
+                }
+
+                x.Add(dx);
+                if (Ldexp(Abs(x.Sum), -128) > Abs(dx)) {
+                    break;
+                }
+
                 u *= w;
+                dx_prev = dx;
             }
 
-            return x.Sum;
+            return x;
+        }
+
+        private static KahanSum SumFraction(KahanSum s, ddouble x, int n) {
+            // sum( 1 / (x + i) , i = 0, n)
+            
+            static KahanSum sum1(KahanSum s, ddouble x) {
+                s.Add(Rcp(x));
+                return s;
+            }
+
+            static KahanSum sum2(KahanSum s, ddouble x) {
+                s.Add((2d * x + 1d) / (x * (x + 1d)));
+                return s;
+            }
+
+            static KahanSum sum4(KahanSum s, ddouble x) {
+                s.Add((2d * (2d * x + 3d) * (x * (x + 3d) + 1d)) / (x * (x + 1) * (x + 2) * (x + 3)));
+                return s;
+            }
+
+            int i = 0;
+            for (; i < n - 3; i += 4) {
+                s = sum4(s, x + i);
+            }
+            for (; i < n - 1; i += 2) {
+                s = sum2(s, x + i);
+            }
+            for (; i < n; i++) {
+                s = sum1(s, x + i);
+            }
+
+            return s;
         }
 
         private static partial class Consts {
@@ -230,7 +275,7 @@ namespace DoubleDouble {
                 private static ReadOnlyCollection<ddouble> GenerateSterlingTable() {
                     List<ddouble> table = new();
 
-                    for (int k = 1; k <= 24; k++) {
+                    for (int k = 1; k <= 32; k++) {
                         ddouble c = ddouble.BernoulliSequence[k] / checked((2 * k));
                         table.Add(c);
                     }
