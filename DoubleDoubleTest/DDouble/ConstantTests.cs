@@ -14,7 +14,8 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(actual);
             Console.WriteLine(error);
 
-            Assert.IsTrue(ddouble.Abs(error) < 1e-31);
+            Assert.IsTrue(ddouble.Abs(error) < 1e-30);
+            HPAssert.NeighborBits(expected, actual, 1);
 
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);
             Console.WriteLine(ddouble.BitIncrement(expected) - actual);
@@ -32,7 +33,8 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(actual);
             Console.WriteLine(error);
 
-            Assert.IsTrue(ddouble.Abs(error) < 1e-31);
+            Assert.IsTrue(ddouble.Abs(error) < 1e-30);
+            HPAssert.NeighborBits(expected, actual, 1);
 
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);
             Console.WriteLine(ddouble.BitIncrement(expected) - actual);

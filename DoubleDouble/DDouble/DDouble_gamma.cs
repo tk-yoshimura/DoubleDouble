@@ -102,14 +102,16 @@ namespace DoubleDouble {
                 int n = (int)Floor(x);
                 ddouble f = x - n;
                 ddouble z = f + Consts.Gamma.Threshold;
-                ddouble v = sterling_loggamma(z).Sum;
+                KahanSum v = sterling_loggamma(z);
 
                 ddouble w = f + n;
                 for (int i = n + 1; i < Consts.Gamma.Threshold; i++) {
                     w *= f + i;
                 }
 
-                ddouble y = v - Log(w);
+                v.Add(-Log(w));
+
+                ddouble y = v.Sum;
 
                 return y;
             }

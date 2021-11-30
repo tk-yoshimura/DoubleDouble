@@ -19,10 +19,10 @@ namespace DoubleDouble {
                 return a.hi + b;
             }
 
-            double hi = a.hi + b;
-            double lo = a.lo + (b - (hi - a.hi));
+            (double z1, double z2) = TwoSum(a.hi, b);
+            z2 += a.lo;
 
-            return new ddouble(hi, lo);
+            return new ddouble(z1, z2);
         }
 
         public static ddouble operator +(ddouble a, int b) {
@@ -47,10 +47,10 @@ namespace DoubleDouble {
                 return a + b.hi;
             }
 
-            double hi = a + b.hi;
-            double lo = b.lo + (b.hi - (hi - a));
+            (double z1, double z2) = TwoSum(a, b.hi);
+            z2 += b.lo;
 
-            return new ddouble(hi, lo);
+            return new ddouble(z1, z2);
         }
 
         public static ddouble operator +(int a, ddouble b) {
@@ -75,10 +75,10 @@ namespace DoubleDouble {
                 return a.hi + b.hi;
             }
 
-            double hi = a.hi + b.hi;
-            double lo = a.lo + (b.lo + (b.hi - (hi - a.hi)));
+            (double z1, double z2) = TwoSum(a.hi, b.hi);
+            z2 += a.lo + b.lo;
 
-            return new ddouble(hi, lo);
+            return new ddouble(z1, z2);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -315,6 +315,15 @@ namespace DoubleDouble {
             double lo = v.lo + Math.FusedMultiplyAdd(a, b, v.hi - hi);
 
             return new ddouble(hi, lo);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static (double s, double c) TwoSum(double a, double b) {
+            double s = a + b;
+            double t = s - a;
+            double c = (a - (s - t)) + (b - t);
+            
+            return (s, c);
         }
     }
 }

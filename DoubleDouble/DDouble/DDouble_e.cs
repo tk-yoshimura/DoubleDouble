@@ -3,7 +3,7 @@
         public static readonly ddouble E = GenerateE();
 
         private static ddouble GenerateE() {
-            KahanSum x = (ddouble)0;
+            KahanSum x = ddouble.Zero;
 
             foreach (ddouble f in TaylorSequence) {
                 x.Add(f);
