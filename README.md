@@ -91,11 +91,6 @@
 |Bernoulli|B(2k)|ddouble.BernoulliSequence|
 |HarmonicNumber|H_n|ddouble.HarmonicNumber|
 
-## Coefficient
-
-|coefficient|note|usage|
-|----|----|----|
-
 ## Casts
 
 - long (accurately)
