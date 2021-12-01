@@ -38,7 +38,7 @@ namespace DoubleDouble {
                 return 1d;
             }
 
-            ddouble y = EllipticECore(k, new Dictionary<ddouble, ddouble>());
+            ddouble y = EllipticECore(k);
 
             return Max(1, y);
         }
@@ -108,35 +108,27 @@ namespace DoubleDouble {
             return y;
         }
 
-        private static ddouble EllipticECore(ddouble k, [AllowNull] Dictionary<ddouble, ddouble> kvalue_cache = null) {
+        private static ddouble EllipticECore(ddouble k) {
+            ddouble a = 1d;
+            ddouble b = Sqrt(1d - k * k);
+            ddouble c = Sqrt(Abs(a * a - b * b));
+            ddouble q = 1d;
 
-            ddouble squa_k = k * k;
-            ddouble y;
+            for (int n = 0; n < int.MaxValue && !IsZero(c) && a != b; n++) {
+                ddouble squa_c = c * c;
+                ddouble dq = Ldexp(squa_c, n - 1);
+                q -= dq;
 
-            if (squa_k > Math.ScaleB(1, -32)) {
-                ddouble c = Sqrt(1d - squa_k), cp1 = 1d + c, cm1 = 1d - c, r = cm1 / cp1;
+                ddouble a_next = Ldexp(a + b, -1);
+                ddouble b_next = Sqrt(a * b);
+                ddouble c_next = squa_c / Ldexp(a_next, 2);
 
-                ddouble e = Ldexp(c, 1) / cp1 * EllipticKCore(r, kvalue_cache);
-
-                y = cp1 * EllipticECore(r, kvalue_cache) - e;
+                a = a_next;
+                b = b_next;
+                c = c_next;
             }
-            else {
-                ddouble x = 1d, w = squa_k;
 
-                for (int i = 1; i < int.MaxValue; i++) {
-                    ddouble dx = Consts.Elliptic.ETable(i) * w;
-                    ddouble x_next = x + dx;
-
-                    if (x == x_next) {
-                        break;
-                    }
-
-                    w *= squa_k;
-                    x = x_next;
-                }
-
-                y = x * Consts.AsinAcos.HalfPI;
-            }
+            ddouble y = q * PI / Ldexp(a, 1);
 
             return y;
         }
@@ -148,7 +140,7 @@ namespace DoubleDouble {
             ddouble q = 1d;
             ddouble sum_q = 1d;
 
-            while(Abs(sum_q) <= Ldexp(Abs(q), +100)) {
+            while (Abs(sum_q) <= Ldexp(Abs(q), +100)) {
                 ddouble ab = a * b, p_squa = p * p;
                 ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
 
@@ -191,16 +183,6 @@ namespace DoubleDouble {
                     }
 
                     return k_table[n];
-                }
-
-                public static ddouble ETable(int n) {
-                    for (int i = e_table.Count; i <= n; i++) {
-                        ddouble e = KTable(i) * checked(1 - 2 * i);
-
-                        e_table.Add(e);
-                    }
-
-                    return e_table[n];
                 }
             }
         }
