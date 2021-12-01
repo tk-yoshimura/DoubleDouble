@@ -15,12 +15,27 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
             if (x >= Consts.Erfc.ApproxMin) {
-                return 1d - Erfc(x); 
+                return 1d - Erfc(x);
             }
 
-            return ddouble.NaN;
+            ddouble s = 1d, w = x * x, u = w;
+            foreach (ddouble f in Consts.Erf.FracTable) {
+                ddouble ds = u * f;
+                ddouble s_next = s + ds;
+
+                if (s == s_next) {
+                    break;
+                }
+
+                u *= w;
+                s = s_next;
+            }
+
+            ddouble y = RoundMantissa(x * s * Consts.Erf.C, Consts.Erfc.Precision);
+
+            return y;
         }
-        
+
         public static ddouble Erfc(ddouble x) {
             if (x.Sign < 0) {
                 return 1d + Erf(-x);
@@ -47,18 +62,59 @@ namespace DoubleDouble {
                     + s * (table[13] + s * (table[14] + s * (table[15] + s * (table[16]
                     + s * (table[17] + s * (table[18] + s * (table[19] + s * (table[20]))))))))))))))))))));
 
-                ddouble erfc = RoundMantissa(Exp(-x * x) / inv_erfcx, 92);
+                ddouble y = RoundMantissa(Exp(-x * x) / inv_erfcx, Consts.Erfc.Precision);
 
-                return erfc;
+                return y;
             }
+            else {
+                ddouble w = x * x;
 
-            return ddouble.NaN;
+                ddouble c = x * ddouble.Exp(-w) / ddouble.Sqrt(ddouble.PI);
+
+                ddouble f = 
+                    (ddouble.Sqrt(25 + w * (440 + w * (488 + w * 16 * (10 + w))))
+                     - 5 + w * 4 * (1 + w))
+                    / (20 + w * 8);
+
+                int n = 8;
+                for (int k = 4 * n - 3; k >= 1; k -= 4) {
+                    ddouble c0 = (k + 2) * f;
+                    ddouble c1 = w * ((k + 3) + ddouble.Ldexp(f, 1));
+                    ddouble d0 = (k + 1) * (k + 3) + (4 * k + 6) * f;
+                    ddouble d1 = ddouble.Ldexp(c1, 1);
+
+                    f = w + k * (c0 + c1) / (d0 + d1);
+                }
+
+                ddouble y = RoundMantissa(c / f, Consts.Erfc.Precision);
+
+                return y;
+            }
         }
 
         private static partial class Consts {
+            public static class Erf {
+                public static readonly ReadOnlyCollection<ddouble> FracTable = GenerateFracTable();
+                public static readonly ddouble C = Ldexp(Rcp(Sqrt(PI)), 1);
+
+                private static ReadOnlyCollection<ddouble> GenerateFracTable() {
+                    List<ddouble> table = new();
+
+                    for (int k = 1; k < 32; k++) {
+                        ddouble c = ddouble.TaylorSequence[k] / checked((2 * k + 1));
+                        c = ((k & 1) == 0) ? c : -c;
+
+                        table.Add(c);
+                    }
+
+                    return table.AsReadOnly();
+                }
+            }
+
             public static class Erfc {
                 public static readonly ddouble ApproxMin = 0.5d;
                 public static readonly ddouble TableBin = 0.25d;
+                public const int Precision = 92;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> Tables = (new List<ReadOnlyCollection<ddouble>>() {
                     GenerateP050Table(),
