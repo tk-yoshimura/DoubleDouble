@@ -122,7 +122,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
-                        
+
             for (long i = 0, n = 1; i < 19; i++, n *= 10) {
                 Assert.AreEqual(i, ddouble.Log10(n));
                 Assert.AreEqual(-i, ddouble.Log10(ddouble.Rcp(n)));

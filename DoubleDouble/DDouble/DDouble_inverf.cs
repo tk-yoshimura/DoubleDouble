@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace DoubleDouble {
-    public partial struct ddouble { 
+    public partial struct ddouble {
         public static ddouble InverseErf(ddouble x) {
             if (IsNaN(x) || x < -1d || x > 1d) {
                 return NaN;
@@ -17,10 +17,10 @@ namespace DoubleDouble {
                 ddouble w = PI * x * x;
                 ddouble t = Sqrt(PI) * ((40320 + w * (3360 + w * (588 + w * 127))) / 80640);
 
-                return RoundMantissa(x * t, Consts.InverseErf.Precision);;
+                return RoundMantissa(x * t, Consts.InverseErf.Precision); ;
             }
 
-            ddouble y = (x < 0.5d) ? InverseErfRootFinding(x): InverseErfcRootFinding(1 - x);
+            ddouble y = (x < 0.5d) ? InverseErfRootFinding(x) : InverseErfcRootFinding(1 - x);
 
             return RoundMantissa(y, Consts.InverseErf.Precision);
         }

@@ -216,11 +216,11 @@ namespace DoubleDoubleTest.DDouble {
             for (ddouble v = -1; v <= 1; v += 0.0625d) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
-            
+
                 Assert.AreEqual(v, z);
             }
 
-            for (ddouble v = Math.ScaleB(1, -240); v > Math.ScaleB(1, -985); v /= 2) { 
+            for (ddouble v = Math.ScaleB(1, -240); v > Math.ScaleB(1, -985); v /= 2) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
 
