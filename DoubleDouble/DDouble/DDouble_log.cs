@@ -40,7 +40,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Log10(ddouble x) {
-            return RoundMantissa(Log2(x) * Consts.Log.Lg2, 100);
+            return RoundMantissa(Log2(x) * Consts.Log.Lg2, 103);
         }
 
         public static ddouble Log(ddouble x) {

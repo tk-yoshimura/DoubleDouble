@@ -82,9 +82,9 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow10(ddouble x) {
-            ddouble z = RoundMantissa(Pow2(x * Consts.Log.Lb10), 100);
+            ddouble z = RoundMantissa(Pow2(Abs(x) * Consts.Log.Lb10), 100);
 
-            return z;
+            return x.Sign >= 0 ? z : Rcp(z);
         }
 
         public static ddouble Exp(ddouble x) {

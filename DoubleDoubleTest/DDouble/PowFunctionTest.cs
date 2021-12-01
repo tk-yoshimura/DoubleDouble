@@ -81,12 +81,10 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            Assert.AreEqual(1, ddouble.Pow10(0));
-            Assert.AreEqual(10, ddouble.Pow10(1));
-            Assert.AreEqual(100, ddouble.Pow10(2));
-            Assert.AreEqual(1000, ddouble.Pow10(3));
-            Assert.AreEqual(10000, ddouble.Pow10(4));
-            Assert.AreEqual(100000000, ddouble.Pow10(8));
+            for (long i = 0, n = 1; i < 19; i++, n *= 10) {
+                Assert.AreEqual(n, ddouble.Pow10(i));
+                Assert.AreEqual(ddouble.Rcp(n), ddouble.Pow10(-i));
+            }
 
             ddouble pow10_pzero = ddouble.Pow10(0d);
             ddouble pow10_mzero = ddouble.Pow10(-0d);

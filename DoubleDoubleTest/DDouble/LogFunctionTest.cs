@@ -111,13 +111,6 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            Assert.AreEqual(0, ddouble.Log10(1));
-            Assert.AreEqual(1, ddouble.Log10(10));
-            Assert.AreEqual(2, ddouble.Log10(100));
-            Assert.AreEqual(3, ddouble.Log10(1000));
-            Assert.AreEqual(4, ddouble.Log10(10000));
-            Assert.AreEqual(8, ddouble.Log10(100000000));
-
             for (decimal d = 10m; d <= +10000m; d += 10m) {
                 if (d == 0) {
                     continue;
@@ -128,6 +121,11 @@ namespace DoubleDoubleTest.DDouble {
 
                 Assert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+                        
+            for (long i = 0, n = 1; i < 19; i++, n *= 10) {
+                Assert.AreEqual(i, ddouble.Log10(n));
+                Assert.AreEqual(-i, ddouble.Log10(ddouble.Rcp(n)));
             }
 
             ddouble log10_pzero = ddouble.Log10(0d);
