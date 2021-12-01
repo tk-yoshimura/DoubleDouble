@@ -59,6 +59,9 @@
 |erfc|&#40;-inf,+inf&#41;|10||ddouble.Erfc(x)|
 |inverse_erf|&#40;-1,1&#41;|18||ddouble.InverseErf(x)|
 |inverse_erfc|&#40;0,2&#41;|18||ddouble.InverseErfc(x)|
+|elliptic_k|&#91;0,1&#93;|1||ddouble.EllipticK(k)|
+|elliptic_e|&#91;0,1&#93;|1||ddouble.EllipticE(k)|
+|elliptic_pi|&#91;0,1&#93;|1||ddouble.EllipticPi(n, k)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
