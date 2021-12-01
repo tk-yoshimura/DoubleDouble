@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class PowFunctionTest {
+    public class PowFunctionTests {
         [TestMethod]
         public void PowNTest() {
             ddouble v = ddouble.Pow(5, 308);

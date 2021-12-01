@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class LogFunctionTest {
+    public class LogFunctionTests {
         [TestMethod]
         public void Log2Test() {
             for (decimal d = 0.01m; d <= +10m; d += 0.01m) {

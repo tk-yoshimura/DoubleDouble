@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class GammaFunctionTest {
+    public class GammaFunctionTests {
 
         [TestMethod]
         public void GammaTest() {

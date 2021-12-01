@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class TrigonFunctionTest {
+    public class TrigonFunctionTests {
 
         [TestMethod]
         public void SinPIHalfTest() {

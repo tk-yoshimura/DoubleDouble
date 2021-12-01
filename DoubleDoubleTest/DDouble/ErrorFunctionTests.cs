@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class ErrorFunctionTest {
+    public class ErrorFunctionTests {
         [TestMethod]
         public void ErfTest() {
             foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {

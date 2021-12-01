@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class MiscFunctionTest {
+    public class MiscFunctionTests {
         [TestMethod]
         public void RcpTest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {

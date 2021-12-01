@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class RootFunctionTest {
+    public class RootFunctionTests {
         [TestMethod]
         public void SqrtTest() {
             for (decimal d = 0; d <= +10m; d += 0.01m) {

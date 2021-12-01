@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class TruncateFunctionTest {
+    public class TruncateFunctionTests {
         [TestMethod]
         public void FloorTest() {
             Assert.AreEqual((ddouble)(0), ddouble.Floor(0));
