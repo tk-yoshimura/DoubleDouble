@@ -47,7 +47,7 @@ namespace DoubleDouble {
                 return ddouble.Zero;
             }
             if (x < Consts.Erfc.ApproxMin) {
-                return 1d - Erf(x); 
+                return 1d - Erf(x);
             }
 
             int table_index = (int)Round((x - Consts.Erfc.ApproxMin) / Consts.Erfc.TableBin);
@@ -71,7 +71,7 @@ namespace DoubleDouble {
 
                 ddouble c = x * ddouble.Exp(-w) / ddouble.Sqrt(ddouble.PI);
 
-                ddouble f = 
+                ddouble f =
                     (ddouble.Sqrt(25 + w * (440 + w * (488 + w * 16 * (10 + w))))
                      - 5 + w * 4 * (1 + w))
                     / (20 + w * 8);

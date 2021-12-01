@@ -1,7 +1,5 @@
 ﻿using DoubleDouble;
 using System;
-using System.IO;
-using System.Linq;
 
 namespace DoubleDoubleSandbox {
     internal class Program {
@@ -51,7 +49,7 @@ namespace DoubleDoubleSandbox {
             //}
 
             for (decimal v = 0.5m; v <= 6.25m; v += 0.125m) {
-                ddouble x = (ddouble)v, x_dec = ddouble.BitDecrement(x), x_inc = ddouble.BitIncrement(x); 
+                ddouble x = (ddouble)v, x_dec = ddouble.BitDecrement(x), x_inc = ddouble.BitIncrement(x);
 
                 ddouble erfc_dec = ddouble.Erfc(x_dec);
                 ddouble erfc = ddouble.Erfc(x);

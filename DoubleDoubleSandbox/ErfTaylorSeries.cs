@@ -1,5 +1,5 @@
-﻿using System;
-using DoubleDouble;
+﻿using DoubleDouble;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -22,7 +22,7 @@ namespace DoubleDoubleSandbox {
                 return coefs[n];
             }
 
-            for(int k = factorials.Count; k <= n; k++){
+            for (int k = factorials.Count; k <= n; k++) {
                 BigInteger fact = factorials[k - 1] * k;
                 BigInteger coef = fact * checked(2 * k + 1);
 
