@@ -12,7 +12,7 @@ namespace DoubleDouble {
                 return PlusZero;
             }
             if (IsInfinity(x)) {
-                return PositiveInfinity;
+                return 1;
             }
             if (x >= Consts.Erfc.ApproxMin) {
                 return 1d - Erfc(x);
@@ -44,7 +44,7 @@ namespace DoubleDouble {
                 return 1d;
             }
             if (IsInfinity(x)) {
-                return ddouble.Zero;
+                return PlusZero;
             }
             if (x < Consts.Erfc.ApproxMin) {
                 return 1d - Erf(x);
