@@ -92,8 +92,7 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.NeighborBits(expected, ddouble.Erf(x), 2048);
                 HPAssert.NeighborBits(expected, ddouble.Erf(x_inc), 2048);
 
-                Assert.AreEqual(ddouble.Erf(x), ddouble.Erf(x_dec));
-                Assert.AreEqual(ddouble.Erf(x), ddouble.Erf(x_inc));
+                Assert.IsTrue(ddouble.Erf(x_dec) <= ddouble.Erf(x) && ddouble.Erf(x) <= ddouble.Erf(x_inc));
             }
 
             ddouble erf_pzero = ddouble.Erf(0d);
@@ -196,8 +195,7 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.NeighborBits(expected, ddouble.Erfc(x), 2048);
                 HPAssert.NeighborBits(expected, ddouble.Erfc(x_inc), 2048);
 
-                Assert.AreEqual(ddouble.Erfc(x), ddouble.Erfc(x_dec));
-                Assert.AreEqual(ddouble.Erfc(x), ddouble.Erfc(x_inc));
+                Assert.IsTrue(ddouble.Erfc(x_dec) >= ddouble.Erfc(x) && ddouble.Erfc(x) >= ddouble.Erfc(x_inc));
             }
 
             ddouble erfc_pzero = ddouble.Erfc(0d);
@@ -215,24 +213,33 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void InverseErfTest() {
-            for (ddouble v = -10; v <= 10; v += 0.0625d) {
+            for (ddouble v = -1; v <= 1; v += 0.0625d) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
             
                 Assert.AreEqual(v, z);
             }
 
-            for (ddouble v = Math.ScaleB(1, -240); v > 0; v /= 2) { 
+            for (ddouble v = Math.ScaleB(1, -240); v > Math.ScaleB(1, -985); v /= 2) { 
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
 
                 Assert.AreEqual(v, z, $"exponent: {ddouble.Frexp(v).exp}");
+
+                ddouble y_dec = ddouble.Erf(ddouble.BitDecrement(v));
+                ddouble z_dec = ddouble.InverseErf(y_dec);
+
+                ddouble y_inc = ddouble.Erf(ddouble.BitIncrement(v));
+                ddouble z_inc = ddouble.InverseErf(y_inc);
+
+                Assert.AreEqual(z, z_dec, $"exponent: {ddouble.Frexp(v).exp}");
+                Assert.AreEqual(z, z_inc, $"exponent: {ddouble.Frexp(v).exp}");
             }
         }
 
         [TestMethod]
         public void InverseErfcTest() {
-            for (ddouble v = -10; v <= 10; v += 0.0625d) {
+            for (ddouble v = 0; v <= 10; v += 0.0625d) {
                 ddouble y = ddouble.Erfc(v);
                 ddouble z = ddouble.InverseErfc(y);
 

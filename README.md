@@ -57,8 +57,8 @@
 |digamma|&#40;-inf,+inf&#41;|7|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
 |erf|&#40;-inf,+inf&#41;|10||ddouble.Erf(x)|
 |erfc|&#40;-inf,+inf&#41;|10||ddouble.Erfc(x)|
-|inverse_erf|&#40;-1,1&#41;|50|Error bits are rounded. Guarantee double precision.|ddouble.InverseErf(x)|
-|inverse_erfc|&#40;0,2&#41;|50|Error bits are rounded. Guarantee double precision.|ddouble.InverseErfc(x)|
+|inverse_erf|&#40;-1,1&#41;|20||ddouble.InverseErf(x)|
+|inverse_erfc|&#40;0,2&#41;|20||ddouble.InverseErfc(x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|

@@ -105,7 +105,7 @@ namespace DoubleDouble {
 
         private static partial class Consts {
             public static class InverseErf {
-                public const int Precision = 56;
+                public const int Precision = 84;
             }
         }
     }
