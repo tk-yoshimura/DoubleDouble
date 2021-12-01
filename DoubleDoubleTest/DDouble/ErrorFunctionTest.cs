@@ -212,5 +212,32 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(erfc_ninf == 2, nameof(erfc_ninf));
             Assert.IsTrue(ddouble.IsNaN(erfc_nan), nameof(erfc_nan));
         }
+
+        [TestMethod]
+        public void InverseErfTest() {
+            for (ddouble v = -10; v <= 10; v += 0.0625d) {
+                ddouble y = ddouble.Erf(v);
+                ddouble z = ddouble.InverseErf(y);
+            
+                Assert.AreEqual(v, z);
+            }
+
+            for (ddouble v = Math.ScaleB(1, -240); v > 0; v /= 2) { 
+                ddouble y = ddouble.Erf(v);
+                ddouble z = ddouble.InverseErf(y);
+
+                Assert.AreEqual(v, z, $"exponent: {ddouble.Frexp(v).exp}");
+            }
+        }
+
+        [TestMethod]
+        public void InverseErfcTest() {
+            for (ddouble v = -10; v <= 10; v += 0.0625d) {
+                ddouble y = ddouble.Erfc(v);
+                ddouble z = ddouble.InverseErfc(y);
+
+                Assert.AreEqual(v, z);
+            }
+        }
     }
 }

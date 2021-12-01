@@ -33,6 +33,10 @@ namespace DoubleDouble {
             int exponent = Math.ILogB(x.hi);
             double rem = Math.ScaleB(1, exponent - keep_bits);
 
+            if (!double.IsFinite(rem) || rem == 0) {
+                return x;
+            }
+
             double hi = Math.Truncate(x.hi / rem) * rem;
             double lo = Math.Truncate(x.lo / rem) * rem;
 
@@ -49,6 +53,10 @@ namespace DoubleDouble {
 
             int exponent = Math.ILogB(x.hi);
             double rem = Math.ScaleB(1, exponent - keep_bits);
+
+            if (!double.IsFinite(rem) || rem == 0) {
+                return x;
+            }
 
             double hi = Math.Round(x.hi / rem) * rem;
             double lo = Math.Round(x.lo / rem) * rem;
