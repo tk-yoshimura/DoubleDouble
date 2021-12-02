@@ -147,6 +147,17 @@ namespace DoubleDoubleTest.DDouble {
             Assert.ThrowsException<OverflowException>(() => {
                 int n = (int)(((ddouble)int.MinValue) - 1);
             });
+
+            Assert.AreEqual((ddouble)int.MaxValue, (ddouble)(double)int.MaxValue);
+            Assert.AreEqual((ddouble)int.MinValue, (ddouble)(double)int.MinValue);
+
+            Random random = new Random(1234);
+            for (int i = 0; i < 4096; i++) {
+                int n = random.Next();
+
+                Assert.AreEqual((ddouble)(n), (ddouble)(double)(n), (n).ToString());
+                Assert.AreEqual((ddouble)(-n), (ddouble)(double)(-n), (-n).ToString());
+            }
         }
 
         [TestMethod]
