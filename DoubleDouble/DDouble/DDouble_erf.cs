@@ -72,9 +72,8 @@ namespace DoubleDouble {
                 ddouble c = x * ddouble.Exp(-w) / ddouble.Sqrt(ddouble.PI);
 
                 ddouble f =
-                    (ddouble.Sqrt(25 + w * (440 + w * (488 + w * 16 * (10 + w))))
-                     - 5 + w * 4 * (1 + w))
-                    / (20 + w * 8);
+                    (ddouble.Sqrt(25d + w * (440d + w * (488d + w * 16d * (10d + w))))
+                     - 5d + w * 4d * (1d + w)) / (20d + w * 8d);
 
                 int n = 8;
                 for (int k = 4 * n - 3; k >= 1; k -= 4) {

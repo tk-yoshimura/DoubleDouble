@@ -5,7 +5,7 @@
                 return -Arsinh(Abs(x));
             }
 
-            ddouble y = Log1p(x + (Sqrt(x * x + 1) - 1));
+            ddouble y = Log1p(x + (Sqrt(x * x + 1d) - 1d));
 
             return y;
         }
@@ -15,7 +15,7 @@
                 return Zero;
             }
 
-            ddouble y = Log(x + Sqrt(x * x - 1));
+            ddouble y = Log(x + Sqrt(x * x - 1d));
 
             return y;
         }
@@ -35,7 +35,7 @@
                 return PositiveInfinity;
             }
 
-            ddouble y = (Log1p(x) - Log1p(-x)) / 2;
+            ddouble y = Ldexp(Log1p(x) - Log1p(-x), -1);
 
             return y;
         }

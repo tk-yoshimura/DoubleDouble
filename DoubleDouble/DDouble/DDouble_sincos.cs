@@ -29,15 +29,15 @@ namespace DoubleDouble {
             ddouble s = x - Floor(x);
 
             if (s <= 0.25d) {
-                ddouble sn = SinPI(s), cn = Sqrt(1 - sn * sn);
+                ddouble sn = SinPI(s), cn = Sqrt(1d - sn * sn);
                 return sn / cn;
             }
             else if (s <= 0.75d) {
-                ddouble cn = CosPI(s), sn = Sqrt(1 - cn * cn);
+                ddouble cn = CosPI(s), sn = Sqrt(1d - cn * cn);
                 return sn / cn;
             }
             else {
-                ddouble sn = SinPI(s), cn = -Sqrt(1 - sn * sn);
+                ddouble sn = SinPI(s), cn = -Sqrt(1d - sn * sn);
                 return sn / cn;
             }
         }

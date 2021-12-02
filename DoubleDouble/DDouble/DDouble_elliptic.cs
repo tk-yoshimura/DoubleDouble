@@ -81,7 +81,7 @@ namespace DoubleDouble {
             if (squa_k > Math.ScaleB(1, -8)) {
                 ddouble c = Sqrt(1d - squa_k), cp1 = 1d + c, cm1 = 1d - c;
 
-                y = 2 / cp1 * EllipticKCore(cm1 / cp1, kvalue_cache);
+                y = 2d / cp1 * EllipticKCore(cm1 / cp1, kvalue_cache);
             }
             else {
                 ddouble x = 1, w = squa_k;
@@ -157,7 +157,7 @@ namespace DoubleDouble {
                 sum_q += q;
             }
 
-            ddouble y = (2d + sum_q * n / (1d - n)) * EllipticK(k) / 2d;
+            ddouble y = Ldexp((2d + sum_q * n / (1d - n)) * EllipticK(k), -1);
 
             return y;
         }

@@ -63,7 +63,7 @@ namespace DoubleDouble {
             }
 
             if (x >= 0.999755859375d && x <= 1.000244140625d) {
-                x -= 1;
+                x -= 1d;
 
                 return x * (-226800 * EulerGamma
                         + x * (18900 * (PI * PI)
@@ -75,7 +75,7 @@ namespace DoubleDouble {
                         + x * (3 * Pow(PI, 8))))))))) / 226800;
             }
             if (x >= 1.999755859375d && x <= 2.000244140625d) {
-                x -= 2;
+                x -= 2d;
 
                 return x * (226800 * (1 - EulerGamma)
                         + x * (18900 * ((PI * PI) - 6)

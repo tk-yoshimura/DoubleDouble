@@ -17,11 +17,11 @@ namespace DoubleDouble {
 
             (int n, ddouble v) = Frexp(x);
 
-            int index = (int)ddouble.Floor((v - 1) * Consts.Log.Log2TableN);
-            ddouble v_offset = 1 + Consts.Log.Log2TableDx * index;
+            int index = (int)ddouble.Floor((v - 1d) * Consts.Log.Log2TableN);
+            ddouble v_offset = 1d + Consts.Log.Log2TableDx * index;
             ddouble y_offset = n + Consts.Log.Log2Table[index];
 
-            ddouble w = v / v_offset - 1, squa_w = w * w, r = Consts.Log.LbE * w;
+            ddouble w = v / v_offset - 1d, squa_w = w * w, r = Consts.Log.LbE * w;
 
             ddouble y = y_offset;
             for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
@@ -40,7 +40,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Log10(ddouble x) {
-            return RoundMantissa(Log2(x) * Consts.Log.Lg2, 103);
+            return RoundMantissa(Log2(x) * Consts.Log.Lg2, keep_bits: 103);
         }
 
         public static ddouble Log(ddouble x) {
@@ -59,7 +59,7 @@ namespace DoubleDouble {
             }
 
             ddouble squa_x = x * x, r = x;
-            ddouble y = 0;
+            ddouble y = ddouble.Zero;
 
             for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
                 ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * x) * Consts.Log.LogConvergenceRemTable[i];
@@ -85,7 +85,7 @@ namespace DoubleDouble {
 
                 private static ddouble GenerateLn2() {
                     int n = 3;
-                    Accumulator x = Rcp(3);
+                    Accumulator x = Rcp(3d);
 
                     while (!x.IsConvergence) {
                         x += Rcp(n * Pow(3d, n));

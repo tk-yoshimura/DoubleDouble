@@ -5,7 +5,7 @@ namespace DoubleDouble {
 
     public static class DoubleDoubleEnumerableExpand {
         public static ddouble Sum(this IEnumerable<ddouble> source) {
-            Accumulator acc = 0d;
+            Accumulator acc = ddouble.Zero;
 
             foreach (var v in source) {
                 acc += v;
