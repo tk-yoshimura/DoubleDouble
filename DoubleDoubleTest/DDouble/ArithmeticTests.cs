@@ -39,6 +39,51 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.MinValue + ddouble.MinValue));
             Assert.IsTrue(ddouble.IsZero(ddouble.MinValue + ddouble.MaxValue));
             Assert.IsTrue(ddouble.IsZero(ddouble.MaxValue + ddouble.MinValue));
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.MaxValue + ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.MinValue + ddouble.MinValue));
+            Assert.IsTrue(ddouble.IsZero(ddouble.MinValue + ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsZero(ddouble.MaxValue + ddouble.MinValue));
+
+            Assert.IsTrue(ddouble.IsInfinity(ddouble.PositiveInfinity + double.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity + double.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity + double.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsInfinity(ddouble.NegativeInfinity + double.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity + double.NaN));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity + double.NaN));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN + double.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN + double.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN + double.NaN));
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.MaxValue + double.MaxValue));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.MinValue + double.MinValue));
+            Assert.IsTrue(ddouble.IsZero(ddouble.MinValue + double.MaxValue));
+            Assert.IsTrue(ddouble.IsZero(ddouble.MaxValue + double.MinValue));
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.MaxValue + double.MaxValue));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.MinValue + double.MinValue));
+            Assert.IsTrue(ddouble.IsZero(ddouble.MinValue + double.MaxValue));
+            Assert.IsTrue(ddouble.IsZero(ddouble.MaxValue + double.MinValue));
+
+            Assert.IsTrue(ddouble.IsInfinity(double.PositiveInfinity + ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.PositiveInfinity + ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.NegativeInfinity + ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsInfinity(double.NegativeInfinity + ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.PositiveInfinity + ddouble.NaN));
+            Assert.IsTrue(ddouble.IsNaN(double.NegativeInfinity + ddouble.NaN));
+            Assert.IsTrue(ddouble.IsNaN(double.NaN + ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.NaN + ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.NaN + ddouble.NaN));
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(double.MaxValue + ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(double.MinValue + ddouble.MinValue));
+            Assert.IsTrue(ddouble.IsZero(double.MinValue + ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsZero(double.MaxValue + ddouble.MinValue));
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(double.MaxValue + ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(double.MinValue + ddouble.MinValue));
+            Assert.IsTrue(ddouble.IsZero(double.MinValue + ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsZero(double.MaxValue + ddouble.MinValue));
         }
 
         [TestMethod]
@@ -75,12 +120,40 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsZero(ddouble.MinValue - ddouble.MinValue));
             Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.MinValue - ddouble.MaxValue));
             Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.MaxValue - ddouble.MinValue));
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity - double.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsInfinity(ddouble.PositiveInfinity - double.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsInfinity(ddouble.NegativeInfinity - double.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity - double.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity - double.NaN));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity - double.NaN));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN - double.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN - double.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.NaN - double.NaN));
+
+            Assert.IsTrue(ddouble.IsZero(ddouble.MaxValue - double.MaxValue));
+            Assert.IsTrue(ddouble.IsZero(ddouble.MinValue - double.MinValue));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.MinValue - double.MaxValue));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.MaxValue - double.MinValue));
+
+            Assert.IsTrue(ddouble.IsNaN(double.PositiveInfinity - ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsInfinity(double.PositiveInfinity - ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsInfinity(double.NegativeInfinity - ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.NegativeInfinity - ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.PositiveInfinity - ddouble.NaN));
+            Assert.IsTrue(ddouble.IsNaN(double.NegativeInfinity - ddouble.NaN));
+            Assert.IsTrue(ddouble.IsNaN(double.NaN - ddouble.PositiveInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.NaN - ddouble.NegativeInfinity));
+            Assert.IsTrue(ddouble.IsNaN(double.NaN - ddouble.NaN));
+
+            Assert.IsTrue(ddouble.IsZero(double.MaxValue - ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsZero(double.MinValue - ddouble.MinValue));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(double.MinValue - ddouble.MaxValue));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(double.MaxValue - ddouble.MinValue));
         }
 
         [TestMethod]
         public void MulTest() {
-            ddouble.IsMinusZero(ddouble.PlusZero * ddouble.MinusZero);
-
             foreach (int n in new int[] { -7, -13, -17, -257, 7, 13, 17, 257 }) {
                 ddouble u = (ddouble.Rcp(n)) * (ddouble)n;
                 double v = (1d / n) * n;

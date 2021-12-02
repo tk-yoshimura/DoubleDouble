@@ -5,17 +5,12 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoubleDouble", "DoubleDouble\DoubleDouble.csproj", "{B4B4FCBB-1F1D-4E40-8B1F-6194FC707518}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{13558AEF-81EF-46B6-A642-6D16BB940CCC}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoubleDoubleTest", "DoubleDoubleTest\DoubleDoubleTest.csproj", "{6D870EF9-32E9-4FF4-B8D6-6924CA9A4F34}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B4B4FCBB-1F1D-4E40-8B1F-6194FC707518} = {B4B4FCBB-1F1D-4E40-8B1F-6194FC707518}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleDoubleSandbox", "DoubleDoubleSandbox\DoubleDoubleSandbox.csproj", "{23EFB3DF-6274-4B3A-B8D0-61BF998B17C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoubleDoubleSandbox", "DoubleDoubleSandbox\DoubleDoubleSandbox.csproj", "{23EFB3DF-6274-4B3A-B8D0-61BF998B17C9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B4B4FCBB-1F1D-4E40-8B1F-6194FC707518} = {B4B4FCBB-1F1D-4E40-8B1F-6194FC707518}
 	EndProjectSection
