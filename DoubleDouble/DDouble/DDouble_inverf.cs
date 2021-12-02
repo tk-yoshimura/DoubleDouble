@@ -15,7 +15,7 @@ namespace DoubleDouble {
 
             if (x < Math.ScaleB(1, -256)) {
                 ddouble w = PI * x * x;
-                ddouble t = Sqrt(PI) * ((40320 + w * (3360 + w * (588 + w * 127))) / 80640);
+                ddouble t = Sqrt(PI) * ((40320d + w * (3360d + w * (588d + w * 127d))) / 80640d);
 
                 return RoundMantissa(x * t, Consts.InverseErf.Precision); ;
             }
@@ -42,12 +42,12 @@ namespace DoubleDouble {
         }
 
         private static ddouble InverseErfRootFinding(ddouble x) {
-            ddouble s = 2 / Sqrt(PI);
+            ddouble s = 2d / Sqrt(PI);
 
             const double a = 0.147;
 
-            ddouble lg = Log(1 - x * x);
-            ddouble lga = 2 / (PI * a) + lg / 2;
+            ddouble lg = Log(1d - x * x);
+            ddouble lga = 2d / (PI * a) + Ldexp(lg, -1);
 
             ddouble z = Sqrt(Sqrt(lga * lga - lg / a) - lga);
 
@@ -56,7 +56,7 @@ namespace DoubleDouble {
             };
             (ddouble, ddouble) derf(ddouble z) {
                 ddouble d1 = Exp(-z * z) * s;
-                ddouble d2 = -2 * z * d1;
+                ddouble d2 = -Ldexp(z * d1, 1);
 
                 return (d1, d2);
             };
@@ -64,7 +64,7 @@ namespace DoubleDouble {
             for (int i = 0; i < 3; i++) {
                 ddouble y = erf(z);
                 (ddouble df1, ddouble df2) = derf(z);
-                ddouble dz = (2 * y * df1) / (2 * df1 * df1 - y * df2);
+                ddouble dz = Ldexp(y * df1, 1) / (Ldexp(df1 * df1, 1) - y * df2);
 
                 z -= dz;
             }
@@ -73,12 +73,12 @@ namespace DoubleDouble {
         }
 
         private static ddouble InverseErfcRootFinding(ddouble x) {
-            ddouble s = 2 / Sqrt(PI);
+            ddouble s = 2d / Sqrt(PI);
 
             const double a = 0.147;
 
-            ddouble lg = Log((2 - x) * x);
-            ddouble lga = 2 / (PI * a) + lg / 2;
+            ddouble lg = Log((2d - x) * x);
+            ddouble lga = 2d / (PI * a) + Ldexp(lg, -1);
 
             ddouble z = Sqrt(Sqrt(lga * lga - lg / a) - lga);
 
@@ -87,7 +87,7 @@ namespace DoubleDouble {
             };
             (ddouble, ddouble) derfc(ddouble z) {
                 ddouble d1 = -Exp(-z * z) * s;
-                ddouble d2 = -2 * z * d1;
+                ddouble d2 = -Ldexp(z * d1, 1);
 
                 return (d1, d2);
             };
@@ -95,7 +95,7 @@ namespace DoubleDouble {
             for (int i = 0; i < 3; i++) {
                 ddouble y = erfc(z);
                 (ddouble df1, ddouble df2) = derfc(z);
-                ddouble dz = (2 * y * df1) / (2 * df1 * df1 - y * df2);
+                ddouble dz = Ldexp(y * df1, 1) / (Ldexp(df1 * df1, 1) - y * df2);
 
                 z -= dz;
             }

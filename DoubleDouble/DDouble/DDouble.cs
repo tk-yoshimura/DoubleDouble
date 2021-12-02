@@ -53,7 +53,6 @@ namespace DoubleDouble {
 
         public static bool IsMinusZero(ddouble v) => IsZero(v) && v.Sign < 0;
 
-
         public int Sign => (int)Math.CopySign(1, hi);
 
         internal double Hi => hi;

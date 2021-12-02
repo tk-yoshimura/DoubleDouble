@@ -3,10 +3,10 @@
         public static readonly ddouble PI = GeneratePI();
 
         private static ddouble GeneratePI() {
-            ddouble a = 1;
-            ddouble b = Ldexp(Sqrt(2), -1);
-            ddouble t = Ldexp(1, -2);
-            ddouble p = 1;
+            ddouble a = 1d;
+            ddouble b = Ldexp(Sqrt(2d), -1);
+            ddouble t = Ldexp(1d, -2);
+            ddouble p = 1d;
 
             for (int i = 0; i < 4; i++) {
                 ddouble a_next = Ldexp(a + b, -1);

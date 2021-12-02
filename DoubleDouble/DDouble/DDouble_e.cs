@@ -3,7 +3,7 @@
         public static readonly ddouble E = GenerateE();
 
         private static ddouble GenerateE() {
-            Accumulator x = 0d;
+            Accumulator x = ddouble.Zero;
 
             foreach (ddouble f in TaylorSequence) {
                 x += f;

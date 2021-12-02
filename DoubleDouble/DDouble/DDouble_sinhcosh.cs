@@ -17,14 +17,14 @@
                 return NaN;
             }
 
-            ddouble x2 = 2 * x;
+            ddouble x2 = Ldexp(x, 1);
             ddouble x2_expm1 = Expm1(x2), x2_expp1 = Exp(x2) + 1;
 
             if (IsFinite(x2_expm1) && IsFinite(x2_expp1)) {
                 return x2_expm1 / x2_expp1;
             }
             else {
-                return 1;
+                return 1d;
             }
         }
     }

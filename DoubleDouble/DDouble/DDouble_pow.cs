@@ -36,14 +36,14 @@ namespace DoubleDouble {
                 return 1d;
             }
             if (IsInfinity(x)) {
-                return (x.Sign < 0) ? 0 : PositiveInfinity;
+                return (x.Sign < 0) ? PlusZero : PositiveInfinity;
             }
             if (x >= 1024) {
                 return PositiveInfinity;
             }
 
             int exp = (int)Floor(x);
-            ddouble s = x - exp, c = Ldexp(1, exp);
+            ddouble s = x - exp, c = Ldexp(1d, exp);
 
             int index = (int)ddouble.Floor(s * Consts.Pow.Pow2TableN);
             ddouble v = (s - Consts.Pow.Pow2TableDx * index) * Consts.Log.Ln2;

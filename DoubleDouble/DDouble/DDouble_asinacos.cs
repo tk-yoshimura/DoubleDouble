@@ -16,7 +16,7 @@
                 return Consts.AsinAcos.HalfPI - Atan(Rcp(x));
             }
             if (x > 0.25d) {
-                return ddouble.Ldexp(Atan(x / (1 + ddouble.Sqrt(1 + x * x))), 1);
+                return ddouble.Ldexp(Atan(x / (1d + ddouble.Sqrt(1d + x * x))), 1);
             }
 
             ddouble f = 86d * x + 13.5d;
@@ -40,7 +40,7 @@
                 return Consts.AsinAcos.HalfPI;
             }
 
-            ddouble y = Atan(Sqrt(Rcp(1 - x * x) - 1));
+            ddouble y = Atan(Sqrt(Rcp(1d - x * x) - 1d));
 
             return x.Sign >= 0 ? y : -y;
         }

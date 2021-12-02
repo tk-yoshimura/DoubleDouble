@@ -23,13 +23,13 @@ namespace DoubleDouble {
                 x_frac = Ldexp(x_frac, exponent_rem);
             }
 
-            ddouble a = 1 / Math.Cbrt(x_frac.hi);
+            ddouble a = 1d / Math.Cbrt(x_frac.hi);
 
-            ddouble h = 1 - x_frac * a * a * a;
-            a *= 1 + h * (27 + h * (18 + h * 14)) * Consts.Rcp81;
+            ddouble h = 1d - x_frac * a * a * a;
+            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Rcp81;
 
-            h = 1 - x_frac * a * a * a;
-            a *= 1 + h * (27 + h * (18 + h * 14)) * Consts.Rcp81;
+            h = 1d - x_frac * a * a * a;
+            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Rcp81;
 
             ddouble y = Ldexp(x_frac * a * a, (x_exponent - exponent_rem) / 3);
 
