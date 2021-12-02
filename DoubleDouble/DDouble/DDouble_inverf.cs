@@ -15,7 +15,7 @@ namespace DoubleDouble {
 
             if (x < Math.ScaleB(1, -256)) {
                 ddouble w = PI * x * x;
-                ddouble t = Sqrt(PI) * ((40320 + w * (3360 + w * (588 + w * 127))) / 80640);
+                ddouble t = Sqrt(PI) * ((40320d + w * (3360d + w * (588d + w * 127d))) / 80640d);
 
                 return RoundMantissa(x * t, Consts.InverseErf.Precision); ;
             }

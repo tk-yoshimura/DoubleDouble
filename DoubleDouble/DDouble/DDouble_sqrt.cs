@@ -20,7 +20,7 @@ namespace DoubleDouble {
                 x_frac = Ldexp(x_frac, exponent_rem);
             }
 
-            ddouble a = Rcp(Math.Sqrt(x_frac.hi));
+            ddouble a = 1d / Math.Sqrt(x_frac.hi);
 
             ddouble h = 1d - x_frac * a * a;
             a *= 1d + Ldexp(h * (4d + h * 3d), -3);
