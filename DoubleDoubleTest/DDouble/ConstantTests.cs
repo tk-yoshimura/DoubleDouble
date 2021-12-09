@@ -20,8 +20,8 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);
             Console.WriteLine(ddouble.BitIncrement(expected) - actual);
 
-            Console.WriteLine($"0x{FloatSplitter.Split(expected).mantissa:X14}");
-            Console.WriteLine($"0x{FloatSplitter.Split(actual).mantissa:X14}");
+            Console.WriteLine($"0x{FloatSplitter.SplitX2(expected).mantissa:X14}");
+            Console.WriteLine($"0x{FloatSplitter.SplitX2(actual).mantissa:X14}");
         }
 
         [TestMethod]
@@ -39,8 +39,8 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);
             Console.WriteLine(ddouble.BitIncrement(expected) - actual);
 
-            Console.WriteLine($"0x{FloatSplitter.Split(expected).mantissa:X14}");
-            Console.WriteLine($"0x{FloatSplitter.Split(actual).mantissa:X14}");
+            Console.WriteLine($"0x{FloatSplitter.SplitX2(expected).mantissa:X14}");
+            Console.WriteLine($"0x{FloatSplitter.SplitX2(actual).mantissa:X14}");
         }
     }
 }

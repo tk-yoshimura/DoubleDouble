@@ -31,8 +31,8 @@ namespace DoubleDoubleTest {
         }
 
         public static void NeighborBits(ddouble expected, ddouble actual, int dist = 1) {
-            BigInteger n_expected = FloatSplitter.Split(expected).mantissa;
-            BigInteger n_actual = FloatSplitter.Split(actual).mantissa;
+            BigInteger n_expected = FloatSplitter.SplitX2(expected).mantissa;
+            BigInteger n_actual = FloatSplitter.SplitX2(actual).mantissa;
 
             if (BigInteger.Abs(n_expected - n_actual) > dist) {
                 throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}");
@@ -40,8 +40,8 @@ namespace DoubleDoubleTest {
         }
 
         public static void NeighborBits(ddouble expected, ddouble actual, string message, int dist = 1) {
-            BigInteger n_expected = FloatSplitter.Split(expected).mantissa;
-            BigInteger n_actual = FloatSplitter.Split(actual).mantissa;
+            BigInteger n_expected = FloatSplitter.SplitX2(expected).mantissa;
+            BigInteger n_actual = FloatSplitter.SplitX2(actual).mantissa;
 
             if (BigInteger.Abs(n_expected - n_actual) > dist) {
                 throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}\n{message}");

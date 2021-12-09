@@ -53,7 +53,7 @@ namespace DoubleDoubleTest.Utils {
                 double.NaN
             }) {
 
-                (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
+                (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.SplitX2(v);
 
                 Console.WriteLine(v);
                 Console.WriteLine($"  {sign} {exponent} 0x{mantissa:X27} iszero:{iszero}");
@@ -63,15 +63,15 @@ namespace DoubleDoubleTest.Utils {
                 Assert.AreEqual(v == 0, iszero);
 
                 if (Math.Abs((long)Math.ILogB(v.Hi)) < 10L) {
-                    Assert.AreEqual(mantissa, FloatSplitter.Split(v * 2d).mantissa, nameof(mantissa));
-                    Assert.AreEqual(mantissa, FloatSplitter.Split(v / 2d).mantissa, nameof(mantissa));
-                    Assert.AreEqual(mantissa, FloatSplitter.Split(-v * 2d).mantissa, nameof(mantissa));
-                    Assert.AreEqual(mantissa, FloatSplitter.Split(-v / 2d).mantissa, nameof(mantissa));
+                    Assert.AreEqual(mantissa, FloatSplitter.SplitX2(v * 2d).mantissa, nameof(mantissa));
+                    Assert.AreEqual(mantissa, FloatSplitter.SplitX2(v / 2d).mantissa, nameof(mantissa));
+                    Assert.AreEqual(mantissa, FloatSplitter.SplitX2(-v * 2d).mantissa, nameof(mantissa));
+                    Assert.AreEqual(mantissa, FloatSplitter.SplitX2(-v / 2d).mantissa, nameof(mantissa));
 
-                    Assert.AreEqual(exponent + 1, FloatSplitter.Split(v * 2d).exponent, nameof(mantissa));
-                    Assert.AreEqual(exponent - 1, FloatSplitter.Split(v / 2d).exponent, nameof(mantissa));
-                    Assert.AreEqual(exponent + 1, FloatSplitter.Split(-v * 2d).exponent, nameof(mantissa));
-                    Assert.AreEqual(exponent - 1, FloatSplitter.Split(-v / 2d).exponent, nameof(mantissa));
+                    Assert.AreEqual(exponent + 1, FloatSplitter.SplitX2(v * 2d).exponent, nameof(mantissa));
+                    Assert.AreEqual(exponent - 1, FloatSplitter.SplitX2(v / 2d).exponent, nameof(mantissa));
+                    Assert.AreEqual(exponent + 1, FloatSplitter.SplitX2(-v * 2d).exponent, nameof(mantissa));
+                    Assert.AreEqual(exponent - 1, FloatSplitter.SplitX2(-v / 2d).exponent, nameof(mantissa));
                 }
             }
         }

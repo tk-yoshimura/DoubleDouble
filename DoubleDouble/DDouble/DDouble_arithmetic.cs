@@ -339,6 +339,14 @@ namespace DoubleDouble {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble Multiply(double a, double b) {
+            double hi = a * b;
+            double lo = Math.FusedMultiplyAdd(a, b, -hi);
+
+            return new ddouble(hi, lo);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static (double s, double c) TwoSum(double a, double b) {
             double s = a + b;
             double t = s - a;

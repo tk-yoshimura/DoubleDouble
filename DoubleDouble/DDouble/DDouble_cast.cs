@@ -62,7 +62,7 @@ namespace DoubleDouble {
                 throw new InvalidCastException();
             }
 
-            (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
+            (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.SplitX2(v);
 
             if (iszero) {
                 return 0L;
@@ -95,7 +95,7 @@ namespace DoubleDouble {
                 throw new InvalidCastException();
             }
 
-            (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
+            (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.SplitX2(v);
 
             if (sign < 0) {
                 throw new OverflowException();
@@ -116,7 +116,7 @@ namespace DoubleDouble {
         }
 
         public static implicit operator ddouble(BigInteger n) {
-            (int sign, UInt64 hi, UInt64 lo, int sfts) = IntegerSplitter.Split(n);
+            (int sign, UInt64 hi, UInt64 lo, int sfts) = IntegerSplitter.SplitX2(n);
 
             ddouble v = new ddouble(
                 Math.ScaleB((double)hi, IntegerSplitter.MantissaBits + sfts),

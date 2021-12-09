@@ -39,7 +39,7 @@ namespace DoubleDouble {
             return (sign, exponent, mantissa, iszero: false);
         }
 
-        public static (int sign, int exponent, BigInteger mantissa, bool iszero) Split(ddouble v) {
+        public static (int sign, int exponent, BigInteger mantissa, bool iszero) SplitX2(ddouble v) {
             (int sign, int exponent, UInt64 mantissa, bool iszero) hi = Split(v.Hi, hidden_bit: false);
             (int sign, int exponent, UInt64 mantissa, bool iszero) lo = Split(v.Lo, hidden_bit: false);
 
@@ -53,6 +53,31 @@ namespace DoubleDouble {
             }
 
             int sfts = hi.exponent - lo.exponent - MantissaBits;
+
+            if (hi.sign == lo.sign) {
+                mantissa += BigIntegerUtil.RightShift(lo.mantissa, sfts);
+            }
+            else {
+                mantissa -= BigIntegerUtil.RightShift(lo.mantissa, sfts);
+            }
+
+            return (hi.sign, hi.exponent, mantissa, iszero: false);
+        }
+
+        public static (int sign, int exponent, BigInteger mantissa, bool iszero) SplitX4(qdouble v) {
+            (int sign, int exponent, BigInteger mantissa, bool iszero) hi = SplitX2(v.Hi);
+            (int sign, int exponent, BigInteger mantissa, bool iszero) lo = SplitX2(v.Lo);
+
+            if (hi.iszero) {
+                return (hi.sign, 0, 0, iszero: true);
+            }
+
+            BigInteger mantissa = hi.mantissa << (MantissaBits * 2);
+            if (lo.iszero) {
+                return (hi.sign, hi.exponent, mantissa, iszero: false);
+            }
+
+            int sfts = hi.exponent - lo.exponent - (MantissaBits * 2);
 
             if (hi.sign == lo.sign) {
                 mantissa += BigIntegerUtil.RightShift(lo.mantissa, sfts);

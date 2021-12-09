@@ -149,13 +149,13 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(ddouble.Expm1(0));
             Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(0)));
 
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(-0.25d))).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(-0.25d)).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(-0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.SplitX2(ddouble.Expm1(ddouble.BitDecrement(-0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.SplitX2(ddouble.Expm1(-0.25d)).mantissa);
+            Console.WriteLine(FloatSplitter.SplitX2(ddouble.Expm1(ddouble.BitIncrement(-0.25d))).mantissa);
 
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(0.25d))).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(0.25d)).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.SplitX2(ddouble.Expm1(ddouble.BitDecrement(0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.SplitX2(ddouble.Expm1(0.25d)).mantissa);
+            Console.WriteLine(FloatSplitter.SplitX2(ddouble.Expm1(ddouble.BitIncrement(0.25d))).mantissa);
 
             Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(-0.25d)));
             Console.WriteLine(ddouble.Expm1(-0.25d));

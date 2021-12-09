@@ -1,12 +1,12 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
 
 namespace DoubleDouble {
-    public partial struct ddouble {
-        public static int DecimalDigits => 30;
+    internal partial struct qdouble {
+        public static int DecimalDigits => 64;
 
         public override string ToString() {
             if (IsNaN(this)) {
@@ -103,21 +103,21 @@ namespace DoubleDouble {
                 return (Sign, 0, 0);
             }
 
-            (int sign, int exponent, BigInteger mantissa, _) = FloatSplitter.SplitX2(this);
+            (int sign, int exponent, BigInteger mantissa, _) = FloatSplitter.SplitX4(this);
 
-            ddouble exponent_log10 = Consts.Log.Lg2 * exponent;
-            ddouble exponent_int = Floor(exponent_log10);
+            qdouble exponent_log10 = Consts.Log.Lg2 * exponent;
+            qdouble exponent_int = Floor(exponent_log10);
             int exponent_dec = (int)exponent_int;
 
-            ddouble log10_frac = Ldexp(Consts.Dec.Pow5(-exponent_dec), checked(exponent - exponent_dec));
-            (_, int exponent_frac, BigInteger mantissa_frac, _) = FloatSplitter.SplitX2(log10_frac);
+            qdouble log10_frac = Ldexp(Consts.Dec.Pow5(-exponent_dec), checked(exponent - exponent_dec));
+            (_, int exponent_frac, BigInteger mantissa_frac, _) = FloatSplitter.SplitX4(log10_frac);
 
 #if DEBUG
             Debug<ArithmeticException>.Assert(log10_frac >= 1 && log10_frac < 10);
 #endif
 
-            mantissa = (mantissa * Consts.Dec.Decimal(digits + presicion)) >> (FloatSplitter.MantissaBits * 2);
-            mantissa = (mantissa * (mantissa_frac << exponent_frac)) >> (FloatSplitter.MantissaBits * 2);
+            mantissa = (mantissa * Consts.Dec.Decimal(digits + presicion)) >> (FloatSplitter.MantissaBits * 4);
+            mantissa = (mantissa * (mantissa_frac << exponent_frac)) >> (FloatSplitter.MantissaBits * 4);
 
             int mantissa_length = mantissa.ToString().Length;
 
@@ -144,7 +144,7 @@ namespace DoubleDouble {
             public static class Dec {
 
                 static readonly Dictionary<int, BigInteger> decimals = new();
-                static readonly Dictionary<int, ddouble> pow5s = new();
+                static readonly Dictionary<int, qdouble> pow5s = new();
 
                 public static BigInteger Decimal(int n) {
                     if (!decimals.ContainsKey(n)) {
@@ -159,9 +159,9 @@ namespace DoubleDouble {
                     return decimals[n];
                 }
 
-                public static ddouble Pow5(int n) {
+                public static qdouble Pow5(int n) {
                     if (!pow5s.ContainsKey(n)) {
-                        ddouble pow5 = Pow(5, n);
+                        qdouble pow5 = Pow(5, n);
 
                         pow5s.Add(n, pow5);
                     }

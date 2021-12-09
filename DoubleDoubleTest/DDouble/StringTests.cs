@@ -80,7 +80,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 Console.WriteLine(p9);
                 Console.WriteLine(v);
-                Console.WriteLine($"0x{FloatSplitter.Split(v).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.SplitX2(v).mantissa:X14}");
 
                 p9 += "9";
             }
@@ -92,7 +92,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 Console.WriteLine(p3);
                 Console.WriteLine(v);
-                Console.WriteLine($"0x{FloatSplitter.Split(v).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.SplitX2(v).mantissa:X14}");
 
                 p3 += "3";
             }

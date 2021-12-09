@@ -187,7 +187,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble v_round = ddouble.TruncateMantissa(v, keep_bits);
 
                     Console.WriteLine(v_round);
-                    Console.WriteLine($"0x{FloatSplitter.Split(v_round).mantissa:X14}");
+                    Console.WriteLine($"0x{FloatSplitter.SplitX2(v_round).mantissa:X14}");
                     Console.WriteLine(v_round - v);
                 }
             }
