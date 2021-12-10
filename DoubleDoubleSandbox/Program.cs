@@ -5,7 +5,10 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            BesselLimit.BesselI(0, 50);
+            BesselNearZero.CoefTable coef = new BesselNearZero.CoefTable(2.5);
+            BesselNearZero.BesselJ(0, 40);
+
+            coef.Value(16);
 
             using (StreamWriter sw = new StreamWriter("../../bessel_j.csv")) {
                 sw.WriteLine("nu,z,terms,y");
@@ -21,6 +24,22 @@ namespace DoubleDoubleSandbox {
                         Console.WriteLine($"{nu},{z},{terms},{y}");
 
                         break;
+                    }
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter("../../bessel_j_nz.csv")) {
+                sw.WriteLine("nu,z,terms,y");
+                for (double nu = -4d; nu <= 4d; nu += 0.125d) {
+                    for (double z = 0d; z <= 256d; z += 0.5d) {
+                        (ddouble y, int terms) = BesselNearZero.BesselJ(nu, z);
+
+                        if (ddouble.IsNaN(y) || !ddouble.IsFinite(y)) {
+                            break;
+                        }
+
+                        sw.WriteLine($"{nu},{z},{terms},{y}");
+                        Console.WriteLine($"{nu},{z},{terms},{y}");
                     }
                 }
             }

@@ -1,7 +1,11 @@
 ﻿using DoubleDouble;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DoubleDoubleSandbox {
     internal static class BesselLimit {
+        private static Dictionary<ddouble, CoefTable> coef_table = new();
 
         public static (ddouble y, int terms) BesselJ(ddouble nu, ddouble z, int max_terms = 64) {
             (ddouble x, ddouble y, int terms) = BesselJYCoef(nu, z, max_terms);
@@ -39,8 +43,12 @@ namespace DoubleDoubleSandbox {
             return (t, terms);
         }
 
-        public static (ddouble x, ddouble y, int terms) BesselJYCoef(ddouble nu, ddouble z, int max_terms = 64) { 
-            BesselLimitCoef table = new BesselLimitCoef(nu);
+        public static (ddouble x, ddouble y, int terms) BesselJYCoef(ddouble nu, ddouble z, int max_terms = 64) {
+            if (!coef_table.ContainsKey(nu)) {
+                coef_table.Add(nu, new CoefTable(nu));
+            }
+
+            CoefTable table = coef_table[nu];
 
             ddouble squa_nu4 = 4d * nu * nu;
             ddouble v = 1d / z, v2 = v * v, v4 = v2 * v2;
@@ -49,8 +57,7 @@ namespace DoubleDoubleSandbox {
 
             static int square(int n) => checked(n * n);
 
-            int k = 0;
-            for (; k <= max_terms; k++) {
+            for (int k = 0; k <= max_terms; k++) {
                 ddouble dx = p * table.Value(k * 4) * 
                     (1d - v2 * (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2)));
                 ddouble dy = q * table.Value(k * 4 + 1) * 
@@ -73,7 +80,11 @@ namespace DoubleDoubleSandbox {
         }
 
         public static (ddouble c, int terms) BesselIKCoef(ddouble nu, ddouble z, bool sign_switch, int max_terms = 64) {
-            BesselLimitCoef table = new BesselLimitCoef(nu);
+            if (!coef_table.ContainsKey(nu)) {
+                coef_table.Add(nu, new CoefTable(nu));
+            }
+
+            CoefTable table = coef_table[nu];
 
             ddouble squa_nu4 = 4d * nu * nu;
             ddouble v = 1d / z, v2 = v * v;
@@ -82,8 +93,7 @@ namespace DoubleDoubleSandbox {
 
             static int square(int n) => checked(n * n);
 
-            int k = 0;
-            for (; k <= max_terms; k++) {
+            for (int k = 0; k <= max_terms; k++) {
                 ddouble w = v * (squa_nu4 - square(4 * k + 1)) / (8 * (2 * k + 1));
                 ddouble dc = u * table.Value(k * 2) * (sign_switch ? (1d - w) : (1d + w));
                 
@@ -98,6 +108,38 @@ namespace DoubleDoubleSandbox {
             }
 
             return (ddouble.NaN, int.MaxValue);
+        }
+
+        private class CoefTable {
+            private readonly ddouble squa_nu4;
+            private readonly List<ddouble> a_table = new();
+
+            public CoefTable(ddouble nu) {
+                this.squa_nu4 = 4 * nu * nu;
+
+                ddouble a1 = ddouble.Ldexp(squa_nu4 - 1, -3);
+
+                this.a_table.Add(1);
+                this.a_table.Add(a1);
+            }
+
+            public ddouble Value(int n) {
+                if (n < 0) {
+                    throw new ArgumentOutOfRangeException(nameof(n));
+                }
+
+                if (n < a_table.Count) {
+                    return a_table[n];
+                }
+
+                for (int k = a_table.Count; k <= n; k++) {
+                    ddouble a = a_table.Last() * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1))) / checked(k * 8);
+
+                    a_table.Add(a);
+                }
+
+                return a_table[n];
+            }
         }
     }
 }
