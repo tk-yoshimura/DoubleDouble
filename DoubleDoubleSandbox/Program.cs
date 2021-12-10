@@ -7,13 +7,13 @@ namespace DoubleDoubleSandbox {
         static void Main(string[] args) {
             BesselLimit.BesselJ(0, 10);
 
-            using (StreamWriter sw = new StreamWriter("../../bessel_j.csv")) {
+            using (StreamWriter sw = new StreamWriter("../../bessel_y.csv")) {
 
                 sw.WriteLine("nu,z,terms,y");
 
                 for (double nu = -4d; nu <= 4d; nu += 0.125d) {
                     for (double z = 1d; z <= 256d; z += 0.5d) {
-                        (ddouble y, int terms) = BesselLimit.BesselJ(nu, z);
+                        (ddouble y, int terms) = BesselLimit.BesselY(nu, z);
 
                         if (ddouble.IsNaN(y) || !ddouble.IsFinite(y)) {
                             continue;
