@@ -204,7 +204,7 @@ namespace DoubleDouble {
                 return a.hi * b.hi;
             }
 
-            ddouble y = MultiplyAdd(Zero, a.hi, b.hi);
+            ddouble y = Multiply(a.hi, b.hi);
             y = MultiplyAdd(y, a.hi, b.lo);
             y = MultiplyAdd(y, a.lo, b.hi);
             y = MultiplyAdd(y, a.lo, b.lo);
@@ -334,6 +334,14 @@ namespace DoubleDouble {
         private static ddouble MultiplyAdd(ddouble v, double a, double b) {
             double hi = Math.FusedMultiplyAdd(a, b, v.hi);
             double lo = v.lo + Math.FusedMultiplyAdd(a, b, v.hi - hi);
+
+            return new ddouble(hi, lo);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static ddouble Multiply(double a, double b) {
+            double hi = a * b;
+            double lo = Math.FusedMultiplyAdd(a, b, -hi);
 
             return new ddouble(hi, lo);
         }
