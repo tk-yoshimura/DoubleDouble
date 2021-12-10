@@ -4,7 +4,7 @@ namespace DoubleDoubleSandbox {
     internal static class BesselLimit {
 
         public static (ddouble y, int terms) BesselJ(ddouble nu, ddouble z, int max_terms = 64) {
-            (ddouble x, ddouble y, int terms) = BesselJYSinCosWeights(nu, z, max_terms);
+            (ddouble x, ddouble y, int terms) = BesselJYCoef(nu, z, max_terms);
 
             ddouble omega = z - (2 * nu + 1) * ddouble.PI / 4;
             ddouble m = x * ddouble.Cos(omega) - y * ddouble.Sin(omega);
@@ -14,7 +14,7 @@ namespace DoubleDoubleSandbox {
         }
 
         public static (ddouble y, int terms) BesselY(ddouble nu, ddouble z, int max_terms = 64) {
-            (ddouble x, ddouble y, int terms) = BesselJYSinCosWeights(nu, z, max_terms);
+            (ddouble x, ddouble y, int terms) = BesselJYCoef(nu, z, max_terms);
 
             ddouble omega = z - (2 * nu + 1) * ddouble.PI / 4;
             ddouble m = x * ddouble.Sin(omega) + y * ddouble.Cos(omega);
@@ -23,19 +23,34 @@ namespace DoubleDoubleSandbox {
             return (t, terms);
         }
 
-        public static (ddouble x, ddouble y, int terms) BesselJYSinCosWeights(ddouble nu, ddouble z, int max_terms = 64) { 
+        public static (ddouble y, int terms) BesselI(ddouble nu, ddouble z, int max_terms = 64) {
+            (ddouble c, int terms) = BesselIKCoef(nu, z, sign_switch: true, max_terms);
+
+            ddouble t = c * ddouble.Exp(z) / ddouble.Sqrt(2 * ddouble.PI * z);
+
+            return (t, terms);
+        }
+
+        public static (ddouble y, int terms) BesselK(ddouble nu, ddouble z, int max_terms = 64) {
+            (ddouble c, int terms) = BesselIKCoef(nu, z, sign_switch: false, max_terms);
+
+            ddouble t = c * ddouble.Exp(-z) * ddouble.Sqrt(ddouble.PI / (2 * z));
+
+            return (t, terms);
+        }
+
+        public static (ddouble x, ddouble y, int terms) BesselJYCoef(ddouble nu, ddouble z, int max_terms = 64) { 
             BesselLimitCoef table = new BesselLimitCoef(nu);
 
             ddouble squa_nu4 = 4d * nu * nu;
-            ddouble v = 1d / z;
-            ddouble v2 = v * v, v4 = v2 * v2;
+            ddouble v = 1d / z, v2 = v * v, v4 = v2 * v2;
 
             ddouble x = 0d, y = 0d, p = 1d, q = v;
 
-            static int square(int x) => x * x;
+            static int square(int n) => checked(n * n);
 
             int k = 0;
-            for (; k <= max_terms; k++, p *= v4, q *= v4) {
+            for (; k <= max_terms; k++) {
                 ddouble dx = p * table.Value(k * 4) * 
                     (1d - v2 * (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2)));
                 ddouble dy = q * table.Value(k * 4 + 1) * 
@@ -45,14 +60,44 @@ namespace DoubleDoubleSandbox {
                 ddouble y_next = y + dy;
 
                 if (x == x_next && y == y_next) {
-                    break;
+                    return (x, y, k);
                 }
 
+                p *= v4;
+                q *= v4;
                 x = x_next;
                 y = y_next;
             }
 
-            return (x, y, k);
+            return (ddouble.NaN, ddouble.NaN, int.MaxValue);
+        }
+
+        public static (ddouble c, int terms) BesselIKCoef(ddouble nu, ddouble z, bool sign_switch, int max_terms = 64) {
+            BesselLimitCoef table = new BesselLimitCoef(nu);
+
+            ddouble squa_nu4 = 4d * nu * nu;
+            ddouble v = 1d / z, v2 = v * v;
+
+            ddouble c = 0d, u = 1d;
+
+            static int square(int n) => checked(n * n);
+
+            int k = 0;
+            for (; k <= max_terms; k++) {
+                ddouble w = v * (squa_nu4 - square(4 * k + 1)) / (8 * (2 * k + 1));
+                ddouble dc = u * table.Value(k * 2) * (sign_switch ? (1d - w) : (1d + w));
+                
+                ddouble c_next = c + dc;
+                
+                if (c == c_next) {
+                    return (c, k);
+                }
+
+                c = c_next;
+                u *= v2;
+            }
+
+            return (ddouble.NaN, int.MaxValue);
         }
     }
 }
