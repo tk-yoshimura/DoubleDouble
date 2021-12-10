@@ -52,10 +52,10 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.Abs((ddouble)"1.56434465040230869010105319467166892e-1" - ddouble.SinPIHalf(ddouble.Rcp(10))) < 1e-32);
             Assert.IsTrue(ddouble.Abs((ddouble)"9.87688340595137726190040247693437261e-1" - ddouble.SinPIHalf(9 * ddouble.Rcp(10))) < 1e-31);
             Assert.IsTrue(ddouble.Abs(0.5d - ddouble.SinPIHalf(ddouble.Rcp(3))) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(3) / 2 - ddouble.SinPIHalf(2 * ddouble.Rcp(3))) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(0.5d)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(ddouble.BitDecrement(0.5d))) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(ddouble.BitIncrement(0.5d))) < 1e-31);
+            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(3) / 2 - ddouble.SinPIHalf(2 * ddouble.Rcp(3))) < 1e-34);
+            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(0.5d)) < 1e-34);
+            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(ddouble.BitDecrement(0.5d))) < 1e-34);
+            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(ddouble.BitIncrement(0.5d))) < 1e-34);
 
             ddouble sin_pzero = ddouble.SinPIHalf(0d);
             ddouble sin_mzero = ddouble.SinPIHalf(-0d);
