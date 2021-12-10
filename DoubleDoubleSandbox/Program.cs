@@ -1,13 +1,30 @@
 ﻿using DoubleDouble;
 using System;
+using System.IO;
 
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            for (ddouble x = 0d; x < 1d; x += 1d / 1024) {
-                (ddouble y, int terms) = Pow2Mark2.Pow2Prime(x);
+            BesselLimit.BesselJ(0, 10);
 
-                Console.WriteLine($"{x},{y},{terms}");
+            using (StreamWriter sw = new StreamWriter("../../bessel_j.csv")) {
+
+                sw.WriteLine("nu,z,terms,y");
+
+                for (double nu = -4d; nu <= 4d; nu += 0.125d) {
+                    for (double z = 1d; z <= 256d; z += 0.5d) {
+                        (ddouble y, int terms) = BesselLimit.BesselJ(nu, z);
+
+                        if (ddouble.IsNaN(y) || !ddouble.IsFinite(y)) {
+                            continue;
+                        }
+
+                        sw.WriteLine($"{nu},{z},{terms},{y}");
+                        Console.WriteLine($"{nu},{z},{terms},{y}");
+
+                        break;
+                    }
+                }
             }
 
             Console.WriteLine("END");

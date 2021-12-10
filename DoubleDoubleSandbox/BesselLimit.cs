@@ -6,42 +6,30 @@ namespace DoubleDoubleSandbox {
         public static (ddouble y, int terms) BesselJ(ddouble nu, ddouble z, int max_terms = 64) {
             BesselLimitCoef table = new BesselLimitCoef(nu);
 
+            ddouble squa_nu4 = 4 * nu * nu;
             ddouble v = 1 / z;
-            ddouble w = v * v;
+            ddouble v2 = v * v, v4 = v2 * v2;
 
             ddouble x = 0, y = 0, p = 1, q = v;
 
+            static int square(int x) => x * x;
+
             int k = 0;
-            for (int conv_cnt = 0; k <= max_terms && conv_cnt < 2; k++, p *= w, q *= w) {
-                ddouble dx = p * table.Value(k * 2);
-                ddouble dy = q * table.Value(k * 2 + 1);
+            for (; k <= max_terms; k++, p *= v4, q *= v4) {
+                ddouble dx = p * table.Value(k * 4) * 
+                    (1 - v2 * (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2)));
+                ddouble dy = q * table.Value(k * 4 + 1) * 
+                    (1 - v2 * (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / (64 * (4 * k + 2) * (4 * k + 3)));
 
-                if ((k & 1) == 0) {
-                    ddouble x_next = x + dx;
-                    ddouble y_next = y + dy;
+                ddouble x_next = x + dx;
+                ddouble y_next = y + dy;
 
-                    if (x == x_next && y == y_next) {
-                        conv_cnt++;
-                    }
-
-                    x = x_next;
-                    y = y_next;
-                }
-                else {
-                    ddouble x_next = x - dx;
-                    ddouble y_next = y - dy;
-
-                    if (x == x_next && y == y_next) {
-                        conv_cnt++;
-                    }
-
-                    x = x_next;
-                    y = y_next;
+                if (x == x_next && y == y_next) {
+                    break;
                 }
 
-                if (k == max_terms) {
-                    return (ddouble.NaN, k);
-                }
+                x = x_next;
+                y = y_next;
             }
 
             ddouble omega = z - (2 * nu + 1) * ddouble.PI / 4;

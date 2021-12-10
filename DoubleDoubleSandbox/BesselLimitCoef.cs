@@ -27,7 +27,7 @@ namespace DoubleDoubleSandbox {
             }
 
             for (int k = a_table.Count; k <= n; k++) {
-                ddouble a = a_table.Last() * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1)) / checked(k * 8));
+                ddouble a = a_table.Last() * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1))) / checked(k * 8);
 
                 a_table.Add(a);
             }
