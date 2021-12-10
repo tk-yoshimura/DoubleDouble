@@ -72,32 +72,22 @@ namespace DoubleDouble {
             ddouble s = x - Floor(x);
 
             int index = (int)ddouble.Floor(s * Consts.SinCos.SinPIHalfTableN);
-            ddouble v = (s - Consts.SinCos.SinPIHalfTableDx * index) * PI;
+            ddouble v = s - Consts.SinCos.SinPIHalfTableDx * index;
             ddouble sna = Consts.SinCos.SinPIHalfTable[index];
             ddouble cna = Consts.SinCos.SinPIHalfTable[Consts.SinCos.SinPIHalfTableN - index];
 
-            ddouble w = v * v, u = w;
-            ddouble y = Ldexp(1d, -1);
+            ddouble w = Ldexp(v * PI, -1), w2 = w * w, w4 = w2 * w2, u = 1;
+            ddouble y = ddouble.Zero;
 
-            for (int i = 3, n = TaylorSequence.Count - 1; i < n; i += 2) {
-                ddouble f = TaylorSequence[i];
-                ddouble dy = Ldexp(u * f, -i);
-
-                if ((i & 2) > 0) {
-                    dy = -dy;
-                }
-
-                ddouble y_next = y + dy;
-
-                if (y == y_next) {
-                    break;
-                }
-
-                u *= w;
-                y = y_next;
+            for (int i = 0, terms = 0; terms < Consts.SinCos.SinPIHalfConvergenceTerms; i += 4, terms++) {
+                ddouble f = TaylorSequence[i + 3];
+                ddouble dy = u * f * ((i + 2) * (i + 3) - w2);
+                
+                y += dy;
+                u *= w4;
             }
 
-            ddouble snb = v * y, cnb = Sqrt(1 - snb * snb);
+            ddouble snb = w * y, cnb = Sqrt(1 - snb * snb);
 
             ddouble z = sna * cnb + cna * snb;
 
@@ -113,6 +103,8 @@ namespace DoubleDouble {
 
                 public static readonly int SinPIHalfTableN = SinPIHalfTable.Count - 1;
 
+                public static int SinPIHalfConvergenceTerms = SinPIHalfPrime(SinPIHalfTableDx).terms;
+
                 public static readonly ddouble RcpPI = Rcp(PI);
 
                 public static ddouble[] GenerateSinPITable() {
@@ -120,68 +112,64 @@ namespace DoubleDouble {
                     Trace.WriteLine($"SinCos initialize.");
 #endif
 
-                    const int n = 2048;
+                    const int n = 256;
                     ddouble dx = Rcp(n);
                     ddouble[] table = new ddouble[n + 1];
 
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = dx * i;
-                        table[i] = SinPIPrime(x);
+                        table[i] = SinPIHalfPrime(x).value;
                     }
 
                     return table;
                 }
 
-                private static ddouble SinPIPrime(ddouble x) {
+                private static (ddouble value, int terms) SinPIHalfPrime(ddouble x) {
                     if (!(x >= 0d) || x > 1d) {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
 
                     if (x < 0.5d) {
-                        ddouble v = x * PI, w = v * v, u = w;
-                        Accumulator y = Ldexp(1d, -1);
+                        ddouble w = Ldexp(x * PI, -1), w2 = w * w, w4 = w2 * w2, u = 1;
+                        ddouble y = ddouble.Zero;
 
-                        for (int i = 3, n = TaylorSequence.Count - 1; i < n; i += 2) {
-                            ddouble f = TaylorSequence[i];
-                            ddouble dy = Ldexp(u * f, -i);
+                        int terms = 0;
+                        for (int i = 0, n = TaylorSequence.Count - 3; i < n; i += 4) {
+                            ddouble f = TaylorSequence[i + 3];
+                            ddouble dy = u * f * ((i + 2) * (i + 3) - w2);
+                            ddouble y_next = y + dy;
 
-                            if ((i & 2) > 0) {
-                                dy = -dy;
-                            }
-
-                            y += dy;
-
-                            if (y.IsConvergence) {
+                            if (y == y_next) {
                                 break;
                             }
 
-                            u *= w;
+                            u *= w4;
+                            y = y_next;
+                            terms++;
                         }
 
-                        return v * y.Sum;
+                        return (w * y, terms);
                     }
                     else {
-                        ddouble v = (x - 1) * PI, w = v * v, r = w;
-                        Accumulator y = (ddouble)1;
+                        ddouble w = Ldexp((x - 1d) * PI, -1), w2 = w * w, w4 = w2 * w2, u = w2;
+                        ddouble y = 1d;
 
-                        for (int i = 2, n = TaylorSequence.Count - 1; i < n; i += 2) {
-                            ddouble f = TaylorSequence[i];
-                            ddouble dy = Ldexp(r * f, -i);
+                        int terms = 0;
+                        for (int i = 0, n = TaylorSequence.Count - 4; i < n; i += 4) {
+                            ddouble f = TaylorSequence[i + 4];
+                            ddouble dy = u * f * ((i + 3) * (i + 4) - w2);
+                            ddouble y_next = y - dy;
 
-                            if ((i & 2) > 0) {
-                                dy = -dy;
-                            }
-
-                            y += dy;
-
-                            if (y.IsConvergence) {
+                            if (y == y_next) {
                                 break;
                             }
 
-                            r *= w;
+                            u *= w4;
+                            y = y_next;
+                            terms++;
                         }
 
-                        return y.Sum;
+                        return (y, terms);
                     }
                 }
             }
