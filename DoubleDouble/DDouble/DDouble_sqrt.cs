@@ -35,7 +35,7 @@ namespace DoubleDouble {
 
         private static partial class Consts {
             public static class Sqrt {
-                public static ddouble Sqrt2 { get; } = Sqrt(2);
+                public static ddouble Sqrt2 { get; } = Sqrt(2d);
             }
         }
     }

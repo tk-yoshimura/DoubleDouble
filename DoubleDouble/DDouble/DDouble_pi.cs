@@ -4,7 +4,7 @@
 
         private static ddouble GeneratePI() {
             ddouble a = 1d;
-            ddouble b = Ldexp(Sqrt(2d), -1);
+            ddouble b = Ldexp(Consts.Sqrt.Sqrt2, -1);
             ddouble t = Ldexp(1d, -2);
             ddouble p = 1d;
 
