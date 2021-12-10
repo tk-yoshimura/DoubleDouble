@@ -19,20 +19,19 @@ namespace DoubleDouble {
 
             int index = (int)ddouble.Floor((v - 1d) * Consts.Log.Log2TableN);
             ddouble v_offset = 1d + Consts.Log.Log2TableDx * index;
-            ddouble y_offset = n + Consts.Log.Log2Table[index];
 
-            ddouble w = v / v_offset - 1d, squa_w = w * w, r = Consts.Log.LbE * w;
+            ddouble w = v / v_offset - 1d, w2 = w * w, u = Consts.Log.LbE * w;
+            ddouble y = n + Consts.Log.Log2Table[index];
 
-            ddouble y = y_offset;
             for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
-                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * w) * Consts.Log.LogConvergenceRemTable[i];
+                ddouble dy = u * ((2 * i + 2) - (2 * i + 1) * w) * Consts.Log.LogConvergenceRemTable[i];
                 ddouble y_next = y + dy;
 
                 if (y == y_next) {
                     break;
                 }
 
-                r *= squa_w;
+                u *= w2;
                 y = y_next;
             }
 
@@ -58,18 +57,18 @@ namespace DoubleDouble {
                 return MinusZero;
             }
 
-            ddouble squa_x = x * x, r = x;
+            ddouble x2 = x * x, u = x;
             ddouble y = ddouble.Zero;
 
             for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
-                ddouble dy = r * ((2 * i + 2) - (2 * i + 1) * x) * Consts.Log.LogConvergenceRemTable[i];
+                ddouble dy = u * ((2 * i + 2) - (2 * i + 1) * x) * Consts.Log.LogConvergenceRemTable[i];
                 ddouble y_next = y + dy;
 
                 if (y == y_next) {
                     break;
                 }
 
-                r *= squa_x;
+                u *= x2;
                 y = y_next;
             }
 

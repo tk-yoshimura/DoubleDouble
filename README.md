@@ -32,10 +32,10 @@
 |log10|&#40;0,+inf&#41;|3||ddouble.Log10(x)|
 |log1p|&#40;-1,+inf&#41;|3|log(1+x)|ddouble.Log1p(x)|
 |pow2|&#40;-inf,+inf&#41;|1||ddouble.Pow2(x)|
-|pow|&#40;-inf,+inf&#41;|2||ddouble.Pow(x, y)|
-|pow10|&#40;-inf,+inf&#41;|2||ddouble.Pow10(x)|
-|exp|&#40;-inf,+inf&#41;|2||ddouble.Exp(x)|
-|expm1|&#40;-inf,+inf&#41;|2|exp(x)-1|ddouble.Expm1(x)|
+|pow|&#40;-inf,+inf&#41;|4||ddouble.Pow(x, y)|
+|pow10|&#40;-inf,+inf&#41;|4||ddouble.Pow10(x)|
+|exp|&#40;-inf,+inf&#41;|4||ddouble.Exp(x)|
+|expm1|&#40;-inf,+inf&#41;|4|exp(x)-1|ddouble.Expm1(x)|
 |sin|&#40;-inf,+inf&#41;|2||ddouble.Sin(x)|
 |cos|&#40;-inf,+inf&#41;|2||ddouble.Cos(x)|
 |tan|&#40;-inf,+inf&#41;|3||ddouble.Tan(x)|
