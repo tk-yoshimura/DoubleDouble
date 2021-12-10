@@ -5,21 +5,20 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            using (StreamWriter sw = new StreamWriter("../../bessel_j.csv")) {
+            ddouble y5 = SinCosMark2.SinPIPrime((ddouble)0.5m);
+            ddouble y6 = SinCosMark2.SinPIPrime((ddouble)0.6m);
 
-                sw.WriteLine("nu,z,terms,y");
+            for (ddouble x = 0d; x < 1d; x += 1d / 2048) {
+                ddouble y = SinCosMark2.SinPIPrime(x);
 
-                for (double nu = -4d; nu <= 4d; nu += 0.125d) {
-                    for (double z = 1d; z <= 256d; z += 0.5d) {
-                        (ddouble y, int terms) = BesselLimit.BesselJ(nu, z);
+                Console.WriteLine($"{x},{y}");
+            }
 
-                        if (ddouble.IsNaN(y)) {
-                            continue;
-                        }
+            for (int length = 1; length <= 25; length++) {
+                int[] p = new int[length];
 
-                        sw.WriteLine($"{nu},{z},{terms},{y}");
-                        Console.WriteLine($"{nu},{z},{terms},{y}");
-                    }
+                for (int i = 0, n = length - 3; i < n; i += 4) {
+                    p[i + 3] = 1;
                 }
             }
 
