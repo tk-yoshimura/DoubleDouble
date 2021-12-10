@@ -38,6 +38,29 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
+            HPAssert.AreEqual("1.99932321299248736788439373752563131122422617961e0", ddouble.Pow2(2047d / 2048), 1e-31);
+
+            Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(0.5d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitIncrement(0.5d))).mantissa);
+            Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(0.5d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitDecrement(0.5d))).mantissa);
+            Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(1d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitDecrement(1d))).mantissa);
+
+            HPAssert.AreEqual(ddouble.Sqrt(2), ddouble.Pow2(ddouble.BitIncrement(0.5d)), 1e-31, "0.5+eps");
+            HPAssert.AreEqual(ddouble.Sqrt(2), ddouble.Pow2(0.5d), 1e-31);
+            HPAssert.AreEqual(ddouble.Sqrt(2), ddouble.Pow2(ddouble.BitDecrement(0.5d)), 1e-31, "0.5-eps");
+            HPAssert.AreEqual("1.18920711500272106671749997056047591529297209246e0", ddouble.Pow2(1d / 4), 1e-31);
+            HPAssert.AreEqual("1.09050773266525765920701065576070797899270271854e0", ddouble.Pow2(1d / 8), 1e-31);
+            HPAssert.AreEqual("1.00033850805268231295330548185621640403555852068e0", ddouble.Pow2(1d / 2048), 1e-31);
+
+            for (long i = 0; i < 19; i++) {
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow2(i)).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow2(ddouble.BitDecrement(i))).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow2(ddouble.BitIncrement(i))).mantissa:X14}");
+
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow2(-i)).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow2(ddouble.BitDecrement(-i))).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow2(ddouble.BitIncrement(-i))).mantissa:X14}");
+            }
+
             ddouble pow2_pzero = ddouble.Pow2(0d);
             ddouble pow2_mzero = ddouble.Pow2(-0d);
             ddouble pow2_pinf = ddouble.Pow2(double.PositiveInfinity);
@@ -84,6 +107,16 @@ namespace DoubleDoubleTest.DDouble {
             for (long i = 0, n = 1; i < 19; i++, n *= 10) {
                 Assert.AreEqual(n, ddouble.Pow10(i));
                 Assert.AreEqual(ddouble.Rcp(n), ddouble.Pow10(-i));
+            }
+
+            for (long i = 0; i < 19; i++) {
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow10(i)).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow10(ddouble.BitDecrement(i))).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow10(ddouble.BitIncrement(i))).mantissa:X14}");
+
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow10(-i)).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow10(ddouble.BitDecrement(-i))).mantissa:X14}");
+                Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow10(ddouble.BitIncrement(-i))).mantissa:X14}");
             }
 
             ddouble pow10_pzero = ddouble.Pow10(0d);

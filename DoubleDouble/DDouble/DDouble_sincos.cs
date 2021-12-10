@@ -82,7 +82,7 @@ namespace DoubleDouble {
             for (int i = 0, terms = 0; terms < Consts.SinCos.SinPIHalfConvergenceTerms; i += 4, terms++) {
                 ddouble f = TaylorSequence[i + 3];
                 ddouble dy = u * f * ((i + 2) * (i + 3) - w2);
-                
+
                 y += dy;
                 u *= w4;
             }

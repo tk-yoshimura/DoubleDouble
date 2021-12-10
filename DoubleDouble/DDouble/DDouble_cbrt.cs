@@ -26,10 +26,10 @@ namespace DoubleDouble {
             ddouble a = 1d / Math.Cbrt(x_frac.hi);
 
             ddouble h = 1d - x_frac * a * a * a;
-            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Rcp81;
+            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Cbrt.Rcp81;
 
             h = 1d - x_frac * a * a * a;
-            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Rcp81;
+            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Cbrt.Rcp81;
 
             ddouble y = Ldexp(x_frac * a * a, (x_exponent - exponent_rem) / 3);
 
@@ -37,7 +37,9 @@ namespace DoubleDouble {
         }
 
         private static partial class Consts {
-            public static ddouble Rcp81 { get; } = Rcp(81);
+            public static class Cbrt {
+                public static ddouble Rcp81 { get; } = Rcp(81);
+            }
         }
     }
 }

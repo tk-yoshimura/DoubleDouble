@@ -38,7 +38,7 @@ namespace DoubleDouble {
             if (IsInfinity(x)) {
                 return (x.Sign < 0) ? PlusZero : PositiveInfinity;
             }
-            if (x >= 1024) {
+            if (x >= 1024d) {
                 return PositiveInfinity;
             }
 
@@ -46,22 +46,16 @@ namespace DoubleDouble {
             ddouble s = x - exp, c = Ldexp(1d, exp);
 
             int index = (int)ddouble.Floor(s * Consts.Pow.Pow2TableN);
-            ddouble v = (s - Consts.Pow.Pow2TableDx * index) * Consts.Log.Ln2;
+            ddouble v = s - Consts.Pow.Pow2TableDx * index;
             ddouble r = Consts.Pow.Pow2Table[index];
 
-            ddouble y = 1;
-            ddouble w = v;
+            ddouble w = v * Consts.Log.Ln2, u = w, y = 1d;
 
-            foreach (ddouble f in TaylorSequence.Skip(1)) {
-                ddouble dy = f * w;
-                ddouble y_next = y + dy;
+            for (int i = 1; i <= Consts.Pow.Pow2ConvergenceTerms; i++) {
+                ddouble dy = TaylorSequence[i] * u;
 
-                if (y == y_next) {
-                    break;
-                }
-
-                w *= v;
-                y = y_next;
+                y += dy;
+                u *= w;
             }
 
             return c * y * r;
@@ -82,7 +76,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow10(ddouble x) {
-            ddouble z = RoundMantissa(Pow2(Abs(x) * Consts.Log.Lb10), 100);
+            ddouble z = RoundMantissa(Pow2(Abs(x) * Consts.Log.Lb10), keep_bits: 99);
 
             return x.Sign >= 0 ? z : Rcp(z);
         }
@@ -131,44 +125,51 @@ namespace DoubleDouble {
 
                 public static readonly int Pow2TableN = Pow2Table.Count - 1;
 
+                public static int Pow2ConvergenceTerms = Pow2Prime(Pow2TableDx).terms;
+
                 public static ddouble[] GeneratePow2Table() {
-                    const int n = 2048;
+                    const int n = 1024;
                     ddouble dx = Rcp(n);
                     ddouble[] table = new ddouble[n + 1];
 
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = dx * i;
-                        table[i] = Pow2Prime(x);
+                        table[i] = Pow2Prime(x).value;
                     }
 
                     return table;
                 }
 
-                private static ddouble Pow2Prime(ddouble x) {
+                private static (ddouble value, int terms) Pow2Prime(ddouble x) {
                     if (!(x >= 0d) || x > 1d) {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
-
                     if (x == 1d) {
-                        return 2;
+                        return (2, 0);
+                    }
+                    if (x >= 0.5d) {
+                        (ddouble value, int terms_half) = Pow2Prime(x - 0.5d);
+
+                        return (Sqrt.Sqrt2 * value, terms_half);
                     }
 
-                    ddouble v = x * Consts.Log.Ln2;
+                    ddouble w = x * Consts.Log.Ln2, u = w, y = 1d;
 
-                    Accumulator y = 1d;
-                    ddouble w = v;
-
+                    int terms = 0;
                     foreach (ddouble f in TaylorSequence.Skip(1)) {
-                        y += f * w;
+                        ddouble dy = f * u;
+                        ddouble y_next = y + dy;
 
-                        if (y.IsConvergence) {
+                        if (y == y_next) {
                             break;
                         }
 
-                        w *= v;
+                        u *= w;
+                        y = y_next;
+                        terms++;
                     }
 
-                    return y.Sum;
+                    return (y, terms);
                 }
             }
         }
