@@ -67,7 +67,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(y)) {
-                return IsNaN(x) ? NaN : 1;
+                return IsNaN(x) ? NaN : 1d;
             }
 
             ddouble z = Pow2(y * Log2(x));
