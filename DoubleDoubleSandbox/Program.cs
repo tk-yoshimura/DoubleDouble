@@ -5,6 +5,37 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
+            for (int m = 0; m < 256; m++) {
+                ddouble y = BesselMillerBackward.BesselJ(0, 40, m);
+
+                Console.WriteLine($"{m},{y}");
+            }
+
+            using (StreamWriter sw = new StreamWriter("../../bessel_j_millerbw.csv")) {
+                sw.WriteLine("n,z,m,y");
+                for (int n = 0; n <= 4; n++) {
+                    for (double z = 2d; z <= 40d; z += 0.25d) {
+                        (ddouble y, int m) = BesselMillerBackward.BesselJ(n, z, eps: 1e-25);
+
+                        sw.WriteLine($"{n},{z},{m},{y}");
+                        Console.WriteLine($"{n},{z},{m},{y}");
+                    }
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter("../../bessel_j_millerbw_2.csv")) {
+                sw.WriteLine("n,z,y");
+                for (int n = 0; n <= 8; n++) {
+                    for (double z = 2d; z <= 40d; z += 0.25d) {
+                        ddouble y = BesselMillerBackward.BesselJ(n, z);
+
+                        sw.WriteLine($"{n},{z},{y}");
+                        Console.WriteLine($"{n},{z},{y}");
+                    }
+                }
+            }
+
+
             BesselNearZero.CoefTable coef = new BesselNearZero.CoefTable(2.5);
             BesselNearZero.BesselJ(0, 40);
 
