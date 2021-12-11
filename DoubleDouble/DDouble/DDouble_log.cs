@@ -84,14 +84,21 @@ namespace DoubleDouble {
 
                 private static ddouble GenerateLn2() {
                     int n = 3;
-                    Accumulator x = Rcp(3d);
+                    ddouble x = Rcp(3d);
 
-                    while (!x.IsConvergence) {
-                        x += Rcp(n * Pow(3d, n));
+                    while(true){
+                        ddouble dx = Rcp(n * Pow(3d, n));
+                        ddouble x_next = x + dx;
+
+                        if (x == x_next) {
+                            break;
+                        }
+
                         n += 2;
+                        x = x_next;
                     }
 
-                    ddouble y = Ldexp(x.Sum, 1);
+                    ddouble y = Ldexp(x, 1);
 
                     return y;
                 }

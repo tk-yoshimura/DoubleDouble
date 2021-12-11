@@ -87,11 +87,11 @@ namespace DoubleDouble {
                         + x * (3 * (Pow(PI, 8) - 9450))))))))) / 226800;
             }
 
-            static Accumulator sterling_loggamma(ddouble x) {
+            static ddouble sterling_loggamma(ddouble x) {
                 ddouble p = (x - 0.5d) * ddouble.Log(x);
                 ddouble s = SterlingTerm(x);
 
-                Accumulator k = Consts.Gamma.SterlingLogBias;
+                ddouble k = Consts.Gamma.SterlingLogBias;
                 k += p;
                 k += s;
                 k -= x;
@@ -103,7 +103,7 @@ namespace DoubleDouble {
                 int n = (int)Floor(x);
                 ddouble f = x - n;
                 ddouble z = f + Consts.Gamma.Threshold;
-                Accumulator v = sterling_loggamma(z);
+                ddouble v = sterling_loggamma(z);
 
                 ddouble w = f + n;
                 for (int i = n + 1; i < Consts.Gamma.Threshold; i++) {
@@ -112,12 +112,12 @@ namespace DoubleDouble {
 
                 v -= Log(w);
 
-                ddouble y = v.Sum;
+                ddouble y = v;
 
                 return y;
             }
             else {
-                ddouble y = sterling_loggamma(x).Sum;
+                ddouble y = sterling_loggamma(x);
 
                 return y;
             }
@@ -155,8 +155,8 @@ namespace DoubleDouble {
                      + x_zsft * (Consts.Digamma.DiffCoefTable[7]))))))));
             }
 
-            static Accumulator sterling_digamma(ddouble x) {
-                Accumulator s = -DiffLogSterlingTerm(x);
+            static ddouble sterling_digamma(ddouble x) {
+                ddouble s = -DiffLogSterlingTerm(x);
                 ddouble p = ddouble.Log(x);
                 ddouble c = Ldexp(Rcp(x), -1);
 
@@ -170,15 +170,15 @@ namespace DoubleDouble {
                 int n = (int)Floor(x);
                 ddouble f = x - n;
                 ddouble z = f + Consts.Digamma.Threshold;
-                Accumulator v = sterling_digamma(z);
-                Accumulator s = SumFraction(-v, f + n, Consts.Digamma.Threshold - n);
+                ddouble v = sterling_digamma(z);
+                ddouble s = SumFraction(-v, f + n, Consts.Digamma.Threshold - n);
 
-                ddouble y = -s.Sum;
+                ddouble y = -s;
 
                 return y;
             }
             else {
-                ddouble y = sterling_digamma(x).Sum;
+                ddouble y = sterling_digamma(x);
 
                 return y;
             }
@@ -187,64 +187,59 @@ namespace DoubleDouble {
         private static ddouble SterlingTerm(ddouble z) {
             ddouble v = Rcp(z), w = v * v, u = w, dx_prev = PositiveInfinity;
 
-            Accumulator x = Consts.Gamma.SterlingTable[0];
+            ddouble x = Consts.Gamma.SterlingTable[0];
             foreach (ddouble s in Consts.Gamma.SterlingTable.Skip(1)) {
                 ddouble dx = u * s;
+                ddouble x_next = x + dx;
 
-                if (Abs(dx) > Abs(dx_prev) || x.IsConvergence) {
-                    break;
-                }
-
-                x += dx;
-                if (x.IsConvergence) {
-                    break;
-                }
-
-                u *= w;
-            }
-
-            ddouble y = x.Sum * v;
-
-            return y;
-        }
-
-        private static Accumulator DiffLogSterlingTerm(ddouble z) {
-            ddouble v = Rcp(z), w = v * v, u = w * w, dx_prev = PositiveInfinity;
-
-            Accumulator x = Consts.Digamma.SterlingTable[0] * w;
-            foreach (ddouble s in Consts.Digamma.SterlingTable.Skip(1)) {
-                ddouble dx = u * s;
-
-                if (Abs(dx) > Abs(dx_prev)) {
-                    break;
-                }
-
-                x += dx;
-                if (Ldexp(Abs(x.Sum), -128) > Abs(dx)) {
+                if (Abs(dx) > Abs(dx_prev) || x == x_next) {
                     break;
                 }
 
                 u *= w;
                 dx_prev = dx;
+                x = x_next;
+            }
+
+            ddouble y = x * v;
+
+            return y;
+        }
+
+        private static ddouble DiffLogSterlingTerm(ddouble z) {
+            ddouble v = Rcp(z), w = v * v, u = w * w, dx_prev = PositiveInfinity;
+
+            ddouble x = Consts.Digamma.SterlingTable[0] * w;
+            foreach (ddouble s in Consts.Digamma.SterlingTable.Skip(1)) {
+                ddouble dx = u * s;
+                ddouble x_next = x + dx;
+
+                if (Abs(dx) > Abs(dx_prev) || x == x_next) {
+                    break;
+                }
+
+                u *= w;
+                dx_prev = dx;
+                x = x_next;
             }
 
             return x;
         }
 
-        private static Accumulator SumFraction(Accumulator s, ddouble x, int n) {
+        private static ddouble SumFraction(ddouble s, ddouble x, int n) {
             // sum( 1 / (x + i) , i = 0, n)
 
-            static Accumulator sum1(Accumulator s, ddouble x) {
+            static ddouble sum1(ddouble s, ddouble x) {
                 s += Rcp(x);
                 return s;
             }
 
-            static Accumulator sum2(Accumulator s, ddouble x) {
+            static ddouble sum2(ddouble s, ddouble x) {
                 s += (2d * x + 1d) / (x * (x + 1d));
                 return s;
             }
 
-            static Accumulator sum4(Accumulator s, ddouble x) {
+            static ddouble sum4(ddouble s, ddouble x) {
                 s += (2d * (2d * x + 3d) * (x * (x + 3d) + 1d)) / (x * (x + 1) * (x + 2) * (x + 3));
                 return s;
             }

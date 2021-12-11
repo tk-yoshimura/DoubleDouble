@@ -12,7 +12,7 @@ namespace DoubleDouble {
         private static partial class Consts {
             public static class Harmonic {
                 private static readonly List<ddouble> a_table = new();
-                private static Accumulator acc;
+                private static ddouble acc;
 
                 static Harmonic() {
                     a_table.Add(0);
@@ -31,7 +31,7 @@ namespace DoubleDouble {
 
                     for (int k = a_table.Count; k <= n; k++) {
                         acc += Rcp(k);
-                        a_table.Add(acc.Sum);
+                        a_table.Add(acc);
                     }
 
                     return a_table[n];

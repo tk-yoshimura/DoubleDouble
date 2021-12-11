@@ -3,17 +3,19 @@
         public static readonly ddouble E = GenerateE();
 
         private static ddouble GenerateE() {
-            Accumulator x = ddouble.Zero;
+            ddouble x = ddouble.Zero;
 
             foreach (ddouble f in TaylorSequence) {
-                x += f;
+                ddouble x_next = x + f;
 
-                if (x.IsConvergence) {
+                if (x == x_next) {
                     break;
                 }
+
+                x = x_next;
             }
 
-            return x.Sum;
+            return x;
         }
     }
 }
