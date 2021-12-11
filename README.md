@@ -69,8 +69,8 @@
 |ceiling|N/A|N/A||ddouble.Ceiling(x)|
 |round|N/A|N/A||ddouble.Round(x)|
 |truncate|N/A|N/A||ddouble.Truncate(x)|
-|array sum|N/A|N/A|kahan summation|IEnumerable&lt;ddouble&gt;.Sum()|
-|array average|N/A|N/A|kahan summation|IEnumerable&lt;ddouble&gt;.Average()|
+|array sum|N/A|N/A||IEnumerable&lt;ddouble&gt;.Sum()|
+|array average|N/A|N/A||IEnumerable&lt;ddouble&gt;.Average()|
 |array min|N/A|N/A||IEnumerable&lt;ddouble&gt;.Min()|
 |array max|N/A|N/A||IEnumerable&lt;ddouble&gt;.Max()|
 
