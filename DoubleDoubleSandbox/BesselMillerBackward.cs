@@ -150,7 +150,11 @@ namespace DoubleDoubleSandbox {
             y0 /= d;
             y1 /= d;
 
-            return y0;
+            for (int k = 1; k < n; k++) { 
+                (y1, y0) = ((2 * k) * v * y1 - y0, y1);
+            }
+
+            return y1;
         }
 
 
