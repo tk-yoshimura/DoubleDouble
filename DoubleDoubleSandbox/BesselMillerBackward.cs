@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 namespace DoubleDoubleSandbox {
     internal class BesselMillerBackward {
         public static ddouble BesselJ(int n, ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
             ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
             ddouble v = 1d / z;
 
@@ -30,10 +34,49 @@ namespace DoubleDoubleSandbox {
             return y;
         }
 
+        public static ddouble BesselJ(ddouble nu, ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            int n = (int)ddouble.Floor(nu);
+            nu -= n;
+
+            if (nu == 0) {
+                return BesselJ(n, z, m);
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
+            ddouble g = ddouble.Exp(ddouble.LogGamma(nu + m / 2) - ddouble.LogGamma(m / 2 + 1));
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                if ((k & 1) == 0) {
+                    d += (nu + k) * m0 * g;
+                    g *= (k / 2) / (nu + (k / 2) - 1);
+                }
+
+                (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+
+                if (k - 1 == n) {
+                    f = m0;
+                }
+            }
+
+            d += nu * m0 * g;
+
+            d *= ddouble.Pow2(nu) * ddouble.Pow(v, nu);
+
+            ddouble y = f / d;
+
+            return y;
+        }
+
+
         public static (ddouble y, int m) BesselJ(int n, ddouble z, ddouble eps, int max_m = 512) {
             ddouble y_prev = ddouble.NaN, dy = ddouble.NaN, dy_prev = ddouble.NaN;
             
-            for (int m = n * 4; m <= max_m; m += 2) {
+            for (int m = n * 4 + 2; m <= max_m; m += 2) {
                 ddouble y = BesselJ(n, z, m);
                 
                 dy = ddouble.Abs(y - y_prev);

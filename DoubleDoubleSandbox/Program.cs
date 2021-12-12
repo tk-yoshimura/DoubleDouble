@@ -5,8 +5,8 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            for (int m = 0; m < 256; m++) {
-                ddouble y = BesselMillerBackward.BesselJ(0, 40, m);
+            for (int m = 32; m < 256; m += 2) {
+                ddouble y = BesselMillerBackward.BesselJ(1.75, 2, m);
 
                 Console.WriteLine($"{m},{y}");
             }
