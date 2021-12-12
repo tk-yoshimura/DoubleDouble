@@ -12,6 +12,10 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
+            if (n < 0) {
+                return ((n & 1) == 0) ? BesselJ(-n, z, m) : -BesselJ(-n, z, m);
+            }
+
             ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
             ddouble v = 1d / z;
 
@@ -46,30 +50,57 @@ namespace DoubleDoubleSandbox {
                 return BesselJ(n, z, m);
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
-            ddouble g = ddouble.Exp(ddouble.LogGamma(nu + m / 2) - ddouble.LogGamma(m / 2 + 1));
-            ddouble v = 1d / z;
+            if (n >= 0) {
+                ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
+                ddouble g = ddouble.Exp(ddouble.LogGamma(nu + m / 2) - ddouble.LogGamma(m / 2 + 1));
+                ddouble v = 1d / z;
 
-            for (int k = m; k >= 1; k--) {
-                if ((k & 1) == 0) {
-                    d += (nu + k) * m0 * g;
-                    g *= (k / 2) / (nu + (k / 2) - 1);
+                for (int k = m; k >= 1; k--) {
+                    if ((k & 1) == 0) {
+                        d += (nu + k) * m0 * g;
+                        g *= (k / 2) / (nu + (k / 2) - 1);
+                    }
+
+                    (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+
+                    if (k - 1 == n) {
+                        f = m0;
+                    }
                 }
 
-                (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+                d += nu * m0 * g;
 
-                if (k - 1 == n) {
-                    f = m0;
-                }
+                d *= ddouble.Pow2(nu) * ddouble.Pow(v, nu);
+
+                ddouble y = f / d;
+
+                return y;
             }
+            else {
+                ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+                ddouble g = ddouble.Exp(ddouble.LogGamma(nu + m / 2) - ddouble.LogGamma(m / 2 + 1));
+                ddouble v = 1d / z;
 
-            d += nu * m0 * g;
+                for (int k = m; k >= 1; k--) {
+                    if ((k & 1) == 0) {
+                        d += (nu + k) * m0 * g;
+                        g *= (k / 2) / (nu + (k / 2) - 1);
+                    }
 
-            d *= ddouble.Pow2(nu) * ddouble.Pow(v, nu);
+                    (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+                }
 
-            ddouble y = f / d;
+                d += nu * m0 * g;
+                d *= ddouble.Pow2(nu) * ddouble.Pow(v, nu);
 
-            return y;
+                for (int k = 0; k > n; k--) { 
+                    (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+                }
+
+                ddouble y = m0 / d;
+
+                return y;
+            }
         }
 
 
