@@ -30,10 +30,12 @@ namespace DoubleDoubleSandbox {
             }
 
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselK1(2, m);
+                ddouble y = BesselMillerBackward.BesselY(0.001, 40, m);
 
                 Console.WriteLine($"{m},{y}");
             }
+
+            BesselLimit.BesselK(0, 24);
 
             using (StreamWriter sw = new StreamWriter("../../bessel_j_millerbw.csv")) {
                 sw.WriteLine("n,z,m,y");

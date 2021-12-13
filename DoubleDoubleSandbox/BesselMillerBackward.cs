@@ -508,13 +508,9 @@ namespace DoubleDoubleSandbox {
 
             ddouble exp_z = ddouble.Exp(z);
 
-            ddouble i0 = m0 / d * exp_z, i1 = m1 / d * exp_z;
+            k0 = exp_z * (2 * k0 + (ddouble.Log(2 * v) - ddouble.EulerGamma) * m0) / d;
 
-            k0 = ddouble.Exp(z) * (2 * k0 + (ddouble.Log(2 * v) - ddouble.EulerGamma) * m0) / d;
-
-            ddouble k1 = (v - i1 * k0) / i0;
-
-            ddouble y = k1;
+            ddouble y = (v * d / exp_z - m1 * k0) / (m0);
 
             return y;
         }

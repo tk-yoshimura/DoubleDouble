@@ -35,7 +35,7 @@ namespace DoubleDoubleSandbox {
             return (t, terms);
         }
 
-        public static (ddouble y, int terms) BesselK(ddouble nu, ddouble z, int max_terms = 64) {
+        public static (ddouble y, int terms) BesselK(ddouble nu, ddouble z, int max_terms = 256) {
             (ddouble c, int terms) = BesselIKCoef(nu, z, sign_switch: false, max_terms);
 
             ddouble t = c * ddouble.Exp(-z) * ddouble.Sqrt(ddouble.PI / (2 * z));
@@ -79,7 +79,7 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselIKCoef(ddouble nu, ddouble z, bool sign_switch, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselIKCoef(ddouble nu, ddouble z, bool sign_switch, int max_terms = 256) {
             if (!coef_table.ContainsKey(nu)) {
                 coef_table.Add(nu, new CoefTable(nu));
             }
@@ -98,6 +98,8 @@ namespace DoubleDoubleSandbox {
                 ddouble dc = u * table.Value(k * 2) * (sign_switch ? (1d - w) : (1d + w));
                 
                 ddouble c_next = c + dc;
+
+                Console.WriteLine(dc);
                 
                 if (c == c_next) {
                     return (c, k);
