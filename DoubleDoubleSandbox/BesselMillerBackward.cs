@@ -459,6 +459,33 @@ namespace DoubleDoubleSandbox {
             return y;
         }
 
+        public static ddouble BesselK0(ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, k0 = ddouble.Zero;
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                d += m0;
+
+                if ((k & 1) == 0) {
+                    k0 += m0 / (k / 2);
+                }
+
+                (m0, m1) = ((2 * k) * v * m0 + m1, m0);
+            }
+
+            d = ddouble.Ldexp(d, 1) + m0;
+
+            k0 = ddouble.Exp(z) * (2 * k0 + (ddouble.Log(2 * v) - ddouble.EulerGamma) * m0);
+
+            ddouble y = k0 / d;
+
+            return y;
+        }
+
 
         public static (ddouble y, int m) BesselJ(int n, ddouble z, ddouble eps, int max_m = 512) {
             ddouble y_prev = ddouble.NaN, dy = ddouble.NaN, dy_prev = ddouble.NaN;

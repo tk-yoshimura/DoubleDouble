@@ -29,6 +29,12 @@ namespace DoubleDoubleSandbox {
                 Console.WriteLine($"{m},{y}");
             }
 
+            for (int m = 32; m < 256; m += 2) {
+                ddouble y = BesselMillerBackward.BesselK0(2, m);
+
+                Console.WriteLine($"{m},{y}");
+            }
+
             using (StreamWriter sw = new StreamWriter("../../bessel_j_millerbw.csv")) {
                 sw.WriteLine("n,z,m,y");
                 for (int n = 0; n <= 4; n++) {
