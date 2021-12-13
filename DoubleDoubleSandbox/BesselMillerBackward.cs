@@ -7,52 +7,6 @@ using System.Threading.Tasks;
 
 namespace DoubleDoubleSandbox {
     internal class BesselMillerBackward {
-        public static ddouble BesselJ0(ddouble z, int m) {
-            if (m < 2 || (m & 1) != 0) {
-                throw new ArgumentOutOfRangeException(nameof(m));
-            }
-
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
-            ddouble v = 1d / z;
-
-            for (int k = m; k >= 1; k--) {
-                if ((k & 1) == 0) {
-                    d += m0;
-                }
-
-                (m0, m1) = ((2 * k) * v * m0 - m1, m0);
-            }
-
-            d = ddouble.Ldexp(d, 1) + m0;
-
-            ddouble y = m0 / d;
-
-            return y;
-        }
-
-        public static ddouble BesselJ1(ddouble z, int m) {
-            if (m < 2 || (m & 1) != 0) {
-                throw new ArgumentOutOfRangeException(nameof(m));
-            }
-
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
-            ddouble v = 1d / z;
-
-            for (int k = m; k >= 1; k--) {
-                if ((k & 1) == 0) {
-                    d += m0;
-                }
-
-                (m0, m1) = ((2 * k) * v * m0 - m1, m0);
-            }
-
-            d = ddouble.Ldexp(d, 1) + m0;
-
-            ddouble y = m1 / d;
-
-            return y;
-        }
-
         public static ddouble BesselJ(int n, ddouble z, int m) {
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
@@ -91,6 +45,13 @@ namespace DoubleDoubleSandbox {
         }
 
         public static ddouble BesselJ(ddouble nu, ddouble z, int m) {
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) { 
+                throw new ArgumentException(
+                    "The calculation of the Bessel function value is invalid because it loses digits" +
+                    " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
+                    nameof(nu));
+            }
+
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
@@ -155,6 +116,52 @@ namespace DoubleDoubleSandbox {
             }
         }
 
+        public static ddouble BesselJ0(ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                if ((k & 1) == 0) {
+                    d += m0;
+                }
+
+                (m0, m1) = ((2 * k) * v * m0 - m1, m0);
+            }
+
+            d = ddouble.Ldexp(d, 1) + m0;
+
+            ddouble y = m0 / d;
+
+            return y;
+        }
+
+        public static ddouble BesselJ1(ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                if ((k & 1) == 0) {
+                    d += m0;
+                }
+
+                (m0, m1) = ((2 * k) * v * m0 - m1, m0);
+            }
+
+            d = ddouble.Ldexp(d, 1) + m0;
+
+            ddouble y = m1 / d;
+
+            return y;
+        }
+
         public static ddouble BesselY(int n, ddouble z, int m) {
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
@@ -203,6 +210,17 @@ namespace DoubleDoubleSandbox {
             y1 /= d * ddouble.PI;
 
             return y1;
+        }
+
+        public static ddouble BesselY(ddouble nu, ddouble z, int m) {
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) { 
+                throw new ArgumentException(
+                    "The calculation of the Bessel function value is invalid because it loses digits" +
+                    " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
+                    nameof(nu));
+            }
+
+            return (BesselJ(nu, z, m) * ddouble.CosPI(nu) - BesselJ(-nu, z, m)) / ddouble.SinPI(nu);
         }
 
         public static ddouble BesselY0(ddouble z, int m) {

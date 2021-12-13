@@ -6,13 +6,19 @@ namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselY(10, 2, m);
+                ddouble y = BesselMillerBackward.BesselY((ddouble)1.01m, 2, m);
 
                 Console.WriteLine($"{m},{y}");
             }
 
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselY0(2, m);
+                ddouble y = BesselMillerBackward.BesselJ(10.25, 2, m);
+
+                Console.WriteLine($"{m},{y}");
+            }
+
+            for (int m = 32; m < 256; m += 2) {
+                ddouble y = BesselMillerBackward.BesselJ(-10.01, 2, m);
 
                 Console.WriteLine($"{m},{y}");
             }
