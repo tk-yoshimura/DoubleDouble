@@ -414,7 +414,7 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
@@ -439,7 +439,7 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
@@ -482,6 +482,39 @@ namespace DoubleDoubleSandbox {
             k0 = ddouble.Exp(z) * (2 * k0 + (ddouble.Log(2 * v) - ddouble.EulerGamma) * m0);
 
             ddouble y = k0 / d;
+
+            return y;
+        }
+
+        public static ddouble BesselK1(ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, k0 = ddouble.Zero;
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                d += m0;
+
+                if ((k & 1) == 0) {
+                    k0 += m0 / (k / 2);
+                }
+
+                (m0, m1) = ((2 * k) * v * m0 + m1, m0);
+            }
+
+            d = ddouble.Ldexp(d, 1) + m0;
+
+            ddouble exp_z = ddouble.Exp(z);
+
+            ddouble i0 = m0 / d * exp_z, i1 = m1 / d * exp_z;
+
+            k0 = ddouble.Exp(z) * (2 * k0 + (ddouble.Log(2 * v) - ddouble.EulerGamma) * m0) / d;
+
+            ddouble k1 = (v - i1 * k0) / i0;
+
+            ddouble y = k1;
 
             return y;
         }

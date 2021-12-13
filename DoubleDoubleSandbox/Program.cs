@@ -30,7 +30,7 @@ namespace DoubleDoubleSandbox {
             }
 
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselK0(2, m);
+                ddouble y = BesselMillerBackward.BesselK1(2, m);
 
                 Console.WriteLine($"{m},{y}");
             }
