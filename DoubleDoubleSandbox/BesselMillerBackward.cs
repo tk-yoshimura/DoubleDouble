@@ -7,6 +7,52 @@ using System.Threading.Tasks;
 
 namespace DoubleDoubleSandbox {
     internal class BesselMillerBackward {
+        public static ddouble BesselJ0(ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                if ((k & 1) == 0) {
+                    d += m0;
+                }
+
+                (m0, m1) = ((2 * k) * v * m0 - m1, m0);
+            }
+
+            d = ddouble.Ldexp(d, 1) + m0;
+
+            ddouble y = m0 / d;
+
+            return y;
+        }
+
+        public static ddouble BesselJ1(ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                if ((k & 1) == 0) {
+                    d += m0;
+                }
+
+                (m0, m1) = ((2 * k) * v * m0 - m1, m0);
+            }
+
+            d = ddouble.Ldexp(d, 1) + m0;
+
+            ddouble y = m1 / d;
+
+            return y;
+        }
+
         public static ddouble BesselJ(int n, ddouble z, int m) {
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
@@ -14,6 +60,12 @@ namespace DoubleDoubleSandbox {
 
             if (n < 0) {
                 return ((n & 1) == 0) ? BesselJ(-n, z, m) : -BesselJ(-n, z, m);
+            }
+            if (n == 0) {
+                return BesselJ0(z, m);
+            }
+            if (n == 1) {
+                return BesselJ1(z, m);
             }
 
             ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
@@ -111,48 +163,44 @@ namespace DoubleDoubleSandbox {
             if (n < 0) {
                 return ((n & 1) == 0) ? BesselY(-n, z, m) : -BesselY(-n, z, m);
             }
+            if (n == 0) {
+                return BesselY0(z, m);
+            }
+            if (n == 1) {
+                return BesselY1(z, m);
+            }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
-            ddouble[] fs = new ddouble[m];
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, y0 = ddouble.Zero, y1 = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
                     d += m0;
+
+                    int t = k / 2;
+                    ddouble r = m0 / t;
+
+                    y0 = ((k & 2) == 0) ? y0 - r : y0 + r;
+                }
+                else if(k >= 3){
+                    int t = k / 2;
+                    ddouble r = m0 * (2 * t + 1) / (2 * t * (t + 1));
+
+                    y1 = ((k & 2) == 0) ? y1 - r : y1 + r;
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
-
-                fs[k - 1] = m0;
             }
 
             d = ddouble.Ldexp(d, 1) + m0;
-
-            ddouble[] gs = new ddouble[m / 2 + 1], xs = new ddouble[m];
-            gs[0] = (2 * (ddouble.Log(z / 2) + ddouble.EulerGamma)) / ddouble.PI;
-            gs[1] = 4 / ddouble.PI;
-            xs[0] = -2 / (z * ddouble.PI);
-            xs[1] = gs[0] - gs[1] / 2;
-
-            for (int k = 2; k < gs.Length; k++) {
-                gs[k] = -gs[k - 1] * (k - 1) / k; 
-            }
-            for (int k = 3; k < xs.Length; k+= 2) {
-                xs[k] = (gs[k / 2] - gs[k / 2 + 1]) / 2;
-            }
-
-            ddouble y0 = gs[0] * fs[0] + gs[1] * fs[2], y1 = xs[0] * fs[0] + xs[1] * fs[1];
-            for (int k = 4; k < fs.Length; k += 2) {
-                y0 += gs[k / 2] * fs[k];
-                y1 += xs[k - 1] * fs[k - 1];
-            }
-
-            y0 /= d;
-            y1 /= d;
+            y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma));
+            y1 = 2 * (2 * y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1);
 
             for (int k = 1; k < n; k++) { 
                 (y1, y0) = ((2 * k) * v * y1 - y0, y1);
             }
+
+            y1 /= d * ddouble.PI;
 
             return y1;
         }
@@ -169,8 +217,8 @@ namespace DoubleDoubleSandbox {
                 if ((k & 1) == 0) {
                     d += m0;
 
-                    int n = k / 2;
-                    ddouble r = m0 / n;
+                    int t = k / 2;
+                    ddouble r = m0 / t;
 
                     y0 = ((k & 2) == 0) ? y0 - r : y0 + r;
                 }
@@ -197,8 +245,8 @@ namespace DoubleDoubleSandbox {
                     d += m0;
                 }
                 else if(k >= 3){
-                    int n = k / 2;
-                    ddouble r = m0 * (2 * n + 1) / (2 * n * (n + 1));
+                    int t = k / 2;
+                    ddouble r = m0 * (2 * t + 1) / (2 * t * (t + 1));
 
                     y1 = ((k & 2) == 0) ? y1 - r : y1 + r;
                 }
