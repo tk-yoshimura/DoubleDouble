@@ -168,7 +168,13 @@ namespace DoubleDoubleSandbox {
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
                     d += m0;
-                    y0 += ((k & 2) == 0 ? -1 : +1) * m0 / (k / 2);
+
+                    if ((k & 2) == 0) {
+                        y0 -= m0 / (k / 2);
+                    }
+                    else { 
+                        y0 += m0 / (k / 2);
+                    }
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
@@ -178,6 +184,49 @@ namespace DoubleDoubleSandbox {
             y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma)) / (ddouble.PI * d);
 
             return y0;
+        }
+
+        public static ddouble BesselY1(ddouble z, int m) {
+            if (m < 2 || (m & 1) != 0) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble[] fs = new ddouble[m];
+            ddouble v = 1d / z;
+
+            for (int k = m; k >= 1; k--) {
+                if ((k & 1) == 0) {
+                    d += m0;
+                }
+
+                (m0, m1) = ((2 * k) * v * m0 - m1, m0);
+
+                fs[k - 1] = m0;
+            }
+
+            d = ddouble.Ldexp(d, 1) + m0;
+
+            ddouble[] xs = new ddouble[m];
+            xs[0] = -2 * v;
+            xs[1] = 2 * (ddouble.Log(z / 2) + ddouble.EulerGamma - 1);
+
+            for (int k = 3; k < xs.Length; k+= 2) {
+                int n = k / 2;
+
+                ddouble r = 4 * (2 * n + 1) / (ddouble)(2 * n * (n + 1));
+
+                xs[k] = ((k & 2) == 0) ? -r : r;
+            }
+
+            ddouble y1 = xs[0] * fs[0] + xs[1] * fs[1];
+            for (int k = 4; k < fs.Length; k += 2) {
+                y1 += xs[k - 1] * fs[k - 1];
+            }
+
+            y1 /= d * ddouble.PI;
+
+            return y1;
         }
 
 
