@@ -200,27 +200,28 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble y = (ddouble)x;
                 decimal z = (decimal)y;
 
-                Assert.AreEqual(x, z, x.ToString());
-
                 Console.WriteLine(y);
+                Assert.AreEqual(x, z, x.ToString());
+                Assert.IsTrue(y.ToString().Length <= 8);
+
             }
 
             for (decimal x = -10.00m; x <= 10.00m; x += 0.01m) {
                 ddouble y = (ddouble)x;
                 decimal z = (decimal)y;
 
-                Assert.AreEqual(x, z, x.ToString());
-
                 Console.WriteLine(y);
+                Assert.AreEqual(x, z, x.ToString());
+                Assert.IsTrue(y.ToString().Length <= 5);
             }
 
             for (decimal x = -10000m; x <= 10000m; x += 10m) {
                 ddouble y = (ddouble)x;
                 decimal z = (decimal)y;
 
-                Assert.AreEqual(x, z, x.ToString());
-
                 Console.WriteLine(y);
+                Assert.AreEqual(x, z, x.ToString());
+                Assert.IsTrue(y.ToString().Length <= 6);
             }
 
             for (int i = 1; i <= 1000; i++) {

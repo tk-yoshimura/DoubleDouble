@@ -35,7 +35,7 @@ namespace DoubleDouble {
             return (1, hi, lo);
         }
 
-        public static (UInt64 hi52, UInt64 lo53, bool upexp) Split(UInt64 hi, UInt64 lo) {
+        public static (UInt64 hi52, UInt64 lo53) Split(UInt64 hi, UInt64 lo) {
             if (hi < MantissaTopBit) {
                 throw new ArgumentException("Illegal mantissa.");
             }
@@ -50,15 +50,12 @@ namespace DoubleDouble {
                 if (lo53 < Bits53Mask) {
                     lo53 += 1;
                 }
-                else if (hi52 < Bits52Mask) {
+                else{
                     (hi52, lo53) = (hi52 + 1, 0uL);
-                }
-                else {
-                    return (Bits52MantissaOne, 0x0uL, upexp: true);
                 }
             }
 
-            return (hi52, lo53, upexp: false);
+            return (hi52, lo53);
         }
     }
 }

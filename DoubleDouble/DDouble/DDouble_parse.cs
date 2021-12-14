@@ -23,7 +23,7 @@ namespace DoubleDouble {
         }
 
         public static implicit operator ddouble(string num) {
-            const int truncate_digits = 40;
+            const int truncate_digits = 33;
 
             if (!parse_regex.IsMatch(num)) {
                 throw new FormatException();
@@ -91,7 +91,7 @@ namespace DoubleDouble {
 
             ddouble exponent = Consts.Dec.Pow5(p);
 
-            return Ldexp(mantissa * exponent, p);
+            return RoundMantissa(Ldexp(mantissa * exponent, p), keep_bits: 105);
         }
     }
 }

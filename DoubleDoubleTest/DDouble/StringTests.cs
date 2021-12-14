@@ -75,7 +75,7 @@ namespace DoubleDoubleTest.DDouble {
         public void ParseLimitTest() {
             string p9 = "0.9";
 
-            for (int i = 0; i < 38; i++) {
+            for (int i = 0; i < 40; i++) {
                 ddouble v = p9;
 
                 Console.WriteLine(p9);
@@ -87,7 +87,7 @@ namespace DoubleDoubleTest.DDouble {
 
             string p3 = "0.3";
 
-            for (int i = 0; i < 38; i++) {
+            for (int i = 0; i < 40; i++) {
                 ddouble v = p3;
 
                 Console.WriteLine(p3);
@@ -95,6 +95,30 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine($"0x{FloatSplitter.Split(v).mantissa:X14}");
 
                 p3 += "3";
+            }
+
+            string p4 = "0.4";
+
+            for (int i = 0; i < 40; i++) {
+                ddouble v = p4;
+
+                Console.WriteLine(p4);
+                Console.WriteLine(v);
+                Console.WriteLine($"0x{FloatSplitter.Split(v).mantissa:X14}");
+
+                p4 += "4";
+            }
+
+            string p5 = "0.5";
+
+            for (int i = 0; i < 40; i++) {
+                ddouble v = p5;
+
+                Console.WriteLine(p5);
+                Console.WriteLine(v);
+                Console.WriteLine($"0x{FloatSplitter.Split(v).mantissa:X14}");
+
+                p5 += "5";
             }
         }
     }

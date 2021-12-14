@@ -158,7 +158,7 @@ namespace DoubleDouble {
                 num /= 10;
             }
 
-            ddouble x = RoundMantissa(FromStringCore(sign, 0, num, exponent), keep_bits: 105);
+            ddouble x = FromStringCore(sign, 0, num, exponent);
 
             return x;
         }
@@ -199,13 +199,11 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            (UInt64 hi52, UInt64 lo53, bool upexp) = IntegerSplitter.Split(bits.hi, bits.lo);
-
-            int exp = checked(bits.exponent + (upexp ? 1 : 0));
+            (UInt64 hi52, UInt64 lo53) = IntegerSplitter.Split(bits.hi, bits.lo);
 
             ddouble v = new ddouble(
-                Math.ScaleB((double)hi52, checked(exp + 1 - IntegerSplitter.MantissaBits)),
-                Math.ScaleB((double)lo53, checked(exp - IntegerSplitter.MantissaBits * 2))
+                Math.ScaleB((double)hi52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits)),
+                Math.ScaleB((double)lo53, checked(bits.exponent - IntegerSplitter.MantissaBits * 2))
             );
  
             return bits.sign >= 0 ? v : -v;
