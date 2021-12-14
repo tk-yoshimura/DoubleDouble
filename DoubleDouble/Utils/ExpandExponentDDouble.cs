@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace DoubleDouble {
     [DebuggerDisplay("{ToString(),nq}")]
     internal struct ExpandExponentDDouble {
-        private static ddouble lg2 = ddouble.Rcp(3d + ddouble.Log2(ddouble.Ldexp(5d, -2)));
-
         private readonly int exponent;
         private readonly ddouble value;
 
@@ -18,13 +11,13 @@ namespace DoubleDouble {
             this.value = value;
         }
 
-        public static ExpandExponentDDouble operator *(ExpandExponentDDouble v1, ExpandExponentDDouble v2) { 
+        public static ExpandExponentDDouble operator *(ExpandExponentDDouble v1, ExpandExponentDDouble v2) {
             (int exp, ddouble value) = ddouble.Frexp(v1.value * v2.value);
 
             return new(checked(v1.exponent + v2.exponent + exp), value);
         }
 
-        public static ExpandExponentDDouble operator /(ExpandExponentDDouble v1, ExpandExponentDDouble v2) { 
+        public static ExpandExponentDDouble operator /(ExpandExponentDDouble v1, ExpandExponentDDouble v2) {
             (int exp, ddouble value) = ddouble.Frexp(v1.value / v2.value);
 
             return new(checked(v1.exponent - v2.exponent + exp), value);
@@ -36,7 +29,7 @@ namespace DoubleDouble {
 
                 return new(checked(v1.exponent + exp), value);
             }
-            else { 
+            else {
                 (int exp, ddouble value) = ddouble.Frexp(ddouble.Ldexp(v1.value, checked(v1.exponent - v2.exponent)) + v2.value);
 
                 return new(checked(v2.exponent + exp), value);
@@ -49,7 +42,7 @@ namespace DoubleDouble {
 
                 return new(checked(v1.exponent + exp), value);
             }
-            else { 
+            else {
                 (int exp, ddouble value) = ddouble.Frexp(ddouble.Ldexp(v1.value, checked(v1.exponent - v2.exponent)) - v2.value);
 
                 return new(checked(v2.exponent + exp), value);
@@ -67,7 +60,7 @@ namespace DoubleDouble {
         }
 
         public override string ToString() {
-            ddouble exponent_dec = exponent * lg2;
+            ddouble exponent_dec = exponent * ddouble.Lg2;
             int exponent_n = (int)ddouble.Floor(exponent_dec);
             ddouble exponent_frac = exponent_dec - exponent_n;
 
@@ -75,9 +68,9 @@ namespace DoubleDouble {
 
             string dec_str = dec.ToString();
 
-            if ((dec.Sign >= 0 && (dec_str.IndexOf('.') >= 2 || (dec_str.IndexOf('.') < 0 && dec_str.Length >= 2))) || 
-                (dec.Sign < 0  && (dec_str.IndexOf('.') >= 3 || (dec_str.IndexOf('.') < 0 && dec_str.Length >= 3)))) {
-            
+            if ((dec.Sign >= 0 && (dec_str.IndexOf('.') >= 2 || (dec_str.IndexOf('.') < 0 && dec_str.Length >= 2))) ||
+                (dec.Sign < 0 && (dec_str.IndexOf('.') >= 3 || (dec_str.IndexOf('.') < 0 && dec_str.Length >= 3)))) {
+
                 dec /= 10;
                 exponent_n++;
 

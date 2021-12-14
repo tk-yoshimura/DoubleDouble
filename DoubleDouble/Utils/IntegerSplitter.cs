@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 
 namespace DoubleDouble {
     internal static class IntegerSplitter {
@@ -41,7 +40,7 @@ namespace DoubleDouble {
             }
 
             UInt64 hi52 = unchecked((UInt64)(hi >> (UInt64Bits - MantissaBits)));
-            UInt64 lo53 = unchecked((UInt64)(hi << (2 * MantissaBits - UInt64Bits + 1)) | 
+            UInt64 lo53 = unchecked((UInt64)(hi << (2 * MantissaBits - UInt64Bits + 1)) |
                                             (lo >> ((UInt64Bits - MantissaBits) * 2 - 1))) & Bits53Mask;
 
             bool round = (lo & RoundBit) != 0;
@@ -50,7 +49,7 @@ namespace DoubleDouble {
                 if (lo53 < Bits53Mask) {
                     lo53 += 1;
                 }
-                else{
+                else {
                     (hi52, lo53) = (hi52 + 1, 0uL);
                 }
             }

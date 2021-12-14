@@ -61,9 +61,9 @@ namespace DoubleDoubleSandbox {
                 (int xexp, ddouble xf) = table.Value(k * 4);
                 (int yexp, ddouble yf) = table.Value(k * 4 + 1);
 
-                ddouble dx = p * xf * 
+                ddouble dx = p * xf *
                     (1d - v2 * (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2)));
-                ddouble dy = q * yf * 
+                ddouble dy = q * yf *
                     (1d - v2 * (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / (64 * (4 * k + 2) * (4 * k + 3)));
 
                 dx = ddouble.Ldexp(dx, xexp);
@@ -106,9 +106,9 @@ namespace DoubleDoubleSandbox {
                 ddouble dc = u * f * (sign_switch ? (1d - w) : (1d + w));
 
                 dc = ddouble.Ldexp(dc, exp);
-                
+
                 ddouble c_next = c + dc;
-                
+
                 if (c == c_next) {
                     return (c, k);
                 }

@@ -132,7 +132,7 @@ namespace DoubleDouble {
             UInt64 lo = unchecked((UInt64)(n & (~0uL)));
 
             ddouble v = (sign: +1, exponent: bits - 1, hi, lo);
-                 
+
             return v;
         }
 
@@ -205,7 +205,7 @@ namespace DoubleDouble {
                 Math.ScaleB((double)hi52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits)),
                 Math.ScaleB((double)lo53, checked(bits.exponent - IntegerSplitter.MantissaBits * 2))
             );
- 
+
             return bits.sign >= 0 ? v : -v;
         }
     }

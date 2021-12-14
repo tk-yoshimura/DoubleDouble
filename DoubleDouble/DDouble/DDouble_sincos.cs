@@ -10,7 +10,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Sin(ddouble x) {
-            return SinPI(x * Consts.SinCos.RcpPI);
+            return SinPI(x * RcpPI);
         }
 
         public static ddouble CosPI(ddouble x) {
@@ -18,7 +18,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Cos(ddouble x) {
-            return CosPI(x * Consts.SinCos.RcpPI);
+            return CosPI(x * RcpPI);
         }
 
         public static ddouble TanPI(ddouble x) {
@@ -43,7 +43,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Tan(ddouble x) {
-            return TanPI(x * Consts.SinCos.RcpPI);
+            return TanPI(x * RcpPI);
         }
 
         internal static ddouble SinPIHalf(ddouble x) {
@@ -104,8 +104,6 @@ namespace DoubleDouble {
                 public static readonly int SinPIHalfTableN = SinPIHalfTable.Count - 1;
 
                 public static int SinPIHalfConvergenceTerms = SinPIHalfPrime(SinPIHalfTableDx).terms;
-
-                public static readonly ddouble RcpPI = Rcp(PI);
 
                 public static ddouble[] GenerateSinPITable() {
 #if DEBUG

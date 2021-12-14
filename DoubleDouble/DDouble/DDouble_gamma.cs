@@ -143,7 +143,7 @@ namespace DoubleDouble {
                 return y;
             }
 
-            ddouble x_zsft = x - Consts.Digamma.ZeroPoint;
+            ddouble x_zsft = x - DigammaZero;
             if (Abs(x_zsft) < 9.765625e-4d) {
                 return x_zsft * (Consts.Digamma.DiffCoefTable[0]
                      + x_zsft * (Consts.Digamma.DiffCoefTable[1]
@@ -280,8 +280,6 @@ namespace DoubleDouble {
             public static class Digamma {
                 public const int Threshold = 18;
                 public static readonly ReadOnlyCollection<ddouble> SterlingTable = GenerateSterlingTable();
-
-                public static readonly ddouble ZeroPoint = "1.4616321449683623412626595423257213284682";
                 public static readonly ReadOnlyCollection<ddouble> DiffCoefTable = GenerateDiffCoefTable();
 
                 private static ReadOnlyCollection<ddouble> GenerateSterlingTable() {

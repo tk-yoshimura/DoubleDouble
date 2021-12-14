@@ -1,9 +1,5 @@
 ﻿using DoubleDouble;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DoubleDoubleSandbox {
     internal class BesselMillerBackward {
@@ -52,7 +48,7 @@ namespace DoubleDoubleSandbox {
                 return BesselJ(n, z, m);
             }
 
-            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) { 
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
@@ -110,7 +106,7 @@ namespace DoubleDoubleSandbox {
                 d += nu * m0 * g;
                 d *= ddouble.Pow2(nu) * ddouble.Pow(v, nu);
 
-                for (int k = 0; k > n; k--) { 
+                for (int k = 0; k > n; k--) {
                     (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
                 }
 
@@ -193,7 +189,7 @@ namespace DoubleDoubleSandbox {
 
                     y0 = ((k & 2) == 0) ? y0 - r : y0 + r;
                 }
-                else if(k >= 3){
+                else if (k >= 3) {
                     int t = k / 2;
                     ddouble r = m0 * (2 * t + 1) / (2 * t * (t + 1));
 
@@ -207,7 +203,7 @@ namespace DoubleDoubleSandbox {
             y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma));
             y1 = 2 * (2 * y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1);
 
-            for (int k = 1; k < n; k++) { 
+            for (int k = 1; k < n; k++) {
                 (y1, y0) = ((2 * k) * v * y1 - y0, y1);
             }
 
@@ -224,7 +220,7 @@ namespace DoubleDoubleSandbox {
                 return BesselY(n, z, m);
             }
 
-            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) { 
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
@@ -273,7 +269,7 @@ namespace DoubleDoubleSandbox {
                 if ((k & 1) == 0) {
                     d += m0;
                 }
-                else if(k >= 3){
+                else if (k >= 3) {
                     int t = k / 2;
                     ddouble r = m0 * (2 * t + 1) / (2 * t * (t + 1));
 
@@ -330,7 +326,7 @@ namespace DoubleDoubleSandbox {
                 return BesselI(n, z, m, log_scale);
             }
 
-            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) { 
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
@@ -370,7 +366,7 @@ namespace DoubleDoubleSandbox {
                 return y;
             }
             else {
-                if (log_scale) { 
+                if (log_scale) {
                     throw new ArgumentException(
                         "When nu is negative, the log scale is invalid.",
                         nameof(log_scale));
@@ -399,7 +395,7 @@ namespace DoubleDoubleSandbox {
 
                 (m0, m1) = (m0 * exp_z, m1 * exp_z);
 
-                for (int k = 0; k > n; k--) { 
+                for (int k = 0; k > n; k--) {
                     (m0, m1) = ((2 * (k + nu)) * v * m0 + m1, m0);
                 }
 
@@ -518,10 +514,10 @@ namespace DoubleDoubleSandbox {
 
         public static (ddouble y, int m) BesselJ(int n, ddouble z, ddouble eps, int max_m = 512) {
             ddouble y_prev = ddouble.NaN, dy = ddouble.NaN, dy_prev = ddouble.NaN;
-            
+
             for (int m = n * 4 + 2; m <= max_m; m += 2) {
                 ddouble y = BesselJ(n, z, m);
-                
+
                 dy = ddouble.Abs(y - y_prev);
                 y_prev = y;
 
@@ -536,8 +532,8 @@ namespace DoubleDoubleSandbox {
         }
 
         public static ddouble BesselJ(int n, ddouble z) {
-            int m = (int)Math.Ceiling(20 + (double)z * 0.825) * 2; 
- 
+            int m = (int)Math.Ceiling(20 + (double)z * 0.825) * 2;
+
             ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
             ddouble v = 1d / z;
 

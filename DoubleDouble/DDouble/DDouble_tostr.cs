@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static int DecimalDigits => 30;
+        public static int DecimalDigits => 29;
 
         public override string ToString() {
             if (IsNaN(this)) {
@@ -105,7 +105,7 @@ namespace DoubleDouble {
 
             (int sign, int exponent, BigInteger mantissa, _) = FloatSplitter.Split(this);
 
-            ddouble exponent_log10 = Consts.Log.Lg2 * exponent;
+            ddouble exponent_log10 = Lg2 * exponent;
             ddouble exponent_int = Floor(exponent_log10);
             int exponent_dec = (int)exponent_int;
 

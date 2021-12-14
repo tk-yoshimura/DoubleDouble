@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DoubleDoubleSandbox {
     internal class BesselNearZero {
@@ -39,9 +37,9 @@ namespace DoubleDoubleSandbox {
             for (int k = 0; k <= max_terms; k++) {
                 ddouble w = z2 / (4 * (2 * k + 1) * ((2 * k + 1) + nu));
                 ddouble dc = u * table.Value(k) * (sign_switch ? (1d - w) : (1d + w));
-                
+
                 ddouble c_next = c + dc;
-                
+
                 if (c == c_next) {
                     return (c, k);
                 }

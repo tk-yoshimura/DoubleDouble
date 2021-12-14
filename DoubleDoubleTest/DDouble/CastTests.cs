@@ -250,14 +250,14 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void Bits128Test() {
-            ddouble v1 = (+1,  0, 0x8000000000000000uL, 0x0000000000000000uL);
-            ddouble v2 = (+1,  0, 0x8000000000000000uL, 0x0000000000800000uL);
-            ddouble v3 = (+1,  0, 0x8000000000000000uL, 0x00000000007FFFFFuL);
+            ddouble v1 = (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL);
+            ddouble v2 = (+1, 0, 0x8000000000000000uL, 0x0000000000800000uL);
+            ddouble v3 = (+1, 0, 0x8000000000000000uL, 0x00000000007FFFFFuL);
             ddouble v4 = (+1, +1, 0x8000000000000000uL, 0x0000000000000000uL);
             ddouble v5 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
-            ddouble v6 = (-1,  0, 0x8000000000000000uL, 0x0000000000000000uL);
-            ddouble v7 = (+1,  0, 0xC90FDAA22168C234uL, 0xC4C6628B80DC1CD1uL);
-            ddouble v8 = (+1,  0, 0x8000000000000000uL, 0x00000000003FFFFFuL);
+            ddouble v6 = (-1, 0, 0x8000000000000000uL, 0x0000000000000000uL);
+            ddouble v7 = (+1, 0, 0xC90FDAA22168C234uL, 0xC4C6628B80DC1CD1uL);
+            ddouble v8 = (+1, 0, 0x8000000000000000uL, 0x00000000003FFFFFuL);
             ddouble v9 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF3FFFFFuL);
             ddouble v10 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF4FFFFFuL);
             ddouble v11 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF8FFFFFuL);

@@ -13,7 +13,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (x < Math.ScaleB(1, -256)) {
+            if (x < Math.ScaleB(1, -16)) {
                 ddouble w = PI * x * x;
                 ddouble t = Sqrt(PI) * ((40320d + w * (3360d + w * (588d + w * 127d))) / 80640d);
 

@@ -49,7 +49,7 @@ namespace DoubleDouble {
             ddouble v = s - Consts.Pow.Pow2TableDx * index;
             ddouble r = Consts.Pow.Pow2Table[index];
 
-            ddouble w = v * Consts.Log.Ln2, u = w, y = 1d;
+            ddouble w = v * Ln2, u = w, y = 1d;
 
             for (int i = 1; i <= Consts.Pow.Pow2ConvergenceTerms; i++) {
                 ddouble dy = TaylorSequence[i] * u;
@@ -76,13 +76,13 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow10(ddouble x) {
-            ddouble z = RoundMantissa(Pow2(Abs(x) * Consts.Log.Lb10), keep_bits: 99);
+            ddouble z = RoundMantissa(Pow2(Abs(x) * Lb10), keep_bits: 99);
 
             return x.Sign >= 0 ? z : Rcp(z);
         }
 
         public static ddouble Exp(ddouble x) {
-            ddouble z = Pow2(x * Consts.Log.LbE);
+            ddouble z = Pow2(x * LbE);
 
             return z;
         }
@@ -150,10 +150,10 @@ namespace DoubleDouble {
                     if (x >= 0.5d) {
                         (ddouble value, int terms_half) = Pow2Prime(x - 0.5d);
 
-                        return (Sqrt.Sqrt2 * value, terms_half);
+                        return (Sqrt2 * value, terms_half);
                     }
 
-                    ddouble w = x * Consts.Log.Ln2, u = w, y = 1d;
+                    ddouble w = x * Ln2, u = w, y = 1d;
 
                     int terms = 0;
                     foreach (ddouble f in TaylorSequence.Skip(1)) {

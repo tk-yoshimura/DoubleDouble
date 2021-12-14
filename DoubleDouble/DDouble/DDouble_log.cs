@@ -20,7 +20,7 @@ namespace DoubleDouble {
             int index = (int)ddouble.Floor((v - 1d) * Consts.Log.Log2TableN);
             ddouble v_offset = 1d + Consts.Log.Log2TableDx * index;
 
-            ddouble w = v / v_offset - 1d, w2 = w * w, u = Consts.Log.LbE * w;
+            ddouble w = v / v_offset - 1d, w2 = w * w, u = LbE * w;
             ddouble y = n + Consts.Log.Log2Table[index];
 
             for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
@@ -39,11 +39,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble Log10(ddouble x) {
-            return RoundMantissa(Log2(x) * Consts.Log.Lg2, keep_bits: 103);
+            return RoundMantissa(Log2(x) * Lg2, keep_bits: 103);
         }
 
         public static ddouble Log(ddouble x) {
-            return Log2(x) * Consts.Log.Ln2;
+            return Log2(x) * Ln2;
         }
 
         public static ddouble Log1p(ddouble x) {
@@ -77,16 +77,11 @@ namespace DoubleDouble {
 
         private static partial class Consts {
             public static class Log {
-                public static readonly ddouble Lg2 = Rcp(3d + Log2Prime(Ldexp(5d, -2)));
-                public static readonly ddouble Ln2 = GenerateLn2();
-                public static readonly ddouble LbE = Rcp(Ln2);
-                public static readonly ddouble Lb10 = Rcp(Lg2);
-
                 private static ddouble GenerateLn2() {
                     int n = 3;
                     ddouble x = Rcp(3d);
 
-                    while(true){
+                    while (true) {
                         ddouble dx = Rcp(n * Pow(3d, n));
                         ddouble x_next = x + dx;
 

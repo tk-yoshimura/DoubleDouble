@@ -32,11 +32,5 @@ namespace DoubleDouble {
 
             return y;
         }
-
-        private static partial class Consts {
-            public static class Sqrt {
-                public static ddouble Sqrt2 { get; } = Sqrt(2d);
-            }
-        }
     }
 }

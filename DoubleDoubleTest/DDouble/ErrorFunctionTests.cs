@@ -220,17 +220,20 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreEqual(v, z);
             }
 
-            for (ddouble v = Math.ScaleB(1, -240); v > Math.ScaleB(1, -985); v /= 2) {
+            for (ddouble v = Math.ScaleB(1, -12); v > Math.ScaleB(1, -985); v /= 2) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
 
                 Assert.AreEqual(v, z, $"exponent: {ddouble.Frexp(v).exp}");
 
-                ddouble y_dec = ddouble.Erf(ddouble.BitDecrement(v));
+                ddouble y_dec = ddouble.BitDecrement(y);
                 ddouble z_dec = ddouble.InverseErf(y_dec);
 
-                ddouble y_inc = ddouble.Erf(ddouble.BitIncrement(v));
+                ddouble y_inc = ddouble.BitDecrement(y);
                 ddouble z_inc = ddouble.InverseErf(y_inc);
+
+                Assert.AreNotEqual(y, y_dec);
+                Assert.AreNotEqual(y, y_inc);
 
                 Assert.AreEqual(z, z_dec, $"exponent: {ddouble.Frexp(v).exp}");
                 Assert.AreEqual(z, z_inc, $"exponent: {ddouble.Frexp(v).exp}");
