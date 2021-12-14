@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static int DecimalDigits => 29;
+        public static int DecimalDigits => 30;
 
         public override string ToString() {
             if (IsNaN(this)) {

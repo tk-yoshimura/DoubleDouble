@@ -10,23 +10,23 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual("0", (ddouble)(0).ToString());
             Assert.AreEqual("-0", (ddouble)(-0d).ToString());
 
-            Assert.AreEqual("0.333333333333333333333333333333", ddouble.Rcp(3).ToString());
-            Assert.AreEqual("3.33333333333333333333333333333", (ddouble.Rcp(3) * 10).ToString());
+            Assert.AreEqual("0.3333333333333333333333333333333", ddouble.Rcp(3).ToString());
+            Assert.AreEqual("3.333333333333333333333333333333", (ddouble.Rcp(3) * 10).ToString());
             Assert.AreEqual("0.2", ddouble.Rcp(5).ToString());
             Assert.AreEqual("2", (ddouble.Rcp(5) * 10).ToString());
-            Assert.AreEqual("0.166666666666666666666666666667", ddouble.Rcp(6).ToString());
-            Assert.AreEqual("1.66666666666666666666666666667", (ddouble.Rcp(6) * 10).ToString());
-            Assert.AreEqual("0.142857142857142857142857142857", ddouble.Rcp(7).ToString());
-            Assert.AreEqual("1.42857142857142857142857142857", (ddouble.Rcp(7) * 10).ToString());
+            Assert.AreEqual("0.1666666666666666666666666666667", ddouble.Rcp(6).ToString());
+            Assert.AreEqual("1.666666666666666666666666666667", (ddouble.Rcp(6) * 10).ToString());
+            Assert.AreEqual("0.1428571428571428571428571428571", ddouble.Rcp(7).ToString());
+            Assert.AreEqual("1.428571428571428571428571428571", (ddouble.Rcp(7) * 10).ToString());
 
-            Assert.AreEqual("-0.333333333333333333333333333333", (-ddouble.Rcp(3)).ToString());
-            Assert.AreEqual("-3.33333333333333333333333333333", (-ddouble.Rcp(3) * 10).ToString());
+            Assert.AreEqual("-0.3333333333333333333333333333333", (-ddouble.Rcp(3)).ToString());
+            Assert.AreEqual("-3.333333333333333333333333333333", (-ddouble.Rcp(3) * 10).ToString());
             Assert.AreEqual("-0.2", (-ddouble.Rcp(5)).ToString());
             Assert.AreEqual("-2", (-ddouble.Rcp(5) * 10).ToString());
-            Assert.AreEqual("-0.166666666666666666666666666667", (-ddouble.Rcp(6)).ToString());
-            Assert.AreEqual("-1.66666666666666666666666666667", (-ddouble.Rcp(6) * 10).ToString());
-            Assert.AreEqual("-0.142857142857142857142857142857", (-ddouble.Rcp(7)).ToString());
-            Assert.AreEqual("-1.42857142857142857142857142857", (-ddouble.Rcp(7) * 10).ToString());
+            Assert.AreEqual("-0.1666666666666666666666666666667", (-ddouble.Rcp(6)).ToString());
+            Assert.AreEqual("-1.666666666666666666666666666667", (-ddouble.Rcp(6) * 10).ToString());
+            Assert.AreEqual("-0.1428571428571428571428571428571", (-ddouble.Rcp(7)).ToString());
+            Assert.AreEqual("-1.428571428571428571428571428571", (-ddouble.Rcp(7) * 10).ToString());
 
             ddouble p = 1, n = 1, radix = 10;
             for (int i = 1; i < 20; i++) {
