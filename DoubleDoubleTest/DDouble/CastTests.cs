@@ -244,15 +244,17 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void Bits128Test() {
             ddouble v1 = (+1,  0, 0x8000000000000000uL, 0x0000000000000000uL);
-            ddouble v2 = (+1,  0, 0x8000000000000000uL, 0x0000000001000000uL);
-            ddouble v3 = (+1,  0, 0x8000000000000000uL, 0x0000000000FFFFFFuL);
+            ddouble v2 = (+1,  0, 0x8000000000000000uL, 0x0000000000800000uL);
+            ddouble v3 = (+1,  0, 0x8000000000000000uL, 0x00000000007FFFFFuL);
             ddouble v4 = (+1, +1, 0x8000000000000000uL, 0x0000000000000000uL);
             ddouble v5 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
             ddouble v6 = (-1,  0, 0x8000000000000000uL, 0x0000000000000000uL);
             ddouble v7 = (+1,  0, 0xC90FDAA22168C234uL, 0xC4C6628B80DC1CD1uL);
 
-            BigInteger n = ((BigInteger)(0xC90FDAA22168C234uL) << 40) + 0xC4C6628B80uL;
-            Assert.AreEqual(n, FloatSplitter.Split(v7).mantissa / 2);
+            BigInteger n = ((((BigInteger)(0xC90FDAA22168C234uL) << 40) + 0xC4C6628B80uL) << 1) + 1;
+            BigInteger m = FloatSplitter.Split(v7).mantissa;
+
+            Assert.AreEqual(n, m);
             Assert.AreEqual(1, FloatSplitter.Split(v2).mantissa - FloatSplitter.Split(v1).mantissa);
 
             Assert.AreEqual(1, v1);

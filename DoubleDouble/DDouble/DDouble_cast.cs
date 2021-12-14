@@ -187,11 +187,11 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            (UInt64 hi52, UInt64 lo52) = IntegerSplitter.Split(bits.hi, bits.lo); 
+            (UInt64 hi52, UInt64 lo53) = IntegerSplitter.Split(bits.hi, bits.lo); 
 
             ddouble v = new ddouble(
                 Math.ScaleB((double)hi52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits)),
-                Math.ScaleB((double)lo52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits * 2))
+                Math.ScaleB((double)lo53, checked(bits.exponent - IntegerSplitter.MantissaBits * 2))
             );
  
             return bits.sign >= 0 ? v : -v;
