@@ -1,0 +1,90 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DoubleDouble {
+    [DebuggerDisplay("{ToString(),nq}")]
+    internal struct ExpandExponentDDouble {
+        private static ddouble lg2 = ddouble.Rcp(3d + ddouble.Log2(ddouble.Ldexp(5d, -2)));
+
+        private readonly int exponent;
+        private readonly ddouble value;
+
+        private ExpandExponentDDouble(int exponent, ddouble value) {
+            this.exponent = exponent;
+            this.value = value;
+        }
+
+        public static ExpandExponentDDouble operator *(ExpandExponentDDouble v1, ExpandExponentDDouble v2) { 
+            (int exp, ddouble value) = ddouble.Frexp(v1.value * v2.value);
+
+            return new(checked(v1.exponent + v2.exponent + exp), value);
+        }
+
+        public static ExpandExponentDDouble operator /(ExpandExponentDDouble v1, ExpandExponentDDouble v2) { 
+            (int exp, ddouble value) = ddouble.Frexp(v1.value / v2.value);
+
+            return new(checked(v1.exponent - v2.exponent + exp), value);
+        }
+
+        public static ExpandExponentDDouble operator +(ExpandExponentDDouble v1, ExpandExponentDDouble v2) {
+            if (v1.exponent >= v2.exponent) {
+                (int exp, ddouble value) = ddouble.Frexp(v1.value + ddouble.Ldexp(v2.value, checked(v2.exponent - v1.exponent)));
+
+                return new(checked(v1.exponent + exp), value);
+            }
+            else { 
+                (int exp, ddouble value) = ddouble.Frexp(ddouble.Ldexp(v1.value, checked(v1.exponent - v2.exponent)) + v2.value);
+
+                return new(checked(v2.exponent + exp), value);
+            }
+        }
+
+        public static ExpandExponentDDouble operator -(ExpandExponentDDouble v1, ExpandExponentDDouble v2) {
+            if (v1.exponent >= v2.exponent) {
+                (int exp, ddouble value) = ddouble.Frexp(v1.value - ddouble.Ldexp(v2.value, checked(v2.exponent - v1.exponent)));
+
+                return new(checked(v1.exponent + exp), value);
+            }
+            else { 
+                (int exp, ddouble value) = ddouble.Frexp(ddouble.Ldexp(v1.value, checked(v1.exponent - v2.exponent)) - v2.value);
+
+                return new(checked(v2.exponent + exp), value);
+            }
+        }
+
+        public static implicit operator ExpandExponentDDouble(ddouble v) {
+            (int exp, ddouble value) = ddouble.Frexp(v);
+
+            return new ExpandExponentDDouble(exp, value);
+        }
+
+        public static explicit operator ddouble(ExpandExponentDDouble v) {
+            return ddouble.Ldexp(v.value, v.exponent);
+        }
+
+        public override string ToString() {
+            ddouble exponent_dec = exponent * lg2;
+            int exponent_n = (int)ddouble.Floor(exponent_dec);
+            ddouble exponent_frac = exponent_dec - exponent_n;
+
+            ddouble dec = value * ddouble.Pow10(exponent_frac);
+
+            string dec_str = dec.ToString();
+
+            if ((dec.Sign >= 0 && (dec_str.IndexOf('.') >= 2 || (dec_str.IndexOf('.') < 0 && dec_str.Length >= 2))) || 
+                (dec.Sign < 0  && (dec_str.IndexOf('.') >= 3 || (dec_str.IndexOf('.') < 0 && dec_str.Length >= 3)))) {
+            
+                dec /= 10;
+                exponent_n++;
+
+                return $"{dec}e{exponent_n}";
+            }
+
+            return $"{dec_str}e{exponent_n}";
+        }
+    }
+}

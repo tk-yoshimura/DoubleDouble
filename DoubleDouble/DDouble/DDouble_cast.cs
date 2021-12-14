@@ -3,8 +3,6 @@ using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-
-
         public static implicit operator ddouble(double v) {
             return new ddouble(v);
         }
@@ -178,6 +176,25 @@ namespace DoubleDouble {
             );
 
             return d;
+        }
+
+        public static implicit operator ddouble((int sign, int exponent, UInt64 hi, UInt64 lo) bits) {
+            if (bits.sign == 0) {
+                if (bits.exponent != 0 || bits.hi != 0 || bits.lo != 0) {
+                    throw new ArgumentException("Illegal zero set.");
+                }
+
+                return Zero;
+            }
+
+            (UInt64 hi52, UInt64 lo52) = IntegerSplitter.Split(bits.hi, bits.lo); 
+
+            ddouble v = new ddouble(
+                Math.ScaleB((double)hi52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits)),
+                Math.ScaleB((double)lo52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits * 2))
+            );
+ 
+            return bits.sign >= 0 ? v : -v;
         }
     }
 }

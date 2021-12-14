@@ -196,8 +196,6 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void DecimalTest() {
-            ddouble w = (ddouble)0.0625m;
-
             for (decimal x = -0.01m; x <= 0.01m; x += 0.00001m) {
                 ddouble y = (ddouble)x;
                 decimal z = (decimal)y;
@@ -241,6 +239,28 @@ namespace DoubleDoubleTest.DDouble {
                 v /= 2;
                 d /= 2;
             }
+        }
+
+        [TestMethod]
+        public void Bits128Test() {
+            ddouble v1 = (+1,  0, 0x8000000000000000uL, 0x0000000000000000uL);
+            ddouble v2 = (+1,  0, 0x8000000000000000uL, 0x0000000001000000uL);
+            ddouble v3 = (+1,  0, 0x8000000000000000uL, 0x0000000000FFFFFFuL);
+            ddouble v4 = (+1, +1, 0x8000000000000000uL, 0x0000000000000000uL);
+            ddouble v5 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
+            ddouble v6 = (-1,  0, 0x8000000000000000uL, 0x0000000000000000uL);
+            ddouble v7 = (+1,  0, 0xC90FDAA22168C234uL, 0xC4C6628B80DC1CD1uL);
+
+            BigInteger n = ((BigInteger)(0xC90FDAA22168C234uL) << 40) + 0xC4C6628B80uL;
+            Assert.AreEqual(n, FloatSplitter.Split(v7).mantissa / 2);
+            Assert.AreEqual(1, FloatSplitter.Split(v2).mantissa - FloatSplitter.Split(v1).mantissa);
+
+            Assert.AreEqual(1, v1);
+            Assert.AreNotEqual(v2, v1);
+            Assert.AreEqual(v1, v3);
+            Assert.AreEqual(2, v4);
+            Assert.AreNotEqual(v1, v5);
+            Assert.AreEqual(-1, v6);
         }
     }
 }
