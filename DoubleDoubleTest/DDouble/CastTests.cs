@@ -250,8 +250,14 @@ namespace DoubleDoubleTest.DDouble {
             ddouble v5 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
             ddouble v6 = (-1,  0, 0x8000000000000000uL, 0x0000000000000000uL);
             ddouble v7 = (+1,  0, 0xC90FDAA22168C234uL, 0xC4C6628B80DC1CD1uL);
+            ddouble v8 = (+1,  0, 0x8000000000000000uL, 0x00000000003FFFFFuL);
+            ddouble v9 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF3FFFFFuL);
+            ddouble v10 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF4FFFFFuL);
+            ddouble v11 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF8FFFFFuL);
+            ddouble v12 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFFCFFFFFuL);
+            ddouble v13 = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFFFFFFFFuL);
 
-            BigInteger n = ((((BigInteger)(0xC90FDAA22168C234uL) << 40) + 0xC4C6628B80uL) << 1) + 1;
+            BigInteger n = ((((BigInteger)(0xC90FDAA22168C234uL) << 40) + 0xC4C6628B80uL) << 1) + 2;
             BigInteger m = FloatSplitter.Split(v7).mantissa;
 
             Assert.AreEqual(n, m);
@@ -259,10 +265,16 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.AreEqual(1, v1);
             Assert.AreNotEqual(v2, v1);
-            Assert.AreEqual(v1, v3);
+            Assert.AreEqual(v2, v3);
             Assert.AreEqual(2, v4);
             Assert.AreNotEqual(v1, v5);
             Assert.AreEqual(-1, v6);
+            Assert.AreEqual(1, v8);
+            Assert.AreNotEqual(1, v9);
+            Assert.AreNotEqual(1, v10);
+            Assert.AreNotEqual(1, v11);
+            Assert.AreEqual(1, v12);
+            Assert.AreEqual(1, v13);
         }
     }
 }

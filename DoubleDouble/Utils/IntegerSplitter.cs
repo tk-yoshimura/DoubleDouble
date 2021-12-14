@@ -5,7 +5,10 @@ namespace DoubleDouble {
     internal static class IntegerSplitter {
         // C# is IEEE754 compliant.
         public const int MantissaBits = 52, UInt64Bits = 64;
-        public const UInt64 Bits52Mask = 0x000FFFFFFFFFFFFFuL, Bits53Mask = 0x001FFFFFFFFFFFFFuL;
+
+        private const UInt64 Bits52Mask = 0x000FFFFFFFFFFFFFuL, Bits53Mask = 0x001FFFFFFFFFFFFFuL;
+        private const UInt64 RoundBit = 0x0000000000400000uL, MantissaTopBit = 0x8000000000000000uL;
+        private const UInt64 Bits52MantissaOne = 0x0008000000000000uL;
 
         public static (int sign, UInt64 hi, UInt64 lo, int sfts) Split(BigInteger n) {
             int sign = n.Sign;
@@ -52,8 +55,8 @@ namespace DoubleDouble {
             return (1, hi, lo);
         }
 
-        public static (UInt64 hi52, UInt64 lo53) Split(UInt64 hi, UInt64 lo) {
-            if (hi < 0x8000000000000000uL) {
+        public static (UInt64 hi52, UInt64 lo53, bool upexp) Split(UInt64 hi, UInt64 lo) {
+            if (hi < MantissaTopBit) {
                 throw new ArgumentException("Illegal mantissa.");
             }
 
@@ -61,7 +64,21 @@ namespace DoubleDouble {
             UInt64 lo53 = unchecked((UInt64)(hi << (2 * MantissaBits - UInt64Bits + 1)) | 
                                             (lo >> ((UInt64Bits - MantissaBits) * 2 - 1))) & Bits53Mask;
 
-            return (hi52, lo53);
+            bool round = (lo & RoundBit) != 0;
+
+            if (round) {
+                if (lo53 < Bits53Mask) {
+                    lo53 += 1;
+                }
+                else if (hi52 < Bits52Mask) {
+                    (hi52, lo53) = (hi52 + 1, 0uL);
+                }
+                else {
+                    return (Bits52MantissaOne, 0x0uL, upexp: true);
+                }
+            }
+
+            return (hi52, lo53, upexp: false);
         }
     }
 }
