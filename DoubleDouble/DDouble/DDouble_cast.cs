@@ -114,14 +114,26 @@ namespace DoubleDouble {
         }
 
         public static implicit operator ddouble(BigInteger n) {
-            (int sign, UInt64 hi, UInt64 lo, int sfts) = IntegerSplitter.Split(n);
+            int sign = n.Sign;
 
-            ddouble v = new ddouble(
-                Math.ScaleB((double)hi, IntegerSplitter.MantissaBits + sfts),
-                Math.ScaleB((double)lo, sfts)
-            );
+            if (sign == 0) {
+                return Zero;
+            }
+            if (sign == -1) {
+                return -(ddouble)BigInteger.Negate(n);
+            }
 
-            return sign >= 0 ? v : -v;
+            int bits = checked((int)n.GetBitLength());
+            int sfts = checked(bits - IntegerSplitter.UInt64Bits * 2);
+
+            n = BigIntegerUtil.RightShift(n, sfts);
+
+            UInt64 hi = unchecked((UInt64)(n >> IntegerSplitter.UInt64Bits));
+            UInt64 lo = unchecked((UInt64)(n & (~0uL)));
+
+            ddouble v = (sign: +1, exponent: bits - 1, hi, lo);
+                 
+            return v;
         }
 
         public static explicit operator ddouble(decimal v) {
@@ -146,7 +158,7 @@ namespace DoubleDouble {
                 num /= 10;
             }
 
-            ddouble x = RoundMantissa(FromStringCore(sign, 0, num, exponent), keep_bits: 100);
+            ddouble x = RoundMantissa(FromStringCore(sign, 0, num, exponent), keep_bits: 105);
 
             return x;
         }
