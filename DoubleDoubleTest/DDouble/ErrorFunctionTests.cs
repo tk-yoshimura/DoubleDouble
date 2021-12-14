@@ -238,6 +238,22 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreEqual(z, z_dec, $"exponent: {ddouble.Frexp(v).exp}");
                 Assert.AreEqual(z, z_inc, $"exponent: {ddouble.Frexp(v).exp}");
             }
+
+            for (ddouble y = Math.ScaleB(1, -12); y > Math.ScaleB(1, -20); y /= 2) {
+                ddouble z = ddouble.InverseErf(y);
+
+                ddouble y_dec = ddouble.BitDecrement(y);
+                ddouble z_dec = ddouble.InverseErf(y_dec);
+
+                ddouble y_inc = ddouble.BitDecrement(y);
+                ddouble z_inc = ddouble.InverseErf(y_inc);
+
+                Assert.AreNotEqual(y, y_dec);
+                Assert.AreNotEqual(y, y_inc);
+
+                Assert.AreEqual(z, z_dec, $"exponent: {ddouble.Frexp(y).exp}");
+                Assert.AreEqual(z, z_inc, $"exponent: {ddouble.Frexp(y).exp}");
+            }
         }
 
         [TestMethod]
