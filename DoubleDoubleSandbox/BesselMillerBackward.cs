@@ -188,34 +188,43 @@ namespace DoubleDoubleSandbox {
             ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, y0 = ddouble.Zero, y1 = ddouble.Zero;
             ddouble v = 1d / z;
 
+            if (!eta_table.ContainsKey(0)) {
+                eta_table.Add(0, new BesselYEtaTable(0));
+            }
+
+            BesselYEtaTable eta = eta_table[0];
+
+            if (!xi_table.ContainsKey(0)) {
+                xi_table.Add(0, new BesselYXiTable(0, eta));
+            }
+
+            BesselYXiTable xi = xi_table[0];
+
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
                     lambda += m0;
 
-                    int t = k / 2;
-                    ddouble r = m0 / t;
-
-                    y0 = ((k & 2) == 0) ? y0 - r : y0 + r;
+                    y0 += m0 * eta[k / 2];
                 }
                 else if (k >= 3) {
-                    int t = k / 2;
-                    ddouble r = m0 * (2 * t + 1) / (2 * t * (t + 1));
-
-                    y1 = ((k & 2) == 0) ? y1 - r : y1 + r;
+                    y1 += m0 * xi[k];
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
             }
 
             lambda = ddouble.Ldexp(lambda, 1) + m0;
-            y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma));
-            y1 = 2 * (2 * y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1);
+
+            ddouble c = ddouble.Log(z / 2) + ddouble.EulerGamma;
+
+            y0 = y0 + m0 * c;
+            y1 = y1 - v * m0 + (c - 1) * m1;
 
             for (int k = 1; k < n; k++) {
                 (y1, y0) = ((2 * k) * v * y1 - y0, y1);
             }
 
-            y1 /= lambda * ddouble.PI;
+            y1 = 2 * y1 / (lambda * ddouble.PI);
 
             return y1;
         }
@@ -693,7 +702,7 @@ namespace DoubleDoubleSandbox {
                             xi_table.Add(((m & 2) > 0) ? xi : -xi);
                         }
                         else {
-                            xi_table.Add(0d);
+                            xi_table.Add(ddouble.NaN);
                         }
                     }
                 }
