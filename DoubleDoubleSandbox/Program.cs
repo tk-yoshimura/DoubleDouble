@@ -5,6 +5,17 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
+            ddouble zp = "18.451433996482453689";
+
+            ddouble y1 = BesselMillerBackward.BesselY1(zp, 256);
+            ddouble y0 = BesselMillerBackward.BesselY0(zp, 256);
+
+            for (int k = 0; k > -20; k--) {
+                (y0, y1) = ((ddouble)(2 * k) / zp * y0 - y1, y0);
+
+                Console.WriteLine($"besselY{k - 1}(20) = {y0}");
+            }
+
             for (int m = 32; m < 256; m += 2) {
                 ddouble y = BesselMillerBackward.BesselY((ddouble)1.01m, 2, m);
 
@@ -30,7 +41,7 @@ namespace DoubleDoubleSandbox {
             }
 
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselY(0.001, 40, m);
+                ddouble y = BesselMillerBackward.BesselK(0.25, 20, m);
 
                 Console.WriteLine($"{m},{y}");
             }

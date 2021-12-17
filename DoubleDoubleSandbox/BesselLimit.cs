@@ -51,29 +51,23 @@ namespace DoubleDoubleSandbox {
             CoefTable table = coef_table[nu];
 
             ddouble squa_nu4 = 4d * nu * nu;
-            ddouble v = 1d / z, v2 = v * v, v4 = v2 * v2;
 
+            ddouble v = 1d / z, v2 = v * v, v4 = v2 * v2;
             ddouble x = 0d, y = 0d, p = 1d, q = v;
 
             static int square(int n) => checked(n * n);
 
             for (int k = 0; k <= max_terms; k++) {
-                (int xexp, ddouble xf) = table.Value(k * 4);
-                (int yexp, ddouble yf) = table.Value(k * 4 + 1);
-
-                ddouble dx = p * xf *
+                ddouble dx = p * table.Value(k * 4) *
                     (1d - v2 * (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2)));
-                ddouble dy = q * yf *
+                ddouble dy = q * table.Value(k * 4 + 1) *
                     (1d - v2 * (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / (64 * (4 * k + 2) * (4 * k + 3)));
-
-                dx = ddouble.Ldexp(dx, xexp);
-                dy = ddouble.Ldexp(dy, yexp);
 
                 ddouble x_next = x + dx;
                 ddouble y_next = y + dy;
 
                 if (x == x_next && y == y_next) {
-                    return (x, y, k);
+                    return ((ddouble)x, (ddouble)y, k);
                 }
 
                 p *= v4;
@@ -93,24 +87,20 @@ namespace DoubleDoubleSandbox {
             CoefTable table = coef_table[nu];
 
             ddouble squa_nu4 = 4d * nu * nu;
-            ddouble v = 1d / z, v2 = v * v;
 
+            ddouble v = 1d / z, v2 = v * v;
             ddouble c = 0d, u = 1d;
 
             static int square(int n) => checked(n * n);
 
             for (int k = 0; k <= max_terms; k++) {
-                (int exp, ddouble f) = table.Value(k * 2);
-
                 ddouble w = v * (squa_nu4 - square(4 * k + 1)) / (8 * (2 * k + 1));
-                ddouble dc = u * f * (sign_switch ? (1d - w) : (1d + w));
-
-                dc = ddouble.Ldexp(dc, exp);
+                ddouble dc = u * table.Value(k * 2) * (sign_switch ? (1d - w) : (1d + w));
 
                 ddouble c_next = c + dc;
 
                 if (c == c_next) {
-                    return (c, k);
+                    return ((ddouble)c, k);
                 }
 
                 c = c_next;
@@ -122,18 +112,18 @@ namespace DoubleDoubleSandbox {
 
         private class CoefTable {
             private readonly ddouble squa_nu4;
-            private readonly List<(int exp, ddouble value)> a_table = new();
+            private readonly List<ddouble> a_table = new();
 
             public CoefTable(ddouble nu) {
                 this.squa_nu4 = 4 * nu * nu;
 
                 ddouble a1 = ddouble.Ldexp(squa_nu4 - 1, -3);
 
-                this.a_table.Add((0, 1));
-                this.a_table.Add(ddouble.Frexp(a1));
+                this.a_table.Add(1d);
+                this.a_table.Add(a1);
             }
 
-            public (int exp, ddouble value) Value(int n) {
+            public ddouble Value(int n) {
                 if (n < 0) {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
@@ -143,12 +133,9 @@ namespace DoubleDoubleSandbox {
                 }
 
                 for (int k = a_table.Count; k <= n; k++) {
-                    ddouble a = a_table.Last().value * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1))) / checked(k * 8);
+                    ddouble a = a_table.Last() * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1))) / checked(k * 8);
 
-                    (int exp, ddouble value) = ddouble.Frexp(a);
-                    exp += a_table.Last().exp;
-
-                    a_table.Add((exp, value));
+                    a_table.Add(a);
                 }
 
                 return a_table[n];

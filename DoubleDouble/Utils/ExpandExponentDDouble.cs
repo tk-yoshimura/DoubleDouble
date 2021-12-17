@@ -2,7 +2,7 @@
 
 namespace DoubleDouble {
     [DebuggerDisplay("{ToString(),nq}")]
-    internal struct ExpandExponentDDouble {
+    public struct ExpandExponentDDouble {
         private readonly int exponent;
         private readonly ddouble value;
 
@@ -49,6 +49,34 @@ namespace DoubleDouble {
             }
         }
 
+        public static bool operator ==(ExpandExponentDDouble v1, ExpandExponentDDouble v2) {
+            return v1.exponent == v2.exponent && v1.value == v2.value;
+        }
+
+        public static bool operator !=(ExpandExponentDDouble v1, ExpandExponentDDouble v2) {
+            return !(v1 == v2);
+        }
+
+        public static implicit operator ExpandExponentDDouble(int v) {
+            return (ddouble)v;
+        }
+
+        public static implicit operator ExpandExponentDDouble(uint v) {
+            return (ddouble)v;
+        }
+
+        public static implicit operator ExpandExponentDDouble(long v) {
+            return (ddouble)v;
+        }
+
+        public static implicit operator ExpandExponentDDouble(ulong v) {
+            return (ddouble)v;
+        }
+
+        public static implicit operator ExpandExponentDDouble(double v) {
+            return (ddouble)v;
+        }
+
         public static implicit operator ExpandExponentDDouble(ddouble v) {
             (int exp, ddouble value) = ddouble.Frexp(v);
 
@@ -78,6 +106,14 @@ namespace DoubleDouble {
             }
 
             return $"{dec_str}e{exponent_n}";
+        }
+
+        public override bool Equals(object obj) {
+            return obj is ExpandExponentDDouble v && this == v;
+        }
+
+        public override int GetHashCode() {
+            return exponent.GetHashCode() ^ value.GetHashCode();
         }
     }
 }

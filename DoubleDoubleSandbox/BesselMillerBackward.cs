@@ -213,10 +213,8 @@ namespace DoubleDoubleSandbox {
         }
 
         public static ddouble BesselY(ddouble nu, ddouble z, int m) {
-            int n = (int)ddouble.Floor(nu);
-            nu -= n;
-
-            if (nu == 0) {
+            if ((nu - ddouble.Round(nu)) == 0) {
+                int n = (int)nu;
                 return BesselY(n, z, m);
             }
 
@@ -271,7 +269,7 @@ namespace DoubleDoubleSandbox {
                 }
                 else if (k >= 3) {
                     int t = k / 2;
-                    ddouble r = m0 * (2 * t + 1) / (2 * t * (t + 1));
+                    ddouble r = m0 * (2 * t + 1) / (t * (t + 1));
 
                     y1 = ((k & 2) == 0) ? y1 - r : y1 + r;
                 }
@@ -280,18 +278,18 @@ namespace DoubleDoubleSandbox {
             }
 
             d = ddouble.Ldexp(d, 1) + m0;
-            y1 = 2 * (2 * y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1) / (d * ddouble.PI);
+            y1 = 2 * (y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1) / (d * ddouble.PI);
 
             return y1;
         }
 
-        public static ddouble BesselI(int n, ddouble z, int m, bool log_scale = false) {
+        public static ddouble BesselI(int n, ddouble z, int m, bool scale = false) {
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
             if (n < 0) {
-                return BesselI(-n, z, m, log_scale);
+                return BesselI(-n, z, m, scale);
             }
 
             ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
@@ -311,19 +309,19 @@ namespace DoubleDoubleSandbox {
 
             ddouble y = f / d;
 
-            if (!log_scale) {
+            if (!scale) {
                 y *= ddouble.Exp(z);
             }
 
             return y;
         }
 
-        public static ddouble BesselI(ddouble nu, ddouble z, int m, bool log_scale = false) {
+        public static ddouble BesselI(ddouble nu, ddouble z, int m, bool scale = false) {
             int n = (int)ddouble.Floor(nu);
             nu -= n;
 
             if (nu == 0) {
-                return BesselI(n, z, m, log_scale);
+                return BesselI(n, z, m, scale);
             }
 
             if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
@@ -359,19 +357,13 @@ namespace DoubleDoubleSandbox {
 
                 ddouble y = f / d;
 
-                if (!log_scale) {
+                if (!scale) {
                     y *= ddouble.Exp(z);
                 }
 
                 return y;
             }
             else {
-                if (log_scale) {
-                    throw new ArgumentException(
-                        "When nu is negative, the log scale is invalid.",
-                        nameof(log_scale));
-                }
-
                 ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
                 ddouble g = ddouble.Exp(ddouble.LogGamma(2 * nu + m) - ddouble.LogGamma(m + 1));
                 ddouble v = 1d / z;
@@ -391,21 +383,21 @@ namespace DoubleDoubleSandbox {
 
                 d *= 2 * ddouble.Pow(2 * v, nu) * ddouble.Gamma(1 + nu) / ddouble.Gamma(1 + 2 * nu);
 
-                ddouble exp_z = ddouble.Exp(z);
-
-                (m0, m1) = (m0 * exp_z, m1 * exp_z);
-
                 for (int k = 0; k > n; k--) {
                     (m0, m1) = ((2 * (k + nu)) * v * m0 + m1, m0);
                 }
 
                 ddouble y = m0 / d;
 
+                if (!scale) {
+                    y *= ddouble.Exp(z);
+                }
+
                 return y;
             }
         }
 
-        public static ddouble BesselI0(ddouble z, int m, bool log_scale = false) {
+        public static ddouble BesselI0(ddouble z, int m, bool scale = false) {
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
@@ -423,14 +415,14 @@ namespace DoubleDoubleSandbox {
 
             ddouble y = m0 / d;
 
-            if (!log_scale) {
+            if (!scale) {
                 y *= ddouble.Exp(z);
             }
 
             return y;
         }
 
-        public static ddouble BesselI1(ddouble z, int m, bool log_scale = false) {
+        public static ddouble BesselI1(ddouble z, int m, bool scale = false) {
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
@@ -448,8 +440,34 @@ namespace DoubleDoubleSandbox {
 
             ddouble y = m1 / d;
 
-            if (!log_scale) {
+            if (!scale) {
                 y *= ddouble.Exp(z);
+            }
+
+            return y;
+        }
+
+        public static ddouble BesselK(ddouble nu, ddouble z, int m, bool scale = false) {
+            int n = (int)ddouble.Floor(nu);
+            nu -= n;
+
+            if (nu == 0) {
+                return BesselY(n, z, m);
+            }
+
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
+                throw new ArgumentException(
+                    "The calculation of the Bessel function value is invalid because it loses digits" +
+                    " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
+                    nameof(nu));
+            }
+
+            ddouble y = ddouble.PI / 2 * (BesselI(-nu, z, m, scale: true) - BesselI(nu, z, m, scale: true)) / ddouble.SinPI(nu);
+            ddouble exp_z = ddouble.Exp(z);
+            y *= exp_z;
+
+            if (scale) {
+                y *= exp_z;
             }
 
             return y;
