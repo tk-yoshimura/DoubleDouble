@@ -6,8 +6,9 @@ using System.Linq;
 namespace DoubleDoubleSandbox {
     internal class BesselMillerBackward {
         private static Dictionary<ddouble, BesselJPhiTable> phi_table = new();
-        private static Dictionary<ddouble, BesselYEtaTable> eta_table = new();
         private static Dictionary<ddouble, BesselIPsiTable> psi_table = new();
+        private static Dictionary<ddouble, BesselYEtaTable> eta_table = new();
+        private static Dictionary<ddouble, BesselYXiTable> xi_table = new();
 
         public static ddouble BesselJ(int n, ddouble z, int m) {
             if (m < 2 || (m & 1) != 0) {
@@ -273,15 +274,22 @@ namespace DoubleDoubleSandbox {
             ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, y1 = ddouble.Zero;
             ddouble v = 1d / z;
 
+            if (!xi_table.ContainsKey(0)) {
+                if (!eta_table.ContainsKey(0)) {
+                    eta_table.Add(0, new BesselYEtaTable(0));
+                }
+
+                xi_table.Add(0, new BesselYXiTable(0, eta_table[0]));
+            }
+
+            BesselYXiTable xi = xi_table[0];
+
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
                     lambda += m0;
                 }
                 else if (k >= 3) {
-                    int t = k / 2;
-                    ddouble r = m0 * (2 * t + 1) / (t * (t + 1));
-
-                    y1 = ((k & 2) == 0) ? y1 - r : y1 + r;
+                    y1 += m0 * xi[k];
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
@@ -599,6 +607,7 @@ namespace DoubleDoubleSandbox {
                 }
 
                 this.alpha = alpha;
+                this.eta_table.Add(ddouble.NaN);
 
                 if (alpha > 0) {
                     ddouble c = ddouble.Gamma(1 + alpha);
@@ -607,11 +616,7 @@ namespace DoubleDoubleSandbox {
 
                     ddouble eta1 = (alpha + 2) * g;
 
-                    this.eta_table.Add(ddouble.NaN);
                     this.eta_table.Add(eta1);
-                }
-                else {
-                    this.eta_table.Add(ddouble.NaN);
                 }
             }
 
@@ -642,6 +647,58 @@ namespace DoubleDoubleSandbox {
                 }
 
                 return eta_table[n];
+            }
+        };
+
+        public class BesselYXiTable {
+            private readonly ddouble alpha;
+            private readonly List<ddouble> xi_table = new();
+            private readonly BesselYEtaTable eta;
+
+            public BesselYXiTable(ddouble alpha, BesselYEtaTable eta) {
+                if (!(alpha >= 0) || alpha >= 1) {
+                    throw new ArgumentOutOfRangeException(nameof(alpha));
+                }
+
+                this.alpha = alpha;
+                this.xi_table.Add(ddouble.NaN);
+                this.xi_table.Add(ddouble.NaN);
+
+                this.eta = eta;
+            }
+
+            public ddouble this[int n] => Value(n);
+
+            private ddouble Value(int n) {
+                if (n < 0) {
+                    throw new ArgumentOutOfRangeException(nameof(n));
+                }
+
+                if (n < xi_table.Count) {
+                    return xi_table[n];
+                }
+
+                for (int m = xi_table.Count; m <= n; m++) {
+                    if (alpha > 0) {
+                        if ((m & 1) == 0) {
+                            xi_table.Add(eta[m / 2]);
+                        }
+                        else { 
+                            xi_table.Add((eta[m / 2] - eta[m / 2 + 1]) / 2);
+                        }
+                    }
+                    else {
+                        if ((m & 1) == 1) {
+                            ddouble xi = (ddouble)(2 * (m / 2) + 1) / ((m / 2) * ((m / 2) + 1));
+                            xi_table.Add(((m & 2) > 0) ? xi : -xi);
+                        }
+                        else {
+                            xi_table.Add(0d);
+                        }
+                    }
+                }
+
+                return xi_table[n];
             }
         };
     }
