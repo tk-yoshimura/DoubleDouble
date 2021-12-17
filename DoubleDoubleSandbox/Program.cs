@@ -22,6 +22,11 @@ namespace DoubleDoubleSandbox {
 
                 Console.WriteLine($"besselI({nu}, {x})={y}");
             }
+            for (ddouble nu = 0; nu <= 8d; nu += 0.25d) {
+                ddouble y = BesselYoshidaPade.BesselK(nu, x);
+
+                Console.WriteLine($"besselK({nu}, {x})={y}");
+            }
 
             using (StreamWriter sw = new StreamWriter("../../bessel_j_millerbw.csv")) {
                 sw.WriteLine("n,z,m,y");
