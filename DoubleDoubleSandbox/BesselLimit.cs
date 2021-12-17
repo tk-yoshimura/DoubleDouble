@@ -7,43 +7,51 @@ namespace DoubleDoubleSandbox {
     internal static class BesselLimit {
         private static Dictionary<ddouble, CoefTable> coef_table = new();
 
-        public static (ddouble y, int terms) BesselJ(ddouble nu, ddouble z, int max_terms = 64) {
-            (ddouble x, ddouble y, int terms) = BesselJYCoef(nu, z, max_terms);
+        public static (ddouble y, int terms) BesselJ(ddouble nu, ddouble x, int max_terms = 64) {
+            (ddouble c, ddouble s, int terms) = BesselJYCoef(nu, x, max_terms);
 
-            ddouble omega = z - (2 * nu + 1) * ddouble.PI / 4;
-            ddouble m = x * ddouble.Cos(omega) - y * ddouble.Sin(omega);
-            ddouble t = m * ddouble.Sqrt(2 / (ddouble.PI * z));
-
-            return (t, terms);
-        }
-
-        public static (ddouble y, int terms) BesselY(ddouble nu, ddouble z, int max_terms = 64) {
-            (ddouble x, ddouble y, int terms) = BesselJYCoef(nu, z, max_terms);
-
-            ddouble omega = z - (2 * nu + 1) * ddouble.PI / 4;
-            ddouble m = x * ddouble.Sin(omega) + y * ddouble.Cos(omega);
-            ddouble t = m * ddouble.Sqrt(2 / (ddouble.PI * z));
+            ddouble omega = x - (2 * nu + 1) * ddouble.PI / 4;
+            ddouble m = c * ddouble.Cos(omega) - s * ddouble.Sin(omega);
+            ddouble t = m * ddouble.Sqrt(2 / (ddouble.PI * x));
 
             return (t, terms);
         }
 
-        public static (ddouble y, int terms) BesselI(ddouble nu, ddouble z, int max_terms = 64) {
-            (ddouble c, int terms) = BesselIKCoef(nu, z, sign_switch: true, max_terms);
+        public static (ddouble y, int terms) BesselY(ddouble nu, ddouble x, int max_terms = 64) {
+            (ddouble s, ddouble c, int terms) = BesselJYCoef(nu, x, max_terms);
 
-            ddouble t = c * ddouble.Exp(z) / ddouble.Sqrt(2 * ddouble.PI * z);
-
-            return (t, terms);
-        }
-
-        public static (ddouble y, int terms) BesselK(ddouble nu, ddouble z, int max_terms = 256) {
-            (ddouble c, int terms) = BesselIKCoef(nu, z, sign_switch: false, max_terms);
-
-            ddouble t = c * ddouble.Exp(-z) * ddouble.Sqrt(ddouble.PI / (2 * z));
+            ddouble omega = x - (2 * nu + 1) * ddouble.PI / 4;
+            ddouble m = s * ddouble.Sin(omega) + c * ddouble.Cos(omega);
+            ddouble t = m * ddouble.Sqrt(2 / (ddouble.PI * x));
 
             return (t, terms);
         }
 
-        public static (ddouble x, ddouble y, int terms) BesselJYCoef(ddouble nu, ddouble z, int max_terms = 64) {
+        public static (ddouble y, int terms) BesselI(ddouble nu, ddouble x, bool scale = false, int max_terms = 64) {
+            (ddouble c, int terms) = BesselIKCoef(nu, x, sign_switch: true, max_terms);
+
+            ddouble t = c / ddouble.Sqrt(2 * ddouble.PI * x);
+
+            if (scale) {
+                t *= ddouble.Exp(x);
+            }
+
+            return (t, terms);
+        }
+
+        public static (ddouble y, int terms) BesselK(ddouble nu, ddouble x, bool scale = false, int max_terms = 256) {
+            (ddouble c, int terms) = BesselIKCoef(nu, x, sign_switch: false, max_terms);
+
+            ddouble t = c * ddouble.Sqrt(ddouble.PI / (2 * x));
+
+            if (scale) {
+                t *= ddouble.Exp(-x);
+            }
+
+            return (t, terms);
+        }
+
+        public static (ddouble s, ddouble t, int terms) BesselJYCoef(ddouble nu, ddouble x, int max_terms = 64) {
             if (!coef_table.ContainsKey(nu)) {
                 coef_table.Add(nu, new CoefTable(nu));
             }
@@ -52,34 +60,34 @@ namespace DoubleDoubleSandbox {
 
             ddouble squa_nu4 = 4d * nu * nu;
 
-            ddouble v = 1d / z, v2 = v * v, v4 = v2 * v2;
-            ddouble x = 0d, y = 0d, p = 1d, q = v;
+            ddouble v = 1d / x, v2 = v * v, v4 = v2 * v2;
+            ddouble s = 0d, t = 0d, p = 1d, q = v;
 
             static int square(int n) => checked(n * n);
 
             for (int k = 0; k <= max_terms; k++) {
-                ddouble dx = p * table.Value(k * 4) *
+                ddouble ds = p * table.Value(k * 4) *
                     (1d - v2 * (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2)));
-                ddouble dy = q * table.Value(k * 4 + 1) *
+                ddouble dt = q * table.Value(k * 4 + 1) *
                     (1d - v2 * (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / (64 * (4 * k + 2) * (4 * k + 3)));
 
-                ddouble x_next = x + dx;
-                ddouble y_next = y + dy;
+                ddouble s_next = s + ds;
+                ddouble t_next = t + dt;
 
-                if (x == x_next && y == y_next) {
-                    return ((ddouble)x, (ddouble)y, k);
+                if (s == s_next && t == t_next) {
+                    return ((ddouble)s, (ddouble)t, k);
                 }
 
                 p *= v4;
                 q *= v4;
-                x = x_next;
-                y = y_next;
+                s = s_next;
+                t = t_next;
             }
 
             return (ddouble.NaN, ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselIKCoef(ddouble nu, ddouble z, bool sign_switch, int max_terms = 256) {
+        public static (ddouble r, int terms) BesselIKCoef(ddouble nu, ddouble x, bool sign_switch, int max_terms = 256) {
             if (!coef_table.ContainsKey(nu)) {
                 coef_table.Add(nu, new CoefTable(nu));
             }
@@ -88,22 +96,22 @@ namespace DoubleDoubleSandbox {
 
             ddouble squa_nu4 = 4d * nu * nu;
 
-            ddouble v = 1d / z, v2 = v * v;
-            ddouble c = 0d, u = 1d;
+            ddouble v = 1d / x, v2 = v * v;
+            ddouble r = 0d, u = 1d;
 
             static int square(int n) => checked(n * n);
 
             for (int k = 0; k <= max_terms; k++) {
                 ddouble w = v * (squa_nu4 - square(4 * k + 1)) / (8 * (2 * k + 1));
-                ddouble dc = u * table.Value(k * 2) * (sign_switch ? (1d - w) : (1d + w));
+                ddouble dr = u * table.Value(k * 2) * (sign_switch ? (1d - w) : (1d + w));
 
-                ddouble c_next = c + dc;
+                ddouble r_next = r + dr;
 
-                if (c == c_next) {
-                    return ((ddouble)c, k);
+                if (r == r_next) {
+                    return ((ddouble)r, k);
                 }
 
-                c = c_next;
+                r = r_next;
                 u *= v2;
             }
 

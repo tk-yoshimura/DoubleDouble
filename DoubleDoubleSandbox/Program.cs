@@ -5,37 +5,23 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            BesselMillerBackward.BesselYXiTable table = new(0, new BesselMillerBackward.BesselYEtaTable(0));
+            ddouble x = 2;
 
-            for (int i = 0; i <= 32; i++) {
-                Console.WriteLine($"{i},{table[i]}");
+            for (ddouble nu = -8; nu <= 8d; nu += 0.25d) {
+                ddouble y = BesselMillerBackward.BesselJ(nu, x, 32);
+
+                Console.WriteLine($"besselJ({nu}, {x})={y}");
             }
+            for (ddouble nu = -8; nu <= 8d; nu += 0.25d) {
+                ddouble y = BesselMillerBackward.BesselY(nu, x, 32);
 
-            for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselY(-4.25, 2, m);
-
-                Console.WriteLine($"{m},{y}");
+                Console.WriteLine($"besselY({nu}, {x})={y}");
             }
+            for (ddouble nu = -8; nu <= 8d; nu += 0.25d) {
+                ddouble y = BesselMillerBackward.BesselI(nu, x, 32);
 
-            for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselJ(-2.25, 2, m);
-
-                Console.WriteLine($"{m},{y}");
+                Console.WriteLine($"besselI({nu}, {x})={y}");
             }
-
-            for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselJ(-10.01, 2, m);
-
-                Console.WriteLine($"{m},{y}");
-            }
-
-            for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselI(2.25, 2, m);
-
-                Console.WriteLine($"{m},{y}");
-            }
-
-            BesselLimit.BesselK(0, 24);
 
             using (StreamWriter sw = new StreamWriter("../../bessel_j_millerbw.csv")) {
                 sw.WriteLine("n,z,m,y");
