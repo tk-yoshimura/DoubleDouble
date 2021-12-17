@@ -5,14 +5,14 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            BesselMillerBackward.BesselITable table = new(0.5d);
+            BesselMillerBackward.BesselYEtaTable table = new(0);
 
             for (int i = 0; i <= 32; i++) {
                 Console.WriteLine($"{i},{table[i]}");
             }
 
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselY((ddouble)1.01m, 2, m);
+                ddouble y = BesselMillerBackward.BesselY0(2, m);
 
                 Console.WriteLine($"{m},{y}");
             }

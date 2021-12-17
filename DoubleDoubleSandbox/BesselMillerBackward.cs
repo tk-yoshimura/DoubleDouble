@@ -5,8 +5,9 @@ using System.Linq;
 
 namespace DoubleDoubleSandbox {
     internal class BesselMillerBackward {
-        private static Dictionary<ddouble, BesselJTable> phi_table = new();
-        private static Dictionary<ddouble, BesselITable> psi_table = new();
+        private static Dictionary<ddouble, BesselJPhiTable> phi_table = new();
+        private static Dictionary<ddouble, BesselYEtaTable> eta_table = new();
+        private static Dictionary<ddouble, BesselIPsiTable> psi_table = new();
 
         public static ddouble BesselJ(int n, ddouble z, int m) {
             if (m < 2 || (m & 1) != 0) {
@@ -65,10 +66,10 @@ namespace DoubleDoubleSandbox {
             }
 
             if (!phi_table.ContainsKey(alpha)) {
-                phi_table.Add(alpha, new BesselJTable(alpha));
+                phi_table.Add(alpha, new BesselJPhiTable(alpha));
             }
 
-            BesselJTable phi = phi_table[alpha];
+            BesselJPhiTable phi = phi_table[alpha];
 
             if (n >= 0) {
                 ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, f = ddouble.Zero;
@@ -242,21 +243,24 @@ namespace DoubleDoubleSandbox {
             ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, y0 = ddouble.Zero;
             ddouble v = 1d / z;
 
+            if (!eta_table.ContainsKey(0)) {
+                eta_table.Add(0, new BesselYEtaTable(0));
+            }
+
+            BesselYEtaTable eta = eta_table[0];
+
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
                     lambda += m0;
 
-                    int t = k / 2;
-                    ddouble r = m0 / t;
-
-                    y0 = ((k & 2) == 0) ? y0 - r : y0 + r;
+                    y0 += m0 * eta[k / 2];
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
             }
 
             lambda = ddouble.Ldexp(lambda, 1) + m0;
-            y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma)) / (ddouble.PI * lambda);
+            y0 = 2 * (y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma)) / (ddouble.PI * lambda);
 
             return y0;
         }
@@ -342,10 +346,10 @@ namespace DoubleDoubleSandbox {
             }
 
             if (!psi_table.ContainsKey(alpha)) {
-                psi_table.Add(alpha, new BesselITable(alpha));
+                psi_table.Add(alpha, new BesselIPsiTable(alpha));
             }
 
-            BesselITable psi = psi_table[alpha];
+            BesselIPsiTable psi = psi_table[alpha];
 
             if (n >= 0) {
                 ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, f = ddouble.Zero;
@@ -493,13 +497,17 @@ namespace DoubleDoubleSandbox {
             return y;
         }
 
-        public class BesselJTable {
+        public class BesselJPhiTable {
             private readonly ddouble alpha;
             private readonly List<ddouble> phi_table = new();
 
             private ddouble g;
 
-            public BesselJTable(ddouble alpha) {
+            public BesselJPhiTable(ddouble alpha) {
+                if (!(alpha > 0) || alpha >= 1) {
+                    throw new ArgumentOutOfRangeException(nameof(alpha));
+                }
+
                 this.alpha = alpha;
                 
                 ddouble phi0 = ddouble.Gamma(1 + alpha);
@@ -534,13 +542,17 @@ namespace DoubleDoubleSandbox {
             }
         };
 
-        public class BesselITable {
+        public class BesselIPsiTable {
             private readonly ddouble alpha;
             private readonly List<ddouble> psi_table = new();
 
             private ddouble g;
 
-            public BesselITable(ddouble alpha) {
+            public BesselIPsiTable(ddouble alpha) {
+                if (!(alpha > 0) || alpha >= 1) {
+                    throw new ArgumentOutOfRangeException(nameof(alpha));
+                }
+
                 this.alpha = alpha;
                 
                 ddouble psi0 = ddouble.Gamma(1 + alpha);
@@ -572,6 +584,64 @@ namespace DoubleDoubleSandbox {
                 }
 
                 return psi_table[n];
+            }
+        };
+
+        public class BesselYEtaTable {
+            private readonly ddouble alpha;
+            private readonly List<ddouble> eta_table = new();
+
+            private ddouble g;
+
+            public BesselYEtaTable(ddouble alpha) {
+                if (!(alpha >= 0) || alpha >= 1) {
+                    throw new ArgumentOutOfRangeException(nameof(alpha));
+                }
+
+                this.alpha = alpha;
+
+                if (alpha > 0) {
+                    ddouble c = ddouble.Gamma(1 + alpha);
+                    c *= c;
+                    this.g = 1 / (1 - alpha) * c;
+
+                    ddouble eta1 = (alpha + 2) * g;
+
+                    this.eta_table.Add(ddouble.NaN);
+                    this.eta_table.Add(eta1);
+                }
+                else {
+                    this.eta_table.Add(ddouble.NaN);
+                }
+            }
+
+            public ddouble this[int n] => Value(n);
+
+            private ddouble Value(int n) {
+                if (n < 0) {
+                    throw new ArgumentOutOfRangeException(nameof(n));
+                }
+
+                if (n < eta_table.Count) {
+                    return eta_table[n];
+                }
+
+                for (int m = eta_table.Count; m <= n; m++) {
+                    if (alpha > 0) {
+                        g = -g * (alpha + m - 1) * (2 * alpha + m - 1) / (m * (m - alpha));
+
+                        ddouble eta = g * (alpha + 2 * m);
+
+                        eta_table.Add(eta);
+                    }
+                    else { 
+                        ddouble eta = (ddouble)2d / m;
+
+                        eta_table.Add(((m & 1) == 1) ? eta : -eta);
+                    }
+                }
+
+                return eta_table[n];
             }
         };
     }
