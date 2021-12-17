@@ -55,11 +55,11 @@ namespace DoubleDoubleSandbox {
                 return BesselJ(n, z, m);
             }
 
-            if (ddouble.Abs(alpha - ddouble.Round(alpha)) < 1e-3) {
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
-                    nameof(alpha));
+                    nameof(nu));
             }
 
             if (m < 2 || (m & 1) != 0) {
@@ -78,9 +78,7 @@ namespace DoubleDoubleSandbox {
 
                 for (int k = m; k >= 1; k--) {
                     if ((k & 1) == 0) {
-                        int t = k / 2;
-
-                        lambda += m0 * phi[t];
+                        lambda += m0 * phi[k / 2];
                     }
 
                     (m0, m1) = ((2 * (k + alpha)) * v * m0 - m1, m0);
@@ -103,9 +101,7 @@ namespace DoubleDoubleSandbox {
 
                 for (int k = m; k >= 1; k--) {
                     if ((k & 1) == 0) {
-                        int t = k / 2;
-
-                        lambda += m0 * phi[t];
+                        lambda += m0 * phi[k / 2];
                     }
 
                     (m0, m1) = ((2 * (k + alpha)) * v * m0 - m1, m0);
@@ -230,19 +226,80 @@ namespace DoubleDoubleSandbox {
         }
 
         public static ddouble BesselY(ddouble nu, ddouble z, int m) {
-            if ((nu - ddouble.Round(nu)) == 0) {
-                int n = (int)nu;
+            int n = (int)ddouble.Floor(nu);
+            ddouble alpha = nu - n;
+
+            if (alpha == 0) {
                 return BesselY(n, z, m);
             }
 
-            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
-                throw new ArgumentException(
-                    "The calculation of the Bessel function value is invalid because it loses digits" +
-                    " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
-                    nameof(nu));
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, y0 = ddouble.Zero, y1o = ddouble.Zero, y1e = ddouble.Zero;
+            ddouble v = 1d / z;
+
+            if (!eta_table.ContainsKey(alpha)) {
+                eta_table.Add(alpha, new BesselYEtaTable(alpha));
             }
 
-            return (BesselJ(nu, z, m) * ddouble.CosPI(nu) - BesselJ(-nu, z, m)) / ddouble.SinPI(nu);
+            BesselYEtaTable eta = eta_table[alpha];
+
+            if (!xi_table.ContainsKey(alpha)) {
+                xi_table.Add(alpha, new BesselYXiTable(alpha, eta));
+            }
+
+            BesselYXiTable xi = xi_table[alpha];
+
+            if (!phi_table.ContainsKey(alpha)) {
+                phi_table.Add(alpha, new BesselJPhiTable(alpha));
+            }
+
+            BesselJPhiTable phi = phi_table[alpha];
+
+            for (int k = m; k >= 1; k--) {
+                if ((k & 1) == 0) {
+                    lambda += m0 * phi[k / 2];
+
+                    y0 += m0 * eta[k / 2];
+                    y1e += m0 * xi[k];
+                }
+                else if (k >= 3) {
+                    y1o += m0 * xi[k];
+                }
+
+                (m0, m1) = ((2 * (k + alpha)) * v * m0 - m1, m0);
+            }
+
+            ddouble s = ddouble.Pow(2 * v, 2 * alpha);
+
+            lambda += m0 * phi[0];
+            lambda *= s;
+
+            ddouble rcot = 1d / ddouble.TanPI(alpha), rgamma = ddouble.Gamma(1 + alpha), rsqgamma = rgamma * rgamma;
+
+            ddouble eta0 = rcot - s * rsqgamma / (alpha * ddouble.PI);
+            ddouble xi0 = -2 * v * ddouble.RcpPI * s * rsqgamma;
+            ddouble xi1 = rcot + s * rsqgamma * ddouble.RcpPI * (alpha * (alpha + 1) + 1) / (alpha * (alpha - 1));
+
+            y0 = 2 * ddouble.RcpPI * s * y0 + eta0 * m0;
+            ddouble y1 = 2 * ddouble.RcpPI * s * (3 * alpha * v * y1e + y1o) + xi0 * m0 + xi1 * m1;
+
+            if (n >= 0) {
+                for (int k = 1; k < n; k++) {
+                    (y1, y0) = ((2 * (k + alpha)) * v * y1 - y0, y1);
+                }
+
+                y1 /= lambda;
+
+                return y1;
+            }
+            else {
+                for (int k = 0; k > n; k--) {
+                    (y0, y1) = ((2 * (k + alpha)) * v * y0 - y1, y0);
+                }
+
+                y0 /= lambda;
+
+                return y0;
+            }
         }
 
         public static ddouble BesselY0(ddouble z, int m) {
@@ -351,11 +408,11 @@ namespace DoubleDoubleSandbox {
                 return BesselI(n, z, m, scale);
             }
 
-            if (ddouble.Abs(alpha - ddouble.Round(alpha)) < 1e-3) {
+            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
-                    nameof(alpha));
+                    nameof(nu));
             }
 
             if (m < 2 || (m & 1) != 0) {
