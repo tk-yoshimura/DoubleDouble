@@ -1,8 +1,13 @@
 ﻿using DoubleDouble;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DoubleDoubleSandbox {
     internal class BesselMillerBackward {
+        private static Dictionary<ddouble, BesselJTable> phi_table = new();
+        private static Dictionary<ddouble, BesselITable> psi_table = new();
+
         public static ddouble BesselJ(int n, ddouble z, int m) {
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
@@ -18,12 +23,12 @@ namespace DoubleDoubleSandbox {
                 return BesselJ1(z, m);
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, f = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
-                    d += m0;
+                    lambda += m0;
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
@@ -33,84 +38,85 @@ namespace DoubleDoubleSandbox {
                 }
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
 
-            ddouble y = f / d;
+            ddouble y = f / lambda;
 
             return y;
         }
 
         public static ddouble BesselJ(ddouble nu, ddouble z, int m) {
             int n = (int)ddouble.Floor(nu);
-            nu -= n;
+            ddouble alpha = nu - n;
 
-            if (nu == 0) {
+            if (alpha == 0) {
                 return BesselJ(n, z, m);
             }
 
-            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
+            if (ddouble.Abs(alpha - ddouble.Round(alpha)) < 1e-3) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
-                    nameof(nu));
+                    nameof(alpha));
             }
 
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
+            if (!phi_table.ContainsKey(alpha)) {
+                phi_table.Add(alpha, new BesselJTable(alpha));
+            }
+
+            BesselJTable phi = phi_table[alpha];
+
             if (n >= 0) {
-                ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
-                ddouble g = ddouble.Exp(ddouble.LogGamma(nu + m / 2) - ddouble.LogGamma(m / 2 + 1));
+                ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, f = ddouble.Zero;
                 ddouble v = 1d / z;
 
                 for (int k = m; k >= 1; k--) {
                     if ((k & 1) == 0) {
                         int t = k / 2;
 
-                        d += (nu + k) * m0 * g;
-                        g *= t / (nu + t - 1);
+                        lambda += m0 * phi[t];
                     }
 
-                    (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+                    (m0, m1) = ((2 * (k + alpha)) * v * m0 - m1, m0);
 
                     if (k - 1 == n) {
                         f = m0;
                     }
                 }
 
-                d += nu * m0 * g;
+                lambda += m0 * phi[0];
+                lambda *= ddouble.Pow(2 * v, alpha);
 
-                d *= ddouble.Pow2(nu) * ddouble.Pow(v, nu);
-
-                ddouble y = f / d;
+                ddouble y = f / lambda;
 
                 return y;
             }
             else {
-                ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
-                ddouble g = ddouble.Exp(ddouble.LogGamma(nu + m / 2) - ddouble.LogGamma(m / 2 + 1));
+                ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero;
                 ddouble v = 1d / z;
 
                 for (int k = m; k >= 1; k--) {
                     if ((k & 1) == 0) {
                         int t = k / 2;
 
-                        d += (nu + k) * m0 * g;
-                        g *= t / (nu + t - 1);
+                        lambda += m0 * phi[t];
                     }
 
-                    (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+                    (m0, m1) = ((2 * (k + alpha)) * v * m0 - m1, m0);
                 }
 
-                d += nu * m0 * g;
-                d *= ddouble.Pow2(nu) * ddouble.Pow(v, nu);
+                lambda += m0 * phi[0];
+                lambda *= ddouble.Pow(2 * v, alpha);
 
                 for (int k = 0; k > n; k--) {
-                    (m0, m1) = ((2 * (k + nu)) * v * m0 - m1, m0);
+                    (m0, m1) = ((2 * (k + alpha)) * v * m0 - m1, m0);
                 }
 
-                ddouble y = m0 / d;
+                ddouble y = m0 / lambda;
 
                 return y;
             }
@@ -121,20 +127,20 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
-                    d += m0;
+                    lambda += m0;
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
 
-            ddouble y = m0 / d;
+            ddouble y = m0 / lambda;
 
             return y;
         }
@@ -144,20 +150,20 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
-                    d += m0;
+                    lambda += m0;
                 }
 
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
 
-            ddouble y = m1 / d;
+            ddouble y = m1 / lambda;
 
             return y;
         }
@@ -177,12 +183,12 @@ namespace DoubleDoubleSandbox {
                 return BesselY1(z, m);
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, y0 = ddouble.Zero, y1 = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, y0 = ddouble.Zero, y1 = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
-                    d += m0;
+                    lambda += m0;
 
                     int t = k / 2;
                     ddouble r = m0 / t;
@@ -199,7 +205,7 @@ namespace DoubleDoubleSandbox {
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
             y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma));
             y1 = 2 * (2 * y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1);
 
@@ -207,7 +213,7 @@ namespace DoubleDoubleSandbox {
                 (y1, y0) = ((2 * k) * v * y1 - y0, y1);
             }
 
-            y1 /= d * ddouble.PI;
+            y1 /= lambda * ddouble.PI;
 
             return y1;
         }
@@ -233,12 +239,12 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, y0 = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, y0 = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
-                    d += m0;
+                    lambda += m0;
 
                     int t = k / 2;
                     ddouble r = m0 / t;
@@ -249,8 +255,8 @@ namespace DoubleDoubleSandbox {
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
-            y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma)) / (ddouble.PI * d);
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
+            y0 = 2 * (2 * y0 + m0 * (ddouble.Log(z / 2) + ddouble.EulerGamma)) / (ddouble.PI * lambda);
 
             return y0;
         }
@@ -260,12 +266,12 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, y1 = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, y1 = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
                 if ((k & 1) == 0) {
-                    d += m0;
+                    lambda += m0;
                 }
                 else if (k >= 3) {
                     int t = k / 2;
@@ -277,8 +283,8 @@ namespace DoubleDoubleSandbox {
                 (m0, m1) = ((2 * k) * v * m0 - m1, m0);
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
-            y1 = 2 * (y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1) / (d * ddouble.PI);
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
+            y1 = 2 * (y1 - v * m0 + (ddouble.Log(z / 2) + ddouble.EulerGamma - 1) * m1) / (lambda * ddouble.PI);
 
             return y1;
         }
@@ -292,11 +298,11 @@ namespace DoubleDoubleSandbox {
                 return BesselI(-n, z, m, scale);
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, f = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
-                d += m0;
+                lambda += m0;
 
                 (m0, m1) = ((2 * k) * v * m0 + m1, m0);
 
@@ -305,9 +311,9 @@ namespace DoubleDoubleSandbox {
                 }
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
 
-            ddouble y = f / d;
+            ddouble y = f / lambda;
 
             if (!scale) {
                 y *= ddouble.Exp(z);
@@ -318,44 +324,47 @@ namespace DoubleDoubleSandbox {
 
         public static ddouble BesselI(ddouble nu, ddouble z, int m, bool scale = false) {
             int n = (int)ddouble.Floor(nu);
-            nu -= n;
+            ddouble alpha = nu - n;
 
-            if (nu == 0) {
+            if (alpha == 0) {
                 return BesselI(n, z, m, scale);
             }
 
-            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
+            if (ddouble.Abs(alpha - ddouble.Round(alpha)) < 1e-3) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
-                    nameof(nu));
+                    nameof(alpha));
             }
 
             if (m < 2 || (m & 1) != 0) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
+            if (!psi_table.ContainsKey(alpha)) {
+                psi_table.Add(alpha, new BesselITable(alpha));
+            }
+
+            BesselITable psi = psi_table[alpha];
+
             if (n >= 0) {
-                ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
-                ddouble g = ddouble.Exp(ddouble.LogGamma(2 * nu + m) - ddouble.LogGamma(m + 1));
+                ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero, f = ddouble.Zero;
                 ddouble v = 1d / z;
 
                 for (int k = m; k >= 1; k--) {
-                    d += (nu + k) * m0 * g;
-                    g *= k / (2 * nu + k - 1);
+                    lambda += m0 * psi[k];
 
-                    (m0, m1) = ((2 * (k + nu)) * v * m0 + m1, m0);
+                    (m0, m1) = ((2 * (k + alpha)) * v * m0 + m1, m0);
 
                     if (k - 1 == n) {
                         f = m0;
                     }
                 }
 
-                d += nu * m0 * g;
+                lambda += m0 * psi[0];
+                lambda *= ddouble.Pow(2 * v, alpha);
 
-                d *= 2 * ddouble.Pow(2 * v, nu) * ddouble.Gamma(1 + nu) / ddouble.Gamma(1 + 2 * nu);
-
-                ddouble y = f / d;
+                ddouble y = f / lambda;
 
                 if (!scale) {
                     y *= ddouble.Exp(z);
@@ -364,30 +373,23 @@ namespace DoubleDoubleSandbox {
                 return y;
             }
             else {
-                ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, f = ddouble.Zero;
-                ddouble g = ddouble.Exp(ddouble.LogGamma(2 * nu + m) - ddouble.LogGamma(m + 1));
+                ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero;
                 ddouble v = 1d / z;
 
                 for (int k = m; k >= 1; k--) {
-                    d += (nu + k) * m0 * g;
-                    g *= k / (2 * nu + k - 1);
+                    lambda += m0 * psi[k];
 
-                    (m0, m1) = ((2 * (k + nu)) * v * m0 + m1, m0);
-
-                    if (k - 1 == n) {
-                        f = m0;
-                    }
+                    (m0, m1) = ((2 * (k + alpha)) * v * m0 + m1, m0);
                 }
 
-                d += nu * m0 * g;
-
-                d *= 2 * ddouble.Pow(2 * v, nu) * ddouble.Gamma(1 + nu) / ddouble.Gamma(1 + 2 * nu);
+                lambda += m0 * psi[0];
+                lambda *= ddouble.Pow(2 * v, alpha);
 
                 for (int k = 0; k > n; k--) {
-                    (m0, m1) = ((2 * (k + nu)) * v * m0 + m1, m0);
+                    (m0, m1) = ((2 * (k + alpha)) * v * m0 + m1, m0);
                 }
 
-                ddouble y = m0 / d;
+                ddouble y = m0 / lambda;
 
                 if (!scale) {
                     y *= ddouble.Exp(z);
@@ -402,18 +404,18 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
-                d += m0;
+                lambda += m0;
 
                 (m0, m1) = ((2 * k) * v * m0 + m1, m0);
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
 
-            ddouble y = m0 / d;
+            ddouble y = m0 / lambda;
 
             if (!scale) {
                 y *= ddouble.Exp(z);
@@ -427,18 +429,18 @@ namespace DoubleDoubleSandbox {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
 
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero;
+            ddouble m0 = 1e-256, m1 = ddouble.Zero, lambda = ddouble.Zero;
             ddouble v = 1d / z;
 
             for (int k = m; k >= 1; k--) {
-                d += m0;
+                lambda += m0;
 
                 (m0, m1) = ((2 * k) * v * m0 + m1, m0);
             }
 
-            d = ddouble.Ldexp(d, 1) + m0;
+            lambda = ddouble.Ldexp(lambda, 1) + m0;
 
-            ddouble y = m1 / d;
+            ddouble y = m1 / lambda;
 
             if (!scale) {
                 y *= ddouble.Exp(z);
@@ -446,89 +448,6 @@ namespace DoubleDoubleSandbox {
 
             return y;
         }
-
-        public static ddouble BesselK(ddouble nu, ddouble z, int m, bool scale = false) {
-            int n = (int)ddouble.Floor(nu);
-            nu -= n;
-
-            if (nu == 0) {
-                return BesselY(n, z, m);
-            }
-
-            if (ddouble.Abs(nu - ddouble.Round(nu)) < 1e-3) {
-                throw new ArgumentException(
-                    "The calculation of the Bessel function value is invalid because it loses digits" +
-                    " when nu is extremely close to an integer. (|nu - round(nu)| < 10^-3 and nu != round(nu))",
-                    nameof(nu));
-            }
-
-            ddouble y = ddouble.PI / 2 * (BesselI(-nu, z, m, scale: true) - BesselI(nu, z, m, scale: true)) / ddouble.SinPI(nu);
-            ddouble exp_z = ddouble.Exp(z);
-            y *= exp_z;
-
-            if (scale) {
-                y *= exp_z;
-            }
-
-            return y;
-        }
-
-        public static ddouble BesselK0(ddouble z, int m) {
-            if (m < 2 || (m & 1) != 0) {
-                throw new ArgumentOutOfRangeException(nameof(m));
-            }
-
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, k0 = ddouble.Zero;
-            ddouble v = 1d / z;
-
-            for (int k = m; k >= 1; k--) {
-                d += m0;
-
-                if ((k & 1) == 0) {
-                    k0 += m0 / (k / 2);
-                }
-
-                (m0, m1) = ((2 * k) * v * m0 + m1, m0);
-            }
-
-            d = ddouble.Ldexp(d, 1) + m0;
-
-            k0 = ddouble.Exp(z) * (2 * k0 + (ddouble.Log(2 * v) - ddouble.EulerGamma) * m0);
-
-            ddouble y = k0 / d;
-
-            return y;
-        }
-
-        public static ddouble BesselK1(ddouble z, int m) {
-            if (m < 2 || (m & 1) != 0) {
-                throw new ArgumentOutOfRangeException(nameof(m));
-            }
-
-            ddouble m0 = 1e-256, m1 = ddouble.Zero, d = ddouble.Zero, k0 = ddouble.Zero;
-            ddouble v = 1d / z;
-
-            for (int k = m; k >= 1; k--) {
-                d += m0;
-
-                if ((k & 1) == 0) {
-                    k0 += m0 / (k / 2);
-                }
-
-                (m0, m1) = ((2 * k) * v * m0 + m1, m0);
-            }
-
-            d = ddouble.Ldexp(d, 1) + m0;
-
-            ddouble exp_z = ddouble.Exp(z);
-
-            k0 = exp_z * (2 * k0 + (ddouble.Log(2 * v) - ddouble.EulerGamma) * m0) / d;
-
-            ddouble y = (v * d / exp_z - m1 * k0) / (m0);
-
-            return y;
-        }
-
 
         public static (ddouble y, int m) BesselJ(int n, ddouble z, ddouble eps, int max_m = 512) {
             ddouble y_prev = ddouble.NaN, dy = ddouble.NaN, dy_prev = ddouble.NaN;
@@ -573,5 +492,87 @@ namespace DoubleDoubleSandbox {
 
             return y;
         }
+
+        public class BesselJTable {
+            private readonly ddouble alpha;
+            private readonly List<ddouble> phi_table = new();
+
+            private ddouble g;
+
+            public BesselJTable(ddouble alpha) {
+                this.alpha = alpha;
+                
+                ddouble phi0 = ddouble.Gamma(1 + alpha);
+                ddouble phi1 = phi0 * (alpha + 2);
+                
+                this.g = phi0;
+                
+                this.phi_table.Add(phi0);
+                this.phi_table.Add(phi1);
+            }
+
+            public ddouble this[int n] => Value(n);
+
+            private ddouble Value(int n) {
+                if (n < 0) {
+                    throw new ArgumentOutOfRangeException(nameof(n));
+                }
+
+                if (n < phi_table.Count) {
+                    return phi_table[n];
+                }
+
+                for (int m = phi_table.Count; m <= n; m++) {
+                    g = g * (alpha + m - 1) / m;
+
+                    ddouble phi = g * (alpha + 2 * m);
+
+                    phi_table.Add(phi);
+                }
+
+                return phi_table[n];
+            }
+        };
+
+        public class BesselITable {
+            private readonly ddouble alpha;
+            private readonly List<ddouble> psi_table = new();
+
+            private ddouble g;
+
+            public BesselITable(ddouble alpha) {
+                this.alpha = alpha;
+                
+                ddouble psi0 = ddouble.Gamma(1 + alpha);
+                ddouble psi1 = 2 * psi0 * (1 + alpha);
+                
+                this.g = 2 * psi0;
+                
+                this.psi_table.Add(psi0);
+                this.psi_table.Add(psi1);
+            }
+
+            public ddouble this[int n] => Value(n);
+
+            private ddouble Value(int n) {
+                if (n < 0) {
+                    throw new ArgumentOutOfRangeException(nameof(n));
+                }
+
+                if (n < psi_table.Count) {
+                    return psi_table[n];
+                }
+
+                for (int m = psi_table.Count; m <= n; m++) {
+                    g = g * (2 * alpha + m - 1) / m;
+
+                    ddouble phi = g * (alpha + m);
+
+                    psi_table.Add(phi);
+                }
+
+                return psi_table[n];
+            }
+        };
     }
 }

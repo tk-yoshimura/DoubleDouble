@@ -5,15 +5,10 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
-            ddouble zp = "18.451433996482453689";
+            BesselMillerBackward.BesselITable table = new(0.5d);
 
-            ddouble y1 = BesselMillerBackward.BesselY1(zp, 256);
-            ddouble y0 = BesselMillerBackward.BesselY0(zp, 256);
-
-            for (int k = 0; k > -20; k--) {
-                (y0, y1) = ((ddouble)(2 * k) / zp * y0 - y1, y0);
-
-                Console.WriteLine($"besselY{k - 1}(20) = {y0}");
+            for (int i = 0; i <= 32; i++) {
+                Console.WriteLine($"{i},{table[i]}");
             }
 
             for (int m = 32; m < 256; m += 2) {
@@ -23,7 +18,7 @@ namespace DoubleDoubleSandbox {
             }
 
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselJ(10.25, 2, m);
+                ddouble y = BesselMillerBackward.BesselJ(-2.25, 2, m);
 
                 Console.WriteLine($"{m},{y}");
             }
@@ -35,13 +30,7 @@ namespace DoubleDoubleSandbox {
             }
 
             for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselI(-2.25, 2, m);
-
-                Console.WriteLine($"{m},{y}");
-            }
-
-            for (int m = 32; m < 256; m += 2) {
-                ddouble y = BesselMillerBackward.BesselK(0.25, 20, m);
+                ddouble y = BesselMillerBackward.BesselI(2.25, 2, m);
 
                 Console.WriteLine($"{m},{y}");
             }
