@@ -59,8 +59,7 @@ namespace DoubleDouble {
                     + s * (table[1] + s * (table[2] + s * (table[3] + s * (table[4]
                     + s * (table[5] + s * (table[6] + s * (table[7] + s * (table[8]
                     + s * (table[9] + s * (table[10] + s * (table[11] + s * (table[12]
-                    + s * (table[13] + s * (table[14] + s * (table[15] + s * (table[16]
-                    + s * (table[17] + s * (table[18] + s * (table[19] + s * (table[20]))))))))))))))))))));
+                    + s * (table[13] + s * (table[14] + s * (table[15] + s * (table[16]))))))))))))))));
 
                 ddouble y = RoundMantissa(Exp(-x * x) / inv_erfcx, Consts.Erfc.Precision);
 
