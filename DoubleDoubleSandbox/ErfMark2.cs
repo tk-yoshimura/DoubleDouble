@@ -1,10 +1,6 @@
 ﻿using DoubleDouble;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {
@@ -25,13 +21,16 @@ namespace DoubleDoubleSandbox {
                 return 1d - Erfc(x);
             }
 
-            ddouble sc = 1d, sd = 1d, w = x * x, u = w;
-            foreach ((ddouble c, ddouble d) in Consts.Erf.PadeTable) {
-                sc += c * u;
-                sd += d * u;
+            ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erf.PadeTable;
 
-                u *= w;
+            (ddouble sc, ddouble sd) = table[^1];
+            ddouble w = x * x;
+            for (int i = table.Count - 2; i >= 0; i--) {
+                sc = sc * w + table[i].c;
+                sd = sd * w + table[i].d;
             }
+            sc = sc * w + 1d;
+            sd = sd * w + 1d;
 
             ddouble y = x * (sc / sd) * Consts.Erf.C;
 
@@ -53,13 +52,15 @@ namespace DoubleDoubleSandbox {
             }
 
             if (x < Consts.Erfc.PadeApproxThreshold) {
-                ddouble sc = 1d, sd = 1d, u = x;
-                foreach ((ddouble c, ddouble d) in (x < 1d) ? Consts.Erfc.PadeX1Table : Consts.Erfc.PadeX2Table) {
-                    sc += c * u;
-                    sd += d * u;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = (x < 1d) ? Consts.Erfc.PadeX1Table : Consts.Erfc.PadeX2Table;
 
-                    u *= x;
+                (ddouble sc, ddouble sd) = table[^1];
+                for (int i = table.Count - 2; i >= 0; i--) {
+                    sc = sc * x + table[i].c;
+                    sd = sd * x + table[i].d;
                 }
+                sc = sc * x + 1d;
+                sd = sd * x + 1d;
 
                 ddouble y = Exp(-x * x) * sd / sc;
 
@@ -71,8 +72,8 @@ namespace DoubleDoubleSandbox {
                 ddouble w = x - (Consts.Erfc.PadeApproxThreshold + Consts.Erfc.TableBin * table_index);
                 ReadOnlyCollection<ddouble> table = Consts.Erfc.TaylorTables[table_index];
 
-                ddouble s = table[20];
-                for (int i = 19; i >= 0; i--) {
+                ddouble s = table[^1];
+                for (int i = table.Count - 2; i >= 0; i--) {
                     s = s * w + table[i];
                 }
 
@@ -87,7 +88,7 @@ namespace DoubleDoubleSandbox {
 
                 ddouble f = (ddouble.Sqrt(25d + w * (440d + w * (488d + w * 16d * (10d + w)))) - 5d + w * 4d * (1d + w)) / (20d + w * 8d);
 
-                int n = 9;
+                int n = 7;
                 for (int k = 4 * n - 3; k >= 1; k -= 4) {
                     ddouble c0 = (k + 2) * f;
                     ddouble c1 = w * ((k + 3) + ddouble.Ldexp(f, 1));
@@ -107,7 +108,7 @@ namespace DoubleDoubleSandbox {
             public static class Erf {
                 public static readonly ddouble ApproxMin = 0.5d;
                 public static readonly ddouble C = Ldexp(Rcp(Sqrt(PI)), 1);
-                public const int Precision = 100;
+                public const int Precision = 99;
 
                 public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeTable = new(new (ddouble c, ddouble d)[]{
                     ((+1, -3, 0x8D536A97FE3900BAuL, 0xF1A4723EEEB5C89BuL),  (+1, -2, 0xF1545FF6A9C72B08uL, 0x237CE3CA22058EF8uL)),
@@ -125,7 +126,7 @@ namespace DoubleDoubleSandbox {
                 public static readonly ddouble PadeApproxThreshold = 2d;
                 public static readonly ddouble TaylorApproxThreshold = 6d;
                 public static readonly ddouble TableBin = 0.25d;
-                public const int Precision = 100;
+                public const int Precision = 99;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> TaylorTables;
 
                 static Erfc() { 
@@ -146,7 +147,15 @@ namespace DoubleDoubleSandbox {
                         TaylorX5p25Table,
                         TaylorX5p50Table,
                         TaylorX5p75Table,
-                        TaylorX6p00Table
+                        TaylorX6p00Table,
+                        TaylorX6p25Table,
+                        TaylorX6p50Table,
+                        TaylorX6p75Table,
+                        TaylorX7p00Table,
+                        TaylorX7p25Table,
+                        TaylorX7p50Table,
+                        TaylorX7p75Table,
+                        TaylorX8p00Table
                     });
                 }
 
@@ -214,10 +223,6 @@ namespace DoubleDoubleSandbox {
                     (+1, -37, 0x8518A88171965C84uL, 0x21ED2C46AC206D68uL),
                     (-1, -41, 0xCCB7B434A87D9458uL, 0xB4EF53EDE1A4947AuL),
                     (-1, -43, 0xC52DD38E46D5CB26uL, 0x0D9F7BAEC5830857uL),
-                    (+1, -43, 0x8C913A0EC280BF99uL, 0x976AFED86E5EEB5EuL),
-                    (-1, -45, 0xC41251298EC9FAF8uL, 0xD27A85A7562BFDB4uL),
-                    (+1, -47, 0xC61A8B295BB3450CuL, 0xECA24C6FD96D900EuL),
-                    (-1, -49, 0x8F5EACEDB0D05DAAuL, 0xC78A69A37DA38888uL),
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX2p25Table = new(new ddouble[] {
@@ -242,10 +247,6 @@ namespace DoubleDoubleSandbox {
                     (+1, -38, 0x8197D81D6C464273uL, 0x04D40E96C41A70BDuL), 
                     (-1, -41, 0xC6B2055CA080761AuL, 0x5CC2E35D7721805DuL), 
                     (+1, -44, 0xBBFD2C9A5EA38FBDuL, 0x222272EED69781B6uL), 
-                    (+1, -48, 0xD9903ABA8DEE4379uL, 0x014CEA87F918D7CEuL), 
-                    (-1, -47, 0x86BC2EEFC52859F5uL, 0xC260BBDCC0C0BCBBuL), 
-                    (+1, -49, 0xCB74564A362B6E3CuL, 0xE939DE5E4B811FC4uL), 
-                    (-1, -51, 0xDAF59A9B84485CAFuL, 0x160F41F99B6D40A2uL),
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX2p50Table = new(new ddouble[] {
@@ -270,10 +271,6 @@ namespace DoubleDoubleSandbox {
                     (+1, -40, 0xB7B27B96372DE4ADuL, 0xA4A8EB97E7510421uL), 
                     (-1, -42, 0xB28A06B81A8E06B6uL, 0x34E12BFBE4784B9AuL), 
                     (+1, -44, 0x88CAB10ABA75EFECuL, 0x2DB4F4DADAE58B82uL), 
-                    (-1, -47, 0x916AD833D375CDB6uL, 0x078E2BB800599256uL), 
-                    (+1, -54, 0xC4DEBD4D9235C37DuL, 0x7158E24D907F3A7BuL), 
-                    (+1, -52, 0xE2A3D9C2CCCEC1FFuL, 0xDDD6AE0373D42053uL), 
-                    (-1, -53, 0xBEDCCCDEEBDABB23uL, 0x26885B58200B5D34uL),
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX2p75Table = new(new ddouble[] {
@@ -297,11 +294,7 @@ namespace DoubleDoubleSandbox {
                     (-1, -41, 0xCA4DAAA1884D8992uL, 0x0F679BECD6129EEAuL), 
                     (+1, -42, 0xCCA0C16D86EA7F50uL, 0x9E18E687D7EB5F09uL), 
                     (-1, -44, 0xF53F044B9F30237EuL, 0x9A3C0A14E41A993CuL), 
-                    (+1, -46, 0xE61783670C768AEBuL, 0x9E57DD843DE2B8ADuL), 
-                    (-1, -48, 0xAEFDE5149A1F2FA8uL, 0xA4B2EB0E942772CAuL), 
-                    (+1, -51, 0xC7336C2D9787E63CuL, 0x4EFE42591DB35276uL), 
-                    (-1, -55, 0xB6E1023F6CEE810CuL, 0xC23B094CAEB6D69EuL), 
-                    (-1, -56, 0xA193A3569D21F931uL, 0xC22023ADBDE7D923uL), 
+                    (+1, -46, 0xE61783670C768AEBuL, 0x9E57DD843DE2B8ADuL),
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX3p00Table = new(new ddouble[] {
@@ -325,11 +318,7 @@ namespace DoubleDoubleSandbox {
                     (+1, -44, 0xF9FECECF1F8FCF88uL, 0x3003F85AE4EB94DDuL), 
                     (+1, -44, 0x961828BE6EF12C34uL, 0xC55D51EB7E02A922uL), 
                     (-1, -45, 0x87984218C733173DuL, 0xED6CACA4319170D1uL), 
-                    (+1, -47, 0x99CB0461CECB0E04uL, 0x8C73B27883BD933DuL), 
-                    (-1, -49, 0x8B5434AFDC96272AuL, 0xC47F94320F587345uL), 
-                    (+1, -52, 0xD14B2C8692196E50uL, 0x3F30DCB8B4164E21uL), 
-                    (-1, -55, 0xF7E5BB60C8E99ADFuL, 0x7B1EE5CA2A79DA3FuL), 
-                    (+1, -58, 0xAA1042A0A3D78C31uL, 0x3911F7452B32D41BuL), 
+                    (+1, -47, 0x99CB0461CECB0E04uL, 0x8C73B27883BD933DuL),
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX3p25Table = new(new ddouble[] {
@@ -353,11 +342,7 @@ namespace DoubleDoubleSandbox {
                     (+1, -43, 0xE5DF8E00C99C2C98uL, 0xFC3CD26DEFDBA12AuL), 
                     (-1, -48, 0xE64BA756AC48A5C2uL, 0x1C7580610222F045uL), 
                     (-1, -48, 0xCE11A523D32F9B77uL, 0xE981A84FCC8DD306uL), 
-                    (+1, -49, 0xA8ED62BC7506A9D8uL, 0x9278033D88B00D21uL), 
-                    (-1, -51, 0xB5F1BE9A82B6EEC7uL, 0x577905F92BAAA45DuL), 
-                    (+1, -53, 0x9F3783409FC1969BuL, 0xFEF5A0019C9ED212uL), 
-                    (-1, -56, 0xEB4B7AAB09D573BFuL, 0xEC924ECD2F45EB4FuL), 
-                    (+1, -58, 0x8E57FEB0211ACC5CuL, 0x8A23B0355B3F0F5FuL), 
+                    (+1, -49, 0xA8ED62BC7506A9D8uL, 0x9278033D88B00D21uL),  
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX3p50Table = new(new ddouble[] {
@@ -382,10 +367,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -46, 0x8CA830E5DFECC290uL, 0xB1FE6BBBCCEAF73FuL), 
                     (+1, -52, 0xAD5381548F34D0B9uL, 0x63D85FDE3E9DF409uL), 
                     (+1, -51, 0x83FD4FCE53BEBFD0uL, 0xB20EE7D77D49A71FuL), 
-                    (-1, -53, 0xC6AA4F09FC8E6BD4uL, 0xE39A561CA4FBA51BuL), 
-                    (+1, -55, 0xCBC5A1600A063D58uL, 0x6A60274EF3F25DD9uL), 
-                    (-1, -57, 0xAC4E160FCFBF2B83uL, 0x4048A3F1B8823DC7uL), 
-                    (+1, -60, 0xF9CD78A4B0F35EECuL, 0x0FDD5AF8C9740DE4uL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX3p75Table = new(new ddouble[] {
@@ -410,10 +391,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -47, 0xCC0A31B40109CBC0uL, 0xBB914780E59F9244uL), 
                     (+1, -50, 0xA2B71E2BB7076D85uL, 0x1A0E4236A92861F0uL), 
                     (-1, -57, 0xA297DD342A293455uL, 0x4A7B60CFFAA06884uL), 
-                    (-1, -55, 0x9EC622F359585EADuL, 0x61CA8ED28023E257uL), 
-                    (+1, -57, 0xDD5A3610564DF058uL, 0x5673510C44E7FFA9uL), 
-                    (-1, -59, 0xD8BE583153A66569uL, 0x3C4D2702D61EE0A7uL), 
-                    (+1, -61, 0xB12A851C2E1A643AuL, 0x099FD121D0045BCBuL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX4p00Table = new(new ddouble[] {
@@ -438,10 +415,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -48, 0xEAEACCAF3739FD17uL, 0xA6BF250B8515CC54uL), 
                     (+1, -51, 0xF2720C0C416C7A5AuL, 0xBD3772035F71376FuL), 
                     (-1, -54, 0xB27A100CC75FAA65uL, 0x169CF9889ABB96CBuL), 
-                    (-1, -62, 0x91BC05E5CFAAA69FuL, 0xAFB26AFDA24A9821uL), 
-                    (+1, -59, 0xB442FC984E3585ADuL, 0xBA24C66642C332C8uL), 
-                    (-1, -61, 0xEA679E3776E64F8EuL, 0x4A159EDC92E4E097uL), 
-                    (+1, -63, 0xDB9372B9D00041BEuL, 0x00722D9C2A69CE13uL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX4p25Table = new(new ddouble[] {
@@ -466,10 +439,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -49, 0xF502747A2891489BuL, 0x41D9D4AADC55CBDAuL), 
                     (+1, -51, 0x8CD24193498FA1D4uL, 0x077EAFFAAF04794FuL), 
                     (-1, -54, 0x88B0C25E27B633B1uL, 0xC30ECA33371E5131uL), 
-                    (+1, -58, 0xBA1DEAAB8F8D72CDuL, 0xC84734704CF8F9B5uL), 
-                    (+1, -64, 0xA532A6D8A14CD7CBuL, 0x69F769FB3C1102A2uL), 
-                    (-1, -63, 0xC1F61806EF474755uL, 0xDE82A84B8E2AC753uL), 
-                    (+1, -65, 0xEC95E26D94BF77CEuL, 0xCD2E35DD2265CDC3uL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX4p50Table = new(new ddouble[] {
@@ -494,10 +463,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -50, 0xF2342E16303D4195uL, 0x28F16F433FC71485uL), 
                     (+1, -52, 0x939ABF881EA92A45uL, 0xD9B4BEDDAA347138uL), 
                     (-1, -55, 0xA02C3CE85275CC90uL, 0xEA5B1C3E1AE2EF40uL), 
-                    (+1, -58, 0x92AD9E58BB797690uL, 0x973941D978C4EDF6uL), 
-                    (-1, -62, 0xB8F513DB49F138A7uL, 0x32DA466307CF6D95uL), 
-                    (-1, -67, 0x90204A42A971BEEDuL, 0xE541C67E4100597FuL), 
-                    (+1, -67, 0xC67C4AB770DA61A7uL, 0xDA51D53094D74161uL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX4p75Table = new(new ddouble[] {
@@ -521,11 +486,7 @@ namespace DoubleDoubleSandbox {
                     (+1, -48, 0xA5A70086161BFC3FuL, 0xC3014BB88B999DDCuL), 
                     (-1, -51, 0xE77C897AA7A899DEuL, 0xBE2FA1EF57EBA79BuL), 
                     (+1, -53, 0x9289163E56E86D05uL, 0xCED37DBC081407CAuL), 
-                    (-1, -56, 0xA8A39628483503D5uL, 0x978AAE2666F7F8A6uL), 
-                    (+1, -59, 0xAD574EB15C1AF550uL, 0xD96A785762F52F8CuL), 
-                    (-1, -62, 0x9628B40ECC4E687CuL, 0x6C3E759925243337uL), 
-                    (+1, -66, 0xAF88475032DBBB42uL, 0x0168D2A315CAC0F3uL), 
-                    (+1, -71, 0xC32FD12A759D9015uL, 0x4F24273CA3BA65EDuL), 
+                    (-1, -56, 0xA8A39628483503D5uL, 0x978AAE2666F7F8A6uL),
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX5p00Table = new(new ddouble[] {
@@ -550,10 +511,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -52, 0xD7CE13661F38C2E4uL, 0x04D9450721C22EFEuL), 
                     (+1, -54, 0x8CBFBCC16C5FC452uL, 0xA8590A9A9B8FE4C3uL), 
                     (-1, -57, 0xA7FF78ECDC2D53D6uL, 0xBB4452AD46CC6877uL), 
-                    (+1, -60, 0xB73FB2B9A81A76BCuL, 0x0BD91E87F742B2E6uL), 
-                    (-1, -63, 0xB2F1E150E0AC4B14uL, 0xD9DD0150CBF673AFuL), 
-                    (+1, -66, 0x92FBD8DE148C6C4CuL, 0x3CB4D32FFFDFA499uL), 
-                    (-1, -70, 0x9F63EAAEF1756A55uL, 0xE08FA3DAAB1F42E1uL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX5p25Table = new(new ddouble[] {
@@ -578,10 +535,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -53, 0xC4B5E5242324049BuL, 0xAF22E80491867EDBuL), 
                     (+1, -55, 0x841E3D3BDDEF91E7uL, 0x228605A2A05E12A5uL), 
                     (-1, -58, 0xA1F953E28DFAB72AuL, 0xC1F1D40663B94344uL), 
-                    (+1, -61, 0xB713E7BA37A57744uL, 0x04718ED9B04CB068uL), 
-                    (-1, -64, 0xBDE3FEDDDF25AC09uL, 0xDA602686CAAA64F4uL), 
-                    (+1, -67, 0xB09E6D867BD31577uL, 0x9E999A7C2E33C4EDuL), 
-                    (-1, -70, 0x89D8FA883053B726uL, 0xF512134457E0364FuL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX5p50Table = new(new ddouble[] {
@@ -606,10 +559,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -54, 0xAEC9A6D1D5E2950DuL, 0x5327A74582100A4FuL), 
                     (+1, -57, 0xF35605A310F7FC33uL, 0x18C17C55BDD58962uL), 
                     (-1, -59, 0x98CEDC95590BB83AuL, 0x6E79CECE760FDDB8uL), 
-                    (+1, -62, 0xB10684977E49909DuL, 0x047E14B77B338EE8uL), 
-                    (-1, -65, 0xBE2D08CE827499BAuL, 0xAD6B5A908D5D949BuL), 
-                    (+1, -68, 0xBC179749153A8AF3uL, 0xEE7CA707FF284CEFuL), 
-                    (-1, -71, 0xA70366A8754B793DuL, 0x431ADB7E27BF5828uL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX5p75Table = new(new ddouble[] {
@@ -634,10 +583,6 @@ namespace DoubleDoubleSandbox {
                     (-1, -55, 0x95EA31142F6D5108uL, 0x900C07F4A60DB6B4uL), 
                     (+1, -58, 0xDBB3AFCD0D0AB3CAuL, 0x36A05EF1675CB6D3uL), 
                     (-1, -60, 0x8DC22B3A865BF22FuL, 0x8670B8547730C319uL), 
-                    (+1, -63, 0xA7A0F4330A7BE613uL, 0x71D83F5DD472F7F5uL), 
-                    (-1, -66, 0xB84D8ADCA96C52C2uL, 0xED2099554034C2F6uL), 
-                    (+1, -69, 0xBCC56B9EBC3F9470uL, 0xB8921EBFCF8D7953uL), 
-                    (-1, -72, 0xB277F832B1A88A90uL, 0x6134DE9D4423D90FuL), 
                 });
 
                 public static ReadOnlyCollection<ddouble> TaylorX6p00Table = new(new ddouble[] {
@@ -662,10 +607,198 @@ namespace DoubleDoubleSandbox {
                     (-1, -57, 0xF2CB53F10482FE06uL, 0x4A0067C6BBD36F0BuL), 
                     (+1, -59, 0xC16EE692ECAA8EF0uL, 0x225E0A2173BAFDA0uL), 
                     (-1, -61, 0x816EA6E75DCEB803uL, 0x3A07C4DF2CD9F280uL), 
-                    (+1, -64, 0x9C56309AAC9912EDuL, 0x8521584A795CB84CuL), 
-                    (-1, -67, 0xAEFFE39F1F843A05uL, 0x20AA3007AC33FF4CuL), 
-                    (+1, -70, 0xB74376BD007D7167uL, 0x39DEC5ECEFC4B8C9uL), 
-                    (-1, -73, 0xB371B700C6B92DA5uL, 0x559256DA4C1EEECAuL), 
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX6p25Table = new(new ddouble[] {
+                    (+1, 3, 0xB3759E703F031513uL, 0x883658D97B799214uL), 
+                    (+1, 0, 0xE02C0D20FE9AC6D8uL, 0x06B4C2EBD7D2EDC9uL), 
+                    (+1, -9, 0xCE5586EDCB0D8C48uL, 0x2721009D3509CB29uL), 
+                    (-1, -12, 0xF0CDD4169AE7DEA2uL, 0xAFE5F37EDF3C7063uL), 
+                    (+1, -14, 0x897561FE4C739F41uL, 0x4DE829EA03FC909DuL), 
+                    (-1, -17, 0x997D218461DC4CDEuL, 0x5C4CF85CFBE1710AuL), 
+                    (+1, -20, 0xA78A8EEC4E693601uL, 0x561F6DADE0669A86uL), 
+                    (-1, -23, 0xB29BA6266E52CFBEuL, 0x228035D10F9AAD3DuL), 
+                    (+1, -26, 0xB9AF629154F6925DuL, 0x53C743C3F632BA6CuL), 
+                    (-1, -29, 0xBBD7AAE825C40A89uL, 0x0DD390F86CBB0CB3uL), 
+                    (+1, -32, 0xB84CA712ABB0963DuL, 0xF858342D9D333FE3uL), 
+                    (-1, -35, 0xAE801FEA1B8EF3AEuL, 0x4F5AC76694FD457AuL), 
+                    (+1, -38, 0x9E2F58698685FBCDuL, 0xEC361C651251A2D5uL), 
+                    (-1, -41, 0x8771BD71117C83A6uL, 0xC7BF25ECFB25795FuL), 
+                    (+1, -45, 0xD585B46DE23C1E36uL, 0x8C1A21AED94EDF76uL), 
+                    (-1, -48, 0x920C6B7E6EB5BE5EuL, 0xEB3CA3F1331A99DAuL), 
+                    (+1, -52, 0x8E105F8F26D87E25uL, 0x45326D30F54F4F62uL), 
+                    (+1, -58, 0x842A4733225A5FD6uL, 0xD79D561986B2068AuL), 
+                    (-1, -58, 0xB001A86625093D36uL, 0x110AFBBEDEC465FCuL), 
+                    (+1, -60, 0xA4030E7A87A8379DuL, 0x9D3B2567C54DC8F1uL), 
+                    (-1, -63, 0xE7FC2158ED8A0379uL, 0x0A48F941D180F096uL), 
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX6p50Table = new(new ddouble[] {
+                    (+1, 3, 0xBA77C5EAC845D0B7uL, 0xD3A00C5AB9589A59uL), 
+                    (+1, 0, 0xE05CF105FBC51B11uL, 0xD97BCF4848348049uL), 
+                    (+1, -9, 0xB947CBBD8F7FE6CBuL, 0xC2A8D3D7B7188C08uL), 
+                    (-1, -12, 0xD13E7894E314A01DuL, 0x436BC290360F98C3uL), 
+                    (+1, -15, 0xE7808C624992DDFCuL, 0xFCC83C2579DE3DE0uL), 
+                    (-1, -18, 0xFAE218C5EA7B780AuL, 0xDAE7A5A9F3ACA5B7uL), 
+                    (+1, -20, 0x8519E6B532DDEE1FuL, 0x6A3C9BC0FB32B8BFuL), 
+                    (-1, -23, 0x8A2AC28CA157CC8FuL, 0x61AE2695F1D84178uL), 
+                    (+1, -26, 0x8C2503C3CB3A79D9uL, 0x6631B0400552411FuL), 
+                    (-1, -29, 0x8AA54FC7C0237B45uL, 0x1C4DD92A6723AC49uL), 
+                    (+1, -32, 0x856C838356A7B94AuL, 0xB28E14719FBFD804uL), 
+                    (-1, -36, 0xF8CE295C18159B70uL, 0xCE5DC50C13744A47uL), 
+                    (+1, -39, 0xDF645EB6CFA8E6BEuL, 0x9EE78FDD05197FA5uL), 
+                    (-1, -42, 0xBF3C01985879948EuL, 0x1A386DE0E3EE1E84uL), 
+                    (+1, -45, 0x99599D2F5D4D4CD0uL, 0x5E47D05B91B8D052uL), 
+                    (-1, -49, 0xDE3AC809045C8620uL, 0x6C09D784AA1352DBuL), 
+                    (+1, -52, 0x846839826D5F3F3AuL, 0x31A0A6A9F55BBE4AuL), 
+                    (-1, -57, 0xA4119AE747150A50uL, 0x76F0E990618EF2D2uL), 
+                    (-1, -60, 0xBFAF551A1F530D18uL, 0xB1A0245FE20BDE1AuL), 
+                    (+1, -61, 0x8261345431E94889uL, 0x0377701CA406CF27uL), 
+                    (-1, -64, 0xCA8E3E8AC82D5940uL, 0x87E9C9B814696532uL), 
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX6p75Table = new(new ddouble[] {
+                    (+1, 3, 0xC17B6068CA991A94uL, 0x60D7DCD69897734FuL), 
+                    (+1, 0, 0xE088EAFFFE1B472CuL, 0x28CD1BA388AA0F0DuL), 
+                    (+1, -9, 0xA6F286493AAA2E87uL, 0x1A735AABEC4E660BuL), 
+                    (-1, -12, 0xB69A435E542BD3E7uL, 0xFA038DF4C6676A20uL), 
+                    (+1, -15, 0xC3EC74AEEB6C2F82uL, 0xF62F26DAEBD11005uL), 
+                    (-1, -18, 0xCE308DDF915D1CA0uL, 0x99CD8A284E40632BuL), 
+                    (+1, -21, 0xD4C1FF671544DF96uL, 0x418412B2887A98A1uL), 
+                    (-1, -24, 0xD71B3C7AB0CF43C4uL, 0x3927A57E3FB0FE98uL), 
+                    (+1, -27, 0xD4DF93BDE7D6085DuL, 0x9F23686461D3E030uL), 
+                    (-1, -30, 0xCDE316453DDC02F8uL, 0x3661943139319477uL), 
+                    (+1, -33, 0xC22FE4A16A3E088AuL, 0x7D65FD96D99171C3uL), 
+                    (-1, -36, 0xB208647CEC92F15CuL, 0xD335D08B5F45409AuL), 
+                    (+1, -39, 0x9DE617859D7BA9D0uL, 0xA02DDE465EC7CF02uL), 
+                    (-1, -42, 0x86750986FDDB6FF1uL, 0x1866ED8B202AE2B8uL), 
+                    (+1, -46, 0xD9181578EB39ED55uL, 0xA9687655CF64EB16uL), 
+                    (-1, -49, 0xA2444E98C2E574F3uL, 0x2510AE82417FD679uL), 
+                    (+1, -53, 0xD50802AE5ADEEFD2uL, 0xE46A289A244FB9D6uL), 
+                    (-1, -57, 0xCFDEA9BF2CBBB50FuL, 0x14DBDE8A9CB34383uL), 
+                    (+1, -66, 0xAE3532D1979BA229uL, 0x2399989E319366FBuL), 
+                    (+1, -63, 0xB5DB4A58905E7596uL, 0x4BE47105C9E3ED0AuL), 
+                    (-1, -65, 0xA9B89C6DECE628D7uL, 0x32AA601A2D6E1DFAuL), 
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX7p00Table = new(new ddouble[] {
+                    (+1, 3, 0xC880492DEA5819A9uL, 0x3097601A02DAFD71uL), 
+                    (+1, 0, 0xE0B09B583666FF3AuL, 0x56849126429FB3ABuL), 
+                    (+1, -9, 0x96EA95D939727EBAuL, 0x41E6923D8AE33678uL), 
+                    (-1, -12, 0xA000B021A5971380uL, 0xF6F1B8629B9DF49BuL), 
+                    (+1, -15, 0xA69B57981CE34B85uL, 0xCD1CB6BDE787ABF4uL), 
+                    (-1, -18, 0xAA5E55BC82358D5DuL, 0x688A875DF77CC0B0uL), 
+                    (+1, -21, 0xAB0866BAA2CE70E2uL, 0x97DE9665E82CD7C4uL), 
+                    (-1, -24, 0xA877B781653C3715uL, 0x302B163796214FBDuL), 
+                    (+1, -27, 0xA2ACA768B983BA0EuL, 0x59B1FA942CC0D8B0uL), 
+                    (-1, -30, 0x99CA968796E8A5BAuL, 0xC3312B6030C2E13BuL), 
+                    (+1, -33, 0x8E16AD471D2AA248uL, 0x0CED67818A5D24AAuL), 
+                    (-1, -37, 0xFFE95D01D6838208uL, 0x09094EF1CF41E263uL), 
+                    (+1, -40, 0xDFC4110AE0E87061uL, 0xB075D0448D91B742uL), 
+                    (-1, -43, 0xBCDEEFEF12041505uL, 0x8994A45150146B18uL), 
+                    (+1, -46, 0x98734E56BEFD1C8EuL, 0x5845B9B5CD454F3AuL), 
+                    (-1, -50, 0xE7850FFD5826558BuL, 0x6ABB3D502C08ECAEuL), 
+                    (+1, -53, 0xA00C3055F2E1B1D3uL, 0xAD9E2FC01B3EE0B6uL), 
+                    (-1, -57, 0xB9825ECAC1BACC8AuL, 0x88A7C0C83CB65896uL), 
+                    (+1, -62, 0xFD08117ECE306CB3uL, 0xEC1C52D8DF0B8BDAuL), 
+                    (+1, -65, 0xADA8BF7661D11B2AuL, 0x30A98772FFDD2D68uL), 
+                    (-1, -66, 0x841E01B8EC408E95uL, 0x961419C4734FD2B6uL), 
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX7p25Table = new(new ddouble[] {
+                    (+1, 3, 0xCF86601B98DB7B0AuL, 0x6465DF3D5E771FDFuL), 
+                    (+1, 0, 0xE0D48A01CE7E71EBuL, 0x8D5D7F273057605AuL), 
+                    (+1, -9, 0x88D7B8AE4A444E27uL, 0x2103AD7358052F58uL), 
+                    (-1, -12, 0x8CBDD731C154D3C4uL, 0x65B6EEAF695B18DCuL), 
+                    (+1, -15, 0x8E528C90A5063504uL, 0x4F5CD32AF716258BuL), 
+                    (-1, -18, 0x8D7E841217FC6D71uL, 0x2C86470EB24BA7FEuL), 
+                    (+1, -21, 0x8A42DDAECC80B004uL, 0xDB87F5FB06E36FC4uL), 
+                    (-1, -24, 0x84B9231E3B4FD085uL, 0x0C4CB29FAF91E31FuL), 
+                    (+1, -28, 0xFA23C0222D287063uL, 0xC2B0AF174CA9E11AuL), 
+                    (-1, -31, 0xE723F64288C1785EuL, 0x43A74C8ECDF79EBEuL), 
+                    (+1, -34, 0xD11E03B695E9723DuL, 0x6DF2DADD1BF09B27uL), 
+                    (-1, -37, 0xB8D55515FFCA3B79uL, 0x16C52303914AD7C0uL), 
+                    (+1, -40, 0x9F1BB2379A686061uL, 0x53D53AB0D9BF58E3uL), 
+                    (-1, -43, 0x84C6F1C68DA43605uL, 0x77D7C259F2865CDDuL), 
+                    (+1, -47, 0xD54DEE71F0C3FED2uL, 0x91DB2439A59C9F26uL), 
+                    (-1, -50, 0xA2F91AECD5D35534uL, 0xC7B8CC7E5C803C2AuL), 
+                    (+1, -54, 0xE7C66400EF9F0F4EuL, 0xF1CD49ACBB5721A7uL), 
+                    (-1, -57, 0x924BF8A339B95DECuL, 0x48E42C956E19CFCFuL), 
+                    (+1, -61, 0x8E63AD0B953957B0uL, 0x1C4BE0F25CCF617EuL), 
+                    (-1, -68, 0xF3331C25EA135B48uL, 0x1FD4D2AF04D2D7ECuL), 
+                    (-1, -68, 0xAFA474D8EF4A729AuL, 0xF338743BCB68F39CuL),  
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX7p50Table = new(new ddouble[] {
+                    (+1, 3, 0xD68D88FFF34DFE5CuL, 0xD7873BAD3C2D233EuL), 
+                    (+1, 0, 0xE0F52AD62ADEA7A7uL, 0xE6CE6C07132543E3uL), 
+                    (+1, -10, 0xF8E1ADA8023B11CEuL, 0x600CAE845A07F011uL), 
+                    (-1, -13, 0xF88179600F5136E4uL, 0x6FF0EF17195966A9uL), 
+                    (+1, -16, 0xF4360027268F02D5uL, 0xC554C4C8C93065A2uL), 
+                    (-1, -19, 0xEC2ED798FDDF302FuL, 0xCD25F8D96ACD027EuL), 
+                    (+1, -22, 0xE0BE2117B5C50D1FuL, 0x6AEE39E28C283A26uL), 
+                    (-1, -25, 0xD2538906F89E39F6uL, 0x08F45991ADC07CADuL), 
+                    (+1, -28, 0xC175F0C7935592E2uL, 0xD39855A8CC834213uL), 
+                    (-1, -31, 0xAEBC36F28DB36F9EuL, 0xE3246C38B33279D5uL), 
+                    (+1, -34, 0x9AC5986FD2F6B699uL, 0x198446B8CC851C6BuL), 
+                    (-1, -37, 0x863222E86CBA2FF2uL, 0x21350AB054C08E83uL), 
+                    (+1, -41, 0xE3374D664574B651uL, 0x8FE4F55D9474F272uL), 
+                    (-1, -44, 0xBB1F0A777B56931FuL, 0xAF49BAA611A9D0B3uL), 
+                    (+1, -47, 0x951345E7405BDA0FuL, 0x0C50606E2CCE6255uL), 
+                    (-1, -51, 0xE3C2ACBAE8D52BCDuL, 0x7137424D7567B5FCuL), 
+                    (+1, -54, 0xA44EEBFC30CB8A90uL, 0xA9BFE5D4977178C9uL), 
+                    (-1, -58, 0xD94B8084127BB1D1uL, 0x82BA5C30E29DA143uL), 
+                    (+1, -62, 0xF50434AE3A0EC7F4uL, 0xEC1E85CC9EB5B81AuL), 
+                    (-1, -66, 0xB200B87B30E05982uL, 0x5195240C8F2DA3E2uL), 
+                    (-1, -70, 0x88ED7DC1267C289AuL, 0x690082B47F2F32EAuL), 
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX7p75Table = new(new ddouble[] {
+                    (+1, 3, 0xDD95AB0316F77638uL, 0x20B64E81ACADCD69uL), 
+                    (+1, 0, 0xE112E0FE84740C03uL, 0x25ECD036535E140CuL), 
+                    (+1, -10, 0xE2F23201E11877C1uL, 0xA7D9833E1214FA3CuL), 
+                    (-1, -13, 0xDC27C88B6BADCF6CuL, 0xF9F8B21ABC1C1CECuL), 
+                    (+1, -16, 0xD26319E6985955D1uL, 0x263360646174DBCFuL), 
+                    (-1, -19, 0xC60BDBD618438D95uL, 0xFED4A4A95F0818EEuL), 
+                    (+1, -22, 0xB79AE596E3B856F1uL, 0xC0FBF98406BCF73DuL), 
+                    (-1, -25, 0xA793BAE70B6B19ADuL, 0x82493C1EE028ADFBuL), 
+                    (+1, -28, 0x967E1034C3B57D18uL, 0xF939C348827182B6uL), 
+                    (-1, -31, 0x84DFA73BA2ADE06AuL, 0xF793BFB1F547CBB3uL), 
+                    (+1, -35, 0xE66DA8CFCCBA9E99uL, 0xEDC9812ECA8B50A3uL), 
+                    (-1, -38, 0xC3EBD50949A5DEC5uL, 0x41FD1A55098CA024uL), 
+                    (+1, -41, 0xA2FF6AB1E70850C1uL, 0xDE4C2AA59AC96EBAuL), 
+                    (-1, -44, 0x844A2D5D09E29736uL, 0x59C43334B9E7D2A7uL), 
+                    (+1, -48, 0xD08F1567EC4D0988uL, 0x22BB477CB9575152uL), 
+                    (-1, -51, 0x9E98720E12BD0C54uL, 0x2DCE34BF0C329DA2uL), 
+                    (+1, -55, 0xE61EDC068DE47DCFuL, 0x37EB5CAEE69B57C9uL), 
+                    (-1, -58, 0x9C1D6488897D6C04uL, 0xD97C27362624190BuL), 
+                    (+1, -62, 0xBDD42DB89C41857CuL, 0x728FFD50EC8AD4ABuL), 
+                    (-1, -66, 0xB77BC0443F714D01uL, 0x3F4243D4254EA2A7uL), 
+                    (+1, -71, 0x80817CE45798B085uL, 0xA300162A0E79B010uL), 
+                });
+
+                public static ReadOnlyCollection<ddouble> TaylorX8p00Table = new(new ddouble[] {
+                    (+1, 3, 0xE49EB02D10E55196uL, 0xF242A9AA48D3D599uL), 
+                    (+1, 0, 0xE12E01B7AC310C47uL, 0xA0C02197190D2A7DuL), 
+                    (+1, -10, 0xCF7B386FB913CD4FuL, 0xAF3169398C98F96FuL), 
+                    (-1, -13, 0xC3AF318591B98410uL, 0x59222768F8243D4EuL), 
+                    (+1, -16, 0xB5F6652457011276uL, 0x378D8D53A7B0784DuL), 
+                    (-1, -19, 0xA6D0A1891EEE9E9DuL, 0x784D0CD6C29F0084uL), 
+                    (+1, -22, 0x96BE688E4C9CE016uL, 0x631DA77C2D9E609EuL), 
+                    (-1, -25, 0x863B7D4C2A96D8BCuL, 0xC2A5A30753076AB7uL), 
+                    (+1, -29, 0xEB748E66AF8F79CCuL, 0x408F0E17C53B790BuL), 
+                    (-1, -32, 0xCB4064612B46980AuL, 0x3C62E7BAC5D04764uL), 
+                    (+1, -35, 0xAC863DD52ACBDA00uL, 0x70AD6F74AEF2DA9CuL), 
+                    (-1, -38, 0x8FCFC66928A4E813uL, 0x890A676DDDF5579EuL), 
+                    (+1, -42, 0xEB072A1979DF0541uL, 0x532CBDD81B56010BuL), 
+                    (-1, -45, 0xBBCBE5B55A2CBEC0uL, 0x2AEF7880C7A935FFuL), 
+                    (+1, -48, 0x9236376C9E9D3359uL, 0x1F8AACE2400FDAAFuL), 
+                    (-1, -52, 0xDCAA87EEAAAC308AuL, 0x6457F55E84F9B952uL), 
+                    (+1, -55, 0xA00E6D3CF19BDFFEuL, 0xEB48593F511EBF41uL), 
+                    (-1, -59, 0xDC09FC0E9452884EuL, 0x0FF68E10B19BAD04uL), 
+                    (+1, -62, 0x8B7D52BC15546888uL, 0x55E672A433159A76uL), 
+                    (-1, -66, 0x9907C6BC95689464uL, 0x4E5F973281533E4DuL), 
+                    (+1, -71, 0xE7C940F6FC22C21CuL, 0xEB6E78A12DB6C7BBuL), 
                 });
             }
         }
