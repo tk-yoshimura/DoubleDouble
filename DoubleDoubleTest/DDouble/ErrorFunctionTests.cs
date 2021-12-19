@@ -72,6 +72,7 @@ namespace DoubleDoubleTest.DDouble {
                 (7.750d, "9.9999999999999999999999999940602521404829e-1"),
                 (7.875d, "9.9999999999999999999999999991707276217070e-1"),
                 (8.000d, "9.9999999999999999999999999998877570282702e-1"),
+                (8.125d, "9.9999999999999999999999999999981264335294e-1"),
             }) {
                 ddouble x_dec = ddouble.BitDecrement(x);
                 ddouble x_inc = ddouble.BitIncrement(x);
@@ -80,17 +81,17 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erf(x));
                 Console.WriteLine(ddouble.Erf(x_inc));
 
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_dec) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_inc) - 1) < 1e-28);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_dec) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_inc) - 1) < 1e-29);
 
-                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_dec) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_inc) - 1) < 1e-28);
+                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_dec) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_inc) - 1) < 1e-29);
 
-                HPAssert.NeighborBits(expected, ddouble.Erf(x_dec), 2048);
-                HPAssert.NeighborBits(expected, ddouble.Erf(x), 2048);
-                HPAssert.NeighborBits(expected, ddouble.Erf(x_inc), 2048);
+                HPAssert.NeighborBits(expected, ddouble.Erf(x_dec), 32);
+                HPAssert.NeighborBits(expected, ddouble.Erf(x), 32);
+                HPAssert.NeighborBits(expected, ddouble.Erf(x_inc), 32);
 
                 Assert.IsTrue(ddouble.Erf(x_dec) <= ddouble.Erf(x) && ddouble.Erf(x) <= ddouble.Erf(x_inc));
             }
@@ -175,6 +176,7 @@ namespace DoubleDoubleTest.DDouble {
                 (7.750d, "5.9397478595171462152753239533061421673945e-28"),
                 (7.875d, "8.2927237829304430630765952338570312623548e-29"),
                 (8.000d, "1.1224297172982927079967888443170279093432e-29"),
+                (8.125d, "1.4728237544682700263363490101606859851069e-30")
             }) {
                 ddouble x_dec = ddouble.BitDecrement(x);
                 ddouble x_inc = ddouble.BitIncrement(x);
@@ -183,17 +185,17 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erfc(x));
                 Console.WriteLine(ddouble.Erfc(x_inc));
 
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erfc(x_dec) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erfc(x) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erfc(x_inc) - 1) < 1e-28);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erfc(x_dec) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erfc(x) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erfc(x_inc) - 1) < 1e-29);
 
-                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_inc) - 1) < 1e-28);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_inc) - 1) < 1e-29);
 
-                HPAssert.NeighborBits(expected, ddouble.Erfc(x_dec), 2048);
-                HPAssert.NeighborBits(expected, ddouble.Erfc(x), 2048);
-                HPAssert.NeighborBits(expected, ddouble.Erfc(x_inc), 2048);
+                HPAssert.NeighborBits(expected, ddouble.Erfc(x_dec), 32);
+                HPAssert.NeighborBits(expected, ddouble.Erfc(x), 32);
+                HPAssert.NeighborBits(expected, ddouble.Erfc(x_inc), 32);
 
                 Assert.IsTrue(ddouble.Erfc(x_dec) >= ddouble.Erfc(x) && ddouble.Erfc(x) >= ddouble.Erfc(x_inc));
             }

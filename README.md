@@ -55,10 +55,10 @@
 |gamma|&#40;-inf,+inf&#41;|6|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
 |loggamma|&#40;0,+inf&#41;|7|Near the positive zero point, polynomial interpolation is used.|ddouble.LogGamma(x)|
 |digamma|&#40;-inf,+inf&#41;|7|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
-|erf|&#40;-inf,+inf&#41;|10||ddouble.Erf(x)|
-|erfc|&#40;-inf,+inf&#41;|10||ddouble.Erfc(x)|
-|inverse_erf|&#40;-1,1&#41;|18||ddouble.InverseErf(x)|
-|inverse_erfc|&#40;0,2&#41;|18||ddouble.InverseErfc(x)|
+|erf|&#40;-inf,+inf&#41;|5||ddouble.Erf(x)|
+|erfc|&#40;-inf,+inf&#41;|5||ddouble.Erfc(x)|
+|inverse_erf|&#40;-1,1&#41;|8||ddouble.InverseErf(x)|
+|inverse_erfc|&#40;0,2&#41;|8||ddouble.InverseErfc(x)|
 |elliptic_k|&#91;0,1&#93;|1||ddouble.EllipticK(k)|
 |elliptic_e|&#91;0,1&#93;|1||ddouble.EllipticE(k)|
 |elliptic_pi|&#91;0,1&#93;|1||ddouble.EllipticPi(n, k)|
