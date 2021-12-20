@@ -88,9 +88,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.LogGamma(x_inc3));
                 Console.WriteLine("");
 
-                //HPAssert.AreEqual(expected, ddouble.LogGamma(x_dec), 1e-29);
-                //HPAssert.AreEqual(expected, ddouble.LogGamma(x), 1e-29);
-                //HPAssert.AreEqual(expected, ddouble.LogGamma(x_inc), 1e-29);
+                HPAssert.AreEqual(expected, ddouble.LogGamma(x_dec), 1e-30);
+                HPAssert.AreEqual(expected, ddouble.LogGamma(x), 1e-30);
+                HPAssert.AreEqual(expected, ddouble.LogGamma(x_inc), 1e-30);
             }
 
             ddouble loggamma_pzero = ddouble.LogGamma(0d);
