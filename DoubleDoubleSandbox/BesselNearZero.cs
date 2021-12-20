@@ -5,10 +5,12 @@ using System.Linq;
 
 namespace DoubleDoubleSandbox {
     internal class BesselNearZero {
-        private static Dictionary<ddouble, JICoefTable> ji_coef_table = new();
-        private static Dictionary<ddouble, X2DenomCoefTable> x2denom_coef_table = new();
-        private static Dictionary<ddouble, GammaDenomCoefTable> gammadenom_coef_table = new();
+        private static Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = new();
+        private static Dictionary<ddouble, X2DenomTable> x2denom_coef_table = new();
+        private static Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = new();
         private static YCoefTable y_coef_table = new();
+        private static Y0CoefTable y0_coef_table = new();
+        private static Y1CoefTable y1_coef_table = new();
 
         public static (ddouble y, int terms) BesselJ(ddouble nu, ddouble z, int max_terms = 64) {
             if (nu.Sign < 0 && nu == ddouble.Floor(nu)) {
@@ -34,25 +36,31 @@ namespace DoubleDoubleSandbox {
                 return ((n & 2) == 0) ? (y, terms) : (-y, terms);
             }
             else if (nu == ddouble.Floor(nu)) {
+                int n = (int)ddouble.Floor(nu);
+
+                if (n == 0) {
+                    return BesselY0Coef(z, max_terms);
+                }
+
                 return (ddouble.NaN, max_terms);
             }
             else {
-                (ddouble c, int terms) = BesselYCoef(nu, z, sign_switch: true, max_terms);
+                (ddouble c, int terms) = BesselYCoef(nu, z, max_terms);
 
                 return (c, terms);
             }
         }
 
         public static (ddouble c, int terms) BesselJICoef(ddouble nu, ddouble z, bool sign_switch, int max_terms = 64) {
-            if (!ji_coef_table.ContainsKey(nu)) {
-                ji_coef_table.Add(nu, new JICoefTable(nu));
+            if (!dfactdenom_coef_table.ContainsKey(nu)) {
+                dfactdenom_coef_table.Add(nu, new DoubleFactDenomTable(nu));
             }
             if (!x2denom_coef_table.ContainsKey(nu)) {
-                x2denom_coef_table.Add(nu, new X2DenomCoefTable(nu));
+                x2denom_coef_table.Add(nu, new X2DenomTable(nu));
             }
 
-            JICoefTable r = ji_coef_table[nu];
-            X2DenomCoefTable d = x2denom_coef_table[nu];
+            DoubleFactDenomTable r = dfactdenom_coef_table[nu];
+            X2DenomTable d = x2denom_coef_table[nu];
 
             ddouble z2 = z * z, z4 = z2 * z2;
 
@@ -75,23 +83,23 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselYCoef(ddouble nu, ddouble z, bool sign_switch, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselYCoef(ddouble nu, ddouble z, int max_terms = 64) {
             if (!gammadenom_coef_table.ContainsKey(nu)) {
-                gammadenom_coef_table.Add(nu, new GammaDenomCoefTable(nu));
+                gammadenom_coef_table.Add(nu, new GammaDenomTable(nu));
             }
             if (!gammadenom_coef_table.ContainsKey(-nu)) {
-                gammadenom_coef_table.Add(-nu, new GammaDenomCoefTable(-nu));
+                gammadenom_coef_table.Add(-nu, new GammaDenomTable(-nu));
             }
             if (!x2denom_coef_table.ContainsKey(nu)) {
-                x2denom_coef_table.Add(nu, new X2DenomCoefTable(nu));
+                x2denom_coef_table.Add(nu, new X2DenomTable(nu));
             }
             if (!x2denom_coef_table.ContainsKey(-nu)) {
-                x2denom_coef_table.Add(-nu, new X2DenomCoefTable(-nu));
+                x2denom_coef_table.Add(-nu, new X2DenomTable(-nu));
             }
 
             YCoefTable r = y_coef_table;
-            X2DenomCoefTable dp = x2denom_coef_table[nu], dn = x2denom_coef_table[-nu];
-            GammaDenomCoefTable gp = gammadenom_coef_table[nu], gn = gammadenom_coef_table[-nu];
+            X2DenomTable dp = x2denom_coef_table[nu], dn = x2denom_coef_table[-nu];
+            GammaDenomTable gp = gammadenom_coef_table[nu], gn = gammadenom_coef_table[-nu];
 
             ddouble cos = ddouble.CosPI(nu), sin = ddouble.SinPI(nu);
             ddouble tp = ddouble.Pow(ddouble.Ldexp(z, -1), nu), tn = 1d / tp, fp = tp * cos;
@@ -116,11 +124,45 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public class JICoefTable {
+        public static (ddouble c, int terms) BesselY0Coef(ddouble z, int max_terms = 64) {
+            if (!dfactdenom_coef_table.ContainsKey(0)) {
+                dfactdenom_coef_table.Add(0, new DoubleFactDenomTable(0));
+            }
+            if (!x2denom_coef_table.ContainsKey(0)) {
+                x2denom_coef_table.Add(0, new X2DenomTable(0));
+            }
+
+            DoubleFactDenomTable r = dfactdenom_coef_table[0];
+            X2DenomTable d = x2denom_coef_table[0];
+            Y0CoefTable q = y0_coef_table;
+
+            ddouble h = ddouble.Log(ddouble.Ldexp(z, -1)) + ddouble.EulerGamma;
+
+            ddouble z2 = z * z, z4 = z2 * z2;
+
+            ddouble c = 0d, u = 1d;
+
+            for (int k = 0; k <= max_terms; k++) {                
+                ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k)) * (1 - z2 * d[k]) + z2 * q[k]);
+
+                ddouble c_next = c + dc;
+
+                if (c == c_next) {
+                    return (2 * c * ddouble.RcpPI, k);
+                }
+
+                c = c_next;
+                u *= z4;
+            }
+
+            return (ddouble.NaN, int.MaxValue);
+        }
+
+        public class DoubleFactDenomTable {
             private readonly ddouble nu;
             private readonly List<ddouble> c_table = new(), a_table = new();
 
-            public JICoefTable(ddouble nu) {
+            public DoubleFactDenomTable(ddouble nu) {
                 ddouble c = ddouble.Gamma(nu + 1);
 
                 this.nu = nu;
@@ -150,11 +192,11 @@ namespace DoubleDoubleSandbox {
             }
         }
 
-        public class X2DenomCoefTable {
+        public class X2DenomTable {
             private readonly ddouble nu;
             private readonly List<ddouble> a_table = new();
 
-            public X2DenomCoefTable(ddouble nu) {
+            public X2DenomTable(ddouble nu) {
                 ddouble f = 1d / (4 * (nu + 1));
 
                 this.nu = nu;
@@ -182,11 +224,11 @@ namespace DoubleDoubleSandbox {
             }
         }
 
-        public class GammaDenomCoefTable {
+        public class GammaDenomTable {
             private readonly ddouble nu;
             private readonly List<ddouble> c_table = new(), a_table = new();
 
-            public GammaDenomCoefTable(ddouble nu) {
+            public GammaDenomTable(ddouble nu) {
                 ddouble c = ddouble.Gamma(nu + 1);
 
                 this.nu = nu;
@@ -244,6 +286,62 @@ namespace DoubleDoubleSandbox {
                 }
 
                 return a_table[n];
+            }
+        }
+
+        public class Y0CoefTable {
+            private readonly List<ddouble> c_table = new();
+
+            public Y0CoefTable() {
+                this.c_table.Add(1d / 4d);
+            }
+
+            public ddouble this[int n] => Value(n);
+
+            public ddouble Value(int n) {
+                if (n < 0) {
+                    throw new ArgumentOutOfRangeException(nameof(n));
+                }
+
+                if (n < c_table.Count) {
+                    return c_table[n];
+                }
+
+                for (int k = c_table.Count; k <= n; k++) {
+                    ddouble c = ddouble.Rcp(checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 1)));
+
+                    c_table.Add(c);
+                }
+
+                return c_table[n];
+            }
+        }
+
+        public class Y1CoefTable {
+            private readonly List<ddouble> c_table = new();
+
+            public Y1CoefTable() {
+                this.c_table.Add(3d / 16d);
+            }
+
+            public ddouble this[int n] => Value(n);
+
+            public ddouble Value(int n) {
+                if (n < 0) {
+                    throw new ArgumentOutOfRangeException(nameof(n));
+                }
+
+                if (n < c_table.Count) {
+                    return c_table[n];
+                }
+
+                for (int k = c_table.Count; k <= n; k++) {
+                    ddouble c = (ddouble)(4 * k + 3) / checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 2) * (2 * k + 2));
+
+                    c_table.Add(c);
+                }
+
+                return c_table[n];
             }
         }
     }
