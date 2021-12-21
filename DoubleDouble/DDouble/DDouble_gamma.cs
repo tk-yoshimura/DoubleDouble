@@ -161,7 +161,7 @@ namespace DoubleDouble {
             static ddouble sterling_digamma(ddouble x) {
                 ddouble s = -DiffLogSterlingTerm(x);
                 ddouble p = ddouble.Log(x);
-                ddouble c = Ldexp(Rcp(x), -1);
+                ddouble c = Rcp(x) / 2;
 
                 s += p;
                 s -= c;
@@ -265,7 +265,7 @@ namespace DoubleDouble {
             public static class Gamma {
                 public const int Threshold = 16;
                 public const int SterlingPrecision = 96;
-                public static readonly ddouble SterlingLogBias = Log(Ldexp(PI, 1)) / 2;
+                public static readonly ddouble SterlingLogBias = Log(PI * 2) / 2;
                 public static readonly ReadOnlyCollection<ddouble> SterlingTable = GenerateSterlingTable();
 
                 private static ReadOnlyCollection<ddouble> GenerateSterlingTable() {

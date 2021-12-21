@@ -23,10 +23,10 @@ namespace DoubleDouble {
             ddouble a = 1d / Math.Sqrt(x_frac.hi);
 
             ddouble h = 1d - x_frac * a * a;
-            a *= 1d + Ldexp(h * (4d + h * 3d), -3);
+            a *= 1d + (h * (4d + h * 3d)) / 8;
 
             h = 1 - x_frac * a * a;
-            a *= 1d + Ldexp(h * (4d + h * 3d), -3);
+            a *= 1d + (h * (4d + h * 3d)) / 8;
 
             ddouble y = Ldexp(x_frac * a, (x_exponent - exponent_rem) / 2);
 

@@ -88,9 +88,9 @@ namespace DoubleDouble {
                 int n = 7;
                 for (int k = 4 * n - 3; k >= 1; k -= 4) {
                     ddouble c0 = (k + 2) * f;
-                    ddouble c1 = w * ((k + 3) + ddouble.Ldexp(f, 1));
+                    ddouble c1 = w * (2 * f + (k + 3));
                     ddouble d0 = (k + 1) * (k + 3) + (4 * k + 6) * f;
-                    ddouble d1 = ddouble.Ldexp(c1, 1);
+                    ddouble d1 = 2 * c1;
 
                     f = w + k * (c0 + c1) / (d0 + d1);
                 }
@@ -104,7 +104,7 @@ namespace DoubleDouble {
         private static partial class Consts {
             public static class Erf {
                 public static readonly ddouble ApproxMin = 0.5d;
-                public static readonly ddouble C = Ldexp(Rcp(Sqrt(PI)), 1);
+                public static readonly ddouble C = 2 * Rcp(Sqrt(PI));
                 public const int Precision = 99;
 
                 public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeTable = new(new (ddouble c, ddouble d)[]{

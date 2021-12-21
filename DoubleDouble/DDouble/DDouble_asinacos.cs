@@ -16,7 +16,7 @@
                 return Consts.AsinAcos.HalfPI - Atan(Rcp(x));
             }
             if (x > 0.25d) {
-                return ddouble.Ldexp(Atan(x / (1d + ddouble.Sqrt(1d + x * x))), 1);
+                return 2 * Atan(x / (1d + ddouble.Sqrt(1d + x * x)));
             }
 
             ddouble f = 86d * x + 13.5d;
@@ -68,7 +68,7 @@
 
         private static partial class Consts {
             public static class AsinAcos {
-                public static readonly ddouble HalfPI = Ldexp(PI, -1);
+                public static readonly ddouble HalfPI = PI / 2;
             }
         }
     }

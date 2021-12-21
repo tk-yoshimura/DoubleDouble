@@ -162,18 +162,40 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator *(ddouble a, int b) {
+            uint abs_b = UIntUtil.Abs(b);
+            if (UIntUtil.IsPower2(abs_b)) {
+                int exp = UIntUtil.Power2(abs_b);
+                return (b >= 0) ? Ldexp(a, exp) : -Ldexp(a, exp);
+            }
+
             return a * (ddouble)b;
         }
 
         public static ddouble operator *(ddouble a, uint b) {
+            if (UIntUtil.IsPower2(b)) {
+                int exp = UIntUtil.Power2(b);
+                return Ldexp(a, exp);
+            }
+
             return a * (ddouble)b;
         }
 
         public static ddouble operator *(ddouble a, long b) {
+            ulong abs_b = UIntUtil.Abs(b);
+            if (UIntUtil.IsPower2(abs_b)) {
+                int exp = UIntUtil.Power2(abs_b);
+                return (b >= 0) ? Ldexp(a, exp) : -Ldexp(a, exp);
+            }
+
             return a * (ddouble)b;
         }
 
         public static ddouble operator *(ddouble a, ulong b) {
+            if (UIntUtil.IsPower2(b)) {
+                int exp = UIntUtil.Power2(b);
+                return Ldexp(a, exp);
+            }
+
             return a * (ddouble)b;
         }
 
@@ -183,19 +205,19 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator *(int a, ddouble b) {
-            return (ddouble)a * b;
+            return b * a;
         }
 
         public static ddouble operator *(uint a, ddouble b) {
-            return (ddouble)a * b;
+            return b * a;
         }
 
         public static ddouble operator *(long a, ddouble b) {
-            return (ddouble)a * b;
+            return b * a;
         }
 
         public static ddouble operator *(ulong a, ddouble b) {
-            return (ddouble)a * b;
+            return b * a;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -217,18 +239,40 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator /(ddouble a, int b) {
+            uint abs_b = UIntUtil.Abs(b);
+            if (UIntUtil.IsPower2(abs_b)) {
+                int exp = UIntUtil.Power2(abs_b);
+                return (b >= 0) ? Ldexp(a, -exp) : -Ldexp(a, -exp);
+            }
+
             return a / (ddouble)b;
         }
 
         public static ddouble operator /(ddouble a, uint b) {
+            if (UIntUtil.IsPower2(b)) {
+                int exp = UIntUtil.Power2(b);
+                return Ldexp(a, -exp);
+            }
+
             return a / (ddouble)b;
         }
 
         public static ddouble operator /(ddouble a, long b) {
+            ulong abs_b = UIntUtil.Abs(b);
+            if (UIntUtil.IsPower2(abs_b)) {
+                int exp = UIntUtil.Power2(abs_b);
+                return (b >= 0) ? Ldexp(a, -exp) : -Ldexp(a, -exp);
+            }
+
             return a / (ddouble)b;
         }
 
         public static ddouble operator /(ddouble a, ulong b) {
+            if (UIntUtil.IsPower2(b)) {
+                int exp = UIntUtil.Power2(b);
+                return Ldexp(a, -exp);
+            }
+
             return a / (ddouble)b;
         }
 

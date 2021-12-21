@@ -227,6 +227,40 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(double.NaN * ddouble.PositiveInfinity));
             Assert.IsTrue(ddouble.IsNaN(double.NaN * ddouble.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(double.NaN * ddouble.NaN));
+
+            foreach (int n in new int[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 
+                                          -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537 }) {
+
+                ddouble u = (ddouble.Rcp(n)) * n;
+
+                Assert.AreEqual(0, (double)(1 - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            foreach (uint n in new uint[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537 }) {
+
+                ddouble u = (ddouble.Rcp(n)) * n;
+
+                Assert.AreEqual(0, (double)(1 - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            foreach (long n in new long[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295L, 4294967296L, 4294967297L, 
+                                          -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537, -4294967295L, -4294967296L, -4294967297L, }) {
+
+                ddouble u = (ddouble.Rcp(n)) * n;
+
+                Assert.AreEqual(0, (double)(1 - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            foreach (ulong n in new ulong[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295uL, 4294967296uL, 4294967297uL }) {
+
+                ddouble u = (ddouble.Rcp(n)) * n;
+
+                Assert.AreEqual(0, (double)(1 - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
         }
 
         [TestMethod]
@@ -296,6 +330,40 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / double.PositiveInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / double.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / double.NaN));
+
+            foreach (int n in new int[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 
+                                          -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537 }) {
+
+                ddouble u = ((ddouble)0.25d / n) * n;
+
+                Assert.AreEqual(0, (double)(0.25d - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            foreach (uint n in new uint[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537 }) {
+
+                ddouble u = ((ddouble)0.25d / n) * n;
+
+                Assert.AreEqual(0, (double)(0.25d - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            foreach (long n in new long[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295L, 4294967296L, 4294967297L, 
+                                          -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537, -4294967295L, -4294967296L, -4294967297L, }) {
+
+                ddouble u = ((ddouble)0.25d / n) * n;
+
+                Assert.AreEqual(0, (double)(0.25d - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            foreach (ulong n in new ulong[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295uL, 4294967296uL, 4294967297uL }) {
+
+                ddouble u = ((ddouble)0.25d / n) * n;
+
+                Assert.AreEqual(0, (double)(0.25d - u), 1e-30);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
         }
 
         [TestMethod]

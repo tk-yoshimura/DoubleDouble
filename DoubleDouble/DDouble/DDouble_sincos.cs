@@ -6,7 +6,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble SinPI(ddouble x) {
-            return SinPIHalf(Ldexp(x, 1));
+            return SinPIHalf(x * 2);
         }
 
         public static ddouble Sin(ddouble x) {
@@ -14,7 +14,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble CosPI(ddouble x) {
-            return SinPIHalf(Ldexp(x, 1) + 1d);
+            return SinPIHalf(x * 2 + 1d);
         }
 
         public static ddouble Cos(ddouble x) {

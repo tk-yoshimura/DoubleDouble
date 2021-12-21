@@ -93,7 +93,7 @@ namespace DoubleDouble {
                         x = x_next;
                     }
 
-                    ddouble y = Ldexp(x, 1);
+                    ddouble y = x * 2;
 
                     return y;
                 }
@@ -133,16 +133,16 @@ namespace DoubleDouble {
                     }
 
                     ddouble y = 0d;
-                    ddouble p = Ldexp(1d, -1);
+                    ddouble p = Point5;
 
                     for (int i = 128; i > 0; i--) {
                         x *= x;
 
                         if (x >= 2) {
                             y += p;
-                            x = Ldexp(x, -1);
+                            x /= 2;
                         }
-                        p = Ldexp(p, -1);
+                        p /= 2;
 
                         if (y == (y + p) || x == 1) {
                             break;

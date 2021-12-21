@@ -57,7 +57,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(k)) {
-                return PI / Ldexp(Sqrt(1d - n), 1);
+                return PI / (2 * Sqrt(1d - n));
             }
 
             if (k == 1d) {
@@ -119,16 +119,16 @@ namespace DoubleDouble {
                 ddouble dq = Ldexp(squa_c, n - 1);
                 q -= dq;
 
-                ddouble a_next = Ldexp(a + b, -1);
+                ddouble a_next = (a + b) / 2;
                 ddouble b_next = Sqrt(a * b);
-                ddouble c_next = squa_c / Ldexp(a_next, 2);
+                ddouble c_next = squa_c / (4 * a_next);
 
                 a = a_next;
                 b = b_next;
                 c = c_next;
             }
 
-            ddouble y = q * PI / Ldexp(a, 1);
+            ddouble y = q * PI / (2 * a);
 
             return y;
         }
@@ -144,10 +144,10 @@ namespace DoubleDouble {
                 ddouble ab = a * b, p_squa = p * p;
                 ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
 
-                ddouble a_next = Ldexp(a + b, -1);
+                ddouble a_next = (a + b) / 2;
                 ddouble b_next = Sqrt(ab);
-                ddouble p_next = p_squa_pab / Ldexp(p, 1);
-                ddouble q_next = Ldexp(q, -1) * p_squa_mab / p_squa_pab;
+                ddouble p_next = p_squa_pab / (2 * p);
+                ddouble q_next = q * p_squa_mab / (2 * p_squa_pab);
 
                 a = a_next;
                 b = b_next;
@@ -157,7 +157,7 @@ namespace DoubleDouble {
                 sum_q += q;
             }
 
-            ddouble y = Ldexp((2d + sum_q * n / (1d - n)) * EllipticK(k), -1);
+            ddouble y = (2d + sum_q * n / (1d - n)) * EllipticK(k) / 2;
 
             return y;
         }

@@ -47,7 +47,7 @@ namespace DoubleDouble {
             const double a = 0.147;
 
             ddouble lg = Log(1d - x * x);
-            ddouble lga = 2d / (PI * a) + Ldexp(lg, -1);
+            ddouble lga = 2d / (PI * a) + lg / 2;
 
             ddouble z = Sqrt(Sqrt(lga * lga - lg / a) - lga);
 
@@ -56,7 +56,7 @@ namespace DoubleDouble {
             };
             (ddouble, ddouble) derf(ddouble z) {
                 ddouble d1 = Exp(-z * z) * s;
-                ddouble d2 = -Ldexp(z * d1, 1);
+                ddouble d2 = -2 * z * d1;
 
                 return (d1, d2);
             };
@@ -64,7 +64,7 @@ namespace DoubleDouble {
             for (int i = 0; i < 3; i++) {
                 ddouble y = erf(z);
                 (ddouble df1, ddouble df2) = derf(z);
-                ddouble dz = Ldexp(y * df1, 1) / (Ldexp(df1 * df1, 1) - y * df2);
+                ddouble dz = (2 * y * df1) / ((2 * df1 * df1) - y * df2);
 
                 z -= dz;
             }
@@ -78,7 +78,7 @@ namespace DoubleDouble {
             const double a = 0.147;
 
             ddouble lg = Log((2d - x) * x);
-            ddouble lga = 2d / (PI * a) + Ldexp(lg, -1);
+            ddouble lga = 2d / (PI * a) + lg / 2;
 
             ddouble z = Sqrt(Sqrt(lga * lga - lg / a) - lga);
 
@@ -87,7 +87,7 @@ namespace DoubleDouble {
             };
             (ddouble, ddouble) derfc(ddouble z) {
                 ddouble d1 = -Exp(-z * z) * s;
-                ddouble d2 = -Ldexp(z * d1, 1);
+                ddouble d2 = -2 * z * d1;
 
                 return (d1, d2);
             };
@@ -95,7 +95,7 @@ namespace DoubleDouble {
             for (int i = 0; i < 3; i++) {
                 ddouble y = erfc(z);
                 (ddouble df1, ddouble df2) = derfc(z);
-                ddouble dz = Ldexp(y * df1, 1) / (Ldexp(df1 * df1, 1) - y * df2);
+                ddouble dz = (2 * y * df1) / ((2 * df1 * df1) - y * df2);
 
                 z -= dz;
             }
