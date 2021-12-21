@@ -9,10 +9,21 @@ namespace DoubleDoubleSandbox {
                 ddouble y = Sterling.Gamma(x);
                 ddouble r = (x <= 21.5d) ? ddouble.RoundMantissa(y, 99) : ddouble.RoundMantissa(y, 97);
 
-                //Console.WriteLine($"{x},{y}");
-                //Console.WriteLine($"{FloatSplitter.Split(y).mantissa:X14}");
+                Console.WriteLine($"{x},{y}");
+                Console.WriteLine($"{FloatSplitter.Split(y).mantissa:X14}");
                 Console.WriteLine($"{FloatSplitter.Split(r).mantissa:X14}");
                 //Console.WriteLine("");
+            }
+
+            for (double x = 1; x <= 35; x += 1) {
+                ddouble y = Sterling.Digamma(x);
+                ddouble e = -ddouble.EulerGamma + ddouble.HarmonicNumber((int)x - 1);
+
+                Console.WriteLine($"{x}");
+                Console.WriteLine($"{y}");
+                Console.WriteLine($"{e}");
+                Console.WriteLine($"{FloatSplitter.Split(y).mantissa:X14}");
+                Console.WriteLine($"{FloatSplitter.Split(e).mantissa:X14}");
             }
 
 

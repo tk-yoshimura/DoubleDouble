@@ -20,23 +20,50 @@ namespace DoubleDoubleSandbox {
             return y;
         }
 
+        public static ddouble Digamma(ddouble x) {
+            ddouble s = DiffLogSterlingTerm(x);
+            ddouble p = ddouble.Log(x);
+            ddouble c = Rcp(x) / 2;
+
+            ddouble y = -s + p - c;
+
+            return y;
+        }
+
         private static ddouble SterlingTerm(ddouble x) {
-            ddouble v = Rcp(x), v2 = v * v, v4 = v2 * v2, u = 1d;
+            ddouble v = Rcp(x), v2 = v * v, v4 = v2 * v2, u = v;
 
-            ddouble c = 0d;
+            ddouble y = 0d;
             foreach ((ddouble s, ddouble r) in SterlingTable) {
-                ddouble dc = u * s * (1d - v2 * r);
-                ddouble c_next = c + dc;
+                ddouble dy = u * s * (1d - v2 * r);
+                ddouble y_next = y + dy;
 
-                if (c == c_next) {
+                if (y == y_next) {
                     break;
                 }
 
                 u *= v4;
-                c = c_next;
+                y = y_next;
             }
 
-            ddouble y = c * v;
+            return y;
+        }
+
+        private static ddouble DiffLogSterlingTerm(ddouble x) {
+            ddouble v = Rcp(x), v2 = v * v, v4 = v2 * v2, u = v2;
+
+            ddouble y = 0d;
+            foreach ((ddouble s, ddouble r) in DiffLogSterlingTable) {
+                ddouble dy = u * s * (1d - v2 * r);
+                ddouble y_next = y + dy;
+
+                if (y == y_next) {
+                    break;
+                }
+
+                u *= v4;
+                y = y_next;
+            }
 
             return y;
         }
@@ -54,6 +81,25 @@ namespace DoubleDoubleSandbox {
             ((+1, 38, 0xA1BBCDE4EA012735uL, 0x0B88127350B88127uL),  (+1, 5, 0x8E75243CF95640BAuL, 0xB1AC741F13538518uL)),
             ((+1, 48, 0xDE466B7C78FBAAE3uL, 0xC3A9E6DAEAE46D98uL),  (+1, 5, 0xAE799EBA1DCEB485uL, 0xFC9877597F7685B3uL)),
             ((+1, 59, 0xE2E1337F5AF0BED9uL, 0x0B6B0A352D4F335CuL),  (+1, 5, 0xD1BC1F238533A53CuL, 0x065E1F08A600A21BuL))
+        });
+
+        public static ReadOnlyCollection<(ddouble s, ddouble r)> DiffLogSterlingTable = new(new (ddouble s, ddouble r)[]{
+            ((+1, -4, 0xAAAAAAAAAAAAAAAAuL, 0xAAAAAAAAAAAAAAAAuL),  (+1, -4, 0xCCCCCCCCCCCCCCCCuL, 0xCCCCCCCCCCCCCCCCuL)),
+            ((+1, -8, 0x8208208208208208uL, 0x2082082082082082uL),  (+1, 0, 0x8666666666666666uL, 0x6666666666666666uL)),
+            ((+1, -8, 0xF83E0F83E0F83E0FuL, 0x83E0F83E0F83E0F8uL),  (+1, 1, 0xB231231231231231uL, 0x2312312312312312uL)),
+            ((+1, -4, 0xAAAAAAAAAAAAAAAAuL, 0xAAAAAAAAAAAAAAAAuL),  (+1, 2, 0xAA36363636363636uL, 0x3636363636363636uL)),
+            ((+1, 1, 0xC373FCDCFF373FCDuL, 0xCFF373FCDCFF373FuL),   (+1, 3, 0x8A9B6331EAB8DA7EuL, 0xFDB2ACC2FD4737B6uL)),
+            ((+1, 8, 0x8CBAE6076B981DAEuL, 0x6076B981DAE6076BuL),   (+1, 3, 0xCD12F438911D0D30uL, 0x5CCEF88EB6F5D78FuL)),
+            ((+1, 15, 0xD62B955555555555uL, 0x5555555555555555uL),  (+1, 4, 0x8E4143C38A48A430uL, 0xA097076AD0A5339CuL)),
+            ((+1, 24, 0x98FD6BE5F9DFFE17uL, 0xE77FF85F9DFFE17EuL),  (+1, 4, 0xBC751842CF4E9497uL, 0x70E668923E28A49CuL)),
+            ((+1, 33, 0xBC4976FEFAAAAAAAuL, 0xAAAAAAAAAAAAAAAAuL),  (+1, 4, 0xF124F8842E1C48A0uL, 0xD06011ECEFE36DB1uL)),
+            ((+1, 43, 0xBB012610AE915555uL, 0x5555555555555555uL),  (+1, 5, 0x9628724E1B92443AuL, 0x6840275F06887788uL)),
+            ((+1, 54, 0x8E651CDBBD813979uL, 0xE958D7E43E7A5635uL),  (+1, 5, 0xB6FC6E4651367267uL, 0x0F2944F9F6122852uL)),
+            ((+1, 65, 0x9F8658358BF14630uL, 0x9C07432D63DBB01DuL),  (+1, 5, 0xDB0E702AC9B318AAuL, 0xC812A8F246FAF8F4uL)),
+            ((+1, 76, 0xFE23A5EEA9E101EAuL, 0x44D3364D9364D936uL),  (+1, 6, 0x812F3BFDC335A2BAuL, 0xBF33D1C77579DA39uL)),
+            ((+1, 89, 0x8BE36E94549BC383uL, 0x3183A1C126A99EFFuL),  (+1, 6, 0x967642DC43BD1134uL, 0x32FDF1146F4122ACuL)),
+            ((+1, 101, 0xCFBD9FD1BF989F60uL, 0xE2608D3CA7BC05C9uL), (+1, 6, 0xAD5C4CB0E670DCD6uL, 0x7D262473FFCAA985uL)),
+            ((+1, 114, 0xCBC91757DAE8B62EuL, 0x38D01E72BE6542AAuL), (+1, 6, 0xC5E1597BAB5118EFuL, 0x82DA12535E50F793uL)),
         });
     }
 }
