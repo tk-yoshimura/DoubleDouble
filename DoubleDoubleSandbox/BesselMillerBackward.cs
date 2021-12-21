@@ -279,14 +279,14 @@ namespace DoubleDoubleSandbox {
                 (f0, f1) = ((2 * (k + alpha)) * v * f0 - f1, f0);
             }
 
-            ddouble s = ddouble.Pow(2 * v, 2 * alpha);
+            ddouble s = ddouble.Pow(2 * v, alpha), sqs = s * s;
 
             lambda += f0 * phi[0];
             lambda *= s;
 
             ddouble rcot = 1d / ddouble.TanPI(alpha), rgamma = ddouble.Gamma(1 + alpha), rsqgamma = rgamma * rgamma;
-            ddouble r = 2 * ddouble.RcpPI * s;
-            ddouble p = s * rsqgamma * ddouble.RcpPI;
+            ddouble r = 2 * ddouble.RcpPI * sqs;
+            ddouble p = sqs * rsqgamma * ddouble.RcpPI;
 
             ddouble eta0 = rcot - p / alpha;
             ddouble xi0 = -2 * v * p;
@@ -295,6 +295,19 @@ namespace DoubleDoubleSandbox {
             ddouble y0 = r * se + eta0 * f0;
             ddouble y1 = r * (3 * alpha * v * sxe + sxo) + xi0 * f0 + xi1 * f1;
 
+            ddouble m0 = y0 / lambda;
+            ddouble m1 = y1 / lambda;
+
+            if (n == 0) { 
+                ddouble yn = y0 / lambda;
+
+                return yn;
+            }
+            if (n == 1) { 
+                ddouble yn = y1 / lambda;
+
+                return yn;
+            }
             if (n >= 0) {
                 for (int k = 1; k < n; k++) {
                     (y1, y0) = ((2 * (k + alpha)) * v * y1 - y0, y1);
@@ -543,11 +556,55 @@ namespace DoubleDoubleSandbox {
             return y1;
         }
 
-        public static (ddouble y, int m) BesselJ(int n, ddouble x, ddouble eps, int max_m = 512) {
+        public static (ddouble y, int m) BesselJ(ddouble nu, ddouble x, ddouble eps, int max_m = 512) {
             ddouble y_prev = ddouble.NaN, dy = ddouble.NaN, dy_prev = ddouble.NaN;
 
+            int n = (int)ddouble.Ceiling(ddouble.Abs(nu));
+
             for (int m = n * 4 + 2; m <= max_m; m += 2) {
-                ddouble y = BesselJ(n, x, m);
+                ddouble y = BesselJ(nu, x, m);
+
+                dy = ddouble.Abs(y - y_prev);
+                y_prev = y;
+
+                if (dy < eps && dy >= dy_prev) {
+                    return (y, m - 2);
+                }
+
+                dy_prev = dy;
+            }
+
+            return (y_prev, max_m);
+        }
+
+        public static (ddouble y, int m) BesselY(ddouble nu, ddouble x, ddouble eps, int max_m = 512) {
+            ddouble y_prev = ddouble.NaN, dy = ddouble.NaN, dy_prev = ddouble.NaN;
+
+            int n = (int)ddouble.Ceiling(ddouble.Abs(nu));
+
+            for (int m = 40; m <= max_m; m += 2) {
+                ddouble y = BesselY(nu, x, m);
+
+                dy = ddouble.Abs(y - y_prev);
+                y_prev = y;
+
+                if (dy < eps && dy >= dy_prev) {
+                    return (y, m - 2);
+                }
+
+                dy_prev = dy;
+            }
+
+            return (y_prev, max_m);
+        }
+
+        public static (ddouble y, int m) BesselI(ddouble nu, ddouble x, ddouble eps, int max_m = 512) {
+            ddouble y_prev = ddouble.NaN, dy = ddouble.NaN, dy_prev = ddouble.NaN;
+
+            int n = (int)ddouble.Ceiling(ddouble.Abs(nu));
+
+            for (int m = n * 4 + 2; m <= max_m; m += 2) {
+                ddouble y = BesselI(nu, x, m);
 
                 dy = ddouble.Abs(y - y_prev);
                 y_prev = y;
