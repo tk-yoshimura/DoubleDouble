@@ -23,11 +23,9 @@ namespace DoubleDoubleSandbox {
                 return ((n & 2) == 0) ? (y, terms) : (-y, terms);
             }
             else {
-                (ddouble c, int terms) = BesselJICoef(nu, z, sign_switch: true, max_terms);
+                (ddouble y, int terms) = BesselJICoef(nu, z, sign_switch: true, max_terms);
 
-                ddouble t = ddouble.Pow(z / 2, nu) * c;
-
-                return (t, terms);
+                return (y, terms);
             }
         }
 
@@ -53,11 +51,9 @@ namespace DoubleDoubleSandbox {
                 return ((n & 2) == 0) ? (y, terms) : (-y, terms);
             }
             else {
-                (ddouble c, int terms) = BesselJICoef(nu, z, sign_switch: false, max_terms);
+                (ddouble y, int terms) = BesselJICoef(nu, z, sign_switch: false, max_terms);
 
-                ddouble t = ddouble.Pow(z / 2, nu) * c;
-
-                return (t, terms);
+                return (y, terms);
             }
         }
 
@@ -88,7 +84,7 @@ namespace DoubleDoubleSandbox {
 
             ddouble z2 = z * z, z4 = z2 * z2;
 
-            ddouble c = 0d, u = 1d;
+            ddouble c = 0d, u = ddouble.Pow(z / 2, nu);
 
             for (int k = 0; k <= max_terms; k++) {
                 ddouble w = z2 * d[k];
@@ -344,15 +340,14 @@ namespace DoubleDoubleSandbox {
         }
 
         public class DoubleFactDenomTable {
+            private ddouble c;
             private readonly ddouble nu;
-            private readonly List<ddouble> c_table = new(), a_table = new();
+            private readonly List<ddouble> a_table = new();
 
             public DoubleFactDenomTable(ddouble nu) {
-                ddouble c = ddouble.Gamma(nu + 1);
-
+                this.c = ddouble.Gamma(nu + 1);
                 this.nu = nu;
-                this.c_table.Add(c);
-                this.a_table.Add(1d / c);
+                this.a_table.Add(ddouble.Rcp(c));
             }
 
             public ddouble this[int n] => Value(n);
@@ -366,11 +361,10 @@ namespace DoubleDoubleSandbox {
                     return a_table[n];
                 }
 
-                for (int k = c_table.Count; k <= n; k++) {
-                    ddouble c = c_table.Last() * (nu + (2 * k - 1)) * (nu + (2 * k)) * checked(32 * k * (2 * k - 1));
+                for (int k = a_table.Count; k <= n; k++) {
+                    c *= (nu + (2 * k)) * (nu + (2 * k - 1)) * checked(32 * k * (2 * k - 1));
 
-                    c_table.Add(c);
-                    a_table.Add(1d / c);
+                    a_table.Add(ddouble.Rcp(c));
                 }
 
                 return a_table[n];
@@ -382,10 +376,10 @@ namespace DoubleDoubleSandbox {
             private readonly List<ddouble> a_table = new();
 
             public X2DenomTable(ddouble nu) {
-                ddouble f = 1d / (4 * (nu + 1));
+                ddouble a = ddouble.Rcp(4 * (nu + 1));
 
                 this.nu = nu;
-                this.a_table.Add(f);
+                this.a_table.Add(a);
             }
 
             public ddouble this[int n] => Value(n);
@@ -400,9 +394,9 @@ namespace DoubleDoubleSandbox {
                 }
 
                 for (int k = a_table.Count; k <= n; k++) {
-                    ddouble f = 1d / (4 * (2 * k + 1) * (2 * k + nu + 1));
+                    ddouble a = ddouble.Rcp(4 * (2 * k + 1) * (2 * k + nu + 1));
 
-                    a_table.Add(f);
+                    a_table.Add(a);
                 }
 
                 return a_table[n];
@@ -410,15 +404,14 @@ namespace DoubleDoubleSandbox {
         }
 
         public class GammaDenomTable {
+            private ddouble c;
             private readonly ddouble nu;
-            private readonly List<ddouble> c_table = new(), a_table = new();
+            private readonly List<ddouble> a_table = new();
 
             public GammaDenomTable(ddouble nu) {
-                ddouble c = ddouble.Gamma(nu + 1);
-
+                this.c = ddouble.Gamma(nu + 1);
                 this.nu = nu;
-                this.c_table.Add(c);
-                this.a_table.Add(1d / c);
+                this.a_table.Add(ddouble.Rcp(c));
             }
 
             public ddouble this[int n] => Value(n);
@@ -433,10 +426,9 @@ namespace DoubleDoubleSandbox {
                 }
 
                 for (int k = a_table.Count; k <= n; k++) {
-                    ddouble c = c_table.Last() * (nu + k);
+                    c *= nu + k;
 
-                    c_table.Add(c);
-                    a_table.Add(1d / c);
+                    a_table.Add(ddouble.Rcp(c));
                 }
 
                 return a_table[n];
@@ -444,10 +436,11 @@ namespace DoubleDoubleSandbox {
         }
 
         public class YCoefTable {
-            private readonly List<ddouble> c_table = new(), a_table = new();
+            private ddouble c;
+            private readonly List<ddouble> a_table = new();
 
             public YCoefTable() {
-                this.c_table.Add(1d);
+                this.c = 1d;
                 this.a_table.Add(1d);
             }
 
@@ -462,12 +455,10 @@ namespace DoubleDoubleSandbox {
                     return a_table[n];
                 }
 
-                for (int k = c_table.Count; k <= n; k++) {
-                    ddouble c = c_table.Last() * checked(32 * k * (2 * k - 1));
-                    ddouble f = 1d / c;
+                for (int k = a_table.Count; k <= n; k++) {
+                    c *= checked(32 * k * (2 * k - 1));
 
-                    c_table.Add(c);
-                    a_table.Add(1d / c);
+                    a_table.Add(ddouble.Rcp(c));
                 }
 
                 return a_table[n];
@@ -478,7 +469,7 @@ namespace DoubleDoubleSandbox {
             private readonly List<ddouble> c_table = new();
 
             public Y0CoefTable() {
-                this.c_table.Add(1d / 4d);
+                this.c_table.Add(ddouble.Rcp(4));
             }
 
             public ddouble this[int n] => Value(n);
@@ -506,7 +497,7 @@ namespace DoubleDoubleSandbox {
             private readonly List<ddouble> c_table = new();
 
             public Y1CoefTable() {
-                this.c_table.Add(3d / 16d);
+                this.c_table.Add(ddouble.Ldexp(3, -4));
             }
 
             public ddouble this[int n] => Value(n);
@@ -521,7 +512,7 @@ namespace DoubleDoubleSandbox {
                 }
 
                 for (int k = c_table.Count; k <= n; k++) {
-                    ddouble c = (ddouble)(4 * k + 3) / checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 2) * (2 * k + 2));
+                    ddouble c = (ddouble)(4 * k + 3) / (ddouble)checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 2) * (2 * k + 2));
 
                     c_table.Add(c);
                 }
@@ -531,10 +522,11 @@ namespace DoubleDoubleSandbox {
         }
 
         public class KCoefTable {
-            private readonly List<ddouble> c_table = new(), a_table = new();
+            private ddouble c;
+            private readonly List<ddouble> a_table = new();
 
             public KCoefTable() {
-                this.c_table.Add(1d);
+                this.c = 1d;
                 this.a_table.Add(1d);
             }
 
@@ -549,12 +541,10 @@ namespace DoubleDoubleSandbox {
                     return a_table[n];
                 }
 
-                for (int k = c_table.Count; k <= n; k++) {
-                    ddouble c = c_table.Last() * checked(4 * k);
-                    ddouble f = 1d / c;
-
-                    c_table.Add(c);
-                    a_table.Add(1d / c);
+                for (int k = a_table.Count; k <= n; k++) {
+                    c *= checked(4 * k);
+                    
+                    a_table.Add(ddouble.Rcp(c));
                 }
 
                 return a_table[n];
@@ -567,8 +557,7 @@ namespace DoubleDoubleSandbox {
 
             public K0CoefTable() {
                 this.c = 1;
-
-                this.a_table.Add(1d / c);
+                this.a_table.Add(1d);
             }
 
             public ddouble this[int n] => Value(n);
@@ -585,7 +574,7 @@ namespace DoubleDoubleSandbox {
                 for (int k = a_table.Count; k <= n; k++) {
                     c *= checked(4 * k * k);
 
-                    a_table.Add(1d / c);
+                    a_table.Add(ddouble.Rcp(c));
                 }
 
                 return a_table[n];
@@ -598,8 +587,7 @@ namespace DoubleDoubleSandbox {
 
             public K1CoefTable() {
                 this.c = 1;
-
-                this.a_table.Add(1d / c);
+                this.a_table.Add(1d);
             }
 
             public ddouble this[int n] => Value(n);
@@ -616,7 +604,7 @@ namespace DoubleDoubleSandbox {
                 for (int k = a_table.Count; k <= n; k++) {
                     c *= checked(4 * k * (k + 1));
 
-                    a_table.Add(1d / c);
+                    a_table.Add(ddouble.Rcp(c));
                 }
 
                 return a_table[n];
