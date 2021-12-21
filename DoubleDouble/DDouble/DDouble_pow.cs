@@ -41,6 +41,9 @@ namespace DoubleDouble {
             if (x >= 1024d) {
                 return PositiveInfinity;
             }
+            if (x <= -1024d) {
+                return Zero;
+            }
 
             int exp = (int)Floor(x);
             ddouble s = x - exp, c = Ldexp(1d, exp);

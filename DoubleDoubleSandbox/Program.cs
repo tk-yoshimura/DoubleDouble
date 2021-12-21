@@ -5,6 +5,17 @@ using System.IO;
 namespace DoubleDoubleSandbox {
     internal class Program {
         static void Main(string[] args) {
+            for (double x = 1; x <= 35; x += 1) {
+                ddouble y = Sterling.Gamma(x);
+                ddouble r = (x <= 21.5d) ? ddouble.RoundMantissa(y, 99) : ddouble.RoundMantissa(y, 97);
+
+                //Console.WriteLine($"{x},{y}");
+                //Console.WriteLine($"{FloatSplitter.Split(y).mantissa:X14}");
+                Console.WriteLine($"{FloatSplitter.Split(r).mantissa:X14}");
+                //Console.WriteLine("");
+            }
+
+
             //ddouble x = 2;
             //
             //for (ddouble nu = -8; nu <= 8d; nu += 0.25d) {
