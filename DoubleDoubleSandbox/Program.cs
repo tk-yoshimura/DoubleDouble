@@ -104,6 +104,30 @@ namespace DoubleDoubleSandbox {
                 }
             }
 
+            using (StreamWriter sw = new StreamWriter("../../bessel_i_nz.csv")) {
+                sw.WriteLine("nu,z,terms,y");
+                for (double nu = -4d; nu <= 4d; nu += 0.125d) {
+                    for (double z = 0d; z <= 2d; z += 0.125d) {
+                        (ddouble y, int terms) = BesselNearZero.BesselI(nu, z);
+            
+                        sw.WriteLine($"{nu},{z},{terms},{y}");
+                        Console.WriteLine($"{nu},{z},{terms},{y}");
+                    }
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter("../../bessel_k_nz.csv")) {
+                sw.WriteLine("nu,z,terms,y");
+                for (double nu = -4d; nu <= 4d; nu += 0.125d) {
+                    for (double z = 0d; z <= 2d; z += 0.125d) {
+                        (ddouble y, int terms) = BesselNearZero.BesselK(nu, z);
+            
+                        sw.WriteLine($"{nu},{z},{terms},{y}");
+                        Console.WriteLine($"{nu},{z},{terms},{y}");
+                    }
+                }
+            }
+
             //
             //using (StreamWriter sw = new StreamWriter("../../bessel_y.csv")) {
             //    sw.WriteLine("nu,z,terms,y");
