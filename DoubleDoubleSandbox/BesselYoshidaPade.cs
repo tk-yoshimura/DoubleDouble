@@ -13,15 +13,31 @@ namespace DoubleDoubleSandbox {
         public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
             nu = ddouble.Abs(nu);
 
-            if (!table.ContainsKey(nu)) {
-                table.Add(nu, Table(nu));
+            if (nu < 2) {
+                if (!table.ContainsKey(nu)) {
+                    table.Add(nu, Table(nu));
+                }
+
+                (ddouble[] cs, ddouble[] ds) = table[nu];
+
+                ddouble y = Value(x, cs, ds, scale);
+
+                return y;
             }
+            else {
+                ddouble y0 = BesselK(nu, x, scale);
+                ddouble y1 = BesselK(nu + 1, x, scale);
 
-            (ddouble[] cs, ddouble[] ds) = table[nu];
+                int n = (int)ddouble.Floor(nu);
+                ddouble alpha = nu - n;
+                ddouble v = 1d / x;
 
-            ddouble y = Value(x, cs, ds, scale);
+                for (int k = 1; k < n; k++) {
+                    (y1, y0) = ((2 * (k + alpha)) * v * y1 + y0, y1);
+                }
 
-            return y;
+                return y1;
+            }
         }
 
         private static ddouble Value(ddouble x, ddouble[] cs, ddouble[] ds, bool scale = false) { 
