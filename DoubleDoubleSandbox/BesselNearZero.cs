@@ -23,7 +23,7 @@ namespace DoubleDoubleSandbox {
                 return ((n & 2) == 0) ? (y, terms) : (-y, terms);
             }
             else {
-                (ddouble y, int terms) = BesselJICoef(nu, x, sign_switch: true, max_terms);
+                (ddouble y, int terms) = BesselJIKernel(nu, x, sign_switch: true, max_terms);
 
                 return (y, terms);
             }
@@ -32,12 +32,12 @@ namespace DoubleDoubleSandbox {
         public static (ddouble y, int terms) BesselY(ddouble nu, ddouble x, int max_terms = 64) {
             if (nu == ddouble.Floor(nu)) {
                 int n = (int)ddouble.Floor(nu);
-                (ddouble c, int terms) = BesselYCoef(n, x, max_terms);
+                (ddouble c, int terms) = BesselYKernel(n, x, max_terms);
 
                 return (c, terms);
             }
             else {
-                (ddouble c, int terms) = BesselYCoef(nu, x, max_terms);
+                (ddouble c, int terms) = BesselYKernel(nu, x, max_terms);
 
                 return (c, terms);
             }
@@ -51,7 +51,7 @@ namespace DoubleDoubleSandbox {
                 return ((n & 2) == 0) ? (y, terms) : (-y, terms);
             }
             else {
-                (ddouble y, int terms) = BesselJICoef(nu, x, sign_switch: false, max_terms);
+                (ddouble y, int terms) = BesselJIKernel(nu, x, sign_switch: false, max_terms);
 
                 return (y, terms);
             }
@@ -60,18 +60,18 @@ namespace DoubleDoubleSandbox {
         public static (ddouble y, int terms) BesselK(ddouble nu, ddouble x, int max_terms = 64) {
             if (nu == ddouble.Floor(nu)) {
                 int n = (int)ddouble.Floor(nu);
-                (ddouble c, int terms) = BesselKCoef(n, x, max_terms);
+                (ddouble c, int terms) = BesselKKernel(n, x, max_terms);
 
                 return (c, terms);
             }
             else {
-                (ddouble c, int terms) = BesselKCoef(nu, x, max_terms);
+                (ddouble c, int terms) = BesselKKernel(nu, x, max_terms);
 
                 return (c, terms);
             }
         }
 
-        public static (ddouble c, int terms) BesselJICoef(ddouble nu, ddouble x, bool sign_switch, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselJIKernel(ddouble nu, ddouble x, bool sign_switch, int max_terms = 64) {
             if (!dfactdenom_coef_table.ContainsKey(nu)) {
                 dfactdenom_coef_table.Add(nu, new DoubleFactDenomTable(nu));
             }
@@ -103,7 +103,7 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselYCoef(ddouble nu, ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselYKernel(ddouble nu, ddouble x, int max_terms = 64) {
             if (!gammadenom_coef_table.ContainsKey(nu)) {
                 gammadenom_coef_table.Add(nu, new GammaDenomTable(nu));
             }
@@ -144,24 +144,24 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselYCoef(int n, ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselYKernel(int n, ddouble x, int max_terms = 64) {
             if (n < 0) {
-                (ddouble y, int terms) = BesselYCoef(-n, x, max_terms);
+                (ddouble y, int terms) = BesselYKernel(-n, x, max_terms);
 
                 return ((n & 2) == 0) ? (y, terms) : (-y, terms);
             }
             else {
                 if (n == 0) {
-                    return BesselY0Coef(x, max_terms);
+                    return BesselY0Kernel(x, max_terms);
                 }
                 if (n == 1) {
-                    return BesselY1Coef(x, max_terms);
+                    return BesselY1Kernel(x, max_terms);
                 }
             }
 
             ddouble v = 1d / x;
-            (ddouble y0, int y0_terms) = BesselY0Coef(x, max_terms);
-            (ddouble y1, int y1_terms) = BesselY1Coef(x, max_terms);
+            (ddouble y0, int y0_terms) = BesselY0Kernel(x, max_terms);
+            (ddouble y1, int y1_terms) = BesselY1Kernel(x, max_terms);
 
             for (int k = 1; k < n; k++) {
                 (y1, y0) = ((2 * k) * v * y1 - y0, y1);
@@ -170,7 +170,7 @@ namespace DoubleDoubleSandbox {
             return (y1, Math.Max(y0_terms, y1_terms));
         }
 
-        public static (ddouble c, int terms) BesselY0Coef(ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselY0Kernel(ddouble x, int max_terms = 64) {
             if (!dfactdenom_coef_table.ContainsKey(0)) {
                 dfactdenom_coef_table.Add(0, new DoubleFactDenomTable(0));
             }
@@ -204,7 +204,7 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselY1Coef(ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselY1Kernel(ddouble x, int max_terms = 64) {
             if (!dfactdenom_coef_table.ContainsKey(1)) {
                 dfactdenom_coef_table.Add(1, new DoubleFactDenomTable(1));
             }
@@ -238,7 +238,7 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselKCoef(ddouble nu, ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselKKernel(ddouble nu, ddouble x, int max_terms = 64) {
             if (!gammadenom_coef_table.ContainsKey(nu)) {
                 gammadenom_coef_table.Add(nu, new GammaDenomTable(nu));
             }
@@ -271,18 +271,18 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselKCoef(int n, ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselKKernel(int n, ddouble x, int max_terms = 64) {
             n = Math.Abs(n);
             if (n == 0) {
-                return BesselK0Coef(x, max_terms);
+                return BesselK0Kernel(x, max_terms);
             }
             if (n == 1) {
-                return BesselK1Coef(x, max_terms);
+                return BesselK1Kernel(x, max_terms);
             }
             
             ddouble v = 1d / x;
-            (ddouble y0, int y0_terms) = BesselK0Coef(x, max_terms);
-            (ddouble y1, int y1_terms) = BesselK1Coef(x, max_terms);
+            (ddouble y0, int y0_terms) = BesselK0Kernel(x, max_terms);
+            (ddouble y1, int y1_terms) = BesselK1Kernel(x, max_terms);
             
             for (int k = 1; k < n; k++) {
                 (y1, y0) = ((2 * k) * v * y1 + y0, y1);
@@ -291,7 +291,7 @@ namespace DoubleDoubleSandbox {
             return (y1, Math.Max(y0_terms, y1_terms));
         }
 
-        public static (ddouble c, int terms) BesselK0Coef(ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselK0Kernel(ddouble x, int max_terms = 64) {
             K0CoefTable r = k0_coef_table;
             ddouble h = - ddouble.Log(x / 2) - ddouble.EulerGamma;
 
@@ -315,7 +315,7 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble c, int terms) BesselK1Coef(ddouble x, int max_terms = 64) {
+        public static (ddouble c, int terms) BesselK1Kernel(ddouble x, int max_terms = 64) {
             K1CoefTable r = k1_coef_table;
             ddouble h = ddouble.Log(x / 2) + ddouble.EulerGamma;
 
@@ -342,12 +342,12 @@ namespace DoubleDoubleSandbox {
         public class DoubleFactDenomTable {
             private ddouble c;
             private readonly ddouble nu;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public DoubleFactDenomTable(ddouble nu) {
                 this.c = ddouble.Gamma(nu + 1);
                 this.nu = nu;
-                this.a_table.Add(ddouble.Rcp(c));
+                this.table.Add(ddouble.Rcp(c));
             }
 
             public ddouble this[int n] => Value(n);
@@ -357,29 +357,29 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     c *= (nu + (2 * k)) * (nu + (2 * k - 1)) * checked(32 * k * (2 * k - 1));
 
-                    a_table.Add(ddouble.Rcp(c));
+                    table.Add(ddouble.Rcp(c));
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         public class X2DenomTable {
             private readonly ddouble nu;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public X2DenomTable(ddouble nu) {
                 ddouble a = ddouble.Rcp(4 * (nu + 1));
 
                 this.nu = nu;
-                this.a_table.Add(a);
+                this.table.Add(a);
             }
 
             public ddouble this[int n] => Value(n);
@@ -389,29 +389,29 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     ddouble a = ddouble.Rcp(4 * (2 * k + 1) * (2 * k + nu + 1));
 
-                    a_table.Add(a);
+                    table.Add(a);
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         public class GammaDenomTable {
             private ddouble c;
             private readonly ddouble nu;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public GammaDenomTable(ddouble nu) {
                 this.c = ddouble.Gamma(nu + 1);
                 this.nu = nu;
-                this.a_table.Add(ddouble.Rcp(c));
+                this.table.Add(ddouble.Rcp(c));
             }
 
             public ddouble this[int n] => Value(n);
@@ -421,27 +421,27 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     c *= nu + k;
 
-                    a_table.Add(ddouble.Rcp(c));
+                    table.Add(ddouble.Rcp(c));
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         public class YCoefTable {
             private ddouble c;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public YCoefTable() {
                 this.c = 1d;
-                this.a_table.Add(1d);
+                this.table.Add(1d);
             }
 
             public ddouble this[int n] => Value(n);
@@ -451,25 +451,25 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     c *= checked(32 * k * (2 * k - 1));
 
-                    a_table.Add(ddouble.Rcp(c));
+                    table.Add(ddouble.Rcp(c));
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         public class Y0CoefTable {
-            private readonly List<ddouble> c_table = new();
+            private readonly List<ddouble> table = new();
 
             public Y0CoefTable() {
-                this.c_table.Add(ddouble.Rcp(4));
+                this.table.Add(ddouble.Rcp(4));
             }
 
             public ddouble this[int n] => Value(n);
@@ -479,25 +479,25 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < c_table.Count) {
-                    return c_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = c_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     ddouble c = ddouble.Rcp(checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 1)));
 
-                    c_table.Add(c);
+                    table.Add(c);
                 }
 
-                return c_table[n];
+                return table[n];
             }
         }
 
         public class Y1CoefTable {
-            private readonly List<ddouble> c_table = new();
+            private readonly List<ddouble> table = new();
 
             public Y1CoefTable() {
-                this.c_table.Add(ddouble.Ldexp(3, -4));
+                this.table.Add(ddouble.Ldexp(3, -4));
             }
 
             public ddouble this[int n] => Value(n);
@@ -507,27 +507,27 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < c_table.Count) {
-                    return c_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = c_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     ddouble c = (ddouble)(4 * k + 3) / (ddouble)checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 2) * (2 * k + 2));
 
-                    c_table.Add(c);
+                    table.Add(c);
                 }
 
-                return c_table[n];
+                return table[n];
             }
         }
 
         public class KCoefTable {
             private ddouble c;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public KCoefTable() {
                 this.c = 1d;
-                this.a_table.Add(1d);
+                this.table.Add(1d);
             }
 
             public ddouble this[int n] => Value(n);
@@ -537,27 +537,27 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     c *= checked(4 * k);
                     
-                    a_table.Add(ddouble.Rcp(c));
+                    table.Add(ddouble.Rcp(c));
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         public class K0CoefTable {
             private ddouble c;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public K0CoefTable() {
                 this.c = 1;
-                this.a_table.Add(1d);
+                this.table.Add(1d);
             }
 
             public ddouble this[int n] => Value(n);
@@ -567,27 +567,27 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     c *= checked(4 * k * k);
 
-                    a_table.Add(ddouble.Rcp(c));
+                    table.Add(ddouble.Rcp(c));
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         public class K1CoefTable {
             private ddouble c;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public K1CoefTable() {
                 this.c = 1;
-                this.a_table.Add(1d);
+                this.table.Add(1d);
             }
 
             public ddouble this[int n] => Value(n);
@@ -597,17 +597,17 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     c *= checked(4 * k * (k + 1));
 
-                    a_table.Add(ddouble.Rcp(c));
+                    table.Add(ddouble.Rcp(c));
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
     }

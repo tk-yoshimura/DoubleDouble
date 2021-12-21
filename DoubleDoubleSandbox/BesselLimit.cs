@@ -10,7 +10,7 @@ namespace DoubleDoubleSandbox {
         private static Dictionary<ddouble, IKCoefTable> ik_table = new();
 
         public static (ddouble y, int terms) BesselJ(ddouble nu, ddouble x, int max_terms = 64) {
-            (ddouble c, ddouble s, int terms) = BesselJYCoef(nu, x, max_terms);
+            (ddouble c, ddouble s, int terms) = BesselJYKernel(nu, x, max_terms);
 
             ddouble omega = x - (2 * nu + 1) * ddouble.PI / 4;
             ddouble m = c * ddouble.Cos(omega) - s * ddouble.Sin(omega);
@@ -20,7 +20,7 @@ namespace DoubleDoubleSandbox {
         }
 
         public static (ddouble y, int terms) BesselY(ddouble nu, ddouble x, int max_terms = 64) {
-            (ddouble s, ddouble c, int terms) = BesselJYCoef(nu, x, max_terms);
+            (ddouble s, ddouble c, int terms) = BesselJYKernel(nu, x, max_terms);
 
             ddouble omega = x - (2 * nu + 1) * ddouble.PI / 4;
             ddouble m = s * ddouble.Sin(omega) + c * ddouble.Cos(omega);
@@ -30,7 +30,7 @@ namespace DoubleDoubleSandbox {
         }
 
         public static (ddouble y, int terms) BesselI(ddouble nu, ddouble x, bool scale = false, int max_terms = 64) {
-            (ddouble c, int terms) = BesselIKCoef(nu, x, sign_switch: true, max_terms);
+            (ddouble c, int terms) = BesselIKKernel(nu, x, sign_switch: true, max_terms);
 
             ddouble t = c / ddouble.Sqrt(2 * ddouble.PI * x);
 
@@ -42,7 +42,7 @@ namespace DoubleDoubleSandbox {
         }
 
         public static (ddouble y, int terms) BesselK(ddouble nu, ddouble x, bool scale = false, int max_terms = 256) {
-            (ddouble c, int terms) = BesselIKCoef(nu, x, sign_switch: false, max_terms);
+            (ddouble c, int terms) = BesselIKKernel(nu, x, sign_switch: false, max_terms);
 
             ddouble t = c * ddouble.Sqrt(ddouble.PI / (2 * x));
 
@@ -53,7 +53,7 @@ namespace DoubleDoubleSandbox {
             return (t, terms);
         }
 
-        public static (ddouble s, ddouble t, int terms) BesselJYCoef(ddouble nu, ddouble x, int max_terms = 64) {
+        public static (ddouble s, ddouble t, int terms) BesselJYKernel(ddouble nu, ddouble x, int max_terms = 64) {
             if (!a_table.ContainsKey(nu)) {
                 a_table.Add(nu, new ACoefTable(nu));
             }
@@ -87,7 +87,7 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, ddouble.NaN, int.MaxValue);
         }
 
-        public static (ddouble r, int terms) BesselIKCoef(ddouble nu, ddouble x, bool sign_switch, int max_terms = 256) {
+        public static (ddouble r, int terms) BesselIKKernel(ddouble nu, ddouble x, bool sign_switch, int max_terms = 256) {
             if (!a_table.ContainsKey(nu)) {
                 a_table.Add(nu, new ACoefTable(nu));
             }
@@ -120,15 +120,15 @@ namespace DoubleDoubleSandbox {
 
         private class ACoefTable {
             private readonly ddouble squa_nu4;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public ACoefTable(ddouble nu) {
                 this.squa_nu4 = 4 * nu * nu;
 
                 ddouble a1 = (squa_nu4 - 1) / 8;
 
-                this.a_table.Add(1d);
-                this.a_table.Add(a1);
+                this.table.Add(1d);
+                this.table.Add(a1);
             }
 
             public ddouble this[int n] => Value(n);
@@ -138,23 +138,23 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int k = a_table.Count; k <= n; k++) {
-                    ddouble a = a_table.Last() * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1))) / checked(k * 8);
+                for (int k = table.Count; k <= n; k++) {
+                    ddouble a = table.Last() * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1))) / checked(k * 8);
 
-                    a_table.Add(a);
+                    table.Add(a);
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         private class JYCoefTable {
             private readonly ddouble squa_nu4;
-            private readonly List<(ddouble p0, ddouble p1)> a_table = new();
+            private readonly List<(ddouble p0, ddouble p1)> table = new();
 
             public JYCoefTable(ddouble nu) {
                 this.squa_nu4 = 4 * nu * nu;
@@ -167,26 +167,26 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
                 static int square(int n) => checked(n * n);
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     ddouble p0 = (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / checked(64 * (4 * k + 1) * (4 * k + 2));
                     ddouble p1 = (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / checked(64 * (4 * k + 2) * (4 * k + 3));
 
-                    a_table.Add((p0, p1));
+                    table.Add((p0, p1));
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
 
         private class IKCoefTable {
             private readonly ddouble squa_nu4;
-            private readonly List<ddouble> a_table = new();
+            private readonly List<ddouble> table = new();
 
             public IKCoefTable(ddouble nu) {
                 this.squa_nu4 = 4 * nu * nu;
@@ -199,19 +199,19 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < a_table.Count) {
-                    return a_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
                 static int square(int n) => checked(n * n);
 
-                for (int k = a_table.Count; k <= n; k++) {
+                for (int k = table.Count; k <= n; k++) {
                     ddouble p = (squa_nu4 - square(4 * k + 1)) / checked(8 * (2 * k + 1));
 
-                    a_table.Add(p);
+                    table.Add(p);
                 }
 
-                return a_table[n];
+                return table[n];
             }
         }
     }

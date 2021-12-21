@@ -589,7 +589,7 @@ namespace DoubleDoubleSandbox {
 
         public class BesselJPhiTable {
             private readonly ddouble alpha;
-            private readonly List<ddouble> phi_table = new();
+            private readonly List<ddouble> table = new();
 
             private ddouble g;
 
@@ -605,8 +605,8 @@ namespace DoubleDoubleSandbox {
 
                 this.g = phi0;
 
-                this.phi_table.Add(phi0);
-                this.phi_table.Add(phi1);
+                this.table.Add(phi0);
+                this.table.Add(phi1);
             }
 
             public ddouble this[int n] => Value(n);
@@ -616,25 +616,25 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < phi_table.Count) {
-                    return phi_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int m = phi_table.Count; m <= n; m++) {
+                for (int m = table.Count; m <= n; m++) {
                     g = g * (alpha + m - 1) / m;
 
                     ddouble phi = g * (alpha + 2 * m);
 
-                    phi_table.Add(phi);
+                    table.Add(phi);
                 }
 
-                return phi_table[n];
+                return table[n];
             }
         };
 
         public class BesselIPsiTable {
             private readonly ddouble alpha;
-            private readonly List<ddouble> psi_table = new();
+            private readonly List<ddouble> table = new();
 
             private ddouble g;
 
@@ -650,8 +650,8 @@ namespace DoubleDoubleSandbox {
 
                 this.g = 2 * psi0;
 
-                this.psi_table.Add(psi0);
-                this.psi_table.Add(psi1);
+                this.table.Add(psi0);
+                this.table.Add(psi1);
             }
 
             public ddouble this[int n] => Value(n);
@@ -661,25 +661,25 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < psi_table.Count) {
-                    return psi_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int m = psi_table.Count; m <= n; m++) {
+                for (int m = table.Count; m <= n; m++) {
                     g = g * (2 * alpha + m - 1) / m;
 
                     ddouble phi = g * (alpha + m);
 
-                    psi_table.Add(phi);
+                    table.Add(phi);
                 }
 
-                return psi_table[n];
+                return table[n];
             }
         };
 
         public class BesselYEtaTable {
             private readonly ddouble alpha;
-            private readonly List<ddouble> eta_table = new();
+            private readonly List<ddouble> table = new();
 
             private ddouble g;
 
@@ -689,7 +689,7 @@ namespace DoubleDoubleSandbox {
                 }
 
                 this.alpha = alpha;
-                this.eta_table.Add(ddouble.NaN);
+                this.table.Add(ddouble.NaN);
 
                 if (alpha > 0) {
                     ddouble c = ddouble.Gamma(1 + alpha);
@@ -698,7 +698,7 @@ namespace DoubleDoubleSandbox {
 
                     ddouble eta1 = (alpha + 2) * g;
 
-                    this.eta_table.Add(eta1);
+                    this.table.Add(eta1);
                 }
             }
 
@@ -709,32 +709,32 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < eta_table.Count) {
-                    return eta_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int m = eta_table.Count; m <= n; m++) {
+                for (int m = table.Count; m <= n; m++) {
                     if (alpha > 0) {
                         g = -g * (alpha + m - 1) * (2 * alpha + m - 1) / (m * (m - alpha));
 
                         ddouble eta = g * (alpha + 2 * m);
 
-                        eta_table.Add(eta);
+                        table.Add(eta);
                     }
                     else {
                         ddouble eta = (ddouble)2d / m;
 
-                        eta_table.Add(((m & 1) == 1) ? eta : -eta);
+                        table.Add(((m & 1) == 1) ? eta : -eta);
                     }
                 }
 
-                return eta_table[n];
+                return table[n];
             }
         };
 
         public class BesselYXiTable {
             private readonly ddouble alpha;
-            private readonly List<ddouble> xi_table = new();
+            private readonly List<ddouble> table = new();
             private readonly BesselYEtaTable eta;
 
             public BesselYXiTable(ddouble alpha, BesselYEtaTable eta) {
@@ -743,8 +743,8 @@ namespace DoubleDoubleSandbox {
                 }
 
                 this.alpha = alpha;
-                this.xi_table.Add(ddouble.NaN);
-                this.xi_table.Add(ddouble.NaN);
+                this.table.Add(ddouble.NaN);
+                this.table.Add(ddouble.NaN);
 
                 this.eta = eta;
             }
@@ -756,31 +756,31 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-                if (n < xi_table.Count) {
-                    return xi_table[n];
+                if (n < table.Count) {
+                    return table[n];
                 }
 
-                for (int m = xi_table.Count; m <= n; m++) {
+                for (int m = table.Count; m <= n; m++) {
                     if (alpha > 0) {
                         if ((m & 1) == 0) {
-                            xi_table.Add(eta[m / 2]);
+                            table.Add(eta[m / 2]);
                         }
                         else {
-                            xi_table.Add((eta[m / 2] - eta[m / 2 + 1]) / 2);
+                            table.Add((eta[m / 2] - eta[m / 2 + 1]) / 2);
                         }
                     }
                     else {
                         if ((m & 1) == 1) {
                             ddouble xi = (ddouble)(2 * (m / 2) + 1) / ((m / 2) * ((m / 2) + 1));
-                            xi_table.Add(((m & 2) > 0) ? xi : -xi);
+                            table.Add(((m & 2) > 0) ? xi : -xi);
                         }
                         else {
-                            xi_table.Add(ddouble.NaN);
+                            table.Add(ddouble.NaN);
                         }
                     }
                 }
 
-                return xi_table[n];
+                return table[n];
             }
         };
     }
