@@ -1,6 +1,4 @@
-﻿using DoubleDouble;
-using System;
-using System.IO;
+﻿using System;
 
 namespace DoubleDoubleSandbox {
     internal class Program {
@@ -142,29 +140,29 @@ namespace DoubleDoubleSandbox {
             //    }
             //}
 
-            using (StreamWriter sw = new StreamWriter("../../bessel_y_millerbw.csv")) {
-                sw.WriteLine("n,z,m,y");
-                for (ddouble nu = 0; nu <= 8; nu += 0.125d) {
-                    for (double z = 2d; z <= 40d; z += 0.25d) {
-                        (ddouble y, int m) = BesselMillerBackward.BesselY(nu, z, eps: 1e-25);
-            
-                        sw.WriteLine($"{nu},{z},{m},{y}");
-                        Console.WriteLine($"{nu},{z},{m},{y}");
-                    }
-                }
-            }
-
-            using (StreamWriter sw = new StreamWriter("../../bessel_i_millerbw.csv")) {
-                sw.WriteLine("n,z,m,y");
-                for (ddouble nu = 0; nu <= 8; nu += 0.125d) {
-                    for (double z = 2d; z <= 40d; z += 0.25d) {
-                        (ddouble y, int m) = BesselMillerBackward.BesselI(nu, z, eps: 1e-25);
-            
-                        sw.WriteLine($"{nu},{z},{m},{y}");
-                        Console.WriteLine($"{nu},{z},{m},{y}");
-                    }
-                }
-            }
+            //using (StreamWriter sw = new StreamWriter("../../bessel_y_millerbw.csv")) {
+            //    sw.WriteLine("n,z,m,y");
+            //    for (ddouble nu = 0; nu <= 8; nu += 0.125d) {
+            //        for (double z = 2d; z <= 40d; z += 0.25d) {
+            //            (ddouble y, int m) = BesselMillerBackward.BesselY(nu, z, eps: 1e-25);
+            //
+            //            sw.WriteLine($"{nu},{z},{m},{y}");
+            //            Console.WriteLine($"{nu},{z},{m},{y}");
+            //        }
+            //    }
+            //}
+            //
+            //using (StreamWriter sw = new StreamWriter("../../bessel_i_millerbw.csv")) {
+            //    sw.WriteLine("n,z,m,y");
+            //    for (ddouble nu = 0; nu <= 8; nu += 0.125d) {
+            //        for (double z = 2d; z <= 40d; z += 0.25d) {
+            //            (ddouble y, int m) = BesselMillerBackward.BesselI(nu, z, eps: 1e-25);
+            //
+            //            sw.WriteLine($"{nu},{z},{m},{y}");
+            //            Console.WriteLine($"{nu},{z},{m},{y}");
+            //        }
+            //    }
+            //}
 
             Console.WriteLine("END");
             Console.Read();

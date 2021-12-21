@@ -260,7 +260,7 @@ namespace DoubleDoubleSandbox {
             }
 
             BesselJPhiTable phi = phi_table[alpha];
-                        
+
             ddouble f0 = 1e-256, f1 = ddouble.Zero, lambda = ddouble.Zero;
             ddouble se = ddouble.Zero, sxo = ddouble.Zero, sxe = ddouble.Zero;
             ddouble v = 1d / x;
@@ -298,12 +298,12 @@ namespace DoubleDoubleSandbox {
             ddouble m0 = y0 / lambda;
             ddouble m1 = y1 / lambda;
 
-            if (n == 0) { 
+            if (n == 0) {
                 ddouble yn = y0 / lambda;
 
                 return yn;
             }
-            if (n == 1) { 
+            if (n == 1) {
                 ddouble yn = y1 / lambda;
 
                 return yn;
@@ -374,7 +374,7 @@ namespace DoubleDoubleSandbox {
             }
 
             BesselYXiTable xi = xi_table[0];
-            
+
             ddouble f0 = 1e-256, f1 = ddouble.Zero, lambda = ddouble.Zero;
             ddouble sx = ddouble.Zero;
             ddouble v = 1d / x;
@@ -604,7 +604,7 @@ namespace DoubleDoubleSandbox {
             int n = (int)ddouble.Ceiling(ddouble.Abs(nu));
 
             for (int m = n * 4 + 2; m <= max_m; m += 2) {
-                ddouble y = BesselI(nu, x, m);
+                ddouble y = BesselI(nu, x, m, scale: true);
 
                 dy = ddouble.Abs(y - y_prev);
                 y_prev = y;

@@ -40,7 +40,7 @@ namespace DoubleDoubleSandbox {
             }
         }
 
-        private static ddouble Value(ddouble x, ddouble[] cs, ddouble[] ds, bool scale = false) { 
+        private static ddouble Value(ddouble x, ddouble[] cs, ddouble[] ds, bool scale = false) {
             ddouble t = 1 / x, tn = 1;
             ddouble c = 0, d = 0;
 

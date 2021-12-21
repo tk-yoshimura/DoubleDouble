@@ -143,7 +143,7 @@ namespace DoubleDoubleTest.DDouble {
             foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
                 (zeropoint - Math.ScaleB(1, -6), "-1.5228971283480549509138070051856036196824e-2"),
                 (zeropoint + Math.ScaleB(1, -6), "+1.5012758784280317663209652801806723405405e-2"),
-            }){
+            }) {
                 ddouble x_dec = ddouble.BitDecrement(x), x_dec2 = ddouble.BitDecrement(x_dec), x_dec3 = ddouble.BitDecrement(x_dec2);
                 ddouble x_inc = ddouble.BitIncrement(x), x_inc2 = ddouble.BitIncrement(x_inc), x_inc3 = ddouble.BitIncrement(x_inc2);
 

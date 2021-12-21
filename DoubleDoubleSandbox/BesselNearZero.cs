@@ -1,7 +1,6 @@
 ﻿using DoubleDouble;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DoubleDoubleSandbox {
     internal class BesselNearZero {
@@ -188,7 +187,7 @@ namespace DoubleDoubleSandbox {
 
             ddouble c = 0d, u = 2 * ddouble.RcpPI;
 
-            for (int k = 0; k <= max_terms; k++) {                
+            for (int k = 0; k <= max_terms; k++) {
                 ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k)) * (1 - x2 * d[k]) + x2 * q[k]);
 
                 ddouble c_next = c + dc;
@@ -222,7 +221,7 @@ namespace DoubleDoubleSandbox {
 
             ddouble c = -2 / (x * ddouble.PI), u = x / (2 * ddouble.PI);
 
-            for (int k = 0; k <= max_terms; k++) {                
+            for (int k = 0; k <= max_terms; k++) {
                 ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k) - ddouble.HarmonicNumber(2 * k + 1)) * (1 - x2 * d[k]) + x2 * q[k]);
 
                 ddouble c_next = c + dc;
@@ -279,21 +278,21 @@ namespace DoubleDoubleSandbox {
             if (n == 1) {
                 return BesselK1Kernel(x, max_terms);
             }
-            
+
             ddouble v = 1d / x;
             (ddouble y0, int y0_terms) = BesselK0Kernel(x, max_terms);
             (ddouble y1, int y1_terms) = BesselK1Kernel(x, max_terms);
-            
+
             for (int k = 1; k < n; k++) {
                 (y1, y0) = ((2 * k) * v * y1 + y0, y1);
             }
-            
+
             return (y1, Math.Max(y0_terms, y1_terms));
         }
 
         public static (ddouble c, int terms) BesselK0Kernel(ddouble x, int max_terms = 64) {
             K0CoefTable r = k0_coef_table;
-            ddouble h = - ddouble.Log(x / 2) - ddouble.EulerGamma;
+            ddouble h = -ddouble.Log(x / 2) - ddouble.EulerGamma;
 
             ddouble x2 = x * x;
 
@@ -543,7 +542,7 @@ namespace DoubleDoubleSandbox {
 
                 for (int k = table.Count; k <= n; k++) {
                     c *= checked(4 * k);
-                    
+
                     table.Add(ddouble.Rcp(c));
                 }
 

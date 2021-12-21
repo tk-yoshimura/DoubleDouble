@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -259,7 +257,7 @@ namespace DoubleDouble {
 
         private static partial class Consts {
             public static class Gamma {
-                public const int Threshold = 12;                
+                public const int Threshold = 12;
 
                 public static ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable = new(new (ddouble s, ddouble r)[]{
                     ((+1, -4, 0xAAAAAAAAAAAAAAAAuL, 0xAAAAAAAAAAAAAAAAuL),  (+1, -5, 0x8888888888888888uL, 0x8888888888888888uL)),

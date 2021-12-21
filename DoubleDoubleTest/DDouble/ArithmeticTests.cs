@@ -228,7 +228,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(double.NaN * ddouble.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(double.NaN * ddouble.NaN));
 
-            foreach (int n in new int[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 
+            foreach (int n in new int[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537,
                                           -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537 }) {
 
                 ddouble u = (ddouble.Rcp(n)) * n;
@@ -245,7 +245,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            foreach (long n in new long[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295L, 4294967296L, 4294967297L, 
+            foreach (long n in new long[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295L, 4294967296L, 4294967297L,
                                           -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537, -4294967295L, -4294967296L, -4294967297L, }) {
 
                 ddouble u = (ddouble.Rcp(n)) * n;
@@ -331,7 +331,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / double.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN / double.NaN));
 
-            foreach (int n in new int[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 
+            foreach (int n in new int[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537,
                                           -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537 }) {
 
                 ddouble u = ((ddouble)0.25d / n) * n;
@@ -348,7 +348,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            foreach (long n in new long[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295L, 4294967296L, 4294967297L, 
+            foreach (long n in new long[] { 1, 2, 3, 4, 5, 15, 16, 17, 255, 256, 257, 65535, 65536, 65537, 4294967295L, 4294967296L, 4294967297L,
                                           -1, -2, -3, -4, -5, -15, -16, -17, -255, -256, -257, -65535, -65536, -65537, -4294967295L, -4294967296L, -4294967297L, }) {
 
                 ddouble u = ((ddouble)0.25d / n) * n;

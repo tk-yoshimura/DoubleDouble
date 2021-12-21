@@ -1,12 +1,10 @@
-﻿using DoubleDouble;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static DoubleDouble.ddouble;
 
+namespace DoubleDouble {
 
-namespace DoubleDoubleSandbox {
-    public static class Bessel {
+    public partial struct ddouble {
 
         public static ddouble BesselJ(ddouble nu, ddouble x) {
             CheckNu(nu);
