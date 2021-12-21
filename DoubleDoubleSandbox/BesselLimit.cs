@@ -125,7 +125,7 @@ namespace DoubleDoubleSandbox {
             public CoefTable(ddouble nu) {
                 this.squa_nu4 = 4 * nu * nu;
 
-                ddouble a1 = ddouble.Ldexp(squa_nu4 - 1, -3);
+                ddouble a1 = (squa_nu4 - 1) / 8;
 
                 this.a_table.Add(1d);
                 this.a_table.Add(a1);

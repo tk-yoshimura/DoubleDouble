@@ -22,27 +22,19 @@ namespace DoubleDoubleSandbox {
             else {
                 (ddouble c, int terms) = BesselJICoef(nu, z, sign_switch: true, max_terms);
 
-                ddouble t = ddouble.Pow(ddouble.Ldexp(z, -1), nu) * c;
+                ddouble t = ddouble.Pow(z / 2, nu) * c;
 
                 return (t, terms);
             }
         }
 
         public static (ddouble y, int terms) BesselY(ddouble nu, ddouble z, int max_terms = 64) {
-            if (nu.Sign < 0 && nu == ddouble.Floor(nu)) {
-                int n = (int)ddouble.Floor(nu);
-                (ddouble y, int terms) = BesselY(-nu, z, max_terms);
-                
-                return ((n & 2) == 0) ? (y, terms) : (-y, terms);
-            }
-            else if (nu == ddouble.Floor(nu)) {
+            if (nu == ddouble.Floor(nu)) {
                 int n = (int)ddouble.Floor(nu);
 
-                if (n == 0) {
-                    return BesselY0Coef(z, max_terms);
-                }
+                (ddouble c, int terms) = BesselYCoef(n, z, max_terms);
 
-                return (ddouble.NaN, max_terms);
+                return (c, terms);
             }
             else {
                 (ddouble c, int terms) = BesselYCoef(nu, z, max_terms);
@@ -102,7 +94,7 @@ namespace DoubleDoubleSandbox {
             GammaDenomTable gp = gammadenom_coef_table[nu], gn = gammadenom_coef_table[-nu];
 
             ddouble cos = ddouble.CosPI(nu), sin = ddouble.SinPI(nu);
-            ddouble tp = ddouble.Pow(ddouble.Ldexp(z, -1), nu), tn = 1d / tp, fp = tp * cos;
+            ddouble tp = ddouble.Pow(z / 2, nu), tn = 1d / tp, fp = tp * cos;
 
             ddouble z2 = z * z, z4 = z2 * z2;
 
@@ -124,6 +116,32 @@ namespace DoubleDoubleSandbox {
             return (ddouble.NaN, int.MaxValue);
         }
 
+        public static (ddouble c, int terms) BesselYCoef(int n, ddouble z, int max_terms = 64) {
+            if (n < 0) {
+                (ddouble y, int terms) = BesselYCoef(-n, z, max_terms);
+
+                return ((n & 2) == 0) ? (y, terms) : (-y, terms);
+            }
+            else {
+                if (n == 0) {
+                    return BesselY0Coef(z, max_terms);
+                }
+                if (n == 1) {
+                    return BesselY1Coef(z, max_terms);
+                }
+            }
+
+            ddouble v = 1d / z;
+            (ddouble y0, int y0_terms) = BesselY0Coef(z, max_terms);
+            (ddouble y1, int y1_terms) = BesselY1Coef(z, max_terms);
+
+            for (int k = 1; k < n; k++) {
+                (y1, y0) = ((2 * k) * v * y1 - y0, y1);
+            }
+
+            return (y1, Math.Max(y0_terms, y1_terms));
+        }
+
         public static (ddouble c, int terms) BesselY0Coef(ddouble z, int max_terms = 64) {
             if (!dfactdenom_coef_table.ContainsKey(0)) {
                 dfactdenom_coef_table.Add(0, new DoubleFactDenomTable(0));
@@ -136,11 +154,11 @@ namespace DoubleDoubleSandbox {
             X2DenomTable d = x2denom_coef_table[0];
             Y0CoefTable q = y0_coef_table;
 
-            ddouble h = ddouble.Log(ddouble.Ldexp(z, -1)) + ddouble.EulerGamma;
+            ddouble h = ddouble.Log(z / 2) + ddouble.EulerGamma;
 
             ddouble z2 = z * z, z4 = z2 * z2;
 
-            ddouble c = 0d, u = 1d;
+            ddouble c = 0d, u = 2 * ddouble.RcpPI;
 
             for (int k = 0; k <= max_terms; k++) {                
                 ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k)) * (1 - z2 * d[k]) + z2 * q[k]);
@@ -148,7 +166,41 @@ namespace DoubleDoubleSandbox {
                 ddouble c_next = c + dc;
 
                 if (c == c_next) {
-                    return (2 * c * ddouble.RcpPI, k);
+                    return (c, k);
+                }
+
+                c = c_next;
+                u *= z4;
+            }
+
+            return (ddouble.NaN, int.MaxValue);
+        }
+
+        public static (ddouble c, int terms) BesselY1Coef(ddouble z, int max_terms = 64) {
+            if (!dfactdenom_coef_table.ContainsKey(1)) {
+                dfactdenom_coef_table.Add(1, new DoubleFactDenomTable(1));
+            }
+            if (!x2denom_coef_table.ContainsKey(1)) {
+                x2denom_coef_table.Add(1, new X2DenomTable(1));
+            }
+
+            DoubleFactDenomTable r = dfactdenom_coef_table[1];
+            X2DenomTable d = x2denom_coef_table[1];
+            Y1CoefTable q = y1_coef_table;
+
+            ddouble h = ddouble.Ldexp(ddouble.Log(z / 2) + ddouble.EulerGamma, 1);
+
+            ddouble z2 = z * z, z4 = z2 * z2;
+
+            ddouble c = -2 / (z * ddouble.PI), u = z / (2 * ddouble.PI);
+
+            for (int k = 0; k <= max_terms; k++) {                
+                ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k) - ddouble.HarmonicNumber(2 * k + 1)) * (1 - z2 * d[k]) + z2 * q[k]);
+
+                ddouble c_next = c + dc;
+
+                if (c == c_next) {
+                    return (c, k);
                 }
 
                 c = c_next;

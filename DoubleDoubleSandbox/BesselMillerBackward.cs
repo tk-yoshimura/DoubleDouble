@@ -39,7 +39,7 @@ namespace DoubleDoubleSandbox {
                 }
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + f0;
+            lambda = 2 * lambda + f0;
 
             ddouble yn = fn / lambda;
 
@@ -134,7 +134,7 @@ namespace DoubleDoubleSandbox {
                 (f0, f1) = ((2 * k) * v * f0 - f1, f0);
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + f0;
+            lambda = 2 * lambda + f0;
 
             ddouble y0 = f0 / lambda;
 
@@ -157,7 +157,7 @@ namespace DoubleDoubleSandbox {
                 (f0, f1) = ((2 * k) * v * f0 - f1, f0);
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + f0;
+            lambda = 2 * lambda + f0;
 
             ddouble y1 = f1 / lambda;
 
@@ -208,7 +208,7 @@ namespace DoubleDoubleSandbox {
                 (f0, f1) = ((2 * k) * v * f0 - f1, f0);
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + f0;
+            lambda = 2 * lambda + f0;
 
             ddouble c = ddouble.Log(x / 2) + ddouble.EulerGamma;
 
@@ -340,7 +340,7 @@ namespace DoubleDoubleSandbox {
                 (f0, f1) = ((2 * k) * v * f0 - f1, f0);
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + f0;
+            lambda = 2 * lambda + f0;
 
             ddouble y0 = 2 * (se + f0 * (ddouble.Log(x / 2) + ddouble.EulerGamma)) / (ddouble.PI * lambda);
 
@@ -377,7 +377,7 @@ namespace DoubleDoubleSandbox {
                 (f0, f1) = ((2 * k) * v * f0 - f1, f0);
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + f0;
+            lambda = 2 * lambda + f0;
 
             ddouble y1 = 2 * (sx - v * f0 + (ddouble.Log(x / 2) + ddouble.EulerGamma - 1) * f1) / (lambda * ddouble.PI);
 
@@ -406,7 +406,7 @@ namespace DoubleDoubleSandbox {
                 }
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + f0;
+            lambda = 2 * lambda + f0;
 
             ddouble yn = fn / lambda;
 
@@ -507,7 +507,7 @@ namespace DoubleDoubleSandbox {
                 (g0, g1) = ((2 * k) * v * g0 + g1, g0);
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + g0;
+            lambda = 2 * lambda + g0;
 
             ddouble y0 = g0 / lambda;
 
@@ -532,7 +532,7 @@ namespace DoubleDoubleSandbox {
                 (g0, g1) = ((2 * k) * v * g0 + g1, g0);
             }
 
-            lambda = ddouble.Ldexp(lambda, 1) + g0;
+            lambda = 2 * lambda + g0;
 
             ddouble y1 = g1 / lambda;
 
