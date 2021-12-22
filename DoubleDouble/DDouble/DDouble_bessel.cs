@@ -1199,9 +1199,6 @@ namespace DoubleDouble {
                 ddouble y0 = r * se + eta0 * f0;
                 ddouble y1 = r * (3 * alpha * v * sxe + sxo) + xi0 * f0 + xi1 * f1;
 
-                ddouble m0 = y0 / lambda;
-                ddouble m1 = y1 / lambda;
-
                 if (n == 0) {
                     ddouble yn = y0 / lambda;
 
