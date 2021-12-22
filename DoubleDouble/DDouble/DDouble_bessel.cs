@@ -13,6 +13,10 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
+            if (nu - Floor(nu) == Point5) {
+                return HalfInt.BesselJ((int)Floor(nu), x);
+            }
+
             if (x <= 2d) {
                 return NearZero.BesselJ(nu, x);
             }
@@ -143,7 +147,7 @@ namespace DoubleDouble {
         }
 
         private static void CheckNu(ddouble nu) {
-            if (Abs(nu - Round(nu)) < Math.ScaleB(1, -10)) {
+            if (nu != Round(nu) && Abs(nu - Round(nu)) < Math.ScaleB(1, -10)) {
                 throw new ArgumentException(
                     "The calculation of the Bessel function value is invalid because it loses digits" +
                     " when nu is extremely close to an integer. (|nu - round(nu)| < 9.765625e-4 and nu != round(nu))",
@@ -184,7 +188,7 @@ namespace DoubleDouble {
                     int n = (int)Floor(nu);
                     ddouble y = BesselJ(-nu, x);
 
-                    return ((n & 2) == 0) ? y : -y;
+                    return ((n & 1) == 0) ? y : -y;
                 }
                 else {
                     ddouble y = BesselJIKernel(nu, x, sign_switch: true, terms: 9);
@@ -334,7 +338,7 @@ namespace DoubleDouble {
                 if (n < 0) {
                     ddouble y = BesselYKernel(-n, x, terms);
 
-                    return ((n & 2) == 0) ? y : -y;
+                    return ((n & 1) == 0) ? y : -y;
                 }
                 else {
                     if (n == 0) {
@@ -2639,6 +2643,64 @@ namespace DoubleDouble {
 
                     return table[n];
                 }
+            }
+        }
+
+        private static class HalfInt {
+            public static ddouble BesselJ(int n, ddouble x) {
+                ddouble c = Cos(x), s = Sin(x);
+                ddouble v = Rcp(x), r = Sqrt(2 * v * RcpPI);
+
+                if (n == -8) { //nu=-7.5
+                    return r*(((((((((-135135*c)* v) + (-135135*s)* v) + (62370*c)* v) + (17325*s)* v) + (-3150*c)* v) + (-378*s)* v) + (28*c)* v) + s);
+                }
+                if (n == -7) { //nu=-6.5
+                    return r*((((((((10395*c)* v) + (10395*s)* v) + (-4725*c)* v) + (-1260*s)* v) + (210*c)* v) + (21*s)* v) - c);
+                }
+                if (n == -6) { //nu=-5.5
+                    return r*(((((((-945*c)* v) + (-945*s)* v) + (420*c)* v) + (105*s)* v) + (-15*c)* v) - s);
+                }
+                if (n == -5) { //nu=-4.5
+                    return r*((((((105*c)* v) + (105*s)* v) + (-45*c)* v) + (-10*s)* v) + c);
+                }
+                if (n == -4) { //nu=-3.5
+                    return r*(((((-15*c)* v) + (-15*s)* v) + (6*c)* v) + s);
+                }
+                if (n == -3) { //nu=-2.5
+                    return r*((((3*c)* v) + (3*s)* v) - c);
+                }
+                if (n == -2) { //nu=-1.5
+                    return r*(- c * v - s);
+                }
+                if (n == -1) { //nu=-0.5
+                    return r*c;
+                }
+                if (n == 0) { //nu=0.5
+                    return r*s;
+                }
+                if (n == 1) { //nu=1.5
+                    return r*(s / x - c);
+                }
+                if (n == 2) { //nu=2.5
+                    return r*((((3*s)* v) + (-3*c)* v) - s);
+                }
+                if (n == 3) { //nu=3.5
+                    return r*(((((15*s)* v) + (-15*c)* v) + (-6*s)* v) + c);
+                }
+                if (n == 4) { //nu=4.5
+                    return r*((((((105*s)* v) + (-105*c)* v) + (-45*s)* v) + (10*c)* v) + s);
+                }
+                if (n == 5) { //nu=5.5
+                    return r*(((((((945*s)* v) + (-945*c)* v) + (-420*s)* v) + (105*c)* v) + (15*s)* v) - c);
+                }
+                if (n == 6) { //nu=6.5
+                    return r*((((((((10395*s)* v) + (-10395*c)* v) + (-4725*s)* v) + (1260*c)* v) + (210*s)* v) + (-21*c)* v) - s);
+                }
+                if (n == 7) { //nu=7.5
+                    return r*(((((((((135135*s)* v) + (-135135*c)* v) + (-62370*s)* v) + (17325*c)* v) + (3150*s)* v) + (-378*c)* v) + (-28*s)* v) + c);
+                }
+
+                throw new NotImplementedException();
             }
         }
     }
