@@ -1696,13 +1696,12 @@ namespace DoubleDouble {
             }
 
             private static ddouble Value(ddouble x, ddouble[] cs, ddouble[] ds, bool scale = false) {
-                ddouble t = 1 / x, tn = 1;
-                ddouble c = 0, d = 0;
+                ddouble t = 1 / x;
+                ddouble c = cs[^1], d = ds[^1];
 
-                for (int j = 0; j < cs.Length; j++) {
-                    c += cs[j] * tn;
-                    d += ds[j] * tn;
-                    tn *= t;
+                for (int j = cs.Length - 2; j >= 0; j--) {
+                    c = (c * t) + cs[j];
+                    d = (d * t) + ds[j];
                 }
 
                 ddouble y = Sqrt(t * PI / 2) * c / d;
