@@ -7,14 +7,21 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble BesselJ(ddouble nu, ddouble x) {
-            CheckNu(nu);
+            BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (nu - Floor(nu) == Point5) {
-                return HalfInt.BesselJ((int)Floor(nu), x);
+            if (x <= BesselUtil.XZero) {
+                if (nu == 0) {
+                    return 1d;
+                }
+                if (nu > 0 || nu == Floor(nu)) {
+                    return 0d;
+                }
+                int n = (int)Floor(nu);
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
             }
 
             if (x <= 2d) {
@@ -28,10 +35,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble BesselJ(int n, ddouble x) {
-            CheckN(n);
+            BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (x <= BesselUtil.XZero) {
+                return (n == 0) ? 1d : 0d;
             }
 
             if (x <= 2d) {
@@ -45,13 +56,24 @@ namespace DoubleDouble {
         }
 
         public static ddouble BesselY(ddouble nu, ddouble x) {
-            CheckNu(nu);
+            BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= 2d) {
+            if (x <= BesselUtil.XZero) {
+                if (nu > 0) {
+                    return NegativeInfinity;
+                }
+                if (nu - Floor(nu) == Point5) {
+                    return 0d;
+                }
+                int n = (int)(Floor(nu + Point5));
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
+            }
+
+            if (x <= 2d || (x <= 4d && nu < 0 && nu - Floor(nu) == Point5)) {
                 return NearZero.BesselY(nu, x);
             }
             if (x <= 40d) {
@@ -62,10 +84,17 @@ namespace DoubleDouble {
         }
 
         public static ddouble BesselY(int n, ddouble x) {
-            CheckN(n);
+            BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (x <= BesselUtil.XZero) {
+                if (n > 0) {
+                    return NegativeInfinity;
+                }
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
             }
 
             if (x <= 2d) {
@@ -79,10 +108,21 @@ namespace DoubleDouble {
         }
 
         public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-            CheckNu(nu);
+            BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (x <= BesselUtil.XZero) {
+                if (nu == 0) {
+                    return 1d;
+                }
+                if (nu > 0 || nu == Floor(nu)) {
+                    return 0d;
+                }
+                int n = (int)Floor(nu);
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
             }
 
             if (x <= 2d) {
@@ -96,10 +136,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble BesselI(int n, ddouble x, bool scale = false) {
-            CheckN(n);
+            BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (x <= BesselUtil.XZero) {
+                return (n == 0) ? 1d : 0d;
             }
 
             if (x <= 2d) {
@@ -113,10 +157,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-            CheckNu(nu);
+            BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (x <= BesselUtil.XZero) {
+                return PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -130,10 +178,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble BesselK(int n, ddouble x, bool scale = false) {
-            CheckN(n);
+            BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
                 throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (x <= BesselUtil.XZero) {
+                return PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -146,29 +198,33 @@ namespace DoubleDouble {
             return Limit.BesselK(n, x, scale);
         }
 
-        private static void CheckNu(ddouble nu) {
-            if (nu != Round(nu) && Abs(nu - Round(nu)) < Math.ScaleB(1, -10)) {
-                throw new ArgumentException(
-                    "The calculation of the Bessel function value is invalid because it loses digits" +
-                    " when nu is extremely close to an integer. (|nu - round(nu)| < 9.765625e-4 and nu != round(nu))",
-                    nameof(nu)
-                );
+        private static class BesselUtil{
+            public static readonly double XZero = Math.ScaleB(1, -64);
+
+            public static void CheckNu(ddouble nu) {
+                if (nu != Round(nu) && Abs(nu - Round(nu)) < Math.ScaleB(1, -10)) {
+                    throw new ArgumentException(
+                        "The calculation of the Bessel function value is invalid because it loses digits" +
+                        " when nu is extremely close to an integer. (|nu - round(nu)| < 9.765625e-4 and nu != round(nu))",
+                        nameof(nu)
+                    );
+                }
+
+                if (!(Abs(nu) <= 8)) {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(nu),
+                        "In the calculation of the Bessel function, nu with an absolute value greater than 8 is not supported."
+                    );
+                }
             }
 
-            if (!(Abs(nu) <= 8)) {
-                throw new ArgumentOutOfRangeException(
-                    nameof(nu),
-                    "In the calculation of the Bessel function, nu with an absolute value greater than 8 is not supported."
-                );
-            }
-        }
-
-        private static void CheckN(int n) {
-            if (n < -8 || n > 8) {
-                throw new ArgumentOutOfRangeException(
-                    nameof(n),
-                    "In the calculation of the Bessel function, n with an absolute value greater than 8 is not supported."
-                );
+            public static void CheckN(int n) {
+                if (n < -8 || n > 8) {
+                    throw new ArgumentOutOfRangeException(
+                        nameof(n),
+                        "In the calculation of the Bessel function, n with an absolute value greater than 8 is not supported."
+                    );
+                }
             }
         }
 
@@ -860,7 +916,7 @@ namespace DoubleDouble {
 
                 if (nu == Floor(nu)) {
                     int n = (int)Floor(nu);
-                    ddouble y = BesselIKernel(n, x, m);
+                    ddouble y = BesselIKernel(n, x, m, scale);
 
                     return y;
                 }
@@ -1250,14 +1306,13 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                if (n < 0) {
-                    return BesselIKernel(-n, x, m, scale);
-                }
+                n = Math.Abs(n);
+                
                 if (n == 0) {
-                    return BesselI0Kernel(x, m);
+                    return BesselI0Kernel(x, m, scale);
                 }
                 if (n == 1) {
-                    return BesselI1Kernel(x, m);
+                    return BesselI1Kernel(x, m, scale);
                 }
 
                 ddouble f0 = 1e-256, f1 = Zero, lambda = Zero, fn = Zero;
@@ -1624,11 +1679,12 @@ namespace DoubleDouble {
                     return y;
                 }
                 else {
-                    ddouble y0 = BesselK(nu, x, scale);
-                    ddouble y1 = BesselK(nu + 1, x, scale);
-
                     int n = (int)Floor(nu);
                     ddouble alpha = nu - n;
+
+                    ddouble y0 = BesselK(alpha, x, scale);
+                    ddouble y1 = BesselK(alpha + 1, x, scale);
+
                     ddouble v = 1d / x;
 
                     for (int k = 1; k < n; k++) {
@@ -2643,64 +2699,6 @@ namespace DoubleDouble {
 
                     return table[n];
                 }
-            }
-        }
-
-        private static class HalfInt {
-            public static ddouble BesselJ(int n, ddouble x) {
-                ddouble c = Cos(x), s = Sin(x);
-                ddouble v = Rcp(x), r = Sqrt(2 * v * RcpPI);
-
-                if (n == -8) { //nu=-7.5
-                    return r*(((((((((-135135*c)* v) + (-135135*s)* v) + (62370*c)* v) + (17325*s)* v) + (-3150*c)* v) + (-378*s)* v) + (28*c)* v) + s);
-                }
-                if (n == -7) { //nu=-6.5
-                    return r*((((((((10395*c)* v) + (10395*s)* v) + (-4725*c)* v) + (-1260*s)* v) + (210*c)* v) + (21*s)* v) - c);
-                }
-                if (n == -6) { //nu=-5.5
-                    return r*(((((((-945*c)* v) + (-945*s)* v) + (420*c)* v) + (105*s)* v) + (-15*c)* v) - s);
-                }
-                if (n == -5) { //nu=-4.5
-                    return r*((((((105*c)* v) + (105*s)* v) + (-45*c)* v) + (-10*s)* v) + c);
-                }
-                if (n == -4) { //nu=-3.5
-                    return r*(((((-15*c)* v) + (-15*s)* v) + (6*c)* v) + s);
-                }
-                if (n == -3) { //nu=-2.5
-                    return r*((((3*c)* v) + (3*s)* v) - c);
-                }
-                if (n == -2) { //nu=-1.5
-                    return r*(- c * v - s);
-                }
-                if (n == -1) { //nu=-0.5
-                    return r*c;
-                }
-                if (n == 0) { //nu=0.5
-                    return r*s;
-                }
-                if (n == 1) { //nu=1.5
-                    return r*(s / x - c);
-                }
-                if (n == 2) { //nu=2.5
-                    return r*((((3*s)* v) + (-3*c)* v) - s);
-                }
-                if (n == 3) { //nu=3.5
-                    return r*(((((15*s)* v) + (-15*c)* v) + (-6*s)* v) + c);
-                }
-                if (n == 4) { //nu=4.5
-                    return r*((((((105*s)* v) + (-105*c)* v) + (-45*s)* v) + (10*c)* v) + s);
-                }
-                if (n == 5) { //nu=5.5
-                    return r*(((((((945*s)* v) + (-945*c)* v) + (-420*s)* v) + (105*c)* v) + (15*s)* v) - c);
-                }
-                if (n == 6) { //nu=6.5
-                    return r*((((((((10395*s)* v) + (-10395*c)* v) + (-4725*s)* v) + (1260*c)* v) + (210*s)* v) + (-21*c)* v) - s);
-                }
-                if (n == 7) { //nu=7.5
-                    return r*(((((((((135135*s)* v) + (-135135*c)* v) + (-62370*s)* v) + (17325*c)* v) + (3150*s)* v) + (-378*c)* v) + (-28*s)* v) + c);
-                }
-
-                throw new NotImplementedException();
             }
         }
     }
