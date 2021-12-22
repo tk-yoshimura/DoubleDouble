@@ -21,7 +21,7 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 int n = (int)Floor(nu);
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -70,7 +70,7 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 int n = (int)(Floor(nu + Point5));
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d || (x <= 4d && nu < 0 && nu - Floor(nu) == Point5)) {
@@ -94,7 +94,7 @@ namespace DoubleDouble {
                 if (n > 0) {
                     return NegativeInfinity;
                 }
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -122,7 +122,7 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 int n = (int)Floor(nu);
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity; 
+                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -198,7 +198,7 @@ namespace DoubleDouble {
             return Limit.BesselK(n, x, scale);
         }
 
-        private static class BesselUtil{
+        private static class BesselUtil {
             public static readonly double XZero = Math.ScaleB(1, -64);
 
             public static void CheckNu(ddouble nu) {
@@ -1307,7 +1307,7 @@ namespace DoubleDouble {
                 }
 
                 n = Math.Abs(n);
-                
+
                 if (n == 0) {
                     return BesselI0Kernel(x, m, scale);
                 }

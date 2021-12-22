@@ -1,80 +1,79 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
     public class BesselFunctionTests {
         [TestMethod]
         public void BesselJTest() {
-            ddouble[] x0_expecteds = { 
-                ddouble.Zero,             
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.Zero,             
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                ddouble.Zero,             
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.Zero,             
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                ddouble.Zero,             
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.Zero,             
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                ddouble.Zero,             
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.NegativeInfinity, 
-                ddouble.Zero,             
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                ddouble.PositiveInfinity, 
-                1,                        
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
-                ddouble.Zero,             
+            ddouble[] x0_expecteds = {
+                ddouble.Zero,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.Zero,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                ddouble.Zero,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.Zero,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                ddouble.Zero,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.Zero,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                ddouble.Zero,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.NegativeInfinity,
+                ddouble.Zero,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                ddouble.PositiveInfinity,
+                1,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
+                ddouble.Zero,
             };
-            ddouble[] x1_expecteds = { 
+            ddouble[] x1_expecteds = {
                 "9.422344172604500545385401466982582667721e-8",
                 "-153768.4458353549797979173005325952867488",
                 "-112065.1624242787873936125881364104869809",
@@ -141,7 +140,7 @@ namespace DoubleDoubleTest.DDouble {
                 "1.904920587621419920156128463518269440369e-7",
                 "9.422344172604500545385401466982582667721e-8"
             };
-            ddouble[] x2_expecteds = { 
+            ddouble[] x2_expecteds = {
                 "0.00002217955228792590408774977732719738080162",
                 "-799.7485411168869565263355825940302553277",
                 "-696.2712505347138297800794043879168169293",
@@ -208,7 +207,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.00003761466957597028470400872892855480017131",
                 "0.00002217955228792590408774977732719738080162"
             };
-            ddouble[] x4_expecteds = { 
+            ddouble[] x4_expecteds = {
                 "0.004028667820819003737376520348181997938307",
                 "-6.003228587657872042761985431108373765804",
                 "-6.363590984341479559858502794768071137781",
@@ -275,7 +274,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.005685834140239501960939752745289848701242",
                 "0.004028667820819003737376520348181997938307"
             };
-            ddouble[] x8_expecteds = { 
+            ddouble[] x8_expecteds = {
                 "0.2234549863511029542836632858516401464322",
                 "-0.06669166082384841260539223806475332329559",
                 "-0.2992963633520794206079815580567829447890",
@@ -342,7 +341,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.2500498709576042626885793528732065943566",
                 "0.2234549863511029542836632858516401464322"
             };
-            ddouble[] x16_expecteds = { 
+            ddouble[] x16_expecteds = {
                 "-0.007021141952960652628932840969925083260319",
                 "-0.1120150695420080144734364919105609710571",
                 "-0.1860047889886884419488880924322986555843",
@@ -409,7 +408,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.04893541832161217466136300079899408260672",
                 "-0.007021141952960652628932840969925083260319"
             };
-            ddouble[] x32_expecteds = { 
+            ddouble[] x32_expecteds = {
                 "0.09990864269902963793487457437070789990860",
                 "0.1347605178983134021351416907296378808189",
                 "0.1422057866621864414989919931980834390308",
@@ -543,7 +542,7 @@ namespace DoubleDoubleTest.DDouble {
                 "-0.1127554308688707355595941161636679769579",
                 "-0.08630831524531732767365805856081562337474"
             };
-            ddouble[] x64_expecteds = { 
+            ddouble[] x64_expecteds = {
                 "0.06368947613435578164968469472663065876063",
                 "0.08979288336210474420924862672025641253793",
                 "0.1000169403928464556528094461868606209601",
@@ -635,7 +634,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselYTest() {
-            ddouble[] x0_expecteds = { 
+            ddouble[] x0_expecteds = {
                 ddouble.NegativeInfinity,
                 ddouble.NegativeInfinity,
                 ddouble.Zero,
@@ -702,7 +701,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble.NegativeInfinity,
                 ddouble.NegativeInfinity,
             };
-            ddouble[] x1_expecteds = { 
+            ddouble[] x1_expecteds = {
                 "-425674.6184865066936838545919325341825000",
                 "-153768.4458356243762509430943138336576745",
                 "-3.821974121348042196031583851599689269198e-7",
@@ -769,7 +768,7 @@ namespace DoubleDoubleTest.DDouble {
                 "-217461.4215655821693763144032098384714436",
                 "-425674.6184865066936838545919325341825000"
             };
-            ddouble[] x2_expecteds = { 
+            ddouble[] x2_expecteds = {
                 "-1853.922175159876417867437032020352830548",
                 "-799.7485943120628150461485011103599546164",
                 "-0.00006329818630237478444419926721330498793287",
@@ -836,7 +835,7 @@ namespace DoubleDoubleTest.DDouble {
                 "-1131.015270950267958087817195348709114771",
                 "-1853.922175159876417867437032020352830548"
             };
-            ddouble[] x4_expecteds = { 
+            ddouble[] x4_expecteds = {
                 "-11.47109197649104636193744360002789455791",
                 "-6.011269571412402712929302988539258864509",
                 "-0.007957316227848076863619375632515578667343",
@@ -903,7 +902,7 @@ namespace DoubleDoubleTest.DDouble {
                 "-8.495533120831882823775490132415936813624",
                 "-11.47109197649104636193744360002789455791"
             };
-            ddouble[] x8_expecteds = { 
+            ddouble[] x8_expecteds = {
                 "-0.3876699399771849685416415027070800968569",
                 "-0.4203155796017346567363750718008272751127",
                 "-0.2759399608703306540653631752492518712805",
@@ -970,7 +969,7 @@ namespace DoubleDoubleTest.DDouble {
                 "-0.3443661221918771092770362058009429362678",
                 "-0.3876699399771849685416415027070800968569"
             };
-            ddouble[] x16_expecteds = { 
+            ddouble[] x16_expecteds = {
                 "-0.2139937392608976407003004497517613480005",
                 "-0.1812202018128327918706817518711020002890",
                 "-0.1017967684277387770011636527886760411742",
@@ -1037,7 +1036,7 @@ namespace DoubleDoubleTest.DDouble {
                 "-0.2073486488580853052796892127743571959527",
                 "-0.2139937392608976407003004497517613480005"
             };
-            ddouble[] x32_expecteds = { 
+            ddouble[] x32_expecteds = {
                 "0.1027681179138565658423888705867407507833",
                 "0.04838096112272577144092476517418448222713",
                 "-0.01543675083915910242926352533878247828198",
@@ -1171,7 +1170,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.05922401329394204371922608882580293547224",
                 "0.09377044928139815141828209847568110079979"
             };
-            ddouble[] x64_expecteds = { 
+            ddouble[] x64_expecteds = {
                 "0.07726013865422291296758745451698176534817",
                 "0.04424733939840470399919117032452156730599",
                 "0.003531735613538088602098717787976828329821",
@@ -1263,7 +1262,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselITest() {
-            ddouble[] x0_expecteds = { 
+            ddouble[] x0_expecteds = {
                 ddouble.Zero,
                 ddouble.NegativeInfinity,
                 ddouble.NegativeInfinity,
@@ -1330,7 +1329,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble.Zero,
                 ddouble.Zero,
             };
-            ddouble[] x1_expecteds = { 
+            ddouble[] x1_expecteds = {
                 "9.960624033363978629805321924027945266950e-8",
                 "-142789.4713170378974784589397030287178660",
                 "-103767.6604206083996305221305635007751019",
@@ -1397,7 +1396,7 @@ namespace DoubleDoubleTest.DDouble {
                 "2.016943961060803795561877477172375682542e-7",
                 "9.960624033363978629805321924027945266950e-8"
             };
-            ddouble[] x2_expecteds = { 
+            ddouble[] x2_expecteds = {
                 "0.00002769936951232900996869241318262886579736",
                 "-594.5714985720404894679247757509206051348",
                 "-511.7563453852392823048036726356649255998",
@@ -1464,7 +1463,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.00004727513866119642087609879537489194995403",
                 "0.00002769936951232900996869241318262886579736"
             };
-            ddouble[] x4_expecteds = { 
+            ddouble[] x4_expecteds = {
                 "0.009809927616657364003361207899783398048674",
                 "-1.800961196154019970963897867047090897207",
                 "-1.811176035506463045597228355347436941097",
@@ -1531,7 +1530,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.01420347367009001731906303470499678956109",
                 "0.009809927616657364003361207899783398048674"
             };
-            ddouble[] x8_expecteds = { 
+            ddouble[] x8_expecteds = {
                 "8.433605359324387041822728559079805091214",
                 "10.56705298082597058932337794610294937892",
                 "13.16883501706980266811540036866834544937",
@@ -1598,7 +1597,7 @@ namespace DoubleDoubleTest.DDouble {
                 "10.56896354894757069997884656654725308980",
                 "8.433605359324387041822728559079805091214"
             };
-            ddouble[] x16_expecteds = { 
+            ddouble[] x16_expecteds = {
                 "118477.8237018237740654788974755510178118",
                 "133824.2634840625528909176402198001630683",
                 "150618.9034781166311100283749573370298695",
@@ -1665,7 +1664,7 @@ namespace DoubleDoubleTest.DDouble {
                 "133824.2634841571591675449802763348484068",
                 "118477.8237018237740654788974755510178118"
             };
-            ddouble[] x32_expecteds = { 
+            ddouble[] x32_expecteds = {
                 "2.035184380381256907424104400105249961523e12",
                 "2.165043732445341633153335247620478567682e12",
                 "2.298760786043588418542328113407035713001e12",
@@ -1799,7 +1798,7 @@ namespace DoubleDoubleTest.DDouble {
                 "6.980266102641604566944201045093357705547e15",
                 "6.643061873342098986394878101747633942614e15"
             };
-            ddouble[] x64_expecteds = { 
+            ddouble[] x64_expecteds = {
                 "1.883405692695813795773724232507685527100e26",
                 "1.942560645842875365823235362325525803352e26",
                 "2.001617235758614767358024108600987963920e26",
@@ -1868,7 +1867,7 @@ namespace DoubleDoubleTest.DDouble {
             };
 
             foreach ((ddouble x, ddouble[] expecteds) in new (ddouble, ddouble[])[] {
-                (0, x0_expecteds), 
+                (0, x0_expecteds),
                 (1, x1_expecteds), (2, x2_expecteds), (4, x4_expecteds), (8, x8_expecteds),
                 (16, x16_expecteds), (32, x32_expecteds), (40, x40_expecteds), (64, x64_expecteds)}) {
 
@@ -1906,7 +1905,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselKTest() {
-            ddouble[] x0_expecteds = {  
+            ddouble[] x0_expecteds = {
                 ddouble.PositiveInfinity,
                 ddouble.PositiveInfinity,
                 ddouble.PositiveInfinity,
@@ -1941,7 +1940,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble.PositiveInfinity,
                 ddouble.PositiveInfinity,
             };
-            ddouble[] x1_expecteds = { 
+            ddouble[] x1_expecteds = {
                 "0.4210244382407083333356273792126090361362",
                 "0.4307397744485855246569468845402854057755",
                 "0.4610685044478945584395758738756945896889",
@@ -1976,7 +1975,7 @@ namespace DoubleDoubleTest.DDouble {
                 "317198.4529320086003417406913181455874996",
                 "622552.1229586677746406716016199048777505"
             };
-            ddouble[] x2_expecteds = { 
+            ddouble[] x2_expecteds = {
                 "0.1138938727495334356527195749324818329983",
                 "0.1153782768408567569708314085945969311887",
                 "0.1199377719680614473680365016367935162195",
@@ -2011,7 +2010,7 @@ namespace DoubleDoubleTest.DDouble {
                 "1320.805888279438534107100621987460792615",
                 "2188.117285211129980169738660090266413800"
             };
-            ddouble[] x4_expecteds = { 
+            ddouble[] x4_expecteds = {
                 "0.01115967608585302426974519597983348922501",
                 "0.01123837553695810383900613169926964220061",
                 "0.01147762457660805343382605335895134476699",
@@ -2046,7 +2045,7 @@ namespace DoubleDoubleTest.DDouble {
                 "4.032282070754701272226805983777515115685",
                 "5.693178536191547193640998129077954856287"
             };
-            ddouble[] x8_expecteds = { 
+            ddouble[] x8_expecteds = {
                 "0.0001464707052228153870965844086986779219673",
                 "0.0001470121235522799306272912513215262899624",
                 "0.0001486480066651728298787091323662822494168",
@@ -2081,7 +2080,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.004244215254823205196589760519517810681578",
                 "0.005236422076212772548784941770766298957367"
             };
-            ddouble[] x16_expecteds = { 
+            ddouble[] x16_expecteds = {
                 "3.499411663936498936045504532514608259428e-8",
                 "3.506052209382413919983653417371882767458e-8",
                 "3.526048135522933256996638195077608672072e-8",
@@ -2116,7 +2115,7 @@ namespace DoubleDoubleTest.DDouble {
                 "2.101623061351498812377634995264944289922e-7",
                 "2.359158922983692126737163572268992479157e-7"
             };
-            ddouble[] x32_expecteds = { 
+            ddouble[] x32_expecteds = {
                 "2.795057518761978770578134592269409471089e-15",
                 "2.797747073861333285661877104954471119603e-15",
                 "2.805831124499617581260531800843833887080e-15",
@@ -2186,7 +2185,7 @@ namespace DoubleDoubleTest.DDouble {
                 "3.092290497492635019749697469220913456561e-16",
                 "3.267267403207844828134263629025070311663e-16"
             };
-            ddouble[] x64_expecteds = { 
+            ddouble[] x64_expecteds = {
                 "2.507733605169036578743457972234113935505e-29",
                 "2.508948969124073902555945587687174246781e-29",
                 "2.512598578381462807607863273751315538248e-29",
@@ -2223,7 +2222,7 @@ namespace DoubleDoubleTest.DDouble {
             };
 
             foreach ((ddouble x, ddouble[] expecteds) in new (ddouble, ddouble[])[] {
-                (0, x0_expecteds), 
+                (0, x0_expecteds),
                 (1, x1_expecteds), (2, x2_expecteds), (4, x4_expecteds), (8, x8_expecteds),
                 (16, x16_expecteds), (32, x32_expecteds), (35, x35_expecteds), (64, x64_expecteds)}) {
 
@@ -2261,7 +2260,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselJNearZeroNuTest() {
-            ddouble[] pluseps_expecteds = { 
+            ddouble[] pluseps_expecteds = {
                 "0.7653322377301964979223615233840387187127",
                 "0.2246733211212076148652301113199866931736",
                 "-0.2594736316236708937710721973685993647506",
@@ -2328,7 +2327,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.09264676321166171616765658489611995169693"
             };
 
-            ddouble[] minuseps_expecteds = { 
+            ddouble[] minuseps_expecteds = {
                 "0.7650614679325024022752011488141077016169",
                 "0.2231075085606671960497675100633692709209",
                 "-0.2606297924264542537488110193772251826590",
@@ -2412,7 +2411,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselYNearZeroNuTest() {
-            ddouble[] pluseps_expecteds = { 
+            ddouble[] pluseps_expecteds = {
                 "0.08708336495184351107870627143167899375897",
                 "0.5100317005756386619964270935992901628156",
                 "0.3772484505240658432013777662108516983081",
@@ -2479,7 +2478,7 @@ namespace DoubleDoubleTest.DDouble {
                 "0.03692502906899319998747116795923183937775"
             };
 
-            ddouble[] minuseps_expecteds = { 
+            ddouble[] minuseps_expecteds = {
                 "0.08943096133560554060917306120256720668519",
                 "0.5107185883043253993871807123031570479331",
                 "0.3764506212380693991787183449624195357066",
@@ -2563,7 +2562,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselINearZeroNuTest() {
-            ddouble[] pluseps_expecteds = { 
+            ddouble[] pluseps_expecteds = {
                 "1.265654032443770888533175812496606956079",
                 "2.279473303572527668472219555042049021713",
                 "4.880757658758654302839248955861609158982",
@@ -2630,7 +2629,7 @@ namespace DoubleDoubleTest.DDouble {
                 "3.115457894791434040824027427844759539802e26"
             };
 
-            ddouble[] minuseps_expecteds = { 
+            ddouble[] minuseps_expecteds = {
                 "1.266476344796392587175860374305077001767",
                 "2.279695752237757564749684101558693202190",
                 "4.880825509256143222239424673454517760319",
@@ -2711,7 +2710,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselKNearZeroNuTest() {
-            ddouble[] pluseps_expecteds = { 
+            ddouble[] pluseps_expecteds = {
                 "0.4210245850164736599979258857325247136730",
                 "0.1138938952665493627332426605560763108926",
                 "0.03473950921125902394274802449528478991867",
@@ -2778,7 +2777,7 @@ namespace DoubleDoubleTest.DDouble {
                 "2.507733623709549135391347770641775156242e-29"
             };
 
-            ddouble[] minuseps_expecteds = { 
+            ddouble[] minuseps_expecteds = {
                 "0.4210245850164736599979258857325247136730",
                 "0.1138938952665493627332426605560763108926",
                 "0.03473950921125902394274802449528478991867",
