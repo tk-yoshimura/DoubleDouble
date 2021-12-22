@@ -52,13 +52,17 @@
 |arsinh|&#40;-inf,+inf&#41;|2||ddouble.Arsinh(x)|
 |arcosh|&#91;1,+inf&#41;|2||ddouble.Arcosh(x)|
 |artanh|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|ddouble.Artanh(x)|
-|gamma|&#40;-inf,+inf&#41;|6|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
-|loggamma|&#40;0,+inf&#41;|7|Near the positive zero point, polynomial interpolation is used.|ddouble.LogGamma(x)|
-|digamma|&#40;-inf,+inf&#41;|7|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
+|gamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
+|loggamma|&#40;0,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.LogGamma(x)|
+|digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
 |erf|&#40;-inf,+inf&#41;|5||ddouble.Erf(x)|
 |erfc|&#40;-inf,+inf&#41;|5||ddouble.Erfc(x)|
 |inverse_erf|&#40;-1,1&#41;|8||ddouble.InverseErf(x)|
 |inverse_erfc|&#40;0,2&#41;|8||ddouble.InverseErfc(x)|
+|bessel_j|&#40;0,+inf&#41;|10|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselJ(nu, x)|
+|bessel_y|&#40;0,+inf&#41;|10|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
+|bessel_i|&#91;0,+inf&#41;|10|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
+|bessel_k|&#91;0,+inf&#41;|10|abs(nu) &leq; 8 |ddouble.BesselK(nu, x)|
 |elliptic_k|&#91;0,1&#93;|1||ddouble.EllipticK(k)|
 |elliptic_e|&#91;0,1&#93;|1||ddouble.EllipticE(k)|
 |elliptic_pi|&#91;0,1&#93;|1||ddouble.EllipticPi(n, k)|
