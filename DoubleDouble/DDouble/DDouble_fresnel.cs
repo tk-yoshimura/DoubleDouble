@@ -10,6 +10,9 @@ namespace DoubleDouble {
             if (x.Sign < 0) {
                 return -FresnelC(-x);
             }
+            if (IsNaN(x)) {
+                return NaN;
+            }
 
             if (x <= FresnelPade.PadeApproxMin) {
                 return FresnelNearZero.FresnelC(x);
@@ -20,8 +23,11 @@ namespace DoubleDouble {
                 if (x <= FresnelPade.PadeApproxMax) {
                     (f, g) = FresnelPade.Coef(x);
                 }
-                else {
+                else if (x <= Math.ScaleB(1, 256)) {
                     (f, g) = FresnelLimit.Coef(x);
+                }
+                else {
+                    return Point5;
                 }
 
                 ddouble theta = x * x / 2;
@@ -37,6 +43,9 @@ namespace DoubleDouble {
             if (x.Sign < 0) {
                 return -FresnelS(-x);
             }
+            if (IsNaN(x)) {
+                return NaN;
+            }
 
             if (x <= FresnelPade.PadeApproxMin) {
                 return FresnelNearZero.FresnelS(x);
@@ -47,8 +56,11 @@ namespace DoubleDouble {
                 if (x <= FresnelPade.PadeApproxMax) {
                     (f, g) = FresnelPade.Coef(x);
                 }
-                else {
+                else if (x <= Math.ScaleB(1, 256)) {
                     (f, g) = FresnelLimit.Coef(x);
+                }
+                else {
+                    return Point5;
                 }
 
                 ddouble theta = x * x / 2;

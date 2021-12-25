@@ -286,6 +286,10 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(0, ddouble.FresnelC(0));
 
             Assert.IsTrue(ddouble.IsFinite(ddouble.FresnelC(ddouble.Epsilon)));
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelS(ddouble.NaN)));
+            Assert.AreEqual(0.5d, ddouble.FresnelC(ddouble.PositiveInfinity));
+            Assert.AreEqual(-0.5d, ddouble.FresnelC(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -569,6 +573,10 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(0, ddouble.FresnelS(0));
 
             Assert.IsTrue(ddouble.IsFinite(ddouble.FresnelS(ddouble.Epsilon)));
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelS(ddouble.NaN)));
+            Assert.AreEqual(0.5d, ddouble.FresnelS(ddouble.PositiveInfinity));
+            Assert.AreEqual(-0.5d, ddouble.FresnelS(ddouble.NegativeInfinity));
         }
     }
 }

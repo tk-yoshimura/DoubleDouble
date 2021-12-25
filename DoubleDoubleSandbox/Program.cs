@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble nu = -8; nu <= 8; nu += 1d / 4) {
-                ddouble y0 = ddouble.BesselK(nu, Math.ScaleB(1, -96));
-                ddouble y1 = ddouble.BesselK(nu, Math.BitIncrement(Math.ScaleB(1, -96)));
-                ddouble y2 = ddouble.BesselK(nu, Math.ScaleB(1, -95));
+            ddouble y_inf = ddouble.FresnelC(Math.ScaleB(1, 256));
 
-                Console.WriteLine($"{y0}\n{y1}\n{y2}\n");
+            for (ddouble x = 0; x <= 10; x += 1d / 64) {
+                ddouble y = ddouble.FresnelS(x);
+
+                Console.WriteLine($"{x},{y}");
             }
 
             Console.WriteLine("END");
