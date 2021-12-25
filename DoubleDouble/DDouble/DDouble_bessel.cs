@@ -25,13 +25,13 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d) {
-                return NearZero.BesselJ(nu, x);
+                return BesselNearZero.BesselJ(nu, x);
             }
             if (x <= 40d) {
-                return MillerBackward.BesselJ(nu, x);
+                return BesselMillerBackward.BesselJ(nu, x);
             }
 
-            return Limit.BesselJ(nu, x);
+            return BesselLimit.BesselJ(nu, x);
         }
 
         public static ddouble BesselJ(int n, ddouble x) {
@@ -46,13 +46,13 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d) {
-                return NearZero.BesselJ(n, x);
+                return BesselNearZero.BesselJ(n, x);
             }
             if (x <= 40d) {
-                return MillerBackward.BesselJ(n, x);
+                return BesselMillerBackward.BesselJ(n, x);
             }
 
-            return Limit.BesselJ(n, x);
+            return BesselLimit.BesselJ(n, x);
         }
 
         public static ddouble BesselY(ddouble nu, ddouble x) {
@@ -74,13 +74,13 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d || (x <= 4d && nu < 0 && nu - Floor(nu) == Point5)) {
-                return NearZero.BesselY(nu, x);
+                return BesselNearZero.BesselY(nu, x);
             }
             if (x <= 40d) {
-                return MillerBackward.BesselY(nu, x);
+                return BesselMillerBackward.BesselY(nu, x);
             }
 
-            return Limit.BesselY(nu, x);
+            return BesselLimit.BesselY(nu, x);
         }
 
         public static ddouble BesselY(int n, ddouble x) {
@@ -98,13 +98,13 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d) {
-                return NearZero.BesselY(n, x);
+                return BesselNearZero.BesselY(n, x);
             }
             if (x <= 40d) {
-                return MillerBackward.BesselY(n, x);
+                return BesselMillerBackward.BesselY(n, x);
             }
 
-            return Limit.BesselY(n, x);
+            return BesselLimit.BesselY(n, x);
         }
 
         public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
@@ -126,13 +126,13 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d) {
-                return NearZero.BesselI(nu, x, scale);
+                return BesselNearZero.BesselI(nu, x, scale);
             }
             if (x <= 40d) {
-                return MillerBackward.BesselI(nu, x, scale);
+                return BesselMillerBackward.BesselI(nu, x, scale);
             }
 
-            return Limit.BesselI(nu, x, scale);
+            return BesselLimit.BesselI(nu, x, scale);
         }
 
         public static ddouble BesselI(int n, ddouble x, bool scale = false) {
@@ -147,13 +147,13 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d) {
-                return NearZero.BesselI(n, x, scale);
+                return BesselNearZero.BesselI(n, x, scale);
             }
             if (x <= 40d) {
-                return MillerBackward.BesselI(n, x, scale);
+                return BesselMillerBackward.BesselI(n, x, scale);
             }
 
-            return Limit.BesselI(n, x, scale);
+            return BesselLimit.BesselI(n, x, scale);
         }
 
         public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
@@ -168,13 +168,13 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d) {
-                return NearZero.BesselK(nu, x, scale);
+                return BesselNearZero.BesselK(nu, x, scale);
             }
             if (x <= 35d) {
-                return YoshidaPade.BesselK(nu, x, scale);
+                return BesselYoshidaPade.BesselK(nu, x, scale);
             }
 
-            return Limit.BesselK(nu, x, scale);
+            return BesselLimit.BesselK(nu, x, scale);
         }
 
         public static ddouble BesselK(int n, ddouble x, bool scale = false) {
@@ -189,17 +189,17 @@ namespace DoubleDouble {
             }
 
             if (x <= 2d) {
-                return NearZero.BesselK(n, x, scale);
+                return BesselNearZero.BesselK(n, x, scale);
             }
             if (x <= 35d) {
-                return YoshidaPade.BesselK(n, x, scale);
+                return BesselYoshidaPade.BesselK(n, x, scale);
             }
 
-            return Limit.BesselK(n, x, scale);
+            return BesselLimit.BesselK(n, x, scale);
         }
 
         private static class BesselUtil {
-            public static readonly double XZero = Math.ScaleB(1, -64);
+            public static readonly double XZero = Math.ScaleB(1, -96);
 
             public static void CheckNu(ddouble nu) {
                 if (nu != Round(nu) && Abs(nu - Round(nu)) < Math.ScaleB(1, -10)) {
@@ -228,7 +228,7 @@ namespace DoubleDouble {
             }
         }
 
-        private static class NearZero {
+        private static class BesselNearZero {
             private static Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = new();
             private static Dictionary<ddouble, X2DenomTable> x2denom_coef_table = new();
             private static Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = new();
@@ -873,7 +873,7 @@ namespace DoubleDouble {
             }
         }
 
-        private static class MillerBackward {
+        private static class BesselMillerBackward {
             private static Dictionary<ddouble, BesselJPhiTable> phi_table = new();
             private static Dictionary<ddouble, BesselIPsiTable> psi_table = new();
             private static Dictionary<ddouble, BesselYEtaTable> eta_table = new();
@@ -1653,10 +1653,10 @@ namespace DoubleDouble {
             };
         }
 
-        private static class YoshidaPade {
+        private static class BesselYoshidaPade {
             private static Dictionary<ddouble, (ddouble[] c, ddouble[] s)> table = new();
 
-            static YoshidaPade() {
+            static BesselYoshidaPade() {
                 table.Add(0, (cs0, ds0));
                 table.Add(1, (cs1, ds1));
             }
@@ -2480,7 +2480,7 @@ namespace DoubleDouble {
             };
         }
 
-        private static class Limit {
+        private static class BesselLimit {
             private static Dictionary<ddouble, ACoefTable> a_table = new();
             private static Dictionary<ddouble, JYCoefTable> jy_table = new();
             private static Dictionary<ddouble, IKCoefTable> ik_table = new();

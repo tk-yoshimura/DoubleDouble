@@ -66,6 +66,8 @@
 |elliptic_k|&#91;0,1&#93;|1||ddouble.EllipticK(k)|
 |elliptic_e|&#91;0,1&#93;|1||ddouble.EllipticE(k)|
 |elliptic_pi|&#91;0,1&#93;|1||ddouble.EllipticPi(n, k)|
+|fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
+|fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|

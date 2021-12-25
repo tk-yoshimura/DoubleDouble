@@ -7,7 +7,7 @@ namespace DoubleDoubleTest {
     internal static class HPAssert {
 
         public static void AreEqual(ddouble expected, ddouble actual, ddouble delta) {
-            AreEqual(expected, actual, delta, $"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}");
+            AreEqual(expected, actual, delta, string.Empty);
         }
 
         public static void AreEqual(ddouble expected, ddouble actual, ddouble delta, string message) {
@@ -23,7 +23,7 @@ namespace DoubleDoubleTest {
         }
 
         public static void NeighborBits(ddouble expected, ddouble actual, int dist = 1) {
-            NeighborBits(expected, actual, $"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}", dist);
+            NeighborBits(expected, actual, string.Empty, dist);
         }
 
         public static void NeighborBits(ddouble expected, ddouble actual, string message, int dist = 1) {
