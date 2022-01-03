@@ -3,6 +3,7 @@
         public static readonly ddouble PI = (+1, +1, 0xC90FDAA22168C234uL, 0xC4C6628B80DC1CD1uL);
         public static readonly ddouble RcpPI = (+1, -2, 0xA2F9836E4E441529uL, 0xFC2757D1F534DDC0uL);
         public static readonly ddouble E = (+1, +1, 0xADF85458A2BB4A9AuL, 0xAFDC5620273D3CF1uL);
+        public static readonly ddouble RcpE = (+1, -2, 0xBC5AB1B16779BE35uL, 0x75BD8F0520A9F21BuL);
         public static readonly ddouble DigammaZero = (+1, 0, 0xBB16C31AB5F1FB70uL, 0xD4E4432F05278358uL);
         public static readonly ddouble EulerGamma = (+1, -1, 0x93C467E37DB0C7A4uL, 0xD1BE3F810152CB56uL);
         public static readonly ddouble Zeta3 = (+1, 0, 0x99DD0027803109C1uL, 0xB8B8AE2CF3483F8DuL);
