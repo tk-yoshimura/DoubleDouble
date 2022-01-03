@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            using (StreamWriter sw = new StreamWriter("../../ei_coef_table.csv")) {
+            ddouble y_lim = EiPrototype.Ei(-Math.ScaleB(1, -1023));
 
-                for (double x = -2; x <= 2; x += 1d / 1024) {
-                    ddouble y = EiPrototype.EiPade.Coef(x);
+            using (StreamWriter sw = new StreamWriter("../../ei_table.csv")) {
+
+                for (double x = -8; x <= 8; x += 1d / 512) {
+                    ddouble y = EiPrototype.Ei(x);
 
                     sw.WriteLine($"{x},{y:e29}");
                 }

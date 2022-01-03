@@ -2,14 +2,162 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {
     public static class EiPrototype {
 
-        public static class EiPade {
+        public static ddouble Ei(ddouble x) {
+            if (IsNaN(x)) {
+                return NaN;
+            }
+            if (IsInfinity(x)) {
+                return x.Sign > 0 ? PositiveInfinity : Zero;
+            }
+
+            if (x <= EiPade.PadeApproxMin || x >= EiPade.PadeApproxMax) {
+                ddouble g = EiPade.Coef(x) + x;
+                ddouble y = Exp(x) / g;
+
+                return y;
+            }
+            if (x > 0) {
+                return EiNearZero.Positive(x);
+            }
+            if (x < 0) {
+                return EiNearZero.Negative(x);
+            }
+
+            return NegativeInfinity;
+        }
+
+        public static ddouble Li(ddouble x) {
+            return Ei(Log(x));
+        }
+
+        internal static class EiNearZero {
+            public static ddouble Positive(ddouble x, int max_terms = 12) { 
+                ddouble x2 = x * x;
+
+                ddouble s = EulerGamma + Log(x);
+                ddouble u = x * Exp(x / 2);
+
+                for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
+                    ddouble f = TaylorSequence[2 * k + 1] * (1 - x * K4Series.Value(k));
+                    ddouble ds = Ldexp(u * f, -2 * k) * FSeries.Value(k);
+                    ddouble s_next = s + ds;
+
+                    if (s == s_next || IsInfinity(s_next)) {
+                        conv_times++;
+                    }
+                    else {
+                        conv_times = 0;
+                    }
+
+                    u *= x2;
+                    s = s_next;
+                }
+
+                return s;
+            }
+
+            public static ddouble Negative(ddouble x, int max_terms = 12){
+                if (!(x <= 0)) {
+                    throw new ArgumentOutOfRangeException(nameof(x));
+                }
+
+                ddouble x2 = x * x;
+
+                ddouble s = EulerGamma + Log(-x);
+                ddouble u = x;
+
+                for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
+                    (ddouble r1, ddouble r2) = NRcpSeries.Value(k);
+
+                    ddouble f = TaylorSequence[2 * k + 1] * (r1 + x * r2);
+                    ddouble ds = u * f;
+                    ddouble s_next = s + ds;
+
+                    if (s == s_next || IsInfinity(s_next)) {
+                        conv_times++;
+                    }
+                    else {
+                        conv_times = 0;
+                    }
+
+                    u *= x2;
+                    s = s_next;
+                }
+
+                return s;
+            }
+
+            internal class FSeries {
+                private static ddouble v = 0;
+                private static readonly List<ddouble> table = new();
+
+                public static ddouble Value(int n) {
+                    if (n < 0) {
+                        throw new ArgumentOutOfRangeException(nameof(n));
+                    }
+
+                    if (n < table.Count) {
+                        return table[n];
+                    }
+
+                    for (int k = table.Count; k <= n; k++) {
+                        v += Rcp(checked(2 * k + 1));
+                        table.Add(v);
+                    }
+
+                    return table[n];
+                }
+            }
+
+            internal class K4Series {
+                private static readonly List<ddouble> table = new();
+
+                public static ddouble Value(int n) {
+                    if (n < 0) {
+                        throw new ArgumentOutOfRangeException(nameof(n));
+                    }
+
+                    if (n < table.Count) {
+                        return table[n];
+                    }
+
+                    for (int k = table.Count; k <= n; k++) {
+                        table.Add(Rcp(checked(4 * k + 4)));
+                    }
+
+                    return table[n];
+                }
+            }
+
+            internal class NRcpSeries {
+                private static readonly List<(ddouble, ddouble)> table = new();
+
+                public static (ddouble r1, ddouble r2) Value(int n) {
+                    if (n < 0) {
+                        throw new ArgumentOutOfRangeException(nameof(n));
+                    }
+
+                    if (n < table.Count) {
+                        return table[n];
+                    }
+
+                    for (int k = table.Count; k <= n; k++) {
+                        ddouble r1 = Rcp(checked(2 * k + 1));
+                        ddouble r2 = Rcp(checked((2 * k + 2) * (2 * k + 2)));
+                        table.Add((r1, r2));
+                    }
+
+                    return table[n];
+                }
+            }
+        }
+
+        internal static class EiPade {
             public static readonly ddouble PadeApproxMin = -1 / 2d, PadeApproxMax = 1 / 2d;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
             public static readonly ReadOnlyCollection<double> PadeCenterTable, PadeThresholdTable;
@@ -148,7 +296,7 @@ namespace DoubleDoubleSandbox {
             }
 
             public static ddouble Coef(ddouble x) {
-                ddouble v = x;
+                ddouble v = 1d / x;
 
                 int table_index = SegmentIndex(v);
                 ddouble w = v - PadeCenterTable[table_index];
