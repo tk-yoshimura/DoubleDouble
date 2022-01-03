@@ -1,6 +1,8 @@
 ﻿using DoubleDouble;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +10,13 @@ using System.Threading.Tasks;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble y_inf = ddouble.FresnelC(Math.ScaleB(1, 256));
+            using (StreamWriter sw = new StreamWriter("../../ei_coef_table.csv")) {
 
-            for (ddouble x = 0; x <= 10; x += 1d / 64) {
-                ddouble y = ddouble.FresnelS(x);
+                for (double x = -2; x <= 2; x += 1d / 1024) {
+                    ddouble y = EiPrototype.EiPade.Coef(x);
 
-                Console.WriteLine($"{x},{y}");
+                    sw.WriteLine($"{x},{y:e29}");
+                }
             }
 
             Console.WriteLine("END");
