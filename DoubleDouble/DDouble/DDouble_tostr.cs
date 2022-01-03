@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Numerics;
 
 namespace DoubleDouble {
-    public partial struct ddouble {
+    public partial struct ddouble : IFormattable {
         public static int DecimalDigits => 30;
 
         public override string ToString() {

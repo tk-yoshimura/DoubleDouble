@@ -43,6 +43,21 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void ToStringFormatTest() {
+            ddouble v = ddouble.Rcp(3);
+
+            Console.WriteLine($"{v:e30}");
+            Console.WriteLine($"{v:E30}");
+            Console.WriteLine(v.ToString("e30"));
+            Console.WriteLine(v.ToString("E30"));
+
+            Console.WriteLine($"{v:e20}");
+            Console.WriteLine($"{v:E20}");
+            Console.WriteLine(v.ToString("e20"));
+            Console.WriteLine(v.ToString("E20"));
+        }
+
+        [TestMethod]
         public void ParseTest() {
             Random random = new Random(1234);
             for (int i = 0; i < 2048; i++) {
