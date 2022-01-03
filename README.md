@@ -68,6 +68,11 @@
 |elliptic_pi|&#91;0,1&#93;|1||ddouble.EllipticPi(n, k)|
 |fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
 |fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
+|ei|&#40;-inf,+inf&#41;|8|exponential integral|ddouble.Ei(x)|
+|li|&#40;-inf,+inf&#41;|8|logarithmic integral li(x)=ei(log(x))|ddouble.Li(x)|
+|lambertw|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
+|airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
+|airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
