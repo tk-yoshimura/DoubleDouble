@@ -409,8 +409,8 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.IsTrue(ddouble.IsFinite(ddouble.LambertW(ddouble.MaxValue)));
 
-            HPAssert.AreEqual("7.0045838920868939868016508375916341696918104269217e2", 
-                              ddouble.LambertW(Math.ScaleB(1, 1020)), 
+            HPAssert.AreEqual("7.0045838920868939868016508375916341696918104269217e2",
+                              ddouble.LambertW(Math.ScaleB(1, 1020)),
                               1e-26);
 
             Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(ddouble.BitDecrement(-ddouble.RcpE))));
