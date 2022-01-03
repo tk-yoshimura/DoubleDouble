@@ -1,11 +1,9 @@
-﻿using DoubleDouble;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using static DoubleDouble.ddouble;
 
-namespace DoubleDoubleSandbox {
-    public static class EiPrototype {
+namespace DoubleDouble {
+    public partial struct ddouble {
 
         public static ddouble Ei(ddouble x) {
             if (IsNaN(x)) {

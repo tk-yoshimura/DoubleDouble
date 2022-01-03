@@ -287,7 +287,7 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.IsTrue(ddouble.IsFinite(ddouble.FresnelC(ddouble.Epsilon)));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelS(ddouble.NaN)));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelC(ddouble.NaN)));
             Assert.AreEqual(0.5d, ddouble.FresnelC(ddouble.PositiveInfinity));
             Assert.AreEqual(-0.5d, ddouble.FresnelC(ddouble.NegativeInfinity));
         }

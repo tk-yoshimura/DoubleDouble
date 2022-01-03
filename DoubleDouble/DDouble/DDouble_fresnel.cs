@@ -73,7 +73,7 @@ namespace DoubleDouble {
         }
 
         private static class FresnelNearZero {
-            public static ddouble FresnelC(ddouble x, int max_terms = 16) {                
+            public static ddouble FresnelC(ddouble x, int max_terms = 16) {
                 if (IsZero(x)) {
                     return 0;
                 }
@@ -176,7 +176,7 @@ namespace DoubleDouble {
             }
         };
 
-        private static class FresnelLimit { 
+        private static class FresnelLimit {
 
             public static (ddouble p, ddouble q) Coef(ddouble x, int max_terms = 10) {
                 ddouble v = Rcp(x * x * PI);
@@ -294,7 +294,7 @@ namespace DoubleDouble {
                 });
             }
 
-            public static (ddouble f, ddouble g) Coef(ddouble x) { 
+            public static (ddouble f, ddouble g) Coef(ddouble x) {
                 int table_index = (int)Round((x - PadeApproxMin) / TableBin);
                 ddouble w = x - (PadeApproxMin + TableBin * table_index);
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
@@ -313,7 +313,7 @@ namespace DoubleDouble {
 
                 return (f, g);
             }
-            
+
             public static ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> PadeX1p00Table
              = new(new (ddouble fc, ddouble fd, ddouble gc, ddouble gd)[] {
                 ((+1, -2, 0x8F4E3011F8290ADDuL, 0x706477F9EEB97F4DuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, -5, 0xFCE3F9EC91BEFDB3uL, 0xFA96584FC59E34B3uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
