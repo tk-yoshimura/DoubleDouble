@@ -1,6 +1,5 @@
 ﻿using DoubleDouble;
 using System;
-using System.IO;
 
 namespace DoubleDoubleSandbox {
     public static class Program {

@@ -13,7 +13,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 if (nu == 0) {
                     return 1d;
                 }
@@ -41,7 +41,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 return (n == 0) ? 1d : 0d;
             }
 
@@ -62,7 +62,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 if (nu > 0) {
                     return NegativeInfinity;
                 }
@@ -90,7 +90,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 if (n > 0) {
                     return NegativeInfinity;
                 }
@@ -114,7 +114,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 if (nu == 0) {
                     return 1d;
                 }
@@ -142,7 +142,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 return (n == 0) ? 1d : 0d;
             }
 
@@ -163,7 +163,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 return PositiveInfinity;
             }
 
@@ -184,7 +184,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (x <= BesselUtil.XZero) {
+            if (x <= BesselUtil.Eps) {
                 return PositiveInfinity;
             }
 
@@ -199,7 +199,7 @@ namespace DoubleDouble {
         }
 
         private static class BesselUtil {
-            public static readonly double XZero = Math.ScaleB(1, -96);
+            public static readonly double Eps = Math.ScaleB(1, -96);
 
             public static void CheckNu(ddouble nu) {
                 if (nu != Round(nu) && Abs(nu - Round(nu)) < Math.ScaleB(1, -10)) {

@@ -176,13 +176,5 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(digamma_ninf), nameof(digamma_ninf));
             Assert.IsTrue(ddouble.IsNaN(digamma_nan), nameof(digamma_nan));
         }
-
-        [TestMethod]
-        public void IncompleteGammaTest() {
-            //(ddouble lower, ddouble upper) = ddouble.IncompleteGamma(1, 16);
-            //
-            //Console.WriteLine(lower);
-            //Console.WriteLine(upper);
-        }
     }
 }
