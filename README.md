@@ -73,6 +73,8 @@
 |lambertw|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
 |airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
 |airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
+|lower incomplete gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.LowerIncompleteGamma(nu, x)|
+|upper incomplete gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.UpperIncompleteGamma(nu, x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
