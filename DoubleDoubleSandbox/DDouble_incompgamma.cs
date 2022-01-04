@@ -6,115 +6,53 @@ using static DoubleDouble.ddouble;
 namespace DoubleDoubleSandbox {
     public static class IncompleteGammaPrototype {
 
-        public static ddouble LowerIncompleteGamma(ddouble s, ddouble x, int m) {
-            if (s < 0) {
-                throw new ArgumentOutOfRangeException(nameof(s));
+        public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x, int m) {
+            if (nu < 0) {
+                throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (IsNaN(s) || IsNaN(x)) {
+            if (IsNaN(nu) || IsNaN(x)) {
                 return NaN;
             }
 
-            if (s < Math.ScaleB(1, -100)) {
+            if (x < Math.ScaleB(1, -100)) {
+                return 0;
+            }
+            if (nu < Math.ScaleB(1, -100)) {
                 return PositiveInfinity;
             }
 
-            ddouble g = Gamma(s);
-            if (IsInfinity(g)) {
-                return NaN;
-            }
-
-            ddouble f = 1;
-
-            for (int n = m; n >= 0; n--) {
-                f = s + (2 * n) - (f * (s + n) * x) / (((n + 1) * x) + f * (s + (2 * n + 1)));
-            }
-
-            ddouble y = Pow(x, s) * Exp(-x) / f;
-
-            return y;
+            return LowerIncompleteGammaCFrac.Value(nu, x);
         }
 
-        public static ddouble UpperIncompleteGamma(ddouble s, ddouble x, int m) {
-            if (s < 0) {
-                throw new ArgumentOutOfRangeException(nameof(s));
+        public static ddouble UpperIncompleteGamma(ddouble nu, ddouble x) {
+            if (nu < 0) {
+                throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (IsNaN(s) || IsNaN(x)) {
+            if (IsNaN(nu) || IsNaN(x)) {
                 return NaN;
             }
 
-            if (s < Math.ScaleB(1, -100)) {
+            if (x < Math.ScaleB(1, -100)) {
+                return Gamma(nu);
+            }
+            if (nu < Math.ScaleB(1, -100)) {
                 return -Ei(-x);
             }
 
-            ddouble f = 1;
-
-            for (int n = m; n >= 1; n--) {
-                f = x + f * (n - s) / (f + n);
-            }
-
-            ddouble y = Pow(x, s) * Exp(-x) / f;
-
-            return y;
-        }
-
-        public static (ddouble y, int m) LowerIncompleteGammaConvergence(ddouble s, ddouble x, int max_terms = 1024, int convchecks = 4) {
-            ddouble prev_y = LowerIncompleteGamma(s, x, m: 1);
-
-            for (int m = 2, convtimes = 0; m <= max_terms; m++) {
-                ddouble y = LowerIncompleteGamma(s, x, m);
-
-                if (ddouble.Abs(y / prev_y - 1) < 1e-29) {
-                    convtimes++;
-                }
-                else {
-                    convtimes = 0;
-                }
-                if (convtimes >= convchecks) {
-                    return (y, m - convchecks);
-                }
-
-                prev_y = y;
-            }
-
-            return (NaN, int.MaxValue);
-        }
-
-        public static (ddouble y, int m) UpperIncompleteGammaConvergence(ddouble s, ddouble x, int max_terms = 1024, int convchecks = 4) {
-            ddouble prev_y = UpperIncompleteGamma(s, x, m: 1);
-
-            for (int m = 2, convtimes = 0; m <= max_terms; m++) {
-                ddouble y = UpperIncompleteGamma(s, x, m);
-
-                if (ddouble.Abs(y / prev_y - 1) < 1e-29) {
-                    convtimes++;
-                }
-                else {
-                    convtimes = 0;
-                }
-                if (convtimes >= convchecks) {
-                    return (y, m - convchecks);
-                }
-
-                prev_y = y;
-            }
-
-            return (NaN, int.MaxValue);
-        }
-
-        public static ddouble UpperIncompleteGamma(ddouble nu, ddouble x) {
             if (x <= 3) {
                 return UpperIncompleteGammaNearZero.Value(nu, x);
             }
-
-            throw new NotImplementedException();
+            else {
+                return UpperIncompleteGammaCFrac.Value(nu, x);
+            }
         }
 
         internal static class UpperIncompleteGammaNearZero {
@@ -214,6 +152,42 @@ namespace DoubleDoubleSandbox {
                 (+1, -41, 0x8F900A8991E681C8uL, 0xF6862A8BDDBA9233uL),
                 (-1, -46, 0xB965C4752D7373BDuL, 0x2A90DA417F9F6A64uL),
             });
+        }
+
+        internal static class UpperIncompleteGammaCFrac {
+            public static ddouble Value(ddouble nu, ddouble x) {
+                double log2x = Math.Log2((double)x);
+
+                int m = (x > 64) ? 14 : (int)Math.Pow(2, ((0.04525 * log2x - 1) * log2x + 8.250)) + 1;
+
+                ddouble f = 1;
+
+                for (int n = m; n >= 1; n--) {
+                    f = x + f * (n - nu) / (f + n);
+                }
+
+                ddouble y = Pow(x, nu) * Exp(-x) / f;
+
+                return y;
+            }
+        }
+
+        internal static class LowerIncompleteGammaCFrac {
+            public static ddouble Value(ddouble nu, ddouble x) {
+                double log2x = Math.Log2((double)x);
+
+                int m = (int)Math.Pow(2, ((0.01478 * log2x + 0.2829) * log2x + 3.528)) + 1;
+
+                ddouble f = 1;
+
+                for (int n = m; n >= 0; n--) {
+                    f = nu + (2 * n) - (f * (nu + n) * x) / (((n + 1) * x) + f * (nu + (2 * n + 1)));
+                }
+
+                ddouble y = Pow(x, nu) * Exp(-x) / f;
+
+                return y;
+            }
         }
     }
 }
