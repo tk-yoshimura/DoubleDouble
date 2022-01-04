@@ -6,8 +6,8 @@ using static DoubleDouble.ddouble;
 namespace DoubleDoubleSandbox {
     public static class IncompleteGammaPrototype {
 
-        public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x, int m) {
-            if (nu < 0) {
+        public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x) {
+            if (nu < 0 || nu > 32) {
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0) {
@@ -25,11 +25,16 @@ namespace DoubleDoubleSandbox {
                 return PositiveInfinity;
             }
 
-            return LowerIncompleteGammaCFrac.Value(nu, x);
+            if (x < 1.0975d * (double)nu + 0.7725d) {
+                return LowerIncompleteGammaCFrac.Value(nu, x);
+            }
+            else {
+                return Gamma(nu) - UpperIncompleteGamma(nu, x);
+            }
         }
 
         public static ddouble UpperIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0) {
+            if (nu < 0 || nu > 32) {
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0) {
@@ -58,18 +63,21 @@ namespace DoubleDoubleSandbox {
         internal static class UpperIncompleteGammaNearZero {
 
             public static ddouble Value(ddouble nu, ddouble x) {
-                ddouble a = UpperIncompleteGammaNearZero.A1(nu);
-                ddouble a0 = (1 + nu) * a - 1;
-                ddouble phi = UpperIncompleteGammaNearZero.Phi(nu, x);
-                ddouble g0 = Gamma(1 + nu), g = g0 * (1 + nu);
+                int n = (int)ddouble.Floor(nu);
+                ddouble alpha = nu - n;
+
+                ddouble a = UpperIncompleteGammaNearZero.A1(alpha);
+                ddouble a0 = (1 + alpha) * a - 1;
+                ddouble phi = UpperIncompleteGammaNearZero.Phi(alpha, x);
+                ddouble g0 = Gamma(1 + alpha), g = g0 * (1 + alpha);
 
                 ddouble s = a0 + phi / g0 + x * (a + phi / g);
 
                 ddouble u = x * x;
 
                 for (int k = 2; k < TaylorSequence.Count; k++) {
-                    a = 1d / (k + nu) * (a + TaylorSequence[k]);
-                    g *= k + nu;
+                    a = 1d / (k + alpha) * (a + TaylorSequence[k]);
+                    g *= k + alpha;
 
                     ddouble ds = u * (a + phi / g);
                     ddouble s_next = s + ds;
@@ -82,7 +90,18 @@ namespace DoubleDoubleSandbox {
                     s = s_next;
                 }
 
-                ddouble y = g0 * Exp(-x) * s;
+                ddouble expx = Exp(-x);
+
+                ddouble y = g0 * expx * s;
+
+                if (n > 0) {
+                    ddouble powx = Pow(x, alpha);
+
+                    for (int k = 0; k < n; k++) {
+                        y = (alpha + k) * y + powx * expx;
+                        powx *= x;
+                    }
+                }
 
                 return y;
             }
@@ -156,17 +175,29 @@ namespace DoubleDoubleSandbox {
 
         internal static class UpperIncompleteGammaCFrac {
             public static ddouble Value(ddouble nu, ddouble x) {
+                int n = (int)ddouble.Floor(nu);
+                ddouble alpha = nu - n;
+
                 double log2x = Math.Log2((double)x);
 
                 int m = (x > 64) ? 14 : (int)Math.Pow(2, ((0.04525 * log2x - 1) * log2x + 8.250)) + 1;
 
                 ddouble f = 1;
 
-                for (int n = m; n >= 1; n--) {
-                    f = x + f * (n - nu) / (f + n);
+                for (int i = m; i >= 1; i--) {
+                    f = x + f * (i - alpha) / (f + i);
                 }
 
-                ddouble y = Pow(x, nu) * Exp(-x) / f;
+                ddouble powx = Pow(x, alpha), expx = Exp(-x);
+
+                ddouble y = powx * expx / f;
+
+                if (n > 0) {
+                    for (int k = 0; k < n; k++) {
+                        y = (alpha + k) * y + powx * expx;
+                        powx *= x;
+                    }
+                }
 
                 return y;
             }
@@ -180,11 +211,13 @@ namespace DoubleDoubleSandbox {
 
                 ddouble f = 1;
 
-                for (int n = m; n >= 0; n--) {
-                    f = nu + (2 * n) - (f * (nu + n) * x) / (((n + 1) * x) + f * (nu + (2 * n + 1)));
+                for (int i = m; i >= 0; i--) {
+                    f = nu + (2 * i) - (f * (nu + i) * x) / (((i + 1) * x) + f * (nu + (2 * i + 1)));
                 }
 
-                ddouble y = Pow(x, nu) * Exp(-x) / f;
+                ddouble powx = Pow(x, nu), expx = Exp(-x);
+
+                ddouble y = powx * expx / f;
 
                 return y;
             }
