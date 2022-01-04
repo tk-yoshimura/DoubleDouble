@@ -110,38 +110,47 @@ namespace DoubleDoubleSandbox {
         }
 
         public static ddouble UpperIncompleteGamma(ddouble nu, ddouble x) {
-            ddouble a = UpperIncompleteGammaNearZero.A1(nu);
-            ddouble a0 = (1 + nu) * a - 1;
-            ddouble phi = UpperIncompleteGammaNearZero.Phi(nu, x);
-            ddouble g0 = Gamma(1 + nu), g = g0 * (1 + nu);
-
-            ddouble s = a0 + phi / g0 + x * (a + phi / g);
-
-            ddouble u = x * x;
-
-            for (int k = 2; k < TaylorSequence.Count; k++) {
-                a = 1d / (k + nu) * (a + TaylorSequence[k]);
-                g *= k + nu;
-
-                ddouble ds = u * (a + phi / g);
-                ddouble s_next = s + ds;
-
-                if (s == s_next) {
-                    break;
-                }
-
-                u *= x;
-                s = s_next;
+            if (x <= 3) {
+                return UpperIncompleteGammaNearZero.Value(nu, x);
             }
 
-            ddouble y = g0 * Exp(-x) * s;
-
-            return y;
+            throw new NotImplementedException();
         }
 
         internal static class UpperIncompleteGammaNearZero {
+
+            public static ddouble Value(ddouble nu, ddouble x) {
+                ddouble a = UpperIncompleteGammaNearZero.A1(nu);
+                ddouble a0 = (1 + nu) * a - 1;
+                ddouble phi = UpperIncompleteGammaNearZero.Phi(nu, x);
+                ddouble g0 = Gamma(1 + nu), g = g0 * (1 + nu);
+
+                ddouble s = a0 + phi / g0 + x * (a + phi / g);
+
+                ddouble u = x * x;
+
+                for (int k = 2; k < TaylorSequence.Count; k++) {
+                    a = 1d / (k + nu) * (a + TaylorSequence[k]);
+                    g *= k + nu;
+
+                    ddouble ds = u * (a + phi / g);
+                    ddouble s_next = s + ds;
+
+                    if (s == s_next) {
+                        break;
+                    }
+
+                    u *= x;
+                    s = s_next;
+                }
+
+                ddouble y = g0 * Exp(-x) * s;
+
+                return y;
+            }
+
             public static ddouble A1(ddouble nu) {
-                if (nu >= 0.0625d) {
+                if (nu >= 0.15625d) {
                     return (1d - 1d / Gamma(2 + nu)) / nu;
                 }
                 else {
@@ -200,6 +209,10 @@ namespace DoubleDoubleSandbox {
                 (+1, -28, 0xABDE1FE1C2199FD9uL, 0xEAFBBF416E76D1E0uL),
                 (-1, -30, 0xA25A676E51C47BE3uL, 0x89819C393897FFDEuL),
                 (+1, -34, 0xE573B3AE0C30362FuL, 0xBF7D38399563B603uL),
+                (+1, -37, 0x88E832DFD7833A2DuL, 0x6B19F0B77E71C665uL),
+                (-1, -38, 0x8211DD64651FD552uL, 0x333C5E6F89FA0414uL),
+                (+1, -41, 0x8F900A8991E681C8uL, 0xF6862A8BDDBA9233uL),
+                (-1, -46, 0xB965C4752D7373BDuL, 0x2A90DA417F9F6A64uL),
             });
         }
     }

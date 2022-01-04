@@ -31,18 +31,18 @@ namespace DoubleDoubleSandbox {
             //    }
             //}
 
-            IncompleteGammaPrototype.UpperIncompleteGamma(31d / 32, 1d);
-            IncompleteGammaPrototype.UpperIncompleteGamma(0.5d, 0.5d);
+            //IncompleteGammaPrototype.UpperIncompleteGamma(1d / 32, 3d);
+            //IncompleteGammaPrototype.UpperIncompleteGamma(0.5d, 0.5d);
 
-            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(ddouble.BitDecrement(0.0625d)));
-            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(0.0625d));
-            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(ddouble.BitIncrement(0.0625d)));
+            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(ddouble.BitDecrement(0.15625d)));
+            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(0.15625d));
+            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(ddouble.BitIncrement(0.15625d)));
 
-            for (ddouble nu = 0; nu <= 1; nu += 1d / 256) {
-                ddouble y = IncompleteGammaPrototype.UpperIncompleteGamma(nu, 0.5d);
-            
-                Console.WriteLine($"{nu},{y}");
-            }
+            //for (ddouble nu = 0; nu <= 1; nu += 1d / 256) {
+            //    ddouble y = IncompleteGammaPrototype.UpperIncompleteGamma(nu, 0.5d);
+            //
+            //    Console.WriteLine($"{nu},{y}");
+            //}
 
             Console.WriteLine("END");
             Console.Read();
