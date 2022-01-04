@@ -31,13 +31,18 @@ namespace DoubleDoubleSandbox {
             //    }
             //}
 
-            IncompleteGammaPrototype.UpperIncompleteGammaNearZero(0.5, 0.5);
+            IncompleteGammaPrototype.UpperIncompleteGamma(31d / 32, 1d);
+            IncompleteGammaPrototype.UpperIncompleteGamma(0.5d, 0.5d);
 
-           //for (ddouble nu = 0; nu <= 1; nu += 1d / 256) {
-           //    ddouble y = IncompleteGammaPrototype.UpperIncompleteGammaNearZero(nu, 0.5);
-           //
-           //    Console.WriteLine($"{nu},{y}");
-           //}
+            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(ddouble.BitDecrement(0.0625d)));
+            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(0.0625d));
+            Console.WriteLine(IncompleteGammaPrototype.UpperIncompleteGammaNearZero.A1(ddouble.BitIncrement(0.0625d)));
+
+            for (ddouble nu = 0; nu <= 1; nu += 1d / 256) {
+                ddouble y = IncompleteGammaPrototype.UpperIncompleteGamma(nu, 0.5d);
+            
+                Console.WriteLine($"{nu},{y}");
+            }
 
             Console.WriteLine("END");
             Console.Read();
