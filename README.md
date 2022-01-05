@@ -63,9 +63,9 @@
 |bessel_y|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
 |bessel_i|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
 |bessel_k|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselK(nu, x)|
-|elliptic_k|&#91;0,1&#93;|1||ddouble.EllipticK(k)|
-|elliptic_e|&#91;0,1&#93;|1||ddouble.EllipticE(k)|
-|elliptic_pi|&#91;0,1&#93;|1||ddouble.EllipticPi(n, k)|
+|elliptic_k|&#91;0,1&#93;|1|k: elliptic modulus, m=k^2|ddouble.EllipticK(k)|
+|elliptic_e|&#91;0,1&#93;|1|k: elliptic modulus, m=k^2|ddouble.EllipticE(k)|
+|elliptic_pi|&#91;0,1&#93;|1|k: elliptic modulus, m=k^2|ddouble.EllipticPi(n, k)|
 |fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
 |fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
 |ei|&#40;-inf,+inf&#41;|8|exponential integral|ddouble.Ei(x)|
