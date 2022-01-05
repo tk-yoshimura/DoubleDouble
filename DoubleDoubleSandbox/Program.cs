@@ -4,12 +4,10 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble k = 0; k <= 1; k += 1d / 8) {
-                for (ddouble x = 0; x <= 4; x += 1d / 32) {
-                    ddouble y = JacobiTrigonPrototype.JacobiDn(x, k);
+            for (ddouble x = 0; x <= 16; x += 1d / 128) {
+                ddouble y = ddouble.JacobiDn(x, 0.95d);
 
-                    Console.WriteLine($"{x},{k},{y}");
-                }
+                Console.WriteLine($"{x},{y}");
             }
 
             Console.WriteLine("END");

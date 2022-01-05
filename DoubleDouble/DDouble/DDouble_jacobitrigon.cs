@@ -99,6 +99,8 @@ namespace DoubleDouble {
 
             private static Dictionary<ddouble, ddouble> period_table = new();
 
+            private static Dictionary<ddouble, (ddouble a, ddouble[] ds)> phi_table = new();
+
             public static ddouble SnLeqOneK(ddouble x, ddouble k) {
                 if (k < Eps) {
                     return SnNearZeroK(x, k);
@@ -162,30 +164,12 @@ namespace DoubleDouble {
             }
 
             public static ddouble Phi(ddouble x, ddouble k) {
-                ddouble a = 1, b = Sqrt(1d - k * k), c = k;
+                (ddouble a, ddouble[] ds) = Phi(k);
 
-                List<ddouble> a_list = new() { a };
-                List<ddouble> c_list = new() { c };
+                ddouble phi = Ldexp(a * x, ds.Length);
 
-                int n = 1;
-                for (; n < 32; n++) {
-                    (a, b, c) = ((a + b) / 2, Sqrt(a * b), (a - b) / 2);
-
-                    a_list.Add(a);
-                    c_list.Add(c);
-
-                    if (a == b || c < Eps) {
-                        break;
-                    }
-                }
-
-                ddouble phi = Ldexp(a * x, n);
-
-                while (n > 0) {
-                    ddouble v = c_list[n] / a_list[n] * Sin(phi);
-
-                    phi = (phi + Asin(v)) / 2;
-                    n--;
+                for(int i = ds.Length - 1; i >= 0; i--){
+                    phi = (phi + Asin(ds[i] * Sin(phi))) / 2;
                 }
 
                 return phi;
@@ -197,6 +181,36 @@ namespace DoubleDouble {
                 }
 
                 return period_table[k];
+            }
+
+            public static (ddouble a, ddouble[] ds) Phi(ddouble k) {
+                if (!phi_table.ContainsKey(k)) {
+                    phi_table.Add(k, GeneratePhiTable(k));
+                }
+
+                return phi_table[k];
+            }
+
+            private static (ddouble a, ddouble[] ds) GeneratePhiTable(ddouble k) { 
+                ddouble a = 1, b = Sqrt(1d - k * k), c = k;
+
+                List<ddouble> a_list = new() { a };
+                List<ddouble> c_list = new() { c };
+                List<ddouble> d_list = new();
+
+                for (int n = 1; n < 32; n++) {
+                    (a, b, c) = ((a + b) / 2, Sqrt(a * b), (a - b) / 2);
+
+                    a_list.Add(a);
+                    c_list.Add(c);
+                    d_list.Add(c / a);
+
+                    if (a == b || c < Eps) {
+                        break;
+                    }
+                }
+
+                return (a, d_list.ToArray());
             }
         }
     }
