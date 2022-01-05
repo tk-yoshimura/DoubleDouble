@@ -75,9 +75,9 @@
 |airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
 |lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.LowerIncompleteGamma(nu, x)|
 |upper_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.UpperIncompleteGamma(nu, x)|
-|jacobi_sn|&#91;0,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, k)|
-|jacobi_cn|&#91;0,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, k)|
-|jacobi_dn|&#91;0,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, k)|
+|jacobi_sn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, k)|
+|jacobi_cn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, k)|
+|jacobi_dn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, k)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
