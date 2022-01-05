@@ -1,24 +1,34 @@
-﻿using DoubleDouble;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using static DoubleDouble.ddouble;
 
-namespace DoubleDoubleSandbox {
-    public static class JacobiTrigonPrototype {
+namespace DoubleDouble {
+    public partial struct ddouble {
         public static ddouble JacobiSn(ddouble x, ddouble k) {
             if (k < 0d || k > 1d) {
                 throw new ArgumentOutOfRangeException(nameof(k));
+            }
+            if (x < 0) {
+                return -JacobiSn(-x, k);
             }
 
             if (!IsFinite(x) || !IsFinite(k)) {
                 return NaN;
             }
-
             if (IsZero(x)) {
                 return Zero;
             }
+            if (k >= JacobiTrigon.NearOne) {
+                return Tanh(x);
+            }
 
-            ddouble y = JacobiTrigon.SnLeqOneK(x, k);
+            ddouble period = JacobiTrigon.Period(k);
+
+            int n = (int)Floor(x / period);
+            ddouble v = x - n * period;
+
+            ddouble y = ((n & 1) == 0) ? JacobiTrigon.SnLeqOneK(v, k) : JacobiTrigon.SnLeqOneK(period - v, k);
+
+            y = ((n & 2) == 0) ? y : -y;
 
             return y;
         }
@@ -27,16 +37,30 @@ namespace DoubleDoubleSandbox {
             if (k < 0d || k > 1d) {
                 throw new ArgumentOutOfRangeException(nameof(k));
             }
+            if (x < 0) {
+                return JacobiCn(-x, k);
+            }
 
             if (!IsFinite(x) || !IsFinite(k)) {
                 return NaN;
             }
-
             if (IsZero(x)) {
                 return 1d;
             }
+            if (k >= JacobiTrigon.NearOne) {
+                return 1d / Cosh(x);
+            }
 
-            ddouble y = JacobiTrigon.CnLeqOneK(x, k);
+            ddouble period = JacobiTrigon.Period(k);
+
+            int n = (int)Floor(x / period);
+            ddouble v = x - n * period;
+
+            n &= 3;
+
+            ddouble y = ((n & 1) == 0) ? JacobiTrigon.CnLeqOneK(v, k) : JacobiTrigon.CnLeqOneK(period - v, k);
+
+            y = (n == 0 || n == 3) ? y : -y;
 
             return y;
         }
@@ -45,16 +69,26 @@ namespace DoubleDoubleSandbox {
             if (k < 0d || k > 1d) {
                 throw new ArgumentOutOfRangeException(nameof(k));
             }
+            if (x < 0) {
+                return JacobiDn(-x, k);
+            }
 
             if (!IsFinite(x) || !IsFinite(k)) {
                 return NaN;
             }
-
             if (IsZero(x)) {
                 return 1d;
             }
+            if (k >= JacobiTrigon.NearOne) {
+                return 1d / Cosh(x);
+            }
 
-            ddouble y = JacobiTrigon.DnLeqOneK(x, k);
+            ddouble period = JacobiTrigon.Period(k) * 2;
+
+            int n = (int)Floor(x / period);
+            ddouble v = x - n * period;
+
+            ddouble y = ((n & 1) == 0) ? JacobiTrigon.DnLeqOneK(v, k) : JacobiTrigon.DnLeqOneK(period - v, k);
 
             return y;
         }
@@ -63,10 +97,9 @@ namespace DoubleDoubleSandbox {
             public static ddouble NearOne = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
             public static ddouble Eps = Math.ScaleB(1, -51);
 
+            private static Dictionary<ddouble, ddouble> period_table = new();
+
             public static ddouble SnLeqOneK(ddouble x, ddouble k) {
-                if (k >= NearOne) {
-                    return Tanh(x);
-                }
                 if (k < Eps) {
                     return SnNearZeroK(x, k);
                 }
@@ -87,9 +120,6 @@ namespace DoubleDoubleSandbox {
             }
 
             public static ddouble CnLeqOneK(ddouble x, ddouble k) {
-                if (k >= NearOne) {
-                    return 1 / Cosh(x);
-                }
                 if (k < Eps) {
                     return CnNearZeroK(x, k);
                 }
@@ -110,9 +140,6 @@ namespace DoubleDoubleSandbox {
             }
 
             public static ddouble DnLeqOneK(ddouble x, ddouble k) {
-                if (k >= NearOne) {
-                    return 1 / Cosh(x);
-                }
                 if (k < Eps) {
                     return DnNearZeroK(x, k);
                 }
@@ -155,11 +182,21 @@ namespace DoubleDoubleSandbox {
                 ddouble phi = Ldexp(a * x, n);
 
                 while (n > 0) {
-                    phi = (phi + Asin(c_list[n] / a_list[n] * Sin(phi))) / 2;
+                    ddouble v = c_list[n] / a_list[n] * Sin(phi);
+
+                    phi = (phi + Asin(v)) / 2;
                     n--;
                 }
 
                 return phi;
+            }
+
+            public static ddouble Period(ddouble k) {
+                if (!period_table.ContainsKey(k)) {
+                    period_table.Add(k, EllipticK(k));
+                }
+
+                return period_table[k];
             }
         }
     }

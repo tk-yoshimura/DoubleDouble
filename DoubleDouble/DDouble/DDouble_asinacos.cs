@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Collections.ObjectModel;
+
+namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble Atan(ddouble x) {
@@ -39,6 +41,18 @@
             if (x == 1d) {
                 return Consts.AsinAcos.HalfPI;
             }
+            if (x > -0.03125d && x < 0.03125d) {
+                ddouble x2 = x * x;
+
+                ddouble s = Consts.Asin.TaylorXZeroCoefTable[^1];
+                for (int i = Consts.Asin.TaylorXZeroCoefTable.Count - 2; i >= 0; i--) {
+                    s = s * x2 + Consts.Asin.TaylorXZeroCoefTable[i];
+                }
+                s = s * x2 + 1;
+                s *= x;
+
+                return s;
+            }
 
             ddouble y = Atan(Sqrt(Rcp(1d - x * x) - 1d));
 
@@ -69,6 +83,21 @@
         private static partial class Consts {
             public static class AsinAcos {
                 public static readonly ddouble HalfPI = PI / 2;
+            }
+
+            public static class Asin {
+                public static ReadOnlyCollection<ddouble> TaylorXZeroCoefTable = new(new ddouble[] {
+                    (ddouble)1 / 6,
+                    (ddouble)3 / 40,
+                    (ddouble)5 / 112,
+                    (ddouble)35 / 1152,
+                    (ddouble)63 / 2816,
+                    (ddouble)231 / 13312,
+                    (ddouble)143 / 10240,
+                    (ddouble)6435 / 557056,
+                    (ddouble)12155 / 1245184,
+                    (ddouble)46189 / 5505024
+                });
             }
         }
     }

@@ -226,12 +226,30 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            Assert.IsTrue(ddouble.Abs(ddouble.PI / 6 - ddouble.Asin(ddouble.Rcp(2))) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.11976951499863418668667705584539962" - ddouble.Asin((ddouble)9 / 10)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.42925685347046940048553233466472443" - ddouble.Asin((ddouble)99 / 100)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.52607123962616318798162545896820037" - ddouble.Asin((ddouble)999 / 1000)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.55665407331738374163508146582209533" - ddouble.Asin((ddouble)9999 / 10000)) < 1e-30);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.56632418711310869205898202533489875" - ddouble.Asin((ddouble)99999 / 100000)) < 1e-30);
+            HPAssert.AreEqual("3.125508849949515468409146989332854974298e-2", ddouble.Asin(ddouble.BitDecrement(ddouble.Rcp(32))), 1e-32);
+            HPAssert.AreEqual("3.125508849949515468409146989332854974298e-2", ddouble.Asin(ddouble.Rcp(32)), 1e-32);
+            HPAssert.AreEqual("3.125508849949515468409146989332854974298e-2", ddouble.Asin(ddouble.BitIncrement(ddouble.Rcp(32))), 1e-32);
+
+            HPAssert.AreEqual("-3.125508849949515468409146989332854974298e-2", ddouble.Asin(-ddouble.BitDecrement(ddouble.Rcp(32))), 1e-32);
+            HPAssert.AreEqual("-3.125508849949515468409146989332854974298e-2", ddouble.Asin(-ddouble.Rcp(32)), 1e-32);
+            HPAssert.AreEqual("-3.125508849949515468409146989332854974298e-2", ddouble.Asin(-ddouble.BitIncrement(ddouble.Rcp(32))), 1e-32);
+
+            HPAssert.AreEqual("0.003906259934175675287287668546931409343529", ddouble.Asin(ddouble.Rcp(256)), 1e-32);
+            HPAssert.AreEqual("0.0009765626552204957159990441089610155724292", ddouble.Asin(ddouble.Rcp(1024)), 1e-33);
+            HPAssert.AreEqual("0.0002441406274253192697799412915520836753299", ddouble.Asin(ddouble.Rcp(4096)), 1e-33);
+            HPAssert.AreEqual("0.00003051757812973695157371923471036862626770", ddouble.Asin(ddouble.Rcp(32768)), 1e-33);
+            HPAssert.AreEqual("7.629394531324014868310282473922313774258e-6", ddouble.Asin(ddouble.Rcp(131072)), 1e-36);
+            HPAssert.AreEqual("2.328306436538696289083536290805893648145e-10", ddouble.Asin(Math.ScaleB(1, -32)), 1e-40);
+            HPAssert.AreEqual("5.421010862427522170037264004349708557132e-20", ddouble.Asin(Math.ScaleB(1, -64)), 1e-50);
+            HPAssert.AreEqual("8.636168555094444625386351862800399571116e-78", ddouble.Asin(Math.ScaleB(1, -256)), 1e-108);
+            HPAssert.AreEqual("8.900295434028805532360930869329616256877e-308", ddouble.Asin(Math.ScaleB(1, -1020)), 1e-338);
+
+            HPAssert.AreEqual(ddouble.PI / 6, ddouble.Asin(ddouble.Rcp(2)), 1e-31);
+            HPAssert.AreEqual("1.11976951499863418668667705584539962", ddouble.Asin((ddouble)9 / 10), 1e-31);
+            HPAssert.AreEqual("1.42925685347046940048553233466472443", ddouble.Asin((ddouble)99 / 100), 1e-31);
+            HPAssert.AreEqual("1.52607123962616318798162545896820037", ddouble.Asin((ddouble)999 / 1000), 1e-31);
+            HPAssert.AreEqual("1.55665407331738374163508146582209533", ddouble.Asin((ddouble)9999 / 10000), 1e-30);
+            HPAssert.AreEqual("1.56632418711310869205898202533489875", ddouble.Asin((ddouble)99999 / 100000), 1e-30);
 
             ddouble asin_pzero = ddouble.Asin(0d);
             ddouble asin_mzero = ddouble.Asin(-0d);
