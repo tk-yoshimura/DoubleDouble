@@ -60,7 +60,10 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual($"{v1:E30}", v1.ToString("E30"));
             Assert.AreEqual($"{v1:e20}", v1.ToString("e20"));
             Assert.AreEqual($"{v1:E20}", v1.ToString("E20"));
+        }
 
+        [TestMethod]
+        public void ParseFormatTest() {
             ddouble v2 = "1.234567890123456789012345678901234567890123456789e-20";
             ddouble v3 = "0.00000000000000000001234567890123456789012345678901234567890123456789";
             ddouble v4 = "0.0000000001234567890123456789012345678901234567890123456789e-10";
@@ -71,6 +74,19 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(v2, v4);
             Assert.AreEqual(v2, v5);
             Assert.AreEqual(v2, v6);
+        }
+
+        [TestMethod]
+        public void ParseZeroTest() {
+            ddouble v2 = "00000";
+            ddouble v3 = "0.0000";
+            ddouble v4 = "0";
+            ddouble v5 = "0.0";
+
+            Assert.AreEqual(0, v2);
+            Assert.AreEqual(0, v3);
+            Assert.AreEqual(0, v4);
+            Assert.AreEqual(0, v5);
         }
 
         [TestMethod]

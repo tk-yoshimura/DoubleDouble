@@ -58,6 +58,9 @@ namespace DoubleDouble {
 
             string dec = mantissa.Replace(".", string.Empty);
             string dec_trim = dec.TrimStart('0');
+            if (dec_trim.Length == 0) {
+                dec_trim = "0";
+            }
 
             int leading_zeros = dec.Length - dec_trim.Length;
             dec = dec_trim;
