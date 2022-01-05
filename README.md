@@ -63,9 +63,9 @@
 |bessel_y|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
 |bessel_i|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
 |bessel_k|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselK(nu, x)|
-|elliptic_k|&#91;0,1&#93;|1|k: elliptic modulus, m=k^2|ddouble.EllipticK(k)|
-|elliptic_e|&#91;0,1&#93;|1|k: elliptic modulus, m=k^2|ddouble.EllipticE(k)|
-|elliptic_pi|&#91;0,1&#93;|1|k: elliptic modulus, m=k^2|ddouble.EllipticPi(n, k)|
+|elliptic_k|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticK(k)|
+|elliptic_e|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticE(k)|
+|elliptic_pi|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticPi(n, k)|
 |fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
 |fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
 |ei|&#40;-inf,+inf&#41;|8|exponential integral|ddouble.Ei(x)|
@@ -73,8 +73,11 @@
 |lambertw|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
 |airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
 |airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
-|lower incomplete gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.LowerIncompleteGamma(nu, x)|
-|upper incomplete gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.UpperIncompleteGamma(nu, x)|
+|lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.LowerIncompleteGamma(nu, x)|
+|upper_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.UpperIncompleteGamma(nu, x)|
+|jacobi_sn|&#91;0,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, k)|
+|jacobi_cn|&#91;0,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, k)|
+|jacobi_dn|&#91;0,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, k)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
