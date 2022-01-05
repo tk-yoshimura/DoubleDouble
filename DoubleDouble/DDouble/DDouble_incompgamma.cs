@@ -5,7 +5,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d || nu > 32d) {
+            if (nu < 0d || nu > 128d) {
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0d) {
@@ -32,7 +32,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble UpperIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d || nu > 32d) {
+            if (nu < 0d || nu > 128d) {
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0d) {

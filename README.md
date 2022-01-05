@@ -73,8 +73,8 @@
 |lambertw|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
 |airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
 |airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
-|lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.LowerIncompleteGamma(nu, x)|
-|upper_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 32|ddouble.UpperIncompleteGamma(nu, x)|
+|lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
+|upper_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.UpperIncompleteGamma(nu, x)|
 |jacobi_sn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, k)|
 |jacobi_cn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, k)|
 |jacobi_dn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, k)|
