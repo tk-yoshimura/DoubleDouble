@@ -6,7 +6,7 @@ using static DoubleDouble.ddouble;
 namespace DoubleDoubleSandbox {
     public static class JacobiTrigonPrototype {
         public static ddouble JacobiSn(ddouble x, ddouble k) {
-            if (k < 0d) {
+            if (k < 0d || k > 1d) {
                 throw new ArgumentOutOfRangeException(nameof(k));
             }
 
@@ -18,32 +18,53 @@ namespace DoubleDoubleSandbox {
                 return Zero;
             }
 
-            ddouble y = (k >= 1d) ? JacobiTrigon.SnGeqOneK(x, k) : JacobiTrigon.SnLtOneK(x, k);
+            ddouble y = JacobiTrigon.SnLeqOneK(x, k);
+
+            return y;
+        }
+
+        public static ddouble JacobiCn(ddouble x, ddouble k) {
+            if (k < 0d || k > 1d) {
+                throw new ArgumentOutOfRangeException(nameof(k));
+            }
+
+            if (!IsFinite(x) || !IsFinite(k)) {
+                return NaN;
+            }
+
+            if (IsZero(x)) {
+                return 1d;
+            }
+
+            ddouble y = JacobiTrigon.CnLeqOneK(x, k);
+
+            return y;
+        }
+
+        public static ddouble JacobiDn(ddouble x, ddouble k) {
+            if (k < 0d || k > 1d) {
+                throw new ArgumentOutOfRangeException(nameof(k));
+            }
+
+            if (!IsFinite(x) || !IsFinite(k)) {
+                return NaN;
+            }
+
+            if (IsZero(x)) {
+                return 1d;
+            }
+
+            ddouble y = JacobiTrigon.DnLeqOneK(x, k);
 
             return y;
         }
 
         internal static class JacobiTrigon {
-            public static (ddouble min, ddouble max) NearOne
-                = ((+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL),
-                   (+1,  0, 0x8000000000000000uL, 0x0000000001000000uL));
-            public static ddouble Eps = Math.ScaleB(1, -102);
-
-            public static ddouble SnGeqOneK(ddouble x, ddouble k) {
-                if (k <= NearOne.max) {
-                    return Tanh(x);
-                }
-
-                ddouble u = 1d / (k * k);
-                ddouble v = x * k;
-
-                ddouble y = SnLtOneK(v, u) / k;
-
-                return y;
-            }
-
-            public static ddouble SnLtOneK(ddouble x, ddouble k) {
-                if (k >= NearOne.min) {
+            public static ddouble NearOne = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
+            public static ddouble Eps = Math.ScaleB(1, -51);
+            
+            public static ddouble SnLeqOneK(ddouble x, ddouble k) {
+                if (k >= NearOne) {
                     return Tanh(x);
                 }
                 if (k < Eps) {
@@ -57,7 +78,6 @@ namespace DoubleDoubleSandbox {
                 return y;
             }
 
-
             public static ddouble SnNearZeroK(ddouble x, ddouble k) {
                 ddouble sinx = Sin(x), cosx = Cos(x);
 
@@ -66,7 +86,54 @@ namespace DoubleDoubleSandbox {
                 return y;
             }
 
-            
+            public static ddouble CnLeqOneK(ddouble x, ddouble k) {
+                if (k >= NearOne) {
+                    return 1 / Cosh(x);
+                }
+                if (k < Eps) {
+                    return CnNearZeroK(x, k);
+                }
+
+                ddouble phi = Phi(x, k);
+
+                ddouble y = Cos(phi);
+
+                return y;
+            }
+
+            public static ddouble CnNearZeroK(ddouble x, ddouble k) {
+                ddouble sinx = Sin(x), cosx = Cos(x);
+
+                ddouble y = cosx - k * k * (x - sinx * cosx) * sinx / 4;
+
+                return y;
+            }
+
+            public static ddouble DnLeqOneK(ddouble x, ddouble k) {
+                if (k >= NearOne) {
+                    return 1 / Cosh(x);
+                }
+                if (k < Eps) {
+                    return DnNearZeroK(x, k);
+                }
+
+                ddouble phi = Phi(x, k);
+
+                ddouble sn = Sin(phi), cn = Cos(phi);
+
+                ddouble y = Sqrt(cn * cn + (1 - k * k) * sn * sn);
+
+                return y;
+            }
+
+            public static ddouble DnNearZeroK(ddouble x, ddouble k) {
+                ddouble sinx = Sin(x);
+
+                ddouble y = 1 - k * k * sinx * sinx / 4;
+
+                return y;
+            }
+
             public static ddouble Phi(ddouble x, ddouble k) {
                 ddouble a = 1, b = Sqrt(1d - k * k), c = k;
 
