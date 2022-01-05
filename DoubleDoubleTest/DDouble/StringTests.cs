@@ -44,17 +44,29 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void ToStringFormatTest() {
-            ddouble v = ddouble.Rcp(3);
+            ddouble v1 = ddouble.Rcp(3);
 
-            Console.WriteLine($"{v:e30}");
-            Console.WriteLine($"{v:E30}");
-            Console.WriteLine(v.ToString("e30"));
-            Console.WriteLine(v.ToString("E30"));
+            Console.WriteLine($"{v1:e30}");
+            Console.WriteLine($"{v1:E30}");
+            Console.WriteLine(v1.ToString("e30"));
+            Console.WriteLine(v1.ToString("E30"));
 
-            Console.WriteLine($"{v:e20}");
-            Console.WriteLine($"{v:E20}");
-            Console.WriteLine(v.ToString("e20"));
-            Console.WriteLine(v.ToString("E20"));
+            Console.WriteLine($"{v1:e20}");
+            Console.WriteLine($"{v1:E20}");
+            Console.WriteLine(v1.ToString("e20"));
+            Console.WriteLine(v1.ToString("E20"));
+
+            Assert.AreEqual($"{v1:e30}", v1.ToString("e30"));
+            Assert.AreEqual($"{v1:E30}", v1.ToString("E30"));
+            Assert.AreEqual($"{v1:e20}", v1.ToString("e20"));
+            Assert.AreEqual($"{v1:E20}", v1.ToString("E20"));
+
+            ddouble v2 = "0.00000000000000000001234567890123456789012345678901234567890123456789";
+            ddouble v3 = "1.234567890123456789012345678901234567890123456789e-20";
+            ddouble v4 = "0.0000000001234567890123456789012345678901234567890123456789e-10";
+
+            Assert.AreEqual(v2, v3);
+            Assert.AreEqual(v2, v4);
         }
 
         [TestMethod]

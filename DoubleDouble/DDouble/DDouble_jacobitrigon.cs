@@ -168,7 +168,7 @@ namespace DoubleDouble {
 
                 ddouble phi = Ldexp(a * x, ds.Length);
 
-                for(int i = ds.Length - 1; i >= 0; i--){
+                for (int i = ds.Length - 1; i >= 0; i--) {
                     phi = (phi + Asin(ds[i] * Sin(phi))) / 2;
                 }
 
@@ -191,7 +191,7 @@ namespace DoubleDouble {
                 return phi_table[k];
             }
 
-            private static (ddouble a, ddouble[] ds) GeneratePhiTable(ddouble k) { 
+            private static (ddouble a, ddouble[] ds) GeneratePhiTable(ddouble k) {
                 ddouble a = 1, b = Sqrt(1d - k * k), c = k;
 
                 List<ddouble> a_list = new() { a };

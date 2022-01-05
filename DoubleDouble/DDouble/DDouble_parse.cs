@@ -56,22 +56,25 @@ namespace DoubleDouble {
 
             int point_symbol_index = mantissa.Contains('.') ? (mantissa.IndexOf('.') - 1) : (mantissa.Length - 1);
 
-            string mantissa_withoutpoint = mantissa.Replace(".", string.Empty);
+            string dec = mantissa.Replace(".", string.Empty);
+            string dec_trim = dec.TrimStart('0');
 
-            if (mantissa_withoutpoint.Length > truncate_digits) {
-                mantissa_withoutpoint = mantissa_withoutpoint[..truncate_digits];
+            int leading_zeros = dec.Length - dec_trim.Length;
+            dec = dec_trim;
+
+            if (dec.Length > truncate_digits) {
+                dec = dec[..truncate_digits];
             }
+            int digits = dec.Length - 1;
 
-            BigInteger mantissa_dec = BigInteger.Parse(mantissa_withoutpoint);
+            BigInteger mantissa_dec = BigInteger.Parse(dec);
 
             string exponent = (exponent_symbol_index + 1 < num.Length) ? num[(exponent_symbol_index + 1)..] : "0";
             if (!int.TryParse(exponent, NumberStyles.Integer, CultureInfo.InvariantCulture, out int exponent_dec)) {
                 throw new FormatException(nameof(num));
             }
 
-            exponent_dec = checked(exponent_dec + point_symbol_index);
-
-            int digits = mantissa_withoutpoint.Length - 1;
+            exponent_dec = checked(exponent_dec + point_symbol_index - leading_zeros);
 
             return FromStringCore(sign, exponent_dec, mantissa_dec, digits);
         }
