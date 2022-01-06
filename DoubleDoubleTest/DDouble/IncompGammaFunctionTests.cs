@@ -1614,7 +1614,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            HPAssert.AreEqual("3.012660018453826334760381669635281566460e213", ddouble.UpperIncompleteGamma(128, 64),  1e185);
+            HPAssert.AreEqual("3.012660018453826334760381669635281566460e213", ddouble.UpperIncompleteGamma(128, 64), 1e185);
             HPAssert.AreEqual("1.470917844951055222028516480599072858560e213", ddouble.UpperIncompleteGamma(128, 128), 1e185);
             HPAssert.AreEqual("9.152339882250260407460087855828786316007e194", ddouble.UpperIncompleteGamma(128, 256), 1e166);
         }
@@ -3147,7 +3147,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            HPAssert.AreEqual("3.833210049595407891778125864029205719578e201", ddouble.LowerIncompleteGamma(128, 64),  1e172);
+            HPAssert.AreEqual("3.833210049595407891778125864029205719578e201", ddouble.LowerIncompleteGamma(128, 64), 1e172);
             HPAssert.AreEqual("1.541742173506604322781460596927986833764e213", ddouble.LowerIncompleteGamma(128, 128), 1e185);
             HPAssert.AreEqual("3.012660018457659543894743089302033651578e213", ddouble.LowerIncompleteGamma(128, 256), 1e185);
         }

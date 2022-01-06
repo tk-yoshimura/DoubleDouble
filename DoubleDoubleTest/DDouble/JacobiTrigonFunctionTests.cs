@@ -1449,8 +1449,6 @@ namespace DoubleDoubleTest.DDouble {
                 "0.9999997749296758898100188329563683933541"
             };
 
-            ddouble.JacobiSn(-6.5, 1d / 256);
-
             foreach ((double k, ddouble[] expecteds) in new[] {
                 (0,             k0_expecteds),
                 (0.00390625,    k0p00390625_expecteds),
@@ -1467,7 +1465,7 @@ namespace DoubleDoubleTest.DDouble {
                 for ((int i, ddouble x) = (0, -8); i < expecteds.Length; i++, x += 1d / 8) {
                     ddouble expected = expecteds[i];
 
-                    ddouble y = ddouble.JacobiSn(x, k);
+                    ddouble y = ddouble.JacobiSn(x, k * k);
 
                     Console.WriteLine($"{k},{x}");
                     Console.WriteLine(y);
@@ -2937,7 +2935,7 @@ namespace DoubleDoubleTest.DDouble {
                 for ((int i, ddouble x) = (0, -8); i < expecteds.Length; i++, x += 1d / 8) {
                     ddouble expected = expecteds[i];
 
-                    ddouble y = ddouble.JacobiCn(x, k);
+                    ddouble y = ddouble.JacobiCn(x, k * k);
 
                     Console.WriteLine($"{k},{x}");
                     Console.WriteLine(y);
@@ -4128,7 +4126,6 @@ namespace DoubleDoubleTest.DDouble {
                 "0.7802504159272118559697392292770364911147",
                 "0.8278777256912621600871778868979852384451"
             };
-
             ddouble[] k0p99609375_expecteds = {
                 "0.9382211848646830380507525517379713119050",
                 "0.9726784412781104409305011222800570665624",
@@ -4408,7 +4405,7 @@ namespace DoubleDoubleTest.DDouble {
                 for ((int i, ddouble x) = (0, -8); i < expecteds.Length; i++, x += 1d / 8) {
                     ddouble expected = expecteds[i];
 
-                    ddouble y = ddouble.JacobiDn(x, k);
+                    ddouble y = ddouble.JacobiDn(x, k * k);
 
                     Console.WriteLine($"{k},{x}");
                     Console.WriteLine(y);

@@ -1,6 +1,6 @@
 ﻿
-using System;
 using DoubleDouble;
+using System;
 using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {

@@ -1,155 +1,175 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace DoubleDouble {
 
     public partial struct ddouble {
 
-        public static ddouble EllipticK(ddouble k) {
-            if (!IsFinite(k) || k.Sign < 0 || k > 1d) {
+        public static ddouble EllipticK(ddouble m) {
+            if (!IsFinite(m) || m < -1d || m > 1d) {
                 return NaN;
             }
 
-            if (IsZero(k)) {
+            if (IsZero(m)) {
                 return Consts.AsinAcos.HalfPI;
             }
 
-            if (k == 1d) {
+            if (m == 1d) {
                 return PositiveInfinity;
             }
 
-            ddouble y = EllipticKCore(k);
-            return y;
+            if (m >= 0d) {
+                ddouble y = EllipticIntegral.EllipticKCore(m);
+
+                return y;
+            }
+            else {
+                ddouble y = CarlsonRF(0, 1d - m, 1d);
+
+                return y;
+            }
         }
 
-        public static ddouble EllipticE(ddouble k) {
-            if (!IsFinite(k) || k.Sign < 0 || k > 1d) {
+        public static ddouble EllipticE(ddouble m) {
+            if (!IsFinite(m) || m < -1d || m > 1d) {
                 return NaN;
             }
 
-            if (IsZero(k)) {
+            if (IsZero(m)) {
                 return Consts.AsinAcos.HalfPI;
             }
 
-            if (k == 1d) {
+            if (m == 1d) {
                 return 1d;
             }
 
-            ddouble y = EllipticECore(k);
+            if (m >= 0d) {
+                ddouble y = EllipticIntegral.EllipticECore(m);
 
-            return Max(1, y);
+                return Max(1, y);
+            }
+            else {
+                ddouble y = 2 * CarlsonRG(0, 1d - m, 1d);
+
+                return y;
+            }
         }
 
-        public static ddouble EllipticPi(ddouble n, ddouble k) {
-            if (!IsFinite(k) || k.Sign < 0 || k > 1d || n > 1d) {
+        public static ddouble EllipticPi(ddouble n, ddouble m) {
+            if (!IsFinite(m) || m < -1d || m > 1d || n > 1d) {
                 return NaN;
             }
 
             if (IsZero(n)) {
-                return EllipticK(k);
+                return EllipticK(m);
             }
 
             if (n == 1d) {
                 return PositiveInfinity;
             }
 
-            if (IsZero(k)) {
+            if (IsZero(m)) {
                 return PI / (2 * Sqrt(1d - n));
             }
 
-            if (k == 1d) {
+            if (m == 1d) {
                 return PositiveInfinity;
             }
 
-            ddouble y = EllipticPiCore(n, k);
+            if (m >= 0d) {
+                ddouble y = EllipticIntegral.EllipticPiCore(n, m);
 
-            return y;
-        }
-
-        private static ddouble EllipticKCore(ddouble k) {
-
-            Trace.WriteLine("call kcore");
-
-            ddouble squa_k = k * k;
-            ddouble y;
-
-            if (squa_k > Math.ScaleB(1, -8)) {
-                ddouble c = Sqrt(1d - squa_k), cp1 = 1d + c, cm1 = 1d - c;
-
-                y = 2d / cp1 * EllipticKCore(cm1 / cp1);
+                return y;
             }
             else {
-                ddouble x = 1, w = squa_k;
+                ddouble y = CarlsonRF(0, 1d - m, 1d) + n / 3d * CarlsonRJ(0, 1d - m, 1d, 1d - n);
 
-                for (int i = 1; i < int.MaxValue; i++) {
-                    ddouble dx = Consts.Elliptic.KTable(i) * w;
-                    ddouble x_next = x + dx;
+                return y;
+            }
+        }
 
-                    if (x == x_next) {
-                        break;
+        internal static class EllipticIntegral {
+
+            public static ddouble EllipticKCore(ddouble m) {
+                ddouble y;
+
+                if (m > Math.ScaleB(1, -8)) {
+                    ddouble c = Sqrt(1d - m), cp1 = 1d + c, cm1 = 1d - c;
+
+                    y = 2d / cp1 * EllipticKCore(Square(cm1 / cp1));
+                }
+                else {
+                    ddouble x = 1, w = m;
+
+                    for (int i = 1; i < int.MaxValue; i++) {
+                        ddouble dx = Consts.Elliptic.KTable(i) * w;
+                        ddouble x_next = x + dx;
+
+                        if (x == x_next) {
+                            break;
+                        }
+
+                        w *= m;
+                        x = x_next;
                     }
 
-                    w *= squa_k;
-                    x = x_next;
+                    y = x * Consts.AsinAcos.HalfPI;
                 }
 
-                y = x * Consts.AsinAcos.HalfPI;
+                return y;
             }
 
-            return y;
-        }
+            public static ddouble EllipticECore(ddouble m) {
+                ddouble a = 1d;
+                ddouble b = Sqrt(1d - m);
+                ddouble c = Sqrt(Abs(a * a - b * b));
+                ddouble q = 1d;
 
-        private static ddouble EllipticECore(ddouble k) {
-            ddouble a = 1d;
-            ddouble b = Sqrt(1d - k * k);
-            ddouble c = Sqrt(Abs(a * a - b * b));
-            ddouble q = 1d;
+                for (int n = 0; n < int.MaxValue && !IsZero(c) && a != b; n++) {
+                    ddouble squa_c = c * c;
+                    ddouble dq = Ldexp(squa_c, n - 1);
+                    q -= dq;
 
-            for (int n = 0; n < int.MaxValue && !IsZero(c) && a != b; n++) {
-                ddouble squa_c = c * c;
-                ddouble dq = Ldexp(squa_c, n - 1);
-                q -= dq;
+                    (a, b) = (
+                        (a + b) / 2,
+                        Sqrt(a * b)
+                    );
 
-                (a, b) = (
-                    (a + b) / 2, 
-                    Sqrt(a * b)
-                );
+                    c = squa_c / (4 * a);
+                }
 
-                c = squa_c / (4 * a);
+                ddouble y = q * PI / (2 * a);
+
+                return y;
             }
 
-            ddouble y = q * PI / (2 * a);
+            public static ddouble EllipticPiCore(ddouble n, ddouble m) {
+                ddouble a = 1d;
+                ddouble b = Sqrt(1d - m);
+                ddouble p = Sqrt(1d - n);
+                ddouble q = 1d;
+                ddouble sum_q = 1d;
 
-            return y;
-        }
+                while (Abs(sum_q) <= Ldexp(Abs(q), +100)) {
+                    ddouble ab = a * b, p_squa = p * p;
+                    ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
 
-        private static ddouble EllipticPiCore(ddouble n, ddouble k) {
-            ddouble a = 1d;
-            ddouble b = Sqrt(1d - k * k);
-            ddouble p = Sqrt(1d - n);
-            ddouble q = 1d;
-            ddouble sum_q = 1d;
+                    (a, b, p, q) = (
+                        (a + b) / 2,
+                        Sqrt(ab),
+                        p_squa_pab / (2 * p),
+                        q * p_squa_mab / (2 * p_squa_pab)
+                    );
 
-            while (Abs(sum_q) <= Ldexp(Abs(q), +100)) {
-                ddouble ab = a * b, p_squa = p * p;
-                ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
+                    sum_q += q;
+                }
 
-                (a, b, p, q) = (
-                    (a + b) / 2, 
-                    Sqrt(ab), 
-                    p_squa_pab / (2 * p), 
-                    q * p_squa_mab / (2 * p_squa_pab)
-                );
+                ddouble y = (2d + sum_q * n / (1d - n)) * EllipticK(m) / 2;
 
-                sum_q += q;
+                return y;
             }
-
-            ddouble y = (2d + sum_q * n / (1d - n)) * EllipticK(k) / 2;
-
-            return y;
         }
 
         internal static partial class Consts {

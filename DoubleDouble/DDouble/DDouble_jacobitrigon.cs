@@ -3,92 +3,92 @@ using System.Collections.Generic;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble JacobiSn(ddouble x, ddouble k) {
-            if (k < 0d || k > 1d) {
-                throw new ArgumentOutOfRangeException(nameof(k));
+        public static ddouble JacobiSn(ddouble x, ddouble m) {
+            if (m < 0d || m > 1d) {
+                throw new ArgumentOutOfRangeException(nameof(m));
             }
             if (x < 0) {
-                return -JacobiSn(-x, k);
+                return -JacobiSn(-x, m);
             }
 
-            if (!IsFinite(x) || !IsFinite(k)) {
+            if (!IsFinite(x) || !IsFinite(m)) {
                 return NaN;
             }
             if (IsZero(x)) {
                 return Zero;
             }
-            if (k >= JacobiTrigon.NearOne) {
+            if (m >= JacobiTrigon.NearOne) {
                 return Tanh(x);
             }
 
-            ddouble period = JacobiTrigon.Period(k);
+            ddouble period = JacobiTrigon.Period(m);
 
             int n = (int)Floor(x / period);
             ddouble v = x - n * period;
 
-            ddouble y = ((n & 1) == 0) ? JacobiTrigon.SnLeqOneK(v, k) : JacobiTrigon.SnLeqOneK(period - v, k);
+            ddouble y = ((n & 1) == 0) ? JacobiTrigon.SnLeqOneK(v, m) : JacobiTrigon.SnLeqOneK(period - v, m);
 
             y = ((n & 2) == 0) ? y : -y;
 
             return y;
         }
 
-        public static ddouble JacobiCn(ddouble x, ddouble k) {
-            if (k < 0d || k > 1d) {
-                throw new ArgumentOutOfRangeException(nameof(k));
+        public static ddouble JacobiCn(ddouble x, ddouble m) {
+            if (m < 0d || m > 1d) {
+                throw new ArgumentOutOfRangeException(nameof(m));
             }
             if (x < 0) {
-                return JacobiCn(-x, k);
+                return JacobiCn(-x, m);
             }
 
-            if (!IsFinite(x) || !IsFinite(k)) {
+            if (!IsFinite(x) || !IsFinite(m)) {
                 return NaN;
             }
             if (IsZero(x)) {
                 return 1d;
             }
-            if (k >= JacobiTrigon.NearOne) {
+            if (m >= JacobiTrigon.NearOne) {
                 return 1d / Cosh(x);
             }
 
-            ddouble period = JacobiTrigon.Period(k);
+            ddouble period = JacobiTrigon.Period(m);
 
             int n = (int)Floor(x / period);
             ddouble v = x - n * period;
 
             n &= 3;
 
-            ddouble y = ((n & 1) == 0) ? JacobiTrigon.CnLeqOneK(v, k) : JacobiTrigon.CnLeqOneK(period - v, k);
+            ddouble y = ((n & 1) == 0) ? JacobiTrigon.CnLeqOneK(v, m) : JacobiTrigon.CnLeqOneK(period - v, m);
 
             y = (n == 0 || n == 3) ? y : -y;
 
             return y;
         }
 
-        public static ddouble JacobiDn(ddouble x, ddouble k) {
-            if (k < 0d || k > 1d) {
-                throw new ArgumentOutOfRangeException(nameof(k));
+        public static ddouble JacobiDn(ddouble x, ddouble m) {
+            if (m < 0d || m > 1d) {
+                throw new ArgumentOutOfRangeException(nameof(m));
             }
             if (x < 0) {
-                return JacobiDn(-x, k);
+                return JacobiDn(-x, m);
             }
 
-            if (!IsFinite(x) || !IsFinite(k)) {
+            if (!IsFinite(x) || !IsFinite(m)) {
                 return NaN;
             }
             if (IsZero(x)) {
                 return 1d;
             }
-            if (k >= JacobiTrigon.NearOne) {
+            if (m >= JacobiTrigon.NearOne) {
                 return 1d / Cosh(x);
             }
 
-            ddouble period = JacobiTrigon.Period(k) * 2;
+            ddouble period = JacobiTrigon.Period(m) * 2;
 
             int n = (int)Floor(x / period);
             ddouble v = x - n * period;
 
-            ddouble y = ((n & 1) == 0) ? JacobiTrigon.DnLeqOneK(v, k) : JacobiTrigon.DnLeqOneK(period - v, k);
+            ddouble y = ((n & 1) == 0) ? JacobiTrigon.DnLeqOneK(v, m) : JacobiTrigon.DnLeqOneK(period - v, m);
 
             return y;
         }
@@ -101,70 +101,70 @@ namespace DoubleDouble {
 
             private static Dictionary<ddouble, (ddouble a, ddouble[] ds)> phi_table = new();
 
-            public static ddouble SnLeqOneK(ddouble x, ddouble k) {
-                if (k < Eps) {
-                    return SnNearZeroK(x, k);
+            public static ddouble SnLeqOneK(ddouble x, ddouble m) {
+                if (m < Eps) {
+                    return SnNearZeroK(x, m);
                 }
 
-                ddouble phi = Phi(x, k);
+                ddouble phi = Phi(x, m);
 
                 ddouble y = Sin(phi);
 
                 return y;
             }
 
-            public static ddouble SnNearZeroK(ddouble x, ddouble k) {
+            public static ddouble SnNearZeroK(ddouble x, ddouble m) {
                 ddouble sinx = Sin(x), cosx = Cos(x);
 
-                ddouble y = sinx - k * k * (x - sinx * cosx) * cosx / 4;
+                ddouble y = sinx - m * (x - sinx * cosx) * cosx / 4;
 
                 return y;
             }
 
-            public static ddouble CnLeqOneK(ddouble x, ddouble k) {
-                if (k < Eps) {
-                    return CnNearZeroK(x, k);
+            public static ddouble CnLeqOneK(ddouble x, ddouble m) {
+                if (m < Eps) {
+                    return CnNearZeroK(x, m);
                 }
 
-                ddouble phi = Phi(x, k);
+                ddouble phi = Phi(x, m);
 
                 ddouble y = Cos(phi);
 
                 return y;
             }
 
-            public static ddouble CnNearZeroK(ddouble x, ddouble k) {
+            public static ddouble CnNearZeroK(ddouble x, ddouble m) {
                 ddouble sinx = Sin(x), cosx = Cos(x);
 
-                ddouble y = cosx - k * k * (x - sinx * cosx) * sinx / 4;
+                ddouble y = cosx - m * (x - sinx * cosx) * sinx / 4;
 
                 return y;
             }
 
-            public static ddouble DnLeqOneK(ddouble x, ddouble k) {
-                if (k < Eps) {
-                    return DnNearZeroK(x, k);
+            public static ddouble DnLeqOneK(ddouble x, ddouble m) {
+                if (m < Eps) {
+                    return DnNearZeroK(x, m);
                 }
 
-                ddouble phi = Phi(x, k);
+                ddouble phi = Phi(x, m);
 
                 ddouble sn = Sin(phi), cn = Cos(phi);
 
-                ddouble y = Sqrt(cn * cn + (1 - k * k) * sn * sn);
+                ddouble y = Sqrt(cn * cn + (1 - m) * sn * sn);
 
                 return y;
             }
 
-            public static ddouble DnNearZeroK(ddouble x, ddouble k) {
+            public static ddouble DnNearZeroK(ddouble x, ddouble m) {
                 ddouble sinx = Sin(x);
 
-                ddouble y = 1 - k * k * sinx * sinx / 4;
+                ddouble y = 1 - m * sinx * sinx / 4;
 
                 return y;
             }
 
-            public static ddouble Phi(ddouble x, ddouble k) {
-                (ddouble a, ddouble[] ds) = Phi(k);
+            public static ddouble Phi(ddouble x, ddouble m) {
+                (ddouble a, ddouble[] ds) = Phi(m);
 
                 ddouble phi = Ldexp(a * x, ds.Length);
 
@@ -175,24 +175,24 @@ namespace DoubleDouble {
                 return phi;
             }
 
-            public static ddouble Period(ddouble k) {
-                if (!period_table.ContainsKey(k)) {
-                    period_table.Add(k, EllipticK(k));
+            public static ddouble Period(ddouble m) {
+                if (!period_table.ContainsKey(m)) {
+                    period_table.Add(m, EllipticK(m));
                 }
 
-                return period_table[k];
+                return period_table[m];
             }
 
-            public static (ddouble a, ddouble[] ds) Phi(ddouble k) {
-                if (!phi_table.ContainsKey(k)) {
-                    phi_table.Add(k, GeneratePhiTable(k));
+            public static (ddouble a, ddouble[] ds) Phi(ddouble m) {
+                if (!phi_table.ContainsKey(m)) {
+                    phi_table.Add(m, GeneratePhiTable(m));
                 }
 
-                return phi_table[k];
+                return phi_table[m];
             }
 
-            private static (ddouble a, ddouble[] ds) GeneratePhiTable(ddouble k) {
-                ddouble a = 1, b = Sqrt(1d - k * k), c = k;
+            private static (ddouble a, ddouble[] ds) GeneratePhiTable(ddouble m) {
+                ddouble a = 1, b = Sqrt(1d - m), c = Sqrt(m);
 
                 List<ddouble> a_list = new() { a };
                 List<ddouble> c_list = new() { c };
