@@ -94,7 +94,7 @@ namespace DoubleDouble {
             return sign > 0 ? z : -z;
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class SinCos {
 
                 public static readonly IReadOnlyList<ddouble> SinPIHalfTable = GenerateSinPITable();

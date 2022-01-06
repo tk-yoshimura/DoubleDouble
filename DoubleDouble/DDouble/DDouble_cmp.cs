@@ -362,8 +362,28 @@ namespace DoubleDouble {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble Min(ddouble a, ddouble b, ddouble c) {
+            return Min(Min(a, b), c);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble Min(ddouble a, ddouble b, ddouble c, ddouble d) {
+            return Min(Min(a, b), Min(c, d));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble Max(ddouble a, ddouble b) {
             return a > b ? a : b;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble Max(ddouble a, ddouble b, ddouble c) {
+            return Max(Max(a, b), c);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble Max(ddouble a, ddouble b, ddouble c, ddouble d) {
+            return Max(Max(a, b), Max(c, d));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

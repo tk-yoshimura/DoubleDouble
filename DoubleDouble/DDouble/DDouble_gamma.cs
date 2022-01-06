@@ -255,7 +255,7 @@ namespace DoubleDouble {
             return s;
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Gamma {
                 public const int Threshold = 12;
 

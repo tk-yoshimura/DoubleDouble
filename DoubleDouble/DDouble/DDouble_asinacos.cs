@@ -80,7 +80,7 @@ namespace DoubleDouble {
             }
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class AsinAcos {
                 public static readonly ddouble HalfPI = PI / 2;
             }

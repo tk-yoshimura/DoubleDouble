@@ -139,7 +139,7 @@ namespace DoubleDouble {
             return (sign, exponent_dec, mantissa);
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
 
             public static class Dec {
 

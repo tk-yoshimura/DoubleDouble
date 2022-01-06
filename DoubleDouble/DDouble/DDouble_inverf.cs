@@ -103,7 +103,7 @@ namespace DoubleDouble {
             return z;
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class InverseErf {
                 public const int Precision = 84;
             }

@@ -75,7 +75,7 @@ namespace DoubleDouble {
             return y;
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Log {
                 private static ddouble GenerateLn2() {
                     int n = 3;

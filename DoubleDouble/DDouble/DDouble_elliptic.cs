@@ -158,7 +158,7 @@ namespace DoubleDouble {
             return y;
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Elliptic {
                 private static readonly List<ddouble> k_table;
 

@@ -36,7 +36,7 @@ namespace DoubleDouble {
             return y;
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Cbrt {
                 public static ddouble Rcp81 { get; } = Rcp(81);
             }

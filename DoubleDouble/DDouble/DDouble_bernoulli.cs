@@ -6,7 +6,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
         public static ReadOnlyCollection<ddouble> BernoulliSequence => Consts.Bernoulli.BernoulliTable;
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Bernoulli {
                 public static readonly ReadOnlyCollection<ddouble> BernoulliTable = GenerateBernoulliTable();
 

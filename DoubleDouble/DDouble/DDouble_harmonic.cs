@@ -9,7 +9,7 @@ namespace DoubleDouble {
             return Consts.Harmonic.Value(n);
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Harmonic {
                 private static readonly List<ddouble> a_table = new();
                 private static ddouble acc;

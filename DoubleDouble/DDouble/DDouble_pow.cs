@@ -123,7 +123,7 @@ namespace DoubleDouble {
             return y;
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Pow {
 
                 public static readonly IReadOnlyList<ddouble> Pow2Table = GeneratePow2Table();

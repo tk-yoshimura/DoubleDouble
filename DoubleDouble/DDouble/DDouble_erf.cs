@@ -100,7 +100,7 @@ namespace DoubleDouble {
             }
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Erf {
                 public static readonly ddouble ApproxMin = 0.5d;
                 public static readonly ddouble C = 2 * Rcp(Sqrt(PI));

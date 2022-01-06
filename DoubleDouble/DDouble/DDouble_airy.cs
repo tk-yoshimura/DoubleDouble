@@ -70,7 +70,7 @@ namespace DoubleDouble {
             }
         }
 
-        private static partial class Consts {
+        internal static partial class Consts {
             public static class Airy {
                 public static ddouble Rcp3 { get; } = Rcp(3);
                 public static ddouble RcpSqrt3 { get; } = Rcp(Sqrt(3));
