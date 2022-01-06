@@ -5,7 +5,7 @@ using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {
     public static class IncompleteEllipticPrototype {
-        internal static class IncompleteEllipticCarlsonIntegrals {
+        internal static class CarlsonIntegrals {
 
             public static ddouble Rcp3 = Rcp(3d);
             public static ddouble Rcp5 = Rcp(5d);
