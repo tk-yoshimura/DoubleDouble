@@ -277,8 +277,18 @@ namespace DoubleDouble {
             if (Max(x, y) < (z + 1) * Math.ScaleB(1, -105)) {
                 return Sqrt(z) / 2;
             }
+            if (Max(y, z) < (x + 1) * Math.ScaleB(1, -105)) {
+                return Sqrt(x) / 2;
+            }
+            if (Max(z, x) < (y + 1) * Math.ScaleB(1, -105)) {
+                return Sqrt(y) / 2;
+            }
 
             ddouble v = (z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z)) / 2;
+
+            if (IsNaN(v)) {
+                return (x + y + z) > 1 ? PositiveInfinity : Zero;
+            }
 
             return v;
         }

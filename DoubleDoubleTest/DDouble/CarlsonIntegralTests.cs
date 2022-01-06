@@ -351,6 +351,38 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(ddouble.CarlsonRG(ddouble.NaN, ddouble.NaN, ddouble.NaN)));
 
             for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
+                ddouble y = ddouble.CarlsonRG(4, v, v);
+
+                Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
+
+                HPAssert.AreEqual(1, y, 1e-20);
+            }
+
+            for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
+                ddouble y = ddouble.CarlsonRG(40000, v, v);
+
+                Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
+
+                HPAssert.AreEqual(100, y, 1e-20);
+            }
+
+            for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
+                ddouble y = ddouble.CarlsonRG(v, 4, v);
+
+                Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
+
+                HPAssert.AreEqual(1, y, 1e-20);
+            }
+
+            for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
+                ddouble y = ddouble.CarlsonRG(v, 40000, v);
+
+                Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
+
+                HPAssert.AreEqual(100, y, 1e-20);
+            }
+
+            for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
                 ddouble y = ddouble.CarlsonRG(v, v, 4);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
@@ -408,6 +440,30 @@ namespace DoubleDoubleTest.DDouble {
 
             for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRG(v, v, v);
+
+                Console.WriteLine(y);
+
+                Assert.IsTrue(y > 1, "largeval");
+            }
+
+            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+                ddouble y = ddouble.CarlsonRG(v, v, 1);
+
+                Console.WriteLine(y);
+
+                Assert.IsTrue(y > 1, "largeval");
+            }
+
+            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+                ddouble y = ddouble.CarlsonRG(v, 1, 1);
+
+                Console.WriteLine(y);
+
+                Assert.IsTrue(y > 1, "largeval");
+            }
+
+            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+                ddouble y = ddouble.CarlsonRG(v, v, 0);
 
                 Console.WriteLine(y);
 
