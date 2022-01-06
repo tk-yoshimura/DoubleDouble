@@ -78,6 +78,10 @@
 |jacobi_sn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, m)|
 |jacobi_cn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, m)|
 |jacobi_dn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, m)|
+|carlson_rd|&#91;0,+inf&#41;|4||ddouble.CarlsonRD(x, y, z)|
+|carlson_rc|&#91;0,+inf&#41;|4||ddouble.CarlsonRC(x, y)|
+|carlson_rf|&#91;0,+inf&#41;|4||ddouble.CarlsonRF(x, y, z)|
+|carlson_rj|&#91;0,+inf&#41;|4||ddouble.CarlsonRJ(x, y, z, p)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|

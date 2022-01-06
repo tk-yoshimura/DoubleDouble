@@ -88,5 +88,17 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.AreEqual(ddouble.Abs(ddouble.BitDecrement(0)), ddouble.Abs(ddouble.BitIncrement(0)));
         }
+
+        [TestMethod]
+        public void SquareTest() {
+            Assert.AreEqual(4, ddouble.Square(2));
+            Assert.AreEqual(9, ddouble.Square(3));
+        }
+
+        [TestMethod]
+        public void CubeTest() {
+            Assert.AreEqual(8, ddouble.Cube(2));
+            Assert.AreEqual(27, ddouble.Cube(3));
+        }
     }
 }
