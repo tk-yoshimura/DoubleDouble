@@ -69,11 +69,9 @@ namespace DoubleDouble {
             return y;
         }
 
-        private static ddouble EllipticKCore(ddouble k, [AllowNull] Dictionary<ddouble, ddouble> kvalue_cache = null) {
+        private static ddouble EllipticKCore(ddouble k) {
 
-            if (kvalue_cache is not null && kvalue_cache.ContainsKey(k)) {
-                return kvalue_cache[k];
-            }
+            Trace.WriteLine("call kcore");
 
             ddouble squa_k = k * k;
             ddouble y;
@@ -81,7 +79,7 @@ namespace DoubleDouble {
             if (squa_k > Math.ScaleB(1, -8)) {
                 ddouble c = Sqrt(1d - squa_k), cp1 = 1d + c, cm1 = 1d - c;
 
-                y = 2d / cp1 * EllipticKCore(cm1 / cp1, kvalue_cache);
+                y = 2d / cp1 * EllipticKCore(cm1 / cp1);
             }
             else {
                 ddouble x = 1, w = squa_k;
@@ -99,10 +97,6 @@ namespace DoubleDouble {
                 }
 
                 y = x * Consts.AsinAcos.HalfPI;
-            }
-
-            if (kvalue_cache is not null) {
-                kvalue_cache.Add(k, y);
             }
 
             return y;
