@@ -84,7 +84,8 @@
 |carlson_rd|&#91;0,+inf&#41;|4||ddouble.CarlsonRD(x, y, z)|
 |carlson_rc|&#91;0,+inf&#41;|4||ddouble.CarlsonRC(x, y)|
 |carlson_rf|&#91;0,+inf&#41;|4||ddouble.CarlsonRF(x, y, z)|
-|carlson_rj|&#91;0,+inf&#41;|4||ddouble.CarlsonRJ(x, y, z, p)|
+|carlson_rj|&#91;0,+inf&#41;|4||ddouble.CarlsonRJ(x, y, z, w)|
+|carlson_rg|&#91;0,+inf&#41;|4||ddouble.CarlsonRG(x, y, z)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|

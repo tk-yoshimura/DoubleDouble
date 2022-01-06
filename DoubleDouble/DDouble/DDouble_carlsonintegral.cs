@@ -4,13 +4,19 @@ using static DoubleDouble.ddouble.Consts.CarlsonIntegrals;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble CarlsonRC(ddouble x, ddouble y) {
-            if (x < 0 || y < 0) {
+            if (!(x >= 0d) || !(y >= 0d)) {
                 return NaN;
             }
+            if (IsInfinity(x) || IsInfinity(y)) {
+                return Zero;
+            }
+
+            bool lessval = x * y * y < 1d;
 
             const int max_iters = 64;
 
             ddouble s = 0, mu = 0, invmu = 0;
+            ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
                 (ddouble sqrtx, ddouble sqrty) = (
@@ -32,30 +38,37 @@ namespace DoubleDouble {
 
                     ddouble eps = Abs(s);
 
-                    if (!(eps >= 6e-6)) {
+                    if (eps < 6e-6 || IsNaN(eps) || eps_prev <= eps) {
                         break;
                     }
-                }
-
-                if (i >= max_iters) {
-                    throw new ArithmeticException("Carlson integral Rc not convergence.");
+                    eps_prev = eps;
                 }
             }
 
             ddouble v = (1d + s * s * (C3d10 + s * (Rcp7 + s * (C3d8 + s * C9d22)))) * Sqrt(invmu);
 
+            if (IsNaN(v)) {
+                return lessval ? PositiveInfinity : Zero;
+            }
+
             return v;
         }
 
         public static ddouble CarlsonRD(ddouble x, ddouble y, ddouble z) {
-            if (x < 0 || y < 0 || z < 0) {
+            if (!(x >= 0d) || !(y >= 0d) || !(z >= 0d)) {
                 return NaN;
+            }
+            if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z)) {
+                return Zero;
             }
 
             const int max_iters = 64;
 
+            bool lessval = x * y * z * z * z < 1d;
+
             ddouble s = 0, exp4 = 1;
             ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0;
+            ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
                 (ddouble sqrtx, ddouble sqrty, ddouble sqrtz) = (
@@ -84,13 +97,10 @@ namespace DoubleDouble {
 
                     ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd));
 
-                    if (!(eps >= 8e-6)) {
+                    if (eps < 8e-6 || IsNaN(eps) || eps_prev <= eps) {
                         break;
                     }
-                }
-
-                if (i >= max_iters) {
-                    throw new ArithmeticException("Carlson integral Rd not convergence.");
+                    eps_prev = eps;
                 }
             }
 
@@ -102,17 +112,35 @@ namespace DoubleDouble {
 
             ddouble v = 3d * s + exp4 * (1d + v1 + v2) * (invmu * Sqrt(invmu));
 
+            if (IsNaN(v)) {
+                return lessval ? PositiveInfinity : Zero;
+            }
+
             return v;
         }
 
         public static ddouble CarlsonRF(ddouble x, ddouble y, ddouble z) {
-            if (x < 0 || y < 0 || z < 0) {
+            if (y == z) {
+                return CarlsonRC(x, y);
+            }
+
+            if (!(x >= 0d) || !(y >= 0d) || !(z >= 0d)) {
                 return NaN;
+            }
+            if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z)) {
+                return Zero;
+            }
+
+            if (x == 0d && z == 0d) {
+                return PositiveInfinity;
             }
 
             const int max_iters = 64;
 
+            bool lessval = x * y * z < 1d;
+
             ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0;
+            ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
                 (ddouble sqrtx, ddouble sqrty, ddouble sqrtz) = (
@@ -139,13 +167,11 @@ namespace DoubleDouble {
 
                     ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd));
 
-                    if (!(eps >= 1e-5)) {
+                    if (eps < 1e-5 || IsNaN(eps) || eps_prev <= eps) {
+                        i = max_iters;
                         break;
                     }
-                }
-
-                if (i >= max_iters) {
-                    throw new ArithmeticException("Carlson integral Rf not convergence.");
+                    eps_prev = eps;
                 }
             }
 
@@ -153,18 +179,36 @@ namespace DoubleDouble {
 
             ddouble v = (1d + xyz * Rcp14 - xymzz * (Rcp10 - xymzz * Rcp24 + xyz * C3d44)) * Sqrt(invmu);
 
+            if (IsNaN(v)) {
+                return lessval ? PositiveInfinity : Zero;
+            }
+
             return v;
         }
 
-        public static ddouble CarlsonRJ(ddouble x, ddouble y, ddouble z, ddouble p) {
-            if (x < 0 || y < 0 || z < 0 || p < 0) {
+        public static ddouble CarlsonRJ(ddouble x, ddouble y, ddouble z, ddouble w) {
+            if (z == w) {
+                return CarlsonRD(x, y, z);
+            }
+
+            if (!(x >= 0d) || !(y >= 0d) || !(z >= 0d) || !(w >= 0d)) {
                 return NaN;
+            }
+            if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z) || IsInfinity(w)) {
+                return Zero;
+            }
+
+            if ((x == 0d && y == 0d) || (y == 0d && z == 0d) || (z == 0d && x == 0d)) {
+                return PositiveInfinity;
             }
 
             const int max_iters = 64;
 
+            bool lessval = x * y * z * w * w < 1d;
+
             ddouble s = 0, exp4 = 1;
-            ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0, pd = 0;
+            ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0, wd = 0;
+            ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
                 (ddouble sqrtx, ddouble sqrty, ddouble sqrtz) = (
@@ -172,55 +216,68 @@ namespace DoubleDouble {
                 );
 
                 ddouble lambda = (sqrtx + sqrtz) * sqrty + sqrtx * sqrtz;
-                ddouble alpha = Square(p * (sqrtx + sqrty + sqrtz) + (sqrtx * sqrty * sqrtz));
-                ddouble beta = p * Square(p + lambda);
+                ddouble alpha = Square(w * (sqrtx + sqrty + sqrtz) + (sqrtx * sqrty * sqrtz));
+                ddouble beta = w * Square(w + lambda);
 
                 s += exp4 * CarlsonRC(alpha, beta);
                 exp4 /= 4;
 
-                (x, y, z, p) = (
+                (x, y, z, w) = (
                     (x + lambda) / 4,
                     (y + lambda) / 4,
                     (z + lambda) / 4,
-                    (p + lambda) / 4
+                    (w + lambda) / 4
                 );
 
                 if ((i & 1) == 0) {
-                    mu = (x + y + z + 2 * p) * Rcp5;
+                    mu = (x + y + z + 2 * w) * Rcp5;
                     invmu = Rcp(mu);
 
-                    (xd, yd, zd, pd) = (
+                    (xd, yd, zd, wd) = (
                         (mu - x) * invmu,
                         (mu - y) * invmu,
                         (mu - z) * invmu,
-                        (mu - p) * invmu
+                        (mu - w) * invmu
                     );
 
-                    ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd), Abs(pd));
+                    ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd), Abs(wd));
 
-                    if (!(eps >= 8e-6)) {
+                    if (eps < 8e-6 || IsNaN(eps) || eps_prev <= eps) {
+                        i = max_iters;
                         break;
                     }
-                }
-
-                if (i >= max_iters) {
-                    throw new ArithmeticException("Carlson integral Rj not convergence.");
+                    eps_prev = eps;
                 }
             }
 
-            ddouble xyz = xd * yd * zd, xyyzzx = (xd + zd) * yd + xd * zd, pp = pd * pd;
-            ddouble xyyzzxmpp3 = xyyzzx - 3d * pp;
+            ddouble xyz = xd * yd * zd, xyyzzx = (xd + zd) * yd + xd * zd, ww = wd * wd;
+            ddouble xyyzzxmww3 = xyyzzx - 3d * ww;
 
-            ddouble v1 = xyz * (Rcp6 - pd * (C3d11 - pd * C3d26));
-            ddouble v2 = pd * ((xyyzzx - pp) * Rcp3 - xyyzzx * pd * C3d22);
-            ddouble v3 = xyyzzxmpp3 * (-C3d14 + xyyzzxmpp3 * C9d88 - (xyz + 2 * pd * (xyyzzx - pp)) * C9d52);
+            ddouble v1 = xyz * (Rcp6 - wd * (C3d11 - wd * C3d26));
+            ddouble v2 = wd * ((xyyzzx - ww) * Rcp3 - xyyzzx * wd * C3d22);
+            ddouble v3 = xyyzzxmww3 * (-C3d14 + xyyzzxmww3 * C9d88 - (xyz + 2 * wd * (xyyzzx - ww)) * C9d52);
 
             ddouble v = 3d * s + exp4 * (1d + v1 + v2 + v3) * (invmu * Sqrt(invmu));
+
+            if (IsNaN(v)) {
+                return lessval ? PositiveInfinity : Zero;
+            }
 
             return v;
         }
 
         public static ddouble CarlsonRG(ddouble x, ddouble y, ddouble z) {
+            if (!(x >= 0d) || !(y >= 0d) || !(z >= 0d)) {
+                return NaN;
+            }
+            if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z)) {
+                return PositiveInfinity;
+            }
+
+            if (Max(x, y) < (z + 1) * Math.ScaleB(1, -105)) {
+                return Sqrt(z) / 2;
+            }
+
             ddouble v = (z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z)) / 2;
 
             return v;
