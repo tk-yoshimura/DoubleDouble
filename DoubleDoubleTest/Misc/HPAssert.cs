@@ -13,9 +13,11 @@ namespace DoubleDoubleTest {
         public static void AreEqual(ddouble expected, ddouble actual, ddouble delta, string message) {
             if (ddouble.IsInfinity(expected)) {
                 Assert.IsTrue(ddouble.IsInfinity(actual), message);
-                Assert.AreEqual(expected.Sign, actual.Sign, message);
+                Assert.AreEqual(expected.Sign, actual.Sign, $"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}\n{message}");
                 return;
             }
+
+            Assert.AreEqual(ddouble.IsNaN(expected), ddouble.IsNaN(actual), $"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}\n{message}");
 
             if (ddouble.Abs(expected - actual) > delta) {
                 throw new AssertFailedException($"{nameof(expected)}:{expected}\n{nameof(actual)}:  {actual}\n{message}");

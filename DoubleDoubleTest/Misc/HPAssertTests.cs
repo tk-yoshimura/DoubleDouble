@@ -33,6 +33,53 @@ namespace DoubleDoubleTest.Utils {
 
 
             HPAssert.AreEqual((ddouble)2, (ddouble)2 + (ddouble)1e-28, 1e-27);
+
+            HPAssert.AreEqual(-(ddouble)2, -(ddouble)2 + (ddouble)1e-28, 1e-27);
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(-(ddouble)2, (ddouble)2 + (ddouble)1e-28, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual((ddouble)2, -(ddouble)2 + (ddouble)1e-28, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(ddouble.NaN, (ddouble)2 + (ddouble)1e-28, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual((ddouble)2 + (ddouble)1e-28, ddouble.NaN, 1e-27);
+            });
+
+            HPAssert.AreEqual(ddouble.NaN, ddouble.NaN, 1e-27);
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(ddouble.NaN, ddouble.PositiveInfinity, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(ddouble.NaN, ddouble.NegativeInfinity, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(ddouble.PositiveInfinity, ddouble.NaN, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(ddouble.NegativeInfinity, ddouble.NaN, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(ddouble.PositiveInfinity, ddouble.NegativeInfinity, 1e-27);
+            });
+
+            Assert.ThrowsException<AssertFailedException>(() => {
+                HPAssert.AreEqual(ddouble.NegativeInfinity, ddouble.PositiveInfinity, 1e-27);
+            });
+
+            HPAssert.AreEqual(ddouble.PositiveInfinity, ddouble.PositiveInfinity, 1e-27);
+            HPAssert.AreEqual(ddouble.NegativeInfinity, ddouble.NegativeInfinity, 1e-27);
         }
 
         [TestMethod]
