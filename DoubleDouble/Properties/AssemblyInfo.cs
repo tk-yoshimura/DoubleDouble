@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("9A19103F-16F7-4668-BE54-9A1E7A4F7556")]
 
-[assembly: AssemblyVersion("1.9.2.*")]
+[assembly: AssemblyVersion("1.9.3.*")]
 
 [assembly: InternalsVisibleTo("DoubleDoubleTest")]
 [assembly: InternalsVisibleTo("DoubleDoubleSandbox")]

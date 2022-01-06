@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace DoubleDouble {
     public partial struct ddouble {
+
+        public static ddouble Square(ddouble x) => x * x;
+        public static ddouble Cube(ddouble x) => x * x * x;
+
         public static ddouble Pow(ddouble x, long n) {
             if (IsNaN(x)) {
                 return NaN;

@@ -119,13 +119,12 @@ namespace DoubleDouble {
                 ddouble dq = Ldexp(squa_c, n - 1);
                 q -= dq;
 
-                ddouble a_next = (a + b) / 2;
-                ddouble b_next = Sqrt(a * b);
-                ddouble c_next = squa_c / (4 * a_next);
+                (a, b) = (
+                    (a + b) / 2, 
+                    Sqrt(a * b)
+                );
 
-                a = a_next;
-                b = b_next;
-                c = c_next;
+                c = squa_c / (4 * a);
             }
 
             ddouble y = q * PI / (2 * a);
@@ -144,15 +143,12 @@ namespace DoubleDouble {
                 ddouble ab = a * b, p_squa = p * p;
                 ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
 
-                ddouble a_next = (a + b) / 2;
-                ddouble b_next = Sqrt(ab);
-                ddouble p_next = p_squa_pab / (2 * p);
-                ddouble q_next = q * p_squa_mab / (2 * p_squa_pab);
-
-                a = a_next;
-                b = b_next;
-                p = p_next;
-                q = q_next;
+                (a, b, p, q) = (
+                    (a + b) / 2, 
+                    Sqrt(ab), 
+                    p_squa_pab / (2 * p), 
+                    q * p_squa_mab / (2 * p_squa_pab)
+                );
 
                 sum_q += q;
             }
