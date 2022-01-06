@@ -90,6 +90,27 @@ namespace DoubleDouble {
             }
         }
 
+        public static ddouble EllipticF(ddouble x, ddouble m) {
+            ddouble sinx = Sin(x), cosx = Cos(x);
+            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1 - m * sqsinx;
+            
+            return sinx * CarlsonRF(sqcosx, cmsqsinx, 1);
+        }
+
+        public static ddouble EllipticE(ddouble x, ddouble m) {
+            ddouble sinx = Sin(x), cosx = Cos(x);
+            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1 - m * sqsinx;
+            
+            return sinx * (CarlsonRF(sqcosx, cmsqsinx, 1) - m * sqsinx * CarlsonRD(sqcosx, cmsqsinx, 1) / 3);
+        }
+
+        public static ddouble EllipticPi(ddouble n, ddouble x, ddouble m) {
+            ddouble sinx = Sin(x), cosx = Cos(x);
+            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1 - m * sqsinx;
+            
+            return sinx * (CarlsonRF(sqcosx, cmsqsinx, 1) + n * sqsinx * CarlsonRJ(sqcosx, cmsqsinx, 1, 1 - n * sqsinx) / 3);
+        }
+
         internal static class EllipticIntegral {
 
             public static ddouble EllipticKCore(ddouble m) {

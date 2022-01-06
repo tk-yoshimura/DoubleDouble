@@ -5,7 +5,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble CarlsonRC(ddouble x, ddouble y) {
             if (x < 0 || y < 0) {
-                throw new ArgumentOutOfRangeException($"{nameof(x)},{nameof(y)}");
+                return NaN;
             }
 
             const int max_iters = 64;
@@ -49,7 +49,7 @@ namespace DoubleDouble {
 
         public static ddouble CarlsonRD(ddouble x, ddouble y, ddouble z) {
             if (x < 0 || y < 0 || z < 0) {
-                throw new ArgumentOutOfRangeException($"{nameof(x)},{nameof(y)},{nameof(z)}");
+                return NaN;
             }
 
             const int max_iters = 64;
@@ -107,7 +107,7 @@ namespace DoubleDouble {
 
         public static ddouble CarlsonRF(ddouble x, ddouble y, ddouble z) {
             if (x < 0 || y < 0 || z < 0) {
-                throw new ArgumentOutOfRangeException($"{nameof(x)},{nameof(y)},{nameof(z)}");
+                return NaN;
             }
 
             const int max_iters = 64;
@@ -158,7 +158,7 @@ namespace DoubleDouble {
 
         public static ddouble CarlsonRJ(ddouble x, ddouble y, ddouble z, ddouble p) {
             if (x < 0 || y < 0 || z < 0 || p < 0) {
-                throw new ArgumentOutOfRangeException($"{nameof(x)},{nameof(y)},{nameof(z)},{nameof(p)}");
+                return NaN;
             }
 
             const int max_iters = 64;
