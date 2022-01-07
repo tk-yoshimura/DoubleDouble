@@ -358,7 +358,7 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble Min(ddouble a, ddouble b) {
-            return a < b ? a : b;
+            return (IsNaN(a) || a < b) ? a : b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -373,7 +373,7 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble Max(ddouble a, ddouble b) {
-            return a > b ? a : b;
+            return (IsNaN(a) || a > b) ? a : b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

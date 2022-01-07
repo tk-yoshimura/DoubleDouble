@@ -100,5 +100,69 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(8, ddouble.Cube(2));
             Assert.AreEqual(27, ddouble.Cube(3));
         }
+
+        [TestMethod]
+        public void FrexpTest() {
+            Assert.AreEqual((-2, 1), ddouble.Frexp(0.25d));
+            Assert.AreEqual(1, ddouble.Frexp(2).exp);
+            Assert.AreEqual(0, ddouble.Frexp(1).exp);
+
+            Assert.AreEqual(1, ddouble.Frexp(ddouble.BitDecrement(2)).exp);
+            Assert.IsTrue(ddouble.Frexp(ddouble.BitDecrement(2)).value < 2);
+
+            Assert.AreEqual(-1, ddouble.Frexp(ddouble.BitDecrement(1)).exp);
+            Assert.IsTrue(ddouble.Frexp(ddouble.BitDecrement(1)).value < 2);
+
+            (int exp, ddouble value) = ddouble.Frexp(ddouble.BitDecrement(1));
+            Assert.AreEqual(ddouble.BitDecrement(1), ddouble.Ldexp(value, exp));
+        }
+
+        [TestMethod]
+        public void AjdustScaleTest() {
+            Assert.AreEqual((-1, 0.125d), ddouble.AdjustScale(-3, 0.25d));
+            Assert.AreEqual((5, 8d), ddouble.AdjustScale(3, 0.25d));
+
+            Assert.AreEqual((-2, (0.0625d, 0.125d)), ddouble.AdjustScale(-3, (0.25d, 0.5d)));
+            Assert.AreEqual((4, (4d, 8d)), ddouble.AdjustScale(3, (0.25d, 0.5d)));
+
+            Assert.AreEqual((-3, (0.03125d, 0.0625d, 0.125d)), ddouble.AdjustScale(-3, (0.25d, 0.5d, 1)));
+            Assert.AreEqual((3, (2d, 4d, 8d)), ddouble.AdjustScale(3, (0.25d, 0.5d, 1)));
+
+            Assert.AreEqual((-4, (0.015625d, 0.03125d, 0.0625d, 0.125d)), ddouble.AdjustScale(-3, (0.25d, 0.5d, 1, 2)));
+            Assert.AreEqual((2, (1d, 2d, 4d, 8d)), ddouble.AdjustScale(3, (0.25d, 0.5d, 1, 2)));
+
+            Assert.AreEqual((-1, 0.125d), ddouble.AdjustScale(-3, 0.25d));
+            Assert.AreEqual((5, 8d), ddouble.AdjustScale(3, 0.25d));
+
+            Assert.AreEqual((-2, (0.0625d, 0.1875d)), ddouble.AdjustScale(-3, (0.25d, 0.75d)));
+            Assert.AreEqual((4, (4d, 12d)), ddouble.AdjustScale(3, (0.25d, 0.75d)));
+
+            Assert.AreEqual((-3, (0.03125d, 0.0625d, 0.1875d)), ddouble.AdjustScale(-3, (0.25d, 0.5d, 1.5d)));
+            Assert.AreEqual((3, (2d, 4d, 12d)), ddouble.AdjustScale(3, (0.25d, 0.5d, 1.5d)));
+
+            Assert.AreEqual((-4, (0.015625d, 0.03125d, 0.0625d, 0.1875d)), ddouble.AdjustScale(-3, (0.25d, 0.5d, 1, 3)));
+            Assert.AreEqual((2, (1d, 2d, 4d, 12d)), ddouble.AdjustScale(3, (0.25d, 0.5d, 1, 3)));
+
+            Assert.AreEqual((-2, (0.1875d, 0.0625d)), ddouble.AdjustScale(-3, (0.75d, 0.25d)));
+            Assert.AreEqual((4, (12d, 4d)), ddouble.AdjustScale(3, (0.75d, 0.25d)));
+
+            Assert.AreEqual((-3, (0.0625d, 0.03125d, 0.1875d)), ddouble.AdjustScale(-3, (0.5d, 0.25d, 1.5d)));
+            Assert.AreEqual((3, (4d, 2d, 12d)), ddouble.AdjustScale(3, (0.5d, 0.25d, 1.5d)));
+
+            Assert.AreEqual((-4, (0.015625d, 0.1875d, 0.03125d, 0.0625d)), ddouble.AdjustScale(-3, (0.25d, 3, 0.5d, 1)));
+            Assert.AreEqual((2, (1d, 12d, 2d, 4d)), ddouble.AdjustScale(3, (0.25d, 3, 0.5d, 1)));
+
+            Assert.AreEqual((-4, 0.1875d), ddouble.AdjustScale(-3, 3));
+            Assert.AreEqual((2, 12), ddouble.AdjustScale(3, 3));
+
+            Assert.AreEqual((-5, (0.09375d, 0.1875d)), ddouble.AdjustScale(-3, (3, 6)));
+            Assert.AreEqual((1, (6d, 12d)), ddouble.AdjustScale(3, (3, 6)));
+
+            Assert.AreEqual((-6, (0.046875d, 0.1875d, 0.09375d)), ddouble.AdjustScale(-3, (3, 12, 6)));
+            Assert.AreEqual((0, (3d, 12d, 6d)), ddouble.AdjustScale(3, (3, 12, 6)));
+
+            Assert.AreEqual((-7, (0.1875d, 0.0234375d, 0.09375d, 0.046875d)), ddouble.AdjustScale(-3, (24, 3, 12, 6d)));
+            Assert.AreEqual((-1, (12d, 1.5d, 6d, 3d)), ddouble.AdjustScale(3, (24, 3, 12, 6d)));
+        }
     }
 }

@@ -224,6 +224,66 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void MaxTest() {
+            ddouble prcp3 = ddouble.Rcp(3);
+            ddouble nrcp3 = -prcp3;
+
+            Assert.AreEqual(prcp3, ddouble.Max(prcp3, nrcp3));
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.Max(prcp3, double.NaN)));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.Max(double.NaN, nrcp3)));
+
+            Assert.AreEqual(double.PositiveInfinity, ddouble.Max(prcp3, double.PositiveInfinity));
+            Assert.AreEqual(double.PositiveInfinity, ddouble.Max(nrcp3, double.PositiveInfinity));
+            Assert.AreEqual(prcp3, ddouble.Max(prcp3, double.NegativeInfinity));
+            Assert.AreEqual(nrcp3, ddouble.Max(nrcp3, double.NegativeInfinity));
+
+            Assert.AreEqual(double.PositiveInfinity, ddouble.Max(double.PositiveInfinity, prcp3));
+            Assert.AreEqual(double.PositiveInfinity, ddouble.Max(double.PositiveInfinity, nrcp3));
+            Assert.AreEqual(prcp3, ddouble.Max(double.NegativeInfinity, prcp3));
+            Assert.AreEqual(nrcp3, ddouble.Max(double.NegativeInfinity, nrcp3));
+
+            Assert.AreEqual(3, ddouble.Max(1, 2, 3));
+            Assert.AreEqual(3, ddouble.Max(3, 1, 2));
+            Assert.AreEqual(3, ddouble.Max(2, 3, 1));
+
+            Assert.AreEqual(4, ddouble.Max(1, 2, 3, 4));
+            Assert.AreEqual(4, ddouble.Max(4, 1, 2, 3));
+            Assert.AreEqual(4, ddouble.Max(3, 4, 1, 2));
+            Assert.AreEqual(4, ddouble.Max(2, 3, 4, 1));
+        }
+
+        [TestMethod]
+        public void MinTest() {
+            ddouble prcp3 = ddouble.Rcp(3);
+            ddouble nrcp3 = -prcp3;
+
+            Assert.AreEqual(nrcp3, ddouble.Min(prcp3, nrcp3));
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.Min(prcp3, double.NaN)));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.Min(double.NaN, nrcp3)));
+
+            Assert.AreEqual(prcp3, ddouble.Min(prcp3, double.PositiveInfinity));
+            Assert.AreEqual(nrcp3, ddouble.Min(nrcp3, double.PositiveInfinity));
+            Assert.AreEqual(double.NegativeInfinity, ddouble.Min(prcp3, double.NegativeInfinity));
+            Assert.AreEqual(double.NegativeInfinity, ddouble.Min(nrcp3, double.NegativeInfinity));
+
+            Assert.AreEqual(prcp3, ddouble.Min(double.PositiveInfinity, prcp3));
+            Assert.AreEqual(nrcp3, ddouble.Min(double.PositiveInfinity, nrcp3));
+            Assert.AreEqual(double.NegativeInfinity, ddouble.Min(double.NegativeInfinity, prcp3));
+            Assert.AreEqual(double.NegativeInfinity, ddouble.Min(double.NegativeInfinity, nrcp3));
+
+            Assert.AreEqual(1, ddouble.Min(1, 2, 3));
+            Assert.AreEqual(1, ddouble.Min(3, 1, 2));
+            Assert.AreEqual(1, ddouble.Min(2, 3, 1));
+
+            Assert.AreEqual(1, ddouble.Min(1, 2, 3, 4));
+            Assert.AreEqual(1, ddouble.Min(4, 1, 2, 3));
+            Assert.AreEqual(1, ddouble.Min(3, 4, 1, 2));
+            Assert.AreEqual(1, ddouble.Min(2, 3, 4, 1));
+        }
+
+        [TestMethod]
         public void LongCmpTest() {
             ddouble pn = 0x4FFFFFFFFFFFFFFFL;
             long pn_bitdec = 0x4FFFFFFFFFFFFFFEL;
