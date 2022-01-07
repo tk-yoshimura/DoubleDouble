@@ -11,7 +11,13 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            bool lessval = x * y * y < 1d;
+            int scale;
+            (scale, (x, y)) = AdjustScale(exp: 0, (x, y));
+            ddouble kappa = Pow2(scale * 0.5);
+
+            if (x <= 0d && y <= 0d) {
+                return PositiveInfinity;
+            }
 
             const int max_iters = 64;
 
@@ -45,11 +51,7 @@ namespace DoubleDouble {
                 }
             }
 
-            ddouble v = (1d + s * s * (C3d10 + s * (Rcp7 + s * (C3d8 + s * C9d22)))) * Sqrt(invmu);
-
-            if (IsNaN(v)) {
-                return lessval ? PositiveInfinity : Zero;
-            }
+            ddouble v = kappa * ((1d + s * s * (C3d10 + s * (Rcp7 + s * (C3d8 + s * C9d22)))) * Sqrt(invmu));
 
             return v;
         }
@@ -62,9 +64,15 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            const int max_iters = 64;
+            int scale;
+            (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
+            ddouble kappa = Pow2(scale * 1.5);
 
-            bool lessval = x * y * z * z * z < 1d;
+            if (x <= 0d && y <= 0d && z <= 0d) {
+                return PositiveInfinity;
+            }
+
+            const int max_iters = 64;
 
             ddouble s = 0, exp4 = 1;
             ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0;
@@ -110,11 +118,7 @@ namespace DoubleDouble {
             ddouble v1 = xymzz6 * (-C3d14 + xymzz6 * C9d88 - zd * xy3mzz8 * C9d52);
             ddouble v2 = zd * (xy3mzz8 * Rcp6 + zd * (zd * xy * C3d26 - (xy - zz) * C9d22));
 
-            ddouble v = 3d * s + exp4 * (1d + v1 + v2) * (invmu * Sqrt(invmu));
-
-            if (IsNaN(v)) {
-                return lessval ? PositiveInfinity : Zero;
-            }
+            ddouble v = kappa * (3d * s + exp4 * (1d + v1 + v2) * (invmu * Sqrt(invmu)));
 
             return v;
         }
@@ -131,13 +135,15 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            if (x == 0d && z == 0d) {
+            int scale;
+            (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
+            ddouble kappa = Pow2(scale * 0.5);
+
+            if (x <= 0d && z <= 0d) {
                 return PositiveInfinity;
             }
 
             const int max_iters = 64;
-
-            bool lessval = x * y * z < 1d;
 
             ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0;
             ddouble eps_prev = NaN;
@@ -177,11 +183,7 @@ namespace DoubleDouble {
 
             ddouble xymzz = xd * yd - zd * zd, xyz = xd * yd * zd;
 
-            ddouble v = (1d + xyz * Rcp14 - xymzz * (Rcp10 - xymzz * Rcp24 + xyz * C3d44)) * Sqrt(invmu);
-
-            if (IsNaN(v)) {
-                return lessval ? PositiveInfinity : Zero;
-            }
+            ddouble v = kappa * ((1d + xyz * Rcp14 - xymzz * (Rcp10 - xymzz * Rcp24 + xyz * C3d44)) * Sqrt(invmu));
 
             return v;
         }
@@ -204,13 +206,15 @@ namespace DoubleDouble {
                 return Zero;
             }
 
+            int scale;
+            (scale, (x, y, z, w)) = AdjustScale(exp: 0, (x, y, z, w));
+            ddouble kappa = Pow2(scale * 1.5);
+
             if ((x == 0d && y == 0d) || (y == 0d && z == 0d) || (z == 0d && x == 0d)) {
                 return PositiveInfinity;
             }
 
             const int max_iters = 64;
-
-            bool lessval = x * y * z * w * w < 1d;
 
             ddouble s = 0, exp4 = 1;
             ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0, wd = 0;
@@ -263,11 +267,7 @@ namespace DoubleDouble {
             ddouble v2 = wd * ((xyyzzx - ww) * Rcp3 - xyyzzx * wd * C3d22);
             ddouble v3 = xyyzzxmww3 * (-C3d14 + xyyzzxmww3 * C9d88 - (xyz + 2 * wd * (xyyzzx - ww)) * C9d52);
 
-            ddouble v = 3d * s + exp4 * (1d + v1 + v2 + v3) * (invmu * Sqrt(invmu));
-
-            if (IsNaN(v)) {
-                return lessval ? PositiveInfinity : Zero;
-            }
+            ddouble v = kappa * (3d * s + exp4 * (1d + v1 + v2 + v3) * (invmu * Sqrt(invmu)));
 
             return v;
         }
@@ -280,27 +280,55 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (Max(x, y) <= z * Math.ScaleB(1, -105)) {
-                return Sqrt(z) / 2;
+            int scale;
+            (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
+            ddouble kappa = Pow2(-scale * 0.5);
+
+            if (x <= 0d && y <= 0d && z <= 0d) {
+                return Zero;
             }
-            if (Max(y, z) <= x * Math.ScaleB(1, -105)) {
-                return Sqrt(x) / 2;
+
+            if (Max(x, y) <= Eps) {
+                return kappa * Sqrt(z) / 2;
             }
-            if (Max(z, x) <= y * Math.ScaleB(1, -105)) {
-                return Sqrt(y) / 2;
+            if (Max(y, z) <= Eps) {
+                return kappa * Sqrt(x) / 2;
+            }
+            if (Max(z, x) <= Eps) {
+                return kappa * Sqrt(y) / 2;
+            }
+
+            if (x <= Eps) {
+                return kappa * CarlsonRG(y, z);
+            }
+            if (y <= Eps) {
+                return kappa * CarlsonRG(z, x);
+            }
+            if (z <= Eps) {
+                return kappa * CarlsonRG(x, y);
             }
 
             ddouble v = (z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z)) / 2;
 
             if (IsNaN(v)) {
-                return (x + y + z) > 1 ? PositiveInfinity : Zero;
+                // pinf1 - pinf2, pinf1 >> pinf2
+                return PositiveInfinity;
             }
+
+            v *= kappa;
 
             return v;
         }
 
+        private static ddouble CarlsonRG(ddouble a, ddouble b) {
+            return (a < b) ? Sqrt(b) * EllipticE(1d - a / b) / 2
+                           : Sqrt(a) * EllipticE(1d - b / a) / 2;
+        }
+
         internal static partial class Consts {
             internal static class CarlsonIntegrals {
+                public static double Eps = Math.ScaleB(1, -105);
+
                 public static ddouble Rcp3 = Rcp(3d);
                 public static ddouble Rcp5 = Rcp(5d);
                 public static ddouble Rcp6 = Rcp(6d);

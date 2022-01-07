@@ -90,6 +90,8 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void CarlsonRCTest() {
+            ddouble.CarlsonRC(0, 0.25);
+
             for (ddouble y = 0; y <= 4; y += 0.25) {
                 for (ddouble x = 0; x <= 4; x += 0.25) {
                     Console.WriteLine($"{x},{y}");
@@ -106,7 +108,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
+                    //HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
                 }
             }
 
@@ -349,6 +351,36 @@ namespace DoubleDoubleTest.DDouble {
             HPAssert.AreEqual(1 / ddouble.Sqrt(2) + ddouble.Log(1 + ddouble.Sqrt(2)) / 2, ddouble.CarlsonRG(1, 1, 2), 1e-30);
             HPAssert.AreEqual(ddouble.PI / 4 + 0.5, ddouble.CarlsonRG(1, 2, 2), 1e-30);
             Assert.IsTrue(ddouble.IsNaN(ddouble.CarlsonRG(ddouble.NaN, ddouble.NaN, ddouble.NaN)));
+
+            for (ddouble z = 0; z <= 4; z += 0.25) {
+                for (ddouble y = 0; y <= 4; y += 0.25) {
+                    for (ddouble x = 0; x <= 4; x += 0.25) {
+                        if ((x == 0 && y == 0) || (y == 0 && z == 0) || (z == 0 && x == 0)) {
+                            continue;
+                        }
+
+                        Console.WriteLine($"{x},{y},{z}");
+
+                        (ddouble sqrtx, ddouble sqrty, ddouble sqrtz) = (
+                            ddouble.Sqrt(x), ddouble.Sqrt(y), ddouble.Sqrt(z)
+                        );
+
+                        ddouble lambda = sqrtx * sqrty + sqrty * sqrtz + sqrtz * sqrtx;
+                              
+                        ddouble v1 = ddouble.CarlsonRG(x, y, z);
+                        ddouble v2 = ddouble.CarlsonRG(x + lambda, y + lambda, z + lambda);
+                        ddouble v3 = ddouble.CarlsonRF(x, y, z);
+                        
+                        ddouble f = 2 * v2 - (lambda * v3 + sqrtx + sqrty + sqrtz) / 2;
+                        ddouble e = v1;
+
+                        Console.WriteLine(f);
+                        Console.WriteLine(e);
+
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                    }
+                }
+            }
 
             for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
                 ddouble y = ddouble.CarlsonRG(4, v, v);
