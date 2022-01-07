@@ -110,6 +110,25 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
+            for (ddouble y = 0; y <= 4; y += 0.25) {
+                for (ddouble x = 0; x <= 4; x += 0.25) {
+                    Console.WriteLine($"{x},{y}");
+
+                    ddouble lambda = y + 2 * ddouble.Sqrt(x * y);
+
+                    ddouble v1 = ddouble.CarlsonRC(x, y);
+                    ddouble v2 = ddouble.CarlsonRC(x + lambda, y + lambda);
+
+                    ddouble f = 2 * v2;
+                    ddouble e = v1;
+
+                    Console.WriteLine(f);
+                    Console.WriteLine(e);
+
+                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
+                }
+            }
+
             for (ddouble y = Math.ScaleB(1, -256); y <= 1; y *= Math.ScaleB(1, 32)) {
                 for (ddouble x = Math.ScaleB(1, -256); x <= 1; x *= Math.ScaleB(1, 32)) {
                     Console.WriteLine($"{x},{y}");

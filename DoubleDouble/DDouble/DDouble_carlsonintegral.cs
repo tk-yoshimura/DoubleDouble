@@ -315,13 +315,12 @@ namespace DoubleDouble {
             }
 
             ddouble v = (z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z)) / 2;
+            v *= kappa;
 
             if (IsNaN(v)) {
                 // pinf1 - pinf2, pinf1 >> pinf2
                 return PositiveInfinity;
             }
-
-            v *= kappa;
 
             return v;
         }
