@@ -76,6 +76,7 @@
 |fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
 |fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
 |ei|&#40;-inf,+inf&#41;|8|exponential integral|ddouble.Ei(x)|
+|ein|&#40;-inf,+inf&#41;|8|complementary exponential integral|ddouble.Ein(x)|
 |li|&#91;0,+inf&#41;|10|logarithmic integral li(x)=ei(log(x))|ddouble.Li(x)|
 |lambertw|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
 |airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|

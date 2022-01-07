@@ -29,15 +29,41 @@ namespace DoubleDouble {
             return NegativeInfinity;
         }
 
+        public static ddouble Ein(ddouble x) {
+            if (IsNaN(x)) {
+                return NaN;
+            }
+            if (IsInfinity(x)) {
+                return x.Sign > 0 ? PositiveInfinity : NegativeInfinity;
+            }
+
+            if (x <= EiPade.PadeApproxMin || x >= EiPade.PadeApproxMax) {
+                ddouble g = EiPade.Coef(-x) - x;
+                ddouble ei = Exp(-x) / g;
+
+                ddouble y = (x > 0) ? (EulerGamma + Log(x) - ei) : (EulerGamma + Log(-x) - ei);
+
+                return y;
+            }
+            if (x > 0) {
+                return -EiNearZero.Negative(-x, offset: false);
+            }
+            if (x < 0) {
+                return -EiNearZero.Positive(-x, offset: false);
+            }
+
+            return Zero;
+        }
+
         public static ddouble Li(ddouble x) {
             return Ei(Log(x));
         }
 
         internal static class EiNearZero {
-            public static ddouble Positive(ddouble x, int max_terms = 12) {
+            public static ddouble Positive(ddouble x, bool offset = true, int max_terms = 12) {
                 ddouble x2 = x * x;
 
-                ddouble s = EulerGamma + Log(x);
+                ddouble s = (offset) ? (EulerGamma + Log(x)) : Zero;
                 ddouble u = x * Exp(x / 2);
 
                 for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
@@ -59,14 +85,14 @@ namespace DoubleDouble {
                 return s;
             }
 
-            public static ddouble Negative(ddouble x, int max_terms = 12) {
+            public static ddouble Negative(ddouble x, bool offset = true, int max_terms = 12) {
                 if (!(x <= 0)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 
                 ddouble x2 = x * x;
 
-                ddouble s = EulerGamma + Log(-x);
+                ddouble s = (offset) ? (EulerGamma + Log(-x)) : Zero;
                 ddouble u = x;
 
                 for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {

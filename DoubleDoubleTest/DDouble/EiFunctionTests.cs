@@ -1086,6 +1086,53 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void EinTest() {
+            for (ddouble x = -32; x <= 32; x += 1) {
+                if (x == 0) {
+                    continue;
+                }
+                
+                ddouble y = ddouble.Ein(x);
+                ddouble y_dec = ddouble.Ein(ddouble.BitDecrement(x));
+                ddouble y_inc = ddouble.Ein(ddouble.BitIncrement(x));
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 8e-28);
+                HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 8e-28);
+            }
+
+            for (ddouble x = -1; x <= 1; x += 1d / 32) {
+                if (x == 0) {
+                    continue;
+                }
+                
+                ddouble y = ddouble.Ein(x);
+                ddouble y_dec = ddouble.Ein(ddouble.BitDecrement(x));
+                ddouble y_inc = ddouble.Ein(ddouble.BitIncrement(x));
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 8e-28);
+                HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 8e-28);
+            }
+
+            Assert.IsTrue(ddouble.IsZero(ddouble.Ein(0)));
+
+            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(ddouble.Epsilon)));
+            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(-ddouble.Epsilon)));
+
+            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(Math.ScaleB(1, -256))));
+            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(-Math.ScaleB(1, -256))));
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.Ein(ddouble.NaN)));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Ein(ddouble.PositiveInfinity)));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Ein(ddouble.NegativeInfinity)));
+        }
+
+        [TestMethod]
         public void LiTest() {
             ddouble[] int_expecteds = {
                 "0",
