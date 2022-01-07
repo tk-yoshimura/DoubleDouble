@@ -15,7 +15,7 @@ namespace DoubleDouble {
             (scale, (x, y)) = AdjustScale(exp: 0, (x, y));
             ddouble kappa = Pow2(scale * 0.5);
 
-            if (x <= 0d && y <= 0d) {
+            if (y <= Eps) {
                 return PositiveInfinity;
             }
 
@@ -68,7 +68,7 @@ namespace DoubleDouble {
             (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
             ddouble kappa = Pow2(scale * 1.5);
 
-            if (x <= 0d && y <= 0d && z <= 0d) {
+            if (x <= Eps && y <= Eps && z <= Eps) {
                 return PositiveInfinity;
             }
 
@@ -124,8 +124,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble CarlsonRF(ddouble x, ddouble y, ddouble z) {
+            if (x == y) {
+                return CarlsonRC(z, x);
+            }
             if (y == z) {
                 return CarlsonRC(x, y);
+            }
+            if (z == x) {
+                return CarlsonRC(y, x);
             }
 
             if (!(x >= 0d) || !(y >= 0d) || !(z >= 0d)) {
@@ -139,7 +145,7 @@ namespace DoubleDouble {
             (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
             ddouble kappa = Pow2(scale * 0.5);
 
-            if (x <= 0d && z <= 0d) {
+            if ((x <= Eps && y <= Eps) || (y <= Eps && z <= Eps) || (z <= Eps && x <= Eps)) {
                 return PositiveInfinity;
             }
 
@@ -210,7 +216,7 @@ namespace DoubleDouble {
             (scale, (x, y, z, w)) = AdjustScale(exp: 0, (x, y, z, w));
             ddouble kappa = Pow2(scale * 1.5);
 
-            if ((x == 0d && y == 0d) || (y == 0d && z == 0d) || (z == 0d && x == 0d)) {
+            if ((x <= Eps && y <= Eps) || (y <= Eps && z <= Eps) || (z <= Eps && x <= Eps)) {
                 return PositiveInfinity;
             }
 
@@ -284,27 +290,27 @@ namespace DoubleDouble {
             (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
             ddouble kappa = Pow2(-scale * 0.5);
 
-            if (x <= 0d && y <= 0d && z <= 0d) {
+            if (x <= Eps && y <= Eps && z <= Eps) {
                 return Zero;
             }
 
-            if (Max(x, y) <= Eps) {
+            if (Max(x, y) <= RGLimitEps) {
                 return kappa * Sqrt(z) / 2;
             }
-            if (Max(y, z) <= Eps) {
+            if (Max(y, z) <= RGLimitEps) {
                 return kappa * Sqrt(x) / 2;
             }
-            if (Max(z, x) <= Eps) {
+            if (Max(z, x) <= RGLimitEps) {
                 return kappa * Sqrt(y) / 2;
             }
 
-            if (x <= Eps) {
+            if (x <= RGLimitEps) {
                 return kappa * CarlsonRG(y, z);
             }
-            if (y <= Eps) {
+            if (y <= RGLimitEps) {
                 return kappa * CarlsonRG(z, x);
             }
-            if (z <= Eps) {
+            if (z <= RGLimitEps) {
                 return kappa * CarlsonRG(x, y);
             }
 
@@ -327,7 +333,8 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             internal static class CarlsonIntegrals {
-                public static double Eps = Math.ScaleB(1, -105);
+                public static double Eps = Math.ScaleB(1, -1000);
+                public static double RGLimitEps = Math.ScaleB(1, -105);
 
                 public static ddouble Rcp3 = Rcp(3d);
                 public static ddouble Rcp5 = Rcp(5d);

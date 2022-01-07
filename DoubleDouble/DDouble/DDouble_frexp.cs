@@ -24,7 +24,7 @@ namespace DoubleDouble {
             return (n, f);
         }
 
-        public static (int exp, ddouble x) AdjustScale(int exp, ddouble x) { 
+        public static (int exp, ddouble x) AdjustScale(int exp, ddouble x) {
             if (!IsFinite(x)) {
                 return (0, NaN);
             }
@@ -45,14 +45,14 @@ namespace DoubleDouble {
                 return (0, (NaN, NaN));
             }
             if (IsZero(x)) {
-                return (0, 
+                return (0,
                     (v.a.Sign > 0 ? PlusZero : MinusZero,
                      v.b.Sign > 0 ? PlusZero : MinusZero)
                 );
             }
 
-            int n = checked(exp - Math.ILogB(x.hi));            
-            
+            int n = checked(exp - Math.ILogB(x.hi));
+
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n)));
         }
 
@@ -63,14 +63,14 @@ namespace DoubleDouble {
                 return (0, (NaN, NaN, NaN));
             }
             if (IsZero(x)) {
-                return (0, 
+                return (0,
                     (v.a.Sign > 0 ? PlusZero : MinusZero,
                      v.b.Sign > 0 ? PlusZero : MinusZero,
                      v.c.Sign > 0 ? PlusZero : MinusZero)
                 );
             }
 
-            int n = checked(exp - Math.ILogB(x.hi));  
+            int n = checked(exp - Math.ILogB(x.hi));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n)));
         }
@@ -82,7 +82,7 @@ namespace DoubleDouble {
                 return (0, (NaN, NaN, NaN, NaN));
             }
             if (IsZero(x)) {
-                return (0, 
+                return (0,
                     (v.a.Sign > 0 ? PlusZero : MinusZero,
                      v.b.Sign > 0 ? PlusZero : MinusZero,
                      v.c.Sign > 0 ? PlusZero : MinusZero,
@@ -90,7 +90,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = checked(exp - Math.ILogB(x.hi));     
+            int n = checked(exp - Math.ILogB(x.hi));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n), Ldexp(v.d, n)));
         }

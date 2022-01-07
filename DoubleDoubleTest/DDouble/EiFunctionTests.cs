@@ -1091,7 +1091,7 @@ namespace DoubleDoubleTest.DDouble {
                 if (x == 0) {
                     continue;
                 }
-                
+
                 ddouble y = ddouble.Ein(x);
                 ddouble y_dec = ddouble.Ein(ddouble.BitDecrement(x));
                 ddouble y_inc = ddouble.Ein(ddouble.BitIncrement(x));
@@ -1107,7 +1107,7 @@ namespace DoubleDoubleTest.DDouble {
                 if (x == 0) {
                     continue;
                 }
-                
+
                 ddouble y = ddouble.Ein(x);
                 ddouble y_dec = ddouble.Ein(ddouble.BitDecrement(x));
                 ddouble y_inc = ddouble.Ein(ddouble.BitIncrement(x));
