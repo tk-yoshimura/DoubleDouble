@@ -69,6 +69,10 @@
 |incomplete_elliptic_k|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticK(x, m)|
 |incomplete_elliptic_e|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticE(x, m)|
 |incomplete_elliptic_pi|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2<br/>Argument order follows wolfram.|ddouble.EllipticPi(n, x, m)|
+|elliptic_theta1|&#40;-inf,+inf&#41;|4|q &leq; 0.995|ddouble.EllipticTheta1(x, q)|
+|elliptic_theta2|&#40;-inf,+inf&#41;|4|q &leq; 0.995|ddouble.EllipticTheta2(x, q)|
+|elliptic_theta3|&#40;-inf,+inf&#41;|4|q &leq; 0.995|ddouble.EllipticTheta3(x, q)|
+|elliptic_theta4|&#40;-inf,+inf&#41;|4|q &leq; 0.995|ddouble.EllipticTheta4(x, q)|
 |fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
 |fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
 |ei|&#40;-inf,+inf&#41;|8|exponential integral|ddouble.Ei(x)|

@@ -187,6 +187,12 @@ namespace DoubleDouble {
         }
 
         public static ddouble CarlsonRJ(ddouble x, ddouble y, ddouble z, ddouble w) {
+            if (x == w) {
+                return CarlsonRD(y, z, x);
+            }
+            if (y == w) {
+                return CarlsonRD(z, x, y);
+            }
             if (z == w) {
                 return CarlsonRD(x, y, z);
             }
@@ -274,13 +280,13 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (Max(x, y) < (z + 1) * Math.ScaleB(1, -105)) {
+            if (Max(x, y) <= z * Math.ScaleB(1, -105)) {
                 return Sqrt(z) / 2;
             }
-            if (Max(y, z) < (x + 1) * Math.ScaleB(1, -105)) {
+            if (Max(y, z) <= x * Math.ScaleB(1, -105)) {
                 return Sqrt(x) / 2;
             }
-            if (Max(z, x) < (y + 1) * Math.ScaleB(1, -105)) {
+            if (Max(z, x) <= y * Math.ScaleB(1, -105)) {
                 return Sqrt(y) / 2;
             }
 
