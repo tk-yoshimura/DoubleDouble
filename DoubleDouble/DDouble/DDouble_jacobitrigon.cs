@@ -93,6 +93,8 @@ namespace DoubleDouble {
             return y;
         }
 
+        public static ddouble JacobiAm(ddouble x, ddouble m) => JacobiTrigon.Phi(x, m);
+
         internal static class JacobiTrigon {
             public static ddouble NearOne = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
             public static ddouble Eps = Math.ScaleB(1, -51);
