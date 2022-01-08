@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace DoubleDouble {
@@ -68,7 +69,7 @@ namespace DoubleDouble {
         }
 
         private static class CiSiNearZero {
-            public static ddouble Ci(ddouble x, int max_terms = 16) {
+            public static ddouble Ci(ddouble x, int max_terms = 7) {
                 if (IsZero(x)) {
                     return NegativeInfinity;
                 }
@@ -95,7 +96,7 @@ namespace DoubleDouble {
                 return s;
             }
 
-            public static ddouble Si(ddouble x, bool limit_zero, int max_terms = 16) {
+            public static ddouble Si(ddouble x, bool limit_zero, int max_terms = 7) {
                 if (IsZero(x)) {
                     return limit_zero ? -PI / 2 : Zero;
                 }
@@ -171,7 +172,7 @@ namespace DoubleDouble {
 
         private static class CiSiLimit {
 
-            public static (ddouble p, ddouble q) Coef(ddouble x, int max_terms = 10) {
+            public static (ddouble p, ddouble q) Coef(ddouble x, int max_terms = 7) {
                 ddouble v = 1d / x;
                 ddouble v2 = v * v, v4 = v2 * v2;
 
