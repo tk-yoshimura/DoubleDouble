@@ -182,8 +182,8 @@ namespace DoubleDouble {
                 ddouble t = 1;
 
                 for (int k = 0; k < max_terms; k++) {
-                    ddouble dp = t * c * (1 - v2 * ((4 * k + 1) * (4 * k + 2)));
-                    ddouble dq = t * d * (1 - v2 * ((4 * k + 2) * (4 * k + 3))) * (4 * k + 1);
+                    ddouble dp = t * c * (1d - v2 * ((4 * k + 1) * (4 * k + 2)));
+                    ddouble dq = t * d * (1d - v2 * ((4 * k + 2) * (4 * k + 3))) * (4 * k + 1);
 
                     ddouble p_next = dp + p, q_next = dq + q;
 

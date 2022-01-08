@@ -194,8 +194,8 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            Assert.AreEqual(0, (double)ddouble.Log1p(ddouble.BitDecrement(0)), 1e-300);
-            Assert.AreEqual(0, (double)ddouble.Log1p(ddouble.BitIncrement(0)), 1e-300);
+            HPAssert.AreEqual(0, ddouble.Log1p(ddouble.BitDecrement(0)), 1e-300);
+            HPAssert.AreEqual(0, ddouble.Log1p(ddouble.BitIncrement(0)), 1e-300);
 
             Console.WriteLine(ddouble.Log1p(ddouble.BitDecrement(0)));
             Console.WriteLine(ddouble.Log1p(0));

@@ -35,7 +35,7 @@
                 ddouble exp_y = Exp(y);
                 ddouble d = y * exp_y - x;
 
-                dy = d / (exp_y * (y + 1) - (y + 2) * d / (2 * y + 2));
+                dy = d / (exp_y * (y + 1d) - (y + 2d) * d / (2 * y + 2d));
 
                 ddouble y_next = y - dy;
 

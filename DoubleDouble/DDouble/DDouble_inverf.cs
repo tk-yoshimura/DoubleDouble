@@ -36,7 +36,7 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            ddouble y = (x >= 0.5d) ? InverseErf(1 - x) : InverseErfcRootFinding(x);
+            ddouble y = (x >= 0.5d) ? InverseErf(1d - x) : InverseErfcRootFinding(x);
 
             return RoundMantissa(y, Consts.InverseErf.Precision);
         }

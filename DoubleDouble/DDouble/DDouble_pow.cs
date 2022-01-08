@@ -96,7 +96,7 @@ namespace DoubleDouble {
 
         public static ddouble Expm1(ddouble x) {
             if (x < -0.25d || x > 0.25d) {
-                return Exp(x) - 1;
+                return Exp(x) - 1d;
             }
             if (IsPlusZero(x)) {
                 return PlusZero;

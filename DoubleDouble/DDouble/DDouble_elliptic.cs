@@ -92,23 +92,23 @@ namespace DoubleDouble {
 
         public static ddouble EllipticF(ddouble x, ddouble m) {
             ddouble sinx = Sin(x), cosx = Cos(x);
-            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1 - m * sqsinx;
+            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1d - m * sqsinx;
 
-            return sinx * CarlsonRF(sqcosx, cmsqsinx, 1);
+            return sinx * CarlsonRF(sqcosx, cmsqsinx, 1d);
         }
 
         public static ddouble EllipticE(ddouble x, ddouble m) {
             ddouble sinx = Sin(x), cosx = Cos(x);
-            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1 - m * sqsinx;
+            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1d - m * sqsinx;
 
-            return sinx * (CarlsonRF(sqcosx, cmsqsinx, 1) - m * sqsinx * CarlsonRD(sqcosx, cmsqsinx, 1) / 3);
+            return sinx * (CarlsonRF(sqcosx, cmsqsinx, 1d) - m * sqsinx * CarlsonRD(sqcosx, cmsqsinx, 1d) / 3d);
         }
 
         public static ddouble EllipticPi(ddouble n, ddouble x, ddouble m) {
             ddouble sinx = Sin(x), cosx = Cos(x);
-            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1 - m * sqsinx;
+            ddouble sqsinx = Square(sinx), sqcosx = Square(cosx), cmsqsinx = 1d - m * sqsinx;
 
-            return sinx * (CarlsonRF(sqcosx, cmsqsinx, 1) + n * sqsinx * CarlsonRJ(sqcosx, cmsqsinx, 1, 1 - n * sqsinx) / 3);
+            return sinx * (CarlsonRF(sqcosx, cmsqsinx, 1d) + n * sqsinx * CarlsonRJ(sqcosx, cmsqsinx, 1d, 1d - n * sqsinx) / 3d);
         }
 
         internal static class EllipticIntegral {

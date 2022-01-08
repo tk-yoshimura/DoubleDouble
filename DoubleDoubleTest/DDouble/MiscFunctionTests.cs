@@ -15,7 +15,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Rcp(v) * v - 1;
 
-                Assert.AreEqual(0, (double)u, Math.Abs((double)d) * 1e-30, $"{d}");
+                HPAssert.AreEqual(0, u, ddouble.Abs((double)d) * 1e-30, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -28,7 +28,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Rcp(v) * (ddouble)d - 1;
 
-                Assert.AreEqual(0, (double)u, Math.Abs((double)d) * 1e-32, $"{d}");
+                HPAssert.AreEqual(0, u, ddouble.Abs((double)d) * 1e-32, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }

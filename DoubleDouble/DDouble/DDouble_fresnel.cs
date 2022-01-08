@@ -194,8 +194,8 @@ namespace DoubleDouble {
                         return (NaN, NaN);
                     }
 
-                    ddouble dp = a * (1 - s) * RSeries.Value(4 * k);
-                    ddouble dq = b * (1 - t) * RSeries.Value(4 * k + 1);
+                    ddouble dp = a * (1d - s) * RSeries.Value(4 * k);
+                    ddouble dq = b * (1d - t) * RSeries.Value(4 * k + 1);
                     ddouble p_next = dp + p, q_next = dq + q;
 
                     if (p == p_next && q == q_next) {

@@ -48,7 +48,7 @@ namespace DoubleDouble {
                 for (int i = Consts.Asin.TaylorXZeroCoefTable.Count - 2; i >= 0; i--) {
                     s = s * x2 + Consts.Asin.TaylorXZeroCoefTable[i];
                 }
-                s = s * x2 + 1;
+                s = s * x2 + 1d;
                 s *= x;
 
                 return s;

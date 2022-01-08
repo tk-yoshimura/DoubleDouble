@@ -25,7 +25,7 @@ namespace DoubleDouble {
             ddouble h = 1d - x_frac * a * a;
             a *= 1d + (h * (4d + h * 3d)) / 8;
 
-            h = 1 - x_frac * a * a;
+            h = 1d - x_frac * a * a;
             a *= 1d + (h * (4d + h * 3d)) / 8;
 
             ddouble y = Ldexp(x_frac * a, (x_exponent - exponent_rem) / 2);

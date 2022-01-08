@@ -73,7 +73,7 @@ namespace DoubleDouble {
                 return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
-            if (x <= 2d || (x <= 4d && nu < 0 && nu - Floor(nu) == Point5)) {
+            if (x <= 2d || (x <= 4d && nu < 0d && nu - Floor(nu) == Point5)) {
                 return BesselNearZero.BesselY(nu, x);
             }
             if (x <= 40d) {
@@ -372,7 +372,7 @@ namespace DoubleDouble {
                 ddouble c = 0d, u = 1d / sin;
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * (fp * gp[2 * k] * (1 - x2 * dp[k]) - tn * gn[2 * k] * (1 - x2 * dn[k]));
+                    ddouble dc = u * r[k] * (fp * gp[2 * k] * (1d - x2 * dp[k]) - tn * gn[2 * k] * (1d - x2 * dn[k]));
 
                     ddouble c_next = c + dc;
 
@@ -435,7 +435,7 @@ namespace DoubleDouble {
                 ddouble c = 0d, u = 2 * RcpPI;
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k)) * (1 - x2 * d[k]) + x2 * q[k]);
+                    ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k)) * (1d - x2 * d[k]) + x2 * q[k]);
 
                     ddouble c_next = c + dc;
 
@@ -472,7 +472,7 @@ namespace DoubleDouble {
                 ddouble c = -2 / (x * PI), u = x / (2 * PI);
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1 - x2 * d[k]) + x2 * q[k]);
+                    ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
 
                     ddouble c_next = c + dc;
 
@@ -606,7 +606,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public DoubleFactDenomTable(ddouble nu) {
-                    this.c = Gamma(nu + 1);
+                    this.c = Gamma(nu + 1d);
                     this.nu = nu;
                     this.table.Add(Rcp(c));
                 }
@@ -637,7 +637,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public X2DenomTable(ddouble nu) {
-                    ddouble a = Rcp(4 * (nu + 1));
+                    ddouble a = Rcp(4 * (nu + 1d));
 
                     this.nu = nu;
                     this.table.Add(a);
@@ -655,7 +655,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble a = Rcp(4 * (2 * k + 1) * (2 * k + nu + 1));
+                        ddouble a = Rcp(4 * (2 * k + 1) * (2 * k + 1 + nu));
 
                         table.Add(a);
                     }
@@ -670,7 +670,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public GammaDenomTable(ddouble nu) {
-                    this.c = Gamma(nu + 1);
+                    this.c = Gamma(nu + 1d);
                     this.nu = nu;
                     this.table.Add(Rcp(c));
                 }
@@ -1124,7 +1124,7 @@ namespace DoubleDouble {
                 ddouble c = Log(x / 2) + EulerGamma;
 
                 ddouble y0 = se + f0 * c;
-                ddouble y1 = sx - v * f0 + (c - 1) * f1;
+                ddouble y1 = sx - v * f0 + (c - 1d) * f1;
 
                 for (int k = 1; k < n; k++) {
                     (y1, y0) = ((2 * k) * v * y1 - y0, y1);
@@ -1194,7 +1194,7 @@ namespace DoubleDouble {
 
                 ddouble eta0 = rcot - p / alpha;
                 ddouble xi0 = -2 * v * p;
-                ddouble xi1 = rcot + p * (alpha * (alpha + 1) + 1) / (alpha * (alpha - 1));
+                ddouble xi1 = rcot + p * (alpha * (alpha + 1d) + 1d) / (alpha * (alpha - 1d));
 
                 ddouble y0 = r * se + eta0 * f0;
                 ddouble y1 = r * (3 * alpha * v * sxe + sxo) + xi0 * f0 + xi1 * f1;
@@ -1293,7 +1293,7 @@ namespace DoubleDouble {
 
                 lambda = 2 * lambda + f0;
 
-                ddouble y1 = 2 * (sx - v * f0 + (Log(x / 2) + EulerGamma - 1) * f1) / (lambda * PI);
+                ddouble y1 = 2 * (sx - v * f0 + (Log(x / 2) + EulerGamma - 1d) * f1) / (lambda * PI);
 
                 return y1;
             }
@@ -1469,7 +1469,7 @@ namespace DoubleDouble {
                     this.alpha = alpha;
 
                     ddouble phi0 = Gamma(1 + alpha);
-                    ddouble phi1 = phi0 * (alpha + 2);
+                    ddouble phi1 = phi0 * (alpha + 2d);
 
                     this.g = phi0;
 
@@ -1489,7 +1489,7 @@ namespace DoubleDouble {
                     }
 
                     for (int m = table.Count; m <= n; m++) {
-                        g = g * (alpha + m - 1) / m;
+                        g = g * (alpha + m - 1d) / m;
 
                         ddouble phi = g * (alpha + 2 * m);
 
@@ -1513,8 +1513,8 @@ namespace DoubleDouble {
 
                     this.alpha = alpha;
 
-                    ddouble psi0 = Gamma(1 + alpha);
-                    ddouble psi1 = 2 * psi0 * (1 + alpha);
+                    ddouble psi0 = Gamma(1d + alpha);
+                    ddouble psi1 = 2 * psi0 * (1d + alpha);
 
                     this.g = 2 * psi0;
 
@@ -1534,7 +1534,7 @@ namespace DoubleDouble {
                     }
 
                     for (int m = table.Count; m <= n; m++) {
-                        g = g * (2 * alpha + m - 1) / m;
+                        g = g * (2 * alpha + m - 1d) / m;
 
                         ddouble phi = g * (alpha + m);
 
@@ -1560,11 +1560,11 @@ namespace DoubleDouble {
                     this.table.Add(NaN);
 
                     if (alpha > 0) {
-                        ddouble c = Gamma(1 + alpha);
+                        ddouble c = Gamma(1d + alpha);
                         c *= c;
-                        this.g = 1 / (1 - alpha) * c;
+                        this.g = 1d / (1d - alpha) * c;
 
-                        ddouble eta1 = (alpha + 2) * g;
+                        ddouble eta1 = (alpha + 2d) * g;
 
                         this.table.Add(eta1);
                     }
@@ -1583,7 +1583,7 @@ namespace DoubleDouble {
 
                     for (int m = table.Count; m <= n; m++) {
                         if (alpha > 0) {
-                            g = -g * (alpha + m - 1) * (2 * alpha + m - 1) / (m * (m - alpha));
+                            g = -g * (alpha + m - 1) * (2 * alpha + m - 1d) / (m * (m - alpha));
 
                             ddouble eta = g * (alpha + 2 * m);
 
@@ -1680,7 +1680,7 @@ namespace DoubleDouble {
                     ddouble alpha = nu - n;
 
                     ddouble y0 = BesselK(alpha, x, scale);
-                    ddouble y1 = BesselK(alpha + 1, x, scale);
+                    ddouble y1 = BesselK(alpha + 1d, x, scale);
 
                     ddouble v = 1d / x;
 
@@ -2488,7 +2488,7 @@ namespace DoubleDouble {
             public static ddouble BesselJ(ddouble nu, ddouble x) {
                 (ddouble c, ddouble s) = BesselJYKernel(nu, x, terms: 18);
 
-                ddouble omega = x - (2 * nu + 1) * PI / 4;
+                ddouble omega = x - (2 * nu + 1d) * PI / 4;
                 ddouble m = c * Cos(omega) - s * Sin(omega);
                 ddouble t = m * Sqrt(2 / (PI * x));
 
@@ -2498,7 +2498,7 @@ namespace DoubleDouble {
             public static ddouble BesselY(ddouble nu, ddouble x) {
                 (ddouble s, ddouble c) = BesselJYKernel(nu, x, terms: 18);
 
-                ddouble omega = x - (2 * nu + 1) * PI / 4;
+                ddouble omega = x - (2 * nu + 1d) * PI / 4;
                 ddouble m = s * Sin(omega) + c * Cos(omega);
                 ddouble t = m * Sqrt(2 / (PI * x));
 
@@ -2607,7 +2607,7 @@ namespace DoubleDouble {
                 public ACoefTable(ddouble nu) {
                     this.squa_nu4 = 4 * nu * nu;
 
-                    ddouble a1 = (squa_nu4 - 1) / 8;
+                    ddouble a1 = (squa_nu4 - 1d) / 8;
 
                     this.table.Add(1d);
                     this.table.Add(a1);

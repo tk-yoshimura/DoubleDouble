@@ -66,7 +66,7 @@ namespace DoubleDouble {
                 ddouble alpha = nu - n;
 
                 ddouble a = UpperIncompleteGammaNearZero.A1(alpha);
-                ddouble a0 = (1 + alpha) * a - 1;
+                ddouble a0 = (1d + alpha) * a - 1d;
                 ddouble phi = UpperIncompleteGammaNearZero.Phi(alpha, x);
                 ddouble g0 = Gamma(1 + alpha), g = g0 * (1 + alpha);
 
@@ -115,7 +115,7 @@ namespace DoubleDouble {
                         s = s * nu + TaylorA1ZeroTable[i];
                     }
 
-                    return (1 - s) / (1 + nu);
+                    return (1d - s) / (1d + nu);
                 }
             }
 

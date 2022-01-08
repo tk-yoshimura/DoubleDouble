@@ -152,7 +152,7 @@ namespace DoubleDouble {
 
                 ddouble sn = Sin(phi), cn = Cos(phi);
 
-                ddouble y = Sqrt(cn * cn + (1 - m) * sn * sn);
+                ddouble y = Sqrt(cn * cn + (1d - m) * sn * sn);
 
                 return y;
             }
@@ -160,7 +160,7 @@ namespace DoubleDouble {
             public static ddouble DnNearZeroK(ddouble x, ddouble m) {
                 ddouble sinx = Sin(x);
 
-                ddouble y = 1 - m * sinx * sinx / 4;
+                ddouble y = 1d - m * sinx * sinx / 4;
 
                 return y;
             }

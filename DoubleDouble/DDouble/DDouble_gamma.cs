@@ -138,7 +138,7 @@ namespace DoubleDouble {
                     return NaN;
                 }
 
-                ddouble y = Digamma(1 - x) - PI / tanpi;
+                ddouble y = Digamma(1d - x) - PI / tanpi;
 
                 return y;
             }
@@ -236,7 +236,7 @@ namespace DoubleDouble {
             }
 
             static ddouble sum4(ddouble s, ddouble x) {
-                s += (2d * (2d * x + 3d) * (x * (x + 3d) + 1d)) / (x * (x + 1) * (x + 2) * (x + 3));
+                s += (2d * (2d * x + 3d) * (x * (x + 3d) + 1d)) / (x * (x + 1d) * (x + 2d) * (x + 3d));
                 return s;
             }
 
