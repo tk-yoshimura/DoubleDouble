@@ -53,7 +53,7 @@
 |arcosh|&#91;1,+inf&#41;|2||ddouble.Arcosh(x)|
 |artanh|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|ddouble.Artanh(x)|
 |gamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
-|loggamma|&#40;0,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.LogGamma(x)|
+|loggamma|&#40;0,+inf&#41;|5||ddouble.LogGamma(x)|
 |digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
 |erf|&#40;-inf,+inf&#41;|5||ddouble.Erf(x)|
 |erfc|&#40;-inf,+inf&#41;|5||ddouble.Erfc(x)|
