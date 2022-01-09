@@ -4,11 +4,9 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble x = 0.5, m = 1;
+            ddouble z = ddouble.JacobiArcCn(-0.5, 0.5);
 
-            ddouble y = ddouble.JacobiDn(x, m);
-
-            ddouble z = ddouble.JacobiArcDn(y, m);
+            ddouble x = ddouble.JacobiCn(z, 0.5);
 
             Console.WriteLine("END");
             Console.Read();

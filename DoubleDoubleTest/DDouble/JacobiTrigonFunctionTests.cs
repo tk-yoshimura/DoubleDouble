@@ -4422,9 +4422,20 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble y = ddouble.JacobiSn(x, m);
                     ddouble z = ddouble.JacobiArcSn(y, m);
 
-                    Console.WriteLine($"{x},{m}");
+                    Console.WriteLine($"{x},{y},{m}");
 
                     HPAssert.AreEqual(x, z, 1e-28);
+                }
+            }
+
+            for (ddouble m = 0; m <= 1; m += 0.125) {
+                for (ddouble x = -0.875; x <= 0.875; x += 0.125) {
+                    ddouble y = ddouble.JacobiArcSn(x, m);
+                    ddouble z = ddouble.JacobiSn(y, m);
+
+                    Console.WriteLine($"{x},{y},{m}");
+
+                    HPAssert.AreEqual(ddouble.Abs(x), ddouble.Abs(z), 1e-28);
                 }
             }
         }
@@ -4436,9 +4447,20 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble y = ddouble.JacobiCn(x, m);
                     ddouble z = ddouble.JacobiArcCn(y, m);
 
-                    Console.WriteLine($"{x},{m}");
+                    Console.WriteLine($"{x},{y},{m}");
 
                     HPAssert.AreEqual(x, z, 1e-28);
+                }
+            }
+
+            for (ddouble m = 0; m <= 1; m += 0.125) {
+                for (ddouble x = -0.875; x < 0; x += 0.125) {
+                    ddouble y = ddouble.JacobiArcCn(x, m);
+                    ddouble z = ddouble.JacobiCn(y, m);
+
+                    Console.WriteLine($"{x},{y},{m}");
+
+                    HPAssert.AreEqual(ddouble.Abs(x), ddouble.Abs(z), 1e-28);
                 }
             }
         }
@@ -4450,7 +4472,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble y = ddouble.JacobiDn(x, m);
                     ddouble z = ddouble.JacobiArcDn(y, m);
 
-                    Console.WriteLine($"{x},{m}");
+                    Console.WriteLine($"{x},{y},{m}");
 
                     HPAssert.AreEqual(x, z, 1e-28);
                 }
