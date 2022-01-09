@@ -4,11 +4,11 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (double x = 0; x <= 36; x += 1d/32) {
-                ddouble y = ddouble.LogGamma(x);
+            ddouble x = 0.5, m = 1;
 
-                Console.WriteLine($"{x},{y}");
-            }
+            ddouble y = ddouble.JacobiDn(x, m);
+
+            ddouble z = ddouble.JacobiArcDn(y, m);
 
             Console.WriteLine("END");
             Console.Read();

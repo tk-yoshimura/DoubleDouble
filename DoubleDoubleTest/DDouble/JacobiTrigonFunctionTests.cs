@@ -4414,5 +4414,47 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
         }
+
+        [TestMethod]
+        public void JacobiArcSnTest() {
+            for (ddouble m = 0; m <= 1; m += 0.125) {
+                for (ddouble x = -1; x <= 1; x += 0.125) {
+                    ddouble y = ddouble.JacobiSn(x, m);
+                    ddouble z = ddouble.JacobiArcSn(y, m);
+
+                    Console.WriteLine($"{x},{m}");
+
+                    HPAssert.AreEqual(x, z, 1e-28);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void JacobiArcCnTest() {
+            for (ddouble m = 0; m <= 1; m += 0.125) {
+                for (ddouble x = 0; x <= 1; x += 0.125) {
+                    ddouble y = ddouble.JacobiCn(x, m);
+                    ddouble z = ddouble.JacobiArcCn(y, m);
+
+                    Console.WriteLine($"{x},{m}");
+
+                    HPAssert.AreEqual(x, z, 1e-28);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void JacobiArcDnTest() {
+            for (ddouble m = 0.125; m <= 1; m += 0.125) {
+                for (ddouble x = 0; x <= 1; x += 0.125) {
+                    ddouble y = ddouble.JacobiDn(x, m);
+                    ddouble z = ddouble.JacobiArcDn(y, m);
+
+                    Console.WriteLine($"{x},{m}");
+
+                    HPAssert.AreEqual(x, z, 1e-28);
+                }
+            }
+        }
     }
 }

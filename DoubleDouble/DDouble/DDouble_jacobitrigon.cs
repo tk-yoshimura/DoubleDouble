@@ -95,6 +95,20 @@ namespace DoubleDouble {
 
         public static ddouble JacobiAm(ddouble x, ddouble m) => JacobiTrigon.Phi(x, m);
 
+        public static ddouble JacobiArcSn(ddouble x, ddouble m) {
+            return EllipticF(Asin(x), m);
+        }
+
+        public static ddouble JacobiArcCn(ddouble x, ddouble m) {
+            return EllipticF(Acos(x), m);
+        }
+
+        public static ddouble JacobiArcDn(ddouble x, ddouble m) {
+            ddouble s = Sqrt((1d - x * x) / m);
+
+            return JacobiArcSn(s, m);
+        }
+
         internal static class JacobiTrigon {
             public static ddouble NearOne = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
             public static ddouble Eps = Math.ScaleB(1, -51);
