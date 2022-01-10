@@ -19,7 +19,7 @@ namespace DoubleDoubleSandbox {
         }
 
         public static ddouble Cfrac(ddouble x, ddouble a, ddouble b, int m) {
-            ddouble f = 1d;
+            ddouble f = 0d;
             
             for (int n = m; n >= 0; n--) {
                 ddouble na = n + a, nb = n - b, nab = n + a + b;
@@ -35,6 +35,28 @@ namespace DoubleDoubleSandbox {
             ddouble y = Pow(x, a) * Pow(1d - x, b) / a * f;
 
             return y;
+        }
+
+        public static (ddouble y, int m) BetaConvergence(ddouble x, ddouble a, ddouble b, int max_m = 1024, int convchecks = 4) {
+            ddouble prev_y = Beta(x, a, b, 0);
+            
+            for (int m = 1, convtimes = 0; m <= max_m; m++) {
+                ddouble y = Beta(x, a, b, m);
+
+                if (ddouble.Abs(y / prev_y - 1) < 1e-30) {
+                    convtimes++;
+                }
+                else {
+                    convtimes = 0;
+                }
+                if (convtimes > convchecks) {
+                    return (y, m - convchecks);
+                }
+
+                prev_y = y;
+            }
+
+            return (NaN, int.MaxValue);
         }
     }
 }
