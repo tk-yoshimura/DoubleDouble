@@ -4,9 +4,7 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble z = ddouble.JacobiArcCn(-0.5, 0.5);
-
-            ddouble x = ddouble.JacobiCn(z, 0.5);
+            ddouble z = IncompBetaPrototype.Beta(0.75, 2, 3, 196);
 
             Console.WriteLine("END");
             Console.Read();

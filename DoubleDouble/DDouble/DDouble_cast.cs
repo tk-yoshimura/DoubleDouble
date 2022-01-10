@@ -11,6 +11,10 @@ namespace DoubleDouble {
             return v.hi;
         }
 
+        public static explicit operator float(ddouble v) {
+            return (float)v.hi;
+        }
+
         public static implicit operator ddouble(int n) {
             return new ddouble(n);
         }
