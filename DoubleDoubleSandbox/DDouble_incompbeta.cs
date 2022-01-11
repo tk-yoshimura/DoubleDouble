@@ -105,5 +105,54 @@ namespace DoubleDoubleSandbox {
 
             return y;
         }
+
+        public static int ConvergenceCfracM(double a, double b) {
+            double c = Math.Max(a, b);
+
+            if (c <= 20.0d) {
+                return 20;
+            }
+            if (c <= 21.5d) {
+                return 21;
+            }
+            if (c <= 23.5d) {
+                return 22;
+            }
+            if (c <= 25.5d) {
+                return 23;
+            }
+            if (c <= 28.5d) {
+                return 24;
+            }
+            if (c <= 31.0d) {
+                return 25;
+            }
+            if (c <= 34.0d) {
+                return 26;
+            }
+            if (c <= 37.5d) {
+                return 27;
+            }
+            if (c <= 41.5d) {
+                return 28;
+            }
+            if (c <= 45.0d) {
+                return 29;
+            }
+            if (c <= 49.5d) {
+                return 30;
+            }
+            if (c <= 54.0d) {
+                return 31;
+            }
+            if (c <= 59.0d) {
+                return 32;
+            }
+            if (c <= 64.0d) {
+                return 33;
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }
