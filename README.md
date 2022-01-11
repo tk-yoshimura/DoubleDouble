@@ -55,6 +55,8 @@
 |gamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
 |loggamma|&#40;0,+inf&#41;|5||ddouble.LogGamma(x)|
 |digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
+|beta|&#91;0,+inf&#41;|5||ddouble.Beta(a, b)|
+|incomplete_beta|&#91;0,1&#93;|5|Accuracy decreases when the radio of a,b is large. a,b &leq; 64|ddouble.IncompleteBeta(x, a, b)|
 |erf|&#40;-inf,+inf&#41;|5||ddouble.Erf(x)|
 |erfc|&#40;-inf,+inf&#41;|5||ddouble.Erfc(x)|
 |inverse_erf|&#40;-1,1&#41;|8||ddouble.InverseErf(x)|

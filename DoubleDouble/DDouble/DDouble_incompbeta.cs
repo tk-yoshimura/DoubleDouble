@@ -21,7 +21,7 @@ namespace DoubleDouble {
             if (x == 1d) {
                 return Beta(a, b);
             }
-                 
+
             return IncompleteBetaCFrac.Value(x, a, b);
         }
 
@@ -30,8 +30,9 @@ namespace DoubleDouble {
 
             public static ddouble Value(ddouble x, ddouble a, ddouble b) {
                 int m = ConvergenceCfracM((double)a, (double)b);
+                double thr = ConvergenceThreshold((double)a, (double)b);
 
-                if (x < ConvergenceThreshold((double)a, (double)b)) {
+                if (x < thr) {
                     return Kernel(x, a, b, m);
                 }
                 else {
@@ -41,7 +42,7 @@ namespace DoubleDouble {
 
             private static ddouble Kernel(ddouble x, ddouble a, ddouble b, int m) {
                 ddouble f = 0d;
-            
+
                 for (int n = m; n >= 0; n--) {
                     ddouble na = n + a, nb = n - b, nab = n + a + b;
                     ddouble n2a = 2 * n + a, n2a1 = n2a + 1d, n2a2 = n2a + 2d;
