@@ -91,5 +91,19 @@ namespace DoubleDoubleSandbox {
 
             return (x, m);
         }
+
+        public static double ConvergenceThreshold(double a, double b) {
+            const double p1 = -3.06204161e-02;
+            const double p2 = 4.97686689e-03;
+            const double p3 = -8.02053481e-05;
+            const double p4 = 4.39088250e-07;
+
+            double ap = 1 + (a * (p1 + a * (p2 + a * (p3 + a * p4))));
+            double bp = 1 + (b * (p1 + b * (p2 + b * (p3 + b * p4))));
+
+            double y = ap / (ap + bp);
+
+            return y;
+        }
     }
 }

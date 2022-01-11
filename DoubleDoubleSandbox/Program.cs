@@ -59,43 +59,43 @@ namespace DoubleDoubleSandbox {
             //    }
             //}
 
-            using (StreamWriter sw = new("../../incompbeta8.csv")) {
-                sw.WriteLine("x,a,b,m");
-            
-                for (ddouble b = 1d / 16; b <= 32d; b += 1d / 16) {
-                    if (b % 1 == 0) {
-                        continue;
-                    }
+            //using (StreamWriter sw = new("../../incompbeta8.csv")) {
+            //    sw.WriteLine("x,a,b,m");
+            //
+            //    for (ddouble b = 1d / 16; b <= 64d; b += 1d / 16) {
+            //        if (b % 1 == 0) {
+            //            continue;
+            //        }
+            //
+            //        for (ddouble a = 1d / 16; a <= 64d; a += 1d / 16) {
+            //            if (a % 1 == 0) {
+            //                continue;
+            //            }
+            //
+            //            (ddouble x, int m) = IncompBetaPrototype.BetaConvergence(a, b);
+            //            
+            //            sw.WriteLine($"{x},{a},{b},{m}");
+            //
+            //            Console.WriteLine($"{x},{a},{b}\t{m}");
+            //        }
+            //    }
+            //}
 
-                    for (ddouble a = 1d / 16; a <= 32d; a += 1d / 16) {
-                        if (a % 1 == 0) {
-                            continue;
-                        }
-
-                        (ddouble x, int m) = IncompBetaPrototype.BetaConvergence(a, b);
-                        
-                        sw.WriteLine($"{x},{a},{b},{m}");
-            
-                        Console.WriteLine($"{x},{a},{b}\t{m}");
-                    }
-                }
-            }
-
-            using (StreamWriter sw = new("../../incompbeta7.csv")) {
+            using (StreamWriter sw = new("../../incompbeta9.csv")) {
                 sw.WriteLine("x,a,b,y,ma,mb");
             
-                for (ddouble b = 1d / 16; b <= 32d; b += 1d / 16) {
+                for (ddouble b = 1d / 16; b <= 64d; b += 1d / 16) {
                     if (b % 1 == 0) {
                         continue;
                     }
-
-                    for (ddouble a = 1d / 16; a <= 32d; a += 1d / 16) {
+            
+                    for (ddouble a = 1d / 16; a <= 64d; a += 1d / 16) {
                         if (a % 1 == 0) {
                             continue;
                         }
-                        
-                        ddouble x = (ddouble.Sqrt(a) + 4) / (ddouble.Sqrt(a) + ddouble.Sqrt(b) + 8);
 
+                        ddouble x = IncompBetaPrototype.ConvergenceThreshold((double)a, (double)b);
+            
                         (ddouble y, int ma) = IncompBetaPrototype.BetaConvergence(x, a, b, complementary: false);
                         (ddouble _, int mb) = IncompBetaPrototype.BetaConvergence(x, a, b, complementary: true);
             
