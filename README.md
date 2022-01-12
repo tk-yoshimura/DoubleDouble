@@ -52,6 +52,7 @@
 |arsinh|&#40;-inf,+inf&#41;|2||ddouble.Arsinh(x)|
 |arcosh|&#91;1,+inf&#41;|2||ddouble.Arcosh(x)|
 |artanh|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|ddouble.Artanh(x)|
+|sinc|&#40;-inf,+inf&#41;|2||ddouble.Sinc(x, normalized)|
 |gamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
 |loggamma|&#40;0,+inf&#41;|5||ddouble.LogGamma(x)|
 |digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
@@ -99,6 +100,7 @@
 |carlson_rf|&#91;0,+inf&#41;|4||ddouble.CarlsonRF(x, y, z)|
 |carlson_rj|&#91;0,+inf&#41;|4||ddouble.CarlsonRJ(x, y, z, w)|
 |carlson_rg|&#91;0,+inf&#41;|4||ddouble.CarlsonRG(x, y, z)|
+|riemann_zeta|&#40;-inf,+inf&#41;|3||ddouble.RiemannZeta(x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
