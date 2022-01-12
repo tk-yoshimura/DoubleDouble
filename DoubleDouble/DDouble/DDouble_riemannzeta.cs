@@ -85,14 +85,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble DirichletEta(ddouble x) {
-            if (Abs(x - 1d) > Eps) {
-                ddouble y = (1d - Pow2(1d - x)) * RiemannZeta(x);
+            ddouble v = x - 1d;
+
+            if (Abs(v) > Eps) {
+                ddouble y = (1d - Pow2(-v)) * RiemannZeta(x);
 
                 return y;
             }
             else {
-                ddouble v = x - 1d;
-
                 ddouble y = Ln2 * (1d + v * (EulerGamma - Ln2 / 2));
 
                 return y;
