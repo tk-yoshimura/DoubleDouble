@@ -36,7 +36,14 @@ namespace DoubleDouble {
                     return Kernel(x, a, b, m);
                 }
                 else {
-                    return Beta(a, b) - Kernel(1d - x, b, a, m);
+                    ddouble f = Beta(a, b), c = Kernel(1d - x, b, a, m);
+
+                    if (f * 0.75 > c) {
+                        return f - c;
+                    }
+
+                    // When a << b and x near threshold has a large digit loss, recalculation is performed.
+                    return Kernel(x, a, b, m: 128);
                 }
             }
 
