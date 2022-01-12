@@ -1,15 +1,13 @@
-﻿using System;
-using DoubleDouble;
+﻿using DoubleDouble;
+using System;
 
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble c = "3.8317059702075123156144358863081607665645452742878019287622989899";
+            for (ddouble x = -4; x <= 8; x += 1d / 32) {
+                ddouble y = ddouble.RiemannZeta(x);
 
-            for (ddouble x = c - 1e-29; x < c + 1e-29; x += 1e-30) {
-                ddouble y = ddouble.BesselJ(1, x);
-
-                Console.WriteLine(y);
+                Console.WriteLine($"{x},{y}");
             }
 
             Console.WriteLine("END");

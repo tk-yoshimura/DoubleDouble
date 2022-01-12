@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Reference Include="DoubleDouble">
-      <HintPath>..\DoubleDouble\bin\Debug\net5.0\DoubleDouble.dll</HintPath>
+      <HintPath>..\DoubleDouble\bin\Release\net5.0\DoubleDouble.dll</HintPath>
     </Reference>
   </ItemGroup>
 
