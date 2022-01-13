@@ -38,7 +38,8 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            HPAssert.AreEqual("1.99932321299248736788439373752563131122422617961e0", ddouble.Pow2(2047d / 2048), 1e-31);
+            HPAssert.AreEqual("1.99932321299248736788439373752563131122422617961", ddouble.Pow2(2047d / 2048), 1e-31);
+            HPAssert.AreEqual("1.25992104989487316476721060727822835057025146470", ddouble.Pow2(ddouble.Rcp(3)), 1e-31);
 
             Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(0.5d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitIncrement(0.5d))).mantissa);
             Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(0.5d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitDecrement(0.5d))).mantissa);
