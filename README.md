@@ -62,6 +62,8 @@
 |erfc|&#40;-inf,+inf&#41;|5||ddouble.Erfc(x)|
 |inverse_erf|&#40;-1,1&#41;|8||ddouble.InverseErf(x)|
 |inverse_erfc|&#40;0,2&#41;|8||ddouble.InverseErfc(x)|
+|erfi|&#40;-inf,+inf&#41;|8||ddouble.Erfi(x)|
+|dawson_f|&#40;-inf,+inf&#41;|4||ddouble.DawsonF(x)|
 |bessel_j|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselJ(nu, x)|
 |bessel_y|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
 |bessel_i|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
@@ -101,6 +103,7 @@
 |carlson_rj|&#91;0,+inf&#41;|4||ddouble.CarlsonRJ(x, y, z, w)|
 |carlson_rg|&#91;0,+inf&#41;|4||ddouble.CarlsonRG(x, y, z)|
 |riemann_zeta|&#40;-inf,+inf&#41;|3||ddouble.RiemannZeta(x)|
+|dirichlet_eta|&#40;-inf,+inf&#41;|3||ddouble.DirichletEta(x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|

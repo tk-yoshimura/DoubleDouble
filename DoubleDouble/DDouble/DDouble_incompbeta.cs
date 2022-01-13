@@ -43,7 +43,7 @@ namespace DoubleDouble {
                     }
 
                     // In rare case, When a >> b and x near threshold has a large digit loss, recalculation is performed.
-                    return Kernel(x, a, b, m: 128);
+                    return Kernel(x, a, b, m: 64);
                 }
             }
 
