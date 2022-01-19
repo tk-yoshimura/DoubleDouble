@@ -103,7 +103,7 @@ namespace DoubleDouble {
                 public static readonly double PadeApproxThreshold = 12d;
                 public static readonly ddouble TableBin = 0.5d;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
-                
+
                 static Erfc() {
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
                         PadeX0Table,

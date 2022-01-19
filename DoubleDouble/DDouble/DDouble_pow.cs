@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DoubleDouble {
@@ -107,7 +106,7 @@ namespace DoubleDouble {
             if (IsNaN(x)) {
                 return NaN;
             }
-            
+
             if (x <= -310d) {
                 return Zero;
             }
@@ -129,7 +128,7 @@ namespace DoubleDouble {
             if (IsNaN(x)) {
                 return NaN;
             }
-            
+
             if (x <= -710d) {
                 return Zero;
             }
