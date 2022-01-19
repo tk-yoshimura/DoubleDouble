@@ -73,9 +73,26 @@ namespace DoubleDouble {
             if (x.Sign < 0) {
                 return NaN;
             }
-
             if (IsZero(y)) {
                 return IsNaN(x) ? NaN : 1d;
+            }
+            if (IsZero(x)) {
+                return Zero;
+            }
+
+            if (y <= long.MinValue) {
+                if (x == 1d) {
+                    return 1;
+                }
+
+                return x < 1 ? PositiveInfinity : Zero;
+            }
+            if (y >= long.MaxValue) {
+                if (x == 1d) {
+                    return 1;
+                }
+
+                return x < 1 ? Zero : PositiveInfinity;
             }
 
             long n = (long)ddouble.Truncate(y);

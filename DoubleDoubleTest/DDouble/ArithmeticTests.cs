@@ -276,6 +276,15 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
+            foreach (int m in new int[] { -1, -3, -5, -7, -9, 1, 3, 5, 7, 9 }) {
+                foreach (ddouble n in new ddouble[] { "1e+100", "1e+150", "1e+200", "1e+250" }) {
+                    ddouble v = (ddouble)m / (ddouble)n;
+                    ddouble u = v * n;
+            
+                    HPAssert.AreEqual(0, m - u, Math.Abs(m) * 1e-30);
+                }
+            }
+
             Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity / ddouble.PositiveInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.PositiveInfinity / ddouble.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NegativeInfinity / ddouble.PositiveInfinity));

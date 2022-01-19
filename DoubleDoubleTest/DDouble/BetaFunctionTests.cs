@@ -26,7 +26,6 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void IncompleteBetaTest() {
-            ddouble r = ddouble.IncompleteBeta(0.25, 0.0625, 32);
 
             for (ddouble b = 1d / 64; b <= 32; b *= 2) {
                 for (ddouble a = 1d / 64; a <= 32; a *= 2) {
