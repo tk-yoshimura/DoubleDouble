@@ -28,7 +28,7 @@ namespace DoubleDouble {
         public static ddouble Zero { private set; get; } = new ddouble(0d);
         public static ddouble PlusZero => Zero;
         public static ddouble MinusZero { private set; get; } = new ddouble(-0d);
-        public static ddouble Epsilon { private set; get; } = double.Epsilon;
+        public static ddouble Epsilon { private set; get; } = Math.ScaleB(1, -968);
         public static ddouble MaxValue { private set; get; } = double.MaxValue;
         public static ddouble MinValue { private set; get; } = double.MinValue;
         public static ddouble NaN { private set; get; } = double.NaN;
@@ -43,7 +43,7 @@ namespace DoubleDouble {
 
         public static bool IsNegativeInfinity(ddouble v) => double.IsNegativeInfinity(v.hi);
 
-        public static bool IsNormal(ddouble v) => double.IsNormal(v.hi);
+        public static bool IsNormal(ddouble v) => !IsNaN(v) && !IsInfinity(v) && (v < -Epsilon || v > Epsilon);
 
         public static bool IsFinite(ddouble v) => double.IsFinite(v.hi);
 

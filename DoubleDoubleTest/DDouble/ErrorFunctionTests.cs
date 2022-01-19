@@ -251,17 +251,13 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erfc(x));
                 Console.WriteLine(ddouble.Erfc(x_inc));
 
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_dec), expected * 1e-28);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 1e-28);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 1e-28);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x_dec), expected * 2e-29);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 2e-29);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 2e-29);
 
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 1e-28);
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 1e-29);
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_inc) - 1) < 1e-28);
-                
-                HPAssert.NeighborBits(expected, ddouble.Erfc(x_dec), 128);
-                HPAssert.NeighborBits(expected, ddouble.Erfc(x), 128);
-                HPAssert.NeighborBits(expected, ddouble.Erfc(x_inc), 128);
             }
 
             ddouble erfc_pzero = ddouble.Erfc(0d);
