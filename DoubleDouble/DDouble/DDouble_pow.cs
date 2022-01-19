@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DoubleDouble {
@@ -77,19 +78,54 @@ namespace DoubleDouble {
                 return IsNaN(x) ? NaN : 1d;
             }
 
-            ddouble z = Pow2(y * Log2(x));
+            long n = (long)ddouble.Truncate(y);
+            ddouble f = y - n;
+
+            ddouble z = Pow(x, n) * Pow2(f * Log2(x));
 
             return z;
         }
 
         public static ddouble Pow10(ddouble x) {
-            ddouble z = RoundMantissa(Pow2(Abs(x) * Lb10), keep_bits: 99);
+            if (IsNaN(x)) {
+                return NaN;
+            }
+            
+            if (x <= -310d) {
+                return Zero;
+            }
+            if (x >= 310d) {
+                return PositiveInfinity;
+            }
 
-            return x.Sign >= 0 ? z : Rcp(z);
+            int n = (int)ddouble.Truncate(x);
+            ddouble f = x - n;
+
+            ddouble pow10n = (n >= 0) ? Consts.Pow.Pow10NTable[n] : (1d / Consts.Pow.Pow10NTable[-n]);
+
+            ddouble z = pow10n * Pow2(f * Lb10);
+
+            return z;
         }
 
         public static ddouble Exp(ddouble x) {
-            ddouble z = Pow2(x * LbE);
+            if (IsNaN(x)) {
+                return NaN;
+            }
+            
+            if (x <= -710d) {
+                return Zero;
+            }
+            if (x >= 710d) {
+                return PositiveInfinity;
+            }
+
+            int n = (int)ddouble.Truncate(x);
+            ddouble f = x - n;
+
+            ddouble expn = (n >= 0) ? Consts.Pow.ExpNTable[n] : (1d / Consts.Pow.ExpNTable[-n]);
+
+            ddouble z = expn * Pow2(f * LbE);
 
             return z;
         }
@@ -134,6 +170,10 @@ namespace DoubleDouble {
 
                 public static int Pow2ConvergenceTerms = Pow2Prime(Pow2TableDx).terms;
 
+                public static readonly IReadOnlyList<ddouble> ExpNTable = GenerateExpNTable();
+
+                public static readonly IReadOnlyList<ddouble> Pow10NTable = GeneratePow10NTable();
+
                 public static ddouble[] GeneratePow2Table() {
                     const int n = 1024;
                     ddouble dx = Rcp(n);
@@ -142,6 +182,54 @@ namespace DoubleDouble {
                     for (int i = 0; i < table.Length; i++) {
                         ddouble x = dx * i;
                         table[i] = Pow2Prime(x).value;
+                    }
+
+                    return table;
+                }
+
+                public static ddouble[] GenerateExpNTable() {
+                    ddouble[] es = new ddouble[10];
+                    es[0] = E;
+                    for (int i = 1; i < es.Length; i++) {
+                        es[i] = es[i - 1] * es[i - 1];
+                    }
+
+                    ddouble[] table = new ddouble[711];
+                    for (int i = 0; i < table.Length; i++) {
+                        int n = i;
+                        ddouble y = 1d;
+
+                        for (int j = 0; j < es.Length && n > 0; j++, n >>= 1) {
+                            if ((n & 1) == 1) {
+                                y *= es[j];
+                            }
+                        }
+
+                        table[i] = y;
+                    }
+
+                    return table;
+                }
+
+                public static ddouble[] GeneratePow10NTable() {
+                    ddouble[] pow10s = new ddouble[9];
+                    pow10s[0] = 10d;
+                    for (int i = 1; i < pow10s.Length; i++) {
+                        pow10s[i] = pow10s[i - 1] * pow10s[i - 1];
+                    }
+
+                    ddouble[] table = new ddouble[310];
+                    for (int i = 0; i < table.Length; i++) {
+                        int n = i;
+                        ddouble y = 1d;
+
+                        for (int j = 0; j < pow10s.Length && n > 0; j++, n >>= 1) {
+                            if ((n & 1) == 1) {
+                                y *= pow10s[j];
+                            }
+                        }
+
+                        table[i] = y;
                     }
 
                     return table;

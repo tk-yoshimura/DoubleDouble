@@ -77,7 +77,20 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void PowTest() {
-            for (decimal y = -10m; y <= +10m; y += 0.1m) {
+            for (decimal y = -1m; y <= +1m; y += 0.01m) {
+                for (decimal x = 0.1m; x <= +10m; x += 0.1m) {
+                    if (y == 0) {
+                        continue;
+                    }
+
+                    ddouble u = ddouble.Pow((ddouble)x, (ddouble)y);
+
+                    Assert.AreEqual(Math.Pow((double)x, (double)y), (double)u, (double)u * 1e-12);
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+            }
+
+            for (decimal y = -100m; y <= +100m; y += 0.1m) {
                 for (decimal x = 0.1m; x <= +10m; x += 0.1m) {
                     if (y == 0) {
                         continue;
@@ -94,6 +107,18 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void Pow10Test() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Pow10(v);
+
+                Assert.AreEqual(Math.Pow(10, (double)d), (double)u, (double)u * 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            for (decimal d = -300m; d <= +300m; d += 1m) {
                 if (d == 0) {
                     continue;
                 }
@@ -136,6 +161,19 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void ExpTest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Exp(v);
+
+                Assert.AreEqual(Math.Exp((double)d), (double)u, (double)u * 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+
+            for (decimal d = -709m; d <= +709m; d += 1m) {
                 if (d == 0) {
                     continue;
                 }

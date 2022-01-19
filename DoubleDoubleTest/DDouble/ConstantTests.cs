@@ -42,5 +42,10 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine($"0x{FloatSplitter.Split(expected).mantissa:X14}");
             Console.WriteLine($"0x{FloatSplitter.Split(actual).mantissa:X14}");
         }
+
+        [TestMethod]
+        public void Sqrt2Test() {
+            HPAssert.AreEqual(2, ddouble.Sqrt2 * ddouble.Sqrt2, 1e-30);
+        }
     }
 }
