@@ -104,6 +104,7 @@
 |carlson_rg|&#91;0,+inf&#41;|4||ddouble.CarlsonRG(x, y, z)|
 |riemann_zeta|&#40;-inf,+inf&#41;|3||ddouble.RiemannZeta(x)|
 |dirichlet_eta|&#40;-inf,+inf&#41;|3||ddouble.DirichletEta(x)|
+|owen's_t|&#40;-inf,+inf&#41;|10||ddouble.OwenT(h, a)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|

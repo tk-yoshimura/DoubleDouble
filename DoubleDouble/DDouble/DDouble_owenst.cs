@@ -13,7 +13,7 @@ namespace DoubleDouble {
 
             h = Abs(h);
 
-            if (h == 0d) {
+            if (h <= OwenTIntegrate.Eps) {
                 return Atan(a) / (2 * PI);
             }
             if (h > 36d) {

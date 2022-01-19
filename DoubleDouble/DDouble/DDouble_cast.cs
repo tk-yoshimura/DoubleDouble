@@ -140,7 +140,7 @@ namespace DoubleDouble {
             return v;
         }
 
-        public static explicit operator ddouble(decimal v) {
+        public static implicit operator ddouble(decimal v) {
             int[] arr = decimal.GetBits(v);
 
             int sign = arr[3] >= 0 ? 1 : -1;
