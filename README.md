@@ -21,6 +21,8 @@
 |----|----|----|
 |ddouble|104|30|
 
+Exponent : &plusmn;968  (4.00833x10^-292 - 2.49480x10^291)
+
 ## Functions
 
 |function|domain|mantissa error bits|note|usage|
