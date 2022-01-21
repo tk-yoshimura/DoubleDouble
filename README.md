@@ -56,7 +56,8 @@ MaxValue : 2^1024 = 1.79769e308
 |arcosh|&#91;1,+inf&#41;|2||ddouble.Arcosh(x)|
 |artanh|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|ddouble.Artanh(x)|
 |sinc|&#40;-inf,+inf&#41;|2||ddouble.Sinc(x, normalized)|
-|gamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
+|sinhc|&#40;-inf,+inf&#41;|3||ddouble.Sinhc(x)|
+|gamma|&#40;-inf,+inf&#41;|4|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
 |loggamma|&#40;0,+inf&#41;|5||ddouble.LogGamma(x)|
 |digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
 |beta|&#91;0,+inf&#41;|5||ddouble.Beta(a, b)|
@@ -81,6 +82,7 @@ MaxValue : 2^1024 = 1.79769e308
 |elliptic_theta2|&#40;-inf,+inf&#41;|4|q &leq; 0.995|ddouble.EllipticTheta2(x, q)|
 |elliptic_theta3|&#40;-inf,+inf&#41;|4|q &leq; 0.995|ddouble.EllipticTheta3(x, q)|
 |elliptic_theta4|&#40;-inf,+inf&#41;|4|q &leq; 0.995|ddouble.EllipticTheta4(x, q)|
+|agm|&#91;0,+inf&#41;|2||ddouble.Agm(a, b)|
 |fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
 |fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
 |ei|&#40;-inf,+inf&#41;|8|exponential integral|ddouble.Ei(x)|

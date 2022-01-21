@@ -9,7 +9,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void GammaTest() {
-            for (BigInteger i = 1, y = 1; i <= 35; i++, y = y * (i - 1)) {
+            for (BigInteger i = 1, y = 1; i <= 36; i++, y = y * (i - 1)) {
                 ddouble x = ddouble.Gamma(i);
 
                 Assert.AreEqual(y, x);
@@ -17,19 +17,19 @@ namespace DoubleDoubleTest.DDouble {
 
             ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
 
-            for (BigInteger i = 1, y = 1, z = 1; i <= 30; i++, y *= 2, z *= 2 * i - 3) {
+            for (BigInteger i = 1, y = 1, z = 1; i <= 40; i++, y *= 2, z *= 2 * i - 3) {
                 ddouble x = ddouble.Gamma((2 * (int)i - 1) * 0.5d);
                 ddouble v = sqrtpi * z / y;
 
-                HPAssert.NeighborBits(v, x, 32);
+                HPAssert.NeighborBits(v, x, 16);
             }
 
-            HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 32);
-            HPAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 32);
+            HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 16);
+            HPAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 16);
 
-            HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 32);
-            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 128);
-            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 128);
+            HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 16);
+            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 64);
+            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 64);
 
             ddouble gamma_pzero = ddouble.Gamma(0d);
             ddouble gamma_mzero = ddouble.Gamma(-0d);

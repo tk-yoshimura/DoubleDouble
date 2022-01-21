@@ -163,5 +163,15 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual((-7, (0.1875d, 0.0234375d, 0.09375d, 0.046875d)), ddouble.AdjustScale(-3, (24, 3, 12, 6d)));
             Assert.AreEqual((-1, (12d, 1.5d, 6d, 3d)), ddouble.AdjustScale(3, (24, 3, 12, 6d)));
         }
+
+        [TestMethod]
+        public void AgmTest() {
+            HPAssert.AreEqual(3 * ddouble.PI / (4 * ddouble.EllipticK(ddouble.Rcp(9))), ddouble.Agm(1, 2), 1e-30);
+            HPAssert.AreEqual(5 * ddouble.PI / (2 * ddouble.EllipticK(4 * ddouble.Rcp(25))), ddouble.Agm(3, 7), 1e-30);
+            HPAssert.AreEqual(7 * ddouble.PI / (40 * ddouble.EllipticK(9 * ddouble.Rcp(49))), ddouble.Agm(0.5m, 0.2m), 1e-30);
+            HPAssert.AreEqual(65 * ddouble.PI / (4 * ddouble.EllipticK(3969 * ddouble.Rcp(4225))), ddouble.Agm(64, 1), 1e-29);
+            Assert.IsTrue(ddouble.Agm(1, double.Epsilon) > 0);
+            Assert.IsTrue(ddouble.IsZero(ddouble.Agm(1, 0)));
+        }
     }
 }

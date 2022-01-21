@@ -28,5 +28,19 @@ namespace DoubleDouble {
                 return Sin(x) / x;
             }
         }
+
+        public static ddouble Sinhc(ddouble x) {
+            if (Abs(x) < Math.ScaleB(1, -64)) {
+                return 1d + x * x / 6d;
+            }
+
+            ddouble sinh = Sinh(x);
+
+            if (IsInfinity(x)) {
+                return PositiveInfinity;
+            }
+
+            return sinh / x;
+        }
     }
 }
