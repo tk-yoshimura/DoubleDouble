@@ -218,7 +218,7 @@ namespace DoubleDoubleSandbox {
 
                 ddouble h = Min(x, 72); // exp(-72) < 1e-31
 
-                int divs = (int)ddouble.Ceiling(h / 4);
+                int divs = (int)ddouble.Ceiling(h / 2);
                 ddouble q = h / divs;
                 
                 ddouble s = 0;
@@ -236,6 +236,22 @@ namespace DoubleDoubleSandbox {
                 s *= q;
 
                 ddouble y = - s * Pow(x / 2, n - 1) * RcpPI * StruveGTable.Value(n);
+
+                return y;
+            }
+
+            public static ddouble ValueMk2(int n, ddouble x){
+                ddouble s = 0;
+
+                foreach ((ddouble u, ddouble w) in gls) {
+                    ddouble u_sft = u / 2;
+
+                    ddouble v = Exp(-x * SinPI(u_sft)) * Pow(CosPI(u_sft), 2 * n);
+
+                    s += w * v;
+                }
+
+                ddouble y = -s * Pow(x / 2, n) * StruveGTable.Value(n);
 
                 return y;
             }
