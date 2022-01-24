@@ -1,4 +1,5 @@
 ﻿using DoubleDouble;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -6,6 +7,135 @@ using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {
     public static class Struve {
+
+        public static ddouble StruveH(int n, ddouble x) {
+            if (x.Sign < 0) {
+                return ((n & 1) == 0) ? -StruveH(n, -x) : StruveH(n, -x);
+            }
+
+            if (n < 0 || n > 16) {
+                throw new ArgumentException(
+                    "In the calculation of the StruveH function, n greater than 16 and negative integer are not supported."
+                );
+            }
+
+            if (x < Epsilon) {
+                return Zero;
+            }
+
+            if (IsNaN(x)) {
+                return NaN;
+            }
+
+            if (IsInfinity(x)) {
+                if (n == 0) {
+                    return PlusZero;
+                }
+                if (n == 1) {
+                    return 2d * RcpPI;
+                }
+
+                return PositiveInfinity;
+            }
+
+            if (x < 1) {
+                return StruveHLNearZero.Value(n, x, sign_switch: true, terms: 16);
+            }
+
+            return StruveKIntegral.Value(n, x) + BesselY(n, x);
+        }
+
+        public static ddouble StruveK(int n, ddouble x) {
+            if (n < 0 || n > 16) {
+                throw new ArgumentException(
+                    "In the calculation of the StruveK function, n greater than 16 and negative integer are not supported."
+                );
+            }
+
+            if (x.Sign < 0 || IsNaN(x)) {
+                return NaN;
+            }
+
+            if (IsInfinity(x)) {
+                if (n == 0) {
+                    return PlusZero;
+                }
+                if (n == 1) {
+                    return 2d * RcpPI;
+                }
+
+                return PositiveInfinity;
+            }
+
+            if (x < 1) {
+                return StruveHLNearZero.Value(n, x, sign_switch: true, terms: 16) - BesselY(n, x);
+            }
+
+            return StruveKIntegral.Value(n, x);
+        }
+
+        public static ddouble StruveL(int n, ddouble x) {
+            if (x.Sign < 0) {
+                return ((n & 1) == 0) ? -StruveL(n, -x) : StruveL(n, -x);
+            }
+
+            if (n < 0 || n > 16) {
+                throw new ArgumentException(
+                    "In the calculation of the StruveL function, n greater than 16 and negative integer are not supported."
+                );
+            }
+
+            if (IsNaN(x)) {
+                return NaN;
+            }
+
+            if (x < Epsilon) {
+                return Zero;
+            }
+
+            if (IsInfinity(x)) {
+                return PositiveInfinity;
+            }
+
+            if (x < 1) {
+                return StruveHLNearZero.Value(n, x, sign_switch: false, terms: 16);
+            }
+
+            return StruveMIntegral.Value(n, x) + BesselI(n, x);
+        }
+
+        public static ddouble StruveM(int n, ddouble x) {
+            if (n < 0 || n > 16) {
+                throw new ArgumentException(
+                    "In the calculation of the StruveM function, n greater than 16 and negative integer are not supported."
+                );
+            }
+                        
+            if (x.Sign < 0 || IsNaN(x)) {
+                return NaN;
+            }
+
+            if (x < Epsilon) {
+                return (n >= 1) ? Zero : -1d;
+            }
+
+            if (IsInfinity(x)) {
+                if (n == 0) {
+                    return MinusZero;
+                }
+                if (n == 1) {
+                    return -2d * RcpPI;
+                }
+
+                return PositiveInfinity;
+            }
+
+            if (x < 1) {
+                return StruveHLNearZero.Value(n, x, sign_switch: false, terms: 16) - BesselI(n, x);
+            }
+
+            return StruveMIntegral.Value(n, x);
+        }
 
         internal static class StruveGTable {
             private static readonly List<ddouble> table = new();
