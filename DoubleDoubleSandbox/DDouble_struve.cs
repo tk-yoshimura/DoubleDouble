@@ -7,6 +7,28 @@ using static DoubleDouble.ddouble;
 namespace DoubleDoubleSandbox {
     public static class Struve {
 
+        internal static class StruveGTable {
+            private static readonly List<ddouble> table = new();
+
+            static StruveGTable() {
+                table.Add(1);
+            }
+
+            public static ddouble Value(int k) {
+                if (k < table.Count) {
+                    return table[k];
+                }
+
+                for (int i = table.Count; i <= k; i++) {
+                    ddouble g = table[^1] * 2 / (2 * i - 1);
+
+                    table.Add(g);
+                }
+
+                return table[k];
+            }
+        }
+
         internal static class StruveKIntegral {
             public static ddouble Value(int n, ddouble x) {
                 ddouble r = 1d / x;
@@ -19,7 +41,7 @@ namespace DoubleDoubleSandbox {
                     s += w * v;
                 }
 
-                ddouble y = s * Pow(x / 2, n - 1) / (Sqrt(PI) * Gamma(n + Point5));
+                ddouble y = s * Pow(x / 2, n - 1) * RcpPI * StruveGTable.Value(n);
 
                 return y;
             }
@@ -64,7 +86,7 @@ namespace DoubleDoubleSandbox {
             public static ddouble Value(int n, ddouble x){
                 ddouble r = 1d / x;
 
-                ddouble h = Min(x, 80);
+                ddouble h = Min(x, 72); // exp(-72) < 1e-31
 
                 int divs = (int)ddouble.Ceiling(h / 4);
                 ddouble q = h / divs;
@@ -83,7 +105,7 @@ namespace DoubleDoubleSandbox {
 
                 s *= q;
 
-                ddouble y = - s * Pow(x / 2, n - 1) / (Sqrt(PI) * Gamma(n + Point5));
+                ddouble y = - s * Pow(x / 2, n - 1) * RcpPI * StruveGTable.Value(n);
 
                 return y;
             }
@@ -133,7 +155,7 @@ namespace DoubleDoubleSandbox {
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble w = x2 * FTable.Value(2 * k) * FTable.Value(2 * k + n);
-                    ddouble ds = Ldexp(u * GTable.Value(2 * k + 1) * GTable.Value(2 * k + n + 1), -4 * k)
+                    ddouble ds = Ldexp(u * StruveGTable.Value(2 * k + 1) * StruveGTable.Value(2 * k + n + 1), -4 * k)
                                   * (sign_switch ? (1d - w) : (1d + w));
                     
                     ddouble s_next = s + ds;
@@ -150,28 +172,6 @@ namespace DoubleDoubleSandbox {
                 }
 
                 return s;
-            }
-
-            public static class GTable {
-                private static readonly List<ddouble> table = new();
-
-                static GTable() {
-                    table.Add(1);
-                }
-
-                public static ddouble Value(int k) {
-                    if (k < table.Count) {
-                        return table[k];
-                    }
-
-                    for (int i = table.Count; i <= k; i++) {
-                        ddouble g = table[^1] * 2 / (2 * i - 1);
-
-                        table.Add(g);
-                    }
-
-                    return table[k];
-                }
             }
 
             public static class FTable {
