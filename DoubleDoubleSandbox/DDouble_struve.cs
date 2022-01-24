@@ -256,6 +256,57 @@ namespace DoubleDoubleSandbox {
                 return y;
             }
 
+            public static ddouble ValueMk3(int n, ddouble x){
+                ddouble h = Min(x, 256); // exp(-72) < 1e-31
+
+                int divs = (int)ddouble.Ceiling(h / 16);
+                ddouble q = Rcp(divs);
+                
+                ddouble s = 0;
+
+                for (int i = 0; i < divs; i++) {
+                    foreach ((ddouble u, ddouble w) in gls) {
+                        ddouble u_sft = (i + u) * q / 2;
+
+                        ddouble v = Exp(-x * SinPI(u_sft)) * Pow(CosPI(u_sft), 2 * n);
+
+                        s += w * v;
+                    }
+                }
+
+                ddouble y = -s * Pow(x / 2, n) * q * StruveGTable.Value(n);
+
+                return y;
+            }
+
+            public static ddouble ValueMk4(int n, ddouble x){
+                int divs = (int)ddouble.Ceiling(Max(x / 16, 32));
+                ddouble q = Rcp(divs);
+                
+                ddouble s = 0;
+
+                bool convergenced = false;
+
+                for (int i = 0; i < divs && !convergenced; i++) {
+                    foreach ((ddouble u, ddouble w) in gls) {
+                        ddouble u_sft = (i + u) * q / 2;
+
+                        ddouble v = Exp(-x * SinPI(u_sft)) * Pow(CosPI(u_sft), 2 * n);
+
+                        if (v < s * 1e-31) {
+                            convergenced = true;
+                            break;
+                        }
+
+                        s += w * v;
+                    }
+                }
+
+                ddouble y = -s * Pow(x / 2, n) * q * StruveGTable.Value(n);
+
+                return y;
+            }
+
             static ReadOnlyCollection<(ddouble u, ddouble w)> gls = new(new (ddouble, ddouble)[] {
                 ("0.0013680690752592182275094356674796364","0.0035093050047350483002035318694265913"),
                 ("0.0071942442273658322999124776845490107","0.0081371973654528353025852811031933091"),
