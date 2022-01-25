@@ -72,6 +72,10 @@ MaxValue : 2^1024 = 1.79769e308
 |bessel_y|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
 |bessel_i|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
 |bessel_k|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselK(nu, x)|
+|struve_h|&#40;-inf,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveH(n, x)|
+|struve_k|&#91;0,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveK(n, x)|
+|struve_l|&#40;-inf,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveL(n, x)|
+|struve_m|&#91;0,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveM(n, x)|
 |elliptic_k|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticK(m)|
 |elliptic_e|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticE(m)|
 |elliptic_pi|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticPi(n, m)|
