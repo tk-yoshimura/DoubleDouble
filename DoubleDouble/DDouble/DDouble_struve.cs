@@ -251,14 +251,14 @@ namespace DoubleDouble {
 
         internal static class StruveMIntegral {
             public static ddouble Value(int n, ddouble x) {
-                int divs = (int)ddouble.Ceiling(Min(x / 16, 8));
+                ddouble divs = ddouble.Ceiling(x / 16);
                 ddouble q = Rcp(divs);
 
                 ddouble s = 0;
 
                 bool convergenced = false;
 
-                for (int i = 0; i < divs && !convergenced; i++) {
+                for (int i = 0; i < divs && i < 8 && !convergenced; i++) {
                     ddouble ddi = i;
 
                     foreach ((ddouble u, ddouble w) in gls) {
@@ -275,7 +275,7 @@ namespace DoubleDouble {
                     }
                 }
 
-                ddouble y = -s * Pow(x / 2, n) * q * StruveGTable.Value(n);
+                ddouble y = -s * Pow(x / 2, n) * StruveGTable.Value(n) * q;
 
                 return y;
             }

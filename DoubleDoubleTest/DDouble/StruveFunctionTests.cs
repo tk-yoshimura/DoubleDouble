@@ -2405,6 +2405,17 @@ namespace DoubleDoubleTest.DDouble {
                 "-1.7664199419546303083638034293857871865093483661310e8"
             };
 
+            ddouble[] n0largex_expecteds = {
+                "-0.00248683393651926370601572952876222388",
+                "-0.00124340273625521586330705415594527985",
+                "-0.000621699589356170616667469520009126930",
+                "-0.000310849572338812787917529897604571803",
+                "-0.000155424758377220968656141337943869714",
+                "-0.0000777123757145942947433853940981023214",
+                "-0.0000388561874230453420653926017939756599",
+                "-0.0000194280936572412021941420770900427705",
+            };
+
             foreach ((int n, ddouble[] expecteds) in new (int, ddouble[])[] {
                 (0, n0_expecteds),
                 (1, n1_expecteds),
@@ -2425,6 +2436,23 @@ namespace DoubleDoubleTest.DDouble {
                         ddouble actual_inc = ddouble.StruveM(n, ddouble.BitIncrement(x));
                         HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-29d, $"{x}+eps,{n}");
                     }
+                }
+            }
+
+            for ((ddouble x, int i) = (256, 0); i < n0largex_expecteds.Length; x *= 2, i++) {
+                int n = 0;
+
+                ddouble expected = n0largex_expecteds[i];
+
+                ddouble actual = ddouble.StruveM(n, x);
+                HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-29d, $"{x},{n}");
+
+                if (x > 0) {
+                    ddouble actual_dec = ddouble.StruveM(n, ddouble.BitDecrement(x));
+                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-29d, $"{x}-eps,{n}");
+
+                    ddouble actual_inc = ddouble.StruveM(n, ddouble.BitIncrement(x));
+                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-29d, $"{x}+eps,{n}");
                 }
             }
         }

@@ -4,8 +4,8 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble x = -8; x <= 8; x += 1d / 32) {
-                ddouble y = ddouble.StruveL(0, x);
+            for (ddouble x = 256; x <= Math.ScaleB(1, 800); x *= 2) {
+                ddouble y = ddouble.StruveM(0, x);
 
                 Console.WriteLine($"{x},{y}");
             }
