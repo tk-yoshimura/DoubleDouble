@@ -66,6 +66,34 @@ namespace DoubleDouble {
             }
         }
 
+        public static ddouble Shi(ddouble x) {
+            if (x.Sign < 0) {
+                return -Shi(-x);
+            }
+
+            if (x >= 720d) {
+                return PositiveInfinity;
+            }
+
+            ddouble y = (Ein(x) - Ein(-x)) / 2;
+
+            return y;
+        }
+
+        public static ddouble Chi(ddouble x) {
+            if (x.Sign < 0) {
+                return NaN;
+            }
+
+            if (x >= 720d) {
+                return PositiveInfinity;
+            }
+
+            ddouble y = EulerGamma + Log(x) - (Ein(x) + Ein(-x)) / 2;
+
+            return y;
+        }
+
         private static class CiSiNearZero {
             public static ddouble Ci(ddouble x, int max_terms = 7) {
                 if (IsZero(x)) {

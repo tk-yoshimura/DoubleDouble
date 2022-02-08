@@ -258,11 +258,10 @@ namespace DoubleDouble {
 
                 bool convergenced = false;
 
-                for (int i = 0; i < divs && i < 8 && !convergenced; i++) {
-                    ddouble ddi = i;
+                for (double i = 0; i < divs && i < 8 && !convergenced; i++) {
 
                     foreach ((ddouble u, ddouble w) in gls) {
-                        ddouble u_sft = Ldexp((ddi + u) * q, -1);
+                        ddouble u_sft = Ldexp((i + u) * q, -1);
 
                         ddouble v = Exp(-x * SinPI(u_sft)) * Pow(Square(CosPI(u_sft)), n);
 
