@@ -4,22 +4,34 @@ using DoubleDouble;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            //for (int n = 2; n <= 8; n++) {
-            //    ddouble x = 1.5;
-            //    ddouble y = PolylogSanbox.PolylogLimit.Polylog(n, -x);
-            //
-            //    if (!ddouble.IsNaN(y)) {
-            //        Console.WriteLine($"{n},{x},{y}");
-            //    }
-            //}
+            for (int n = 2; n <= 8; n++) {
+                ddouble x = -1.5;
+                ddouble y = PolylogSanbox.PolylogPowerSeries.PolylogMinusLimit(n, x);
+            
+                Console.WriteLine($"{n},{x},{y}");
+            }
 
             for (int n = 2; n <= 8; n++) {
-                for (ddouble x = 0.5; x > Math.ScaleB(1, -102); x /= 2) {
-                    ddouble y = PolylogSanbox.PolylogNearOne.Polylog(n, 1 - x);
+                ddouble x = -0.5;
+                ddouble y = PolylogSanbox.PolylogPowerSeries.PolylogNearZero(n, x);
             
-                    Console.WriteLine($"{n},{1 - x},{y}");
-                }
+                Console.WriteLine($"{n},{x},{y}");
             }
+
+            for (int n = 2; n <= 8; n++) {
+                ddouble x = 0.5;
+                ddouble y = PolylogSanbox.PolylogPowerSeries.PolylogNearZero(n, x);
+            
+                Console.WriteLine($"{n},{x},{y}");
+            }
+
+            //for (int n = 2; n <= 8; n++) {
+            //    for (ddouble x = 0.5; x > Math.ScaleB(1, -102); x /= 2) {
+            //        ddouble y = PolylogSanbox.PolylogNearOne.Polylog(n, 1 - x);
+            //
+            //        Console.WriteLine($"{n},{1 - x},{y}");
+            //    }
+            //}
 
             Console.WriteLine("END");
             Console.Read();

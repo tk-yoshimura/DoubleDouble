@@ -17,14 +17,14 @@ namespace DoubleDoubleSandbox {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 
-                if (1 - x < Math.ScaleB(1, -100)) {
+                if (x > RegardedOneThreshold) {
                     return RiemannZeta(n);
                 }
 
-                ddouble v = Log(x), v2 = v * v;
 
                 ReadOnlyCollection<ddouble> coef = CoefTable.Coef(n);
 
+                ddouble v = Log(x), v2 = v * v;
                 ddouble y = Pow(v, n - 1) * TaylorSequence[n - 1] * (HarmonicNumber(n - 1) - Log(-v)); 
                 ddouble u = 1;
 
@@ -60,14 +60,12 @@ namespace DoubleDoubleSandbox {
                 return NaN;
             }
 
+            private static readonly ddouble RegardedOneThreshold = 1 - Math.ScaleB(1, -100);
+
             public static class CoefTable {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
                 
                 public static ReadOnlyCollection<ddouble> Coef(int n) {
-                    if (n < 2) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
-                    
                     if (table.ContainsKey(n)) {
                         return table[n];
                     }
@@ -86,23 +84,54 @@ namespace DoubleDoubleSandbox {
         }
 
 
-        public static class PolylogLimit {
-            public static ddouble Polylog(int n, ddouble x) {
+        public static class PolylogPowerSeries {
+            public static ddouble PolylogNearZero(int n, ddouble x) {
+                if (x < -0.5 || x > 0.5) {
+                    throw new ArgumentOutOfRangeException(nameof(x));
+                }
+
+                if (x == 0) {
+                    return x;
+                }
+
+                ReadOnlyCollection<ddouble> coef = CoefTable.Coef(n);
+
+                ddouble y = x;
+                ddouble u = x * x, x2 = u;
+
+                for (int i = 1; i < coef.Count - 1; i += 2) {
+                    ddouble dy = u * (coef[i] + x * coef[i + 1]);
+                    ddouble y_next = y + dy;
+
+                    if (y == y_next) {
+                        return y;
+                    }
+
+                    y = y_next;
+                    u *= x2;
+                }
+
+                return NaN;
+            }
+            
+            public static ddouble PolylogMinusLimit(int n, ddouble x) {
                 if (x > -1.5) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 
                 x = -x;
 
-                ddouble y = bias[n](Log(x));
+                ReadOnlyCollection<ddouble> coef = CoefTable.Coef(n);
+
+                ddouble y = mlimit_bias[n](Log(x));
                 ddouble u = 1 / x, v = u, v2 = v * v;
 
-                for (int i = 1; i <= 2048; i += 2) {
-                    ddouble dy = u * (Pow(i, -n) - v * Pow(i + 1, -n));
+                for (int i = 0; i < coef.Count - 1; i += 2) {
+                    ddouble dy = u * (coef[i] - v * coef[i + 1]);
                     ddouble y_next = ((n & 1) == 0) ? (y - dy) : (y + dy);
 
                     if (y == y_next) {
-                        return y;
+                        return -y;
                     }
 
                     y = y_next;
@@ -117,7 +146,7 @@ namespace DoubleDoubleSandbox {
             static ddouble pi6 = Pow(PI, 6);
             static ddouble pi8 = Pow(PI, 8);
 
-            static ReadOnlyCollection<Func<ddouble, ddouble>> bias = new(new Func<ddouble, ddouble>[] {
+            static ReadOnlyCollection<Func<ddouble, ddouble>> mlimit_bias = new(new Func<ddouble, ddouble>[] {
                (logx) => throw new NotImplementedException(),
                (logx) => throw new NotImplementedException(),
                (logx) => (pi2 + 3 * Square(logx)) / 6,
@@ -143,6 +172,26 @@ namespace DoubleDoubleSandbox {
                    return (127 * pi8 + logx2 * (620 * pi6 + logx2 * (490 * pi4 + logx2 * (140 * pi2 + 15 * logx2)))) / 604800;
                },
             });
+
+            public static class CoefTable {
+                public const int Terms = 201;
+                private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
+                
+                public static ReadOnlyCollection<ddouble> Coef(int n) {                    
+                    if (table.ContainsKey(n)) {
+                        return table[n];
+                    }
+                    
+                    List<ddouble> coef = new List<ddouble>();
+                    for (int k = 1; k < Terms; k++) {
+                        coef.Add(Pow(k, -n));
+                    }
+
+                    table.Add(n, new ReadOnlyCollection<ddouble>(coef));
+
+                    return table[n];
+                }
+            }
         }
     }
 }
