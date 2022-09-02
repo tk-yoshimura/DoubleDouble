@@ -58,47 +58,37 @@ namespace DoubleDouble {
                 ddouble scale = Math.Max(1, 8d / n), r = scale * n / x;
                 ddouble ir = 0, it = 0;
 
-                if (n > 1) {
-                    ddouble polygamma_ir(ddouble t) {
-                        ddouble y = Pow(t, n) * Exp(-x * t) / (1 - Exp(-t));
+                Func<ddouble, ddouble> polygamma_ir =
+                (n > 1) ? (t) => {
+                    ddouble y = Pow(t, n) * Exp(-x * t) / (1 - Exp(-t));
 
-                        return y;
-                    };
-
-                    ddouble polygamma_it(ddouble u) {
-                        ddouble v = (u + scale * n) / x;
-                        ddouble y = Pow(v, n) / (1 - Exp(-v));
-
-                        return y;
-                    };
-
-                    foreach ((ddouble t, ddouble w) in gles) {
-                        ir += w * polygamma_ir(t * r);
-                    }
-                    foreach ((ddouble t, ddouble w) in glas) {
-                        it += w * polygamma_it(t);
-                    }
+                    return y;
                 }
-                else {
-                    ddouble polygamma_ir(ddouble t) {
-                        ddouble y = t * Exp(-x * t) / (1 - Exp(-t));
+                : (t) => {
+                    ddouble y = t * Exp(-x * t) / (1 - Exp(-t));
 
-                        return y;
-                    };
+                    return y;
+                }; 
 
-                    ddouble polygamma_it(ddouble u) {
-                        ddouble v = (u + scale) / x;
-                        ddouble y = v / (1 - Exp(-v));
+                Func<ddouble, ddouble> polygamma_it =
+                (n > 1) ? (u) => {
+                    ddouble v = (u + scale * n) / x;
+                    ddouble y = Pow(v, n) / (1 - Exp(-v));
 
-                        return y;
-                    };
+                    return y;
+                }
+                : (u) => {
+                    ddouble v = (u + scale) / x;
+                    ddouble y = v / (1 - Exp(-v));
 
-                    foreach ((ddouble t, ddouble w) in gles) {
-                        ir += w * polygamma_ir(t * r);
-                    }
-                    foreach ((ddouble t, ddouble w) in glas) {
-                        it += w * polygamma_it(t);
-                    }
+                    return y;
+                }; 
+
+                foreach ((ddouble t, ddouble w) in gles) {
+                    ir += w * polygamma_ir(t * r);
+                }
+                foreach ((ddouble t, ddouble w) in glas) {
+                    it += w * polygamma_it(t);
                 }
 
                 ir *= r;
