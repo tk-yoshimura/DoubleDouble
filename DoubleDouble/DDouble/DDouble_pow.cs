@@ -52,20 +52,16 @@ namespace DoubleDouble {
             int exp = (int)Floor(x);
             ddouble s = x - exp, c = Ldexp(1d, exp);
 
-            int index = (int)ddouble.Floor(s * Consts.Pow.Pow2TableN);
+            int index = (int)ddouble.Floor(s * (Consts.Pow.Pow2TableN * Consts.Pow.Pow2TableN));
             ddouble v = s - Consts.Pow.Pow2TableDx * index;
-            ddouble r = Consts.Pow.Pow2Table[index];
+            ddouble r0 = Consts.Pow.Pow2Table[index / Consts.Pow.Pow2TableN];
+            ddouble r1 = Consts.Pow.Pow2Table[index % Consts.Pow.Pow2TableN + Consts.Pow.Pow2TableN + 1];
 
-            ddouble w = v * Ln2, u = w, y = 1d;
+            ddouble w = 1d + v * (Consts.Pow.Pow2C1 + v * (Consts.Pow.Pow2C2 + v * (Consts.Pow.Pow2C3 + v * Consts.Pow.Pow2C4)));
 
-            for (int i = 1; i <= Consts.Pow.Pow2ConvergenceTerms; i++) {
-                ddouble dy = TaylorSequence[i] * u;
+            ddouble y = c * r0 * r1 * w;
 
-                y += dy;
-                u *= w;
-            }
-
-            return c * y * r;
+            return y;
         }
 
         public static ddouble Pow(ddouble x, ddouble y) {
@@ -177,27 +173,30 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Pow {
+                public const int Pow2TableN = 1024;
 
                 public static readonly IReadOnlyList<ddouble> Pow2Table = GeneratePow2Table();
-
-                public static readonly ddouble Pow2TableDx = Rcp(Pow2Table.Count - 1);
-
-                public static readonly int Pow2TableN = Pow2Table.Count - 1;
-
-                public static int Pow2ConvergenceTerms = Pow2Prime(Pow2TableDx).terms;
+                public static readonly ddouble Pow2TableDx = Rcp(Pow2TableN * Pow2TableN);
+                public static readonly ddouble Pow2C1 = Ln2;
+                public static readonly ddouble Pow2C2 = Ln2 * Ln2 / 2;
+                public static readonly ddouble Pow2C3 = Ln2 * Ln2 * Ln2 / 6;
+                public static readonly ddouble Pow2C4 = Ln2 * Ln2 * Ln2 * Ln2 / 24;
 
                 public static readonly IReadOnlyList<ddouble> ExpNTable = GenerateExpNTable();
 
                 public static readonly IReadOnlyList<ddouble> Pow10NTable = GeneratePow10NTable();
 
                 public static ddouble[] GeneratePow2Table() {
-                    const int n = 1024;
-                    ddouble dx = Rcp(n);
-                    ddouble[] table = new ddouble[n + 1];
+                    ddouble dx = Rcp(Pow2TableN), ddx = Rcp(Pow2TableN * Pow2TableN);
+                    ddouble[] table = new ddouble[Pow2TableN * 2 + 1];
 
-                    for (int i = 0; i < table.Length; i++) {
+                    for (int i = 0; i <= Pow2TableN; i++) {
                         ddouble x = dx * i;
-                        table[i] = Pow2Prime(x).value;
+                        table[i] = Pow2Prime(x);
+                    }
+                    for (int i = 0; i < Pow2TableN; i++) {
+                        ddouble x = ddx * i;
+                        table[i + Pow2TableN + 1] = Pow2Prime(x);
                     }
 
                     return table;
@@ -251,22 +250,21 @@ namespace DoubleDouble {
                     return table;
                 }
 
-                private static (ddouble value, int terms) Pow2Prime(ddouble x) {
+                private static ddouble Pow2Prime(ddouble x) {
                     if (!(x >= 0d) || x > 1d) {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
                     if (x == 1d) {
-                        return (2, 0);
+                        return 2;
                     }
                     if (x >= 0.5d) {
-                        (ddouble value, int terms_half) = Pow2Prime(x - 0.5d);
+                        ddouble value = Pow2Prime(x - 0.5d);
 
-                        return (Sqrt2 * value, terms_half);
+                        return Sqrt2 * value;
                     }
 
                     ddouble w = x * Ln2, u = w, y = 1d;
 
-                    int terms = 0;
                     foreach (ddouble f in TaylorSequence.Skip(1)) {
                         ddouble dy = f * u;
                         ddouble y_next = y + dy;
@@ -277,10 +275,9 @@ namespace DoubleDouble {
 
                         u *= w;
                         y = y_next;
-                        terms++;
                     }
 
-                    return (y, terms);
+                    return y;
                 }
             }
         }

@@ -21,7 +21,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.Gamma((2 * (int)i - 1) * 0.5d);
                 ddouble v = sqrtpi * z / y;
 
-                HPAssert.NeighborBits(v, x, 16);
+                HPAssert.NeighborBits(v, x, 17);
             }
 
             HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 16);
