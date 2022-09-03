@@ -25,8 +25,8 @@ namespace DoubleDouble {
             }
 
             if (x <= Consts.Gamma.Threshold) {
-                int n = Math.Max(0, (int)Round(x - 1));
-                ddouble v = x - n - 1;
+                int n = Math.Max(0, (int)Round(x - 1d));
+                ddouble v = x - n - 1d;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Gamma.PadeTables[n];
 
@@ -84,8 +84,8 @@ namespace DoubleDouble {
             }
 
             if (x < Consts.LogGamma.Threshold) {
-                int n = Math.Max(0, (int)Round(x - 2));
-                ddouble v = x - n - 2;
+                int n = Math.Max(0, (int)Round(x - 2d));
+                ddouble v = x - n - 2d;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LogGamma.PadeTables[n];
 
@@ -151,8 +151,8 @@ namespace DoubleDouble {
             }
 
             if (x < Consts.Digamma.Threshold) {
-                int n = Math.Max(0, (int)Round(x - 1));
-                ddouble v = x - n - 1;
+                int n = Math.Max(0, (int)Round(x - 1d));
+                ddouble v = x - n - 1d;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeTables[n];
 

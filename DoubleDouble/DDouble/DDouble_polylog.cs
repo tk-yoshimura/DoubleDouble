@@ -23,13 +23,13 @@ namespace DoubleDouble {
             }
 
             if (n >= 2) {
-                if (x >= 0.5) {
+                if (x >= 0.5d) {
                     return PolylogNearOne.Polylog(n, x);
                 }
-                if (x >= -0.5) {
+                if (x >= -0.5d) {
                     return PolylogPowerSeries.PolylogNearZero(n, x);
                 }
-                if (x >= -1.5) {
+                if (x >= -1.5d) {
                     return PolylogIntegral.Polylog(n, x);
                 }
                 if (IsNegativeInfinity(x)) {
@@ -45,7 +45,7 @@ namespace DoubleDouble {
         private static class PolylogNearOne {
             public static ddouble Polylog(int n, ddouble x) {
 #if DEBUG
-                if (x < 0.5 || x > 1) {
+                if (x < 0.5d || x > 1d) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -120,12 +120,12 @@ namespace DoubleDouble {
         private static class PolylogPowerSeries {
             public static ddouble PolylogNearZero(int n, ddouble x) {
 #if DEBUG
-                if (x < -0.5 || x > 0.5) {
+                if (x < -0.5d || x > 0.5d) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
 
-                if (x == 0) {
+                if (x == 0d) {
                     return x;
                 }
 
@@ -151,7 +151,7 @@ namespace DoubleDouble {
 
             public static ddouble PolylogMinusLimit(int n, ddouble x) {
 #if DEBUG
-                if (x > -1.5) {
+                if (x > -1.5d) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -161,7 +161,7 @@ namespace DoubleDouble {
                 ReadOnlyCollection<ddouble> coef = CoefTable.Coef(n);
 
                 ddouble y = mlimit_bias[n](Log(x));
-                ddouble u = 1 / x, v = u, v2 = v * v;
+                ddouble u = 1d / x, v = u, v2 = v * v;
 
                 for (int i = 0; i < coef.Count - 1; i += 2) {
                     ddouble dy = u * (coef[i] - v * coef[i + 1]);
@@ -186,27 +186,27 @@ namespace DoubleDouble {
             static ReadOnlyCollection<Func<ddouble, ddouble>> mlimit_bias = new(new Func<ddouble, ddouble>[] {
                (logx) => throw new NotImplementedException(),
                (logx) => throw new NotImplementedException(),
-               (logx) => (pi2 + 3 * Square(logx)) / 6,
+               (logx) => (pi2 + 3d * Square(logx)) / 6,
                (logx) => logx * (pi2 + Square(logx)) / 6,
                (logx) => {
                    ddouble logx2 = Square(logx);
-                   return (7 * pi4 + logx2 * (30 * pi2 + 15 * logx2)) / 360;
+                   return (7d * pi4 + logx2 * (30d * pi2 + 15d * logx2)) / 360d;
                },
                (logx) => {
                    ddouble logx2 = Square(logx);
-                   return logx * (7 * pi4 + logx2 * (10 * pi2 + 3 * logx2)) / 360;
+                   return logx * (7d * pi4 + logx2 * (10d * pi2 + 3d * logx2)) / 360d;
                },
                (logx) => {
                    ddouble logx2 = Square(logx);
-                   return (31 * pi6 + logx2 * (147 * pi4 + logx2 * (105 * pi2 + 21 * logx2))) / 15120;
+                   return (31d * pi6 + logx2 * (147d * pi4 + logx2 * (105d * pi2 + 21d * logx2))) / 15120d;
                },
                (logx) => {
                    ddouble logx2 = Square(logx);
-                   return logx * (31 * pi6 + logx2 * (49 * pi4 + logx2 * (21 * pi2 + 3 * logx2))) / 15120;
+                   return logx * (31d * pi6 + logx2 * (49d * pi4 + logx2 * (21d * pi2 + 3d * logx2))) / 15120d;
                },
                (logx) => {
                    ddouble logx2 = Square(logx);
-                   return (127 * pi8 + logx2 * (620 * pi6 + logx2 * (490 * pi4 + logx2 * (140 * pi2 + 15 * logx2)))) / 604800;
+                   return (127d * pi8 + logx2 * (620d * pi6 + logx2 * (490d * pi4 + logx2 * (140d * pi2 + 15d * logx2)))) / 604800d;
                },
             });
 
@@ -234,22 +234,22 @@ namespace DoubleDouble {
         private static class PolylogIntegral {
             public static ddouble Polylog(int n, ddouble x) {
 #if DEBUG
-                if (x < -1.5 || x > -0.5) {
+                if (x < -1.5d || x > -0.5d) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
 
                 ddouble h = IntegrandPeak(n, -(double)x);
-                ddouble r = 1 / -x;
+                ddouble r = 1d / -x;
 
                 Func<ddouble, ddouble> polylog_ir =
                 (n > 2) ? (t) => {
-                    ddouble y = Pow(t, n - 1) / (Exp(t) * r + 1);
+                    ddouble y = Pow(t, n - 1) / (Exp(t) * r + 1d);
 
                     return y;
                 }
                 : (t) => {
-                    ddouble y = t / (Exp(t) * r + 1);
+                    ddouble y = t / (Exp(t) * r + 1d);
 
                     return y;
                 };
@@ -415,27 +415,27 @@ namespace DoubleDouble {
                 ddouble y;
 
                 if (n == 1) {
-                    y = -Log(1 - x);
+                    y = -Log(1d - x);
 
                     return IsNaN(y) ? NegativeInfinity : y;
                 }
                 if (n == 0) {
-                    y = x / (1 - x);
+                    y = x / (1d - x);
 
                     return IsNaN(y) ? -1 : y;
                 }
                 if (n >= -4) {
                     if (n == -1) {
-                        y = x / Square(1 - x);
+                        y = x / Square(1d - x);
                     }
                     else if (n == -2) {
-                        y = x * (1 + x) / Cube(1 - x);
+                        y = x * (1d + x) / Cube(1d - x);
                     }
                     else if (n == -3) {
-                        y = x * (1 + x * (4 + x)) / Pow(1 - x, 4);
+                        y = x * (1d + x * (4d + x)) / Pow(1d - x, 4);
                     }
                     else {
-                        y = x * (1 + x) * (1 + x * (10 + x)) / Pow(1 - x, 5);
+                        y = x * (1d + x) * (1d + x * (10d + x)) / Pow(1d - x, 5);
                     }
 
                     return IsNaN(y) ? Zero : y;

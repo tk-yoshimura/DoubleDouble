@@ -221,21 +221,21 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(ddouble.Expm1(0));
             Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(0)));
 
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(-0.25d))).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(-0.25d)).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(-0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(-0.09375d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(-0.09375d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(-0.09375d))).mantissa);
 
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(0.25d))).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(0.25d)).mantissa);
-            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(0.25d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitDecrement(0.1015625d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(0.1015625d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Expm1(ddouble.BitIncrement(0.1015625d))).mantissa);
 
-            Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(-0.25d)));
-            Console.WriteLine(ddouble.Expm1(-0.25d));
-            Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(-0.25d)));
+            Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(-0.09375d)));
+            Console.WriteLine(ddouble.Expm1(-0.09375d));
+            Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(-0.09375d)));
 
-            Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(0.25d)));
-            Console.WriteLine(ddouble.Expm1(0.25d));
-            Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(0.25d)));
+            Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(0.1015625d)));
+            Console.WriteLine(ddouble.Expm1(0.1015625d));
+            Console.WriteLine(ddouble.Expm1(ddouble.BitIncrement(0.1015625d)));
 
             ddouble exp_pzero = ddouble.Expm1(0d);
             ddouble exp_mzero = ddouble.Expm1(-0d);

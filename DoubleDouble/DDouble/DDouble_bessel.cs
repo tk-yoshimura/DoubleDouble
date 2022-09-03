@@ -469,7 +469,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble c = -2 / (x * PI), u = x / (2 * PI);
+                ddouble c = -2d / (x * PI), u = x / (2 * PI);
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
@@ -1693,7 +1693,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble Value(ddouble x, ddouble[] cs, ddouble[] ds, bool scale = false) {
-                ddouble t = 1 / x;
+                ddouble t = 1d / x;
                 ddouble c = cs[^1], d = ds[^1];
 
                 for (int j = cs.Length - 2; j >= 0; j--) {
@@ -2490,7 +2490,7 @@ namespace DoubleDouble {
 
                 ddouble omega = x - (2 * nu + 1d) * PI / 4;
                 ddouble m = c * Cos(omega) - s * Sin(omega);
-                ddouble t = m * Sqrt(2 / (PI * x));
+                ddouble t = m * Sqrt(2d / (PI * x));
 
                 return t;
             }
@@ -2500,7 +2500,7 @@ namespace DoubleDouble {
 
                 ddouble omega = x - (2 * nu + 1d) * PI / 4;
                 ddouble m = s * Sin(omega) + c * Cos(omega);
-                ddouble t = m * Sqrt(2 / (PI * x));
+                ddouble t = m * Sqrt(2d / (PI * x));
 
                 return t;
             }

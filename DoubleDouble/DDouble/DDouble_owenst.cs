@@ -60,7 +60,7 @@ namespace DoubleDouble {
                     ddouble x_sft = x * ap;
 
                     ddouble p = x_sft * x_sft;
-                    ddouble r = 1 + p;
+                    ddouble r = 1d + p;
 
                     ddouble u = w * Exp(n_half_h2 * r) * p / r;
 
@@ -73,7 +73,7 @@ namespace DoubleDouble {
                         ddouble x_sft = x * ad + ap;
 
                         ddouble p = x_sft * x_sft;
-                        ddouble r = 1 + p;
+                        ddouble r = 1d + p;
 
                         ddouble u = w * Exp(n_half_h2 * r) * p / r;
 
@@ -98,7 +98,7 @@ namespace DoubleDouble {
                 ddouble p2 = h4 + 4 * p1;
                 ddouble p3 = h6 + 6 * p2;
 
-                ddouble s = a * (1680 + (a2 * (-280 * p1 + (a2 * (42 * p2 - a2 * (5 * p3)))))) / 1680;
+                ddouble s = a * (1680d + (a2 * (-280d * p1 + (a2 * (42d * p2 - a2 * (5d * p3)))))) / 1680d;
                 ddouble c = Exp(-h2 / 2) / (2 * PI);
 
                 ddouble y = s * c;

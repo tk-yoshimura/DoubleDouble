@@ -25,7 +25,7 @@ namespace DoubleDouble {
             ddouble sc = 131d + u * (1281d + u * (1881d + u * (481d + u * 6d)));
             ddouble sd = 30d + u * (600d + u * (1800d + u * (1200d + u * 150d)));
 
-            ddouble w = (u - 1) * sc / (sd * Ln2);
+            ddouble w = (u - 1d) * sc / (sd * Ln2);
 
             ddouble y = n + Consts.Log.Log2Table[index] + w;
 

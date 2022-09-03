@@ -67,7 +67,7 @@ namespace DoubleDouble {
                 ddouble u = x * Exp(x / 2);
 
                 for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
-                    ddouble f = TaylorSequence[2 * k + 1] * (1 - x * K4Series.Value(k));
+                    ddouble f = TaylorSequence[2 * k + 1] * (1d - x * K4Series.Value(k));
                     ddouble ds = Ldexp(u * f, -2 * k) * FSeries.Value(k);
                     ddouble s_next = s + ds;
 

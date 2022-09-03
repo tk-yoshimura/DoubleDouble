@@ -68,7 +68,7 @@ namespace DoubleDouble {
                 ddouble a = UpperIncompleteGammaNearZero.A1(alpha);
                 ddouble a0 = (1d + alpha) * a - 1d;
                 ddouble phi = UpperIncompleteGammaNearZero.Phi(alpha, x);
-                ddouble g0 = Gamma(1 + alpha), g = g0 * (1 + alpha);
+                ddouble g0 = Gamma(1d + alpha), g = g0 * (1d + alpha);
 
                 ddouble s = a0 + phi / g0 + x * (a + phi / g);
 
@@ -123,7 +123,7 @@ namespace DoubleDouble {
                 ddouble x_nu = Pow(x, nu);
 
                 if (x_nu <= 0.5d || x_nu >= 2d) {
-                    return (1 - x_nu) / nu;
+                    return (1d - x_nu) / nu;
                 }
 
                 ddouble logx = Log(x);
