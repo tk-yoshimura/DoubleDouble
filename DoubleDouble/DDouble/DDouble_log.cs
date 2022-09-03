@@ -22,8 +22,8 @@ namespace DoubleDouble {
 
             ddouble u = v / v_offset;
 
-            ddouble sc = 131d + u * (1281d + u * (1881d + u * ( 481d + u *   6d)));
-            ddouble sd =  30d + u * ( 600d + u * (1800d + u * (1200d + u * 150d)));
+            ddouble sc = 131d + u * (1281d + u * (1881d + u * (481d + u * 6d)));
+            ddouble sd = 30d + u * (600d + u * (1800d + u * (1200d + u * 150d)));
 
             ddouble w = (u - 1) * sc / (sd * Ln2);
 
@@ -51,54 +51,24 @@ namespace DoubleDouble {
                 return MinusZero;
             }
 
-            ddouble x2 = x * x, u = x;
-            ddouble y = Zero;
+            ddouble sc = 116396280d + x * (493152660d + x * (865824960d + x * (814143330d + x * (442197756d
+                       + x * (139339200d + x * (24195600d + x * (2031975d + x * (59950d + x * 126d))))))));
+            ddouble sd = 116396280d + x * (551350800d + x * (1102701600d + x * (1210809600d + x * (794593800d
+                       + x * (317837520d + x * (75675600d + x * (9979200d + x * (623700d + x * 12600d))))))));
 
-            for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
-                ddouble dy = u * ((2 * i + 2) - (2 * i + 1) * x) * Consts.Log.LogConvergenceRemTable[i];
-                ddouble y_next = y + dy;
-
-                if (y == y_next) {
-                    break;
-                }
-
-                u *= x2;
-                y = y_next;
-            }
+            ddouble y = x * sc / sd;
 
             return y;
         }
 
         internal static partial class Consts {
             public static class Log {
-                private static ddouble GenerateLn2() {
-                    int n = 3;
-                    ddouble x = Rcp(3d);
-
-                    while (true) {
-                        ddouble dx = Rcp(n * Pow(3d, n));
-                        ddouble x_next = x + dx;
-
-                        if (x == x_next) {
-                            break;
-                        }
-
-                        n += 2;
-                        x = x_next;
-                    }
-
-                    ddouble y = x * 2;
-
-                    return y;
-                }
 
                 public static readonly IReadOnlyList<ddouble> Log2Table = GenerateLog2Table();
 
                 public static readonly ddouble Log2TableDx = Rcp(Log2Table.Count - 1);
 
                 public static readonly int Log2TableN = Log2Table.Count - 1;
-
-                public static readonly IReadOnlyList<ddouble> LogConvergenceRemTable = GenerateLogConvergenceRemTable();
 
                 public static ddouble[] GenerateLog2Table() {
 #if DEBUG
@@ -144,17 +114,6 @@ namespace DoubleDouble {
                     }
 
                     return y;
-                }
-
-                private static IReadOnlyList<ddouble> GenerateLogConvergenceRemTable() {
-                    const int n = 16;
-                    ddouble[] table = new ddouble[n];
-
-                    for (int i = 0; i < n; i++) {
-                        table[i] = Rcp(checked((2 * i + 1) * (2 * i + 2)));
-                    }
-
-                    return table;
                 }
             }
         }
