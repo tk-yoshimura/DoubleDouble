@@ -147,6 +147,7 @@ MaxValue : 2^1024 = 1.79769e308
 |sequence|note|usage|
 |----|----|----|
 |Taylor|1/n!|ddouble.TaylorSequence|
+|Factorial|n!|ddouble.Factorial|
 |Bernoulli|B(2k)|ddouble.BernoulliSequence|
 |HarmonicNumber|H_n|ddouble.HarmonicNumber|
 
