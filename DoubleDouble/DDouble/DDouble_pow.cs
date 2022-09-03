@@ -143,7 +143,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Expm1(ddouble x) {
-            if (x < -0.25d || x > 0.25d) {
+            if (x < -0.09375d || x > 0.1015625d) {
                 return Exp(x) - 1d;
             }
             if (IsPlusZero(x)) {
@@ -153,20 +153,10 @@ namespace DoubleDouble {
                 return MinusZero;
             }
 
-            ddouble z = x;
-            ddouble y = 0;
+            ddouble sc = 259459200d + x * (8648640d + x * (8648640d + x * (277200d + x * (55440d + x * (1512d + x * (72d + x * 1d))))));
+            ddouble sd = 259459200d + x * (-121080960d + x * (25945920d + x * (-3326400d + x * (277200d + x * (-15120d + x * (504d + x * -8d))))));
 
-            foreach (ddouble f in TaylorSequence.Skip(1)) {
-                ddouble dy = f * z;
-                ddouble y_next = y + dy;
-
-                if (y == y_next) {
-                    break;
-                }
-
-                z *= x;
-                y = y_next;
-            }
+            ddouble y = x * sc / sd;
 
             return y;
         }
