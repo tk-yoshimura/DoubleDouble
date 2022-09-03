@@ -39,6 +39,9 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             HPAssert.AreEqual("1.99932321299248736788439373752563131122422617961", ddouble.Pow2(2047d / 2048), 1e-31);
+            HPAssert.AreEqual("1.99999867792710979052356105801249019590553355921", ddouble.Pow2(1048575d / 1048576), 1e-31);
+            HPAssert.AreEqual("1.99999933896344565293023476737641150234462232042", ddouble.Pow2(2097151d / 2097152), 1e-31);
+            HPAssert.AreEqual("1.99999999870891276684363011175144199364866798456", ddouble.Pow2(1073741823d / 1073741824), 1e-31);
             HPAssert.AreEqual("1.25992104989487316476721060727822835057025146470", ddouble.Pow2(ddouble.Rcp(3)), 1e-31);
 
             Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(0.5d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitIncrement(0.5d))).mantissa);
