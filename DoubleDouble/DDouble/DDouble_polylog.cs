@@ -33,7 +33,7 @@ namespace DoubleDouble {
                 if (x >= -1.5) {
                     return PolylogIntegral.Polylog(n, x);
                 }
-                if (ddouble.IsNegativeInfinity(x)) {
+                if (IsNegativeInfinity(x)) {
                     return NegativeInfinity;
                 }
 

@@ -62,7 +62,7 @@ namespace DoubleDouble {
             else {
                 ddouble w = x * x;
 
-                ddouble c = x * Exp(-w) / Sqrt(ddouble.PI);
+                ddouble c = x * Exp(-w) / Sqrt(PI);
 
                 ddouble f = 1d;
 
