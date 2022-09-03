@@ -20,20 +20,14 @@ namespace DoubleDouble {
             int index = (int)Floor((v - 1d) * Consts.Log.Log2TableN);
             ddouble v_offset = 1d + Consts.Log.Log2TableDx * index;
 
-            ddouble w = v / v_offset - 1d, w2 = w * w, u = LbE * w;
-            ddouble y = n + Consts.Log.Log2Table[index];
+            ddouble u = v / v_offset;
 
-            for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
-                ddouble dy = u * ((2 * i + 2) - (2 * i + 1) * w) * Consts.Log.LogConvergenceRemTable[i];
-                ddouble y_next = y + dy;
+            ddouble sc = 131d + u * (1281d + u * (1881d + u * ( 481d + u *   6d)));
+            ddouble sd =  30d + u * ( 600d + u * (1800d + u * (1200d + u * 150d)));
 
-                if (y == y_next) {
-                    break;
-                }
+            ddouble w = (u - 1) * sc / (sd * Ln2);
 
-                u *= w2;
-                y = y_next;
-            }
+            ddouble y = n + Consts.Log.Log2Table[index] + w;
 
             return y;
         }
