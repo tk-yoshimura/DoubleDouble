@@ -63,23 +63,21 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Log {
+                public const int Log2TableN = 2048;
 
                 public static readonly IReadOnlyList<ddouble> Log2Table = GenerateLog2Table();
 
-                public static readonly ddouble Log2TableDx = Rcp(Log2Table.Count - 1);
-
-                public static readonly int Log2TableN = Log2Table.Count - 1;
+                public static readonly ddouble Log2TableDx = Rcp(Log2TableN);
 
                 public static ddouble[] GenerateLog2Table() {
 #if DEBUG
                     Trace.WriteLine($"Log2 initialize.");
 #endif
 
-                    const int n = 2048;
-                    ddouble dx = Rcp(n);
-                    ddouble[] table = new ddouble[n + 1];
+                    ddouble dx = Rcp(Log2TableN);
+                    ddouble[] table = new ddouble[Log2TableN + 1];
 
-                    for (int i = 0; i < table.Length; i++) {
+                    for (int i = 0; i <= Log2TableN; i++) {
                         ddouble x = 1 + dx * i;
                         table[i] = Log2Prime(x);
                     }
