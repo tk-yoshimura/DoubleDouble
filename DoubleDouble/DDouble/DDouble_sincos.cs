@@ -79,7 +79,7 @@ namespace DoubleDouble {
             ddouble u = Ldexp(v * PI, -1), u2 = u * u;
 
             ddouble sc = 166320d + u2 * (-22260d + u2 * 551d);
-            ddouble sd = 166320d + u2 * (  5460d + u2 *  75d);
+            ddouble sd = 166320d + u2 * (5460d + u2 * 75d);
 
             ddouble snb = u * sc / sd, cnb = Sqrt(1d - snb * snb);
 

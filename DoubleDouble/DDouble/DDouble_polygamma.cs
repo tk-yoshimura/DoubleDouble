@@ -68,7 +68,7 @@ namespace DoubleDouble {
                     ddouble y = t * Exp(-x * t) / (1 - Exp(-t));
 
                     return y;
-                }; 
+                };
 
                 Func<ddouble, ddouble> polygamma_it =
                 (n > 1) ? (u) => {
@@ -82,7 +82,7 @@ namespace DoubleDouble {
                     ddouble y = v / (1 - Exp(-v));
 
                     return y;
-                }; 
+                };
 
                 foreach ((ddouble t, ddouble w) in gles) {
                     ir += w * polygamma_ir(t * r);

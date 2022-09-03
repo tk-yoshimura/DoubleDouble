@@ -1,7 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Numerics;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -604,7 +603,7 @@ namespace DoubleDoubleTest.DDouble {
                     if ((n & 1) == 1) {
                         Assert.IsTrue(yn >= yz && yz >= yp && yp >= 0, $"{yn},\n{yz},\n{yp}");
                     }
-                    else { 
+                    else {
                         Assert.IsTrue(yn <= yz && yz <= yp && yp <= 0, $"{yn},\n{yz},\n{yp}");
                     }
                 }
