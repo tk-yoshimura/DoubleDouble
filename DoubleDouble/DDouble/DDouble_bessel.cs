@@ -1183,14 +1183,14 @@ namespace DoubleDouble {
                     (f0, f1) = ((2 * (k + alpha)) * v * f0 - f1, f0);
                 }
 
-                ddouble s = ddouble.Pow(2 * v, alpha), sqs = s * s;
+                ddouble s = Pow(2 * v, alpha), sqs = s * s;
 
                 lambda += f0 * phi[0];
                 lambda *= s;
 
-                ddouble rcot = 1d / ddouble.TanPI(alpha), rgamma = ddouble.Gamma(1 + alpha), rsqgamma = rgamma * rgamma;
-                ddouble r = 2 * ddouble.RcpPI * sqs;
-                ddouble p = sqs * rsqgamma * ddouble.RcpPI;
+                ddouble rcot = 1d / TanPI(alpha), rgamma = Gamma(1 + alpha), rsqgamma = rgamma * rgamma;
+                ddouble r = 2 * RcpPI * sqs;
+                ddouble p = sqs * rsqgamma * RcpPI;
 
                 ddouble eta0 = rcot - p / alpha;
                 ddouble xi0 = -2 * v * p;

@@ -20,7 +20,7 @@ namespace DoubleDouble {
         }
 
         public static explicit operator int(ddouble v) {
-            if (ddouble.IsNaN(v)) {
+            if (IsNaN(v)) {
                 throw new InvalidCastException();
             }
 
@@ -38,7 +38,7 @@ namespace DoubleDouble {
         }
 
         public static explicit operator uint(ddouble v) {
-            if (ddouble.IsNaN(v)) {
+            if (IsNaN(v)) {
                 throw new InvalidCastException();
             }
 
@@ -60,7 +60,7 @@ namespace DoubleDouble {
         }
 
         public static explicit operator long(ddouble v) {
-            if (ddouble.IsNaN(v)) {
+            if (IsNaN(v)) {
                 throw new InvalidCastException();
             }
 
@@ -93,7 +93,7 @@ namespace DoubleDouble {
         }
 
         public static explicit operator ulong(ddouble v) {
-            if (ddouble.IsNaN(v)) {
+            if (IsNaN(v)) {
                 throw new InvalidCastException();
             }
 

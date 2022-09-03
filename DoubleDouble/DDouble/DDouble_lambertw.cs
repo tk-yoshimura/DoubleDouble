@@ -29,7 +29,7 @@
 
             ddouble prev_dy = NaN, dy = NaN;
 
-            while (!(ddouble.Abs(prev_dy) < ddouble.Abs(dy))) {
+            while (!(Abs(prev_dy) < Abs(dy))) {
                 prev_dy = dy;
 
                 ddouble exp_y = Exp(y);

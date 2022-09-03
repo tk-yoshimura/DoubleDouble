@@ -25,7 +25,7 @@ namespace DoubleDouble {
             for (int i = 2; i <= 256; i++) {
                 ddouble t = i * table[^1];
 
-                if (ddouble.IsPositiveInfinity(t)) {
+                if (IsPositiveInfinity(t)) {
                     break;
                 }
 

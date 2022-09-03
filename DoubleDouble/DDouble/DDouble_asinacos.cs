@@ -18,11 +18,11 @@ namespace DoubleDouble {
                 return Consts.AsinAcos.HalfPI - Atan(Rcp(x));
             }
             if (x > 0.25d) {
-                return 2 * Atan(x / (1d + ddouble.Sqrt(1d + x * x)));
+                return 2 * Atan(x / (1d + Sqrt(1d + x * x)));
             }
 
             ddouble f = 86d * x + 13.5d;
-            int n = (int)ddouble.Floor(33.5d * x + 9d);
+            int n = (int)Floor(33.5d * x + 9d);
 
             for (int i = n; i >= 1; i--) {
                 f = (2 * i - 1) + (i * i) * x * x / f;

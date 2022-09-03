@@ -17,7 +17,7 @@ namespace DoubleDouble {
 
             (int n, ddouble v) = Frexp(x);
 
-            int index = (int)ddouble.Floor((v - 1d) * Consts.Log.Log2TableN);
+            int index = (int)Floor((v - 1d) * Consts.Log.Log2TableN);
             ddouble v_offset = 1d + Consts.Log.Log2TableDx * index;
 
             ddouble w = v / v_offset - 1d, w2 = w * w, u = LbE * w;
@@ -58,7 +58,7 @@ namespace DoubleDouble {
             }
 
             ddouble x2 = x * x, u = x;
-            ddouble y = ddouble.Zero;
+            ddouble y = Zero;
 
             for (int i = 0; i < Consts.Log.LogConvergenceRemTable.Count; i++) {
                 ddouble dy = u * ((2 * i + 2) - (2 * i + 1) * x) * Consts.Log.LogConvergenceRemTable[i];

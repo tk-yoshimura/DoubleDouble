@@ -52,7 +52,7 @@ namespace DoubleDouble {
             int exp = (int)Floor(x);
             ddouble s = x - exp, c = Ldexp(1d, exp);
 
-            int index = (int)ddouble.Floor(s * (Consts.Pow.Pow2TableN * Consts.Pow.Pow2TableN));
+            int index = (int)Floor(s * (Consts.Pow.Pow2TableN * Consts.Pow.Pow2TableN));
             ddouble v = s - Consts.Pow.Pow2TableDx * index;
             ddouble r0 = Consts.Pow.Pow2Table[index / Consts.Pow.Pow2TableN];
             ddouble r1 = Consts.Pow.Pow2Table[index % Consts.Pow.Pow2TableN + Consts.Pow.Pow2TableN + 1];
@@ -90,7 +90,7 @@ namespace DoubleDouble {
                 return x < 1 ? Zero : PositiveInfinity;
             }
 
-            long n = (long)ddouble.Truncate(y);
+            long n = (long)Truncate(y);
             ddouble f = y - n;
 
             ddouble z = Pow(x, n) * Pow2(f * Log2(x));
@@ -110,7 +110,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            int n = (int)ddouble.Truncate(x);
+            int n = (int)Truncate(x);
             ddouble f = x - n;
 
             ddouble pow10n = (n >= 0) ? Consts.Pow.Pow10NTable[n] : (1d / Consts.Pow.Pow10NTable[-n]);
@@ -132,7 +132,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            int n = (int)ddouble.Truncate(x);
+            int n = (int)Truncate(x);
             ddouble f = x - n;
 
             ddouble expn = (n >= 0) ? Consts.Pow.ExpNTable[n] : (1d / Consts.Pow.ExpNTable[-n]);

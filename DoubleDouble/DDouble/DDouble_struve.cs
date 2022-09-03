@@ -251,7 +251,7 @@ namespace DoubleDouble {
 
         internal static class StruveMIntegral {
             public static ddouble Value(int n, ddouble x) {
-                ddouble divs = ddouble.Ceiling(x / 16);
+                ddouble divs = Ceiling(x / 16);
                 ddouble q = Rcp(divs);
 
                 ddouble s = 0;

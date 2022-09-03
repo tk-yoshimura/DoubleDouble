@@ -245,12 +245,12 @@ namespace DoubleDouble {
 
                 Func<ddouble, ddouble> polylog_ir =
                 (n > 2) ? (t) => {
-                    ddouble y = ddouble.Pow(t, n - 1) / (ddouble.Exp(t) * r + 1);
+                    ddouble y = Pow(t, n - 1) / (Exp(t) * r + 1);
 
                     return y;
                 }
                 : (t) => {
-                    ddouble y = t / (ddouble.Exp(t) * r + 1);
+                    ddouble y = t / (Exp(t) * r + 1);
 
                     return y;
                 };
@@ -269,13 +269,13 @@ namespace DoubleDouble {
                 Func<ddouble, ddouble> polylog_it =
                 (n > 2) ? (u) => {
                     ddouble v = u + sh;
-                    ddouble y = ddouble.Pow(v, n - 1) / (r + ddouble.Exp(-v));
+                    ddouble y = Pow(v, n - 1) / (r + Exp(-v));
 
                     return y;
                 }
                 : (u) => {
                     ddouble v = u + sh;
-                    ddouble y = v / (r + ddouble.Exp(-v));
+                    ddouble y = v / (r + Exp(-v));
 
                     return y;
                 };
@@ -285,7 +285,7 @@ namespace DoubleDouble {
                 }
 
                 ir *= h;
-                it *= ddouble.Exp(-sh);
+                it *= Exp(-sh);
 
                 ddouble i = ir + it;
 

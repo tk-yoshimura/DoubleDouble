@@ -62,7 +62,7 @@ namespace DoubleDouble {
             public static double Eps = Math.ScaleB(1, -105);
 
             public static ddouble Value(ddouble nu, ddouble x) {
-                int n = (int)ddouble.Floor(nu);
+                int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
                 ddouble a = UpperIncompleteGammaNearZero.A1(alpha);
@@ -174,7 +174,7 @@ namespace DoubleDouble {
 
         internal static class UpperIncompleteGammaCFrac {
             public static ddouble Value(ddouble nu, ddouble x) {
-                int n = (int)ddouble.Floor(nu);
+                int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
                 double log2x = Math.Log2((double)x);

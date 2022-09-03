@@ -102,7 +102,7 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble p = (x - 0.5d) * ddouble.Log(x);
+                ddouble p = (x - 0.5d) * Log(x);
                 ddouble s = SterlingTerm(x);
 
                 ddouble k = Consts.LogGamma.SterlingLogBias;
@@ -170,7 +170,7 @@ namespace DoubleDouble {
             }
             else {
                 ddouble s = DiffLogSterlingTerm(x);
-                ddouble p = ddouble.Log(x);
+                ddouble p = Log(x);
                 ddouble c = Rcp(x) / 2;
 
                 ddouble y = -s + p - c;

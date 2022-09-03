@@ -92,7 +92,7 @@ namespace DoubleDouble {
                 }
 
                 ir *= r;
-                it *= ddouble.Exp(-scale * n) / x;
+                it *= Exp(-scale * n) / x;
 
                 ddouble i = ir + it;
 
@@ -103,20 +103,20 @@ namespace DoubleDouble {
                 ddouble inv_x2 = 1 / (x * x), c = Pow(x, -n);
                 ddouble v = c * Factorial[n - 1] * (2 * x + n) / (2 * x);
                 ddouble u = c * Factorial[n + 1] / 2 * inv_x2;
-                ddouble dv = ddouble.BernoulliSequence[1] * u;
+                ddouble dv = BernoulliSequence[1] * u;
 
                 v += dv;
 
                 for (int k = 2; k <= 20; k++) {
                     u *= inv_x2 * checked((n + 2 * k - 2) * (n + 2 * k - 1)) / checked((2 * k) * (2 * k - 1));
-                    dv = ddouble.BernoulliSequence[k] * u;
+                    dv = BernoulliSequence[k] * u;
                     ddouble next_v = v + dv;
 
                     if (v == next_v) {
                         break;
                     }
                     if (IsNaN(next_v)) {
-                        return ddouble.Zero;
+                        return Zero;
                     }
 
                     v = next_v;

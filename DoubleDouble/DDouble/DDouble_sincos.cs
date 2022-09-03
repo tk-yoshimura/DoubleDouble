@@ -71,13 +71,13 @@ namespace DoubleDouble {
 
             ddouble s = x - Floor(x);
 
-            int index = (int)ddouble.Floor(s * Consts.SinCos.SinPIHalfTableN);
+            int index = (int)Floor(s * Consts.SinCos.SinPIHalfTableN);
             ddouble v = s - Consts.SinCos.SinPIHalfTableDx * index;
             ddouble sna = Consts.SinCos.SinPIHalfTable[index];
             ddouble cna = Consts.SinCos.SinPIHalfTable[Consts.SinCos.SinPIHalfTableN - index];
 
             ddouble w = Ldexp(v * PI, -1), w2 = w * w, w4 = w2 * w2, u = 1;
-            ddouble y = ddouble.Zero;
+            ddouble y = Zero;
 
             for (int i = 0, terms = 0; terms < Consts.SinCos.SinPIHalfConvergenceTerms; i += 4, terms++) {
                 ddouble f = TaylorSequence[i + 3];
@@ -129,7 +129,7 @@ namespace DoubleDouble {
 
                     if (x < 0.5d) {
                         ddouble w = Ldexp(x * PI, -1), w2 = w * w, w4 = w2 * w2, u = 1;
-                        ddouble y = ddouble.Zero;
+                        ddouble y = Zero;
 
                         int terms = 0;
                         for (int i = 0, n = TaylorSequence.Count - 3; i < n; i += 4) {

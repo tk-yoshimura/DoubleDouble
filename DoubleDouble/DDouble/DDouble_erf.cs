@@ -62,7 +62,7 @@ namespace DoubleDouble {
             else {
                 ddouble w = x * x;
 
-                ddouble c = x * ddouble.Exp(-w) / ddouble.Sqrt(ddouble.PI);
+                ddouble c = x * Exp(-w) / Sqrt(ddouble.PI);
 
                 ddouble f = 1d;
 

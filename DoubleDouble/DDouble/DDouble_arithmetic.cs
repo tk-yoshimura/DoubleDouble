@@ -364,7 +364,7 @@ namespace DoubleDouble {
 
             ddouble abs_a = Abs(a), abs_b = Abs(b);
 
-            ddouble abs_y = abs_a - ddouble.Truncate(abs_a / abs_b) * abs_b;
+            ddouble abs_y = abs_a - Truncate(abs_a / abs_b) * abs_b;
             if (abs_y.Sign < 0 || abs_y >= abs_b) {
                 abs_y = 0;
             }
