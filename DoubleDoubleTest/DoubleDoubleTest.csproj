@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -13,9 +13,15 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Reference Include="DoubleDouble">
-      <HintPath>..\DoubleDouble\bin\Debug\net5.0\DoubleDouble.dll</HintPath>
+      <HintPath>..\DoubleDouble\bin\Debug\net6.0\DoubleDouble.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <Reference Include="DoubleDouble">
+      <HintPath>..\DoubleDouble\bin\Release\net6.0\DoubleDouble.dll</HintPath>
     </Reference>
   </ItemGroup>
 

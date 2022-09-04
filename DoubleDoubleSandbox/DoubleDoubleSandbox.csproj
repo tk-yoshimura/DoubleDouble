@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="DoubleDouble">
-      <HintPath>..\DoubleDouble\bin\Release\net5.0\DoubleDouble.dll</HintPath>
+      <HintPath>..\DoubleDouble\bin\Release\net6.0\DoubleDouble.dll</HintPath>
     </Reference>
   </ItemGroup>
 
