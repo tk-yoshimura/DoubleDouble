@@ -118,6 +118,7 @@ MaxValue : 2^1024 = 1.79769e308
 |dirichlet_eta|&#40;-inf,+inf&#41;|3||ddouble.DirichletEta(x)|
 |polylog|&#40;-inf,1&#93;|3|n &in; &#91;-4,8&#93;|ddouble.Polylog(n, x)|
 |owen's_t|&#40;-inf,+inf&#41;|10||ddouble.OwenT(h, a)|
+|bump|&#40;-inf,+inf&#41;|4|C-infinity smoothness basis function, bump(x)=1/(exp(1/x-1/(1-x))+1)|ddouble.Bump(x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
