@@ -1,19 +1,27 @@
 ﻿using DoubleDouble;
 using System;
-using static DoubleDouble.ddouble;
 
-namespace DoubleDoubleSandbox {
-    public static class HurwitzZetaProto {
+namespace DoubleDouble {
+    public partial struct ddouble {
         public static ddouble HurwitzZeta(ddouble x, ddouble a) {
-            if (!(x >= 1)) {
+            if (x < 1) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
-            if (!(a >= 0)) {
+            if (a < 0) {
                 throw new ArgumentOutOfRangeException(nameof(a));
             }
 
+            if (IsNaN(x) || IsNaN(a)) {
+                return NaN;
+            }
             if (x == 1d || a == 0d) {
                 return PositiveInfinity;
+            }
+            if (a == 1d) {
+                return RiemannZeta(x);
+            }
+            if (IsInfinity(x)) {
+                return (a < 1d) ? PositiveInfinity : Zero;
             }
 
             double a_convergence = 12d + 0.24d * (double)a + 1.35d * Math.Log2((double)a + 1d);
