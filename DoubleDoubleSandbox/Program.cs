@@ -5,10 +5,7 @@ using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {
     public static class Program {
-        static void Main() {            
-            ddouble y = HurwitzZetaProto.HurwitzZeta(25.5, 16);
-
-            Console.WriteLine(y);
+        static void Main() {
 
             Console.WriteLine("END");
             Console.Read();
