@@ -115,6 +115,7 @@ MaxValue : 2^1024 = 1.79769e308
 |carlson_rj|&#91;0,+inf&#41;|4||ddouble.CarlsonRJ(x, y, z, w)|
 |carlson_rg|&#91;0,+inf&#41;|4||ddouble.CarlsonRG(x, y, z)|
 |riemann_zeta|&#40;-inf,+inf&#41;|3||ddouble.RiemannZeta(x)|
+|hurwitz_zeta|&#40;1,+inf&#41;|3|a &geq; 0|ddouble.HurwitzZeta(x, a)|
 |dirichlet_eta|&#40;-inf,+inf&#41;|3||ddouble.DirichletEta(x)|
 |polylog|&#40;-inf,1&#93;|3|n &in; &#91;-4,8&#93;|ddouble.Polylog(n, x)|
 |owen's_t|&#40;-inf,+inf&#41;|10||ddouble.OwenT(h, a)|
