@@ -76,7 +76,7 @@ namespace DoubleDoubleTest.DDouble {
         public void HermiteTest() {
             for (int n = 64; n >= HermitePolynomials.Count; n--) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
-                    ddouble actual = ddouble.Hermite(n, x);
+                    ddouble actual = ddouble.HermiteH(n, x);
 
                     Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
                 }
@@ -85,7 +85,7 @@ namespace DoubleDoubleTest.DDouble {
             for (int n = 0; n < HermitePolynomials.Count; n++) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble expected = HermitePolynomials[n](x);
-                    ddouble actual = ddouble.Hermite(n, x);
+                    ddouble actual = ddouble.HermiteH(n, x);
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
                 }

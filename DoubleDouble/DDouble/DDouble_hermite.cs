@@ -4,16 +4,16 @@ using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble Hermite(int n, ddouble x) {
+        public static ddouble HermiteH(int n, ddouble x) {
             if (n > 64) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
-                    "In the calculation of the Hermite function, n greater than 64 is not supported."
+                    "In the calculation of the HermiteH function, n greater than 64 is not supported."
                 );
             }
 
             if (n >= 2) {
-                ReadOnlyCollection<ddouble> coefs = Consts.Hermite.Table(n);
+                ReadOnlyCollection<ddouble> coefs = Consts.HermiteH.Table(n);
 
                 ddouble x2 = x * x;
                 ddouble s = coefs[n / 2];
@@ -43,7 +43,7 @@ namespace DoubleDouble {
         }
 
         internal static partial class Consts {
-            public static class Hermite {
+            public static class HermiteH {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
                     { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
                     { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},

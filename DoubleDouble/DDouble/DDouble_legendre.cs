@@ -4,16 +4,16 @@ using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble Legendre(int n, ddouble x) {
+        public static ddouble LegendreP(int n, ddouble x) {
             if (n > 64) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
-                    "In the calculation of the Legendre function, n greater than 64 is not supported."
+                    "In the calculation of the LegendreP function, n greater than 64 is not supported."
                 );
             }
 
             if (n >= 2) {
-                ReadOnlyCollection<ddouble> coefs = Consts.Legendre.Table(n);
+                ReadOnlyCollection<ddouble> coefs = Consts.LegendreP.Table(n);
 
                 ddouble x2 = x * x;
                 ddouble s = coefs[n / 2];
@@ -43,7 +43,7 @@ namespace DoubleDouble {
         }
 
         internal static partial class Consts {
-            public static class Legendre {
+            public static class LegendreP {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
                     { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
                     { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 2 })},

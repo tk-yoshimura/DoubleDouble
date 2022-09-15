@@ -120,9 +120,9 @@ MaxValue : 2^1024 = 1.79769e308
 |polylog|&#40;-inf,1&#93;|3|n &in; &#91;-4,8&#93;|ddouble.Polylog(n, x)|
 |owen's_t|&#40;-inf,+inf&#41;|10||ddouble.OwenT(h, a)|
 |bump|&#40;-inf,+inf&#41;|4|C-infinity smoothness basis function, bump(x)=1/(exp(1/x-1/(1-x))+1)|ddouble.Bump(x)|
-|hermite|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.Hermite(n, x)|
-|laguerre|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.Laguerre(n, x)|
-|legendre|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.Legendre(n, x)|
+|hermite_h|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.HermiteH(n, x)|
+|laguerre_l|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.LaguerreL(n, x)|
+|legendre_p|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.LegendreP(n, x)|
 |chebyshev_t|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevT(n, x)|
 |chebyshev_u|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevU(n, x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|

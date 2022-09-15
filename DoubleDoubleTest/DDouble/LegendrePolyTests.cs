@@ -76,7 +76,7 @@ namespace DoubleDoubleTest.DDouble {
         public void LegendreTest() {
             for (int n = 64; n >= LegendrePolynomials.Count; n--) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
-                    ddouble actual = ddouble.Legendre(n, x);
+                    ddouble actual = ddouble.LegendreP(n, x);
 
                     Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
                 }
@@ -85,7 +85,7 @@ namespace DoubleDoubleTest.DDouble {
             for (int n = 0; n < LegendrePolynomials.Count; n++) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble expected = LegendrePolynomials[n](x);
-                    ddouble actual = ddouble.Legendre(n, x);
+                    ddouble actual = ddouble.LegendreP(n, x);
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
                 }

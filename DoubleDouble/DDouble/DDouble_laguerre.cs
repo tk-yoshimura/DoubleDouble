@@ -4,16 +4,16 @@ using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble Laguerre(int n, ddouble x) {
+        public static ddouble LaguerreL(int n, ddouble x) {
             if (n > 64) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
-                    "In the calculation of the Laguerre function, n greater than 64 is not supported."
+                    "In the calculation of the LaguerreL function, n greater than 64 is not supported."
                 );
             }
 
             if (n >= 2) {
-                ReadOnlyCollection<ddouble> coefs = Consts.Laguerre.Table(n);
+                ReadOnlyCollection<ddouble> coefs = Consts.LaguerreL.Table(n);
 
                 ddouble s = coefs[n];
 
@@ -38,7 +38,7 @@ namespace DoubleDouble {
         }
 
         internal static partial class Consts {
-            public static class Laguerre {
+            public static class LaguerreL {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
                     { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
                     { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1, -1 })},
