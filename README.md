@@ -97,7 +97,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ci|&#91;0,+inf&#41;|8|cos integral|ddouble.Ci(x)|
 |shi|&#40;-inf,+inf&#41;|8|hyperbolic sin integral|ddouble.Shi(x)|
 |chi|&#91;0,+inf&#41;|8|hyperbolic cos integral|ddouble.Chi(x)|
-|lambertw|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
+|lambert_w|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
 |airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
 |airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
 |lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
@@ -120,6 +120,11 @@ MaxValue : 2^1024 = 1.79769e308
 |polylog|&#40;-inf,1&#93;|3|n &in; &#91;-4,8&#93;|ddouble.Polylog(n, x)|
 |owen's_t|&#40;-inf,+inf&#41;|10||ddouble.OwenT(h, a)|
 |bump|&#40;-inf,+inf&#41;|4|C-infinity smoothness basis function, bump(x)=1/(exp(1/x-1/(1-x))+1)|ddouble.Bump(x)|
+|hermite|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.Hermite(n, x)|
+|laguerre|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.Laguerre(n, x)|
+|legendre|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.Legendre(n, x)|
+|chebyshev_t|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevT(n, x)|
+|chebyshev_u|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevU(n, x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
