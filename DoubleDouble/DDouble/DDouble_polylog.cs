@@ -8,13 +8,13 @@ namespace DoubleDouble {
             if (n < -4) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
-                    "In the calculation of the polylog function, n with an absolute value less than -4 is not supported."
+                    "In the calculation of the Polylog function, n less than -4 is not supported."
                 );
             }
             if (n > 8) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
-                    "In the calculation of the polylog function, n with an absolute value greater than 8 is not supported."
+                    "In the calculation of the Polylog function, n greater than 8 is not supported."
                 );
             }
 

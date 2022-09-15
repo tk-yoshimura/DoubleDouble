@@ -10,7 +10,7 @@ namespace DoubleDouble {
             if (n > 16) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
-                    "In the calculation of the polygamma function, n with an absolute value greater than 16 is not supported."
+                    "In the calculation of the Polygamma function, n greater than 16 is not supported."
                 );
             }
             if (n == 0) {
