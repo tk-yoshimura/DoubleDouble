@@ -282,7 +282,7 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
-        public void BumpMonotoneTest() {            
+        public void BumpMonotoneTest() {
             for (ddouble x = 0; x <= 1; x += 1d / 16384) {
                 ddouble yn = ddouble.Bump(x - Math.ScaleB(1, -32));
                 ddouble yz = ddouble.Bump(x);

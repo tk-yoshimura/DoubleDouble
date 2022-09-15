@@ -1,7 +1,4 @@
-﻿using DoubleDouble;
-using System;
-
-using static DoubleDouble.ddouble;
+﻿using System;
 
 namespace DoubleDoubleSandbox {
     public static class Program {

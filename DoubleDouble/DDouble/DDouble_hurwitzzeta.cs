@@ -1,5 +1,4 @@
-﻿using DoubleDouble;
-using System;
+﻿using System;
 
 namespace DoubleDouble {
     public partial struct ddouble {
