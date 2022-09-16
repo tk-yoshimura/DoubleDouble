@@ -1,6 +1,7 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace DoubleDoubleTest.DDouble {
@@ -72,6 +73,44 @@ namespace DoubleDoubleTest.DDouble {
                 },
             });
 
+        private static readonly Dictionary<(int, int), Func<ddouble, ddouble>> LegendreTables =
+            new Dictionary<(int, int), Func<ddouble, ddouble>>{
+                { (0,  0), (x) => 1d },
+
+                { (1, -1), (x) => ddouble.Sqrt(1 - x * x) / 2 },
+                { (1,  0), (x) => x },
+                { (1, +1), (x) => -ddouble.Sqrt(1 - x * x) },
+
+                { (2, -2), (x) => (1 - x * x) / 8 },
+                { (2, -1), (x) => x * ddouble.Sqrt(1 - x * x) / 2 },
+                { (2,  0), (x) => (-1 + x * x * 3) / 2 },
+                { (2, +1), (x) => -x * ddouble.Sqrt(1 - x * x) * 3 },
+                { (2, +2), (x) => (1 - x * x) * 3 },
+
+                { (3, -3), (x) => ddouble.Pow(1 - x * x, 1.5d) / 48 },
+                { (3, -2), (x) => x * (1 - x * x) / 8 },
+                { (3, -1), (x) => -(1 - x * x * 5) * ddouble.Sqrt(1 - x * x) / 8 },
+                { (3,  0), (x) => x * (-3 + x * x * 5) / 2 },
+                { (3, +1), (x) => (3 - x * x * 15) * ddouble.Sqrt(1 - x * x) / 2 },
+                { (3, +2), (x) => x * (1 - x * x) * 15 },
+                { (3, +3), (x) => -ddouble.Pow(1 - x * x, 1.5d) * 15 },
+
+                { (4, -4), (x) => ddouble.Pow(1 - x * x, 2) / 384 },
+                { (4, -3), (x) => x * ddouble.Pow(1 - x * x, 1.5d) / 48 },
+                { (4, -2), (x) => (-1 + x * x * 7) * (1 - x * x) / 48 },
+                { (4, -1), (x) => x * (-3 + x * x * 7) * ddouble.Sqrt(1 - x * x) / 8 },
+                { (4,  0), (x) => (3 + x * x * (-30 + x * x * 35)) / 8 },
+                { (4, +1), (x) => x * (15 - x * x * 35) * ddouble.Sqrt(1 - x * x) / 2 },
+                { (4, +2), (x) => (-15 + x * x * 105) * (1 - x * x) / 2 },
+                { (4, +3), (x) => -x * ddouble.Pow(1 - x * x, 1.5d) * 105 },
+                { (4, +4), (x) => ddouble.Pow(1 - x * x, 2) * 105 },
+
+                { (8, -2), (x) => (-1 + x * x * (33 + x * x * (-143 + x * x * 143))) * (1 - x * x) / 256 },
+                { (8, -1), (x) => x * (-35 + x * x * (385 + x * x * (-1001 + x * x * 715))) * ddouble.Sqrt(1 - x * x) / 128 },
+                { (8, +1), (x) => -x * (-35 + x * x * (385 + x * x * (-1001 + x * x * 715))) * ddouble.Sqrt(1 - x * x) * 9 / 16 },
+                { (8, +2), (x) => (-1 + x * x * (33 + x * x * (-143 + x * x * 143))) * (1 - x * x) * 315 / 16 },
+            };
+
         [TestMethod]
         public void LegendreTest() {
             for (int n = 64; n >= LegendrePolynomials.Count; n--) {
@@ -88,6 +127,28 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble actual = ddouble.LegendreP(n, x);
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void AssociatedLegendreTest() {
+            for(int n = 64; n >= 0; n--) {
+                for (int m = -n; m <= n; m++) {
+                    for (ddouble x = -1; x <= 1; x += 0.0625) {
+                        ddouble actual = ddouble.LegendreP(n, m, x);
+
+                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{m},{x}");
+                    }
+                }
+            }
+
+            foreach ((int n, int m) in LegendreTables.Keys) {
+                for (ddouble x = -1; x <= 1; x += 0.0625) {
+                    ddouble expected = LegendreTables[(n, m)](x);
+                    ddouble actual = ddouble.LegendreP(n, m, x);
+
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-31, $"{n},{m},{x}");
                 }
             }
         }
