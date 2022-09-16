@@ -39,11 +39,12 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void GegenbauerCTest() {
             for (int n = 64; n >= 0; n--) {
-                for(ddouble alpha = -4; alpha <= 4; alpha += 0.25)
-                for (ddouble x = -1; x <= 1; x += 0.125) {
-                    ddouble actual = ddouble.GegenbauerC(n, alpha, x);
+                for (ddouble alpha = -4; alpha <= 4; alpha += 0.25) {
+                    for (ddouble x = -1; x <= 1; x += 0.125) {
+                        ddouble actual = ddouble.GegenbauerC(n, alpha, x);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{alpha},{x}");
+                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{alpha},{x}");
+                    }
                 }
             }
 

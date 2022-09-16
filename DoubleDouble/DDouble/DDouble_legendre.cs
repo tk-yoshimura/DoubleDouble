@@ -11,6 +11,9 @@ namespace DoubleDouble {
                     "In the calculation of the LegendreP function, n greater than 64 is not supported."
                 );
             }
+            if (n < 0) {
+                throw new ArgumentOutOfRangeException(nameof(n));
+            }
 
             if (n >= 2) {
                 ReadOnlyCollection<ddouble> coefs = Consts.LegendreP.Table(n);
@@ -34,12 +37,9 @@ namespace DoubleDouble {
             if (n == 0) {
                 return 1d;
             }
-
-            if (n == 1) {
+            else {
                 return x;
             }
-
-            throw new ArgumentOutOfRangeException(nameof(n));
         }
 
         public static ddouble LegendreP(int n, int m, ddouble x) {
@@ -48,6 +48,9 @@ namespace DoubleDouble {
                     nameof(n),
                     "In the calculation of the LegendreP function, n greater than 64 is not supported."
                 );
+            }
+            if (n < 0) {
+                throw new ArgumentOutOfRangeException(nameof(n));
             }
 
             if (x < -1d || x > 1d) {
@@ -58,34 +61,30 @@ namespace DoubleDouble {
                 return LegendreP(n, x);
             }
 
-            if (n >= 0) {
-                if (n < Math.Abs(m)) {
-                    return Zero;
-                }
-
-                ReadOnlyCollection<ddouble> coefs = Consts.LegendreP.Table(n, m);
-
-                ddouble x2 = x * x;
-                ddouble s = coefs[^1];
-
-                for (int i = coefs.Count - 2; i >= 0; i--) {
-                    s = s * x2 + coefs[i];
-                }
-
-                if (((n - Math.Abs(m)) & 1) == 1) {
-                    s *= x;
-                }
-
-                s = Ldexp(s, -n) * Pow(1d - x2, Math.Abs(m) / 2);
-
-                if ((m & 1) != 0) {
-                    s *= Sqrt(1d - x2);
-                }
-
-                return s;
+            if (n < Math.Abs(m)) {
+                return Zero;
             }
 
-            throw new ArgumentOutOfRangeException(nameof(n));
+            ReadOnlyCollection<ddouble> coefs = Consts.LegendreP.Table(n, m);
+
+            ddouble x2 = x * x;
+            ddouble s = coefs[^1];
+
+            for (int i = coefs.Count - 2; i >= 0; i--) {
+                s = s * x2 + coefs[i];
+            }
+
+            if (((n - Math.Abs(m)) & 1) == 1) {
+                s *= x;
+            }
+
+            s = Ldexp(s, -n) * Pow(1d - x2, Math.Abs(m) / 2);
+
+            if ((m & 1) != 0) {
+                s *= Sqrt(1d - x2);
+            }
+
+            return s;
         }
 
         internal static partial class Consts {

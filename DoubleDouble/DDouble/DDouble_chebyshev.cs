@@ -11,6 +11,9 @@ namespace DoubleDouble {
                     "In the calculation of the ChebyshevT function, n greater than 64 is not supported."
                 );
             }
+            if (n < 0) {
+                throw new ArgumentOutOfRangeException(nameof(n));
+            }
 
             if (n >= 2) {
                 ReadOnlyCollection<ddouble> coefs = Consts.ChebyshevT.Table(n);
@@ -32,12 +35,9 @@ namespace DoubleDouble {
             if (n == 0) {
                 return 1d;
             }
-
-            if (n == 1) {
+            else {
                 return x;
             }
-
-            throw new ArgumentOutOfRangeException(nameof(n));
         }
 
         public static ddouble ChebyshevU(int n, ddouble x) {
@@ -46,6 +46,9 @@ namespace DoubleDouble {
                     nameof(n),
                     "In the calculation of the ChebyshevU function, n greater than 64 is not supported."
                 );
+            }
+            if (n < 0) {
+                throw new ArgumentOutOfRangeException(nameof(n));
             }
 
             if (n >= 2) {
@@ -68,12 +71,9 @@ namespace DoubleDouble {
             if (n == 0) {
                 return 1d;
             }
-
-            if (n == 1) {
+            else {
                 return 2 * x;
             }
-
-            throw new ArgumentOutOfRangeException(nameof(n));
         }
 
         internal static partial class Consts {

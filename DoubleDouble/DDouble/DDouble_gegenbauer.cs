@@ -11,6 +11,9 @@ namespace DoubleDouble {
                     "In the calculation of the GegenbauerC function, n greater than 64 is not supported."
                 );
             }
+            if (n < 0) {
+                throw new ArgumentOutOfRangeException(nameof(n));
+            }
 
             if (!IsFinite(alpha)) {
                 return NaN;
@@ -36,12 +39,9 @@ namespace DoubleDouble {
             if (n == 0) {
                 return 1d;
             }
-
-            if (n == 1) {
+            else {
                 return 2 * alpha * x;
             }
-
-            throw new ArgumentOutOfRangeException(nameof(n));
         }
 
         internal static partial class Consts {
