@@ -133,7 +133,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void AssociatedLegendreTest() {
-            for(int n = 64; n >= 0; n--) {
+            for (int n = 64; n >= 0; n--) {
                 for (int m = -n; m <= n; m++) {
                     for (ddouble x = -1; x <= 1; x += 0.0625) {
                         ddouble actual = ddouble.LegendreP(n, m, x);

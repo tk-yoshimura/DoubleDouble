@@ -76,10 +76,10 @@ namespace DoubleDouble {
                     s *= x;
                 }
 
-                s = Ldexp(s, -n) * Pow(1 - x2, Math.Abs(m) / 2);
+                s = Ldexp(s, -n) * Pow(1d - x2, Math.Abs(m) / 2);
 
                 if ((m & 1) != 0) {
-                    s *= Sqrt(1 - x2);
+                    s *= Sqrt(1d - x2);
                 }
 
                 return s;
