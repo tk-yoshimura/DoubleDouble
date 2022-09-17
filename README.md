@@ -126,6 +126,7 @@ MaxValue : 2^1024 = 1.79769e308
 |legendre_p|&#91;-1,1&#93;|3|n &leq; 64|ddouble.LegendreP(n, m, x)|
 |chebyshev_t|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevT(n, x)|
 |chebyshev_u|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevU(n, x)|
+|zernike_r|&#91;0,1&#93;|3|n &leq; 64|ddouble.ZernikeR(n, m, x)|
 |gegenbauer_c|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.GegenbauerC(n, alpha, x)|
 |jacobi_p|&#91;-1,1&#93;|3|n &leq; 64, alpha,beta &gt; -1|ddouble.JacobiP(n, alpha, beta, x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
