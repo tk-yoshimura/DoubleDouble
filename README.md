@@ -122,8 +122,9 @@ MaxValue : 2^1024 = 1.79769e308
 |bump|&#40;-inf,+inf&#41;|4|C-infinity smoothness basis function, bump(x)=1/(exp(1/x-1/(1-x))+1)|ddouble.Bump(x)|
 |hermite_h|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.HermiteH(n, x)|
 |laguerre_l|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.LaguerreL(n, x)|
+|associated_laguerre_l|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.LaguerreL(n, alpha, x)|
 |legendre_p|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.LegendreP(n, x)|
-|legendre_p|&#91;-1,1&#93;|3|n &leq; 64|ddouble.LegendreP(n, m, x)|
+|associated_legendre_p|&#91;-1,1&#93;|3|n &leq; 64|ddouble.LegendreP(n, m, x)|
 |chebyshev_t|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevT(n, x)|
 |chebyshev_u|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.ChebyshevU(n, x)|
 |zernike_r|&#91;0,1&#93;|3|n &leq; 64|ddouble.ZernikeR(n, m, x)|
