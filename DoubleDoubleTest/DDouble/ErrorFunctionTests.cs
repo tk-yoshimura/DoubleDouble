@@ -282,7 +282,7 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(v, z, ddouble.Abs(v) * 1e-29);
             }
 
-            for (ddouble v = Math.ScaleB(1, -8); v > Math.ScaleB(1, -950); v /= 2) {
+            for (ddouble v = Math.ScaleB(1, -8); v > Math.ScaleB(1, -968); v /= 2) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
 
@@ -336,7 +336,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void InverseErfcTest() {
-            for (ddouble v = 1; v >= Math.ScaleB(1, -950); v /= 2) {
+            for (ddouble v = 1; v >= Math.ScaleB(1, -968); v /= 2) {
                 ddouble y = ddouble.InverseErfc(v);
                 ddouble z = ddouble.Erfc(y);
 
