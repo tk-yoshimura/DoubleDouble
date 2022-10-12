@@ -4,15 +4,14 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble x = -1; x <= 1; x += 1d / 32) {
-                Console.Write($"{x}");
-
-                for (int n = 0; n <= 8; n++) {
-                    Console.Write($",{ddouble.GegenbauerC(n, -0.5, x)}");
-                }
-
-                Console.Write("\n");
-            }
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 10));
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 100));
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 1000));
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 10000));
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 100000));
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 1000000));
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 10000000));
+            Console.WriteLine(ddouble.InverseErfc((ddouble)1 / 100000000));
 
             Console.WriteLine("END");
             Console.Read();

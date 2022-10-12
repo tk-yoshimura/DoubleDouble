@@ -63,10 +63,10 @@ MaxValue : 2^1024 = 1.79769e308
 |polygamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|ddouble.Polygamma(n, x)|
 |beta|&#91;0,+inf&#41;|5||ddouble.Beta(a, b)|
 |incomplete_beta|&#91;0,1&#93;|8|Accuracy decreases when the radio of a,b is too large. a,b &leq; 64|ddouble.IncompleteBeta(x, a, b)|
-|erf|&#40;-inf,+inf&#41;|5||ddouble.Erf(x)|
-|erfc|&#40;-inf,+inf&#41;|5||ddouble.Erfc(x)|
-|inverse_erf|&#40;-1,1&#41;|8||ddouble.InverseErf(x)|
-|inverse_erfc|&#40;0,2&#41;|8||ddouble.InverseErfc(x)|
+|erf|&#40;-inf,+inf&#41;|3||ddouble.Erf(x)|
+|erfc|&#40;-inf,+inf&#41;|3||ddouble.Erfc(x)|
+|inverse_erf|&#40;-1,1&#41;|3||ddouble.InverseErf(x)|
+|inverse_erfc|&#40;0,2&#41;|3||ddouble.InverseErfc(x)|
 |erfi|&#40;-inf,+inf&#41;|8||ddouble.Erfi(x)|
 |dawson_f|&#40;-inf,+inf&#41;|4||ddouble.DawsonF(x)|
 |bessel_j|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselJ(nu, x)|

@@ -81,13 +81,13 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erf(x));
                 Console.WriteLine(ddouble.Erf(x_inc));
 
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_dec) - 1) < 1e-29);
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x) - 1) < 1e-29);
-                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_inc) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_dec) - 1) < 2e-30);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x) - 1) < 2e-30);
+                Assert.IsTrue(ddouble.Abs(expected / ddouble.Erf(x_inc) - 1) < 2e-30);
 
-                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_dec) - 1) < 1e-29);
-                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x) - 1) < 1e-29);
-                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_inc) - 1) < 1e-29);
+                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_dec) - 1) < 2e-30);
+                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x) - 1) < 2e-30);
+                Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_inc) - 1) < 2e-30);
 
                 HPAssert.NeighborBits(expected, ddouble.Erf(x_dec), 32);
                 HPAssert.NeighborBits(expected, ddouble.Erf(x), 32);
@@ -255,9 +255,9 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 2e-29);
                 HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 2e-29);
 
-                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 1e-28);
-                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 1e-29);
-                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_inc) - 1) < 1e-28);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 2e-29);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 2e-29);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_inc) - 1) < 2e-29);
             }
 
             ddouble erfc_pzero = ddouble.Erfc(0d);
@@ -275,18 +275,18 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void InverseErfTest() {
-            for (ddouble v = -1; v <= 1; v += 0.0625d) {
-                ddouble y = ddouble.Erf(v);
-                ddouble z = ddouble.InverseErf(y);
+            for (ddouble v = -255d / 256; v <= 255d / 256; v += 1d / 256) {
+                ddouble y = ddouble.InverseErf(v);
+                ddouble z = ddouble.Erf(y);
 
-                Assert.AreEqual(v, z);
+                HPAssert.AreEqual(v, z, ddouble.Abs(v) * 1e-29);
             }
 
-            for (ddouble v = Math.ScaleB(1, -12); v > Math.ScaleB(1, -985); v /= 2) {
+            for (ddouble v = Math.ScaleB(1, -8); v > Math.ScaleB(1, -950); v /= 2) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
 
-                Assert.AreEqual(v, z, $"exponent: {ddouble.Frexp(v).exp}");
+                HPAssert.AreEqual(v, z, ddouble.Abs(v) * 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
 
                 ddouble y_dec = ddouble.BitDecrement(y);
                 ddouble z_dec = ddouble.InverseErf(y_dec);
@@ -297,11 +297,11 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreNotEqual(y, y_dec);
                 Assert.AreNotEqual(y, y_inc);
 
-                Assert.AreEqual(z, z_dec, $"exponent: {ddouble.Frexp(v).exp}");
-                Assert.AreEqual(z, z_inc, $"exponent: {ddouble.Frexp(v).exp}");
+                HPAssert.AreEqual(v, z_dec, ddouble.Abs(v) * 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
+                HPAssert.AreEqual(v, z_inc, ddouble.Abs(v) * 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
             }
 
-            for (ddouble y = Math.ScaleB(1, -12); y > Math.ScaleB(1, -20); y /= 2) {
+            for (ddouble y = Math.ScaleB(1, -8); y > Math.ScaleB(1, -20); y /= 2) {
                 ddouble z = ddouble.InverseErf(y);
 
                 ddouble y_dec = ddouble.BitDecrement(y);
@@ -313,19 +313,58 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreNotEqual(y, y_dec);
                 Assert.AreNotEqual(y, y_inc);
 
-                Assert.AreEqual(z, z_dec, $"exponent: {ddouble.Frexp(y).exp}");
-                Assert.AreEqual(z, z_inc, $"exponent: {ddouble.Frexp(y).exp}");
+                HPAssert.AreEqual(z, z_dec, ddouble.Abs(z) * 1e-29, $"exponent: {ddouble.Frexp(y).exp}");
+                HPAssert.AreEqual(z, z_inc, ddouble.Abs(z) * 1e-29, $"exponent: {ddouble.Frexp(y).exp}");
             }
+
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.InverseErf(-1)), "x = -1");
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.InverseErf(+1)), "x = +1");
+            
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(-2)), "x = -2");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(+2)), "x = +2");
+            
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(Math.BitDecrement(-1))), "x = -1-eps");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(Math.BitIncrement(+1))), "x = +1+eps");
+            
+            Assert.IsTrue(ddouble.IsFinite(ddouble.InverseErf(Math.BitIncrement(-1))), "x = -1+eps");
+            Assert.IsTrue(ddouble.IsFinite(ddouble.InverseErf(Math.BitDecrement(+1))), "x = +1-eps");
+            
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(ddouble.PositiveInfinity)), "x = +inf");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(ddouble.NegativeInfinity)), "x = -inf");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(ddouble.NaN)), "x = nan");
         }
 
         [TestMethod]
         public void InverseErfcTest() {
-            for (ddouble v = 0; v <= 10; v += 0.0625d) {
-                ddouble y = ddouble.Erfc(v);
-                ddouble z = ddouble.InverseErfc(y);
+            for (ddouble v = 1; v >= Math.ScaleB(1, -950); v /= 2) {
+                ddouble y = ddouble.InverseErfc(v);
+                ddouble z = ddouble.Erfc(y);
 
-                Assert.AreEqual(v, z);
+                HPAssert.AreEqual(v, z, v * 8e-29);
             }
+
+            for (ddouble v = 1; v < 2; v += 1d / 256) {
+                ddouble y = ddouble.InverseErfc(v);
+                ddouble z = ddouble.Erfc(y);
+
+                HPAssert.AreEqual(v, z, v * 8e-29);
+            }
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.InverseErfc(0)), "x = 0");
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.InverseErfc(2)), "x = 2");
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErfc(-1)), "x = -1");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErfc(3)), "x = 3");
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErfc(Math.BitDecrement(0))), "x = 0-eps");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErfc(Math.BitIncrement(2))), "x = 2+eps");
+
+            Assert.IsTrue(ddouble.IsFinite(ddouble.InverseErfc(Math.BitIncrement(0))), "x = 0+eps");
+            Assert.IsTrue(ddouble.IsFinite(ddouble.InverseErfc(Math.BitDecrement(2))), "x = 2-eps");
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErfc(ddouble.PositiveInfinity)), "x = +inf");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErfc(ddouble.NegativeInfinity)), "x = -inf");
+            Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErfc(ddouble.NaN)), "x = nan");
         }
     }
 }
