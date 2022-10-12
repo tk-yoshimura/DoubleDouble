@@ -350,6 +350,11 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(v, z, v * 8e-29);
             }
 
+            HPAssert.AreEqual(
+                "2.57667901354624266004355913677911282e1",
+                ddouble.InverseErfc("1e-290"), 1e-30
+            );
+
             Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.InverseErfc(0)), "x = 0");
             Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.InverseErfc(2)), "x = 2");
 
