@@ -62,6 +62,8 @@ MaxValue : 2^1024 = 1.79769e308
 |digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
 |polygamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|ddouble.Polygamma(n, x)|
 |inverse_gamma|&#91;1,+inf&#41;|6|gamma^-1(x)|ddouble.InverseGamma(x)|
+|lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
+|upper_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.UpperIncompleteGamma(nu, x)|
 |beta|&#91;0,+inf&#41;|5||ddouble.Beta(a, b)|
 |incomplete_beta|&#91;0,1&#93;|8|Accuracy decreases when the radio of a,b is too large. a,b &leq; 64|ddouble.IncompleteBeta(x, a, b)|
 |erf|&#40;-inf,+inf&#41;|3||ddouble.Erf(x)|
@@ -101,8 +103,6 @@ MaxValue : 2^1024 = 1.79769e308
 |lambert_w|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
 |airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
 |airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
-|lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
-|upper_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.UpperIncompleteGamma(nu, x)|
 |jacobi_sn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, m)|
 |jacobi_cn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, m)|
 |jacobi_dn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, m)|
