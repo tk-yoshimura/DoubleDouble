@@ -166,6 +166,7 @@ namespace DoubleDoubleTest.DDouble {
             ddouble digamma_mzero = ddouble.Digamma(-0d);
             ddouble digamma_mone = ddouble.Digamma(-1d);
             ddouble digamma_pinf = ddouble.Digamma(double.PositiveInfinity);
+            ddouble digamma_pmax = ddouble.Digamma(double.MaxValue);
             ddouble digamma_ninf = ddouble.Digamma(double.NegativeInfinity);
             ddouble digamma_nan = ddouble.Digamma(double.NaN);
 
@@ -173,6 +174,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_mzero), nameof(digamma_mzero));
             Assert.IsTrue(ddouble.IsNaN(digamma_mone), nameof(digamma_mone));
             Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_pinf), nameof(digamma_pinf));
+            Assert.IsTrue(ddouble.IsFinite(digamma_pmax), nameof(digamma_pmax));
             Assert.IsTrue(ddouble.IsNaN(digamma_ninf), nameof(digamma_ninf));
             Assert.IsTrue(ddouble.IsNaN(digamma_nan), nameof(digamma_nan));
         }
