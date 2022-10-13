@@ -173,7 +173,9 @@ namespace DoubleDouble {
                 ddouble q = 1d;
                 ddouble sum_q = 1d;
 
-                while (Abs(sum_q) <= Ldexp(Abs(q), +100)) {
+                int iters = 0;
+
+                while (Math.Abs(q.hi) > Math.Abs(sum_q.hi) * 8e-31 && iters < 256) {
                     ddouble ab = a * b, p_squa = p * p;
                     ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
 
@@ -185,6 +187,7 @@ namespace DoubleDouble {
                     );
 
                     sum_q += q;
+                    iters++;
                 }
 
                 ddouble y = (2d + sum_q * n / (1d - n)) * EllipticK(m) / 2;
