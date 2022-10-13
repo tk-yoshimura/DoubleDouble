@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble LambertW(ddouble x) {
             if (IsZero(x)) {
@@ -29,7 +31,7 @@
 
             ddouble prev_dy = NaN, dy = NaN;
 
-            while (!(Abs(prev_dy) < Abs(dy))) {
+            for (int i = 0; i < 8; i++) {
                 prev_dy = dy;
 
                 ddouble exp_y = Exp(y);
