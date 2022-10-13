@@ -2036,7 +2036,7 @@ namespace DoubleDoubleTest.DDouble {
                 for ((int i, double x) = (0, -4); i < expecteds.Length; i++, x += 1d / 16) {
                     ddouble expected = expecteds[i];
 
-                    ddouble y = ddouble.EllipticTheta1(x, q);
+                    ddouble y = ddouble.EllipticTheta(1, x, q);
 
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
@@ -2582,7 +2582,7 @@ namespace DoubleDoubleTest.DDouble {
                 for ((int i, double x) = (0, -4); i < expecteds.Length; i++, x += 1d / 16) {
                     ddouble expected = expecteds[i];
 
-                    ddouble y = ddouble.EllipticTheta2(x, q);
+                    ddouble y = ddouble.EllipticTheta(2, x, q);
 
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
@@ -3128,7 +3128,7 @@ namespace DoubleDoubleTest.DDouble {
                 for ((int i, double x) = (0, -4); i < expecteds.Length; i++, x += 1d / 16) {
                     ddouble expected = expecteds[i];
 
-                    ddouble y = ddouble.EllipticTheta3(x, q);
+                    ddouble y = ddouble.EllipticTheta(3, x, q);
 
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
@@ -3674,7 +3674,7 @@ namespace DoubleDoubleTest.DDouble {
                 for ((int i, double x) = (0, -4); i < expecteds.Length; i++, x += 1d / 16) {
                     ddouble expected = expecteds[i];
 
-                    ddouble y = ddouble.EllipticTheta4(x, q);
+                    ddouble y = ddouble.EllipticTheta(4, x, q);
 
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);

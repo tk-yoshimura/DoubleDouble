@@ -3,7 +3,22 @@ using System.Collections.Generic;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble EllipticTheta1(ddouble x, ddouble q) {
+        public static ddouble EllipticTheta(int a, ddouble x, ddouble q) {
+            switch (a) {
+                case 1:
+                    return EllipticTheta1(x, q);
+                case 2:
+                    return EllipticTheta2(x, q);
+                case 3:
+                    return EllipticTheta3(x, q);
+                case 4:
+                    return EllipticTheta4(x, q);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(a));
+            }
+        }
+        
+        private static ddouble EllipticTheta1(ddouble x, ddouble q) {
             if (q < 0d || !(q <= 1d)) {
                 return NaN;
             }
@@ -34,7 +49,7 @@ namespace DoubleDouble {
             return y;
         }
 
-        public static ddouble EllipticTheta2(ddouble x, ddouble q) {
+        private static ddouble EllipticTheta2(ddouble x, ddouble q) {
             if (q < 0d || !(q <= 1d)) {
                 return NaN;
             }
@@ -65,7 +80,7 @@ namespace DoubleDouble {
             return y;
         }
 
-        public static ddouble EllipticTheta3(ddouble x, ddouble q) {
+        private static ddouble EllipticTheta3(ddouble x, ddouble q) {
             if (q < 0d || !(q <= 1d)) {
                 return NaN;
             }
@@ -95,7 +110,7 @@ namespace DoubleDouble {
             return y;
         }
 
-        public static ddouble EllipticTheta4(ddouble x, ddouble q) {
+        private static ddouble EllipticTheta4(ddouble x, ddouble q) {
             if (q < 0d || !(q <= 1d)) {
                 return NaN;
             }
