@@ -319,16 +319,16 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.InverseErf(-1)), "x = -1");
             Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.InverseErf(+1)), "x = +1");
-            
+
             Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(-2)), "x = -2");
             Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(+2)), "x = +2");
-            
+
             Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(Math.BitDecrement(-1))), "x = -1-eps");
             Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(Math.BitIncrement(+1))), "x = +1+eps");
-            
+
             Assert.IsTrue(ddouble.IsFinite(ddouble.InverseErf(Math.BitIncrement(-1))), "x = -1+eps");
             Assert.IsTrue(ddouble.IsFinite(ddouble.InverseErf(Math.BitDecrement(+1))), "x = +1-eps");
-            
+
             Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(ddouble.PositiveInfinity)), "x = +inf");
             Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(ddouble.NegativeInfinity)), "x = -inf");
             Assert.IsTrue(ddouble.IsNaN(ddouble.InverseErf(ddouble.NaN)), "x = nan");

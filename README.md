@@ -61,6 +61,7 @@ MaxValue : 2^1024 = 1.79769e308
 |loggamma|&#40;0,+inf&#41;|5||ddouble.LogGamma(x)|
 |digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
 |polygamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|ddouble.Polygamma(n, x)|
+|inverse_gamma|&#91;1,+inf&#41;|6|gamma^-1(x)|ddouble.InverseGamma(x)|
 |beta|&#91;0,+inf&#41;|5||ddouble.Beta(a, b)|
 |incomplete_beta|&#91;0,1&#93;|8|Accuracy decreases when the radio of a,b is too large. a,b &leq; 64|ddouble.IncompleteBeta(x, a, b)|
 |erf|&#40;-inf,+inf&#41;|3||ddouble.Erf(x)|
