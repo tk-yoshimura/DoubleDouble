@@ -14,18 +14,31 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
+            ddouble lnx = Log(x);
             ddouble l = Log((x + c) * s);
             ddouble y = l / (LambertW(l * RcpE)) + Point5;
+            
+            for (int i = 0; i < 8; i++) {
+                ddouble lng = LogGamma(y), psi = Digamma(y);
+                ddouble delta = Expm1(lnx - lng) / psi;
+
+                y += delta;
+
+                if (Math.Abs(delta.hi) < y.hi * 5e-32) {
+                    break;
+                }
+            }
 
             for (int i = 0; i < 8; i++) {
-                ddouble g = Gamma(y), psi = Digamma(y);
-                ddouble delta = (1.0 - x / g) / psi;
-
-                if (!ddouble.IsFinite(delta)) {
-                    return NaN;
+                ddouble g = Gamma(y);
+                if (x == g || !ddouble.IsFinite(g)) {
+                    break;
                 }
 
-                y -= delta;
+                ddouble psi = Digamma(y);
+                ddouble delta = (x / g - 1.0) / psi;
+
+                y += delta;
 
                 if (Math.Abs(delta.hi) < y.hi * 5e-32) {
                     break;

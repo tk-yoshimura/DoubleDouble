@@ -208,7 +208,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble x = 2; x <= 160; x += 1) {
+            for (ddouble x = 2; x <= 171; x += 0.5) {
                 ddouble y = ddouble.Gamma(x);
                 ddouble z = ddouble.InverseGamma(y);
 
@@ -221,11 +221,13 @@ namespace DoubleDoubleTest.DDouble {
 
             ddouble digamma_p0p999 = ddouble.InverseGamma(0.999);
             ddouble digamma_pinf = ddouble.InverseGamma(double.PositiveInfinity);
+            ddouble digamma_pmax = ddouble.InverseGamma(double.MaxValue);
             ddouble digamma_ninf = ddouble.InverseGamma(double.NegativeInfinity);
             ddouble digamma_nan = ddouble.InverseGamma(double.NaN);
 
             Assert.IsTrue(ddouble.IsNaN(digamma_p0p999), nameof(digamma_p0p999));
             Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_pinf), nameof(digamma_pinf));
+            Assert.IsTrue(ddouble.IsFinite(digamma_pmax), nameof(digamma_pmax));
             Assert.IsTrue(ddouble.IsNaN(digamma_ninf), nameof(digamma_ninf));
             Assert.IsTrue(ddouble.IsNaN(digamma_nan), nameof(digamma_nan));
         }
