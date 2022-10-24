@@ -15,12 +15,12 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble g = ddouble.Beta(a + 1, b);
                     ddouble h = ddouble.Beta(a, b + 1);
 
-                    HPAssert.AreEqual(a * h, b * g, f * 1e-27);
-                    HPAssert.AreEqual(f, g + h, f * 1e-27);
+                    HPAssert.AreEqual(a * h, b * g, f * 4e-28);
+                    HPAssert.AreEqual(f, g + h, f * 4e-28);
                 }
 
-                HPAssert.AreEqual(1d / b, ddouble.Beta(b, 1), 1e-27 / b);
-                HPAssert.AreEqual(1d / b, ddouble.Beta(1, b), 1e-27 / b);
+                HPAssert.AreEqual(1d / b, ddouble.Beta(b, 1), 4e-28 / b);
+                HPAssert.AreEqual(1d / b, ddouble.Beta(1, b), 4e-28 / b);
             }
         }
 
@@ -39,8 +39,8 @@ namespace DoubleDoubleTest.DDouble {
 
                         ddouble p = ddouble.Pow(x, a) * ddouble.Pow(1d - x, b);
 
-                        HPAssert.AreEqual(g, (a * f - p) / (a + b), g * 1e-27, $"beta({x},{a},{b})");
-                        HPAssert.AreEqual(h, (b * f + p) / (a + b), h * 1e-27, $"beta({x},{a},{b})");
+                        HPAssert.AreEqual(g, (a * f - p) / (a + b), g * 4e-28, $"beta({x},{a},{b})");
+                        HPAssert.AreEqual(h, (b * f + p) / (a + b), h * 4e-28, $"beta({x},{a},{b})");
                     }
                 }
             }
