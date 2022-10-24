@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DoubleDouble {
@@ -193,18 +194,25 @@ namespace DoubleDouble {
                 }
 
                 public static ddouble[] GenerateExpNTable() {
-                    ddouble[] es = new ddouble[10];
-                    es[0] = E;
-                    for (int i = 1; i < es.Length; i++) {
-                        es[i] = es[i - 1] * es[i - 1];
-                    }
+                    ReadOnlyCollection<ddouble> es = new(new ddouble[10]{
+                        E,
+                        (+1, 2, 0xEC7325C6A6ED6E61uL, 0x9D1DD1035B455DD4uL),
+                        (+1, 5, 0xDA64817139D2C33CuL, 0x6B69DFEDC9EDCB68uL),
+                        (+1, 11, 0xBA4F53EA38636F85uL, 0xF007042540AE8EF3uL),
+                        (+1, 23, 0x87975E8540010249uL, 0x11F8B84415AF72F7uL),
+                        (+1, 46, 0x8FA1FE625B3163ECuL, 0x23C4200C210BA03AuL),
+                        (+1, 92, 0xA12CC167ACBE6902uL, 0xE71EADA76D818BABuL),
+                        (+1, 184, 0xCAF2A62EEA10BBFAuL, 0x9FA6A90CEF88E51DuL),
+                        (+1, 369, 0xA0E3D440A5F5D071uL, 0x919807BBBED32C2AuL),
+                        (+1, 738, 0xCA3B2825D4297360uL, 0x4E42B3E00E2D3324uL)
+                    });
 
                     ddouble[] table = new ddouble[711];
                     for (int i = 0; i < table.Length; i++) {
                         int n = i;
                         ddouble y = 1d;
 
-                        for (int j = 0; j < es.Length && n > 0; j++, n >>= 1) {
+                        for (int j = 0; j < es.Count && n > 0; j++, n >>= 1) {
                             if ((n & 1) == 1) {
                                 y *= es[j];
                             }

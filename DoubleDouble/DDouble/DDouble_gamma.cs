@@ -42,14 +42,28 @@ namespace DoubleDouble {
 
                 return y;
             }
-            else {
+
+            if (x <= Consts.Gamma.ExtremeLarge) {
                 ddouble r = Sqrt(2 * PI / x);
-                ddouble p = Pow(x * RcpE, x);
                 ddouble s = Exp(SterlingTerm(x));
+
+                ddouble p = (x < 128.0)
+                    ? (Pow(x, x) / Exp(x))
+                    : Pow(Pow(x, 128) / Exp(128), Ldexp(x, -7));
 
                 ddouble y = r * p * s;
 
                 return y;
+            }
+            else {
+                ddouble u = x - 1.0;
+
+                if (u <= Consts.Gamma.ExtremeLarge) {
+                    return u * Gamma(u);
+                }
+                else {
+                    return PositiveInfinity;
+                }
             }
         }
 
@@ -220,6 +234,7 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class Gamma {
                 public const double Threshold = 36.25;
+                public const double ExtremeLarge = 170.625;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
 

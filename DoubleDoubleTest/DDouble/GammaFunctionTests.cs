@@ -2,7 +2,6 @@ using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Numerics;
-using static DoubleDouble.ddouble.Consts;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -18,11 +17,11 @@ namespace DoubleDoubleTest.DDouble {
 
             ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
 
-            for (BigInteger i = 1, y = 1, z = 1; i <= 40; i++, y *= 2, z *= 2 * i - 3) {
+            for (BigInteger i = 1, y = 1, z = 1; i <= 128; i++, y *= 2, z *= 2 * i - 3) {
                 ddouble x = ddouble.Gamma((2 * (int)i - 1) * 0.5d);
                 ddouble v = sqrtpi * z / y;
 
-                HPAssert.NeighborBits(v, x, 17);
+                HPAssert.NeighborBits(v, x, 16);
             }
 
             HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 16);
@@ -31,6 +30,8 @@ namespace DoubleDoubleTest.DDouble {
             HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 16);
             HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 64);
             HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 64);
+
+            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 64);
 
             ddouble gamma_pzero = ddouble.Gamma(0d);
             ddouble gamma_mzero = ddouble.Gamma(-0d);
