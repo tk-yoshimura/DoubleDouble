@@ -375,11 +375,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-28);
+                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-28);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-28);
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
                 }
             }
 
@@ -393,11 +393,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-28);
+                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-28);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-28);
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
                 }
             }
 
@@ -411,7 +411,7 @@ namespace DoubleDoubleTest.DDouble {
 
             HPAssert.AreEqual("7.0045838920868939868016508375916341696918104269217e2",
                               ddouble.LambertW(Math.ScaleB(1, 1020)),
-                              1e-26);
+                              1e-28d);
 
             Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(ddouble.BitDecrement(-ddouble.RcpE))));
             Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(ddouble.NaN)));
