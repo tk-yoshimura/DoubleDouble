@@ -1,7 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace DoubleDoubleTest.DDouble {
@@ -124,7 +123,7 @@ namespace DoubleDoubleTest.DDouble {
                     if (x == 0) {
                         continue;
                     }
-                    
+
                     ddouble x_dec = ddouble.BitDecrement(x);
                     ddouble x_inc = ddouble.BitIncrement(x);
 

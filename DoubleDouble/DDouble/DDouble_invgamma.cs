@@ -17,7 +17,7 @@ namespace DoubleDouble {
             ddouble lnx = Log(x);
             ddouble l = Log((x + c) * s);
             ddouble y = l / (LambertW(l * RcpE)) + Point5;
-            
+
             for (int i = 0; i < 8; i++) {
                 ddouble lng = LogGamma(y), psi = Digamma(y);
                 ddouble delta = (lnx - lng) / psi;

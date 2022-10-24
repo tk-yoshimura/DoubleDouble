@@ -17,7 +17,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(a));
             }
         }
-        
+
         private static ddouble EllipticTheta1(ddouble x, ddouble q) {
             if (q < 0d || !(q <= 1d)) {
                 return NaN;
