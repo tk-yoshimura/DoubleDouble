@@ -21,17 +21,17 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.Gamma((2 * (int)i - 1) * 0.5d);
                 ddouble v = sqrtpi * z / y;
 
-                HPAssert.NeighborBits(v, x, 16);
+                HPAssert.NeighborBits(v, x, 8);
             }
 
-            HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 16);
-            HPAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 16);
+            HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 8);
+            HPAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 8);
 
-            HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 16);
-            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 64);
-            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 64);
+            HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 8);
+            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 8);
+            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 8);
 
-            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 64);
+            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 16);
 
             ddouble gamma_pzero = ddouble.Gamma(0d);
             ddouble gamma_mzero = ddouble.Gamma(-0d);
@@ -68,8 +68,8 @@ namespace DoubleDoubleTest.DDouble {
 
             HPAssert.NeighborBits("1.288022524698077457370610440219717295925", ddouble.LogGamma(0.25), 32);
             HPAssert.NeighborBits("2.032809514312953714814329718624296997597e-1", ddouble.LogGamma(0.75), 32);
-            HPAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 128);
-            HPAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 128);
+            HPAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 32);
+            HPAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 32);
 
             foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
                 (1 - Math.ScaleB(1, -3), "8.5858707225334323502365583769487702270e-2"),
@@ -135,8 +135,8 @@ namespace DoubleDoubleTest.DDouble {
             HPAssert.NeighborBits("-2.2745353337626540808953014609668357736724e-1", ddouble.Digamma(1.25), 32);
             HPAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(1.5), 32);
             HPAssert.NeighborBits("2.4747245354686116370644657051615264016326e-1", ddouble.Digamma(1.75), 32);
-            HPAssert.NeighborBits("4.6001618527380874001986055855758507268668e0", ddouble.Digamma(100), 128);
-            HPAssert.NeighborBits("5.2958152832199116154508743070484592057952e0", ddouble.Digamma(200), 128);
+            HPAssert.NeighborBits("4.6001618527380874001986055855758507268668e0", ddouble.Digamma(100), 32);
+            HPAssert.NeighborBits("5.2958152832199116154508743070484592057952e0", ddouble.Digamma(200), 32);
 
             ddouble zeropoint = "1.461632144968362341262659542325721328468196204006446351295988408598";
 
