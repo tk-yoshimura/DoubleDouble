@@ -969,14 +969,14 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y3);
                     Console.WriteLine(y4);
 
-                    HPAssert.AreEqual(expected, y, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(expected, y_negh, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(-expected, y_nega, expected * 1e-28, $"{h},{a}");
+                    HPAssert.AreEqual(expected, y, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(expected, y_negh, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(-expected, y_nega, expected * 8e-29d, $"{h},{a}");
 
-                    HPAssert.AreEqual(y, y1, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(y, y2, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(y, y3, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(y, y4, expected * 1e-28, $"{h},{a}");
+                    HPAssert.AreEqual(y, y1, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(y, y2, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(y, y3, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(y, y4, expected * 8e-29d, $"{h},{a}");
                 }
             }
         }
@@ -1480,14 +1480,14 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y3);
                     Console.WriteLine(y4);
 
-                    HPAssert.AreEqual(expected, y, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(expected, y_negh, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(-expected, y_nega, expected * 1e-28, $"{h},{a}");
+                    HPAssert.AreEqual(expected, y, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(expected, y_negh, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(-expected, y_nega, expected * 8e-29d, $"{h},{a}");
 
-                    HPAssert.AreEqual(y, y1, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(y, y2, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(y, y3, expected * 1e-28, $"{h},{a}");
-                    HPAssert.AreEqual(y, y4, expected * 1e-28, $"{h},{a}");
+                    HPAssert.AreEqual(y, y1, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(y, y2, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(y, y3, expected * 8e-29d, $"{h},{a}");
+                    HPAssert.AreEqual(y, y4, expected * 8e-29d, $"{h},{a}");
                 }
             }
         }
