@@ -681,14 +681,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[n - 2];
 
                     ddouble actual = ddouble.Polylog(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29d, $"x = {x},n = {n}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"x = {x},n = {n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.Polylog(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-29d, $"{x}-eps,{n}");
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.Polylog(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-29d, $"{x}+eps,{n}");
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d, $"{x}+eps,{n}");
                     }
                 }
             }
