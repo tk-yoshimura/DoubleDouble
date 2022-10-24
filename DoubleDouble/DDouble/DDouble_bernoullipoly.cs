@@ -36,18 +36,18 @@ namespace DoubleDouble {
             bool invert_flag = false;
 
             if (centered) {
-                if (x < -0.25d || x > 0.25d) {
+                if (x < -0.375d || x > 0.375d) {
                     centered = false;
                     x += 0.5d;
                 }
             }
 
             if (!centered) {
-                if (x > 0.25d && x < 0.75d) {
+                if (x > 0.125d && x < 0.875d) {
                     centered = true;
                     x -= 0.5d;
                 }
-                else if (x >= 0.75d && (n & 1) == 1) {
+                else if (x >= 0.875d && (n & 1) == 1) {
                     x = 1d - x;
                     invert_flag = true;
                 }

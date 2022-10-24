@@ -89,7 +89,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = BernoulliPolynomials[n](x);
                     ddouble actual = ddouble.Bernoulli(n, x, centered: false);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-27, $"normal {n},{x}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30d, $"normal {n},{x}");
                 }
             }
 
@@ -98,11 +98,11 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = BernoulliCenteredPolynomials[n](x);
                     ddouble actual = ddouble.Bernoulli(n, x, centered: true);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-28, $"centered {n},{x}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30d, $"centered {n},{x}");
                 }
             }
 
-            for (int n = 0; n <= 8; n++) {
+            for (int n = 0; n <= 64; n++) {
                 for (ddouble x = 0.125; x <= 0.875; x += 0.125) {
                     if (x == 0.5) {
                         continue;
@@ -115,8 +115,8 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble y_dec = ddouble.Bernoulli(n, x_dec, centered: false);
                     ddouble y_inc = ddouble.Bernoulli(n, x_inc, centered: false);
 
-                    HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 2e-28, $"normal border {n},{x}");
-                    HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 2e-28, $"normal border {n},{x}");
+                    HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
+                    HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
                 }
 
                 for (ddouble x = -0.375; x <= 0.375; x += 0.125) {
@@ -131,8 +131,8 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble y_dec = ddouble.Bernoulli(n, x_dec, centered: true);
                     ddouble y_inc = ddouble.Bernoulli(n, x_inc, centered: true);
 
-                    HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 2e-28, $"normal border {n},{x}");
-                    HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 2e-28, $"normal border {n},{x}");
+                    HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
+                    HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
                 }
             }
         }
