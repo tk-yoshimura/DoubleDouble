@@ -577,14 +577,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[n];
 
                     ddouble actual = ddouble.Polygamma(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29d, $"{x},{n}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.Polygamma(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-29d, $"{x}-eps,{n}");
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-30d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.Polygamma(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-29d, $"{x}+eps,{n}");
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 4e-30d, $"{x}+eps,{n}");
                     }
                 }
             }
