@@ -20,7 +20,7 @@ namespace DoubleDouble {
             
             for (int i = 0; i < 8; i++) {
                 ddouble lng = LogGamma(y), psi = Digamma(y);
-                ddouble delta = Expm1(lnx - lng) / psi;
+                ddouble delta = (lnx - lng) / psi;
 
                 y += delta;
 

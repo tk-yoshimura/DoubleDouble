@@ -105,7 +105,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                ddouble y = Exp(-x * x) * (sc / sd);
+                ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
             }
@@ -128,7 +128,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                ddouble y = Exp(-x * x) * (sc / sd);
+                ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
             }
@@ -151,7 +151,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                ddouble y = Exp(-x * x) * (sc / sd);
+                ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
             }
@@ -174,7 +174,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                ddouble y = Exp(-x * x) * (sc / sd);
+                ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
             }
@@ -197,7 +197,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                ddouble y = Exp(-x * x) * (sc / sd);
+                ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
             }
@@ -220,7 +220,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                ddouble y = Exp(-x * x) * (sc / sd);
+                ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
             }
