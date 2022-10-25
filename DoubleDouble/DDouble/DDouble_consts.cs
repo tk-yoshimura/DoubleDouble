@@ -16,5 +16,8 @@
         public static readonly ddouble Lb10 = (+1, +1, 0xD49A784BCD1B8AFEuL, 0x492BF6FF4DAFDB4CuL);
         public static readonly ddouble Sqrt2 = (+1, 0, 0xB504F333F9DE6484uL, 0x597D89B3754ABE9FuL);
         public static readonly ddouble Point5 = (+1, -1, 0x8000000000000000uL, 0x0000000000000000uL);
+        public static readonly ddouble ErdosBorwein = (+1, 0, 0xCDA82FCF21F9121BuL, 0xF9B9629409231DE0uL);
+        public static readonly ddouble FeigenbaumDelta = (+1, 2, 0x956A197E30E4BA3AuL, 0x3809DA8B5C4C87EDuL);
+        public static readonly ddouble LemniscatePI = (+1, 1, 0xA7CFCA7CFA858373uL, 0xCC3BB5D6046CF0BDuL);
     }
 }
