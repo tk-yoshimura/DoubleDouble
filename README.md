@@ -152,6 +152,10 @@ MaxValue : 2^1024 = 1.79769e308
 |&zeta;(5)|1.036927755143369926331...||ddouble.Zeta5|
 |&zeta;(7)|1.008349277381922826839...||ddouble.Zeta7|
 |&zeta;(9)|1.002008392826082214418...||ddouble.Zeta9|
+|Positive root of digamma|1.461632144968362341263...||ddouble.DigammaZero|
+|Erdös Borwein constant|1.606695152415291763783...||ddouble.ErdosBorwein|
+|Feigenbaum constant|4.669201609102990671853...||ddouble.FeigenbaumDelta|
+|Lemniscate constant|2.622057554292119810465...||ddouble.LemniscatePI|
 
 ## Sequence
 
@@ -161,6 +165,7 @@ MaxValue : 2^1024 = 1.79769e308
 |Factorial|n!|ddouble.Factorial|
 |Bernoulli|B(2k)|ddouble.BernoulliSequence|
 |HarmonicNumber|H_n|ddouble.HarmonicNumber|
+|StieltjesGamma|&gamma;_n|ddouble.StieltjesGamma|
 
 ## Casts
 
