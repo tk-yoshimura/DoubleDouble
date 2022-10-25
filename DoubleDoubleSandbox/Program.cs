@@ -4,7 +4,7 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble x = "1e+308";
+            ddouble x = ddouble.MaxValue;
             ddouble y = ddouble.InverseGamma(x);
             ddouble z = ddouble.Gamma(y);
 

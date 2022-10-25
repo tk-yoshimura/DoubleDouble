@@ -35,10 +35,10 @@ MaxValue : 2^1024 = 1.79769e308
 |log10|&#40;0,+inf&#41;|3||ddouble.Log10(x)|
 |log1p|&#40;-1,+inf&#41;|3|log(1+x)|ddouble.Log1p(x)|
 |pow2|&#40;-inf,+inf&#41;|1||ddouble.Pow2(x)|
-|pow|&#40;-inf,+inf&#41;|4||ddouble.Pow(x, y)|
-|pow10|&#40;-inf,+inf&#41;|4||ddouble.Pow10(x)|
-|exp|&#40;-inf,+inf&#41;|4||ddouble.Exp(x)|
-|expm1|&#40;-inf,+inf&#41;|4|exp(x)-1|ddouble.Expm1(x)|
+|pow|&#40;-inf,+inf&#41;|2||ddouble.Pow(x, y)|
+|pow10|&#40;-inf,+inf&#41;|2||ddouble.Pow10(x)|
+|exp|&#40;-inf,+inf&#41;|2||ddouble.Exp(x)|
+|expm1|&#40;-inf,+inf&#41;|2|exp(x)-1|ddouble.Expm1(x)|
 |sin|&#40;-inf,+inf&#41;|2||ddouble.Sin(x)|
 |cos|&#40;-inf,+inf&#41;|2||ddouble.Cos(x)|
 |tan|&#40;-inf,+inf&#41;|3||ddouble.Tan(x)|
@@ -57,29 +57,29 @@ MaxValue : 2^1024 = 1.79769e308
 |artanh|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|ddouble.Artanh(x)|
 |sinc|&#40;-inf,+inf&#41;|2||ddouble.Sinc(x, normalized)|
 |sinhc|&#40;-inf,+inf&#41;|3||ddouble.Sinhc(x)|
-|gamma|&#40;-inf,+inf&#41;|4|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
-|loggamma|&#40;0,+inf&#41;|5||ddouble.LogGamma(x)|
-|digamma|&#40;-inf,+inf&#41;|5|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
-|polygamma|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|ddouble.Polygamma(n, x)|
-|inverse_gamma|&#91;1,+inf&#41;|6|gamma^-1(x)|ddouble.InverseGamma(x)|
-|lower_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
-|upper_incomplete_gamma|&#91;0,+inf&#41;|10|nu &leq; 128|ddouble.UpperIncompleteGamma(nu, x)|
-|beta|&#91;0,+inf&#41;|5||ddouble.Beta(a, b)|
-|incomplete_beta|&#91;0,1&#93;|8|Accuracy decreases when the radio of a,b is too large. a,b &leq; 64|ddouble.IncompleteBeta(x, a, b)|
+|gamma|&#40;-inf,+inf&#41;|2|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
+|loggamma|&#40;0,+inf&#41;|4||ddouble.LogGamma(x)|
+|digamma|&#40;-inf,+inf&#41;|4|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
+|polygamma|&#40;-inf,+inf&#41;|4|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|ddouble.Polygamma(n, x)|
+|inverse_gamma|&#91;1,+inf&#41;|4|gamma^-1(x)|ddouble.InverseGamma(x)|
+|lower_incomplete_gamma|&#91;0,+inf&#41;|4|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
+|upper_incomplete_gamma|&#91;0,+inf&#41;|4|nu &leq; 128|ddouble.UpperIncompleteGamma(nu, x)|
+|beta|&#91;0,+inf&#41;|4||ddouble.Beta(a, b)|
+|incomplete_beta|&#91;0,1&#93;|4|Accuracy decreases when the radio of a,b is too large. a,b &leq; 64|ddouble.IncompleteBeta(x, a, b)|
 |erf|&#40;-inf,+inf&#41;|3||ddouble.Erf(x)|
 |erfc|&#40;-inf,+inf&#41;|3||ddouble.Erfc(x)|
 |inverse_erf|&#40;-1,1&#41;|3||ddouble.InverseErf(x)|
 |inverse_erfc|&#40;0,2&#41;|3||ddouble.InverseErfc(x)|
-|erfi|&#40;-inf,+inf&#41;|8||ddouble.Erfi(x)|
+|erfi|&#40;-inf,+inf&#41;|4||ddouble.Erfi(x)|
 |dawson_f|&#40;-inf,+inf&#41;|4||ddouble.DawsonF(x)|
-|bessel_j|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselJ(nu, x)|
-|bessel_y|&#91;0,+inf&#41;|16|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
-|bessel_i|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
-|bessel_k|&#91;0,+inf&#41;|16|abs(nu) &leq; 8 |ddouble.BesselK(nu, x)|
-|struve_h|&#40;-inf,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveH(n, x)|
-|struve_k|&#91;0,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveK(n, x)|
-|struve_l|&#40;-inf,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveL(n, x)|
-|struve_m|&#91;0,+inf&#41;|16|0 &leq; n &leq; 8|ddouble.StruveM(n, x)|
+|bessel_j|&#91;0,+inf&#41;|4|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselJ(nu, x)|
+|bessel_y|&#91;0,+inf&#41;|4|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
+|bessel_i|&#91;0,+inf&#41;|4|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
+|bessel_k|&#91;0,+inf&#41;|4|abs(nu) &leq; 8 |ddouble.BesselK(nu, x)|
+|struve_h|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveH(n, x)|
+|struve_k|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveK(n, x)|
+|struve_l|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveL(n, x)|
+|struve_m|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveM(n, x)|
 |elliptic_k|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticK(m)|
 |elliptic_e|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticE(m)|
 |elliptic_pi|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticPi(n, m)|
@@ -88,18 +88,18 @@ MaxValue : 2^1024 = 1.79769e308
 |incomplete_elliptic_pi|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2<br/>Argument order follows wolfram.|ddouble.EllipticPi(n, x, m)|
 |elliptic_theta|&#40;-inf,+inf&#41;|4|a=1...4, q &leq; 0.995|ddouble.EllipticTheta(a, x, q)|
 |agm|&#91;0,+inf&#41;|2||ddouble.Agm(a, b)|
-|fresnel_c|&#40;-inf,+inf&#41;|8||ddouble.FresnelC(x)|
-|fresnel_s|&#40;-inf,+inf&#41;|8||ddouble.FresnelS(x)|
-|ei|&#40;-inf,+inf&#41;|8|exponential integral|ddouble.Ei(x)|
-|ein|&#40;-inf,+inf&#41;|8|complementary exponential integral|ddouble.Ein(x)|
-|li|&#91;0,+inf&#41;|10|logarithmic integral li(x)=ei(log(x))|ddouble.Li(x)|
-|si|&#40;-inf,+inf&#41;|8|sin integral, limit_zero=true: si(x)|ddouble.Si(x, limit_zero)|
-|ci|&#91;0,+inf&#41;|8|cos integral|ddouble.Ci(x)|
-|shi|&#40;-inf,+inf&#41;|8|hyperbolic sin integral|ddouble.Shi(x)|
-|chi|&#91;0,+inf&#41;|8|hyperbolic cos integral|ddouble.Chi(x)|
-|lambert_w|&#91;-1/e,+inf&#41;|8||ddouble.LambertW(x)|
-|airy_ai|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
-|airy_bi|&#40;-inf,+inf&#41;|10|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
+|fresnel_c|&#40;-inf,+inf&#41;|4||ddouble.FresnelC(x)|
+|fresnel_s|&#40;-inf,+inf&#41;|4||ddouble.FresnelS(x)|
+|ei|&#40;-inf,+inf&#41;|4|exponential integral|ddouble.Ei(x)|
+|ein|&#40;-inf,+inf&#41;|4|complementary exponential integral|ddouble.Ein(x)|
+|li|&#91;0,+inf&#41;|5|logarithmic integral li(x)=ei(log(x))|ddouble.Li(x)|
+|si|&#40;-inf,+inf&#41;|4|sin integral, limit_zero=true: si(x)|ddouble.Si(x, limit_zero)|
+|ci|&#91;0,+inf&#41;|4|cos integral|ddouble.Ci(x)|
+|shi|&#40;-inf,+inf&#41;|5|hyperbolic sin integral|ddouble.Shi(x)|
+|chi|&#91;0,+inf&#41;|5|hyperbolic cos integral|ddouble.Chi(x)|
+|lambert_w|&#91;-1/e,+inf&#41;|4||ddouble.LambertW(x)|
+|airy_ai|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
+|airy_bi|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
 |jacobi_sn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, m)|
 |jacobi_cn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, m)|
 |jacobi_dn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, m)|
@@ -116,7 +116,7 @@ MaxValue : 2^1024 = 1.79769e308
 |hurwitz_zeta|&#40;1,+inf&#41;|3|a &geq; 0|ddouble.HurwitzZeta(x, a)|
 |dirichlet_eta|&#40;-inf,+inf&#41;|3||ddouble.DirichletEta(x)|
 |polylog|&#40;-inf,1&#93;|3|n &in; &#91;-4,8&#93;|ddouble.Polylog(n, x)|
-|owen's_t|&#40;-inf,+inf&#41;|10||ddouble.OwenT(h, a)|
+|owen's_t|&#40;-inf,+inf&#41;|5||ddouble.OwenT(h, a)|
 |bump|&#40;-inf,+inf&#41;|4|C-infinity smoothness basis function, bump(x)=1/(exp(1/x-1/(1-x))+1)|ddouble.Bump(x)|
 |hermite_h|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.HermiteH(n, x)|
 |laguerre_l|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.LaguerreL(n, x)|
