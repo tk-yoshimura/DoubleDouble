@@ -146,7 +146,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -292,7 +292,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -439,7 +439,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -586,7 +586,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -733,7 +733,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -880,7 +880,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -1172,7 +1172,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(n);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -1464,7 +1464,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(n);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-29);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
             }
         }
 
@@ -2041,7 +2041,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-29);
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-30d);
                 }
             }
         }
@@ -2587,7 +2587,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-29);
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-30d);
                 }
             }
         }
@@ -3133,7 +3133,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-29);
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-30d);
                 }
             }
         }
@@ -3679,7 +3679,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-29);
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-30d);
                 }
             }
         }
