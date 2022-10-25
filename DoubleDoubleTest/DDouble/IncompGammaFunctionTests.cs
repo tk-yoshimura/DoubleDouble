@@ -1605,11 +1605,11 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nu},{x}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-28);
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-30d);
 
                     if (nu != 0 && nu != 1) {
-                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-28);
-                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-28);
+                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-30d);
+                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-30d);
                     }
                 }
             }
@@ -3138,11 +3138,11 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nu},{x}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-28);
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
 
                     if (nu != 0 && nu != 1) {
-                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-28);
-                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-28);
+                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
+                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
                     }
                 }
             }
