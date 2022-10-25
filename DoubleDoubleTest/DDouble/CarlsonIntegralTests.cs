@@ -22,7 +22,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -42,7 +42,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -62,7 +62,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -106,7 +106,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
+                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y}");
                 }
             }
 
@@ -125,7 +125,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
+                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y}");
                 }
             }
 
@@ -145,7 +145,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
+                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y}");
                 }
             }
 
@@ -165,7 +165,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
+                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y}");
                 }
             }
 
@@ -185,7 +185,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y}");
+                    HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y}");
                 }
             }
 
@@ -229,7 +229,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -254,7 +254,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -276,7 +276,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -298,7 +298,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -356,7 +356,7 @@ namespace DoubleDoubleTest.DDouble {
                                 );
                             }
                             else {
-                                HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z},{w}");
+                                HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z},{w}");
                             }
                         }
                     }
@@ -387,7 +387,7 @@ namespace DoubleDoubleTest.DDouble {
                             Console.WriteLine(f);
                             Console.WriteLine(e);
 
-                            HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z},{w}");
+                            HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z},{w}");
                         }
                     }
                 }
@@ -449,7 +449,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30, $"{x},{y},{z}");
+                        HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z}");
                     }
                 }
             }
