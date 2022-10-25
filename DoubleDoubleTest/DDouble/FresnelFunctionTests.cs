@@ -341,10 +341,10 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 8e-30);
-                HPAssert.AreEqual(-expected, y_neg, expected * 8e-30);
-                HPAssert.AreEqual(expected, y_dec, expected * 8e-30);
-                HPAssert.AreEqual(expected, y_inc, expected * 8e-30);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
+                HPAssert.AreEqual(-expected, y_neg, expected * 1e-30d);
+                HPAssert.AreEqual(expected, y_dec, expected * 1e-30d);
+                HPAssert.AreEqual(expected, y_inc, expected * 1e-30d);
             }
 
             Assert.AreEqual(0, ddouble.FresnelC(0));
@@ -692,10 +692,10 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 8e-30);
-                HPAssert.AreEqual(-expected, y_neg, expected * 8e-30);
-                HPAssert.AreEqual(expected, y_dec, expected * 8e-30);
-                HPAssert.AreEqual(expected, y_inc, expected * 8e-30);
+                HPAssert.AreEqual(expected, y, expected * 1e-30d);
+                HPAssert.AreEqual(-expected, y_neg, expected * 1e-30d);
+                HPAssert.AreEqual(expected, y_dec, expected * 1e-30d);
+                HPAssert.AreEqual(expected, y_inc, expected * 1e-30d);
             }
 
             Assert.AreEqual(0, ddouble.FresnelS(0));

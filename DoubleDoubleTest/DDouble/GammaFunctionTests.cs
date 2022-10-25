@@ -192,7 +192,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 8e-30);
+                    HPAssert.AreEqual(x, z, x * 8e-30d);
                 }
             }
 
@@ -205,7 +205,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 2e-29);
+                    HPAssert.AreEqual(x, z, x * 2e-29d);
                 }
             }
 

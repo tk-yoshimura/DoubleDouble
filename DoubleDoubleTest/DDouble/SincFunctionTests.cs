@@ -280,13 +280,13 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30 + 1e-30);
-                HPAssert.AreEqual(expected, y_neg, ddouble.Abs(expected) * 1e-30 + 1e-30);
+                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d + 1e-30d);
+                HPAssert.AreEqual(expected, y_neg, ddouble.Abs(expected) * 1e-30d + 1e-30d);
 
-                HPAssert.AreEqual(expected, y_normed, ddouble.Abs(expected) * 1e-29 + 1e-30);
+                HPAssert.AreEqual(expected, y_normed, ddouble.Abs(expected) * 1e-30d + 1e-30d);
 
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30 + 1e-30);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30 + 1e-30);
+                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d);
+                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d);
             }
 
             foreach (bool normalized in new[] { false, true }) {

@@ -251,9 +251,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erfc(x));
                 Console.WriteLine(ddouble.Erfc(x_inc));
 
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_dec), expected * 2e-30);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 2e-30);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 2e-30);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x_dec), expected * 2e-30d);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 2e-30d);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 2e-30d);
 
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 2e-30);
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 2e-30);
@@ -279,7 +279,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble y = ddouble.InverseErf(v);
                 ddouble z = ddouble.Erf(y);
 
-                HPAssert.AreEqual(v, z, ddouble.Abs(v) * 1e-29);
+                HPAssert.AreEqual(v, z, ddouble.Abs(v) * 1e-30d);
             }
 
             for (ddouble v = Math.ScaleB(1, -8); v > Math.ScaleB(1, -968); v /= 2) {
@@ -340,14 +340,14 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble y = ddouble.InverseErfc(v);
                 ddouble z = ddouble.Erfc(y);
 
-                HPAssert.AreEqual(v, z, v * 8e-29);
+                HPAssert.AreEqual(v, z, v * 8e-29d);
             }
 
             for (ddouble v = 1; v < 2; v += 1d / 256) {
                 ddouble y = ddouble.InverseErfc(v);
                 ddouble z = ddouble.Erfc(y);
 
-                HPAssert.AreEqual(v, z, v * 8e-29);
+                HPAssert.AreEqual(v, z, v * 2e-30d);
             }
 
             HPAssert.AreEqual(
