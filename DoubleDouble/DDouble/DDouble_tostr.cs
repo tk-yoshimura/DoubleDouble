@@ -96,7 +96,10 @@ namespace DoubleDouble {
             const int presicion = 4;
 
             if (digits > DecimalDigits) {
-                throw new ArgumentOutOfRangeException(nameof(digits));
+                throw new ArgumentOutOfRangeException(
+                    nameof(digits), 
+                    $"Specifying more than the significant digits (={DecimalDigits}) of ddouble is invalid."
+                );
             }
 
             if (IsZero(this)) {
