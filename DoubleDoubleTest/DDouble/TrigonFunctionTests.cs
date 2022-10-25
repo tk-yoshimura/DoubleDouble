@@ -368,10 +368,6 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void CoshTest() {
-            Console.WriteLine($"{Math.Cosh(9.04):F16}");
-            Console.WriteLine($"{ddouble.Cosh((ddouble)9.04m)}");
-            Console.WriteLine("4.21688858728823488742026530603182233");
-
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Cosh(v);
