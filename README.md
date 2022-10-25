@@ -171,33 +171,28 @@ MaxValue : 2^1024 = 1.79769e308
 ## Casts
 
 - long (accurately)
-
-  ddouble v0 = 123;
-
-  long n0 = (long)v0;
-
+```csharp
+ddouble v0 = 123;
+long n0 = (long)v0;
+```
 - double (accurately)
-
-  ddouble v1 = 0.5;
-
-  double n1 = (double)v1;
-  
+```csharp
+ddouble v1 = 0.5;
+double n1 = (double)v1;
+```
 - decimal (approximately)
-
-  ddouble v1 = 0.1m;
-
-  decimal n1 = (decimal)v1;
-
+```csharp
+ddouble v1 = 0.1m;
+decimal n1 = (decimal)v1;
+```
 - string (approximately)
+```csharp
+ddouble v2 = "3.14e0";
+string s0 = v2.ToString();
+string s1 = v2.ToString("E8");
+string s2 = $"{v2:E8}";
+```
 
-  ddouble v2 = "3.14e0";
-
-  string s0 = v2.ToString();
-
-  string s1 = v2.ToString("E8");
-
-  string s2 = $"{v2:E8}";
-  
 ## I/O
 
 BinaryWriter, BinaryReader
