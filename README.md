@@ -15,7 +15,7 @@
 ## More Precision ?
 [MultiPrecision](https://github.com/tk-yoshimura/MultiPrecision)  
 
-## Types
+## Type
 
 |type|mantissa bits|significant digits|
 |----|----|----|
@@ -129,6 +129,7 @@ MaxValue : 2^1024 = 1.79769e308
 |gegenbauer_c|&#40;-inf,+inf&#41;|3|n &leq; 64|ddouble.GegenbauerC(n, alpha, x)|
 |jacobi_p|&#91;-1,1&#93;|3|n &leq; 64, alpha,beta &gt; -1|ddouble.JacobiP(n, alpha, beta, x)|
 |bernoulli|&#91;0,1&#93;|4|n &leq; 64, centered: x->x-1/2|ddouble.Bernoulli(n, x, centered)|
+|binomial|N/A|1|n &leq; 1000|ddouble.Binomial(n, k)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
