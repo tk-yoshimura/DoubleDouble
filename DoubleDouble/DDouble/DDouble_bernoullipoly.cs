@@ -76,7 +76,7 @@ namespace DoubleDouble {
                 }
 
                 if (invert_flag) {
-                    s *= -1d;
+                    s = -s;
                 }
 
                 return s;
