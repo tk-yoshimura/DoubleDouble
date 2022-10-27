@@ -108,7 +108,7 @@ namespace DoubleDouble {
                 v += dv;
 
                 for (int k = 2; k <= 20; k++) {
-                    u *= inv_x2 * checked((n + 2 * k - 2) * (n + 2 * k - 1)) / checked((2 * k) * (2 * k - 1));
+                    u *= inv_x2 * ((n + 2 * k - 2) * (n + 2 * k - 1)) / ((2 * k) * (2 * k - 1));
                     dv = BernoulliSequence[k] * u;
                     ddouble next_v = v + dv;
 

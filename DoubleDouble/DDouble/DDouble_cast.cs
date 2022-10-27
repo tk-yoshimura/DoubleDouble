@@ -148,9 +148,9 @@ namespace DoubleDouble {
 
             UInt32[] mantissa = new UInt32[3];
 
-            mantissa[0] = (uint)arr[0];
-            mantissa[1] = (uint)arr[1];
-            mantissa[2] = (uint)arr[2];
+            mantissa[0] = unchecked((uint)arr[0]);
+            mantissa[1] = unchecked((uint)arr[1]);
+            mantissa[2] = unchecked((uint)arr[2]);
 
             BigInteger num =
                 (BigInteger)mantissa[0] |

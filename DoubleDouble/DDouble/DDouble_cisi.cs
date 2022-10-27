@@ -162,8 +162,8 @@ namespace DoubleDouble {
                     }
 
                     for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp(checked(4 * m + 2));
-                        ddouble q = Rcp(checked((4 * m + 3) * (4 * m + 4) * (4 * m + 4)));
+                        ddouble p = Rcp((4 * m + 2));
+                        ddouble q = Rcp(((4 * m + 3) * (4 * m + 4) * (4 * m + 4)));
 
                         table.Add((p, q));
                     }
@@ -185,8 +185,8 @@ namespace DoubleDouble {
                     }
 
                     for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp(checked(4 * m + 1));
-                        ddouble q = Rcp(checked((4 * m + 2) * (4 * m + 3) * (4 * m + 3)));
+                        ddouble p = Rcp((4 * m + 1));
+                        ddouble q = Rcp(((4 * m + 2) * (4 * m + 3) * (4 * m + 3)));
 
                         table.Add((p, q));
                     }
@@ -221,7 +221,7 @@ namespace DoubleDouble {
                     d *= v4;
                     p = p_next;
                     q = q_next;
-                    t *= checked((4 * k + 1) * (4 * k + 2) * (4 * k + 3) * (4 * k + 4));
+                    t *= ((4 * k + 1) * (4 * k + 2) * (4 * k + 3) * (4 * k + 4));
                 }
 
                 return (p, q);

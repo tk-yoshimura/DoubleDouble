@@ -142,8 +142,8 @@ namespace DoubleDouble {
                     }
 
                     for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp(checked(8 * m + 1));
-                        ddouble q = Rcp(checked(4 * (8 * m + 5) * (4 * m + 1) * (4 * m + 2)));
+                        ddouble p = Rcp((8 * m + 1));
+                        ddouble q = Rcp((4 * (8 * m + 5) * (4 * m + 1) * (4 * m + 2)));
 
                         table.Add((p, q));
                     }
@@ -165,8 +165,8 @@ namespace DoubleDouble {
                     }
 
                     for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp(checked(8 * m + 3));
-                        ddouble q = Rcp(checked(4 * (8 * m + 7) * (4 * m + 2) * (4 * m + 3)));
+                        ddouble p = Rcp((8 * m + 3));
+                        ddouble q = Rcp((4 * (8 * m + 7) * (4 * m + 2) * (4 * m + 3)));
 
                         table.Add((p, q));
                     }

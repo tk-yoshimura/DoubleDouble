@@ -21,7 +21,7 @@ namespace DoubleDouble {
 
             m = Math.Abs(m);
 
-            if (n < m || (checked(n - m) & 1) == 1) {
+            if (n < m || ((n - m) & 1) == 1) {
                 return Zero;
             }
 
@@ -61,7 +61,7 @@ namespace DoubleDouble {
                 }
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n, int m) {
-                    if (m < 0 || n < m || (checked(n - m) & 1) == 1) {
+                    if (m < 0 || n < m || ((n - m) & 1) == 1) {
                         throw new ArgumentException($"{nameof(n)},{nameof(m)}");
                     }
 
@@ -77,10 +77,10 @@ namespace DoubleDouble {
 
                     int k = (n - m) / 2;
 
-                    int c0 = checked(-n * (n + m - 2) * (n - m - 2));
-                    int c10 = checked(-2 * (n - 1) * (m * m + n * (n - 2)));
-                    int c11 = checked(4 * n * (n - 1) * (n - 2));
-                    int r = checked((n + m) * (n - m) * (n - 2));
+                    int c0 = (-n * (n + m - 2) * (n - m - 2));
+                    int c10 = (-2 * (n - 1) * (m * m + n * (n - 2)));
+                    int c11 = (4 * n * (n - 1) * (n - 2));
+                    int r = ((n + m) * (n - m) * (n - 2));
 
                     ddouble[] p2 = new ddouble[k + 1];
 

@@ -4,7 +4,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Binomial(int n, int k) {
             if (k > n / 2) {
-                return Binomial(n, checked(n - k));
+                return Binomial(n, (n - k));
             }
 
             if (n < 0 || k > n || k < 0) {

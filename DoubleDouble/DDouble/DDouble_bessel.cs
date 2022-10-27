@@ -623,7 +623,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        c *= (nu + (2 * k)) * (nu + (2 * k - 1)) * checked(32 * k * (2 * k - 1));
+                        c *= (nu + (2 * k)) * (nu + (2 * k - 1)) * (32 * k * (2 * k - 1));
 
                         table.Add(Rcp(c));
                     }
@@ -717,7 +717,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        c *= checked(32 * k * (2 * k - 1));
+                        c *= (32 * k * (2 * k - 1));
 
                         table.Add(Rcp(c));
                     }
@@ -745,7 +745,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble c = Rcp(checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 1)));
+                        ddouble c = Rcp((4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 1)));
 
                         table.Add(c);
                     }
@@ -773,7 +773,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble c = (ddouble)(4 * k + 3) / (ddouble)checked(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 2) * (2 * k + 2));
+                        ddouble c = (ddouble)(4 * k + 3) / (ddouble)(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 2) * (2 * k + 2));
 
                         table.Add(c);
                     }
@@ -803,7 +803,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        c *= checked(4 * k);
+                        c *= (4 * k);
 
                         table.Add(Rcp(c));
                     }
@@ -833,7 +833,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        c *= checked(4 * k * k);
+                        c *= (4 * k * k);
 
                         table.Add(Rcp(c));
                     }
@@ -863,7 +863,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        c *= checked(4 * k * (k + 1));
+                        c *= (4 * k * (k + 1));
 
                         table.Add(Rcp(c));
                     }
@@ -2625,7 +2625,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble a = table.Last() * (squa_nu4 - checked((2 * k - 1) * (2 * k - 1))) / checked(k * 8);
+                        ddouble a = table.Last() * (squa_nu4 - ((2 * k - 1) * (2 * k - 1))) / (k * 8);
 
                         table.Add(a);
                     }
@@ -2653,11 +2653,11 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    static int square(int n) => checked(n * n);
+                    static int square(int n) => (n * n);
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble p0 = (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / checked(64 * (4 * k + 1) * (4 * k + 2));
-                        ddouble p1 = (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / checked(64 * (4 * k + 2) * (4 * k + 3));
+                        ddouble p0 = (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2));
+                        ddouble p1 = (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / (64 * (4 * k + 2) * (4 * k + 3));
 
                         table.Add((p0, p1));
                     }
@@ -2685,10 +2685,10 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    static int square(int n) => checked(n * n);
+                    static int square(int n) => (n * n);
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble p = (squa_nu4 - square(4 * k + 1)) / checked(8 * (2 * k + 1));
+                        ddouble p = (squa_nu4 - square(4 * k + 1)) / (8 * (2 * k + 1));
 
                         table.Add(p);
                     }

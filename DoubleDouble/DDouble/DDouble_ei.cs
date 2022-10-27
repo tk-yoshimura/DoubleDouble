@@ -130,7 +130,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        v += Rcp(checked(2 * k + 1));
+                        v += Rcp((2 * k + 1));
                         table.Add(v);
                     }
 
@@ -151,7 +151,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        table.Add(Rcp(checked(4 * k + 4)));
+                        table.Add(Rcp((4 * k + 4)));
                     }
 
                     return table[n];
@@ -171,8 +171,8 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble r1 = Rcp(checked(2 * k + 1));
-                        ddouble r2 = Rcp(checked((2 * k + 2) * (2 * k + 2)));
+                        ddouble r1 = Rcp((2 * k + 1));
+                        ddouble r2 = Rcp(((2 * k + 2) * (2 * k + 2)));
                         table.Add((r1, r2));
                     }
 

@@ -44,11 +44,11 @@ namespace DoubleDouble {
             y += (a / (x - 1d) + 0.5d) / r + u / 6;
 
             for (int k = 2; k < BernoulliSequence.Count - 1;) {
-                u *= (x + (2 * k - 2)) * (x + (2 * k - 3)) / (a2 * checked(2 * k * (2 * k - 1)));
+                u *= (x + (2 * k - 2)) * (x + (2 * k - 3)) / (a2 * (2 * k * (2 * k - 1)));
                 ddouble dy0 = BernoulliSequence[k] * u;
                 k++;
 
-                u *= (x + (2 * k - 2)) * (x + (2 * k - 3)) / (a2 * checked(2 * k * (2 * k - 1)));
+                u *= (x + (2 * k - 2)) * (x + (2 * k - 3)) / (a2 * (2 * k * (2 * k - 1)));
                 ddouble dy1 = BernoulliSequence[k] * u;
                 k++;
 

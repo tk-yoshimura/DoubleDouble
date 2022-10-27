@@ -125,19 +125,19 @@ namespace DoubleDouble {
                     ddouble[] p2 = new ddouble[n / 2 + 1];
 
                     if ((n & 1) == 0) {
-                        p2[0] = -p0[0] * checked(4 * n - 4) / n;
+                        p2[0] = -p0[0] * (4 * n - 4) / n;
 
                         for (int i = 2; i < n; i += 2) {
-                            p2[i / 2] = (p1[(i - 1) / 2] * checked(4 * n - 2) - p0[i / 2] * checked(4 * n - 4)) / n;
+                            p2[i / 2] = (p1[(i - 1) / 2] * (4 * n - 2) - p0[i / 2] * (4 * n - 4)) / n;
                         }
                     }
                     else {
                         for (int i = 1; i < n; i += 2) {
-                            p2[i / 2] = (p1[(i - 1) / 2] * checked(4 * n - 2) - p0[i / 2] * checked(4 * n - 4)) / n;
+                            p2[i / 2] = (p1[(i - 1) / 2] * (4 * n - 2) - p0[i / 2] * (4 * n - 4)) / n;
                         }
                     }
 
-                    p2[n / 2] = p1[(n - 1) / 2] * checked(4 * n - 2) / n;
+                    p2[n / 2] = p1[(n - 1) / 2] * (4 * n - 2) / n;
 
                     return new ReadOnlyCollection<ddouble>(p2);
                 }
@@ -152,19 +152,19 @@ namespace DoubleDouble {
                         ddouble[] p2 = new ddouble[c / 2 + 1];
 
                         if ((c & 1) == 0) {
-                            p2[0] = -p0[0] * checked(4 * (n + m) - 4) / (n - m);
+                            p2[0] = -p0[0] * (4 * (n + m) - 4) / (n - m);
 
                             for (int i = 2; i < c; i += 2) {
-                                p2[i / 2] = (p1[(i - 1) / 2] * checked(4 * n - 2) - p0[i / 2] * checked(4 * (n + m) - 4)) / (n - m);
+                                p2[i / 2] = (p1[(i - 1) / 2] * (4 * n - 2) - p0[i / 2] * (4 * (n + m) - 4)) / (n - m);
                             }
                         }
                         else {
                             for (int i = 1; i < c; i += 2) {
-                                p2[i / 2] = (p1[(i - 1) / 2] * checked(4 * n - 2) - p0[i / 2] * checked(4 * (n + m) - 4)) / (n - m);
+                                p2[i / 2] = (p1[(i - 1) / 2] * (4 * n - 2) - p0[i / 2] * (4 * (n + m) - 4)) / (n - m);
                             }
                         }
 
-                        p2[c / 2] = p1[(c - 1) / 2] * checked(4 * n - 2) / (n - m);
+                        p2[c / 2] = p1[(c - 1) / 2] * (4 * n - 2) / (n - m);
 
                         return new ReadOnlyCollection<ddouble>(p2);
                     }
@@ -172,7 +172,7 @@ namespace DoubleDouble {
                         ReadOnlyCollection<ddouble> p1 = Table(n - 1, m);
 
                         ddouble[] p2 = new ddouble[1] {
-                            p1[0] * checked(4 * n - 2) / (n - m)
+                            p1[0] * (4 * n - 2) / (n - m)
                         };
 
                         return new ReadOnlyCollection<ddouble>(p2);
@@ -184,7 +184,7 @@ namespace DoubleDouble {
                             ddouble[] p1 = new ddouble[p0.Count];
 
                             for (int i = 0; i < p1.Length; i++) {
-                                p1[i] = -p0[i] * checked(4 * n - 2);
+                                p1[i] = -p0[i] * (4 * n - 2);
                             }
 
                             return new ReadOnlyCollection<ddouble>(p1);

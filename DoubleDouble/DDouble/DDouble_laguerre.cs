@@ -96,13 +96,13 @@ namespace DoubleDouble {
 
                     ddouble[] p2 = new ddouble[n + 1];
 
-                    p2[0] = p1[0] * checked(2 * n - 1) - p0[0] * checked((n - 1) * (n - 1));
+                    p2[0] = p1[0] * (2 * n - 1) - p0[0] * ((n - 1) * (n - 1));
 
                     for (int m = 1; m < n - 1; m++) {
-                        p2[m] = p1[m] * checked(2 * n - 1) - p1[m - 1] - p0[m] * checked((n - 1) * (n - 1));
+                        p2[m] = p1[m] * (2 * n - 1) - p1[m - 1] - p0[m] * ((n - 1) * (n - 1));
                     }
 
-                    p2[n - 1] = p1[n - 1] * checked(2 * n - 1) - p1[n - 2];
+                    p2[n - 1] = p1[n - 1] * (2 * n - 1) - p1[n - 2];
                     p2[n] = -p1[n - 1];
 
                     return new ReadOnlyCollection<ddouble>(p2);

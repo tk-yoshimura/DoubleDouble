@@ -32,7 +32,7 @@ namespace DoubleDouble {
                 return (0, x.Sign > 0 ? PlusZero : MinusZero);
             }
 
-            int n = checked(exp - Math.ILogB(x.hi));
+            int n = (exp - Math.ILogB(x.hi));
             ddouble v = Ldexp(x, n);
 
             return (n, v);
@@ -51,7 +51,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = checked(exp - Math.ILogB(x.hi));
+            int n = (exp - Math.ILogB(x.hi));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n)));
         }
@@ -70,7 +70,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = checked(exp - Math.ILogB(x.hi));
+            int n = (exp - Math.ILogB(x.hi));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n)));
         }
@@ -90,7 +90,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = checked(exp - Math.ILogB(x.hi));
+            int n = (exp - Math.ILogB(x.hi));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n), Ldexp(v.d, n)));
         }

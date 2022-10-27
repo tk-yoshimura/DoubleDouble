@@ -210,7 +210,7 @@ namespace DoubleDouble {
 
                 public static ddouble KTable(int n) {
                     for (int i = k_table.Count; i <= n; i++) {
-                        ddouble k = k_table.Last() * checked(4 * i * (i - 1) + 1) / checked(4 * i * i);
+                        ddouble k = k_table.Last() * (4 * i * (i - 1) + 1) / (4 * i * i);
 
                         k_table.Add(k);
                     }
