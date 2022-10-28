@@ -13,7 +13,7 @@ namespace DoubleDouble {
 
             const double c = 0.036533814484900416, s = 0.3989422804014327;
 
-            static double lazy_lambertw(double x) {
+            static double crude_lambertw(double x) {
                 double y;
 
                 if (x < 8) {
@@ -35,7 +35,7 @@ namespace DoubleDouble {
             };
 
             double l = Math.Log((x.hi + c) * s);
-            ddouble y = l / (lazy_lambertw(l / Math.E)) + 0.5;
+            ddouble y = l / (crude_lambertw(l / Math.E)) + 0.5;
 
             ddouble lnx = Log(x);
 
