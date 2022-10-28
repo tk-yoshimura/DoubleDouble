@@ -11,7 +11,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException($"{nameof(n)},{nameof(k)}");
             }
 
-            if (n > 1000) { 
+            if (n > 1000) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
                     "In the calculation of the Binomial function, n greater than 1000 is not supported."

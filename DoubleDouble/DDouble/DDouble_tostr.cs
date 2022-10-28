@@ -97,7 +97,7 @@ namespace DoubleDouble {
 
             if (digits > DecimalDigits) {
                 throw new ArgumentOutOfRangeException(
-                    nameof(digits), 
+                    nameof(digits),
                     $"Specifying more than the significant digits (={DecimalDigits}) of ddouble is invalid."
                 );
             }
