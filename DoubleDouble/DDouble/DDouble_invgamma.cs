@@ -2,9 +2,6 @@
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        private static readonly ddouble c = Sqrt(2 * PI) * RcpE - Gamma(DigammaZero);
-        private static readonly ddouble s = 1 / Sqrt(2 * PI);
-
         public static ddouble InverseGamma(ddouble x) {
             if (!(x >= 1)) {
                 return NaN;
@@ -14,9 +11,33 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
+            const double c = 0.036533814484900416, s = 0.3989422804014327;
+
+            static double lazy_lambertw(double x) {
+                double y;
+
+                if (x < 8) {
+                    y = x * (60.0 + x * (114.0 + x * 17.0)) / (60.0 + x * (174.0 + x * 101.0));
+                }
+                else {
+                    double logx = Math.Log(x), loglogx = Math.Log(logx);
+
+                    y = logx - loglogx + loglogx / (logx + logx);
+                }
+
+                double exp_y, d;
+
+                exp_y = Math.Exp(y);
+                d = y * exp_y - x;
+                y -= d / (exp_y * (y + 1d) - (y + 2d) * d / (y + y + 2d));
+
+                return y;
+            };
+
+            double l = Math.Log((x.hi + c) * s);
+            ddouble y = l / (lazy_lambertw(l / Math.E)) + 0.5;
+
             ddouble lnx = Log(x);
-            ddouble l = Log((x + c) * s);
-            ddouble y = l / (LambertW(l * RcpE)) + Point5;
 
             for (int i = 0; i < 8; i++) {
                 ddouble lng = LogGamma(y), psi = Digamma(y);
