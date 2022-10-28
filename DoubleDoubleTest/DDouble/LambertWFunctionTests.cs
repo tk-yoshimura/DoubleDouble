@@ -375,11 +375,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
+                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 4e-31d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 4e-31d);
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 4e-31d);
                 }
             }
 
@@ -393,11 +393,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
+                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 4e-31d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 4e-31d);
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 4e-31d);
                 }
             }
 
@@ -413,9 +413,39 @@ namespace DoubleDoubleTest.DDouble {
                               ddouble.LambertW(Math.ScaleB(1, 1020)),
                               1e-28d);
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(ddouble.BitDecrement(-ddouble.RcpE))));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(-ddouble.RcpE - Math.ScaleB(1, -104))));
             Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(ddouble.NaN)));
             Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.LambertW(ddouble.PositiveInfinity)));
+        }
+
+        [TestMethod]
+        public void LambertWInvertTest() {
+
+            for (ddouble x = -1; x <= 702; x += 1d / 64) {
+                ddouble y = x * ddouble.Exp(x);
+                ddouble z = ddouble.LambertW(y);
+                ddouble w = z * ddouble.Exp(z);
+
+                Console.WriteLine(y);
+                Console.WriteLine(z);
+                Console.WriteLine(w);
+                Console.WriteLine("");
+
+                HPAssert.AreEqual(y, w, ddouble.Abs(x) * 2e-31d);
+            }
+
+            for (ddouble x = -31 / 32d; x > (ddouble)(-1) + Math.ScaleB(1, -104); x = (x + 1) / 2 - 1) {
+                ddouble y = x * ddouble.Exp(x);
+                ddouble z = ddouble.LambertW(y);
+                ddouble w = z * ddouble.Exp(z);
+
+                Console.WriteLine(y);
+                Console.WriteLine(z);
+                Console.WriteLine(w);
+                Console.WriteLine("");
+
+                HPAssert.AreEqual(y, w, ddouble.Abs(x) * 2e-31d);
+            }
         }
     }
 }
