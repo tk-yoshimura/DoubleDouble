@@ -2,7 +2,7 @@
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble KeplerE(ddouble m, ddouble e, bool centerize = false) {
+        public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
             if (!(e >= 0) || ddouble.IsNaN(m) || !ddouble.IsFinite(e)) {
                 return NaN;
             }
@@ -22,15 +22,15 @@ namespace DoubleDouble {
                 }
 
                 ddouble y = KeplerEUtil.Elliptic.Value(m, e);
-                return centerize ? y : y + m;
+                return centered ? y : y + m;
             }
             else {
                 if (!ddouble.IsFinite(m)) {
-                    return centerize ? NaN : m.Sign * PositiveInfinity;
+                    return centered ? NaN : m.Sign * PositiveInfinity;
                 }
 
                 ddouble y = KeplerEUtil.Hyperbolic.Value(m, e);
-                return centerize ? y - m : y;
+                return centered ? y - m : y;
             }
         }
 
