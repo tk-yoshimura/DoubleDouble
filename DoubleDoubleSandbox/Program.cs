@@ -4,18 +4,13 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (double x = 0; x < 7; x += 1d / 32) {
-                ddouble ke = KeplerSandbox.KeplerE(x, 1.00001, centerize: false);
+            for (ddouble x = -8; x <= 8; x += 1d / 32) {
+                ddouble y1 = ddouble.KeplerE(x, 0.999, centerize:true);
+                ddouble y2 = ddouble.KeplerE(x, 1.001, centerize:true);
             
-                Console.WriteLine($"{x},{ke}");
+                Console.WriteLine($"{x},{y1},{y2}");
             }
-
-            //for (double x = 1d / 32; x > 0; x /= 16) {
-            //    ddouble ke = KeplerSandbox.KeplerE(x, 1);
-            //
-            //    Console.WriteLine($"{x},{ke}");
-            //}
-
+            
             Console.WriteLine("END");
             Console.Read();
         }

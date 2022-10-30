@@ -1,11 +1,9 @@
 ﻿using System;
-using DoubleDouble;
-using static DoubleDouble.ddouble;
 
-namespace DoubleDoubleSandbox {
-    public static class KeplerSandbox {
+namespace DoubleDouble {
+    public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centerize = false) {
-            if (!(e >= 0) || !ddouble.IsFinite(m) || !ddouble.IsFinite(e)) {
+            if (!(e >= 0) || ddouble.IsNaN(m) || !ddouble.IsFinite(e)) {
                 return NaN;
             }
 
@@ -19,16 +17,24 @@ namespace DoubleDoubleSandbox {
             e = RoundMantissa(e, 106);
 
             if (e <= 1) {
+                if (!ddouble.IsFinite(m)) {
+                    return NaN;
+                }
+
                 ddouble y = KeplerEUtil.Elliptic.Value(m, e);
                 return centerize ? y : y + m;
             }
             else {
+                if (!ddouble.IsFinite(m)) {
+                    return centerize ? NaN : m.Sign * PositiveInfinity;
+                }
+
                 ddouble y = KeplerEUtil.Hyperbolic.Value(m, e);
                 return centerize ? y - m : y;
             }
         }
 
-        public static class KeplerEUtil {
+        private static class KeplerEUtil {
 
             public static class Elliptic {
 
@@ -49,7 +55,7 @@ namespace DoubleDoubleSandbox {
                     }
                 }
 
-                public static ddouble RootFinding(ddouble m, ddouble e) {
+                private static ddouble RootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0 || !(m <= PI)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -74,7 +80,7 @@ namespace DoubleDoubleSandbox {
                     }
                 }
 
-                public static ddouble HalleyRootFinding(ddouble m, ddouble e) {
+                private static ddouble HalleyRootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0 || !(m <= PI)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -126,7 +132,7 @@ namespace DoubleDoubleSandbox {
                     return y;
                 }
 
-                public static ddouble SqrtNewtonRootFinding(ddouble m, ddouble e) {
+                private static ddouble SqrtNewtonRootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0 || !(m <= PI / 4)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -165,7 +171,7 @@ namespace DoubleDoubleSandbox {
 
                         ddouble dx = (sqrt_m - v) * (2.0 * v) / (1.0 - ecos);
 
-                        if (!ddouble.IsFinite(dx)) {
+                        if (!IsFinite(dx)) {
                             break;
                         }
 
@@ -198,7 +204,7 @@ namespace DoubleDoubleSandbox {
                     return y;
                 }
 
-                public static ddouble CbrtNewtonRootFinding(ddouble m, ddouble e) {
+                private static ddouble CbrtNewtonRootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0 || !(m <= PI / 4)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -222,8 +228,6 @@ namespace DoubleDoubleSandbox {
                             break;
                         }
 
-                        Console.WriteLine(dx);
-
                         xd = Math.Max(0.0, xd + dx);
 
                         if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
@@ -239,11 +243,9 @@ namespace DoubleDoubleSandbox {
 
                         ddouble dx = (cbrt_m - v) * (3.0 * v * v) / (1.0 - ecos);
 
-                        if (!ddouble.IsFinite(dx)) {
+                        if (!IsFinite(dx)) {
                             break;
                         }
-
-                        Console.WriteLine(dx);
 
                         x = Max(0.0, x + dx);
 
@@ -262,8 +264,6 @@ namespace DoubleDoubleSandbox {
                             break;
                         }
 
-                        Console.WriteLine(dx);
-
                         x += dx;
 
                         if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
@@ -276,7 +276,7 @@ namespace DoubleDoubleSandbox {
                     return y;
                 }
 
-                public static double InitValue(double m, double e) {
+                private static double InitValue(double m, double e) {
 #if DEBUG
                     if (m < 0 || !(m <= PI)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -312,7 +312,7 @@ namespace DoubleDoubleSandbox {
                     }
                 }
 
-                public static ddouble RootFinding(ddouble m, ddouble e) {
+                private static ddouble RootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -326,10 +326,10 @@ namespace DoubleDoubleSandbox {
                         return HalleyRootFinding(m, e);
                     }
 
-                    if (e > 1.0625) {
+                    if (e >= 1.0625) {
                         return HalleyRootFinding(m, e);
                     }
-                    else if (e > 1.000244140625) {
+                    else if (e >= 1.000244140625) {
                         return SqrtNewtonRootFinding(m, e);
                     }
                     else {
@@ -337,7 +337,7 @@ namespace DoubleDoubleSandbox {
                     }
                 }
 
-                public static ddouble HalleyRootFinding(ddouble m, ddouble e) {
+                private static ddouble HalleyRootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -347,7 +347,7 @@ namespace DoubleDoubleSandbox {
                     }
 #endif
 
-                    double xd = InitValue(m.Hi, e.Hi);
+                    double xd = InitValue(m.Hi, e);
 
                     for (int i = 0; i < 16; i++) {
                         (double esinh, double ecosh) = (e.Hi * Math.Sinh(xd), e.Hi * Math.Cosh(xd));
@@ -360,8 +360,6 @@ namespace DoubleDoubleSandbox {
                         }
 
                         xd += dx;
-
-                        //Console.WriteLine(dx);
 
                         if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
                             break;
@@ -382,8 +380,6 @@ namespace DoubleDoubleSandbox {
 
                         x += dx;
 
-                        //Console.WriteLine(dx);
-
                         if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
@@ -392,7 +388,7 @@ namespace DoubleDoubleSandbox {
                     return x;
                 }
 
-                public static ddouble SqrtNewtonRootFinding(ddouble m, ddouble e) {
+                private static ddouble SqrtNewtonRootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -404,7 +400,7 @@ namespace DoubleDoubleSandbox {
 
                     ddouble sqrt_m = Sqrt(m);
 
-                    double xd = Math.Sqrt(InitValue(m.Hi, e.Hi));
+                    double xd = Math.Sqrt(InitValue(m.Hi, e));
 
                     for (int i = 0; i < 16; i++) {
                         (double esinh, double ecosh) = (e.Hi * Math.Sinh(xd), e.Hi * Math.Cosh(xd));
@@ -417,8 +413,6 @@ namespace DoubleDoubleSandbox {
                         }
 
                         xd = Math.Max(0.0, xd + dx);
-
-                        Console.WriteLine(dx);
 
                         if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
                             break;
@@ -433,13 +427,11 @@ namespace DoubleDoubleSandbox {
 
                         ddouble dx = 2.0 * err * v / (1.0 - ecosh);
 
-                        if (!ddouble.IsFinite(dx)) {
+                        if (!IsFinite(dx)) {
                             break;
                         }
 
                         x = Max(0.0, x + dx);
-
-                        Console.WriteLine(dx);
 
                         if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
                             break;
@@ -458,8 +450,6 @@ namespace DoubleDoubleSandbox {
 
                         x += dx;
 
-                        //Console.WriteLine(dx);
-
                         if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
@@ -468,7 +458,7 @@ namespace DoubleDoubleSandbox {
                     return x;
                 }
 
-                public static ddouble CbrtNewtonRootFinding(ddouble m, ddouble e) {
+                private static ddouble CbrtNewtonRootFinding(ddouble m, ddouble e) {
 #if DEBUG
                     if (m < 0) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -480,7 +470,7 @@ namespace DoubleDoubleSandbox {
 
                     ddouble cbrt_m = Cbrt(m);
 
-                    double xd = Math.Cbrt(InitValue(m.Hi, e.Hi));
+                    double xd = Math.Cbrt(InitValue(m.Hi, e));
 
                     for (int i = 0; i < 16; i++) {
                         (double esinh, double ecosh) = (e.Hi * Math.Sinh(xd), e.Hi * Math.Cosh(xd));
@@ -494,8 +484,6 @@ namespace DoubleDoubleSandbox {
 
                         xd = Math.Max(0.0, xd + dx);
 
-                        //Console.WriteLine(dx);
-
                         if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
                             break;
                         }
@@ -503,26 +491,24 @@ namespace DoubleDoubleSandbox {
 
                     ddouble x = xd;
 
-                    for (int i = 0; i < 2; i++) {
+                    for (int i = 0; i < 4; i++) {
                         (ddouble esinh, ddouble ecosh) = (e * Sinh(x), e * Cosh(x));
                         ddouble u = esinh - x, v = Cbrt(u), err = v - cbrt_m;
 
                         ddouble dx = 3.0 * err * v * v / (1.0 - ecosh);
 
-                        if (!ddouble.IsFinite(dx)) {
+                        if (!IsFinite(dx)) {
                             break;
                         }
 
                         x = Max(0.0, x + dx);
-
-                        //Console.WriteLine(dx);
 
                         if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
 
-                    for (int i = 0; i < 4; i++) {
+                    for (int i = 0; i < 8; i++) {
                         (ddouble esinh, ddouble ecosh) = (e * Sinh(x), e * Cosh(x));
                         ddouble u = esinh - x, ecosh_m1 = ecosh - 1.0, err = u - m;
 
@@ -534,8 +520,6 @@ namespace DoubleDoubleSandbox {
 
                         x += dx;
 
-                        //Console.WriteLine(dx);
-
                         if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
@@ -544,7 +528,7 @@ namespace DoubleDoubleSandbox {
                     return x;
                 }
 
-                public static double InitValue(double m, double e) {
+                private static double InitValue(double m, ddouble e) {
 #if DEBUG
                     if (m < 0) {
                         throw new ArgumentOutOfRangeException(nameof(m));
@@ -554,10 +538,10 @@ namespace DoubleDoubleSandbox {
                     }
 #endif
 
-                    double a = (m > 0.0) ? (m / (e - 1.0)) : 0.0;
-                    double b = Math.Log(2 * m / e + 1 + Math.Sqrt(m / (Math.Sqrt(e - 1.0))) / 4);
+                    double a = (m > 0.0) ? (m / (e - 1.0).Hi) : 0.0;
+                    double b = Math.Log(2 * m / e.Hi + 1 + Math.Sqrt(m / (Math.Sqrt((e - 1.0).Hi))) / 4);
 
-                    double t = Math.Exp(-(e - 1.0) / (2 * Math.Pow(m, 13.0 / 16.0)));
+                    double t = Math.Exp(-(e - 1.0).Hi / (2 * Math.Pow(m, 13.0 / 16.0)));
 
                     double x = (t < 0.9999) ? (a * (1.0 - t) + b * t) : b;
 
