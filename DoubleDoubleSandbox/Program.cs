@@ -4,8 +4,8 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (double x = -7; x < 7; x += 1d / 32) {
-                ddouble ke = KeplerSandbox.KeplerE(x, 1, centerize: true);
+            for (double x = 0; x < 7; x += 1d / 32) {
+                ddouble ke = KeplerSandbox.KeplerE(x, 1.00001, centerize: false);
             
                 Console.WriteLine($"{x},{ke}");
             }
