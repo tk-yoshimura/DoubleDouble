@@ -86,7 +86,7 @@ namespace DoubleDouble {
             }
 
             public static class Asin {
-                public static ReadOnlyCollection<ddouble> TaylorXZeroCoefTable = new(new ddouble[] {
+                public static readonly ReadOnlyCollection<ddouble> TaylorXZeroCoefTable = new(new ddouble[] {
                     (ddouble)1 / 6,
                     (ddouble)3 / 40,
                     (ddouble)5 / 112,

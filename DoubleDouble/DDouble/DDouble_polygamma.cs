@@ -125,7 +125,7 @@ namespace DoubleDouble {
                 return v;
             }
 
-            static ReadOnlyCollection<(ddouble x, ddouble w)> gles = new(new (ddouble, ddouble)[] {
+            static readonly ReadOnlyCollection<(ddouble x, ddouble w)> gles = new(new (ddouble, ddouble)[] {
                 ((+1, -11, 0xE6FCA651838752B7uL, 0x25FD5D7505B0DAA3uL), (+1, -9, 0x942738A31E06B328uL, 0x047C1EC6C342098BuL)),
                 ((+1, -8, 0x97F0F95FCAA1688DuL, 0x80F2ED27376E9D16uL), (+1, -8, 0xAC00FF2E6D0503CAuL, 0x32663A4C477F6CDDuL)),
                 ((+1, -7, 0xBA49576421895829uL, 0x01BE526784DABEC0uL), (+1, -7, 0x86857496E97B0E21uL, 0xD52A5C9A950FD0D8uL)),
@@ -168,7 +168,7 @@ namespace DoubleDouble {
                 ((+1, -1, 0xFFC640D66B9F1E2BuL, 0x523680A8A2BE93C9uL), (+1, -9, 0x942738A31E06B328uL, 0x047C1EC6C342098BuL)),
             });
 
-            static ReadOnlyCollection<(ddouble x, ddouble w)> glas = new(new (ddouble, ddouble)[] {
+            static readonly ReadOnlyCollection<(ddouble x, ddouble w)> glas = new(new (ddouble, ddouble)[] {
                 ((+1, -5, 0x923A93A02CF981DFuL, 0x16C83DD3D330FD1DuL), (+1, -4, 0xB511680543957848uL, 0x8A4777966C777F27uL)),
                 ((+1, -3, 0xC0AD9D12077A1912uL, 0x46421A35C7FDE78CuL), (+1, -3, 0xB50EEC4777B499AFuL, 0x8D7326A7A62D1A36uL)),
                 ((+1, -2, 0xECE643CC95AC3EECuL, 0xA671D8AB0DD700DAuL), (+1, -3, 0xD86F92ACA81EBC99uL, 0x4B99AC30E5285095uL)),
@@ -226,7 +226,7 @@ namespace DoubleDouble {
                 return y;
             }
 
-            static ReadOnlyCollection<Func<ddouble, ddouble>> reflecs = new(new Func<ddouble, ddouble>[] {
+            static readonly ReadOnlyCollection<Func<ddouble, ddouble>> reflecs = new(new Func<ddouble, ddouble>[] {
                (x) => 1d / TanPI(x),
                (x) => -1d / Square(SinPI(x)),
                (x) => 2d / (TanPI(x) * Square(SinPI(x))),

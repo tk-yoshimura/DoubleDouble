@@ -78,7 +78,7 @@ namespace DoubleDouble {
                 public static ddouble NearZero { get; } = Math.ScaleB(1, -4);
                 public static ddouble MaxRange { get; } = Math.ScaleB(1, 128);
 
-                public static ReadOnlyCollection<ddouble> TaylorNearZero;
+                public static readonly ReadOnlyCollection<ddouble> TaylorNearZero;
 
                 static Airy() {
                     ddouble[] taylor_nz = new ddouble[17];

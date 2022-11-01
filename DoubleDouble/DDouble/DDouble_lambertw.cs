@@ -86,7 +86,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class LambertW {
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> NearSingularPadeTable = new(new (ddouble c, ddouble d)[]{
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> NearSingularPadeTable = new(new (ddouble c, ddouble d)[]{
                     ((-1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((-1, 2, 0x9478FB18D3F20BC2uL, 0x746283E89F45BBA6uL), (+1, 2, 0xB478FB18D3F20BC2uL, 0x746283E89F45BBA6uL)),
                     ((-1, 3, 0x91E7B80F24D66A48uL, 0x56A7250A1F57ACAFuL), (+1, 3, 0xE6CEE046397A1AD4uL, 0x3B8311A919A5352DuL)),

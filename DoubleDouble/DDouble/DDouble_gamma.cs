@@ -279,7 +279,7 @@ namespace DoubleDouble {
                     });
                 }
 
-                public static ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable = new(new (ddouble s, ddouble r)[]{
+                public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable = new(new (ddouble s, ddouble r)[]{
                     ((+1, -4, 0xAAAAAAAAAAAAAAAAuL, 0xAAAAAAAAAAAAAAAAuL),  (+1, -5, 0x8888888888888888uL, 0x8888888888888888uL)),
                     ((+1, -11, 0xD00D00D00D00D00DuL, 0x00D00D00D00D00D0uL), (+1, -1, 0xC000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -11, 0xDCA8F158C7F91AB8uL, 0x7539C0372A3C5631uL), (+1, 1, 0x91CB1CB1CB1CB1CBuL, 0x1CB1CB1CB1CB1CB1uL)),
@@ -294,7 +294,7 @@ namespace DoubleDouble {
                     ((+1, 59, 0xE2E1337F5AF0BED9uL, 0x0B6B0A352D4F335CuL),  (+1, 5, 0xD1BC1F238533A53CuL, 0x065E1F08A600A21BuL))
                 });
 
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX1Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX1Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xF7BE827D214A59FFuL, 0x253A787D2C0DF3D7uL), (+1, 0, 0xC5C175304F7D90D1uL, 0xFB7C5BFF16B05F97uL)),
@@ -312,7 +312,7 @@ namespace DoubleDouble {
                     ((+1, -34, 0xC79A6A110796BB9FuL, 0x42C7DF4D4B4A31B0uL), (-1, -29, 0xCAD8579BDBEDF543uL, 0x52CA65D80FEDC326uL)),
                     ((+1, -39, 0xA94F151B4C2C820DuL, 0xF47C064B8918A5DFuL), (+1, -34, 0xC408D937BF8BB468uL, 0xE51B363FECD4A28CuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX2Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX2Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xE8B221B670F0E1D2uL, 0x2A4CE6637E906CF0uL), (+1, -2, 0xF8ED1333DD4352EDuL, 0xF8164BC8FFC6708DuL)),
@@ -330,7 +330,7 @@ namespace DoubleDouble {
                     ((+1, -35, 0xA29EB8BD5600848AuL, 0x461FB7036FAA0886uL), (+1, -32, 0xE59E7BCF4F6E45D1uL, 0xEF5D8EFE14C86B64uL)),
                     ((+1, -41, 0xF720E3C8812332F9uL, 0x4B174D75B7D4209BuL), (-1, -37, 0xAEF64C28AC938920uL, 0x51FAB2BDF51089EAuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX3Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX3Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0xE617FEDEC027AB6EuL, 0x1EB041FA07B91400uL), (-1, -6, 0xC47327B844F19DA1uL, 0xF22FD09EDE841516uL)),
@@ -348,7 +348,7 @@ namespace DoubleDouble {
                     ((+1, -34, 0x979527403BD494EAuL, 0x575A7B7524B25FDAuL), (-1, -35, 0x91F7378AE43FAF25uL, 0xD9E88073B6D60AF3uL)),
                     ((+1, -40, 0xE7C35BECE2528733uL, 0xBB9552AD230F11DBuL), (+1, -42, 0xB97A4E52938778BEuL, 0xF8A7A9352BA13E19uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX4Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX4Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 2, 0xC000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xB4ED1C0662D44C4BuL, 0x6ACCB95E5C594182uL), (-1, -2, 0xA0A99027FD12FA97uL, 0xEA6192AD07170FF7uL)),
@@ -366,7 +366,7 @@ namespace DoubleDouble {
                     ((+1, -33, 0xA236F9CF71332B06uL, 0xB580CCC654F9F21CuL), (-1, -35, 0xC22E52AAA2DD2D7FuL, 0x89EE663EBCBF2C77uL)),
                     ((+1, -39, 0xD639CDA3601CEB38uL, 0x2D2A66F29AF37FDBuL), (+1, -40, 0x8C6E280D648C7E49uL, 0xFE2C807D3E1D7B21uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX5Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX5Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 4, 0xC000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 4, 0xB185FC4A4282EA71uL, 0xB7BF32D2F9C31C05uL), (-1, -1, 0x94DE47B97EF5FFC3uL, 0x8E982765B1A90F4CuL)),
@@ -383,7 +383,7 @@ namespace DoubleDouble {
                     ((+1, -28, 0xA3985121A4DA8DDAuL, 0xB9EAAD29AB87A26CuL), (-1, -32, 0xCC4968F75ACF8AC4uL, 0x6E8C7B4230F03E5EuL)),
                     ((+1, -34, 0xD78DD8EE558E8B3AuL, 0x5A9B0B54FCAA7B13uL), (+1, -37, 0x9086E7BA19CC7FC3uL, 0x9539A5FCAE659DCFuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX6Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX6Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 6, 0xF000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 6, 0xC17B551303A0E44CuL, 0x310D9393D3A08638uL), (-1, -1, 0xE662B4D506F8EF81uL, 0x60556758C79B946DuL)),
@@ -400,7 +400,7 @@ namespace DoubleDouble {
                     ((+1, -33, 0xCC23ECC1A1DCA7F0uL, 0x29CC8FE7FCA428E7uL), (+1, -32, 0xAFF90DA8259F290DuL, 0xD1F1D90E8CCABF76uL)),
                     ((-1, -35, 0xC049011180952156uL, 0x015C0F7AF6BBEBC4uL), (-1, -38, 0xD4A13CA4B4B5D531uL, 0x00B2376F70CFFE55uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX7Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX7Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 9, 0xB400000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 9, 0xAEB5C5976849E410uL, 0xD407F48AD4B0967EuL), (-1, -1, 0xE6F4CEBCA40843A3uL, 0xF552E1DBAE0D14ABuL)),
@@ -417,7 +417,7 @@ namespace DoubleDouble {
                     ((+1, -24, 0xE2431BAAA0038F9DuL, 0xE6344F938E3A9827uL), (+1, -32, 0x9855CDDE624901EAuL, 0xFC323CAA64413EC0uL)),
                     ((+1, -29, 0x85355D2EA437A680uL, 0x3FC5A7266AF246DDuL), (-1, -38, 0xB7B22D845D7FF162uL, 0x5AE1F0F1454A6BA1uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX8Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX8Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 12, 0x9D80000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 12, 0x85DAEF0613B9473EuL, 0xB47B469EA438F519uL), (-1, 0, 0x9537DB7A47E17DE8uL, 0xC02F47C5124181DEuL)),
@@ -434,7 +434,7 @@ namespace DoubleDouble {
                     ((+1, -24, 0xF1B4095FBE66A458uL, 0xCD68BA2156EBB994uL), (-1, -32, 0x894B74B1E2D3608BuL, 0xADBE175A31E717A5uL)),
                     ((+1, -30, 0xABA469F889BF0194uL, 0xC3136060C0E38829uL), (+1, -38, 0x8D498C4D81FEC273uL, 0x51DBE1211E6C9669uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX9Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX9Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 15, 0x9D80000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 15, 0x995CFDC7370BB888uL, 0x9074069FD26E11C1uL), (-1, 0, 0x955D31D2C0B60F25uL, 0xD1463D33739C7045uL)),
@@ -451,7 +451,7 @@ namespace DoubleDouble {
                     ((+1, -19, 0xE28473E252691213uL, 0xA2D8110442F8540BuL), (-1, -32, 0xA363035F7BC8189DuL, 0xA7C7FB04D060CAB6uL)),
                     ((+1, -25, 0xE7394BDE72D35446uL, 0x22CEA0F07B58C7C6uL), (+1, -38, 0xA8A35C77DCEEB50BuL, 0xF9DCBF13D8822788uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX10Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX10Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 18, 0xB130000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 18, 0x969D320C539BD7C7uL, 0xFF112C14AE821357uL), (-1, 0, 0xB36BC3E4D784028EuL, 0x36BAE4B4650E20B8uL)),
@@ -468,7 +468,7 @@ namespace DoubleDouble {
                     ((+1, -19, 0x83044561B568912CuL, 0x0FC1DDE992BC5044uL), (+1, -32, 0xDD3823F777CFDB0AuL, 0x4E4CC3D2FE64E224uL)),
                     ((+1, -32, 0xA1196A7D7C0F1798uL, 0x65641FF7AAB49B21uL), (-1, -38, 0xC574EB6BEA539256uL, 0xBF853E1D5344E23FuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX11Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX11Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 21, 0xDD7C000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 21, 0xD266D7263C9D830DuL, 0x487EE4898C1275E7uL), (-1, 0, 0xB36DE07C48909F33uL, 0x4292FC94A415B338uL)),
@@ -485,7 +485,7 @@ namespace DoubleDouble {
                     ((+1, -13, 0x951407795710610AuL, 0x69C847189ED1AED1uL), (+1, -32, 0xDD591C8AA234DE5DuL, 0x8CC0DB16EBF2A37DuL)),
                     ((+1, -19, 0x81E2BEF21B6F8D0AuL, 0xB7BE9D3C077EF094uL), (-1, -38, 0xC594FEA8257172E0uL, 0x247137E10D8B27D9uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX12Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX12Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 25, 0x9845400000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 25, 0x9AEED2249E2B2B04uL, 0x39402D62111FD1ADuL), (-1, 0, 0xB66C3400E7187FAEuL, 0x2CC19C2B8271F8A8uL)),
@@ -502,7 +502,7 @@ namespace DoubleDouble {
                     ((+1, -9, 0xA908E915D3769A13uL, 0x00279E300FBD302BuL), (+1, -31, 0x8BBCBE6434C4C48FuL, 0xA8B2331161017BECuL)),
                     ((+1, -15, 0x97BA0DB6888EB13FuL, 0x6191B391F6258718uL), (-1, -38, 0xFF819B8E6EDFCFCFuL, 0x2F68289BF67E72D3uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX13Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX13Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 28, 0xE467E00000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 28, 0xF6248D62C9407F8BuL, 0x92852D45FFBEDE0EuL), (-1, 0, 0xB9632E5563B14789uL, 0x71E68267B9C8F632uL)),
@@ -519,7 +519,7 @@ namespace DoubleDouble {
                     ((+1, -5, 0xC4E58EDB29B0FAA7uL, 0xD40C826A3A7093B0uL), (+1, -31, 0xAF2BC6A7DC661C3EuL, 0x2A0F1711AFCA6567uL)),
                     ((+1, -11, 0xB51D78A7B47A6F89uL, 0xFE6314778E11FE97uL), (-1, -37, 0xA3E005321DA137E1uL, 0x1A0D04EDAC97C90CuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX14Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX14Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 32, 0xB994660000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 32, 0xD21439C5F1D2C028uL, 0xE79E94875D68B0D3uL), (-1, 0, 0xBC468C5DF9B7BED9uL, 0x4869F36A8F9D4BC6uL)),
@@ -536,7 +536,7 @@ namespace DoubleDouble {
                     ((+1, -1, 0xEE455B932288EF1CuL, 0x8CE2566637C5E213uL), (+1, -31, 0xD93AA7091D09AA0EuL, 0x6ED604C84D400931uL)),
                     ((+1, -7, 0xE043529D42438094uL, 0xF29D820DE11CB099uL), (-1, -37, 0xCFAD6DA0C81970D9uL, 0x01309831D7B32BC2uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX15Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX15Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 36, 0xA261D94000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 36, 0xBFDA6FDAC16E1DAAuL, 0x85D61F452ECCA069uL), (-1, 0, 0xBF15DDE748E7BB0FuL, 0xF485EEF81A0F5595uL)),
@@ -553,7 +553,7 @@ namespace DoubleDouble {
                     ((+1, 4, 0x95C71660799C59C6uL, 0x32D4B46D6EA4491DuL), (+1, -30, 0x854CE7DCE24FD3E6uL, 0xBBA9B15ACB469E53uL)),
                     ((+1, -2, 0x900D135FCA0AE9EFuL, 0xF1836B8B72F668C8uL), (-1, -36, 0x82126EDA34B7FF4DuL, 0x4A9C3CED415F0758uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX16Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX16Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 40, 0x983BBBAC00000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 40, 0xBAC33B40F0BC522BuL, 0xE6CF0BCCF2EF9A7DuL), (-1, 0, 0xC1D1255D1EFF5AC0uL, 0xEDD31C5FE0022C98uL)),
@@ -570,7 +570,7 @@ namespace DoubleDouble {
                     ((+1, 8, 0xC38F4D4E41628DF3uL, 0xFC58062D1D6EC0F8uL), (+1, -30, 0xA1FDC4816400DA78uL, 0x489CA6C1035F61B3uL)),
                     ((+1, 2, 0xBFF2A8061E8E9CBCuL, 0x10789FDB2D72EECDuL), (-1, -36, 0xA1258344D27D1C61uL, 0xC5E77FBE025FC176uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX17Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX17Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 44, 0x983BBBAC00000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 44, 0xC11EE6F9FFD275DEuL, 0x121A7B93156668D4uL), (-1, 0, 0xC47893A112CCDC82uL, 0xC36B2B375614BE58uL)),
@@ -587,7 +587,7 @@ namespace DoubleDouble {
                     ((+1, 13, 0x8487ACA07F3147C0uL, 0x63D6A2B20E206618uL), (+1, -30, 0xC307F52EF5F61129uL, 0x0ADA91A6BCEA5523uL)),
                     ((+1, 7, 0x84997911E26F4C43uL, 0x3CB7BD29B29A7835uL), (-1, -36, 0xC5944868812F7C9AuL, 0x93BA74F64875BD92uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX18Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX18Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 48, 0xA1BF7766C0000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 48, 0xD20A8454BAFC3134uL, 0xD8CFBD0889FCCE59uL), (-1, 0, 0xC8297E75F998DBD6uL, 0x639FC012786580E6uL)),
@@ -605,7 +605,7 @@ namespace DoubleDouble {
                     ((+1, 13, 0xACCF2DA63F1B10B3uL, 0xB296F1A7C5C5A2A8uL), (-1, -34, 0xFE2B19C016A3D342uL, 0xF66000BB8AA1BF25uL)),
                     ((+1, 7, 0x98F461DFDC43F063uL, 0xDD955F9C372F3217uL), (+1, -40, 0xE387959E130AD4E1uL, 0x4CECB9BFFEC4AF72uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX19Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX19Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 52, 0xB5F7665398000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 52, 0xF2EF77E2F33E9694uL, 0x6D725B4B7629B7C2uL), (-1, 0, 0xCA9A5E6A04A70C34uL, 0xBC66379B77EE2695uL)),
@@ -623,7 +623,7 @@ namespace DoubleDouble {
                     ((+1, 18, 0x80AD801EF4A6454EuL, 0x8BB129AA988C496CuL), (-1, -33, 0x97E5CAF53E630337uL, 0x836842FFB4D599D5uL)),
                     ((+1, 11, 0xE7A3101FCEEC4B20uL, 0xAA916D4A2EB8D75DuL), (+1, -39, 0x8A2C2D4C9C8ADD8CuL, 0xD648086E81A610E8uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX20Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX20Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 56, 0xD815C98344800000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 57, 0x93ED04A1BDFFD273uL, 0xA886B448D3C9708AuL), (-1, 0, 0xCCFA0202C7C268BDuL, 0x3F3E0C31823C8B2EuL)),
@@ -641,7 +641,7 @@ namespace DoubleDouble {
                     ((+1, 22, 0xC6536A9E1E4F5FB4uL, 0x0339075A0E4C6706uL), (-1, -33, 0xB420BEE149142303uL, 0xA84C911BFF1D77EEuL)),
                     ((+1, 16, 0xB55CE36E0017D59AuL, 0xA68D703F93750B83uL), (+1, -39, 0xA65C505BC6B20238uL, 0x342F0C199F888949uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX21Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX21Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 61, 0x870D9DF20AD00000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 61, 0xBD3985DCC21AD8CDuL, 0xC39851D69E978337uL), (-1, 0, 0xCF48E12C434AA275uL, 0x975AF5892EBA4AD9uL)),
@@ -659,7 +659,7 @@ namespace DoubleDouble {
                     ((+1, 27, 0x9E146786AA6D5E25uL, 0x347D7A23D1B88D69uL), (-1, -33, 0xD40645F5917CC946uL, 0xBBE489CF5BF9EC02uL)),
                     ((+1, 21, 0x92C07496D88F127BuL, 0xA41E9D092AE214CBuL), (+1, -39, 0xC6AA8BD03BD695B7uL, 0x4B536DB42A9B08BCuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX22Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX22Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 65, 0xB141DF4DAE310000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 65, 0xFDB09B9823111D59uL, 0xBF39CA5E5D891E2CuL), (-1, 0, 0xD1877F026A48AEAFuL, 0xD1CB5304EA74804BuL)),
@@ -677,7 +677,7 @@ namespace DoubleDouble {
                     ((+1, 32, 0x823DFD50975598D4uL, 0x6429F755E074C97AuL), (-1, -33, 0xF7D59D3468C4A606uL, 0x39A45B1772B776E9uL)),
                     ((+1, 25, 0xF54CB9A370D93D99uL, 0x06988F36072E51B4uL), (+1, -39, 0xEB6E0FAA9A36CBF2uL, 0xD3F5F7BA8B2096C3uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX23Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX23Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 69, 0xF3BA930ACF836000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 70, 0xB1DF5D799A6A2A29uL, 0xB114B61A5B4E0C16uL), (-1, 0, 0xD3B665E057080601uL, 0x3A25E1107B8903A1uL)),
@@ -695,7 +695,7 @@ namespace DoubleDouble {
                     ((+1, 36, 0xDDB1B029803A6844uL, 0x6C150CF8404DF7BAuL), (-1, -32, 0x8FE69BDB790EDB7BuL, 0x965BACC1AC20E132uL)),
                     ((+1, 30, 0xD3A0A742102C88B3uL, 0xF0B2773931A13B72uL), (+1, -38, 0x8A7F4BE5E44E0D38uL, 0x0D790BB4437310CFuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX24Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX24Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 74, 0xAF2E19AFC5266D00uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 75, 0x8233607CE62E4C13uL, 0x1331387F6FBBE4FEuL), (-1, 0, 0xD5D624295E5B1932uL, 0x08A30D2B6FA0221CuL)),
@@ -713,7 +713,7 @@ namespace DoubleDouble {
                     ((+1, 41, 0xC2C6D286E9924817uL, 0x830A9C5BBD90A50CuL), (-1, -32, 0xA6154EDD6383D4EDuL, 0x016E257F0F24B367uL)),
                     ((+1, 35, 0xBC5A9478B75BB857uL, 0xEE2B3838B9A24A5AuL), (+1, -38, 0xA1DA14C09DB6177CuL, 0x2508C25737E9F51BuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX25Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX25Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 79, 0x83629343D3DCD1C0uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 79, 0xC6A75D9629B33483uL, 0x8A85AC5DCB6A4326uL), (-1, 0, 0xD7E749B921E6F369uL, 0x21D3927C5D774864uL)),
@@ -731,7 +731,7 @@ namespace DoubleDouble {
                     ((+1, 46, 0xB089F6B13460E239uL, 0xCB8C643A1051566CuL), (-1, -32, 0xBE952971F5ED845BuL, 0x1E471F94CD704F5CuL)),
                     ((+1, 40, 0xACD61B1D56A07D30uL, 0xE22AD2A38842A786uL), (+1, -38, 0xBBF36CED0BBF5101uL, 0xDDE70CD78C30908FuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX26Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX26Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 83, 0xCD4A0619FB0907BCuL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 84, 0x9DB0C336641D73FDuL, 0xC3BC2B4073EE66FBuL), (-1, 0, 0xD9EA65E45EA74548uL, 0x99C592F38F5C971AuL)),
@@ -749,7 +749,7 @@ namespace DoubleDouble {
                     ((+1, 51, 0xA4F57626F7A2591FuL, 0x9F72390277084DE4uL), (-1, -32, 0xD983E13AE22A0042uL, 0x1BAD2926526D6521uL)),
                     ((+1, 45, 0xA36976794D016F1DuL, 0x7C09071C359A2C4BuL), (+1, -38, 0xD8F74DE0CEA30ECFuL, 0xB65BC2B85C5DAF11uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX27Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX27Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 88, 0xA6CC24F51BF75648uL, 0xC000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 89, 0x820DF0E6A5A5DF3DuL, 0x13D208F6AAB1B5DBuL), (-1, 0, 0xDBE005F3C5499BBCuL, 0x37EE151DC08D2F00uL)),
@@ -767,7 +767,7 @@ namespace DoubleDouble {
                     ((+1, 56, 0x9ECD3A8A13FE0270uL, 0x8880310BDCF66864uL), (-1, -32, 0xF6FE983C2E801D08uL, 0x0FDBF36E8C97B3C8uL)),
                     ((+1, 50, 0x9F17CC8F006F46BAuL, 0x44EB136D4B3EB8ADuL), (+1, -38, 0xF9118A7815A5933EuL, 0x4939AA948083A3F2uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX28Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX28Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 93, 0x8CBC3F2ECF98B0CDuL, 0x6200000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 93, 0xDE949A9ACD12832BuL, 0x4B6C793284F7CB42uL), (-1, 0, 0xDDC8B4037FA92E12uL, 0x21EEF96BAB185AFEuL)),
@@ -785,7 +785,7 @@ namespace DoubleDouble {
                     ((+1, 61, 0x9D658B86C09808A9uL, 0x3A0963E878CA4DEFuL), (-1, -31, 0x8B90EBBB04DBD261uL, 0x271D3F66DDB6548DuL)),
                     ((+1, 55, 0x9F64940041FB51AFuL, 0x8E51001BE899CB8BuL), (+1, -37, 0x8E36DE370B0D9F77uL, 0xCDC86273E156FB26uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX29Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX29Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 97, 0xF6496E91EB4B3567uL, 0x6B80000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 98, 0xC55DB90975EA0FB8uL, 0x580D4D193CC5E5CDuL), (-1, 0, 0xDFA4F63447AAEF74uL, 0x36B2B4867418E31AuL)),
@@ -803,7 +803,7 @@ namespace DoubleDouble {
                     ((+1, 66, 0xA08418FE8B2A5C3DuL, 0xF0BFDFB46F567D81uL), (-1, -31, 0x9D04C594F31B6FE9uL, 0xF13AF4ADEDF04ED1uL)),
                     ((+1, 60, 0xA43CEF12D51E0F00uL, 0x29C86CB6A242FBEFuL), (+1, -37, 0xA19B9A3B1B8507BDuL, 0x99032ECBFAC3836AuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX30Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX30Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 102, 0xDF328C343D3C2865uL, 0xB96C000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 103, 0xB5213D272B0ADA19uL, 0x1F4932705359CF8AuL), (-1, 0, 0xE1754E1D8EF5926EuL, 0x6DF0E51C52582AF9uL)),
@@ -821,7 +821,7 @@ namespace DoubleDouble {
                     ((+1, 71, 0xA8536BFD9179D389uL, 0x22CE35B2E9415560uL), (-1, -31, 0xAFE8803F73B92CDBuL, 0x5F806E5EF7942324uL)),
                     ((+1, 65, 0xADF14CBFCCBDB995uL, 0x607D5532170F75EFuL), (+1, -37, 0xB6CC765109531425uL, 0x4564793936AD0DE3uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX31Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX31Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 107, 0xD13F6370F96865DFuL, 0x5DD5400000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 108, 0xABD9C01052E7DAB9uL, 0x6FAB352F92F0998FuL), (-1, 0, 0xE33A3872D375C2B2uL, 0xEC2BDDD8C0B91F27uL)),
@@ -839,7 +839,7 @@ namespace DoubleDouble {
                     ((+1, 76, 0xB56547D7075E05C7uL, 0xE36CAA17067B3F87uL), (-1, -31, 0xC44972236EF477CAuL, 0x9BFF7DE1B43F4B42uL)),
                     ((+1, 70, 0xBD3D457287F07289uL, 0xF23872346451D6F4uL), (+1, -37, 0xCDDEBE65643ADF38uL, 0xF987B939B915FE6AuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX32Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX32Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 112, 0xCAB56855719D22B0uL, 0x62E6960000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 113, 0xA861FB9DA4BC31B5uL, 0xAAEE987A53DEE499uL), (-1, 0, 0xE4F42CD0A8D0C0C0uL, 0xB07123FBF6A58515uL)),
@@ -857,7 +857,7 @@ namespace DoubleDouble {
                     ((+1, 81, 0xC8C3B5F0C97161B5uL, 0x084866AD06EA6578uL), (-1, -31, 0xDA34A157F33C7AC3uL, 0xA24764AA062CADAFuL)),
                     ((+1, 75, 0xD35E90F87BD2B9E9uL, 0xF3F8E88A6BF1CA43uL), (+1, -37, 0xE6E7885EA92B78D3uL, 0xF0B4C5182B69A18FuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX33Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX33Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 117, 0xCAB56855719D22B0uL, 0x62E6960000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 118, 0xAA37307A5581BF45uL, 0x0BEB10D63A806C88uL), (-1, 0, 0xE6A39DA82381C44FuL, 0x2DF3C39CC78390EBuL)),
@@ -875,7 +875,7 @@ namespace DoubleDouble {
                     ((+1, 86, 0xE413632B810095A4uL, 0x96DCA685B95BA7C3uL), (-1, -31, 0xF1B6C3DBD40BD79AuL, 0xAE0C276BD424F26EuL)),
                     ((+1, 80, 0xF23EE6651CCE6B66uL, 0xA78FF4F9F5C5FD22uL), (+1, -36, 0x80FDD7FC6AA9FB31uL, 0xAF7668008C529A87uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX34Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX34Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 122, 0xD10B13981D2A0BC5uL, 0xE5FDCAB000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 123, 0xB15BAE6D6C6D4350uL, 0x9D4E0747166D47B3uL), (-1, 0, 0xE848F841283CBB73uL, 0x45ADA4D29B262170uL)),
@@ -893,7 +893,7 @@ namespace DoubleDouble {
                     ((+1, 92, 0x84E6AFD0E0983614uL, 0x33292980775C91F5uL), (-1, -30, 0x856E200F1E34F11CuL, 0xA368BA02ED24BD5EuL)),
                     ((+1, 86, 0x8E5C297A214B6BA4uL, 0x7C0F6F399325FE96uL), (+1, -36, 0x8F97E9A6EA0B0885uL, 0x3F696FFF57586095uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX35Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX35Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 127, 0xDE1BC4D19EFCAC82uL, 0x445DA75B00000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 128, 0xBE50695915D50418uL, 0x1E2457812ED4BD81uL), (-1, 0, 0xE9E4A4CDAB7996C1uL, 0x6CEA86BA367BD485uL)),
@@ -911,7 +911,7 @@ namespace DoubleDouble {
                     ((+1, 97, 0x9ECD8987E9D77C46uL, 0xEEA25012F8FF98E7uL), (-1, -30, 0x92D896E3AD1BBBDAuL, 0xAD429A66FE515917uL)),
                     ((+1, 91, 0xAB8083F29BB3DFD7uL, 0x5038890AD713421CuL), (+1, -36, 0x9F4C27FAA8179188uL, 0x4A42CEB9BC6B3104uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX36Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX36Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 132, 0xF2EE5F4545E45CAEuL, 0x7AC66F0B88000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 133, 0xD2228B3CD6F6DD15uL, 0xFC1D7E041AD30840uL), (-1, 0, 0xEB77068930ABC9B5uL, 0x03E9BDD9CB53AD24uL)),
@@ -929,7 +929,7 @@ namespace DoubleDouble {
                     ((+1, 102, 0xC2734345A5FBBFB3uL, 0xB4269D8EF4CE166BuL), (-1, -30, 0xA120AB5A608A67C9uL, 0x57A424224000AA8AuL)),
                     ((+1, 96, 0xD3AA16D572A3765DuL, 0x44E0F262CF1EC4B8uL), (+1, -36, 0xB024A0548FB55D05uL, 0x9D93CDA956A1E76DuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX37Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX37Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 138, 0x88A61596F7507422uL, 0x250F9E767C800000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 138, 0xEE8E8AEDD21CCF67uL, 0xA5DEE93B0AC6659AuL), (-1, 0, 0xED007BE0DF898416uL, 0x384CE68C4EB98E63uL)),
@@ -947,7 +947,7 @@ namespace DoubleDouble {
                     ((+1, 107, 0xF3DE7636E706C0EEuL, 0x6CDDF96DE48E5588uL), (-1, -30, 0xB04C1C0F97CBFE5CuL, 0xC6CB428E43FCB5E1uL)),
                     ((+1, 102, 0x85BECF483AB099ACuL, 0x27FD76B9A047C7C8uL), (+1, -36, 0xC22B3DAEEAB1F268uL, 0x7BB8DACB9580ED4CuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX38Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX38Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 143, 0x9E0008F68DF50647uL, 0x7ADA0F38FFF40000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 144, 0x8B1F74A7948309FFuL, 0x22D1F74ADF31F7A5uL), (-1, 0, 0xEE815EA159244FBDuL, 0x601EB3D5A56BEDE8uL)),
@@ -965,7 +965,7 @@ namespace DoubleDouble {
                     ((+1, 113, 0x9C8D3430F43F47EBuL, 0xFD46044853FA87A5uL), (-1, -30, 0xC06081F08A0D0029uL, 0xA523780E9301F384uL)),
                     ((+1, 107, 0xACFCA687E34869A0uL, 0x33CDED0AD6F178DEuL), (+1, -36, 0xD569C7E0889E088DuL, 0x7C6EA13EDF20139CuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX39Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX39Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 148, 0xBBA00AA4C892F774uL, 0xE1E2F213AFF1C000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 149, 0xA6994E4A4ACC18F2uL, 0x4DF62FA1E12A70A6uL), (-1, 0, 0xEFFA04281F25EDB5uL, 0xAC5A2C9B0688C6F3uL)),
@@ -983,7 +983,7 @@ namespace DoubleDouble {
                     ((+1, 118, 0xCDAA8D87AD3C1157uL, 0x93A37A7695A0A322uL), (-1, -30, 0xD16350EB4BF8854EuL, 0x8D346B62BB1B686BuL)),
                     ((+1, 112, 0xE4E2DD27F340910BuL, 0xB29DFB842916ED7EuL), (+1, -36, 0xE9E9E3086F257665uL, 0xDA86E545752C19D1uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX40Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX40Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 153, 0xE4AB0CF8D4731D96uL, 0x734C9707FE6EA200uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 154, 0xCCAFFC0FE9F7688EuL, 0x84CCB4AA813C3B11uL), (-1, 0, 0xF16ABD96E5096E9AuL, 0x2A7D85C63D8440A5uL)),
@@ -1029,7 +1029,7 @@ namespace DoubleDouble {
                     });
                 }
 
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX2Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX2Table
                  = new(new (ddouble c, ddouble d)[] {
                     (Zero, (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -2, 0xD8773039049E70B6uL, 0x5C8380FDFD5A6952uL), (+1, 1, 0xD5C2EF2F19D31DFFuL, 0x2EA6859A83CB194AuL)),
@@ -1047,7 +1047,7 @@ namespace DoubleDouble {
                     ((+1, -25, 0xCF2542A04D70E30AuL, 0x5F41921BD93FB8EEuL), (+1, -34, 0x8137FFB0A64AFFC4uL, 0xE23AC8141B1C4A24uL)),
                     ((+1, -32, 0xACBAB2A53357D7FAuL, 0x517F5F070DDCBC6DuL), (-1, -46, 0xFDBEBF7461B03852uL, 0x8620F88C5A90792EuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX3Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX3Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, -1, 0xB17217F7D1CF79ABuL, 0xC9E3B39803F2F6AFuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 1, 0x8E9E33E514053A30uL, 0x4AA55F68BC43CAEAuL), (+1, 0, 0xF11A41C30D487C6AuL, 0x8297DCC24D9EA2C4uL)),
@@ -1063,7 +1063,7 @@ namespace DoubleDouble {
                     ((+1, -25, 0x8469D8685818756BuL, 0x737FB38381F9D551uL), (+1, -35, 0x8FF7A2BFAFE33427uL, 0x8F5AA36D90D52E8DuL)),
                     ((+1, -33, 0xC4340B38BA0383F7uL, 0xB0A872234FA6A2C2uL), (-1, -47, 0xF7F073AFB4F056B7uL, 0x802CD54C402F970DuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX4Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX4Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 0, 0xE5585FD151001191uL, 0x36FEA076849739B2uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 1, 0xE3A2356785758C66uL, 0x3BEB5BF802BD2DE9uL), (+1, 0, 0xA45AD1649B83C98DuL, 0xD1140B0976E615A0uL)),
@@ -1078,7 +1078,7 @@ namespace DoubleDouble {
                     ((+1, -26, 0xB1E185A46F4AEC91uL, 0xCF3C56B0E96051CCuL), (+1, -36, 0xA603F1FA0C0FBC20uL, 0xC411546279B5980AuL)),
                     ((+1, -34, 0xE721A2EB068A5EBDuL, 0x067629068C1BFC40uL), (-1, -48, 0xF7076F62BCE1E6AFuL, 0x0493FCA71D6501A7uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX5Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX5Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0xCB653BE49167C59EuL, 0x80712A0744451830uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0x8E17F56EAFCF1DD9uL, 0x390753649D0012E6uL), (+1, -1, 0xEC5D97AE9CB0B2F3uL, 0x917C4F88ECEA6285uL)),
@@ -1092,7 +1092,7 @@ namespace DoubleDouble {
                     ((+1, -25, 0xA898DDCA8A87ADEAuL, 0x9972456946FAFD89uL), (+1, -35, 0x9511F252FB2A9D1BuL, 0xCE7A9BFC83EADE3DuL)),
                     ((+1, -33, 0xD10EDAFF99EC9B46uL, 0x0404BCB76E2A5341uL), (-1, -47, 0xD2A40400CE72DF8FuL, 0xF5FACD171AF10CDEuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX6Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX6Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 2, 0x993321E223CE49A5uL, 0x3C2789A6630DB256uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xAC56C20632A97AB6uL, 0x66348E8AF17DC9EEuL), (+1, -1, 0xC4C052F860C0A399uL, 0x29678F49A83B536CuL)),
@@ -1106,7 +1106,7 @@ namespace DoubleDouble {
                     ((+1, -27, 0xA2967B121EB83EB2uL, 0x3B20F7D9A397C4F8uL), (+1, -38, 0xE535ECF79F0F3B2AuL, 0xC677307CA7817A0FuL)),
                     ((+1, -35, 0xA5D572E0511C9BFAuL, 0x751994070C687CF2uL), (-1, -49, 0x82410718ECF2B310uL, 0x34E03D23271AEC38uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX7Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX7Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 2, 0xD28939D6780E4E09uL, 0x89E731C4043380C3uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xB72D6AFF4F27783CuL, 0x8A87B0141884795EuL), (+1, -1, 0x95DCEF87D2421D45uL, 0x66599AD405F4B34AuL)),
@@ -1119,7 +1119,7 @@ namespace DoubleDouble {
                     ((+1, -25, 0xE23A1FC0475E67A2uL, 0x2BE7E1FCA69CE8DAuL), (+1, -35, 0xA8D92A6DBB1C8A75uL, 0x8B8150015692F376uL)),
                     ((+1, -33, 0xF25407F118B797B4uL, 0x12C97C4CF852504AuL), (-1, -47, 0xCAD1ACD580911856uL, 0x5AFA70535F3322CEuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX8Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX8Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 3, 0x88670F996E617E59uL, 0x345CE24EF47B7E66uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xCBF6DCB1DF55488AuL, 0x470D1AAF30DFD898uL), (+1, -1, 0x82DF642AFE40C464uL, 0x6B3D3F6A72D427F6uL)),
@@ -1132,7 +1132,7 @@ namespace DoubleDouble {
                     ((+1, -26, 0xB4DD515AD0FE50F7uL, 0x5377920C8F77DF89uL), (+1, -37, 0xE48D5D6DFE4F982CuL, 0x1118A203747BAFC8uL)),
                     ((+1, -34, 0xA7C6EAFC8BE30084uL, 0x256363D101466249uL), (-1, -49, 0xE9DCF9E5D3442C68uL, 0x720C86EA032B6869uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX9Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX9Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 3, 0xA9AC7417E5B86529uL, 0x6A3793FB75390CA7uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xDE7DCB1AC9ADBB5FuL, 0x7ACD3B64168E2836uL), (+1, -2, 0xE8568FF1CDA35ABFuL, 0x8419482BDF6F673DuL)),
@@ -1145,7 +1145,7 @@ namespace DoubleDouble {
                     ((+1, -27, 0xA156E8C8BA765BC4uL, 0x8FA2EE584D837734uL), (+1, -38, 0xB03873ADC6B14AC3uL, 0x9433E6D656DDB254uL)),
                     ((+1, -35, 0x83EC033F4F78F7C0uL, 0x20237C402649FF53uL), (-1, -50, 0x9CA9CFE94553CF2FuL, 0xE2D3FCD73A6A86A0uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX10Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX10Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 3, 0xCCD4490D3FBE7A58uL, 0x3EBAC5A615E07C3DuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xDAAE9330B1852A82uL, 0x11EF85F8934FB756uL), (+1, -2, 0xB74193021B3AA33CuL, 0xC7A5BA7F2C706894uL)),
@@ -1157,7 +1157,7 @@ namespace DoubleDouble {
                     ((+1, -24, 0xFC76CA32114CED44uL, 0x51D442D384B01387uL), (+1, -34, 0x9F501ED1E663FB1FuL, 0x8D3841D0E3BCB524uL)),
                     ((+1, -32, 0xE9D51431735DC28EuL, 0xA93B972CBC0576B4uL), (-1, -46, 0xA2D3F8ED690F2728uL, 0x532762E49E05DD7EuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX11Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX11Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 3, 0xF1ABAC84AA68A55DuL, 0xF9507B30F6953EC7uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xE8655B1676B51060uL, 0xC8FE20E0A8D33B6AuL), (+1, -2, 0xA67507894AC650C4uL, 0x440840CF4BE67CC0uL)),
@@ -1169,7 +1169,7 @@ namespace DoubleDouble {
                     ((+1, -24, 0x9105BEF195548A89uL, 0x18F45E0982B05A89uL), (+1, -35, 0xA2C11B7F4E3FF903uL, 0x05264449B08FDAEAuL)),
                     ((+1, -33, 0xF2B0B98427FAA0F7uL, 0xA16FCABFBA2D9E1FuL), (-1, -47, 0x948B6AE70199AB30uL, 0x93999342929DE36EuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX12Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX12Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 4, 0x8C04B9F9D46B9E66uL, 0xB904FD652337CF07uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 2, 0xF4F2319E02DD34C2uL, 0xCE7B57B996482622uL), (+1, -2, 0x98771CD7594FAE66uL, 0xF2A51B68342167D0uL)),
@@ -1181,7 +1181,7 @@ namespace DoubleDouble {
                     ((+1, -25, 0xAEC3F8306EF608CBuL, 0xB586AE089CD9A6FCuL), (+1, -36, 0xB04699F03730DA88uL, 0xC0E6F0FA3C39D1CEuL)),
                     ((+1, -33, 0x854F406086011501uL, 0xCDE7270EC0F8ABF0uL), (-1, -48, 0x912223B442597FB2uL, 0xB16665AD4E50795CuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX13Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX13Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 4, 0x9FE5D0B6A80A1B4DuL, 0x2AC405094BA0DA57uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 3, 0x8040F8322840E3DEuL, 0x4ACA1114C9BB525AuL), (+1, -2, 0x8CA167B561233538uL, 0xE8A1A08474D86EF3uL)),
@@ -1193,7 +1193,7 @@ namespace DoubleDouble {
                     ((+1, -26, 0xDB399A5CB1FECC04uL, 0x29498E19EFBDA9FEuL), (+1, -37, 0xC88088F8B779045FuL, 0x708AC98A99BC0BF7uL)),
                     ((+1, -34, 0x999A50E0085F7E13uL, 0x3D65A3E4D695C4EEuL), (-1, -49, 0x962E9A20F7BA8472uL, 0x459A6EA8294CFD6BuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX14Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX14Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 4, 0xB46AD4E1D9966C4BuL, 0xB141D401EF9E5C5FuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 3, 0x859C31D5275A7C4EuL, 0xE3BE33D0704F4F6AuL), (+1, -2, 0x827D6C0435759B21uL, 0xA9FB122734C9A7C9uL)),
@@ -1205,7 +1205,7 @@ namespace DoubleDouble {
                     ((+1, -26, 0x8E46ADB6A6A6EB16uL, 0x7DFD7FB656DB4C9CuL), (+1, -38, 0xEDC35C98B31E499BuL, 0x6CAC7DBEA0D413B7uL)),
                     ((+1, -35, 0xB8509C89A17A1CC7uL, 0x674FFD2A96EDBEFDuL), (-1, -50, 0xA32FACFDB2E333A2uL, 0xD3413566A9FB1548uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX15Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX15Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 4, 0xC9879EF8B15213C3uL, 0x4745965528EED317uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 3, 0x8A993F9C3D5D163BuL, 0xC30510167CF0C81AuL), (+1, -3, 0xF368D14FDA2AA814uL, 0x30A34E144DE75AE7uL)),
@@ -1217,7 +1217,7 @@ namespace DoubleDouble {
                     ((+1, -27, 0xBE32D6DDEBEED39AuL, 0xDEDAB85E7210C27BuL), (+1, -38, 0x92219A1DC33ACC34uL, 0x315BF56EF70BADA6uL)),
                     ((+1, -36, 0xE50B63E37EC14EC4uL, 0x834DADA21372896EuL), (-1, -51, 0xB8F071475C688B26uL, 0x7A56F7F3AC527235uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX16Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX16Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 4, 0xDF31B531FE9A32C4uL, 0x7B621FE88153788CuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 3, 0x812BE075C34BD39BuL, 0x07461D91EBBBADEAuL), (+1, -3, 0xC3B5CEA7672B1330uL, 0x861080C72693D02FuL)),
@@ -1256,7 +1256,7 @@ namespace DoubleDouble {
                     });
                 }
 
-                public static ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable = new(new (ddouble s, ddouble r)[]{
+                public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable = new(new (ddouble s, ddouble r)[]{
                     ((+1, -4, 0xAAAAAAAAAAAAAAAAuL, 0xAAAAAAAAAAAAAAAAuL),  (+1, -4, 0xCCCCCCCCCCCCCCCCuL, 0xCCCCCCCCCCCCCCCCuL)),
                     ((+1, -8, 0x8208208208208208uL, 0x2082082082082082uL),  (+1, 0, 0x8666666666666666uL, 0x6666666666666666uL)),
                     ((+1, -8, 0xF83E0F83E0F83E0FuL, 0x83E0F83E0F83E0F8uL),  (+1, 1, 0xB231231231231231uL, 0x2312312312312312uL)),
@@ -1275,7 +1275,7 @@ namespace DoubleDouble {
                     ((+1, 114, 0xCBC91757DAE8B62EuL, 0x38D01E72BE6542AAuL), (+1, 6, 0xC5E1597BAB5118EFuL, 0x82DA12535E50F793uL)),
                 });
 
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeZeroPointTable
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeZeroPointTable
                  = new(new (ddouble c, ddouble d)[] {
                     (Zero, (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xF7B95E4771C55D8FuL, 0x0C28D0814E530F17uL), (+1, 1, 0x9071B2D69DC0C3C5uL, 0x9F1956AD31ECC033uL)),
@@ -1292,7 +1292,7 @@ namespace DoubleDouble {
                     ((+1, -39, 0xCCCA6732A71884A6uL, 0x6EE973CF1D2C64E4uL), (+1, -42, 0xDC1E6AB7FDC1E294uL, 0x6064187B62AADFB5uL)),
                 });
 
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX1Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX1Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((-1, -1, 0x93C467E37DB0C7A4uL, 0xD1BE3F810152CB56uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((-1, -7, 0xE2A2276E4ED2636EuL, 0x7C98B59F3B96D073uL), (+1, 1, 0xB7EB5362DBD152F5uL, 0xAA4528106A5F3EDAuL)),
@@ -1309,7 +1309,7 @@ namespace DoubleDouble {
                     ((+1, -32, 0x8B9950DE85700503uL, 0xB136D10DE12D6165uL), (+1, -35, 0xC8EF6ABE7B40E03CuL, 0xC7ADC48C15DFB2F0uL)),
                     ((+1, -41, 0xA04E90FAE2AF920CuL, 0xDA3B6CF77ABC4C9CuL), (+1, -44, 0xA97E72839B9525ADuL, 0x2497114B291087CAuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX2Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX2Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, -2, 0xD8773039049E70B6uL, 0x5C8380FDFD5A6952uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0xB81C7AD4255FF706uL, 0x4BC2674E2E2DC8C7uL), (+1, 0, 0xF0375F6F3C709682uL, 0x9355B63E8CFFC98AuL)),
@@ -1325,7 +1325,7 @@ namespace DoubleDouble {
                     ((+1, -32, 0x935AD77C66AA92EAuL, 0x36265685C44FF733uL), (+1, -35, 0xD4A82EA237D46563uL, 0x97A417B9C33C6C24uL)),
                     ((+1, -41, 0xAC09BEF3863F1496uL, 0xD6558AA81557A03DuL), (+1, -44, 0xB6480A6CEADD2D42uL, 0xEFCB3E07D2E33CF4uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX3Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX3Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, -1, 0xEC3B981C824F385BuL, 0x2E41C07EFEAD34A9uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0xD5E83FCD44111A39uL, 0x41714D3E695C0371uL), (+1, 0, 0xB10655C923808F1CuL, 0xCDE85623DC910B1CuL)),
@@ -1340,7 +1340,7 @@ namespace DoubleDouble {
                     ((+1, -31, 0xA528FEF9DF9A9A12uL, 0x4595A6F14E994EEFuL), (+1, -34, 0xEFC0C336DC933856uL, 0x5ABE7237606B9DFFuL)),
                     ((+1, -40, 0xC7B7BA2251F92718uL, 0xFDF740DE7EFF7062uL), (+1, -43, 0xD48D595E152E62DDuL, 0xD5C4EB23009AF338uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX4Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX4Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 0, 0xA0C876B8EBD246D8uL, 0x41CB8AEA2A0144FFuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0xCEB7949D38FC26FAuL, 0x707636B7E5140F24uL), (+1, 0, 0x87A576FEBB5188ABuL, 0x775E6126F8FE2999uL)),
@@ -1354,7 +1354,7 @@ namespace DoubleDouble {
                     ((+1, -29, 0x9440CD7963892C77uL, 0x719C59FC17AD022DuL), (+1, -32, 0xD9467A0F20C8E8AAuL, 0xAC3E12F2110E11C1uL)),
                     ((+1, -38, 0xBD9E4BED82F013D6uL, 0xD0BF6CC37F1B9AE0uL), (+1, -41, 0xCB3EE5F4A8ECF8FCuL, 0xCD9DFA14B56D3988uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX5Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX5Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 0, 0xC0C876B8EBD246D8uL, 0x41CB8AEA2A0144FFuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0xC7FDFBAA02EF7C4AuL, 0xE35114577F4B6C72uL), (+1, -1, 0xE3F43A2BF1375377uL, 0xC83AC8D2282ADAACuL)),
@@ -1368,7 +1368,7 @@ namespace DoubleDouble {
                     ((+1, -31, 0x8B992863FAE2C76AuL, 0x9F9743D8FEEE79B0uL), (+1, -34, 0xC6DCFCD962063ADFuL, 0x655B4572768F4CFAuL)),
                     ((+1, -40, 0x978A63D19C13AA37uL, 0x1452F6EDFDF64D31uL), (+1, -43, 0x9F1AAA7228624EBBuL, 0xA74FC075239164DCuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX6Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX6Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 0, 0xDA621052856BE071uL, 0xDB652483C39ADE98uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0xB16B78A9CCAB0EA2uL, 0xC1B2A626F92B2697uL), (+1, -1, 0xB4C6073399D0A16FuL, 0x74FE444EB6068ED1uL)),
@@ -1381,7 +1381,7 @@ namespace DoubleDouble {
                     ((+1, -29, 0xED02E22F307D663BuL, 0x4F0A634239F06598uL), (+1, -31, 0xAB78BC51A2E6B3C4uL, 0x631346D100D9F908uL)),
                     ((+1, -37, 0x8D1073FDCFACDE3EuL, 0xACF83B754429C43EuL), (+1, -40, 0x95D39B41F8F56D65uL, 0x53792B7088BA2D19uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX7Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX7Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 0, 0xEFB765A7DAC135C7uL, 0x30BA79D918F033EEuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0xA78AF55BB4204B8FuL, 0x1F863AC74FEE48E1uL), (+1, -1, 0x9DEF5706040F3785uL, 0x746C38A1DED6EC4CuL)),
@@ -1394,7 +1394,7 @@ namespace DoubleDouble {
                     ((+1, -30, 0xA8C15BAC2FEC32F2uL, 0x22D86152366B1C4CuL), (+1, -33, 0xEE93C10BB6073858uL, 0xE54F09B56171A8B4uL)),
                     ((+1, -39, 0xAF6AC48CCBA9DD4AuL, 0xD82441DBCB8A7E77uL), (+1, -42, 0xB72BEA6070D51E64uL, 0x584E69989E38CF86uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX8Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX8Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0x8100451D11F2E408uL, 0x2AA6617ED59CAC40uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0x9E2EBB05AD0D26C9uL, 0x0B076D0540DD36B4uL), (+1, -1, 0x8C0BB5C20AF5C432uL, 0x7AE5ECE38456F408uL)),
@@ -1407,7 +1407,7 @@ namespace DoubleDouble {
                     ((+1, -31, 0x85C5117CD7FE397AuL, 0xF00E0C57EE67ED54uL), (+1, -34, 0xB94A8C3E723E91EAuL, 0xD6011A455004E173uL)),
                     ((+1, -41, 0xF6353A797ED58EC3uL, 0x1EACAD4194D92243uL), (+1, -44, 0xFD3F0B1F68391DF1uL, 0xEF33881A9055B770uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX9Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX9Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0x8900451D11F2E408uL, 0x2AA6617ED59CAC40uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0x8834CFC577C7F861uL, 0xCE20FABA16A7718CuL), (+1, -2, 0xE26887535014A552uL, 0xF3A4FCCF98976E4EuL)),
@@ -1419,7 +1419,7 @@ namespace DoubleDouble {
                     ((+1, -28, 0xD55C70D3A942D656uL, 0x3F4B6C4EBB81490BuL), (+1, -30, 0x97328B528EE2AE36uL, 0x60F97BBD4605DCF2uL)),
                     ((+1, -37, 0xE16A1F29E8B0585BuL, 0xADAE07A757152862uL), (+1, -40, 0xEBD6BC53ACAD7E97uL, 0x907B87D45A554E97uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX10Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX10Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0x901CB6E42E64AB24uL, 0x9C6D7DF09CB91E07uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, 0, 0x80BCF3EB317F2E5FuL, 0x116739FF3894FCE6uL), (+1, -2, 0xCCC6EBE954C359DEuL, 0x2029293898C29ABCuL)),
@@ -1431,7 +1431,7 @@ namespace DoubleDouble {
                     ((+1, -29, 0xD822B3A71996B567uL, 0x43AB8C070711F592uL), (+1, -31, 0x96856186E7799342uL, 0xE2FFBC9A11A3F0E2uL)),
                     ((+1, -38, 0xCDE8B36F46AA2598uL, 0x34153EDAA556F8F2uL), (+1, -41, 0xD4AEF3C83D73165CuL, 0x42EBDAFE82567633uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX11Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX11Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0x96831D4A94CB118BuL, 0x02D3E457031F846DuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xF408DF1DC5817B3DuL, 0x2AE97ADB91B76669uL), (+1, -2, 0xBAD0CD3A2634B9A2uL, 0xA919CD3123638E87uL)),
@@ -1443,7 +1443,7 @@ namespace DoubleDouble {
                     ((+1, -30, 0xE7D3AD919A038B12uL, 0x0E7C87C715AA6D97uL), (+1, -32, 0x9EEF6AF8328FFBCCuL, 0x135E1C9C16AFFDF2uL)),
                     ((+1, -39, 0xC8E6437B7B5B403CuL, 0x5261DF517717EE3AuL), (+1, -42, 0xCD1C1E753135B1DEuL, 0xDDBBAAD2190099C0uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX12Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX12Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0x9C5491A7AC10E2FFuL, 0x5FEB2A28777C9BB3uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xE7EC6EB8B8AB46D0uL, 0x94D971BF427C232BuL), (+1, -2, 0xABADC9B3681FFC04uL, 0xF1B863EC0F295476uL)),
@@ -1455,7 +1455,7 @@ namespace DoubleDouble {
                     ((+1, -30, 0x8288F41772F3545AuL, 0x4A67FB0669CE7865uL), (+1, -33, 0xB07339EC9365FB11uL, 0xED410793002D5A3CuL)),
                     ((+1, -40, 0xCF5546841B171E1BuL, 0xB5ABC9913E2D7D6BuL), (+1, -43, 0xD171B2524CEE15CDuL, 0xFB1F7FB22730AE68uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX13Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX13Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0xA1A9E6FD01663854uL, 0xB5407F7DCCD1F108uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xDCFB796B698BC063uL, 0xC440AFD51D6B3E48uL), (+1, -2, 0x9EC281A462F1DF3DuL, 0xD2439BB288F1B63BuL)),
@@ -1467,7 +1467,7 @@ namespace DoubleDouble {
                     ((+1, -31, 0x994C931E881AA992uL, 0x083A05901637DE9CuL), (+1, -34, 0xCC8970FA4D70FB5FuL, 0x5E9E6F506595F202uL)),
                     ((+1, -41, 0xE0938ABA86DE383FuL, 0xACD59D7AF26D2E9DuL), (+1, -44, 0xE0A9DE64A02F234DuL, 0xB75B1E1F081AD47EuL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX14Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX14Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0xA69635C1EDB4FD41uL, 0x04056BCC91BE3FCDuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xD310A8A2548F0AF7uL, 0x6D46BDF0D8CC603EuL), (+1, -2, 0x939CA18C5A562654uL, 0x3CF59ED7D1B924E8uL)),
@@ -1479,7 +1479,7 @@ namespace DoubleDouble {
                     ((+1, -32, 0xBAB840BD25C70506uL, 0xBC43BF8B1C7795E3uL), (+1, -35, 0xF6281E4806BDC2DFuL, 0x9D4E96F8A70EA5D3uL)),
                     ((+1, -42, 0xFDB32BCD9F45860FuL, 0x17821B28D2CE1A87uL), (+1, -45, 0xFB86A674F69607A8uL, 0xAB66F497A07A0E01uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX15Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX15Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0xAB287EE67FFE21D3uL, 0x4D29FE15B65088F2uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xCA0B2D92F587F693uL, 0x0C20EBE2413913EDuL), (+1, -2, 0x89E642E450C33EBFuL, 0x5209D295839C5D8CuL)),
@@ -1491,7 +1491,7 @@ namespace DoubleDouble {
                     ((+1, -33, 0xEAD01FE19337CE1DuL, 0xDC8FD19B0B141689uL), (+1, -35, 0x99124D481BF42B2BuL, 0x4641FAAE32CC80C6uL)),
                     ((+1, -42, 0x94AE0DB1B918049AuL, 0x19F404FEA80ADC2FuL), (+1, -45, 0x922E55D9491E34CDuL, 0xFF86D630785789F4uL)),
                 });
-                public static ReadOnlyCollection<(ddouble c, ddouble d)> PadeX16Table
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeX16Table
                  = new(new (ddouble c, ddouble d)[] {
                     ((+1, 1, 0xAF6CC32AC4426617uL, 0x916E4259FA94CD36uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                     ((+1, -1, 0xAC5E183FD300CB9EuL, 0xB043DD7EE0359477uL), (+1, -3, 0xE371CF4ADBF2C47EuL, 0xA0A6E07044E7ABA8uL)),
