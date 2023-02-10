@@ -7,7 +7,6 @@ namespace DoubleDouble {
 
         private const UInt64 Bits52Mask = 0x000FFFFFFFFFFFFFuL, Bits53Mask = 0x001FFFFFFFFFFFFFuL;
         private const UInt64 RoundBit = 0x0000000000400000uL, MantissaTopBit = 0x8000000000000000uL;
-        private const UInt64 Bits52MantissaOne = 0x0008000000000000uL;
 
         public static (int sign, UInt64 hi, UInt64 lo) Split(long n) {
             if (n == 0) {
