@@ -197,7 +197,7 @@ namespace DoubleDouble {
         public static implicit operator ddouble((int sign, int exponent, UInt64 hi, UInt64 lo) bits) {
             if (bits.sign == 0) {
                 if (bits.exponent != 0 || bits.hi != 0 || bits.lo != 0) {
-                    throw new ArgumentException("Illegal zero set.");
+                    throw new ArgumentException("Invalid zero set.");
                 }
 
                 return Zero;

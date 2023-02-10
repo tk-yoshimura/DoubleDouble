@@ -3,8 +3,7 @@
 namespace DoubleDoubleHexcode {
     [DebuggerDisplay("{ToString(),nq}")]
     public struct Hexcode {
-        // C# is IEEE754 compliant.
-        public const int MantissaBits = 116, UInt64Bits = 64;
+        public const int MantissaBits = 116, UInt64Bits = 64, MantissaBias = 1023;
 
         private const UInt64 MantissaOneHi = 0x0008000000000000uL;
         private const UInt64 Bits51Mask = 0x000FFFFFFFFFFFFFuL, Bits52Mask = 0x0010000000000000uL;
@@ -18,6 +17,9 @@ namespace DoubleDoubleHexcode {
         }
 
         public static Hexcode Zero { get; } = new Hexcode(0uL, 0uL);
+
+        public UInt64 Hi => hi;
+        public UInt64 Lo => lo;
 
         public static implicit operator (UInt64 hi, UInt64 lo)(Hexcode hex) {
             return (hex.hi, hex.lo);
@@ -39,12 +41,12 @@ namespace DoubleDoubleHexcode {
                 ? (bits.exponent, mantissabits.hi52)
                 : (checked(bits.exponent + 1), MantissaOneHi);
 
-            if (exponent < -1022 || exponent > 1023) {
+            if (exponent < -MantissaBias + 1 || exponent > MantissaBias) {
                 throw new ArgumentOutOfRangeException(nameof(exponent), "Too large exponent.");
             }
 
             UInt32 signbit = (bits.sign < 0 ? 1u : 0u) << 31;
-            UInt32 exponentbits = (UInt32)(exponent + 1023) << 20;
+            UInt32 exponentbits = (UInt32)(exponent + MantissaBias) << 20;
 
             UInt64 hi = mantissabits.hi52 | ((UInt64)(signbit | exponentbits) << 32);
             UInt64 lo = mantissabits.lo64;

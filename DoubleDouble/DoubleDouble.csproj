@@ -17,4 +17,61 @@
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resource\BernoulliTable.bin" />
+    <None Remove="Resource\CiSiTable.bin" />
+    <None Remove="Resource\DigammaTable.bin" />
+    <None Remove="Resource\EiTable.bin" />
+    <None Remove="Resource\ErfcTable.bin" />
+    <None Remove="Resource\ErfiTable.bin" />
+    <None Remove="Resource\ErfTable.bin" />
+    <None Remove="Resource\FresnelTable.bin" />
+    <None Remove="Resource\GammaTable.bin" />
+    <None Remove="Resource\GaussIntegralTable.bin" />
+    <None Remove="Resource\IncompGammaTable.bin" />
+    <None Remove="Resource\InverseErfcTable.bin" />
+    <None Remove="Resource\InverseErfTable.bin" />
+    <None Remove="Resource\LambertWTable.bin" />
+    <None Remove="Resource\LogGammaTable.bin" />
+    <None Remove="Resource\RiemannZetaTable.bin" />
+    <None Remove="Resource\StieltjesGammaTable.bin" />
+    <None Remove="Resource\StruveIntegralTable.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\BernoulliTable.bin" />
+    <EmbeddedResource Include="Resource\CiSiTable.bin" />
+    <EmbeddedResource Include="Resource\DigammaTable.bin" />
+    <EmbeddedResource Include="Resource\EiTable.bin" />
+    <EmbeddedResource Include="Resource\ErfcTable.bin" />
+    <EmbeddedResource Include="Resource\ErfiTable.bin" />
+    <EmbeddedResource Include="Resource\ErfTable.bin" />
+    <EmbeddedResource Include="Resource\FresnelTable.bin" />
+    <EmbeddedResource Include="Resource\GammaTable.bin" />
+    <EmbeddedResource Include="Resource\GaussIntegralTable.bin" />
+    <EmbeddedResource Include="Resource\IncompGammaTable.bin" />
+    <EmbeddedResource Include="Resource\InverseErfcTable.bin" />
+    <EmbeddedResource Include="Resource\InverseErfTable.bin" />
+    <EmbeddedResource Include="Resource\LambertWTable.bin" />
+    <EmbeddedResource Include="Resource\LogGammaTable.bin" />
+    <EmbeddedResource Include="Resource\RiemannZetaTable.bin" />
+    <EmbeddedResource Include="Resource\StieltjesGammaTable.bin" />
+    <EmbeddedResource Include="Resource\StruveIntegralTable.bin" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
