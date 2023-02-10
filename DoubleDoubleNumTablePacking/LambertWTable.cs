@@ -21,7 +21,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> NearSingularPadeTable
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> NearSingularPadeTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((-1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((-1, 2, 0x9478FB18D3F20BC2uL, 0x746283E89F45BBA6uL), (+1, 2, 0xB478FB18D3F20BC2uL, 0x746283E89F45BBA6uL)),

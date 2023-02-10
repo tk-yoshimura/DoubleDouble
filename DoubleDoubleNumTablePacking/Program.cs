@@ -77,6 +77,18 @@
                 StruveIntegralTable.Pack(sw);
             }
 
+            using (BinaryWriter sw = new(File.OpenWrite(dirpath_root + nameof(MathieuMTable) + ".bin"))) {
+                MathieuMTable.Pack(sw);
+            }
+
+            using (BinaryWriter sw = new(File.OpenWrite(dirpath_root + nameof(MathieuDTable) + ".bin"))) {
+                MathieuDTable.Pack(sw);
+            }
+
+            using (BinaryWriter sw = new(File.OpenWrite(dirpath_root + nameof(BesselKTable) + ".bin"))) {
+                BesselKTable.Pack(sw);
+            }
+
             Console.WriteLine("END");
             Console.Read();
         }

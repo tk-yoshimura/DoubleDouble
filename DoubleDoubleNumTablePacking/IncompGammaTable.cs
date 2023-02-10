@@ -19,7 +19,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<Hexcode> TaylorA1ZeroTable
+        static readonly ReadOnlyCollection<Hexcode> TaylorA1ZeroTable
             = new(new Hexcode[] {
                 (+1, -1, 0x93C467E37DB0C7A4uL, 0xD1BE3F810152CB56uL),
                 (-1, -1, 0xA7E7A01357D16E75uL, 0xC24856F3BD611D64uL),

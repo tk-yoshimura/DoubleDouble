@@ -19,7 +19,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<Hexcode> CoefTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> CoefTable = new(new Hexcode[]{
             (+1, -1, 0xE2DFC48DA77B553CuL, 0xE1D82906AEDC9C1FuL),
             (+1, -3, 0xED94FD97F72F1FB0uL, 0x57441C887E2D6412uL),
             (+1, -3, 0x829E16055C8E2839uL, 0xD8D1B5FE1B00F73FuL),

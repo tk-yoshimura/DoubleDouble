@@ -89,7 +89,7 @@ namespace DoubleDouble {
             public static class LambertW {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> NearSingularPadeTable;
 
-                static LambertW() { 
+                static LambertW() {
                     NearSingularPadeTable = ResourceUnpack.NumTableX2(Resource.LambertWTable)[nameof(NearSingularPadeTable)];
                 }
             }

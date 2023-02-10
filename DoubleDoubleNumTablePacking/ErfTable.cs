@@ -21,7 +21,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeTable
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, 0, 0x906EBA8214DB688DuL, 0x71D48A7F6BFEC344uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, -3, 0xA61A09E5DFFF9E51uL, 0x7E212CA19743662AuL), (+1, -2, 0xF444C1245E74CA13uL, 0x10959EDC1DBBED49uL)),

@@ -34,7 +34,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX0NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX0NumerTable = new(new Hexcode[]{
             (-1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (-1, -5, 0x9097A3419C787FA0uL, 0xE9C6D320E7B4699FuL),
             (+1, -7, 0xB09CC5EA166D0446uL, 0x6583A7847BE5866EuL),
@@ -47,7 +47,7 @@ namespace DoubleDoubleNumTablePacking {
             (+1, -37, 0xC6F91D33BBF18434uL, 0x93F09AC9EFB56A64uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX0DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX0DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (-1, -2, 0xC6643BD0D10F60C2uL, 0x3F4AA699E05C2477uL),
             (+1, -4, 0xA44DCEC8D333465DuL, 0x4C2AD417794025F7uL),
@@ -61,7 +61,7 @@ namespace DoubleDoubleNumTablePacking {
             (+1, -39, 0xDE3DA65B827E7B3CuL, 0x5BD91583B244F2CAuL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX1NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX1NumerTable = new(new Hexcode[]{
             (+1, -1, 0x93C467E37DB0C7A4uL, 0xD1BE3F810152CB48uL),
             (+1, -2, 0x82DDBCA9529C5519uL, 0xCB1377EE94AF6E38uL),
             (+1, -5, 0xCA5D944837774C1BuL, 0xA82084BDB284B51AuL),
@@ -74,7 +74,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -37, 0x9307F16279A9317BuL, 0x278EBA69B9FD15F1uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX1DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX1DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (+1, -2, 0xA2217D326C0F30EFuL, 0x6C013D01B4462802uL),
             (+1, -5, 0xDD593C8937988753uL, 0x92962F363DAB653CuL),
@@ -88,7 +88,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -44, 0x8309C83F52320220uL, 0x8709215E1230DAFEuL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX2NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX2NumerTable = new(new Hexcode[]{
             (-1, -5, 0xDC0F9DACF82CDCF1uL, 0x84EDDBBFE8A60C27uL),
             (+1, -5, 0xAFC10697E6BB7FB3uL, 0x19E4682E542C4955uL),
             (+1, -7, 0xDF10B4BF695D8F17uL, 0xA53E585861206466uL),
@@ -102,7 +102,7 @@ namespace DoubleDoubleNumTablePacking {
             (+1, -42, 0xBF7F9AD7AF262406uL, 0xB85907DBE39FBC5EuL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX2DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX2DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (+1, -2, 0xBA3E20B9CC8196C4uL, 0xF3D9F1B73023E6E4uL),
             (+1, -4, 0x8EA8F50F144D44ABuL, 0xE827F4CAA59B7834uL),
@@ -117,7 +117,7 @@ namespace DoubleDoubleNumTablePacking {
             (+1, -51, 0x9DBA006F7E43A843uL, 0xBC198CC35E9C4840uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX4NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX4NumerTable = new(new Hexcode[]{
             (+1, -1, 0xC9506DF2DA8BA05AuL, 0x39BC0B8FE5AA9AB1uL),
             (+1, -2, 0xFDD51E7229FE8B30uL, 0x833A0A50899A578FuL),
             (-1, -2, 0xD177BFC2A3947531uL, 0x40CAA6C20BDD84C1uL),
@@ -133,7 +133,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -36, 0x84BC27A07E18941CuL, 0xC30D162483075FA1uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX4DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX4DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (+1, 0, 0xD8F2C454B4CCCD49uL, 0x41BDEBA8C197DC1BuL),
             (+1, 0, 0x9D0D94CB9F8CF85AuL, 0xF288B1BD892AF985uL),
@@ -150,7 +150,7 @@ namespace DoubleDoubleNumTablePacking {
             (+1, -53, 0xFF7234A222225375uL, 0x4483FAAB8F4238B0uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX6NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX6NumerTable = new(new Hexcode[]{
             (-1, 2, 0x81BEFA5B030A153BuL, 0xF296DBBAF63DB94EuL),
             (-1, 2, 0x966DA3350EC6B7ECuL, 0xD8F15C635D18390CuL),
             (-1, 1, 0x97A13A1617BA45A3uL, 0xEBBC648B55643EC7uL),
@@ -166,7 +166,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -42, 0xEC8DE3ABE277F8CAuL, 0xC0C7144933D543B0uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX6DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX6DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (+1, -1, 0xFA04C24E328C9FA0uL, 0x5AA59AA82003EB27uL),
             (+1, -2, 0xD14CA283DE1F114FuL, 0xB7F1D436CF770D94uL),
@@ -183,7 +183,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -63, 0xAD8D34FBC80E5842uL, 0xE26F28AE424F26A6uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX10NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX10NumerTable = new(new Hexcode[]{
             (-1, 2, 0xDD38E48D1D29DFC6uL, 0xEE48C9CD016F7B7EuL),
             (-1, 1, 0xE9EA167056B5E439uL, 0xBFF32994323E7522uL),
             (-1, -1, 0xD0454ECD7B383967uL, 0x88E86E8A572EB37EuL),
@@ -199,7 +199,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -52, 0xA6B47F0CCCA14204uL, 0xB63F599EC3A88B8CuL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX10DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX10DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (+1, -2, 0xDAC861D45044CA6FuL, 0xB3791ED4B1162E70uL),
             (+1, -4, 0x98C9340CA20DE508uL, 0xBEE1013E2279FF94uL),
@@ -216,7 +216,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -72, 0xD3721B2044CF9B7EuL, 0x37481943115B4228uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX17NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX17NumerTable = new(new Hexcode[]{
             (-1, 3, 0xBC850990343EE49AuL, 0xF9694A776F1A9217uL),
             (-1, 2, 0x8B8FDE8104670661uL, 0x05868F2FD09110CDuL),
             (-1, -1, 0xBB7574A17FB324F6uL, 0x4A03D0508D87C468uL),
@@ -232,7 +232,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -55, 0xB9B2124F04A304F0uL, 0x5A3DC1CC98335D77uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX17DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX17DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (+1, -2, 0x9F612EF20F08B017uL, 0x4038C146DF974564uL),
             (+1, -5, 0xB38905CEEE562D39uL, 0xA9110ABC1CDCBDA7uL),
@@ -249,7 +249,7 @@ namespace DoubleDoubleNumTablePacking {
             (+1, -84, 0xB6429F1817E58B42uL, 0xC4413E94DA093EDEuL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX30NumerTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX30NumerTable = new(new Hexcode[]{
             (-1, 4, 0xA65AF3BC3FD2CB36uL, 0x944A369EE33B7D5FuL),
             (-1, 2, 0x9EA4A789E1037811uL, 0x439D148CF5B7D093uL),
             (-1, -1, 0x9033D2A18DFD0E8FuL, 0x9C7FF3B4E295C403uL),
@@ -266,7 +266,7 @@ namespace DoubleDoubleNumTablePacking {
             (-1, -65, 0xB1E54B0CFC22D2A9uL, 0xADF87877741BE4F7uL),
         });
 
-        public static readonly ReadOnlyCollection<Hexcode> PadeX30DenomTable = new(new Hexcode[]{
+        static readonly ReadOnlyCollection<Hexcode> PadeX30DenomTable = new(new Hexcode[]{
             (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL),
             (+1, -3, 0xD1FFA3ECE66E3D3CuL, 0x46DDC2EA91C8DB84uL),
             (+1, -6, 0xA5E8EEA1C1227FACuL, 0xDB4B73CF770CEBEFuL),

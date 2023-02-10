@@ -39,7 +39,7 @@ namespace DoubleDouble {
 
             private static readonly ReadOnlyCollection<(ddouble x, ddouble w)> Legendre40Table, Laguerre40Table;
 
-            static PolygammaPlusX() { 
+            static PolygammaPlusX() {
                 Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> tables = ResourceUnpack.NumTableX2(Resource.GaussIntegralTable);
 
                 Legendre40Table = tables[nameof(Legendre40Table)];

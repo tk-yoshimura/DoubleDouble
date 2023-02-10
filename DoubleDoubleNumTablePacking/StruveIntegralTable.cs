@@ -23,7 +23,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> StruveKTable
+        static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> StruveKTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, -6, 0xA35E134F29D1C917uL, 0x116A63D42B4AACACuL), (+1, -5, 0xCD7E16793872F914uL, 0x36A81219C6E1209BuL)),
                 ((+1, -4, 0xD736E5E5EA79148DuL, 0x796484E7D94A203BuL), (+1, -4, 0xDBB215F587B3828DuL, 0x524E2E5B98940E14uL)),
@@ -99,7 +99,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 8, 0x84ED3E8D719120EEuL, 0x759971C895EFCB99uL), (+1, -380, 0xE23C5091EBF6E451uL, 0xED94E299A4FBFCEAuL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> StruveMTable
+        static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> StruveMTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, -10, 0xB350C7DFB25074CCuL, 0xD660038622DCC761uL), (+1, -9, 0xE5FC5E3A1E62E234uL, 0x4CAB1E22737F7476uL)),
                 ((+1, -8, 0xEBBDB1D68648D57FuL, 0xD070632FC4ADD9A8uL), (+1, -7, 0x8551E12434B64887uL, 0xA3E473AAC279FA68uL)),

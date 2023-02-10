@@ -26,7 +26,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> GtP5PadeTable = new(new (Hexcode c, Hexcode d)[]{
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> GtP5PadeTable = new(new (Hexcode c, Hexcode d)[]{
             ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0xCFE58F1CD6B15901uL, 0x377DD7FD748BB77AuL)),
             ((+1, 1, 0x8AB803C6F3475E75uL, 0x7A6EF4CDB8692F7FuL), (+1, 2, 0x9BEEA85380B6BE97uL, 0x9C397B2EA3AF033DuL)),
             ((+1, 1, 0x935E4CC0A2902222uL, 0x2B2F682DF64FB89DuL), (+1, 2, 0xDB303C5B1FAA7886uL, 0x1753779854F61828uL)),
@@ -43,7 +43,7 @@ namespace DoubleDoubleNumTablePacking {
             (Hexcode.Zero, (+1, -25, 0x8DD4118E15F5D4F0uL, 0x7C266ABF2D30C293uL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt1PadeTable = new(new (Hexcode c, Hexcode d)[]{
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt1PadeTable = new(new (Hexcode c, Hexcode d)[]{
             ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 1, 0x95ADA7B501D4B116uL, 0x1C293D62F156A804uL)),
             ((+1, 1, 0x999D65DF911850C4uL, 0x0754F1D897BE04D3uL), (+1, 2, 0xE3737EE719F802D0uL, 0x96E01E4809795A3AuL)),
             ((+1, 1, 0xB20962272E0B53EDuL, 0x9F76AC013B9358FCuL), (+1, 3, 0xA3407D8AB75C6C42uL, 0xFBFABBE98247AA87uL)),
@@ -62,7 +62,7 @@ namespace DoubleDoubleNumTablePacking {
             (Hexcode.Zero, (+1, -32, 0xDA290A6F232A69B6uL, 0xEF77BB3D4219B264uL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt2PadeTable = new(new (Hexcode c, Hexcode d)[]{
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt2PadeTable = new(new (Hexcode c, Hexcode d)[]{
             ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 1, 0xFA97703BE40EAC7DuL, 0x247AB845F0C2A95BuL)),
             ((+1, 1, 0x973C745F0DBC0AA7uL, 0x51ACAFDCE807E19EuL), (+1, 3, 0xAE3CE81B627507EBuL, 0xE67DED6F792E6F00uL)),
             ((+1, 1, 0xAA53CF44254182C2uL, 0x8A29C82264A1F35BuL), (+1, 3, 0xE555938843FE2C16uL, 0x26D0426A03327E03uL)),
@@ -82,7 +82,7 @@ namespace DoubleDoubleNumTablePacking {
             ((+1, -83, 0x8147BF99B84FB714uL, 0x5109333709F79E0BuL), (+1, -37, 0xADDBB8F5B662AC8BuL, 0x009A8067D645241BuL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt4PadeTable = new(new (Hexcode c, Hexcode d)[]{
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt4PadeTable = new(new (Hexcode c, Hexcode d)[]{
             ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 2, 0xE993DB6F3F17B91BuL, 0x5585C0B72C77686AuL)),
             ((+1, 1, 0x87DFC2CD3CB1388BuL, 0xAB943F5FCB5B3B74uL), (+1, 4, 0x89C6B9398EBA9A00uL, 0x8DB6B55BB99103ECuL)),
             ((+1, 1, 0x889C0B7DCE98A03FuL, 0x5286422AE046B990uL), (+1, 4, 0x9A07814BA27C35D3uL, 0x9754372AF64DE021uL)),
@@ -103,7 +103,7 @@ namespace DoubleDoubleNumTablePacking {
             (Hexcode.Zero, (+1, -45, 0xF18EE56264BBE5F5uL, 0x0791F206FB7902ADuL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt8PadeTable = new(new (Hexcode c, Hexcode d)[]{
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt8PadeTable = new(new (Hexcode c, Hexcode d)[]{
             ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 3, 0xE49EB02D10E55196uL, 0xF242A9AA48D3D599uL)),
             ((+1, 0, 0xAE7EFDF1B14EF53CuL, 0x926006BEE327A9DAuL), (+1, 4, 0xA9E824BD7E45DE61uL, 0x9172EBC63EEF36ADuL)),
             ((+1, -1, 0xDE084E83E86A3544uL, 0xDB966355F04C950EuL), (+1, 3, 0xECAEC2002FD7D6CEuL, 0xCC73ED1D92E733BBuL)),
@@ -122,7 +122,7 @@ namespace DoubleDoubleNumTablePacking {
             (Hexcode.Zero, (+1, -46, 0xB1181127AD047634uL, 0x3211269261DA78AEuL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt16PadeTable = new(new (Hexcode c, Hexcode d)[]{
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> Gt16PadeTable = new(new (Hexcode c, Hexcode d)[]{
             ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 4, 0xE350C4179D924C9BuL, 0x7094703468B7D8E1uL)),
             ((+1, -1, 0xA49B29FC4BB0D6B3uL, 0x76147A830414A2BAuL), (+1, 4, 0xA0507F06A2C831E0uL, 0x1E89E3A35287EAD7uL)),
             ((+1, -3, 0xC0D1A735DA0DC9CAuL, 0x1B30DF05E25700F3uL), (+1, 2, 0xCF9EA8B9712B16E9uL, 0x1BAA86B406258F5EuL)),

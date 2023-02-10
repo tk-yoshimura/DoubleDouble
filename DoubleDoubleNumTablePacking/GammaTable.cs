@@ -61,7 +61,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<(Hexcode s, Hexcode r)> SterlingTable
+        static readonly ReadOnlyCollection<(Hexcode s, Hexcode r)> SterlingTable
             = new(new (Hexcode s, Hexcode r)[]{
                 ((+1, -4, 0xAAAAAAAAAAAAAAAAuL, 0xAAAAAAAAAAAAAAAAuL),  (+1, -5, 0x8888888888888888uL, 0x8888888888888888uL)),
                 ((+1, -11, 0xD00D00D00D00D00DuL, 0x00D00D00D00D00D0uL), (+1, -1, 0xC000000000000000uL, 0x0000000000000000uL)),
@@ -77,7 +77,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 59, 0xE2E1337F5AF0BED9uL, 0x0B6B0A352D4F335CuL),  (+1, 5, 0xD1BC1F238533A53CuL, 0x065E1F08A600A21BuL))
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX1Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX1Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, -1, 0xF7BE827D214A59FFuL, 0x253A787D2C0DF3D7uL), (+1, 0, 0xC5C175304F7D90D1uL, 0xFB7C5BFF16B05F97uL)),
@@ -95,7 +95,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -34, 0xC79A6A110796BB9FuL, 0x42C7DF4D4B4A31B0uL), (-1, -29, 0xCAD8579BDBEDF543uL, 0x52CA65D80FEDC326uL)),
                 ((+1, -39, 0xA94F151B4C2C820DuL, 0xF47C064B8918A5DFuL), (+1, -34, 0xC408D937BF8BB468uL, 0xE51B363FECD4A28CuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX2Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX2Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 0, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, -1, 0xE8B221B670F0E1D2uL, 0x2A4CE6637E906CF0uL), (+1, -2, 0xF8ED1333DD4352EDuL, 0xF8164BC8FFC6708DuL)),
@@ -113,7 +113,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -35, 0xA29EB8BD5600848AuL, 0x461FB7036FAA0886uL), (+1, -32, 0xE59E7BCF4F6E45D1uL, 0xEF5D8EFE14C86B64uL)),
                 ((+1, -41, 0xF720E3C8812332F9uL, 0x4B174D75B7D4209BuL), (-1, -37, 0xAEF64C28AC938920uL, 0x51FAB2BDF51089EAuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX3Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX3Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 1, 0x8000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 0, 0xE617FEDEC027AB6EuL, 0x1EB041FA07B91400uL), (-1, -6, 0xC47327B844F19DA1uL, 0xF22FD09EDE841516uL)),
@@ -131,7 +131,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -34, 0x979527403BD494EAuL, 0x575A7B7524B25FDAuL), (-1, -35, 0x91F7378AE43FAF25uL, 0xD9E88073B6D60AF3uL)),
                 ((+1, -40, 0xE7C35BECE2528733uL, 0xBB9552AD230F11DBuL), (+1, -42, 0xB97A4E52938778BEuL, 0xF8A7A9352BA13E19uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX4Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX4Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 2, 0xC000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 2, 0xB4ED1C0662D44C4BuL, 0x6ACCB95E5C594182uL), (-1, -2, 0xA0A99027FD12FA97uL, 0xEA6192AD07170FF7uL)),
@@ -149,7 +149,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -33, 0xA236F9CF71332B06uL, 0xB580CCC654F9F21CuL), (-1, -35, 0xC22E52AAA2DD2D7FuL, 0x89EE663EBCBF2C77uL)),
                 ((+1, -39, 0xD639CDA3601CEB38uL, 0x2D2A66F29AF37FDBuL), (+1, -40, 0x8C6E280D648C7E49uL, 0xFE2C807D3E1D7B21uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX5Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX5Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 4, 0xC000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 4, 0xB185FC4A4282EA71uL, 0xB7BF32D2F9C31C05uL), (-1, -1, 0x94DE47B97EF5FFC3uL, 0x8E982765B1A90F4CuL)),
@@ -166,7 +166,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -28, 0xA3985121A4DA8DDAuL, 0xB9EAAD29AB87A26CuL), (-1, -32, 0xCC4968F75ACF8AC4uL, 0x6E8C7B4230F03E5EuL)),
                 ((+1, -34, 0xD78DD8EE558E8B3AuL, 0x5A9B0B54FCAA7B13uL), (+1, -37, 0x9086E7BA19CC7FC3uL, 0x9539A5FCAE659DCFuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX6Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX6Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 6, 0xF000000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 6, 0xC17B551303A0E44CuL, 0x310D9393D3A08638uL), (-1, -1, 0xE662B4D506F8EF81uL, 0x60556758C79B946DuL)),
@@ -183,7 +183,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -33, 0xCC23ECC1A1DCA7F0uL, 0x29CC8FE7FCA428E7uL), (+1, -32, 0xAFF90DA8259F290DuL, 0xD1F1D90E8CCABF76uL)),
                 ((-1, -35, 0xC049011180952156uL, 0x015C0F7AF6BBEBC4uL), (-1, -38, 0xD4A13CA4B4B5D531uL, 0x00B2376F70CFFE55uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX7Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX7Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 9, 0xB400000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 9, 0xAEB5C5976849E410uL, 0xD407F48AD4B0967EuL), (-1, -1, 0xE6F4CEBCA40843A3uL, 0xF552E1DBAE0D14ABuL)),
@@ -200,7 +200,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -24, 0xE2431BAAA0038F9DuL, 0xE6344F938E3A9827uL), (+1, -32, 0x9855CDDE624901EAuL, 0xFC323CAA64413EC0uL)),
                 ((+1, -29, 0x85355D2EA437A680uL, 0x3FC5A7266AF246DDuL), (-1, -38, 0xB7B22D845D7FF162uL, 0x5AE1F0F1454A6BA1uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX8Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX8Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 12, 0x9D80000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 12, 0x85DAEF0613B9473EuL, 0xB47B469EA438F519uL), (-1, 0, 0x9537DB7A47E17DE8uL, 0xC02F47C5124181DEuL)),
@@ -217,7 +217,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -24, 0xF1B4095FBE66A458uL, 0xCD68BA2156EBB994uL), (-1, -32, 0x894B74B1E2D3608BuL, 0xADBE175A31E717A5uL)),
                 ((+1, -30, 0xABA469F889BF0194uL, 0xC3136060C0E38829uL), (+1, -38, 0x8D498C4D81FEC273uL, 0x51DBE1211E6C9669uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX9Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX9Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 15, 0x9D80000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 15, 0x995CFDC7370BB888uL, 0x9074069FD26E11C1uL), (-1, 0, 0x955D31D2C0B60F25uL, 0xD1463D33739C7045uL)),
@@ -234,7 +234,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -19, 0xE28473E252691213uL, 0xA2D8110442F8540BuL), (-1, -32, 0xA363035F7BC8189DuL, 0xA7C7FB04D060CAB6uL)),
                 ((+1, -25, 0xE7394BDE72D35446uL, 0x22CEA0F07B58C7C6uL), (+1, -38, 0xA8A35C77DCEEB50BuL, 0xF9DCBF13D8822788uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX10Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX10Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 18, 0xB130000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 18, 0x969D320C539BD7C7uL, 0xFF112C14AE821357uL), (-1, 0, 0xB36BC3E4D784028EuL, 0x36BAE4B4650E20B8uL)),
@@ -251,7 +251,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -19, 0x83044561B568912CuL, 0x0FC1DDE992BC5044uL), (+1, -32, 0xDD3823F777CFDB0AuL, 0x4E4CC3D2FE64E224uL)),
                 ((+1, -32, 0xA1196A7D7C0F1798uL, 0x65641FF7AAB49B21uL), (-1, -38, 0xC574EB6BEA539256uL, 0xBF853E1D5344E23FuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX11Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX11Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 21, 0xDD7C000000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 21, 0xD266D7263C9D830DuL, 0x487EE4898C1275E7uL), (-1, 0, 0xB36DE07C48909F33uL, 0x4292FC94A415B338uL)),
@@ -268,7 +268,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -13, 0x951407795710610AuL, 0x69C847189ED1AED1uL), (+1, -32, 0xDD591C8AA234DE5DuL, 0x8CC0DB16EBF2A37DuL)),
                 ((+1, -19, 0x81E2BEF21B6F8D0AuL, 0xB7BE9D3C077EF094uL), (-1, -38, 0xC594FEA8257172E0uL, 0x247137E10D8B27D9uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX12Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX12Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 25, 0x9845400000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 25, 0x9AEED2249E2B2B04uL, 0x39402D62111FD1ADuL), (-1, 0, 0xB66C3400E7187FAEuL, 0x2CC19C2B8271F8A8uL)),
@@ -285,7 +285,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -9, 0xA908E915D3769A13uL, 0x00279E300FBD302BuL), (+1, -31, 0x8BBCBE6434C4C48FuL, 0xA8B2331161017BECuL)),
                 ((+1, -15, 0x97BA0DB6888EB13FuL, 0x6191B391F6258718uL), (-1, -38, 0xFF819B8E6EDFCFCFuL, 0x2F68289BF67E72D3uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX13Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX13Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 28, 0xE467E00000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 28, 0xF6248D62C9407F8BuL, 0x92852D45FFBEDE0EuL), (-1, 0, 0xB9632E5563B14789uL, 0x71E68267B9C8F632uL)),
@@ -302,7 +302,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -5, 0xC4E58EDB29B0FAA7uL, 0xD40C826A3A7093B0uL), (+1, -31, 0xAF2BC6A7DC661C3EuL, 0x2A0F1711AFCA6567uL)),
                 ((+1, -11, 0xB51D78A7B47A6F89uL, 0xFE6314778E11FE97uL), (-1, -37, 0xA3E005321DA137E1uL, 0x1A0D04EDAC97C90CuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX14Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX14Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 32, 0xB994660000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 32, 0xD21439C5F1D2C028uL, 0xE79E94875D68B0D3uL), (-1, 0, 0xBC468C5DF9B7BED9uL, 0x4869F36A8F9D4BC6uL)),
@@ -319,7 +319,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -1, 0xEE455B932288EF1CuL, 0x8CE2566637C5E213uL), (+1, -31, 0xD93AA7091D09AA0EuL, 0x6ED604C84D400931uL)),
                 ((+1, -7, 0xE043529D42438094uL, 0xF29D820DE11CB099uL), (-1, -37, 0xCFAD6DA0C81970D9uL, 0x01309831D7B32BC2uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX15Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX15Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 36, 0xA261D94000000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 36, 0xBFDA6FDAC16E1DAAuL, 0x85D61F452ECCA069uL), (-1, 0, 0xBF15DDE748E7BB0FuL, 0xF485EEF81A0F5595uL)),
@@ -336,7 +336,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 4, 0x95C71660799C59C6uL, 0x32D4B46D6EA4491DuL), (+1, -30, 0x854CE7DCE24FD3E6uL, 0xBBA9B15ACB469E53uL)),
                 ((+1, -2, 0x900D135FCA0AE9EFuL, 0xF1836B8B72F668C8uL), (-1, -36, 0x82126EDA34B7FF4DuL, 0x4A9C3CED415F0758uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX16Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX16Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 40, 0x983BBBAC00000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 40, 0xBAC33B40F0BC522BuL, 0xE6CF0BCCF2EF9A7DuL), (-1, 0, 0xC1D1255D1EFF5AC0uL, 0xEDD31C5FE0022C98uL)),
@@ -353,7 +353,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 8, 0xC38F4D4E41628DF3uL, 0xFC58062D1D6EC0F8uL), (+1, -30, 0xA1FDC4816400DA78uL, 0x489CA6C1035F61B3uL)),
                 ((+1, 2, 0xBFF2A8061E8E9CBCuL, 0x10789FDB2D72EECDuL), (-1, -36, 0xA1258344D27D1C61uL, 0xC5E77FBE025FC176uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX17Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX17Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 44, 0x983BBBAC00000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 44, 0xC11EE6F9FFD275DEuL, 0x121A7B93156668D4uL), (-1, 0, 0xC47893A112CCDC82uL, 0xC36B2B375614BE58uL)),
@@ -370,7 +370,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 13, 0x8487ACA07F3147C0uL, 0x63D6A2B20E206618uL), (+1, -30, 0xC307F52EF5F61129uL, 0x0ADA91A6BCEA5523uL)),
                 ((+1, 7, 0x84997911E26F4C43uL, 0x3CB7BD29B29A7835uL), (-1, -36, 0xC5944868812F7C9AuL, 0x93BA74F64875BD92uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX18Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX18Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 48, 0xA1BF7766C0000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 48, 0xD20A8454BAFC3134uL, 0xD8CFBD0889FCCE59uL), (-1, 0, 0xC8297E75F998DBD6uL, 0x639FC012786580E6uL)),
@@ -388,7 +388,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 13, 0xACCF2DA63F1B10B3uL, 0xB296F1A7C5C5A2A8uL), (-1, -34, 0xFE2B19C016A3D342uL, 0xF66000BB8AA1BF25uL)),
                 ((+1, 7, 0x98F461DFDC43F063uL, 0xDD955F9C372F3217uL), (+1, -40, 0xE387959E130AD4E1uL, 0x4CECB9BFFEC4AF72uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX19Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX19Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 52, 0xB5F7665398000000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 52, 0xF2EF77E2F33E9694uL, 0x6D725B4B7629B7C2uL), (-1, 0, 0xCA9A5E6A04A70C34uL, 0xBC66379B77EE2695uL)),
@@ -406,7 +406,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 18, 0x80AD801EF4A6454EuL, 0x8BB129AA988C496CuL), (-1, -33, 0x97E5CAF53E630337uL, 0x836842FFB4D599D5uL)),
                 ((+1, 11, 0xE7A3101FCEEC4B20uL, 0xAA916D4A2EB8D75DuL), (+1, -39, 0x8A2C2D4C9C8ADD8CuL, 0xD648086E81A610E8uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX20Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX20Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 56, 0xD815C98344800000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 57, 0x93ED04A1BDFFD273uL, 0xA886B448D3C9708AuL), (-1, 0, 0xCCFA0202C7C268BDuL, 0x3F3E0C31823C8B2EuL)),
@@ -424,7 +424,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 22, 0xC6536A9E1E4F5FB4uL, 0x0339075A0E4C6706uL), (-1, -33, 0xB420BEE149142303uL, 0xA84C911BFF1D77EEuL)),
                 ((+1, 16, 0xB55CE36E0017D59AuL, 0xA68D703F93750B83uL), (+1, -39, 0xA65C505BC6B20238uL, 0x342F0C199F888949uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX21Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX21Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 61, 0x870D9DF20AD00000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 61, 0xBD3985DCC21AD8CDuL, 0xC39851D69E978337uL), (-1, 0, 0xCF48E12C434AA275uL, 0x975AF5892EBA4AD9uL)),
@@ -442,7 +442,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 27, 0x9E146786AA6D5E25uL, 0x347D7A23D1B88D69uL), (-1, -33, 0xD40645F5917CC946uL, 0xBBE489CF5BF9EC02uL)),
                 ((+1, 21, 0x92C07496D88F127BuL, 0xA41E9D092AE214CBuL), (+1, -39, 0xC6AA8BD03BD695B7uL, 0x4B536DB42A9B08BCuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX22Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX22Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 65, 0xB141DF4DAE310000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 65, 0xFDB09B9823111D59uL, 0xBF39CA5E5D891E2CuL), (-1, 0, 0xD1877F026A48AEAFuL, 0xD1CB5304EA74804BuL)),
@@ -460,7 +460,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 32, 0x823DFD50975598D4uL, 0x6429F755E074C97AuL), (-1, -33, 0xF7D59D3468C4A606uL, 0x39A45B1772B776E9uL)),
                 ((+1, 25, 0xF54CB9A370D93D99uL, 0x06988F36072E51B4uL), (+1, -39, 0xEB6E0FAA9A36CBF2uL, 0xD3F5F7BA8B2096C3uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX23Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX23Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 69, 0xF3BA930ACF836000uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 70, 0xB1DF5D799A6A2A29uL, 0xB114B61A5B4E0C16uL), (-1, 0, 0xD3B665E057080601uL, 0x3A25E1107B8903A1uL)),
@@ -478,7 +478,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 36, 0xDDB1B029803A6844uL, 0x6C150CF8404DF7BAuL), (-1, -32, 0x8FE69BDB790EDB7BuL, 0x965BACC1AC20E132uL)),
                 ((+1, 30, 0xD3A0A742102C88B3uL, 0xF0B2773931A13B72uL), (+1, -38, 0x8A7F4BE5E44E0D38uL, 0x0D790BB4437310CFuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX24Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX24Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 74, 0xAF2E19AFC5266D00uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 75, 0x8233607CE62E4C13uL, 0x1331387F6FBBE4FEuL), (-1, 0, 0xD5D624295E5B1932uL, 0x08A30D2B6FA0221CuL)),
@@ -496,7 +496,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 41, 0xC2C6D286E9924817uL, 0x830A9C5BBD90A50CuL), (-1, -32, 0xA6154EDD6383D4EDuL, 0x016E257F0F24B367uL)),
                 ((+1, 35, 0xBC5A9478B75BB857uL, 0xEE2B3838B9A24A5AuL), (+1, -38, 0xA1DA14C09DB6177CuL, 0x2508C25737E9F51BuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX25Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX25Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 79, 0x83629343D3DCD1C0uL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 79, 0xC6A75D9629B33483uL, 0x8A85AC5DCB6A4326uL), (-1, 0, 0xD7E749B921E6F369uL, 0x21D3927C5D774864uL)),
@@ -514,7 +514,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 46, 0xB089F6B13460E239uL, 0xCB8C643A1051566CuL), (-1, -32, 0xBE952971F5ED845BuL, 0x1E471F94CD704F5CuL)),
                 ((+1, 40, 0xACD61B1D56A07D30uL, 0xE22AD2A38842A786uL), (+1, -38, 0xBBF36CED0BBF5101uL, 0xDDE70CD78C30908FuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX26Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX26Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 83, 0xCD4A0619FB0907BCuL, 0x0000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 84, 0x9DB0C336641D73FDuL, 0xC3BC2B4073EE66FBuL), (-1, 0, 0xD9EA65E45EA74548uL, 0x99C592F38F5C971AuL)),
@@ -532,7 +532,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 51, 0xA4F57626F7A2591FuL, 0x9F72390277084DE4uL), (-1, -32, 0xD983E13AE22A0042uL, 0x1BAD2926526D6521uL)),
                 ((+1, 45, 0xA36976794D016F1DuL, 0x7C09071C359A2C4BuL), (+1, -38, 0xD8F74DE0CEA30ECFuL, 0xB65BC2B85C5DAF11uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX27Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX27Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 88, 0xA6CC24F51BF75648uL, 0xC000000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 89, 0x820DF0E6A5A5DF3DuL, 0x13D208F6AAB1B5DBuL), (-1, 0, 0xDBE005F3C5499BBCuL, 0x37EE151DC08D2F00uL)),
@@ -550,7 +550,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 56, 0x9ECD3A8A13FE0270uL, 0x8880310BDCF66864uL), (-1, -32, 0xF6FE983C2E801D08uL, 0x0FDBF36E8C97B3C8uL)),
                 ((+1, 50, 0x9F17CC8F006F46BAuL, 0x44EB136D4B3EB8ADuL), (+1, -38, 0xF9118A7815A5933EuL, 0x4939AA948083A3F2uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX28Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX28Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 93, 0x8CBC3F2ECF98B0CDuL, 0x6200000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 93, 0xDE949A9ACD12832BuL, 0x4B6C793284F7CB42uL), (-1, 0, 0xDDC8B4037FA92E12uL, 0x21EEF96BAB185AFEuL)),
@@ -568,7 +568,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 61, 0x9D658B86C09808A9uL, 0x3A0963E878CA4DEFuL), (-1, -31, 0x8B90EBBB04DBD261uL, 0x271D3F66DDB6548DuL)),
                 ((+1, 55, 0x9F64940041FB51AFuL, 0x8E51001BE899CB8BuL), (+1, -37, 0x8E36DE370B0D9F77uL, 0xCDC86273E156FB26uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX29Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX29Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 97, 0xF6496E91EB4B3567uL, 0x6B80000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 98, 0xC55DB90975EA0FB8uL, 0x580D4D193CC5E5CDuL), (-1, 0, 0xDFA4F63447AAEF74uL, 0x36B2B4867418E31AuL)),
@@ -586,7 +586,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 66, 0xA08418FE8B2A5C3DuL, 0xF0BFDFB46F567D81uL), (-1, -31, 0x9D04C594F31B6FE9uL, 0xF13AF4ADEDF04ED1uL)),
                 ((+1, 60, 0xA43CEF12D51E0F00uL, 0x29C86CB6A242FBEFuL), (+1, -37, 0xA19B9A3B1B8507BDuL, 0x99032ECBFAC3836AuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX30Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX30Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 102, 0xDF328C343D3C2865uL, 0xB96C000000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 103, 0xB5213D272B0ADA19uL, 0x1F4932705359CF8AuL), (-1, 0, 0xE1754E1D8EF5926EuL, 0x6DF0E51C52582AF9uL)),
@@ -604,7 +604,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 71, 0xA8536BFD9179D389uL, 0x22CE35B2E9415560uL), (-1, -31, 0xAFE8803F73B92CDBuL, 0x5F806E5EF7942324uL)),
                 ((+1, 65, 0xADF14CBFCCBDB995uL, 0x607D5532170F75EFuL), (+1, -37, 0xB6CC765109531425uL, 0x4564793936AD0DE3uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX31Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX31Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 107, 0xD13F6370F96865DFuL, 0x5DD5400000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 108, 0xABD9C01052E7DAB9uL, 0x6FAB352F92F0998FuL), (-1, 0, 0xE33A3872D375C2B2uL, 0xEC2BDDD8C0B91F27uL)),
@@ -622,7 +622,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 76, 0xB56547D7075E05C7uL, 0xE36CAA17067B3F87uL), (-1, -31, 0xC44972236EF477CAuL, 0x9BFF7DE1B43F4B42uL)),
                 ((+1, 70, 0xBD3D457287F07289uL, 0xF23872346451D6F4uL), (+1, -37, 0xCDDEBE65643ADF38uL, 0xF987B939B915FE6AuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX32Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX32Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 112, 0xCAB56855719D22B0uL, 0x62E6960000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 113, 0xA861FB9DA4BC31B5uL, 0xAAEE987A53DEE499uL), (-1, 0, 0xE4F42CD0A8D0C0C0uL, 0xB07123FBF6A58515uL)),
@@ -640,7 +640,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 81, 0xC8C3B5F0C97161B5uL, 0x084866AD06EA6578uL), (-1, -31, 0xDA34A157F33C7AC3uL, 0xA24764AA062CADAFuL)),
                 ((+1, 75, 0xD35E90F87BD2B9E9uL, 0xF3F8E88A6BF1CA43uL), (+1, -37, 0xE6E7885EA92B78D3uL, 0xF0B4C5182B69A18FuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX33Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX33Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 117, 0xCAB56855719D22B0uL, 0x62E6960000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 118, 0xAA37307A5581BF45uL, 0x0BEB10D63A806C88uL), (-1, 0, 0xE6A39DA82381C44FuL, 0x2DF3C39CC78390EBuL)),
@@ -658,7 +658,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 86, 0xE413632B810095A4uL, 0x96DCA685B95BA7C3uL), (-1, -31, 0xF1B6C3DBD40BD79AuL, 0xAE0C276BD424F26EuL)),
                 ((+1, 80, 0xF23EE6651CCE6B66uL, 0xA78FF4F9F5C5FD22uL), (+1, -36, 0x80FDD7FC6AA9FB31uL, 0xAF7668008C529A87uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX34Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX34Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 122, 0xD10B13981D2A0BC5uL, 0xE5FDCAB000000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 123, 0xB15BAE6D6C6D4350uL, 0x9D4E0747166D47B3uL), (-1, 0, 0xE848F841283CBB73uL, 0x45ADA4D29B262170uL)),
@@ -676,7 +676,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 92, 0x84E6AFD0E0983614uL, 0x33292980775C91F5uL), (-1, -30, 0x856E200F1E34F11CuL, 0xA368BA02ED24BD5EuL)),
                 ((+1, 86, 0x8E5C297A214B6BA4uL, 0x7C0F6F399325FE96uL), (+1, -36, 0x8F97E9A6EA0B0885uL, 0x3F696FFF57586095uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX35Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX35Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 127, 0xDE1BC4D19EFCAC82uL, 0x445DA75B00000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 128, 0xBE50695915D50418uL, 0x1E2457812ED4BD81uL), (-1, 0, 0xE9E4A4CDAB7996C1uL, 0x6CEA86BA367BD485uL)),
@@ -694,7 +694,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 97, 0x9ECD8987E9D77C46uL, 0xEEA25012F8FF98E7uL), (-1, -30, 0x92D896E3AD1BBBDAuL, 0xAD429A66FE515917uL)),
                 ((+1, 91, 0xAB8083F29BB3DFD7uL, 0x5038890AD713421CuL), (+1, -36, 0x9F4C27FAA8179188uL, 0x4A42CEB9BC6B3104uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX36Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX36Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 132, 0xF2EE5F4545E45CAEuL, 0x7AC66F0B88000000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 133, 0xD2228B3CD6F6DD15uL, 0xFC1D7E041AD30840uL), (-1, 0, 0xEB77068930ABC9B5uL, 0x03E9BDD9CB53AD24uL)),
@@ -712,7 +712,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 102, 0xC2734345A5FBBFB3uL, 0xB4269D8EF4CE166BuL), (-1, -30, 0xA120AB5A608A67C9uL, 0x57A424224000AA8AuL)),
                 ((+1, 96, 0xD3AA16D572A3765DuL, 0x44E0F262CF1EC4B8uL), (+1, -36, 0xB024A0548FB55D05uL, 0x9D93CDA956A1E76DuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX37Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX37Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 138, 0x88A61596F7507422uL, 0x250F9E767C800000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 138, 0xEE8E8AEDD21CCF67uL, 0xA5DEE93B0AC6659AuL), (-1, 0, 0xED007BE0DF898416uL, 0x384CE68C4EB98E63uL)),
@@ -730,7 +730,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 107, 0xF3DE7636E706C0EEuL, 0x6CDDF96DE48E5588uL), (-1, -30, 0xB04C1C0F97CBFE5CuL, 0xC6CB428E43FCB5E1uL)),
                 ((+1, 102, 0x85BECF483AB099ACuL, 0x27FD76B9A047C7C8uL), (+1, -36, 0xC22B3DAEEAB1F268uL, 0x7BB8DACB9580ED4CuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX38Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX38Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 143, 0x9E0008F68DF50647uL, 0x7ADA0F38FFF40000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 144, 0x8B1F74A7948309FFuL, 0x22D1F74ADF31F7A5uL), (-1, 0, 0xEE815EA159244FBDuL, 0x601EB3D5A56BEDE8uL)),
@@ -748,7 +748,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 113, 0x9C8D3430F43F47EBuL, 0xFD46044853FA87A5uL), (-1, -30, 0xC06081F08A0D0029uL, 0xA523780E9301F384uL)),
                 ((+1, 107, 0xACFCA687E34869A0uL, 0x33CDED0AD6F178DEuL), (+1, -36, 0xD569C7E0889E088DuL, 0x7C6EA13EDF20139CuL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX39Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX39Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 148, 0xBBA00AA4C892F774uL, 0xE1E2F213AFF1C000uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 149, 0xA6994E4A4ACC18F2uL, 0x4DF62FA1E12A70A6uL), (-1, 0, 0xEFFA04281F25EDB5uL, 0xAC5A2C9B0688C6F3uL)),
@@ -766,7 +766,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 118, 0xCDAA8D87AD3C1157uL, 0x93A37A7695A0A322uL), (-1, -30, 0xD16350EB4BF8854EuL, 0x8D346B62BB1B686BuL)),
                 ((+1, 112, 0xE4E2DD27F340910BuL, 0xB29DFB842916ED7EuL), (+1, -36, 0xE9E9E3086F257665uL, 0xDA86E545752C19D1uL)),
         });
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX40Table
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> PadeX40Table
             = new(new (Hexcode c, Hexcode d)[] {
                 ((+1, 153, 0xE4AB0CF8D4731D96uL, 0x734C9707FE6EA200uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 154, 0xCCAFFC0FE9F7688EuL, 0x84CCB4AA813C3B11uL), (-1, 0, 0xF16ABD96E5096E9AuL, 0x2A7D85C63D8440A5uL)),

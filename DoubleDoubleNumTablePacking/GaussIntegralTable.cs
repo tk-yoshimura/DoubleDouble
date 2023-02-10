@@ -26,7 +26,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Legendre37Table
+        static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Legendre37Table
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, -10, 0x86B42F0977EE0FD1uL, 0xDDB545BDF52E797FuL), (+1, -9, 0xACC99C485E519BBBuL, 0xA69012B19FE1DE05uL)),
                 ((+1, -8, 0xB12D5B95436BC9E5uL, 0x3A380796C60785C1uL), (+1, -8, 0xC8852A11853A3681uL, 0xB692B2D555287528uL)),
@@ -67,7 +67,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -1, 0xFFBCA5E87B4408F8uL, 0x1711255D210568C3uL), (+1, -9, 0xACC99C485E519BBBuL, 0xA69012B19FE1DE05uL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Legendre40Table
+        static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Legendre40Table
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, -11, 0xE6FCA651838752B7uL, 0x25FD5D7505B0DAA3uL), (+1, -9, 0x942738A31E06B328uL, 0x047C1EC6C342098BuL)),
                 ((+1, -8, 0x97F0F95FCAA1688DuL, 0x80F2ED27376E9D16uL), (+1, -8, 0xAC00FF2E6D0503CAuL, 0x32663A4C477F6CDDuL)),
@@ -111,7 +111,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -1, 0xFFC640D66B9F1E2BuL, 0x523680A8A2BE93C9uL), (+1, -9, 0x942738A31E06B328uL, 0x047C1EC6C342098BuL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Legendre45Table
+        static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Legendre45Table
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, -11, 0xB705E48DEC64E67BuL, 0xD073C5F3DA064847uL), (+1, -10, 0xEACB1D15A390A9C7uL, 0x6102426DBDA4E41BuL)),
                 ((+1, -9, 0xF0D84825BC4E5D7AuL, 0x326A73D47151EF22uL), (+1, -8, 0x885DFC74D7DA4BB3uL, 0xBC4144797EF4AA2CuL)),
@@ -160,7 +160,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -1, 0xFFD23E86DC84E6C6uL, 0x610BE30E83097E6DuL), (+1, -10, 0xEACB1D15A390A9C7uL, 0x6102426DBDA4E41BuL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Laguerre38Table
+        static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Laguerre38Table
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, -5, 0x99D36E85913AB729uL, 0x5561200A8990759AuL), (+1, -4, 0xBE1FA63464232EBCuL, 0x1D64D23C25D90C75uL)),
                 ((+1, -3, 0xCAB1FC58487C4920uL, 0x1E504AE58A6F36B3uL), (+1, -3, 0xBC9FF9AC4CB39E1DuL, 0x2BD9369C8AA78887uL)),
@@ -202,7 +202,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, 7, 0x86A0B2CD11BC5D04uL, 0xF6A348AFD9F3481FuL), (+1, -191, 0xE02B4BACBF6510B0uL, 0xEB91DEF67E1D2758uL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Laguerre40Table
+        static readonly ReadOnlyCollection<(Hexcode x, Hexcode w)> Laguerre40Table
             = new(new (Hexcode c, Hexcode d)[]{
 
                 ((+1, -5, 0x923A93A02CF981DFuL, 0x16C83DD3D330FD1DuL), (+1, -4, 0xB511680543957848uL, 0x8A4777966C777F27uL)),

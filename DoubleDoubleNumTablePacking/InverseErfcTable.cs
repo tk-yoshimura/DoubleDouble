@@ -25,7 +25,7 @@ namespace DoubleDoubleNumTablePacking {
             }
         }
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow1PadeTable
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow1PadeTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, -2, 0xF430FDD926004F5CuL, 0xD4CF37283EF220DFuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 2, 0x98F431114C2CD276uL, 0xC59EE346A80DAA0CuL), (+1, 3, 0x867AA86274D199D9uL, 0x5E69BC86AC586292uL)),
@@ -54,7 +54,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -33, 0xF6361683963A6C43uL, 0xBF66C686BB865313uL), Hexcode.Zero),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow4PadeTable
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow4PadeTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, 0, 0xA89861D65726F35EuL, 0xF0E67AAE06F75E9DuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 3, 0x8B5AAC2E83B65670uL, 0xDAF5995615A5660BuL), (+1, 2, 0xBE73816656AA913BuL, 0x4EA7C14C6F1F66E0uL)),
@@ -82,7 +82,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -47, 0xCAD97B8730B368B3uL, 0xA8DCFF5D19AADEC4uL), (+1, -71, 0x84A287EDF949F5EDuL, 0x4825FA4F0A5E2E39uL)),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow16PadeTable
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow16PadeTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, 1, 0xC3B936DA560E93E7uL, 0x0FA4F448E10B5E7AuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 3, 0xAC055386AE0782F1uL, 0xABE0A860B4FA5638uL), (+1, 1, 0xCEE88DDBDEE310B2uL, 0x0F5132F0D5D3266AuL)),
@@ -110,7 +110,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -71, 0xAFB35894CAE6710BuL, 0x02CCD3284013C89DuL), Hexcode.Zero),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow64PadeTable
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow64PadeTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, 2, 0xCF29205AA2682C91uL, 0x2318F3F266674276uL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 3, 0xA4F4CE7C9632C08EuL, 0xD7C7B87FAEF4FBD8uL), (+1, 0, 0xBB1ADBB84EBE35CFuL, 0x3DE0BBFDD5B298A3uL)),
@@ -136,7 +136,7 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -86, 0x82FDD3B944E4DC62uL, 0xCAB8184B23A19E22uL), Hexcode.Zero),
         });
 
-        public static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow256PadeTable
+        static readonly ReadOnlyCollection<(Hexcode c, Hexcode d)> LtRcpBinpow256PadeTable
             = new(new (Hexcode c, Hexcode d)[]{
                 ((+1, 3, 0xD33AF922960E954DuL, 0x25BEE1D86CA64B2CuL), (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL)),
                 ((+1, 3, 0x9B2579FA400D9C07uL, 0xD54EED8AF9160E6DuL), (+1, -1, 0xABC92D8497ED4CDBuL, 0xAA8BF1CABE64A8B4uL)),

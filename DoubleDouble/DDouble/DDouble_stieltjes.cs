@@ -1,5 +1,4 @@
 ﻿using DoubleDouble.Utils;
-using System;
 using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
@@ -9,7 +8,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class StieltjesGamma {
-                public static ReadOnlyCollection<ddouble> StieltjesGammaTable { get; } = 
+                public static ReadOnlyCollection<ddouble> StieltjesGammaTable { get; } =
                     ResourceUnpack.NumTable(Resource.StieltjesGammaTable)[nameof(StieltjesGammaTable)];
             }
         }

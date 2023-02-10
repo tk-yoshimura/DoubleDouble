@@ -33,6 +33,8 @@
     <None Remove="Resource\InverseErfTable.bin" />
     <None Remove="Resource\LambertWTable.bin" />
     <None Remove="Resource\LogGammaTable.bin" />
+    <None Remove="Resource\MathieuDTable.bin" />
+    <None Remove="Resource\MathieuMTable.bin" />
     <None Remove="Resource\RiemannZetaTable.bin" />
     <None Remove="Resource\StieltjesGammaTable.bin" />
     <None Remove="Resource\StruveIntegralTable.bin" />
@@ -54,6 +56,8 @@
     <EmbeddedResource Include="Resource\InverseErfTable.bin" />
     <EmbeddedResource Include="Resource\LambertWTable.bin" />
     <EmbeddedResource Include="Resource\LogGammaTable.bin" />
+    <EmbeddedResource Include="Resource\MathieuDTable.bin" />
+    <EmbeddedResource Include="Resource\MathieuMTable.bin" />
     <EmbeddedResource Include="Resource\RiemannZetaTable.bin" />
     <EmbeddedResource Include="Resource\StieltjesGammaTable.bin" />
     <EmbeddedResource Include="Resource\StruveIntegralTable.bin" />

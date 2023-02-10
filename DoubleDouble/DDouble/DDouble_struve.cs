@@ -160,7 +160,7 @@ namespace DoubleDouble {
         internal static class StruveKIntegral {
             private static readonly ReadOnlyCollection<(ddouble x, ddouble w)> PointTable;
 
-            static StruveKIntegral() { 
+            static StruveKIntegral() {
                 PointTable = ResourceUnpack.NumTableX2(Resource.StruveIntegralTable)["StruveKTable"];
             }
 
@@ -184,7 +184,7 @@ namespace DoubleDouble {
         internal static class StruveMIntegral {
             private static readonly ReadOnlyCollection<(ddouble x, ddouble w)> PointTable;
 
-            static StruveMIntegral() { 
+            static StruveMIntegral() {
                 PointTable = ResourceUnpack.NumTableX2(Resource.StruveIntegralTable)["StruveMTable"];
             }
 

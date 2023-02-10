@@ -24,7 +24,7 @@
                 return resourceMan;
             }
         }
-        
+
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
             get {
@@ -34,10 +34,17 @@
                 resourceCulture = value;
             }
         }
-        
+
         internal static byte[] BernoulliTable {
             get {
                 object obj = ResourceManager.GetObject("BernoulliTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] BesselKTable {
+            get {
+                object obj = ResourceManager.GetObject("BesselKTable", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -136,6 +143,20 @@
         internal static byte[] LogGammaTable {
             get {
                 object obj = ResourceManager.GetObject("LogGammaTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] MathieuDTable {
+            get {
+                object obj = ResourceManager.GetObject("MathieuDTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] MathieuMTable {
+            get {
+                object obj = ResourceManager.GetObject("MathieuMTable", resourceCulture);
                 return ((byte[])(obj));
             }
         }
