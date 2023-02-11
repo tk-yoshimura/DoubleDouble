@@ -54,4 +54,7 @@ nugetpack.bat
 /**/*.nuspec
 /**/*.nupkg
 
+# Resource AutoGen
+DoubleDouble/Resource.Designer.cs
+
 # Safelist

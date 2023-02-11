@@ -245,7 +245,8 @@ namespace DoubleDouble {
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
 
             static FresnelPade() {
-                Dictionary<string, ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> tables = ResourceUnpack.NumTableX4(Resource.FresnelTable);
+                Dictionary<string, ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> tables =
+                    ResourceUnpack.NumTableX4(Resource.FresnelTable, reverse: true);
 
                 PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>[] {
                     tables["PadeX0p0Table"],
@@ -267,8 +268,8 @@ namespace DoubleDouble {
                 ddouble w = v - table_index * 0.5d;
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 
-                (ddouble sfc, ddouble sfd, ddouble sgc, ddouble sgd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sfc, ddouble sfd, ddouble sgc, ddouble sgd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble fc, ddouble fd, ddouble gc, ddouble gd) = table[i];
 
                     sfc = sfc * w + fc;

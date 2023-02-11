@@ -188,7 +188,8 @@ namespace DoubleDouble {
             public static readonly ReadOnlyCollection<double> PadeCenterTable, PadeThresholdTable;
 
             static EiPade() {
-                Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.EiTable);
+                Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                    ResourceUnpack.NumTableX2(Resource.EiTable, reverse: true);
 
                 PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
                     tables["PadeXM2Table"],
@@ -329,8 +330,8 @@ namespace DoubleDouble {
                 ddouble w = v - PadeCenterTable[table_index];
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[table_index];
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;

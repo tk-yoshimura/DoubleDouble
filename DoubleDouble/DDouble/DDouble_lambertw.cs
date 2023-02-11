@@ -67,8 +67,8 @@ namespace DoubleDouble {
                 if (v >= 1e-8) {
                     ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LambertW.NearSingularPadeTable;
 
-                    (ddouble sc, ddouble sd) = table[^1];
-                    for (int i = table.Count - 2; i >= 0; i--) {
+                    (ddouble sc, ddouble sd) = table[0];
+                    for (int i = 1; i < table.Count; i++) {
                         (ddouble c, ddouble d) = table[i];
 
                         sc = sc * v + c;
@@ -90,7 +90,8 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> NearSingularPadeTable;
 
                 static LambertW() {
-                    NearSingularPadeTable = ResourceUnpack.NumTableX2(Resource.LambertWTable)[nameof(NearSingularPadeTable)];
+                    NearSingularPadeTable =
+                        ResourceUnpack.NumTableX2(Resource.LambertWTable, reverse: true)[nameof(NearSingularPadeTable)];
                 }
             }
         }

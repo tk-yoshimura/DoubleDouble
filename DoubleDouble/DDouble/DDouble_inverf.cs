@@ -71,8 +71,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<ddouble> table = Consts.InverseErf.CoefTable;
 
-                ddouble s = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                ddouble s = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     ddouble c = table[i];
 
                     s = s * w + c;
@@ -93,8 +93,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow1PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -116,8 +116,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow4PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -139,8 +139,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow16PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -162,8 +162,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow64PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -185,8 +185,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow256PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -204,7 +204,8 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ddouble> CoefTable;
 
                 static InverseErf() {
-                    Dictionary<string, ReadOnlyCollection<ddouble>> tables = ResourceUnpack.NumTable(Resource.InverseErfTable);
+                    Dictionary<string, ReadOnlyCollection<ddouble>> tables =
+                        ResourceUnpack.NumTable(Resource.InverseErfTable, reverse: true);
 
                     CoefTable = tables[nameof(CoefTable)];
                 }
@@ -218,7 +219,8 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> LtRcpBinpow256PadeTable;
 
                 static InverseErfc() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.InverseErfcTable);
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                        ResourceUnpack.NumTableX2(Resource.InverseErfcTable, reverse: true);
 
                     LtRcpBinpow1PadeTable = tables[nameof(LtRcpBinpow1PadeTable)];
                     LtRcpBinpow4PadeTable = tables[nameof(LtRcpBinpow4PadeTable)];

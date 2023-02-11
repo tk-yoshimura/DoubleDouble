@@ -76,8 +76,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erf.PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -99,8 +99,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.GtP5PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -122,8 +122,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt1PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -145,8 +145,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt2PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -168,8 +168,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt4PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -191,8 +191,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt8PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -214,8 +214,8 @@ namespace DoubleDouble {
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt16PadeTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * w + c;
@@ -233,7 +233,8 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeTable;
 
                 static Erf() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.ErfTable);
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                        ResourceUnpack.NumTableX2(Resource.ErfTable, reverse: true);
 
                     PadeTable = tables[nameof(PadeTable)];
                 }
@@ -248,7 +249,8 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> Gt16PadeTable;
 
                 static Erfc() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.ErfcTable);
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                        ResourceUnpack.NumTableX2(Resource.ErfcTable, reverse: true);
 
                     GtP5PadeTable = tables[nameof(GtP5PadeTable)];
                     Gt1PadeTable = tables[nameof(Gt1PadeTable)];

@@ -1661,7 +1661,8 @@ namespace DoubleDouble {
             private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> CDsTable = new();
 
             static BesselYoshidaPade() {
-                Dictionary<string, ReadOnlyCollection<ddouble>> tables = ResourceUnpack.NumTable(Resource.BesselKTable);
+                Dictionary<string, ReadOnlyCollection<ddouble>> tables =
+                    ResourceUnpack.NumTable(Resource.BesselKTable);
 
                 ReadOnlyCollection<ddouble> cs0 = tables["CS0Table"], cs1 = tables["CS1Table"];
                 ReadOnlyCollection<ddouble> ds0 = tables["DS0Table"], ds1 = tables["DS1Table"];
@@ -1678,6 +1679,9 @@ namespace DoubleDouble {
                 for (int i = 0; i < cs1.Count; i++) {
                     cd1.Add((cs1[i], ds1[i]));
                 }
+
+                cd0.Reverse();
+                cd1.Reverse();
 
                 CDsTable.Add(0, Array.AsReadOnly(cd0.ToArray()));
                 CDsTable.Add(1, Array.AsReadOnly(cd1.ToArray()));
@@ -1724,14 +1728,16 @@ namespace DoubleDouble {
 
             private static ddouble Value(ddouble x, ReadOnlyCollection<(ddouble c, ddouble d)> cds, bool scale = false) {
                 ddouble t = 1d / x;
-                (ddouble c, ddouble d) = cds[^1];
+                (ddouble sc, ddouble sd) = cds[0];
 
-                for (int j = cds.Count - 2; j >= 0; j--) {
-                    c = (c * t) + cds[j].c;
-                    d = (d * t) + cds[j].d;
+                for (int i = 1; i < cds.Count; i++) {
+                    (ddouble c, ddouble d) = cds[i];
+
+                    sc = sc * t + c;
+                    sd = sd * t + d;
                 }
 
-                ddouble y = Sqrt(t * PI / 2) * c / d;
+                ddouble y = Sqrt(t * PI / 2) * sc / sd;
 
                 if (!scale) {
                     y *= Exp(-x);
@@ -1744,7 +1750,7 @@ namespace DoubleDouble {
                 int m = EssTable.Count - 1;
 
                 ddouble squa_nu = nu * nu;
-                (ddouble c, ddouble d)[] cds = new (ddouble, ddouble)[m + 1];
+                List<(ddouble c, ddouble d)> cds = new();
                 ddouble[] us = new ddouble[m + 1], vs = new ddouble[m];
 
                 ddouble u = 1;
@@ -1768,10 +1774,12 @@ namespace DoubleDouble {
                         c += es[j] * us[j];
                     }
 
-                    cds[i] = (c, d);
+                    cds.Add((c, d));
                 }
 
-                return Array.AsReadOnly(cds);
+                cds.Reverse();
+
+                return Array.AsReadOnly(cds.ToArray());
             }
         }
 

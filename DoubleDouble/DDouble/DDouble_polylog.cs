@@ -237,7 +237,8 @@ namespace DoubleDouble {
             private static readonly ReadOnlyCollection<(ddouble x, ddouble w)> Legendre37Table, Laguerre38Table;
 
             static PolylogIntegral() {
-                Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> tables = ResourceUnpack.NumTableX2(Resource.GaussIntegralTable);
+                Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> tables =
+                    ResourceUnpack.NumTableX2(Resource.GaussIntegralTable);
 
                 Legendre37Table = tables[nameof(Legendre37Table)];
                 Laguerre38Table = tables[nameof(Laguerre38Table)];

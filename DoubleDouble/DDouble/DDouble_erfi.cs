@@ -114,7 +114,8 @@ namespace DoubleDouble {
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> X1PadeTables;
 
             static ErfiPade() {
-                Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.ErfiTable);
+                Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                    ResourceUnpack.NumTableX2(Resource.ErfiTable, reverse: true);
 
                 Xp5PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
                     tables["PadeX0p5Table"],
@@ -152,8 +153,8 @@ namespace DoubleDouble {
 
                     ReadOnlyCollection<(ddouble c, ddouble d)> table = Xp5PadeTables[n];
 
-                    (ddouble sc, ddouble sd) = table[^1];
-                    for (int i = table.Count - 2; i >= 0; i--) {
+                    (ddouble sc, ddouble sd) = table[0];
+                    for (int i = 1; i < table.Count; i++) {
                         (ddouble c, ddouble d) = table[i];
 
                         sc = sc * v + c;
@@ -168,8 +169,8 @@ namespace DoubleDouble {
 
                     ReadOnlyCollection<(ddouble c, ddouble d)> table = X1PadeTables[n];
 
-                    (ddouble sc, ddouble sd) = table[^1];
-                    for (int i = table.Count - 2; i >= 0; i--) {
+                    (ddouble sc, ddouble sd) = table[0];
+                    for (int i = 1; i < table.Count; i++) {
                         (ddouble c, ddouble d) = table[i];
 
                         sc = sc * v + c;

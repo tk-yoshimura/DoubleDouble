@@ -21,11 +21,11 @@ namespace DoubleDouble {
             }
 
             static ddouble pade(ddouble x, (ReadOnlyCollection<ddouble> cs, ReadOnlyCollection<ddouble> ds) table) {
-                ddouble c = table.cs[^1], d = table.ds[^1];
-                for (int i = table.cs.Count - 2; i >= 0; i--) {
+                ddouble c = table.cs[0], d = table.ds[0];
+                for (int i = 1; i < table.cs.Count; i++) {
                     c = c * x + table.cs[i];
                 }
-                for (int i = table.ds.Count - 2; i >= 0; i--) {
+                for (int i = 1; i < table.ds.Count; i++) {
                     d = d * x + table.ds[i];
                 }
 
@@ -115,7 +115,8 @@ namespace DoubleDouble {
                 public static readonly (ReadOnlyCollection<ddouble> cs, ReadOnlyCollection<ddouble> ds) PadeX30Table;
 
                 static RiemannZeta() {
-                    Dictionary<string, ReadOnlyCollection<ddouble>> tables = ResourceUnpack.NumTable(Resource.RiemannZetaTable);
+                    Dictionary<string, ReadOnlyCollection<ddouble>> tables
+                        = ResourceUnpack.NumTable(Resource.RiemannZetaTable, reverse: true);
 
                     PadeX0Table = (tables["PadeX0NumerTable"], tables["PadeX0DenomTable"]);
                     PadeX1Table = (tables["PadeX1NumerTable"], tables["PadeX1DenomTable"]);

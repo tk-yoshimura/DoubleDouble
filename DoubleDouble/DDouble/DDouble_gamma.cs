@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -32,8 +33,8 @@ namespace DoubleDouble {
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Gamma.PadeTables[n];
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * v + c;
@@ -86,8 +87,8 @@ namespace DoubleDouble {
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LogGamma.PadeTables[0];
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * v + c;
@@ -105,8 +106,8 @@ namespace DoubleDouble {
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LogGamma.PadeTables[n];
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * v + c;
@@ -153,8 +154,8 @@ namespace DoubleDouble {
             if (Abs(x_zsft) < Math.ScaleB(1, -3)) {
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeZeroPointTable;
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * x_zsft + c;
@@ -172,8 +173,8 @@ namespace DoubleDouble {
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeTables[n];
 
-                (ddouble sc, ddouble sd) = table[^1];
-                for (int i = table.Count - 2; i >= 0; i--) {
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
 
                     sc = sc * v + c;
@@ -242,9 +243,10 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable;
 
                 static Gamma() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.GammaTable);
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                        ResourceUnpack.NumTableX2(Resource.GammaTable, reverse: true);
 
-                    SterlingTable = tables[nameof(SterlingTable)];
+                    SterlingTable = Array.AsReadOnly(tables[nameof(SterlingTable)].Reverse().ToArray());
 
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
                         tables["PadeX1Table"],
@@ -294,7 +296,8 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
 
                 static LogGamma() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.LogGammaTable);
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                        ResourceUnpack.NumTableX2(Resource.LogGammaTable, reverse: true);
 
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
                         tables["PadeX2Table"],
@@ -323,9 +326,10 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable, PadeZeroPointTable;
 
                 static Digamma() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables = ResourceUnpack.NumTableX2(Resource.DigammaTable);
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                        ResourceUnpack.NumTableX2(Resource.DigammaTable, reverse: true);
 
-                    SterlingTable = tables[nameof(SterlingTable)];
+                    SterlingTable = Array.AsReadOnly(tables[nameof(SterlingTable)].Reverse().ToArray());
                     PadeZeroPointTable = tables[nameof(PadeZeroPointTable)];
 
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {

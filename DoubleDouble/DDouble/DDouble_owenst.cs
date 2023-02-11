@@ -49,7 +49,8 @@ namespace DoubleDouble {
             private static readonly ReadOnlyCollection<(ddouble x, ddouble w)> Legendre45Table;
 
             static OwenTIntegrate() {
-                Legendre45Table = ResourceUnpack.NumTableX2(Resource.GaussIntegralTable)[nameof(Legendre45Table)];
+                Legendre45Table =
+                    ResourceUnpack.NumTableX2(Resource.GaussIntegralTable)[nameof(Legendre45Table)];
             }
 
             public static ddouble GaussQuadrature(ddouble h, ddouble a) {

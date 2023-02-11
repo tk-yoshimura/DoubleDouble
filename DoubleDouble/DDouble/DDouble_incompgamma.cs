@@ -111,8 +111,8 @@ namespace DoubleDouble {
                     return (1d - 1d / Gamma(2 + nu)) / nu;
                 }
                 else {
-                    ddouble s = TaylorA1ZeroTable[^1];
-                    for (int i = TaylorA1ZeroTable.Count - 2; i >= 0; i--) {
+                    ddouble s = TaylorA1ZeroTable[0];
+                    for (int i = 1; i < TaylorA1ZeroTable.Count; i++) {
                         s = s * nu + TaylorA1ZeroTable[i];
                     }
 
@@ -147,7 +147,7 @@ namespace DoubleDouble {
             }
 
             public static ReadOnlyCollection<ddouble> TaylorA1ZeroTable { get; } =
-                ResourceUnpack.NumTable(Resource.IncompGammaTable)[nameof(TaylorA1ZeroTable)];
+                ResourceUnpack.NumTable(Resource.IncompGammaTable, reverse: true)[nameof(TaylorA1ZeroTable)];
         }
 
         internal static class UpperIncompleteGammaCFrac {

@@ -11,7 +11,7 @@ namespace DoubleDouble.Utils {
         const UInt64 MantissaMaskHi = 0x000FFFFFFFFFFFFFuL;
         const UInt64 MantissaMaskLo = ~MantissaMaskHi;
 
-        public static Dictionary<string, ReadOnlyCollection<ddouble>> NumTable(byte[] resource) {
+        public static Dictionary<string, ReadOnlyCollection<ddouble>> NumTable(byte[] resource, bool reverse = false) {
             Dictionary<string, ReadOnlyCollection<ddouble>> table = new();
 
             MemoryStream stream = new MemoryStream(resource);
@@ -36,6 +36,10 @@ namespace DoubleDouble.Utils {
                         throw new IOException("The format of resource file is invalid.");
                     }
 
+                    if (reverse) {
+                        vals.Reverse();
+                    }
+
                     table.Add(key, Array.AsReadOnly(vals.ToArray()));
                 }
             }
@@ -43,7 +47,7 @@ namespace DoubleDouble.Utils {
             return table;
         }
 
-        public static Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> NumTableX2(byte[] resource) {
+        public static Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> NumTableX2(byte[] resource, bool reverse = false) {
             Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> table = new();
 
             MemoryStream stream = new MemoryStream(resource);
@@ -70,6 +74,10 @@ namespace DoubleDouble.Utils {
                         throw new IOException("The format of resource file is invalid.");
                     }
 
+                    if (reverse) {
+                        vals.Reverse();
+                    }
+
                     table.Add(key, Array.AsReadOnly(vals.ToArray()));
                 }
             }
@@ -77,7 +85,7 @@ namespace DoubleDouble.Utils {
             return table;
         }
 
-        public static Dictionary<string, ReadOnlyCollection<(ddouble, ddouble, ddouble, ddouble)>> NumTableX4(byte[] resource) {
+        public static Dictionary<string, ReadOnlyCollection<(ddouble, ddouble, ddouble, ddouble)>> NumTableX4(byte[] resource, bool reverse = false) {
             Dictionary<string, ReadOnlyCollection<(ddouble, ddouble, ddouble, ddouble)>> table = new();
 
             MemoryStream stream = new MemoryStream(resource);
@@ -106,6 +114,10 @@ namespace DoubleDouble.Utils {
 
                     if (zeroset != 0u) {
                         throw new IOException("The format of resource file is invalid.");
+                    }
+
+                    if (reverse) {
+                        vals.Reverse();
                     }
 
                     table.Add(key, Array.AsReadOnly(vals.ToArray()));

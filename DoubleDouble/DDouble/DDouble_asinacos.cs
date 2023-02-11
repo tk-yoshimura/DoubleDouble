@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -44,8 +45,8 @@ namespace DoubleDouble {
             if (x > -0.03125d && x < 0.03125d) {
                 ddouble x2 = x * x;
 
-                ddouble s = Consts.Asin.TaylorXZeroCoefTable[^1];
-                for (int i = Consts.Asin.TaylorXZeroCoefTable.Count - 2; i >= 0; i--) {
+                ddouble s = Consts.Asin.TaylorXZeroCoefTable[0];
+                for (int i = 1; i < Consts.Asin.TaylorXZeroCoefTable.Count; i++) {
                     s = s * x2 + Consts.Asin.TaylorXZeroCoefTable[i];
                 }
                 s = s * x2 + 1d;
@@ -97,7 +98,7 @@ namespace DoubleDouble {
                     (ddouble)6435 / 557056,
                     (ddouble)12155 / 1245184,
                     (ddouble)46189 / 5505024
-                });
+                }.Reverse().ToArray());
             }
         }
     }
