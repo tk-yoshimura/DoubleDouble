@@ -26,15 +26,37 @@ namespace DoubleDouble {
             this.lo = 0d;
         }
 
-        public static ddouble Zero { private set; get; } = new ddouble(0d);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public int Sign => (int)Math.CopySign(1, hi);
+
+#if !DEBUG
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+#endif
+        internal double Hi => hi;
+
+#if !DEBUG
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+#endif
+        internal double Lo => lo;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble Zero { get; } = new ddouble(0d);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble PlusZero => Zero;
-        public static ddouble MinusZero { private set; get; } = new ddouble(-0d);
-        public static ddouble Epsilon { private set; get; } = Math.ScaleB(1, -968);
-        public static ddouble MaxValue { private set; get; } = double.MaxValue;
-        public static ddouble MinValue { private set; get; } = double.MinValue;
-        public static ddouble NaN { private set; get; } = double.NaN;
-        public static ddouble NegativeInfinity = double.NegativeInfinity;
-        public static ddouble PositiveInfinity = double.PositiveInfinity;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble MinusZero { get; } = new ddouble(-0d);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble Epsilon { get; } = Math.ScaleB(1, -968);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble MaxValue { get; } = double.MaxValue;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble MinValue { get; } = double.MinValue;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble NaN { get; } = double.NaN;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble NegativeInfinity { get; } = double.NegativeInfinity;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble PositiveInfinity { get; } = double.PositiveInfinity;
 
         public static bool IsNaN(ddouble v) => double.IsNaN(v.hi);
 
@@ -53,15 +75,6 @@ namespace DoubleDouble {
         public static bool IsPlusZero(ddouble v) => IsZero(v) && v.Sign > 0;
 
         public static bool IsMinusZero(ddouble v) => IsZero(v) && v.Sign < 0;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public int Sign => (int)Math.CopySign(1, hi);
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal double Hi => hi;
-
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal double Lo => lo;
 
         internal static bool IsRegulared(ddouble v) {
             if (v.lo < 0) {

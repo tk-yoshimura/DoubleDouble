@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ReadOnlyCollection<ddouble> TaylorSequence => Consts.Taylor.TaylorTable;
 
         internal static partial class Consts {

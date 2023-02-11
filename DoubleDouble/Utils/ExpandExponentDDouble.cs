@@ -3,7 +3,14 @@
 namespace DoubleDouble {
     [DebuggerDisplay("{ToString(),nq}")]
     public struct ExpandExponentDDouble {
+#if !DEBUG
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+#endif
         private readonly int exponent;
+
+#if !DEBUG
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+#endif
         private readonly ddouble value;
 
         private ExpandExponentDDouble(int exponent, ddouble value) {

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ReadOnlyCollection<ddouble> Factorial => Consts.Factorial.FactorialTable;
 
         internal static partial class Consts {

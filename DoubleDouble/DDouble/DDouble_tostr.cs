@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble : IFormattable {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static int DecimalDigits => 30;
 
         public override string ToString() {
