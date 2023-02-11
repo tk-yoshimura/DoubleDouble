@@ -19,7 +19,7 @@ namespace DoubleDouble {
                 return true;
             }
             catch (FormatException) {
-                result = 0;
+                result = ddouble.Zero;
                 return false;
             }
         }
@@ -28,7 +28,7 @@ namespace DoubleDouble {
             const int truncate_digits = 33;
 
             if (!parse_regex.IsMatch(num)) {
-                throw new FormatException();
+                return FromIrregularString(num);
             }
 
             int sign = 1;
@@ -100,6 +100,20 @@ namespace DoubleDouble {
             ddouble exponent = Consts.Dec.Pow5(p);
 
             return RoundMantissa(Ldexp(mantissa * exponent, p), keep_bits: 105);
+        }
+
+        private static ddouble FromIrregularString(string str) {
+            if (str == double.NaN.ToString() || str.ToLower() == "nan") {
+                return ddouble.NaN;
+            }
+            if (str == double.PositiveInfinity.ToString() || str.ToLower() == "inf" || str.ToLower() == "+inf") {
+                return ddouble.PositiveInfinity;
+            }
+            if (str == double.NegativeInfinity.ToString() || str.ToLower() == "-inf") {
+                return ddouble.NegativeInfinity;
+            }
+
+            throw new FormatException($"Invalid numeric string. : {str}");
         }
     }
 }

@@ -168,5 +168,36 @@ namespace DoubleDoubleTest.DDouble {
                 p5 += "5";
             }
         }
+
+        [TestMethod]
+        public void ParseIrregularTest() {
+            ddouble nan1 = double.NaN.ToString();
+            ddouble nan2 = "nan";
+            ddouble nan3 = "NaN";
+
+            ddouble pinf1 = double.PositiveInfinity.ToString();
+            ddouble pinf2 = "inf";
+            ddouble pinf3 = "+inf";
+            ddouble pinf4 = "INF";
+            ddouble pinf5 = "+INF";
+
+            ddouble ninf1 = double.NegativeInfinity.ToString();
+            ddouble ninf2 = "-inf";
+            ddouble ninf3 = "-INF";
+
+            Assert.IsTrue(ddouble.IsNaN(nan1));
+            Assert.IsTrue(ddouble.IsNaN(nan2));
+            Assert.IsTrue(ddouble.IsNaN(nan3));
+
+            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf1));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf2));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf3));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf4));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf5));
+
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf1));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf2));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf3));
+        }
     }
 }
