@@ -6,6 +6,7 @@ namespace DoubleDouble {
 
     [DebuggerDisplay("{ToString(),nq}")]
     public partial struct ddouble {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly double hi, lo;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -53,9 +54,13 @@ namespace DoubleDouble {
 
         public static bool IsMinusZero(ddouble v) => IsZero(v) && v.Sign < 0;
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public int Sign => (int)Math.CopySign(1, hi);
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal double Hi => hi;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal double Lo => lo;
 
         internal static bool IsRegulared(ddouble v) {

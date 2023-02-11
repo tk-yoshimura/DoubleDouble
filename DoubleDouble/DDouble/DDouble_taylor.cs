@@ -4,39 +4,35 @@ using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
-        private static ReadOnlyCollection<ddouble> taylor_sequence = null;
+        public static ReadOnlyCollection<ddouble> TaylorSequence => Consts.Taylor.TaylorTable;
 
-        public static ReadOnlyCollection<ddouble> TaylorSequence {
-            get {
-                if (taylor_sequence is null) {
-                    taylor_sequence = GenerateTaylorSequence();
+        internal static partial class Consts {
+            public static class Taylor {
+                public static readonly ReadOnlyCollection<ddouble> TaylorTable;
+
+                static Taylor() {
+                    List<ddouble> table = new() {
+                        1,
+                        1
+                    };
+
+                    BigInteger v = 2;
+
+                    for (int d = 3; d <= 256; d++) {
+                        ddouble t = Rcp((ddouble)v);
+
+                        table.Add(t);
+
+                        if (IsZero(t)) {
+                            break;
+                        }
+
+                        v *= d;
+                    }
+
+                    TaylorTable = table.AsReadOnly();
                 }
-
-                return taylor_sequence;
             }
-        }
-
-        private static ReadOnlyCollection<ddouble> GenerateTaylorSequence() {
-            List<ddouble> table = new() {
-                1,
-                1
-            };
-
-            BigInteger v = 2;
-
-            for (int d = 3; d <= 256; d++) {
-                ddouble t = Rcp((ddouble)v);
-
-                table.Add(t);
-
-                if (IsZero(t)) {
-                    break;
-                }
-
-                v *= d;
-            }
-
-            return table.AsReadOnly();
         }
     }
 }
