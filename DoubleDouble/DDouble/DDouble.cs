@@ -29,14 +29,10 @@ namespace DoubleDouble {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public int Sign => (int)Math.CopySign(1, hi);
 
-#if !DEBUG
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-#endif
         internal double Hi => hi;
 
-#if !DEBUG
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-#endif
         internal double Lo => lo;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
