@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <None Remove="Resource\BernoulliTable.bin" />
+    <None Remove="Resource\BesselKTable.bin" />
     <None Remove="Resource\CiSiTable.bin" />
     <None Remove="Resource\DigammaTable.bin" />
     <None Remove="Resource\EiTable.bin" />
@@ -33,6 +34,8 @@
     <None Remove="Resource\InverseErfTable.bin" />
     <None Remove="Resource\LambertWTable.bin" />
     <None Remove="Resource\LogGammaTable.bin" />
+    <None Remove="Resource\MathieuATable.bin" />
+    <None Remove="Resource\MathieuBTable.bin" />
     <None Remove="Resource\MathieuDTable.bin" />
     <None Remove="Resource\MathieuMTable.bin" />
     <None Remove="Resource\RiemannZetaTable.bin" />
@@ -42,6 +45,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resource\BernoulliTable.bin" />
+    <EmbeddedResource Include="Resource\BesselKTable.bin" />
     <EmbeddedResource Include="Resource\CiSiTable.bin" />
     <EmbeddedResource Include="Resource\DigammaTable.bin" />
     <EmbeddedResource Include="Resource\EiTable.bin" />
@@ -56,6 +60,8 @@
     <EmbeddedResource Include="Resource\InverseErfTable.bin" />
     <EmbeddedResource Include="Resource\LambertWTable.bin" />
     <EmbeddedResource Include="Resource\LogGammaTable.bin" />
+    <EmbeddedResource Include="Resource\MathieuATable.bin" />
+    <EmbeddedResource Include="Resource\MathieuBTable.bin" />
     <EmbeddedResource Include="Resource\MathieuDTable.bin" />
     <EmbeddedResource Include="Resource\MathieuMTable.bin" />
     <EmbeddedResource Include="Resource\RiemannZetaTable.bin" />

@@ -4,12 +4,22 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble x = -8; x <= 8; x += 1d / 32) {
-                ddouble y1 = ddouble.KeplerE(x, 0.999, centered: true);
-                ddouble y2 = ddouble.KeplerE(x, 1.001, centered: true);
+            const int n = 4;
 
-                Console.WriteLine($"{x},{y1},{y2}");
+            for (ddouble u = 0; u <= 8192; u += 16) {
+                ddouble q = ddouble.Sqrt(u) * n * n;
+
+                ddouble a = ddouble.MathieuA(n, q);
+                ddouble b = ddouble.MathieuB(n, q);
+
+                Console.WriteLine($"{u},{a},{b}");
             }
+
+            //for (int exp = -48; exp <= 0; exp++) {
+            //    ddouble m2 = ddouble.MathieuM(2, ddouble.Ldexp(1, exp));
+            //
+            //    Console.WriteLine(m2);
+            //}
 
             Console.WriteLine("END");
             Console.Read();

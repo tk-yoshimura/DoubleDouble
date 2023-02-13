@@ -181,7 +181,7 @@ namespace DoubleDouble {
                 }
             }
         }
-                
+
         internal static class EiPade {
             public static ddouble Coef(ddouble x) {
                 ddouble v = 1d / x;

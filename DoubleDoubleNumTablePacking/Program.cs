@@ -85,6 +85,14 @@
                 MathieuDTable.Pack(sw);
             }
 
+            using (BinaryWriter sw = new(File.OpenWrite(dirpath_root + nameof(MathieuATable) + ".bin"))) {
+                MathieuATable.Pack(sw);
+            }
+
+            using (BinaryWriter sw = new(File.OpenWrite(dirpath_root + nameof(MathieuBTable) + ".bin"))) {
+                MathieuBTable.Pack(sw);
+            }
+
             using (BinaryWriter sw = new(File.OpenWrite(dirpath_root + nameof(BesselKTable) + ".bin"))) {
                 BesselKTable.Pack(sw);
             }
