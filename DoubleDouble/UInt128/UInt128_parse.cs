@@ -39,19 +39,21 @@ namespace DoubleDouble {
 
             UInt32 carry, bin0, bin1, bin2, bin3, bin4;
 
-            (bin1, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(dec4, dec3));
+            unchecked {
+                (bin1, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(dec4, dec3));
 
-            (carry, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin0, dec2));
-            (bin2, bin1) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin1, carry));
+                (carry, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin0, dec2));
+                (bin2, bin1) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin1, carry));
 
-            (carry, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin0, dec1));
-            (carry, bin1) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin1, carry));
-            (bin3, bin2) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin2, carry));
+                (carry, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin0, dec1));
+                (carry, bin1) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin1, carry));
+                (bin3, bin2) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin2, carry));
 
-            (carry, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin0, dec0));
-            (carry, bin1) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin1, carry));
-            (carry, bin2) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin2, carry));
-            (bin4, bin3) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin3, carry));
+                (carry, bin0) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin0, dec0));
+                (carry, bin1) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin1, carry));
+                (carry, bin2) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin2, carry));
+                (bin4, bin3) = UIntUtil.Unpack(UIntUtil.DecimalPack(bin3, carry));
+            }
 
             if (bin4 > 0) {
                 throw new OverflowException();
