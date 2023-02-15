@@ -64,7 +64,7 @@ namespace DoubleDouble {
                 throw new InvalidCastException();
             }
 
-            (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
+            (int sign, int exponent, UInt128 mantissa, bool iszero) = FloatSplitter.Split(v);
 
             if (iszero) {
                 return 0L;
@@ -73,15 +73,17 @@ namespace DoubleDouble {
                 throw new OverflowException();
             }
 
-            BigInteger n = BigIntegerUtil.LeftShift(mantissa, exponent - FloatSplitter.MantissaBits * 2);
-            if (sign <= 0) {
-                n = BigInteger.Negate(n);
-            }
-            if (n < long.MinValue || n > long.MaxValue) {
+            UInt128 n = UInt128.LeftShift(mantissa, exponent - FloatSplitter.MantissaBits * 2);
+            if (n.Hi > 0uL || (sign >= 0 && n.Lo > 0x7FFFFFFFFFFFFFFFuL) || (sign < 0 && n.Lo > 0x8000000000000000uL)) {
                 throw new OverflowException();
             }
 
-            return (long)n;
+            if (sign >= 0) {
+                return (long)n.Lo;
+            }
+            else {
+                return (n.Lo <= 0x7FFFFFFFFFFFFFFFuL) ? -(long)n.Lo : long.MinValue;
+            }
         }
 
         public static implicit operator ddouble(ulong n) {
@@ -97,7 +99,7 @@ namespace DoubleDouble {
                 throw new InvalidCastException();
             }
 
-            (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
+            (int sign, int exponent, UInt128 mantissa, bool iszero) = FloatSplitter.Split(v);
 
             if (sign < 0) {
                 throw new OverflowException();
@@ -109,12 +111,12 @@ namespace DoubleDouble {
                 throw new OverflowException();
             }
 
-            BigInteger n = BigIntegerUtil.LeftShift(mantissa, exponent - FloatSplitter.MantissaBits * 2);
-            if (n > ulong.MaxValue) {
+            UInt128 n = UInt128.LeftShift(mantissa, exponent - FloatSplitter.MantissaBits * 2);
+            if (n.Hi > 0uL) {
                 throw new OverflowException();
             }
 
-            return (ulong)n;
+            return n.Lo;
         }
 
         public static implicit operator ddouble(BigInteger n) {
@@ -130,7 +132,7 @@ namespace DoubleDouble {
             int bits = checked((int)n.GetBitLength());
             int sfts = checked(bits - IntegerSplitter.UInt64Bits * 2);
 
-            n = BigIntegerUtil.RightShift(n, sfts);
+            n = (sfts >= 0) ? (n >> sfts) : (n << (-sfts));
 
             UInt64 hi = unchecked((UInt64)(n >> IntegerSplitter.UInt64Bits));
             UInt64 lo = unchecked((UInt64)(n & (~0uL)));
@@ -148,14 +150,11 @@ namespace DoubleDouble {
 
             UInt32[] mantissa = new UInt32[3];
 
-            mantissa[0] = unchecked((uint)arr[0]);
-            mantissa[1] = unchecked((uint)arr[1]);
-            mantissa[2] = unchecked((uint)arr[2]);
+            mantissa[0] = unchecked((UInt32)arr[0]);
+            mantissa[1] = unchecked((UInt32)arr[1]);
+            mantissa[2] = unchecked((UInt32)arr[2]);
 
-            BigInteger num =
-                (BigInteger)mantissa[0] |
-                ((BigInteger)mantissa[1]) << 32 |
-                ((BigInteger)mantissa[2]) << 64;
+            UInt128 num = new UInt128(0u, mantissa[2], mantissa[1], mantissa[0]);
 
             while (exponent > 0 && num % 10 == 0) {
                 exponent--;
@@ -170,7 +169,7 @@ namespace DoubleDouble {
         public static explicit operator decimal(ddouble v) {
             const int digits = 28;
 
-            (int sign, int exponent, BigInteger num) = v.ToStringCore(digits);
+            (int sign, int exponent, UInt128 num) = v.ToStringCore(digits);
 
             exponent -= digits;
 
@@ -179,15 +178,10 @@ namespace DoubleDouble {
                 num /= 10;
             }
 
-            UInt32[] mantissa = new UInt32[3];
-            mantissa[0] = (UInt32)(num & (BigInteger)~0u);
-            mantissa[1] = (UInt32)((num >> 32) & (BigInteger)~0u);
-            mantissa[2] = (UInt32)(num >> 64);
-
             decimal d = new decimal(
-                unchecked((int)mantissa[0]),
-                unchecked((int)mantissa[1]),
-                unchecked((int)mantissa[2]),
+                unchecked((Int32)num.E0),
+                unchecked((Int32)num.E1),
+                unchecked((Int32)num.E2),
                 isNegative: sign < 0, scale: checked((byte)(-exponent))
             );
 
@@ -211,6 +205,20 @@ namespace DoubleDouble {
             );
 
             return bits.sign >= 0 ? v : -v;
+        }
+
+        
+        internal static ddouble FromUInt128(UInt128 n) {
+            if (n.IsZero) {
+                return Zero;
+            }
+
+            int lzc = UInt128.LeadingZeroCount(n);
+            UInt128 n_sft = n << lzc;
+            
+            ddouble v = (sign: +1, exponent: UInt128.Bits - lzc - 1, n_sft.Hi, n_sft.Lo);
+
+            return v;
         }
     }
 }

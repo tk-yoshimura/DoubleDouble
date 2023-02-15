@@ -268,7 +268,7 @@ namespace DoubleDoubleTest.DDouble {
             BigInteger m = FloatSplitter.Split(v7).mantissa;
 
             Assert.AreEqual(n, m);
-            Assert.AreEqual(1, FloatSplitter.Split(v2).mantissa - FloatSplitter.Split(v1).mantissa);
+            Assert.AreEqual(1u, FloatSplitter.Split(v2).mantissa - FloatSplitter.Split(v1).mantissa);
 
             Assert.AreEqual(1, v1);
             Assert.AreNotEqual(v2, v1);

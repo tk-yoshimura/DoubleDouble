@@ -53,7 +53,7 @@ namespace DoubleDoubleTest.Utils {
                 double.NaN
             }) {
 
-                (int sign, int exponent, BigInteger mantissa, bool iszero) = FloatSplitter.Split(v);
+                (int sign, int exponent, UInt128 mantissa, bool iszero) = FloatSplitter.Split(v);
 
                 Console.WriteLine(v);
                 Console.WriteLine($"  {sign} {exponent} 0x{mantissa:X27} iszero:{iszero}");

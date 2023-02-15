@@ -18,7 +18,7 @@ namespace DoubleDouble {
                 return (Sign > 0) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
             }
 
-            (int sign, int exponent_dec, BigInteger mantissa_dec) = ToStringCore(DecimalDigits);
+            (int sign, int exponent_dec, UInt128 mantissa_dec) = ToStringCore(DecimalDigits);
 
             if (mantissa_dec.IsZero) {
                 return (Sign > 0) ? "0" : "-0";
@@ -57,7 +57,7 @@ namespace DoubleDouble {
         }
 
         public string ToString([AllowNull] string format, [AllowNull] IFormatProvider formatProvider) {
-            if (format is null) {
+            if (string.IsNullOrWhiteSpace(format)) {
                 return ToString();
             }
 
@@ -78,7 +78,7 @@ namespace DoubleDouble {
                 return (Sign > 0) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
             }
 
-            (int sign, int exponent_dec, BigInteger mantissa_dec) = ToStringCore(digits);
+            (int sign, int exponent_dec, UInt128 mantissa_dec) = ToStringCore(digits);
 
             if (mantissa_dec.IsZero) {
                 return ((Sign > 0) ? "0." : "-0.") + new string('0', digits) + $"{format[0]}0";
@@ -94,7 +94,7 @@ namespace DoubleDouble {
             return ToString(format, null);
         }
 
-        internal (int sign, int exponent_dec, BigInteger mantissa_dec) ToStringCore(int digits) {
+        internal (int sign, int exponent_dec, UInt128 mantissa_dec) ToStringCore(int digits) {
             const int presicion = 4;
 
             if (digits > DecimalDigits) {
@@ -108,28 +108,28 @@ namespace DoubleDouble {
                 return (Sign, 0, 0);
             }
 
-            (int sign, int exponent, BigInteger mantissa, _) = FloatSplitter.Split(this);
+            (int sign, int exponent, UInt128 mantissa, _) = FloatSplitter.Split(this);
 
             ddouble exponent_log10 = Lg2 * exponent;
             ddouble exponent_int = Floor(exponent_log10);
             int exponent_dec = (int)exponent_int;
 
             ddouble log10_frac = Ldexp(Consts.Dec.Pow5(-exponent_dec), checked(exponent - exponent_dec));
-            (_, int exponent_frac, BigInteger mantissa_frac, _) = FloatSplitter.Split(log10_frac);
+            (_, int exponent_frac, UInt128 mantissa_frac, _) = FloatSplitter.Split(log10_frac);
 
 #if DEBUG
             Debug<ArithmeticException>.Assert(log10_frac >= 1 && log10_frac < 10);
 #endif
 
-            mantissa = (mantissa * Consts.Dec.Decimal(digits + presicion)) >> (FloatSplitter.MantissaBits * 2);
-            mantissa = (mantissa * (mantissa_frac << exponent_frac)) >> (FloatSplitter.MantissaBits * 2);
+            mantissa = UInt128.MulShift(mantissa, Consts.Dec.Decimal(digits + presicion), FloatSplitter.MantissaBits * 2);
+            mantissa = UInt128.MulShift(mantissa, mantissa_frac, FloatSplitter.MantissaBits * 2 - exponent_frac);
 
             int mantissa_length = mantissa.ToString().Length;
 
             if (mantissa_length > (digits + 1)) {
                 int trunc_digits = mantissa_length - (digits + 1);
                 exponent_dec = checked(exponent_dec + trunc_digits - presicion);
-                mantissa = BigIntegerUtil.RoundDiv(mantissa, Consts.Dec.Decimal(trunc_digits));
+                mantissa = UInt128.RoundDiv(mantissa, Consts.Dec.Decimal(trunc_digits));
             }
             if (mantissa == Consts.Dec.Decimal(digits + 1)) {
                 exponent_dec = checked(exponent_dec + 1);
@@ -148,14 +148,14 @@ namespace DoubleDouble {
 
             public static class Dec {
 
-                static readonly Dictionary<int, BigInteger> decimals = new();
+                static readonly Dictionary<int, UInt128> decimals = new();
                 static readonly Dictionary<int, ddouble> pow5s = new();
 
-                public static BigInteger Decimal(int n) {
+                public static UInt128 Decimal(int n) {
                     if (!decimals.ContainsKey(n)) {
-                        BigInteger num = 1;
+                        UInt128 num = 1u;
                         for (int i = 0; i < n; i++) {
-                            num *= 10;
+                            num *= 10u;
                         }
 
                         decimals.Add(n, num);

@@ -39,7 +39,7 @@ namespace DoubleDouble {
             return (sign, exponent, mantissa, iszero: false);
         }
 
-        public static (int sign, int exponent, BigInteger mantissa, bool iszero) Split(ddouble v) {
+        public static (int sign, int exponent, UInt128 mantissa, bool iszero) Split(ddouble v) {
             (int sign, int exponent, UInt64 mantissa, bool iszero) hi = Split(v.Hi, hidden_bit: false);
             (int sign, int exponent, UInt64 mantissa, bool iszero) lo = Split(v.Lo, hidden_bit: false);
 
@@ -47,7 +47,7 @@ namespace DoubleDouble {
                 return (hi.sign, 0, 0, iszero: true);
             }
 
-            BigInteger mantissa = new BigInteger(hi.mantissa) << MantissaBits;
+            UInt128 mantissa = (UInt128)hi.mantissa << MantissaBits;
             if (lo.iszero) {
                 return (hi.sign, hi.exponent, mantissa, iszero: false);
             }
@@ -55,10 +55,10 @@ namespace DoubleDouble {
             int sfts = hi.exponent - lo.exponent - MantissaBits;
 
             if (hi.sign == lo.sign) {
-                mantissa += BigIntegerUtil.RightShift(lo.mantissa, sfts);
+                mantissa += UInt128.RightShift(lo.mantissa, sfts);
             }
             else {
-                mantissa -= BigIntegerUtil.RightShift(lo.mantissa, sfts);
+                mantissa -= UInt128.RightShift(lo.mantissa, sfts);
             }
 
             return (hi.sign, hi.exponent, mantissa, iszero: false);

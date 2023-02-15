@@ -4,7 +4,14 @@ using System.Runtime.Intrinsics.X86;
 
 namespace DoubleDouble {
     internal static partial class UIntUtil {
-        const int UInt32Bits = 32, UInt64Bits = 64;
+        public const int UInt32Bits = sizeof(UInt32) * 8;
+        public const int UInt64Bits = sizeof(UInt64) * 8;
+        public const int UInt32MaxDecimalDigits = UInt32Bits * 30103 / 100000;
+        public const int UInt64MaxDecimalDigits = UInt64Bits * 30103 / 100000;
+        public const UInt32 UInt32MaxDecimal = 1000000000u;
+        public const UInt64 UInt64MaxDecimal = 10000000000000000000ul;
+
+        public const UInt32 UInt32Round = UInt32.MaxValue >> 1;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt32 Abs(Int32 x) {
@@ -65,6 +72,37 @@ namespace DoubleDouble {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static UInt64 Pack(UInt32 high, UInt32 low) {
             return (((UInt64)high) << UInt32Bits) | ((UInt64)low);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (UInt32 high, UInt32 low) DecimalUnpack(UInt64 v) {
+
+            UInt32 high, low;
+
+#if DEBUG
+            checked
+#else
+            unchecked
+#endif
+            {
+                high = (UInt32)(v / UInt32MaxDecimal);
+                low = (UInt32)(v - (UInt64)high * (UInt64)UInt32MaxDecimal);
+            }
+
+            return (high, low);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static (UInt32 high, UInt32 low) DecimalUnpack(UInt32 v) {
+            UInt32 high = v / UInt32MaxDecimal;
+            UInt32 low = v - high * UInt32MaxDecimal;
+
+            return (high, low);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static UInt64 DecimalPack(UInt32 high, UInt32 low) {
+            return (UInt64)high * (UInt64)UInt32MaxDecimal + (UInt64)low;
         }
     }
 }

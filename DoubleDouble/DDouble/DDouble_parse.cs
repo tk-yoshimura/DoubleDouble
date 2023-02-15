@@ -9,48 +9,37 @@ namespace DoubleDouble {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly Regex parse_regex = new(@"^[\+-]?\d+(\.\d+)?([eE][\+-]?\d+)?$");
 
-        public static ddouble Parse(string s) {
-            return (ddouble)s;
-        }
-
-        public static bool TryParse(string s, out ddouble result) {
-            try {
-                result = (ddouble)s;
-                return true;
-            }
-            catch (FormatException) {
-                result = ddouble.Zero;
-                return false;
-            }
-        }
-
         public static implicit operator ddouble(string num) {
+            return Parse(num);
+        }
+
+        public static ddouble Parse(string s) {
             const int truncate_digits = 33;
 
-            if (!parse_regex.IsMatch(num)) {
-                return FromIrregularString(num);
+            if (string.IsNullOrEmpty(s) || !parse_regex.IsMatch(s)) {
+                return FromIrregularString(s);
             }
 
             int sign = 1;
 
-            if (num[0] == '+' || num[0] == '-') {
-                if (num[0] == '-') {
+            if (s[0] == '+' || s[0] == '-') {
+                if (s[0] == '-') {
                     sign = -1;
                 }
 
-                num = num[1..];
+                s = s[1..];
             }
 
-            int exponent_symbol_index = num.Length;
+            int exponent_symbol_index = s.Length;
 
-            if (num.Contains('e')) {
-                exponent_symbol_index = num.IndexOf('e');
+            if (s.Contains('e')) {
+                exponent_symbol_index = s.IndexOf('e');
             }
-            else if (num.Contains('E')) {
-                exponent_symbol_index = num.IndexOf('E');
+            else if (s.Contains('E')) {
+                exponent_symbol_index = s.IndexOf('E');
             }
 
-            string mantissa = num[..exponent_symbol_index].TrimStart('0');
+            string mantissa = s[..exponent_symbol_index].TrimStart('0');
 
             if (string.IsNullOrEmpty(mantissa)) {
                 return sign == +1 ? 0 : -1;
@@ -72,11 +61,11 @@ namespace DoubleDouble {
             }
             int digits = dec.Length - 1;
 
-            BigInteger mantissa_dec = BigInteger.Parse(dec);
+            UInt128 mantissa_dec = UInt128.Parse(dec);
 
-            string exponent = (exponent_symbol_index + 1 < num.Length) ? num[(exponent_symbol_index + 1)..] : "0";
+            string exponent = (exponent_symbol_index + 1 < s.Length) ? s[(exponent_symbol_index + 1)..] : "0";
             if (!int.TryParse(exponent, NumberStyles.Integer, CultureInfo.InvariantCulture, out int exponent_dec)) {
-                throw new FormatException(nameof(num));
+                throw new FormatException(nameof(s));
             }
 
             exponent_dec = checked(exponent_dec + point_symbol_index - leading_zeros);
@@ -84,14 +73,25 @@ namespace DoubleDouble {
             return FromStringCore(sign, exponent_dec, mantissa_dec, digits);
         }
 
-        internal static ddouble FromStringCore(int sign, int exponent_dec, BigInteger mantissa_dec, int digits) {
-#if DEBUG
-            Debug<ArithmeticException>.Assert(mantissa_dec.Sign >= 0);
-#endif
+        public static bool TryParse(string s, out ddouble result) {
+            try {
+                result = (ddouble)s;
+                return true;
+            }
+            catch (FormatException) {
+                result = ddouble.Zero;
+                return false;
+            }
+        }
 
+        internal static ddouble FromStringCore(int sign, int exponent_dec, UInt128 mantissa_dec, int digits) {
             int p = checked(exponent_dec - digits);
 
-            ddouble mantissa = (sign >= 0 ? mantissa_dec : BigInteger.Negate(mantissa_dec));
+            ddouble mantissa = FromUInt128(mantissa_dec);
+
+            if (sign < 0) {
+                mantissa = -mantissa;
+            }
 
             if (p == 0) {
                 return mantissa;
