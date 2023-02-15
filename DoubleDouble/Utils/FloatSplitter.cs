@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 
 namespace DoubleDouble {
     internal static class FloatSplitter {

@@ -207,7 +207,7 @@ namespace DoubleDouble {
             return bits.sign >= 0 ? v : -v;
         }
 
-        
+
         internal static ddouble FromUInt128(UInt128 n) {
             if (n.IsZero) {
                 return Zero;
@@ -215,7 +215,7 @@ namespace DoubleDouble {
 
             int lzc = UInt128.LeadingZeroCount(n);
             UInt128 n_sft = n << lzc;
-            
+
             ddouble v = (sign: +1, exponent: UInt128.Bits - lzc - 1, n_sft.Hi, n_sft.Lo);
 
             return v;
