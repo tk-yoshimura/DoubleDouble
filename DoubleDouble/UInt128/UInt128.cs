@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 namespace DoubleDouble {
     [DebuggerDisplay("{ToString(),nq}")]
     [StructLayout(LayoutKind.Explicit)]
-    public readonly partial struct UInt128 : IEquatable<UInt128>, IComparable<UInt128> {
+    internal readonly partial struct UInt128 : IEquatable<UInt128>, IComparable<UInt128> {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         [FieldOffset(0)]
         private readonly UInt32 e0 = 0u;

@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace DoubleDouble {
-    public readonly partial struct UInt128 {
+    internal readonly partial struct UInt128 {
 
         public override string ToString() {
             UInt32 carry, dec0, dec1, dec2, dec3, dec4;

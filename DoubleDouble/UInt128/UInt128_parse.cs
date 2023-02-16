@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace DoubleDouble {
-    public readonly partial struct UInt128 {
+    internal readonly partial struct UInt128 {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private static readonly Regex parse_regex = new(@"^\d+$");
 

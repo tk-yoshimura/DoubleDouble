@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.X86;
 
 namespace DoubleDouble {
-    public readonly partial struct UInt128 {
+    internal readonly partial struct UInt128 {
         public static UInt128 operator >>(UInt128 v, int sft) {
             unchecked {
                 if (sft >= UIntUtil.UInt32Bits * 4) {
@@ -120,18 +120,6 @@ namespace DoubleDouble {
             throw new ArgumentOutOfRangeException(nameof(sft));
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int LeadingZeroCount(UInt128 v) {
-            uint cnt =
-                (v.e3 > 0u) ? Lzcnt.LeadingZeroCount(v.e3) :
-                (v.e2 > 0u) ? Lzcnt.LeadingZeroCount(v.e2) + UIntUtil.UInt32Bits :
-                (v.e1 > 0u) ? Lzcnt.LeadingZeroCount(v.e1) + UIntUtil.UInt32Bits * 2 :
-                (v.e0 > 0u) ? Lzcnt.LeadingZeroCount(v.e0) + UIntUtil.UInt32Bits * 3 :
-                UIntUtil.UInt32Bits * 4;
-
-            return unchecked((int)cnt);
-        }
-
         public static UInt128 RightShift(UInt128 n, int sfts) {
             if (sfts > 0) {
                 return n >> sfts;
@@ -150,6 +138,18 @@ namespace DoubleDouble {
                 return n >> -sfts;
             }
             return n;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int LeadingZeroCount(UInt128 v) {
+            uint cnt =
+                (v.e3 > 0u) ? Lzcnt.LeadingZeroCount(v.e3) :
+                (v.e2 > 0u) ? Lzcnt.LeadingZeroCount(v.e2) + UIntUtil.UInt32Bits :
+                (v.e1 > 0u) ? Lzcnt.LeadingZeroCount(v.e1) + UIntUtil.UInt32Bits * 2 :
+                (v.e0 > 0u) ? Lzcnt.LeadingZeroCount(v.e0) + UIntUtil.UInt32Bits * 3 :
+                UIntUtil.UInt32Bits * 4;
+
+            return unchecked((int)cnt);
         }
     }
 }
