@@ -229,7 +229,7 @@ namespace DoubleDouble {
             }
 
 #if DEBUG
-            Trace.Assert(r < b && a == r + q * b, "Detected divide bug.");
+            Trace.Assert(r < b && a == r + q * b, "Detected divide bug. uint128 / uint128");
 #endif
 
             return (q, r);
@@ -310,7 +310,7 @@ namespace DoubleDouble {
             }
 
 #if DEBUG
-            Trace.Assert(r < b && a == r + q * b, "Detected divide bug.");
+            Trace.Assert(r < b && a == r + q * b, "Detected divide bug. uint128 / uint64");
 #endif
 
             return (q, r);
@@ -333,7 +333,7 @@ namespace DoubleDouble {
             UInt128 r0 = new(a.hi - n0 * b, a.lo);
 
 #if DEBUG
-            Trace.Assert(r0.e3 == 0u && a == r0 + q0 * b, "Detected divide bug. phase 0");
+            Trace.Assert(r0.e3 == 0u && a == r0 + q0 * b, "Detected divide bug. uint128 / uint32 phase 0");
 #endif
 
             UInt64 n1 = UIntUtil.Pack(r0.e2, r0.e1) / b;
@@ -341,14 +341,14 @@ namespace DoubleDouble {
             UInt128 r1 = r0 - ((UInt128)(n1 * b) << UIntUtil.UInt32Bits);
 
 #if DEBUG
-            Trace.Assert(r1.Hi == 0uL && a == r1 + q1 * b, "Detected divide bug. phase 1");
+            Trace.Assert(r1.Hi == 0uL && a == r1 + q1 * b, "Detected divide bug. uint128 / uint32 phase 1");
 #endif
             UInt64 n2 = r1.lo / b;
             UInt128 q2 = q1 + n2;
             UInt64 r2 = r1.lo - n2 * b;
 
 #if DEBUG
-            Trace.Assert(r2 < b && a == r2 + q2 * b, "Detected divide bug. phase 2");
+            Trace.Assert(r2 < b && a == r2 + q2 * b, "Detected divide bug. uint128 / uint32 phase 2");
 #endif
 
             return (q2, r2);
