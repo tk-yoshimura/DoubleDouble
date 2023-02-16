@@ -176,11 +176,11 @@ namespace DoubleDouble {
             if (a.hi == 0uL) {
                 return a.e1 > 0u ? (a.lo / b.lo, a.lo % b.lo) : (a.e0 / b.e0, a.e0 % b.e0);
             }
-            if (b.e3 >= 0x80000000u) {
-                return (a < b) ? (0u, a) : (1u, a - b);
-            }
             if (b.hi == 0uL) {
                 return DivRem(a, b.lo);
+            }
+            if (b.e3 >= 0x80000000u) {
+                return (a < b) ? (0u, a) : (1u, a - b);
             }
 
             UInt128 q = Zero, r = a;
@@ -246,11 +246,8 @@ namespace DoubleDouble {
             if (a.hi == 0uL) {
                 return a.e1 > 0u ? (a.lo / b, a.lo % b) : (a.e0 / b, a.e0 % b);
             }
-
-            (UInt32 b_hi, UInt32 b_lo) = UIntUtil.Unpack(b);
-
-            if (b_hi == 0u) {
-                return DivRem(a, b_lo);
+            if (b <= UInt32.MaxValue) {
+                return DivRem(a, unchecked((UInt32)b));
             }
 
             UInt128 q = Zero, r = a;
