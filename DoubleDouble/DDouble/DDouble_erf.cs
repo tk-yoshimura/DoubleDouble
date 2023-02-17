@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -84,6 +85,10 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Erf x={x}] Too small pade denom!!");
+#endif
+
                 ddouble y = x * (sc / sd);
 
                 return y;
@@ -106,6 +111,10 @@ namespace DoubleDouble {
                     sc = sc * w + c;
                     sd = sd * w + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+#endif
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -130,6 +139,10 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+#endif
+
                 ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
@@ -152,6 +165,10 @@ namespace DoubleDouble {
                     sc = sc * w + c;
                     sd = sd * w + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+#endif
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -176,6 +193,10 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+#endif
+
                 ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
@@ -199,6 +220,10 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+#endif
+
                 ddouble y = sc / (sd * Exp(x * x));
 
                 return y;
@@ -221,6 +246,10 @@ namespace DoubleDouble {
                     sc = sc * w + c;
                     sd = sd * w + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+#endif
 
                 ddouble y = sc / (sd * Exp(x * x));
 

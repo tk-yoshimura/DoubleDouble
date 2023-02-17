@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.RiemannZeta;
 
 namespace DoubleDouble {
@@ -28,6 +29,10 @@ namespace DoubleDouble {
                 for (int i = 1; i < table.ds.Count; i++) {
                     d = d * x + table.ds[i];
                 }
+
+#if DEBUG
+                Trace.Assert(d > 0.0625d, $"[RiemannZeta x={x}] Too small pade denom!!");
+#endif
 
                 return c / d;
             };

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -1736,6 +1737,10 @@ namespace DoubleDouble {
                     sc = sc * t + c;
                     sd = sd * t + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[BesselK x={x}] Too small pade denom!!");
+#endif
 
                 ddouble y = Sqrt(t * PI / 2) * sc / sd;
 

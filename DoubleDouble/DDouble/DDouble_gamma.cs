@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DoubleDouble {
@@ -40,6 +41,10 @@ namespace DoubleDouble {
                     sc = sc * v + c;
                     sd = sd * v + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
+#endif
 
                 ddouble y = sc / sd;
 
@@ -95,6 +100,10 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
+#endif
+
                 ddouble y = sc / sd - Log1p(v);
 
                 return y;
@@ -113,6 +122,10 @@ namespace DoubleDouble {
                     sc = sc * v + c;
                     sd = sd * v + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
+#endif
 
                 ddouble y = sc / sd;
 
@@ -162,6 +175,10 @@ namespace DoubleDouble {
                     sd = sd * x_zsft + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
+#endif
+
                 ddouble y = sc / sd;
 
                 return y;
@@ -180,6 +197,10 @@ namespace DoubleDouble {
                     sc = sc * v + c;
                     sd = sd * v + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
+#endif
 
                 ddouble y = sc / sd;
 

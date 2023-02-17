@@ -42,7 +42,7 @@ namespace DoubleDoubleTest.DDouble {
 
             List<ddouble> us = new List<ddouble>();
 
-            using (BinaryWriter stream = new BinaryWriter(File.OpenWrite(filename_bin))) {
+            using (BinaryWriter stream = new BinaryWriter(File.Open(filename_bin, FileMode.Create))) {
                 foreach (ddouble v in vs) {
                     stream.Write(v);
                 }

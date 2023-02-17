@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DoubleDouble {
@@ -95,6 +96,10 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+#endif
+
                 ddouble y = sc / sd;
 
                 if (n >= 2) {
@@ -127,6 +132,10 @@ namespace DoubleDouble {
                     sc = sc * v + c;
                     sd = sd * v + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+#endif
 
                 ddouble y = sc / sd;
 
@@ -181,6 +190,10 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+#endif
+
                 ddouble delta = sc / sd;
                 if (IsZero(u0)) {
                     delta *= u;
@@ -219,6 +232,10 @@ namespace DoubleDouble {
                     sc = sc * v + c;
                     sd = sd * v + d;
                 }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+#endif
 
                 ddouble delta = sc / sd;
                 if (IsZero(u0)) {

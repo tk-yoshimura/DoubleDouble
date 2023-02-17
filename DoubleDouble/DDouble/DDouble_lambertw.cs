@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -74,6 +75,10 @@ namespace DoubleDouble {
                         sc = sc * v + c;
                         sd = sd * v + d;
                     }
+
+#if DEBUG
+                    Trace.Assert(sd > 0.0625d, $"[LambertW x={x}] Too small pade denom!!");
+#endif
 
                     y = sc / sd;
                 }

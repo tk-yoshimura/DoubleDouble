@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace DoubleDouble {
@@ -277,6 +278,11 @@ namespace DoubleDouble {
                     sgc = sgc * w + gc;
                     sgd = sgd * w + gd;
                 }
+
+#if DEBUG
+                Trace.Assert(sfd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+                Trace.Assert(sgd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+#endif
 
                 ddouble f = sfc / sfd, g = sgc / sgd;
 

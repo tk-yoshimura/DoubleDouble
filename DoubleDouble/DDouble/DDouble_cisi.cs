@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -230,7 +231,7 @@ namespace DoubleDouble {
         };
 
         private static class CiSiPade {
-            public static readonly ddouble PadeApproxMin = 0.71d, PadeApproxMax = 256d;
+            public static readonly ddouble PadeApproxMin = 1d, PadeApproxMax = 511d;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
 
             static CiSiPade() {
@@ -253,8 +254,8 @@ namespace DoubleDouble {
             public static (ddouble f, ddouble g) Coef(ddouble x) {
                 ddouble v = Log2(x);
 
-                int table_index = (int)Round(v);
-                ddouble w = v - table_index;
+                int table_index = Math.Max(0, (int)Floor(v));
+                ddouble w = v - table_index - Point5;
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 
                 (ddouble sfc, ddouble sfd, ddouble sgc, ddouble sgd) = table[0];
@@ -266,6 +267,11 @@ namespace DoubleDouble {
                     sgc = sgc * w + gc;
                     sgd = sgd * w + gd;
                 }
+
+#if DEBUG
+                Trace.Assert(sfd > 0.0625d, $"[CiSi x={x}] Too small pade denom!!");
+                Trace.Assert(sgd > 0.0625d, $"[CiSi x={x}] Too small pade denom!!");
+#endif
 
                 ddouble f = sfc / sfd, g = sgc / sgd;
 
