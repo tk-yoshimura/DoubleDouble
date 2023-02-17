@@ -1,5 +1,5 @@
 # DoubleDouble
- double-double arithmetic implements
+ Double-Double Arithmetic and Special Function Implements
  
 ## Requirement
 .NET 6.0
