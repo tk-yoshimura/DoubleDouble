@@ -1,6 +1,7 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Numerics;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -60,6 +61,76 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual($"{v1:E30}", v1.ToString("E30"));
             Assert.AreEqual($"{v1:e20}", v1.ToString("e20"));
             Assert.AreEqual($"{v1:E20}", v1.ToString("E20"));
+        }
+
+        [TestMethod]
+        public void ToStringDigitTest() {
+            string v1 = "3.14159265358979323846264338327950288";
+            string v2 = "5.55555555555555555555555555555555555e-1";
+            string v3 = "5.45454545454545454545454545454545454e-2";
+            string v4 = "9.99999999999999000000000000000000000e-3";
+
+            Assert.AreEqual("3.1415926535897932384626434e0", $"{((ddouble)v1):e25}");
+            Assert.AreEqual("3.14159265358979323846e0", $"{((ddouble)v1):e20}");
+            Assert.AreEqual("3.141592653589793e0", $"{((ddouble)v1):e15}");
+            Assert.AreEqual("3.1415926536e0", $"{((ddouble)v1):e10}");
+            Assert.AreEqual("3.14159e0", $"{((ddouble)v1):e5}");
+
+            Assert.AreEqual("5.5555555555555555555555556e-1", $"{((ddouble)v2):e25}");
+            Assert.AreEqual("5.55555555555555555556e-1", $"{((ddouble)v2):e20}");
+            Assert.AreEqual("5.555555555555556e-1", $"{((ddouble)v2):e15}");
+            Assert.AreEqual("5.5555555556e-1", $"{((ddouble)v2):e10}");
+            Assert.AreEqual("5.55556e-1", $"{((ddouble)v2):e5}");
+
+            Assert.AreEqual("5.4545454545454545454545455e-2", $"{((ddouble)v3):e25}");
+            Assert.AreEqual("5.45454545454545454545e-2", $"{((ddouble)v3):e20}");
+            Assert.AreEqual("5.454545454545455e-2", $"{((ddouble)v3):e15}");
+            Assert.AreEqual("5.4545454545e-2", $"{((ddouble)v3):e10}");
+            Assert.AreEqual("5.45455e-2", $"{((ddouble)v3):e5}");
+
+            Assert.AreEqual("9.9999999999999900000000000e-3", $"{((ddouble)v4):e25}");
+            Assert.AreEqual("9.99999999999999000000e-3", $"{((ddouble)v4):e20}");
+            Assert.AreEqual("9.999999999999990e-3", $"{((ddouble)v4):e15}");
+            Assert.AreEqual("1.0000000000e-2", $"{((ddouble)v4):e10}");
+            Assert.AreEqual("1.00000e-2", $"{((ddouble)v4):e5}");
+
+            for (int i = 7; i <= 100; i++) {
+                BigInteger n = BigInteger.One << i;
+                string s0 = n.ToString();
+                string s1 = (n - 1).ToString();
+                string s2 = (n + 1).ToString();
+
+                Assert.AreEqual($"{s0[0]}.{s0[1..]}e{s0.Length - 1}", $"{((ddouble)s0).ToString($"e{s0.Length - 1}")}");
+                Assert.AreEqual($"{s1[0]}.{s1[1..]}e{s1.Length - 1}", $"{((ddouble)s1).ToString($"e{s1.Length - 1}")}");
+                Assert.AreEqual($"{s2[0]}.{s2[1..]}e{s2.Length - 1}", $"{((ddouble)s2).ToString($"e{s2.Length - 1}")}");
+
+                Assert.AreEqual($"{s0[0]}.{s0[1..]}e{s0.Length - 6}", $"{((ddouble)s0 / 100000).ToString($"e{s0.Length - 1}")}");
+                Assert.AreEqual($"{s1[0]}.{s1[1..]}e{s1.Length - 6}", $"{((ddouble)s1 / 100000).ToString($"e{s1.Length - 1}")}");
+                Assert.AreEqual($"{s2[0]}.{s2[1..]}e{s2.Length - 6}", $"{((ddouble)s2 / 100000).ToString($"e{s2.Length - 1}")}");
+
+                Assert.AreEqual($"{s0[0]}.{s0[1..]}e{s0.Length - 12}", $"{((ddouble)s0 / 100000000000).ToString($"e{s0.Length - 1}")}");
+                Assert.AreEqual($"{s1[0]}.{s1[1..]}e{s1.Length - 12}", $"{((ddouble)s1 / 100000000000).ToString($"e{s1.Length - 1}")}");
+                Assert.AreEqual($"{s2[0]}.{s2[1..]}e{s2.Length - 12}", $"{((ddouble)s2 / 100000000000).ToString($"e{s2.Length - 1}")}");
+            }
+
+            for (int i = 3; i <= 30; i++) {
+                BigInteger n = BigInteger.Parse($"1{new string('0', i)}");
+                string s0 = n.ToString();
+                string s1 = (n - 1).ToString();
+                string s2 = (n + 1).ToString();
+
+                Assert.AreEqual($"{s0[0]}.{s0[1..]}e{s0.Length - 1}", $"{((ddouble)s0).ToString($"e{s0.Length - 1}")}");
+                Assert.AreEqual($"{s1[0]}.{s1[1..]}e{s1.Length - 1}", $"{((ddouble)s1).ToString($"e{s1.Length - 1}")}");
+                Assert.AreEqual($"{s2[0]}.{s2[1..]}e{s2.Length - 1}", $"{((ddouble)s2).ToString($"e{s2.Length - 1}")}");
+
+                Assert.AreEqual($"{s0[0]}.{s0[1..]}e{s0.Length - 6}", $"{((ddouble)s0 / 100000).ToString($"e{s0.Length - 1}")}");
+                Assert.AreEqual($"{s1[0]}.{s1[1..]}e{s1.Length - 6}", $"{((ddouble)s1 / 100000).ToString($"e{s1.Length - 1}")}");
+                Assert.AreEqual($"{s2[0]}.{s2[1..]}e{s2.Length - 6}", $"{((ddouble)s2 / 100000).ToString($"e{s2.Length - 1}")}");
+
+                Assert.AreEqual($"{s0[0]}.{s0[1..]}e{s0.Length - 12}", $"{((ddouble)s0 / 100000000000).ToString($"e{s0.Length - 1}")}");
+                Assert.AreEqual($"{s1[0]}.{s1[1..]}e{s1.Length - 12}", $"{((ddouble)s1 / 100000000000).ToString($"e{s1.Length - 1}")}");
+                Assert.AreEqual($"{s2[0]}.{s2[1..]}e{s2.Length - 12}", $"{((ddouble)s2 / 100000000000).ToString($"e{s2.Length - 1}")}");
+            }
         }
 
         [TestMethod]
