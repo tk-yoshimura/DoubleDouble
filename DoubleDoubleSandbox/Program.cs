@@ -9,21 +9,19 @@ namespace DoubleDoubleSandbox {
             const int max_terms = 1024;
 
             const int n = 4;
-            ddouble q = 17;
-            ddouble a = ddouble.MathieuB(n, q);
-
-            ddouble[] cs = MathieuSCoef(n, q, a, max_terms);
+            ddouble q = 17.4478865152084;
+            ddouble a = ddouble.MathieuA(n, q);
+            
+            ddouble[] cs = MathieuCCoef(n, q, a, max_terms);
             
             ddouble[] ms = new ddouble[cs.Length];
 
-            /*
             ms[0] = a * cs[0] - q * cs[1];
             ms[1] = (a - 4) * cs[1] - q * (2 * cs[0] + cs[2]);
 
             for (int m = 2; m < cs.Length - 1; m++) {
                 ms[m] = (a - 4 * m * m) * cs[m] - q * (cs[m - 1] + cs[m + 1]);
             }
-            */
 
             /*
             ms[0] = (a - 1 - q) * cs[0] - q * cs[1];
@@ -41,11 +39,13 @@ namespace DoubleDoubleSandbox {
             }
             */
 
+            /*
             ms[0] = (a - 4) * cs[0] - q * cs[1];
             
             for (int m = 1; m < cs.Length - 1; m++) {
                 ms[m] = (a - 4 * (m + 1) * (m + 1)) * cs[m] - q * (cs[m - 1] + cs[m + 1]);
             }
+            */
 
             Console.WriteLine("END");
             Console.Read();
@@ -76,10 +76,20 @@ namespace DoubleDoubleSandbox {
             }
 
             if ((n & 1) == 0) {
-                (cs[0], cs[1], ddouble r2) = SolveC2(2, a, q, 0, 4, cs[2]);
+                if (ddouble.Abs(cs[2]) > ddouble.Abs(cs[3])) {
+                    (cs[0], cs[1], ddouble r2) = SolveC2(2, a, q, 0, 4, cs[2]);
+                }
+                else {
+                    (cs[0], cs[1], cs[2], ddouble r3) = SolveC3(2, a, q, 0, 4, 16, cs[3]);
+                }
             }
             else {
-                (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 1 + q, 9, cs[2]);
+                if (ddouble.Abs(cs[2]) > ddouble.Abs(cs[3])) {
+                    (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 1 + q, 9, cs[2]);
+                }
+                else {
+                    (cs[0], cs[1], cs[2], ddouble r3) = SolveC3(1, a, q, 1 + q, 9, 25, cs[3]);
+                }
             }
 
             if (ddouble.IsInfinity(cs[0])) {
@@ -132,10 +142,20 @@ namespace DoubleDoubleSandbox {
             }
 
             if ((n & 1) == 0) {
-                (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 4, 16, cs[2]);
+                if (ddouble.Abs(cs[2]) > ddouble.Abs(cs[3])) {
+                    (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 4, 16, cs[2]);
+                }
+                else {
+                    (cs[0], cs[1], cs[2], ddouble r3) = SolveC3(1, a, q, 4, 16, 36, cs[3]);
+                }
             }
             else {
-                (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 1 - q, 9, cs[2]);
+                if (ddouble.Abs(cs[2]) > ddouble.Abs(cs[3])) {
+                    (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 1 - q, 9, cs[2]);
+                }
+                else {
+                    (cs[0], cs[1], cs[2], ddouble r3) = SolveC3(1, a, q, 1 - q, 9, 25, cs[3]);
+                }
             }
 
             if (ddouble.IsInfinity(cs[0])) {
@@ -171,6 +191,17 @@ namespace DoubleDoubleSandbox {
             ddouble c1 = m * (a - b0);
 
             return (c0, c1, r);
+        }
+
+        private static (ddouble c0, ddouble c1, ddouble c2, ddouble r) SolveC3(int k, ddouble a, ddouble q, ddouble b0, ddouble b1, ddouble b2, ddouble c3) {
+            ddouble r = (a - b0) * (a - b1) * (a - b2) - ((a - b0) + k * (a - b2)) * q * q;
+            ddouble m = c3 * q / r;
+
+            ddouble c0 = m * q * q;
+            ddouble c1 = m * q * (a - b0);
+            ddouble c2 = m * ((a - b0) * (a - b1) - k * q * q);
+
+            return (c0, c1, c2, r);
         }
     }
 }
