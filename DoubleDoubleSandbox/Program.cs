@@ -9,12 +9,11 @@ namespace DoubleDoubleSandbox {
             const int max_terms = 1024;
 
             const int n = 4;
-            ddouble q = 10;
-
+            ddouble q = 17;
             ddouble a = ddouble.MathieuB(n, q);
 
             ddouble[] cs = MathieuSCoef(n, q, a, max_terms);
-
+            
             ddouble[] ms = new ddouble[cs.Length];
 
             /*
@@ -77,20 +76,14 @@ namespace DoubleDoubleSandbox {
             }
 
             if ((n & 1) == 0) {
-                ddouble s = q / (a * (a - 4d) - 2 * q * q) * cs[2];
-
-                cs[1] = s * a;
-                cs[0] = s * q;
+                (cs[0], cs[1], ddouble r2) = SolveC2(2, a, q, 0, 4, cs[2]);
             }
             else {
-                ddouble s = q / ((a - q - 1d) * (a - 9d) - q * q) * cs[2];
-
-                cs[1] = s * (a - q - 1d);
-                cs[0] = s * q;
+                (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 1 + q, 9, cs[2]);
             }
 
             if (ddouble.IsInfinity(cs[0])) {
-                return new ddouble[] { cs[0].Sign };
+                return new ddouble[] { 1 };
             }
 
             ddouble norm = (cs[0] * cs[0]) * (((n & 1) == 0) ? 2 : 1);
@@ -98,12 +91,12 @@ namespace DoubleDoubleSandbox {
                 norm += cs[i] * cs[i];
             }
 
-            ddouble r = 1d / ddouble.Sqrt(norm);
+            ddouble r = 1d / ddouble.Sqrt(norm) * cs[0].Sign;
             for (int i = 0; i < cs.Length; i++) {
                 cs[i] *= r;
             }
 
-            ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -128);
+            ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -256);
             for (int i = cs.Length - 1; i > 0; i--) {
                 if (ddouble.Abs(cs[i]) > threshold) {
                     cs = cs[..i];
@@ -139,20 +132,14 @@ namespace DoubleDoubleSandbox {
             }
 
             if ((n & 1) == 0) {
-                ddouble s = q / ((a - 4d) * (a - 16d) - q * q) * cs[2];
-
-                cs[1] = s * (a - 4d);
-                cs[0] = s * q;
+                (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 4, 16, cs[2]);
             }
             else {
-                ddouble s = q / ((a + q - 1d) * (a - 9d) - q * q) * cs[2];
-
-                cs[1] = s * (a + q - 1d);
-                cs[0] = s * q;
+                (cs[0], cs[1], ddouble r2) = SolveC2(1, a, q, 1 - q, 9, cs[2]);
             }
 
             if (ddouble.IsInfinity(cs[0])) {
-                return new ddouble[] { cs[0].Sign };
+                return new ddouble[] { 1 };
             }
 
             ddouble norm = ddouble.Zero;
@@ -160,12 +147,12 @@ namespace DoubleDoubleSandbox {
                 norm += cs[i] * cs[i];
             }
 
-            ddouble r = 1d / ddouble.Sqrt(norm);
+            ddouble r = 1d / ddouble.Sqrt(norm) * cs[0].Sign;
             for (int i = 0; i < cs.Length; i++) {
                 cs[i] *= r;
             }
 
-            ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -128);
+            ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -256);
             for (int i = cs.Length - 1; i > 0; i--) {
                 if (ddouble.Abs(cs[i]) > threshold) {
                     cs = cs[..i];
@@ -174,6 +161,16 @@ namespace DoubleDoubleSandbox {
             }
 
             return cs;
+        }
+
+        private static (ddouble c0, ddouble c1, ddouble r) SolveC2(int k, ddouble a, ddouble q, ddouble b0, ddouble b1, ddouble c2) {
+            ddouble r = (a - b0) * (a - b1) - k * q * q;
+            ddouble m = c2 * q / r;
+
+            ddouble c0 = m * q;
+            ddouble c1 = m * (a - b0);
+
+            return (c0, c1, r);
         }
     }
 }
