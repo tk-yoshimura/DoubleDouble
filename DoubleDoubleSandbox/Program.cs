@@ -7,23 +7,24 @@ namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
             const int max_terms = 1024;
-
+            
             const int n = 4;
-            ddouble q = 17;
-            ddouble a = ddouble.MathieuB(n, q);
-            
-            ddouble[] cs = MathieuSCoef(n, q, a, max_terms);
-            
+            ddouble q = "17.4478865152084";
+            ddouble a = ddouble.MathieuA(n, q);
+
+            (ddouble[] cs, ddouble r) = Solve(a, q, 32, 2, 0, 0, 1e-200);
+
+            //
+            //ddouble[] cs = MathieuCCoef(n, q, a, max_terms);
+            //
             ddouble[] ms = new ddouble[cs.Length];
 
-            /*
             ms[0] = a * cs[0] - q * cs[1];
             ms[1] = (a - 4) * cs[1] - q * (2 * cs[0] + cs[2]);
 
             for (int m = 2; m < cs.Length - 1; m++) {
                 ms[m] = (a - 4 * m * m) * cs[m] - q * (cs[m - 1] + cs[m + 1]);
             }
-            */
 
             /*
             ms[0] = (a - 1 - q) * cs[0] - q * cs[1];
@@ -41,11 +42,20 @@ namespace DoubleDoubleSandbox {
             }
             */
 
+            /*
             ms[0] = (a - 4) * cs[0] - q * cs[1];
             
             for (int m = 1; m < cs.Length - 1; m++) {
                 ms[m] = (a - 4 * (m + 1) * (m + 1)) * cs[m] - q * (cs[m - 1] + cs[m + 1]);
             }
+            */
+
+            //ddouble c_sum = cs.Sum();
+
+            //Console.WriteLine(c_sum);
+
+            //(ddouble c0, ddouble c1, ddouble c2, ddouble r3) = SolveC3(a, q, 2, 0, 4, 16, 2.5);
+            
 
             Console.WriteLine("END");
             Console.Read();
@@ -64,7 +74,7 @@ namespace DoubleDoubleSandbox {
 
                 if (Math.ILogB(cs[m - 1].Hi) > -256) {
                     for (int j = m - 1; j < cs.Length; j++) {
-                        if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512) {
+                        if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512 && m >= 32) {
                             cs = cs[..j];
                             cs[^1] = ddouble.Zero;
                             break;
@@ -130,7 +140,7 @@ namespace DoubleDoubleSandbox {
 
                 if (Math.ILogB(cs[m - 1].Hi) > -256) {
                     for (int j = m - 1; j < cs.Length; j++) {
-                        if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512) {
+                        if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512 && m >= 32) {
                             cs = cs[..j];
                             cs[^1] = ddouble.Zero;
                             break;
@@ -202,6 +212,29 @@ namespace DoubleDoubleSandbox {
             ddouble c2 = m * ((a - b0) * (a - b1) - k * q * q);
 
             return (c0, c1, c2, r);
+        }
+
+        private static (ddouble[] cs, ddouble r) Solve(ddouble a, ddouble q, int m, int k, int s, ddouble r0, ddouble cn) {
+            if (m < 2) {
+                throw new ArgumentOutOfRangeException(nameof(m));
+            }
+
+            ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
+            ddouble sq_q = q * q;
+
+            (ts[0], ts[1], ts[2]) = (1d, a - r0, (a - r0) * (a - checked((2 + s) * (2 + s))) - k * q * q);
+            (qs[0], qs[1]) = (cn * q, cn * sq_q);
+
+            for (int i = 2; i < m; i++) {
+                qs[i] = qs[i - 1] * q;
+                ts[i + 1] = ts[i] * (a - checked((2 * i + s) * (2 * i + s))) - ts[i - 1] * sq_q;
+            }
+
+            for (int i = 0; i < cs.Length; i++) {
+                cs[i] = qs[m - i - 1] * ts[i] / ts[m];
+            }
+
+            return (cs, ts[m]);
         }
     }
 }
