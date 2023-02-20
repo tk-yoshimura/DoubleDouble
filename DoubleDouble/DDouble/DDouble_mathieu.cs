@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 namespace DoubleDouble {
@@ -73,8 +74,75 @@ namespace DoubleDouble {
             }
         }
 
+        public static ddouble MathieuC(int n, ddouble q, ddouble x) {
+            if (n < 0) {
+                throw new ArgumentOutOfRangeException(nameof(n));
+            }
+            if (n > 16) {
+                throw new ArgumentException(
+                    "In the calculation of the MathieuC function, n greater than 16 is not supported."
+                );
+            }
+
+            ReadOnlyCollection<ddouble> coef = Mathieu.CCoef(n, q);
+
+            if (coef.Count < 1) {
+                return NaN;
+            }
+
+            ddouble s = Zero;
+
+            if ((n & 1) == 0) {
+                s += coef[0];
+                for (int m = 1; m < coef.Count; m++) {
+                    s += coef[m] * Cos((2 * m) * x);
+                }
+            }
+            else {
+                for (int m = 0; m < coef.Count; m++) {
+                    s += coef[m] * Cos((2 * m + 1) * x);
+                }
+            }
+
+            return s;
+        }
+
+        public static ddouble MathieuS(int n, ddouble q, ddouble x) {
+            if (n < 0) {
+                throw new ArgumentOutOfRangeException(nameof(n));
+            }
+            if (n > 16) {
+                throw new ArgumentException(
+                    "In the calculation of the MathieuS function, n greater than 16 is not supported."
+                );
+            }
+
+            ReadOnlyCollection<ddouble> coef = Mathieu.SCoef(n, q);
+
+            if (coef.Count < 1) {
+                return NaN;
+            }
+
+            ddouble s = Zero;
+
+            if ((n & 1) == 1) {
+                for (int m = 0; m < coef.Count; m++) {
+                    s += coef[m] * Sin((2 * m + 1) * x);
+                }
+            }
+            else {
+                for (int m = 0; m < coef.Count; m++) {
+                    s += coef[m] * Sin((2 * m + 2) * x);
+                }
+            }
+
+            return s;
+        }
+
         internal static class Mathieu {
+            public static readonly double Eps = Math.ScaleB(1, -100);
             public static double NearZeroLimit(int n) => 64 * Math.Max(1, n * n);
+            private static readonly Dictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
 
             public static ddouble MPade(int n, ddouble q) {
                 if (!(q >= 0)) {
@@ -253,6 +321,243 @@ namespace DoubleDouble {
                     (u <= 0.0625d) ? (0.046875d, pade_table[1]) :
                     (u <= 0.125d) ? (0.09375d, pade_table[2]) :
                     throw new NotImplementedException();
+            }
+
+            public static ReadOnlyCollection<ddouble> CCoef(int n, ddouble q) {
+                if (!c_coef_cache.ContainsKey((n, q))) {
+                    ReadOnlyCollection<ddouble> coef;
+
+                    if (q.Sign >= 0) {
+                        ddouble a = MathieuA(n, q);
+                        coef = GenerateCCoef(n, q, a);
+                    }
+                    else {
+                        if ((n & 1) == 0) {
+                            ddouble a = MathieuA(n, -q);
+                            coef = SwapSign(GenerateCCoef(n, -q, a), even_odd: 1);
+                        }
+                        else {
+                            ddouble a = MathieuB(n, -q);
+                            coef = SwapSign(GenerateSCoef(n, -q, a), even_odd: 0);
+                        }
+                    }
+
+                    c_coef_cache.Add((n, q), coef);
+                }
+
+                return c_coef_cache[(n, q)];
+            }
+
+            public static ReadOnlyCollection<ddouble> SCoef(int n, ddouble q) {
+                if (!s_coef_cache.ContainsKey((n, q))) {
+                    ReadOnlyCollection<ddouble> coef;
+
+                    if (q.Sign >= 0) {
+                        ddouble a = MathieuB(n, q);
+                        coef = GenerateSCoef(n, q, a);
+                    }
+                    else {
+                        if ((n & 1) == 0) {
+                            ddouble a = MathieuB(n, -q);
+                            coef = SwapSign(GenerateSCoef(n, -q, a), even_odd: 1);
+                        }
+                        else {
+                            ddouble a = MathieuA(n, -q);
+                            coef = SwapSign(GenerateCCoef(n, -q, a), even_odd: 0);
+                        }
+                    }
+
+                    s_coef_cache.Add((n, q), coef);
+                }
+
+                return s_coef_cache[(n, q)];
+            }
+
+            private static ReadOnlyCollection<ddouble> SwapSign(ReadOnlyCollection<ddouble> coef, int even_odd) {
+                ddouble[] coef_swaped = coef.ToArray();
+
+                for (int m = even_odd; m < coef_swaped.Length; m += 2) {
+                    coef_swaped[m] = -coef_swaped[m];
+                }
+
+                return Array.AsReadOnly(coef_swaped);
+            }
+
+            private static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int max_terms = 1024) {
+                if (q < Eps) {
+                    return (n == 0) ? Array.AsReadOnly(new ddouble[] { Rcp(Sqrt2) }) : Array.AsReadOnly(new ddouble[] { 1d });
+                }
+
+                ddouble inv_q = 1d / q;
+
+                ddouble[] cs = new ddouble[max_terms];
+                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+
+                for (int m = max_terms - 2, k = checked(2 * m + (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
+                    ddouble c = (a - k * k) * cs[m] * inv_q - cs[m + 1];
+
+                    cs[m - 1] = c;
+
+                    if (Math.ILogB(cs[m - 1].Hi) > -256) {
+                        for (int j = m - 1; j < cs.Length; j++) {
+                            if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512 && m >= 32) {
+                                cs = cs[..j];
+                                cs[^1] = ddouble.Zero;
+                                break;
+                            }
+
+                            cs[j] = ddouble.Ldexp(cs[j], -256);
+                        }
+                    }
+                }
+
+                for (int m = 8; m >= 2; m--) {
+                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                        ddouble[] scs;
+                        ddouble rm, d;
+
+                        if ((n & 1) == 0) {
+                            (scs, rm, d) = SolveCoef(a, q, m, 2, 0, 0, cs[m]);
+                        }
+                        else {
+                            (scs, rm, d) = SolveCoef(a, q, m, 1, 1, 1 + q, cs[m]);
+                        }
+
+                        if (m == 2 || d < 1) {
+                            Array.Copy(scs, cs, m);
+                            break;
+                        }
+                    }
+                }
+
+                if (ddouble.IsInfinity(cs[0]) && ddouble.IsFinite(cs[1])) {
+                    return (n == 0) ? Array.AsReadOnly(new ddouble[] { Rcp(Sqrt2) }) : Array.AsReadOnly(new ddouble[] { 1d });
+                }
+
+                ddouble norm = (cs[0] * cs[0]) * (((n & 1) == 0) ? 2 : 1);
+                for (int i = 1; i < cs.Length; i++) {
+                    norm += cs[i] * cs[i];
+                }
+
+                ddouble r = 1d / ddouble.Sqrt(norm) * cs[0].Sign;
+                for (int i = 0; i < cs.Length; i++) {
+                    cs[i] *= r;
+                }
+
+                ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -256);
+                for (int i = cs.Length - 1; i > 0; i--) {
+                    if (ddouble.Abs(cs[i]) > threshold) {
+                        cs = cs[..i];
+                        break;
+                    }
+                }
+
+                if (!ddouble.IsFinite(cs[0])) {
+                    return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
+                }
+
+                return Array.AsReadOnly(cs);
+            }
+
+            private static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble a, int max_terms = 1024) {
+                if (q < Eps) {
+                    return Array.AsReadOnly(new ddouble[] { 1d });
+                }
+
+                ddouble inv_q = 1d / q;
+
+                ddouble[] cs = new ddouble[max_terms];
+                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+
+                for (int m = max_terms - 2, k = checked(2 * m + 2 - (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
+                    ddouble c = (a - k * k) * cs[m] * inv_q - cs[m + 1];
+
+                    cs[m - 1] = c;
+
+                    if (Math.ILogB(cs[m - 1].Hi) > -256) {
+                        for (int j = m - 1; j < cs.Length; j++) {
+                            if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512 && m >= 32) {
+                                cs = cs[..j];
+                                cs[^1] = ddouble.Zero;
+                                break;
+                            }
+
+                            cs[j] = ddouble.Ldexp(cs[j], -256);
+                        }
+                    }
+                }
+
+                for (int m = 8; m >= 2; m--) {
+                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                        ddouble[] scs;
+                        ddouble rm, d;
+
+                        if ((n & 1) == 0) {
+                            (scs, rm, d) = SolveCoef(a, q, m, 1, 2, 4, cs[m]);
+                        }
+                        else {
+                            (scs, rm, d) = SolveCoef(a, q, m, 1, 1, 1 - q, cs[m]);
+                        }
+
+                        if (m == 2 || d < 1) {
+                            Array.Copy(scs, cs, m);
+                            break;
+                        }
+                    }
+                }
+
+                if (ddouble.IsInfinity(cs[0]) && ddouble.IsFinite(cs[1])) {
+                    return Array.AsReadOnly(new ddouble[] { 1d });
+                }
+
+                ddouble norm = ddouble.Zero;
+                for (int i = 0; i < cs.Length; i++) {
+                    norm += cs[i] * cs[i];
+                }
+
+                ddouble r = 1d / ddouble.Sqrt(norm) * cs[0].Sign;
+                for (int i = 0; i < cs.Length; i++) {
+                    cs[i] *= r;
+                }
+
+                ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -256);
+                for (int i = cs.Length - 1; i > 0; i--) {
+                    if (ddouble.Abs(cs[i]) > threshold) {
+                        cs = cs[..i];
+                        break;
+                    }
+                }
+
+                if (!ddouble.IsFinite(cs[0])) {
+                    return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
+                }
+
+                return Array.AsReadOnly(cs);
+            }
+
+            private static (ddouble[] cs, ddouble r, ddouble d) SolveCoef(ddouble a, ddouble q, int m, int k, int s, ddouble r0, ddouble cn) {
+                if (m < 2) {
+                    throw new ArgumentOutOfRangeException(nameof(m));
+                }
+
+                ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
+                ddouble sq_q = q * q;
+
+                (ts[0], ts[1], ts[2]) = (1d, a - r0, (a - r0) * (a - checked((2 + s) * (2 + s))) - k * q * q);
+                (qs[0], qs[1]) = (cn * q, cn * sq_q);
+
+                for (int i = 2; i < m; i++) {
+                    qs[i] = qs[i - 1] * q;
+                    ts[i + 1] = ts[i] * (a - checked((2 * i + s) * (2 * i + s))) - ts[i - 1] * sq_q;
+                }
+
+                for (int i = 0; i < cs.Length; i++) {
+                    cs[i] = qs[m - i - 1] * ts[i] / ts[m];
+                }
+
+                ddouble d = ddouble.Abs(ts[m - 1] / ts[m]);
+
+                return (cs, ts[m], d);
             }
 
             internal static partial class Consts {
