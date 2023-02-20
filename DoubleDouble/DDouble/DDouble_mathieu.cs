@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 namespace DoubleDouble {
@@ -383,35 +382,40 @@ namespace DoubleDouble {
                 return Array.AsReadOnly(coef_swaped);
             }
 
-            private static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int max_terms = 1024) {
+            internal static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int terms = 256) {
                 if (q < Eps) {
-                    return (n == 0) ? Array.AsReadOnly(new ddouble[] { Rcp(Sqrt2) }) : Array.AsReadOnly(new ddouble[] { 1d });
+                    return QZeroCCoef(n);
                 }
 
                 ddouble inv_q = 1d / q;
 
-                ddouble[] cs = new ddouble[max_terms];
+                ddouble[] cs = new ddouble[terms];
                 (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
 
-                for (int m = max_terms - 2, k = checked(2 * m + (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
+                for (long m = terms - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
                     ddouble c = (a - k * k) * cs[m] * inv_q - cs[m + 1];
 
                     cs[m - 1] = c;
 
-                    if (Math.ILogB(cs[m - 1].Hi) > -256) {
-                        for (int j = m - 1; j < cs.Length; j++) {
-                            if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512 && m >= 32) {
+                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                        for (int j = (int)(m - 1); j < cs.Length; j++) {
+                            if (Math.ILogB(cs[j - 1].Hi) < -128 && Math.ILogB(cs[j].Hi) < -128 && m >= 32) {
                                 cs = cs[..j];
                                 cs[^1] = ddouble.Zero;
                                 break;
                             }
 
-                            cs[j] = ddouble.Ldexp(cs[j], -256);
+                            cs[j] = ddouble.Ldexp(cs[j], -128);
                         }
                     }
                 }
 
-                for (int m = 8; m >= 2; m--) {
+                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                for (int m = 0; m < cs.Length; m++) {
+                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                }
+
+                for (int m = Math.Min(8, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -431,7 +435,7 @@ namespace DoubleDouble {
                 }
 
                 if (ddouble.IsInfinity(cs[0]) && ddouble.IsFinite(cs[1])) {
-                    return (n == 0) ? Array.AsReadOnly(new ddouble[] { Rcp(Sqrt2) }) : Array.AsReadOnly(new ddouble[] { 1d });
+                    return QZeroCCoef(n);
                 }
 
                 ddouble norm = (cs[0] * cs[0]) * (((n & 1) == 0) ? 2 : 1);
@@ -444,7 +448,7 @@ namespace DoubleDouble {
                     cs[i] *= r;
                 }
 
-                ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -256);
+                ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -128);
                 for (int i = cs.Length - 1; i > 0; i--) {
                     if (ddouble.Abs(cs[i]) > threshold) {
                         cs = cs[..i];
@@ -459,35 +463,52 @@ namespace DoubleDouble {
                 return Array.AsReadOnly(cs);
             }
 
-            private static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble a, int max_terms = 1024) {
+            private static ReadOnlyCollection<ddouble> QZeroCCoef(int n) {
+                if (n == 0) {
+                    return Array.AsReadOnly(new ddouble[] { Rcp(Sqrt2) });
+                }
+                else {
+                    ddouble[] cs = new ddouble[n / 2 + 1];
+                    cs[n / 2] = 1d;
+
+                    return Array.AsReadOnly(cs);
+                }
+            }
+
+            internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble a, int terms = 1024) {
                 if (q < Eps) {
-                    return Array.AsReadOnly(new ddouble[] { 1d });
+                    return QZeroSCoef(n);
                 }
 
                 ddouble inv_q = 1d / q;
 
-                ddouble[] cs = new ddouble[max_terms];
+                ddouble[] cs = new ddouble[terms];
                 (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
 
-                for (int m = max_terms - 2, k = checked(2 * m + 2 - (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
+                for (long m = terms - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
                     ddouble c = (a - k * k) * cs[m] * inv_q - cs[m + 1];
 
                     cs[m - 1] = c;
 
-                    if (Math.ILogB(cs[m - 1].Hi) > -256) {
-                        for (int j = m - 1; j < cs.Length; j++) {
-                            if (Math.ILogB(cs[j - 1].Hi) < -512 && Math.ILogB(cs[j].Hi) < -512 && m >= 32) {
+                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                        for (int j = (int)(m - 1); j < cs.Length; j++) {
+                            if (Math.ILogB(cs[j - 1].Hi) < -128 && Math.ILogB(cs[j].Hi) < -128 && m >= 32) {
                                 cs = cs[..j];
                                 cs[^1] = ddouble.Zero;
                                 break;
                             }
 
-                            cs[j] = ddouble.Ldexp(cs[j], -256);
+                            cs[j] = ddouble.Ldexp(cs[j], -128);
                         }
                     }
                 }
 
-                for (int m = 8; m >= 2; m--) {
+                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                for (int m = 0; m < cs.Length; m++) {
+                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                }
+
+                for (int m = Math.Min(8, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -507,7 +528,7 @@ namespace DoubleDouble {
                 }
 
                 if (ddouble.IsInfinity(cs[0]) && ddouble.IsFinite(cs[1])) {
-                    return Array.AsReadOnly(new ddouble[] { 1d });
+                    return QZeroSCoef(n);
                 }
 
                 ddouble norm = ddouble.Zero;
@@ -520,7 +541,7 @@ namespace DoubleDouble {
                     cs[i] *= r;
                 }
 
-                ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -256);
+                ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -128);
                 for (int i = cs.Length - 1; i > 0; i--) {
                     if (ddouble.Abs(cs[i]) > threshold) {
                         cs = cs[..i];
@@ -531,6 +552,13 @@ namespace DoubleDouble {
                 if (!ddouble.IsFinite(cs[0])) {
                     return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
                 }
+
+                return Array.AsReadOnly(cs);
+            }
+
+            private static ReadOnlyCollection<ddouble> QZeroSCoef(int n) {
+                ddouble[] cs = new ddouble[n / 2 + 1];
+                cs[n / 2] = 1d;
 
                 return Array.AsReadOnly(cs);
             }
