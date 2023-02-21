@@ -382,10 +382,12 @@ namespace DoubleDouble {
                 return Array.AsReadOnly(coef_swaped);
             }
 
-            internal static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int terms = 256) {
+            internal static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int terms = -1) {
                 if (q < Eps) {
                     return QZeroCCoef(n);
                 }
+
+                terms = (terms > 0) ? terms : Math.Max(128, checked((int)(Math.Pow(q.Hi, 0.2475) * (0.100 * n + 12.056))));
 
                 ddouble inv_q = 1d / q;
 
@@ -475,10 +477,12 @@ namespace DoubleDouble {
                 }
             }
 
-            internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble a, int terms = 1024) {
+            internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble a, int terms = -1) {
                 if (q < Eps) {
                     return QZeroSCoef(n);
                 }
+
+                terms = (terms > 0) ? terms : Math.Max(128, checked((int)(Math.Pow(q.Hi, 0.2475) * (0.094 * n + 11.830))));
 
                 ddouble inv_q = 1d / q;
 
