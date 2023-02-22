@@ -432,7 +432,7 @@ namespace DoubleDouble {
                             (scs, rm, d) = SolveCoef(a, q, m, 1, 1, 1 + q, cs[m]);
                         }
 
-                        if (m == 2 || d < 1) {
+                        if (m <= 2 + n / 2 || d < 1) {
                             Array.Copy(scs, cs, m);
                             break;
                         }
@@ -453,30 +453,52 @@ namespace DoubleDouble {
             }
 
             private static ReadOnlyCollection<ddouble> QNearZeroCCoef(int n, ddouble q) {
-                ddouble[] cs_q0 = new ddouble[n / 2 + 1];
-                ReadOnlyCollection<ddouble> cs_eps = GenerateCCoef(n, Eps, MathieuA(n, Eps));
+                if (n <= 1) {
+                    ddouble t = q / 4, sq_t = t * t;
+                    ddouble[] cs = new ddouble[4];
+                    cs[0] = 1;
 
-                if (n == 0) {
-                    cs_q0[0] = Rcp(Sqrt2);
+                    if (n == 0) {
+                        cs[1] = -t * (2 + sq_t * -3.5);
+                        cs[2] = sq_t * (0.5 + sq_t * -(ddouble)10 / 9);
+                        cs[3] = -t * sq_t * ((ddouble)1 / 18 + sq_t * -(ddouble)13 / 96);
+                    }
+                    else {
+                        cs[1] = -t * (0.5 + t * (0.25 + t * (ddouble)1 / 24));
+                        cs[2] = sq_t * ((ddouble)1 / 12 + t * ((ddouble)1 / 18 + t * (ddouble)1 / 96));
+                        cs[3] = -t * sq_t * ((ddouble)1 / 144 + t * ((ddouble)1 / 192 + t * (ddouble)1 / 960));
+                    }
+
+                    cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
+
+                    return Array.AsReadOnly(cs);
                 }
                 else {
-                    cs_q0[n / 2] = 1d;
+                    ddouble[] cs_q0 = new ddouble[n / 2 + 1];
+                    ReadOnlyCollection<ddouble> cs_eps = GenerateCCoef(n, Eps, MathieuA(n, Eps));
+
+                    if (n == 0) {
+                        cs_q0[0] = Rcp(Sqrt2);
+                    }
+                    else {
+                        cs_q0[n / 2] = 1d;
+                    }
+
+                    int terms = Math.Max(cs_q0.Length, cs_eps.Count);
+                    ddouble[] cs = new ddouble[terms];
+                    ddouble w = q / Eps;
+
+                    for (int i = 0; i < cs.Length; i++) {
+                        ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : Zero;
+                        ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : Zero;
+
+                        cs[i] = c_q0 + (c_eps - c_q0) * w;
+                    }
+
+                    cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
+
+                    return Array.AsReadOnly(cs);
                 }
-
-                int terms = Math.Max(cs_q0.Length, cs_eps.Count);
-                ddouble[] cs = new ddouble[terms];
-                ddouble w = q / Eps;
-
-                for (int i = 0; i < cs.Length; i++) {
-                    ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : Zero;
-                    ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : Zero;
-
-                    cs[i] = c_q0 + (c_eps - c_q0) * w;
-                }
-
-                cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
-
-                return Array.AsReadOnly(cs);
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble a, int terms = -1) {
@@ -529,7 +551,7 @@ namespace DoubleDouble {
                             (scs, rm, d) = SolveCoef(a, q, m, 1, 1, 1 - q, cs[m]);
                         }
 
-                        if (m == 2 || d < 1) {
+                        if (m <= 2 + n / 2 || d < 1) {
                             Array.Copy(scs, cs, m);
                             break;
                         }
@@ -550,25 +572,47 @@ namespace DoubleDouble {
             }
 
             private static ReadOnlyCollection<ddouble> QNearZeroSCoef(int n, ddouble q) {
-                ddouble[] cs_q0 = new ddouble[(n - 1) / 2 + 1];
-                ReadOnlyCollection<ddouble> cs_eps = GenerateSCoef(n, Eps, MathieuB(n, Eps));
+                if (n <= 2) {
+                    ddouble t = q / 4, sq_t = t * t;
+                    ddouble[] cs = new ddouble[4];
+                    cs[0] = 1;
 
-                cs_q0[(n - 1) / 2] = 1d;
+                    if (n == 1) {
+                        cs[1] = -t * (0.5 + t * (-0.25 + t * (ddouble)1 / 24));
+                        cs[2] = sq_t * ((ddouble)1 / 12 + t * (-(ddouble)1 / 18 + t * (ddouble)1 / 96));
+                        cs[3] = -t * sq_t * ((ddouble)1 / 144 + t * (-(ddouble)1 / 192 + t * (ddouble)1 / 960));
+                    }
+                    else {
+                        cs[1] = -t * ((ddouble)1 / 3 + sq_t * -(ddouble)5 / 216);
+                        cs[2] = sq_t * ((ddouble)1 / 24 + sq_t * -(ddouble)37 / 8640);
+                        cs[3] = -t * sq_t * ((ddouble)1 / 360 + sq_t * -(ddouble)11 / 32400);
+                    }
 
-                int terms = Math.Max(cs_q0.Length, cs_eps.Count);
-                ddouble[] cs = new ddouble[terms];
-                ddouble w = q / Eps;
+                    cs = NormalizeAndTruncateCoef(n, 1, cs);
 
-                for (int i = 0; i < cs.Length; i++) {
-                    ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : Zero;
-                    ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : Zero;
-
-                    cs[i] = c_q0 + (c_eps - c_q0) * w;
+                    return Array.AsReadOnly(cs);
                 }
+                else {
+                    ddouble[] cs_q0 = new ddouble[(n - 1) / 2 + 1];
+                    ReadOnlyCollection<ddouble> cs_eps = GenerateSCoef(n, Eps, MathieuB(n, Eps));
 
-                cs = NormalizeAndTruncateCoef(n, 1, cs);
+                    cs_q0[(n - 1) / 2] = 1d;
 
-                return Array.AsReadOnly(cs);
+                    int terms = Math.Max(cs_q0.Length, cs_eps.Count);
+                    ddouble[] cs = new ddouble[terms];
+                    ddouble w = q / Eps;
+
+                    for (int i = 0; i < cs.Length; i++) {
+                        ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : Zero;
+                        ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : Zero;
+
+                        cs[i] = c_q0 + (c_eps - c_q0) * w;
+                    }
+
+                    cs = NormalizeAndTruncateCoef(n, 1, cs);
+
+                    return Array.AsReadOnly(cs);
+                }
             }
 
             public static (ddouble[] cs, ddouble r, ddouble d) SolveCoef(ddouble a, ddouble q, int m, int k, int s, ddouble r0, ddouble cn) {
