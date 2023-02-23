@@ -129,6 +129,8 @@ MaxValue : 2^1024 = 1.79769e308
 |bernoulli|&#91;0,1&#93;|4|n &leq; 64, centered: x->x-1/2|ddouble.Bernoulli(n, x, centered)|
 |mathieu_eigenvalue_a|&#40;-inf,+inf&#41;|4|n &leq; 16|ddouble.MathieuA(n, q)|
 |mathieu_eigenvalue_b|&#40;-inf,+inf&#41;|4|n &leq; 16|ddouble.MathieuB(n, q)|
+|mathieu_ce|&#40;-inf,+inf&#41;|4|n &leq; 16, Accuracy deteriorates when q is very large.|ddouble.MathieuC(n, q, x)|
+|mathieu_se|&#40;-inf,+inf&#41;|4|n &leq; 16, Accuracy deteriorates when q is very large.|ddouble.MathieuS(n, q, x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |binomial|N/A|1|n &leq; 1000|ddouble.Binomial(n, k)|
 |min|N/A|N/A||ddouble.Min(x, y)|
