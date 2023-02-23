@@ -336,11 +336,11 @@ namespace DoubleDouble {
                     else {
                         if ((n & 1) == 0) {
                             ddouble a = MathieuA(n, -q);
-                            coef = SwapSign(GenerateCCoef(n, -q, a), even_odd: 1);
+                            coef = SwapSign(GenerateCCoef(n, -q, a), even_odd: 1 - ((n / 2) & 1));
                         }
                         else {
                             ddouble b = MathieuB(n, -q);
-                            coef = SwapSign(GenerateSCoef(n, -q, b), even_odd: 0);
+                            coef = SwapSign(GenerateSCoef(n, -q, b), even_odd: 1 - ((n / 2) & 1));
                         }
                     }
 
@@ -361,11 +361,11 @@ namespace DoubleDouble {
                     else {
                         if ((n & 1) == 0) {
                             ddouble b = MathieuB(n, -q);
-                            coef = SwapSign(GenerateSCoef(n, -q, b), even_odd: 1);
+                            coef = SwapSign(GenerateSCoef(n, -q, b), even_odd: ((n / 2) & 1));
                         }
                         else {
                             ddouble a = MathieuA(n, -q);
-                            coef = SwapSign(GenerateCCoef(n, -q, a), even_odd: 0);
+                            coef = SwapSign(GenerateCCoef(n, -q, a), even_odd: 1 - ((n / 2) & 1));
                         }
                     }
 
