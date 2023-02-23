@@ -93,6 +93,10 @@
                 MathieuBTable.Pack(sw);
             }
 
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(MathieuNZTable) + ".bin", FileMode.Create))) {
+                MathieuNZTable.Pack(sw);
+            }
+
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(BesselKTable) + ".bin", FileMode.Create))) {
                 BesselKTable.Pack(sw);
             }
