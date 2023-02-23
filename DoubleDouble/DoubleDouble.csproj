@@ -38,6 +38,7 @@
     <None Remove="Resource\MathieuBTable.bin" />
     <None Remove="Resource\MathieuDTable.bin" />
     <None Remove="Resource\MathieuMTable.bin" />
+    <None Remove="Resource\MathieuNZTable.bin" />
     <None Remove="Resource\RiemannZetaTable.bin" />
     <None Remove="Resource\StieltjesGammaTable.bin" />
     <None Remove="Resource\StruveIntegralTable.bin" />
@@ -64,6 +65,7 @@
     <EmbeddedResource Include="Resource\MathieuBTable.bin" />
     <EmbeddedResource Include="Resource\MathieuDTable.bin" />
     <EmbeddedResource Include="Resource\MathieuMTable.bin" />
+    <EmbeddedResource Include="Resource\MathieuNZTable.bin" />
     <EmbeddedResource Include="Resource\RiemannZetaTable.bin" />
     <EmbeddedResource Include="Resource\StieltjesGammaTable.bin" />
     <EmbeddedResource Include="Resource\StruveIntegralTable.bin" />

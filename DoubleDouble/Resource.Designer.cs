@@ -175,6 +175,13 @@
             }
         }
 
+        internal static byte[] MathieuNZTable {
+            get {
+                object obj = ResourceManager.GetObject("MathieuNZTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] RiemannZetaTable {
             get {
                 object obj = ResourceManager.GetObject("RiemannZetaTable", resourceCulture);
