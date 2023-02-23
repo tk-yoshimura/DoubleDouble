@@ -779,9 +779,9 @@ namespace DoubleDouble {
                     norm += cs[i] * cs[i];
                 }
 
-                ddouble r = 1d / ddouble.Sqrt(norm) * cs[0].Sign;
+                ddouble r = ddouble.Sqrt(norm) * cs.Sum().Sign;
                 for (int i = 0; i < cs.Length; i++) {
-                    cs[i] *= r;
+                    cs[i] /= r;
                 }
 
                 ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -128);
