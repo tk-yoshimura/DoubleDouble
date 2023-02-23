@@ -4193,11 +4193,11 @@ namespace DoubleDoubleTest.DDouble {
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
-                    ddouble actual_dec = ddouble.MathieuC(n, q, ddouble.BitDecrement(x));
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}-eps");
+                    ddouble actual_dec = ddouble.MathieuC(n, ddouble.BitDecrement(q), x);
+                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
-                    ddouble actual_inc = ddouble.MathieuC(n, q, ddouble.BitIncrement(x));
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}+eps");
+                    ddouble actual_inc = ddouble.MathieuC(n, ddouble.BitIncrement(q), x);
+                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
                 }
             }
 
@@ -4218,11 +4218,13 @@ namespace DoubleDoubleTest.DDouble {
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
-                    ddouble actual_dec = ddouble.MathieuC(n, q, ddouble.BitDecrement(x));
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}-eps");
+                    if (q > 0) {
+                        ddouble actual_dec = ddouble.MathieuC(n, ddouble.BitDecrement(q), x);
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
-                    ddouble actual_inc = ddouble.MathieuC(n, q, ddouble.BitIncrement(x));
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}+eps");
+                        ddouble actual_inc = ddouble.MathieuC(n, ddouble.BitIncrement(q), x);
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
+                    }
                 }
             }
 
@@ -4237,11 +4239,11 @@ namespace DoubleDoubleTest.DDouble {
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
-                    ddouble actual_dec = ddouble.MathieuC(n, q, ddouble.BitDecrement(x));
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}-eps");
+                    ddouble actual_dec = ddouble.MathieuC(n, ddouble.BitDecrement(q), x);
+                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
-                    ddouble actual_inc = ddouble.MathieuC(n, q, ddouble.BitIncrement(x));
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}+eps");
+                    ddouble actual_inc = ddouble.MathieuC(n, ddouble.BitIncrement(q), x);
+                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
                 }
             }
 
@@ -4660,11 +4662,11 @@ namespace DoubleDoubleTest.DDouble {
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
-                    ddouble actual_dec = ddouble.MathieuS(n, q, ddouble.BitDecrement(x));
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}-eps");
+                    ddouble actual_dec = ddouble.MathieuS(n, ddouble.BitDecrement(q), x);
+                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
-                    ddouble actual_inc = ddouble.MathieuS(n, q, ddouble.BitIncrement(x));
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}+eps");
+                    ddouble actual_inc = ddouble.MathieuS(n, ddouble.BitIncrement(q), x);
+                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
                 }
             }
 
@@ -4684,11 +4686,13 @@ namespace DoubleDoubleTest.DDouble {
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
-                    ddouble actual_dec = ddouble.MathieuS(n, q, ddouble.BitDecrement(x));
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}-eps");
+                    if (q > 0) {
+                        ddouble actual_dec = ddouble.MathieuS(n, ddouble.BitDecrement(q), x);
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
-                    ddouble actual_inc = ddouble.MathieuS(n, q, ddouble.BitIncrement(x));
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}+eps");
+                        ddouble actual_inc = ddouble.MathieuS(n, ddouble.BitIncrement(q), x);
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
+                    }
                 }
             }
 
@@ -4703,11 +4707,11 @@ namespace DoubleDoubleTest.DDouble {
 
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
-                    ddouble actual_dec = ddouble.MathieuS(n, q, ddouble.BitDecrement(x));
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}-eps");
+                    ddouble actual_dec = ddouble.MathieuS(n, ddouble.BitDecrement(q), x);
+                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
-                    ddouble actual_inc = ddouble.MathieuS(n, q, ddouble.BitIncrement(x));
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}, x = {x}+eps");
+                    ddouble actual_inc = ddouble.MathieuS(n, ddouble.BitIncrement(q), x);
+                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
                 }
             }
 
