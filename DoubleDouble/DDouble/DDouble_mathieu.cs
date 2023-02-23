@@ -140,7 +140,7 @@ namespace DoubleDouble {
 
         internal static class Mathieu {
             public const int MaxN = 16;
-            public static readonly double Eps = Math.ScaleB(1, -46);
+            public static readonly double Eps = Math.ScaleB(1, -50);
             public const double NZThreshold = 0.25;
 
             public static double NearZeroLimit(int n) => 64 * Math.Max(1, n * n);
@@ -392,6 +392,9 @@ namespace DoubleDouble {
                 if (q < Eps) {
                     return QNearZeroCCoef(n, q);
                 }
+                if (q <= NZThreshold) {
+                    return GenerateCCoefZeroShifted(n, q);
+                }
 
                 terms = (terms > 0) ? terms : Math.Max(128, checked((int)(Math.Pow(q.Hi, 0.2475) * (0.100 * n + 12.056))));
 
@@ -400,21 +403,13 @@ namespace DoubleDouble {
                 ddouble[] cs = new ddouble[terms];
                 (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
 
-                for (long m = terms - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
                     ddouble c = (a - k * k) * cs[m] * inv_q - cs[m + 1];
 
                     cs[m - 1] = c;
 
                     if (Math.ILogB(cs[m - 1].Hi) > 0) {
-                        for (int j = (int)(m - 1); j < cs.Length; j++) {
-                            if (Math.ILogB(cs[j - 1].Hi) < -128 && Math.ILogB(cs[j].Hi) < -128 && m >= Mathieu.MaxN * 2) {
-                                cs = cs[..j];
-                                cs[^1] = ddouble.Zero;
-                                break;
-                            }
-
-                            cs[j] = ddouble.Ldexp(cs[j], -128);
-                        }
+                        cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
 
@@ -440,10 +435,6 @@ namespace DoubleDouble {
                             break;
                         }
                     }
-                }
-
-                if (ddouble.IsInfinity(cs[0]) && ddouble.IsFinite(cs[1])) {
-                    return QNearZeroCCoef(n, q);
                 }
 
                 cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
@@ -478,7 +469,7 @@ namespace DoubleDouble {
                 }
                 else {
                     ddouble[] cs_q0 = new ddouble[n / 2 + 1];
-                    ReadOnlyCollection<ddouble> cs_eps = GenerateCCoef(n, Eps, MathieuA(n, Eps));
+                    ReadOnlyCollection<ddouble> cs_eps = GenerateCCoefZeroShifted(n, Eps);
 
                     if (n == 0) {
                         cs_q0[0] = Rcp(Sqrt2);
@@ -504,12 +495,79 @@ namespace DoubleDouble {
                 }
             }
 
+            internal static ReadOnlyCollection<ddouble> GenerateCCoefZeroShifted(int n, ddouble q) {
+                if (!(q >= 0)) {
+                    throw new ArgumentOutOfRangeException(nameof(q));
+                }
+                if (q < Eps) {
+                    return QNearZeroCCoef(n, q);
+                }
+
+                int sq_n = checked(n * n);
+                (ddouble a_sft, ReadOnlyCollection<ddouble> arms) = AZeroShift(n, q);
+
+                ddouble inv_q = 1d / q;
+
+                ddouble[] cs = new ddouble[128];
+                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m >= arms.Count; m--, k -= 2) {
+                    ddouble c = (a_sft - (k * k - sq_n)) * cs[m] * inv_q - cs[m + 1];
+
+                    cs[m - 1] = c;
+
+                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                        cs = ScaleAndTruncateCoef(cs, checked((int)m));
+                    }
+                }
+                for (int m = arms.Count - 1; m > 2; m--) {
+                    ddouble c = arms[m] * cs[m] * inv_q - cs[m + 1];
+
+                    cs[m - 1] = c;
+                }
+
+                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                for (int m = 0; m < cs.Length; m++) {
+                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                }
+
+                for (int m = Math.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                        ddouble[] scs;
+                        ddouble rm, d;
+
+                        if ((n & 1) == 0) {
+                            (scs, rm, d) = SolveCoefZeroShifted(arms, q, m, 2, cs[m]);
+                        }
+                        else {
+                            (scs, rm, d) = SolveCoefZeroShifted(arms, q, m, 1, cs[m]);
+                        }
+
+                        if (m <= 2 + n / 2 || d < 1) {
+                            Array.Copy(scs, cs, m);
+                            break;
+                        }
+                    }
+                }
+
+                cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
+
+                if (!ddouble.IsFinite(cs[0])) {
+                    return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
+                }
+
+                return Array.AsReadOnly(cs);
+            }
+
             internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble b, int terms = -1) {
                 if (!(q >= 0)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
                 if (q < Eps) {
                     return QNearZeroSCoef(n, q);
+                }
+                if (q <= NZThreshold) {
+                    return GenerateSCoefZeroShifted(n, q);
                 }
 
                 terms = (terms > 0) ? terms : Math.Max(128, checked((int)(Math.Pow(q.Hi, 0.2475) * (0.094 * n + 11.830))));
@@ -519,21 +577,13 @@ namespace DoubleDouble {
                 ddouble[] cs = new ddouble[terms];
                 (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
 
-                for (long m = terms - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
                     ddouble c = (b - k * k) * cs[m] * inv_q - cs[m + 1];
 
                     cs[m - 1] = c;
 
                     if (Math.ILogB(cs[m - 1].Hi) > 0) {
-                        for (int j = (int)(m - 1); j < cs.Length; j++) {
-                            if (Math.ILogB(cs[j - 1].Hi) < -128 && Math.ILogB(cs[j].Hi) < -128 && m >= Mathieu.MaxN * 2) {
-                                cs = cs[..j];
-                                cs[^1] = ddouble.Zero;
-                                break;
-                            }
-
-                            cs[j] = ddouble.Ldexp(cs[j], -128);
-                        }
+                        cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
 
@@ -559,10 +609,6 @@ namespace DoubleDouble {
                             break;
                         }
                     }
-                }
-
-                if (ddouble.IsInfinity(cs[0]) && ddouble.IsFinite(cs[1])) {
-                    return QNearZeroSCoef(n, q);
                 }
 
                 cs = NormalizeAndTruncateCoef(n, 1, cs);
@@ -597,7 +643,7 @@ namespace DoubleDouble {
                 }
                 else {
                     ddouble[] cs_q0 = new ddouble[(n - 1) / 2 + 1];
-                    ReadOnlyCollection<ddouble> cs_eps = GenerateSCoef(n, Eps, MathieuB(n, Eps));
+                    ReadOnlyCollection<ddouble> cs_eps = GenerateSCoefZeroShifted(n, Eps);
 
                     cs_q0[(n - 1) / 2] = 1d;
 
@@ -618,6 +664,65 @@ namespace DoubleDouble {
                 }
             }
 
+            internal static ReadOnlyCollection<ddouble> GenerateSCoefZeroShifted(int n, ddouble q) {
+                if (!(q >= 0)) {
+                    throw new ArgumentOutOfRangeException(nameof(q));
+                }
+                if (q < Eps) {
+                    return QNearZeroSCoef(n, q);
+                }
+
+                int sq_n = checked(n * n);
+                (ddouble b_sft, ReadOnlyCollection<ddouble> brms) = BZeroShift(n, q);
+
+                ddouble inv_q = 1d / q;
+
+                ddouble[] cs = new ddouble[128];
+                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m >= brms.Count; m--, k -= 2) {
+                    ddouble c = (b_sft - (k * k - sq_n)) * cs[m] * inv_q - cs[m + 1];
+
+                    cs[m - 1] = c;
+
+                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                        cs = ScaleAndTruncateCoef(cs, checked((int)m));
+                    }
+                }
+                for (int m = brms.Count - 1; m > 2; m--) {
+                    ddouble c = brms[m] * cs[m] * inv_q - cs[m + 1];
+
+                    cs[m - 1] = c;
+                }
+
+                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                for (int m = 0; m < cs.Length; m++) {
+                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                }
+
+                for (int m = Math.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                        ddouble[] scs;
+                        ddouble rm, d;
+
+                        (scs, rm, d) = SolveCoefZeroShifted(brms, q, m, 1, cs[m]);
+
+                        if (m <= 2 + n / 2 || d < 1) {
+                            Array.Copy(scs, cs, m);
+                            break;
+                        }
+                    }
+                }
+
+                cs = NormalizeAndTruncateCoef(n, 1, cs);
+
+                if (!ddouble.IsFinite(cs[0])) {
+                    return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
+                }
+
+                return Array.AsReadOnly(cs);
+            }
+
             public static (ddouble[] cs, ddouble r, ddouble d) SolveCoef(ddouble a, ddouble q, int m, int k, int s, ddouble r0, ddouble cn) {
                 if (m < 2) {
                     throw new ArgumentOutOfRangeException(nameof(m));
@@ -632,6 +737,31 @@ namespace DoubleDouble {
                 for (int i = 2; i < m; i++) {
                     qs[i] = qs[i - 1] * q;
                     ts[i + 1] = ts[i] * (a - checked((2 * i + s) * (2 * i + s))) - ts[i - 1] * sq_q;
+                }
+
+                for (int i = 0; i < cs.Length; i++) {
+                    cs[i] = qs[m - i - 1] * ts[i] / ts[m];
+                }
+
+                ddouble d = ddouble.Abs(ts[m - 1] / ts[m]);
+
+                return (cs, ts[m], d);
+            }
+
+            public static (ddouble[] cs, ddouble r, ddouble d) SolveCoefZeroShifted(ReadOnlyCollection<ddouble> arms, ddouble q, int m, int k, ddouble cn) {
+                if (m < 2) {
+                    throw new ArgumentOutOfRangeException(nameof(m));
+                }
+
+                ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
+                ddouble sq_q = q * q;
+
+                (ts[0], ts[1], ts[2]) = (1d, arms[0], arms[0] * arms[1] - k * q * q);
+                (qs[0], qs[1]) = (cn * q, cn * sq_q);
+
+                for (int i = 2; i < m; i++) {
+                    qs[i] = qs[i - 1] * q;
+                    ts[i + 1] = ts[i] * arms[i] - ts[i - 1] * sq_q;
                 }
 
                 for (int i = 0; i < cs.Length; i++) {
@@ -660,6 +790,20 @@ namespace DoubleDouble {
                         cs = cs[..(i + 1)];
                         break;
                     }
+                }
+
+                return cs;
+            }
+
+            private static ddouble[] ScaleAndTruncateCoef(ddouble[] cs, int m) {
+                for (int j = m - 1; j < cs.Length; j++) {
+                    if (Math.ILogB(cs[j - 1].Hi) < -128 && Math.ILogB(cs[j].Hi) < -128 && m >= Mathieu.MaxN * 2) {
+                        cs = cs[..j];
+                        cs[^1] = ddouble.Zero;
+                        break;
+                    }
+
+                    cs[j] = ddouble.Ldexp(cs[j], -128);
                 }
 
                 return cs;
@@ -717,7 +861,7 @@ namespace DoubleDouble {
                 }
             }
 
-            internal static (ddouble zerosft, ReadOnlyCollection<ddouble> arms) BZeroShift(int n, ddouble q) {
+            internal static (ddouble zerosft, ReadOnlyCollection<ddouble> brms) BZeroShift(int n, ddouble q) {
                 if (n < 1 || n > Mathieu.MaxN) {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
@@ -738,25 +882,25 @@ namespace DoubleDouble {
 #if DEBUG
                 Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
 #endif
-                ddouble a = q * q * sc / sd;
+                ddouble b = q * q * sc / sd;
                 int s = ((n & 1) == 0) ? 2 : 1;
-                ddouble[] arms = (new ddouble[(Mathieu.MaxN + 2) / 2])
-                    .Select((_, m) => a - checked((2 * m + s) * (2 * m + s) - (n * n))).ToArray();
+                ddouble[] brms = (new ddouble[(Mathieu.MaxN + 2) / 2])
+                    .Select((_, m) => b - checked((2 * m + s) * (2 * m + s) - (n * n))).ToArray();
 
                 if (n == 1) {
-                    for (int i = 1; i < arms.Length; i++) {
-                        arms[i] -= q;
+                    for (int i = 1; i < brms.Length; i++) {
+                        brms[i] -= q;
                     }
 
-                    return (a - q, Array.AsReadOnly(arms));
+                    return (b - q, Array.AsReadOnly(brms));
                 }
                 else if ((n & 1) == 1) {
-                    arms[0] += q;
+                    brms[0] += q;
 
-                    return (a, Array.AsReadOnly(arms));
+                    return (b, Array.AsReadOnly(brms));
                 }
                 else {
-                    return (a, Array.AsReadOnly(arms));
+                    return (b, Array.AsReadOnly(brms));
                 }
             }
         }
