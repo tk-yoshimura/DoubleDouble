@@ -2660,14 +2660,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.BesselY(nu, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-27d + 8e-54d, $"{x},{nu}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-28d + 8e-56d, $"{x},{nu}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselY(nu, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-27d + 8e-54d, $"{x}-eps,{nu}");
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-28d + 8e-56d, $"{x}-eps,{nu}");
 
                         ddouble actual_inc = ddouble.BesselY(nu, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 4e-27d + 8e-54d, $"{x}+eps,{nu}");
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 4e-28d + 8e-56d, $"{x}+eps,{nu}");
                     }
                 }
             }

@@ -246,6 +246,7 @@ namespace DoubleDouble {
             private static Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = new();
             private static Dictionary<ddouble, X2DenomTable> x2denom_coef_table = new();
             private static Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = new();
+            private static Dictionary<ddouble, GammaTable> gamma_coef_table = new();
             private static YCoefTable y_coef_table = new();
             private static Y0CoefTable y0_coef_table = new();
             private static Y1CoefTable y1_coef_table = new();
@@ -366,32 +367,28 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselYKernel(ddouble nu, ddouble x, int terms) {
-                if (!gammadenom_coef_table.ContainsKey(nu)) {
-                    gammadenom_coef_table.Add(nu, new GammaDenomTable(nu));
+                if (!gamma_coef_table.ContainsKey(nu)) {
+                    gamma_coef_table.Add(nu, new GammaTable(nu));
                 }
-                if (!gammadenom_coef_table.ContainsKey(-nu)) {
-                    gammadenom_coef_table.Add(-nu, new GammaDenomTable(-nu));
-                }
-                if (!x2denom_coef_table.ContainsKey(nu)) {
-                    x2denom_coef_table.Add(nu, new X2DenomTable(nu));
-                }
-                if (!x2denom_coef_table.ContainsKey(-nu)) {
-                    x2denom_coef_table.Add(-nu, new X2DenomTable(-nu));
+                if (!gamma_coef_table.ContainsKey(-nu)) {
+                    gamma_coef_table.Add(-nu, new GammaTable(-nu));
                 }
 
                 YCoefTable r = y_coef_table;
-                X2DenomTable dp = x2denom_coef_table[nu], dn = x2denom_coef_table[-nu];
-                GammaDenomTable gp = gammadenom_coef_table[nu], gn = gammadenom_coef_table[-nu];
+                GammaTable gp = gamma_coef_table[nu], gn = gamma_coef_table[-nu];
 
                 ddouble cos = CosPI(nu), sin = SinPI(nu);
-                ddouble tp = Pow(x / 2, nu), tn = 1d / tp, fp = tp * cos;
+                ddouble p = Pow(x, 2 * nu) * cos, q = Pow(4, nu), s = 4 * Pow(2 * x, nu);
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
                 ddouble c = 0d, u = 1d / sin;
 
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * (fp * gp[2 * k] * (1d - x2 * dp[k]) - tn * gn[2 * k] * (1d - x2 * dn[k]));
+                for (int k = 0, t = 1, conv_times = 0; k <= terms && conv_times < 2; k++, t += 2) {
+                    ddouble ap = (t + nu) * gp[t], an = (t - nu) * gn[t]; 
+                    ddouble a = t * s * ap, ad = q * ap / an;
+
+                    ddouble dc = u * r[k] * ((4 * t * nu) * (p + ad) - (x2 - (4 * t * t)) * (p - ad)) / a;
 
                     ddouble c_next = c + dc;
 
@@ -708,6 +705,38 @@ namespace DoubleDouble {
                         c *= nu + k;
 
                         table.Add(Rcp(c));
+                    }
+
+                    return table[n];
+                }
+            }
+
+            private class GammaTable {
+                private ddouble c;
+                private readonly ddouble nu;
+                private readonly List<ddouble> table = new();
+
+                public GammaTable(ddouble nu) {
+                    this.c = Gamma(nu);
+                    this.nu = nu;
+                    this.table.Add(c);
+                }
+
+                public ddouble this[int n] => Value(n);
+
+                public ddouble Value(int n) {
+                    if (n < 0) {
+                        throw new ArgumentOutOfRangeException(nameof(n));
+                    }
+
+                    if (n < table.Count) {
+                        return table[n];
+                    }
+
+                    for (int k = table.Count; k <= n; k++) {
+                        c *= nu + (k - 1);
+
+                        table.Add(c);
                     }
 
                     return table[n];
