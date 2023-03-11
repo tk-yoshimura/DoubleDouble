@@ -13,13 +13,13 @@
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <Reference Include="DoubleDouble">
       <HintPath>..\DoubleDouble\bin\Debug\net6.0\DoubleDouble.dll</HintPath>
     </Reference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
     <Reference Include="DoubleDouble">
       <HintPath>..\DoubleDouble\bin\Release\net6.0\DoubleDouble.dll</HintPath>
     </Reference>

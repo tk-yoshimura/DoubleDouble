@@ -56,7 +56,7 @@ MaxValue : 2^1024 = 1.79769e308
 |sinhc|&#40;-inf,+inf&#41;|3||ddouble.Sinhc(x)|
 |gamma|&#40;-inf,+inf&#41;|2|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |ddouble.Gamma(x)|
 |loggamma|&#40;0,+inf&#41;|4||ddouble.LogGamma(x)|
-|digamma|&#40;-inf,+inf&#41;|4|Near the positive zero point, polynomial interpolation is used.|ddouble.Digamma(x)|
+|digamma|&#40;-inf,+inf&#41;|4|Near the positive root, polynomial interpolation is used.|ddouble.Digamma(x)|
 |polygamma|&#40;-inf,+inf&#41;|4|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|ddouble.Polygamma(n, x)|
 |inverse_gamma|&#91;1,+inf&#41;|4|gamma^-1(x)|ddouble.InverseGamma(x)|
 |lower_incomplete_gamma|&#91;0,+inf&#41;|4|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
@@ -69,10 +69,10 @@ MaxValue : 2^1024 = 1.79769e308
 |inverse_erfc|&#40;0,2&#41;|3||ddouble.InverseErfc(x)|
 |erfi|&#40;-inf,+inf&#41;|4||ddouble.Erfi(x)|
 |dawson_f|&#40;-inf,+inf&#41;|4||ddouble.DawsonF(x)|
-|bessel_j|&#91;0,+inf&#41;|4|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselJ(nu, x)|
-|bessel_y|&#91;0,+inf&#41;|4|Accuracy deteriorates near zero points.<br/>abs(nu) &leq; 8 |ddouble.BesselY(nu, x)|
-|bessel_i|&#91;0,+inf&#41;|4|abs(nu) &leq; 8 |ddouble.BesselI(nu, x)|
-|bessel_k|&#91;0,+inf&#41;|4|abs(nu) &leq; 8 |ddouble.BesselK(nu, x)|
+|bessel_j|&#91;0,+inf&#41;|4|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselJ(nu, x)|
+|bessel_y|&#91;0,+inf&#41;|4|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselY(nu, x)|
+|bessel_i|&#91;0,+inf&#41;|4|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselI(nu, x)|
+|bessel_k|&#91;0,+inf&#41;|4|abs(nu) &leq; 16 |ddouble.BesselK(nu, x)|
 |struve_h|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveH(n, x)|
 |struve_k|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveK(n, x)|
 |struve_l|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveL(n, x)|
@@ -96,8 +96,8 @@ MaxValue : 2^1024 = 1.79769e308
 |shi|&#40;-inf,+inf&#41;|5|hyperbolic sin integral|ddouble.Shi(x)|
 |chi|&#91;0,+inf&#41;|5|hyperbolic cos integral|ddouble.Chi(x)|
 |lambert_w|&#91;-1/e,+inf&#41;|4||ddouble.LambertW(x)|
-|airy_ai|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near zero points.|ddouble.AiryAi(x)|
-|airy_bi|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near zero points.|ddouble.AiryBi(x)|
+|airy_ai|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|ddouble.AiryAi(x)|
+|airy_bi|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|ddouble.AiryBi(x)|
 |jacobi_sn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiSn(x, m)|
 |jacobi_cn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiCn(x, m)|
 |jacobi_dn|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|ddouble.JacobiDn(x, m)|
