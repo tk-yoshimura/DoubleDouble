@@ -1,8 +1,4 @@
-﻿using DoubleDouble;
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
+﻿using System;
 
 namespace DoubleDoubleSandbox {
     public static class Program {

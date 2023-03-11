@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble HurwitzZeta(ddouble x, ddouble a) {
             if (x < 1) {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Binomial(int n, int k) {
             if (k > n / 2) {

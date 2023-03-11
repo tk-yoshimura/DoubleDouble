@@ -1,5 +1,4 @@
 ﻿using DoubleDouble.Utils;
-using System;
 using System.Collections.ObjectModel;
 
 namespace DoubleDouble {

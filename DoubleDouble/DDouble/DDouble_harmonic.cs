@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
 
     public partial struct ddouble {
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Floor(ddouble x) {
             double nhi = Math.Floor(x.hi), nlo = Math.Floor(x.lo);

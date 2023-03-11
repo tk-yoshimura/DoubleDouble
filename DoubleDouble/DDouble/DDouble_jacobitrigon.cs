@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble JacobiSn(ddouble x, ddouble m) {
             if (m < 0d || m > 1d) {

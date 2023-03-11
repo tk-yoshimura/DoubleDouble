@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Sinc(ddouble x, bool normalized = true) {
             if (normalized) {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     internal static class IntegerSplitter {
         // C# is IEEE754 compliant.
         public const int MantissaBits = 52, UInt64Bits = 64;

@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
 
     public static class DoubleDoubleIOExpand {
 

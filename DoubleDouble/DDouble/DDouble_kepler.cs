@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
             if (!(e >= 0) || ddouble.IsNaN(m) || !ddouble.IsFinite(e)) {

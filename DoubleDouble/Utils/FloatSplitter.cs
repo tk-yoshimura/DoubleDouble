@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     internal static class FloatSplitter {
         // C# is IEEE754 compliant.
 

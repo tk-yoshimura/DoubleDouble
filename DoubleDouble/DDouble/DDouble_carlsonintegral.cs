@@ -1,5 +1,4 @@
-﻿using System;
-using static DoubleDouble.ddouble.Consts.CarlsonIntegrals;
+﻿using static DoubleDouble.ddouble.Consts.CarlsonIntegrals;
 
 namespace DoubleDouble {
     public partial struct ddouble {

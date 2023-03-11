@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble IncompleteBeta(ddouble x, ddouble a, ddouble b) {

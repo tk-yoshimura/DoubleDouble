@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Sqrt(ddouble x) {
             if (x.Sign < 0 || IsNaN(x)) {

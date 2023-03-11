@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
 
     public static class DoubleDoubleEnumerableExpand {
         public static ddouble Sum(this IEnumerable<ddouble> source) {
