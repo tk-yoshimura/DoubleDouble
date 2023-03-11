@@ -2674,6 +2674,24 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void BesselYNegativeNuNearPoint5Test() {
+            for (int n = -16; n < 0; n++) {
+                for (ddouble u = -0.125; u < 0.125; u += 1d / 32) {
+                    ddouble nu = n + u + 0.5;
+
+                    for (ddouble x = 1; x <= 36; x += 1d / 32) { 
+                        ddouble y = ddouble.BesselY(nu, x);
+                        ddouble y_dec = ddouble.BesselY(nu, ddouble.BitDecrement(x));
+                        ddouble y_inc = ddouble.BesselY(nu, ddouble.BitIncrement(x));
+
+                        HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 4e-27d + 8e-54d, $"{x}-eps,{nu}");
+                        HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 4e-27d + 8e-54d, $"{x}+eps,{nu}");
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void BesselITest() {
             ddouble[] x0_expecteds = {
                 ddouble.Zero,

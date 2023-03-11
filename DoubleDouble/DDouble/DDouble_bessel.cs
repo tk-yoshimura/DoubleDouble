@@ -81,7 +81,7 @@ namespace DoubleDouble {
                 return BesselNearZero.BesselY(nu, x);
             }
             if (nu < 0d && Abs((nu - Floor(nu)) - Point5) < 0.0625) {
-                if (x <= 4d || nu <= -x) {
+                if (x <= 4d - nu) {
                     return BesselNearZero.BesselY(nu, x);
                 }
             }
@@ -247,6 +247,7 @@ namespace DoubleDouble {
             private static Dictionary<ddouble, X2DenomTable> x2denom_coef_table = new();
             private static Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = new();
             private static Dictionary<ddouble, GammaTable> gamma_coef_table = new();
+            private static Dictionary<ddouble, GammaPNTable> gammapn_coef_table = new();
             private static YCoefTable y_coef_table = new();
             private static Y0CoefTable y0_coef_table = new();
             private static Y1CoefTable y1_coef_table = new();
@@ -276,7 +277,7 @@ namespace DoubleDouble {
                     return y;
                 }
                 else if (nu < 0d && Abs((nu - Floor(nu)) - Point5) < 0.0625) {
-                    ddouble y = BesselYKernel(nu, x, terms: 20);
+                    ddouble y = BesselYKernel(nu, x, terms: 32);
 
                     return y;
                 }
@@ -370,25 +371,25 @@ namespace DoubleDouble {
                 if (!gamma_coef_table.ContainsKey(nu)) {
                     gamma_coef_table.Add(nu, new GammaTable(nu));
                 }
-                if (!gamma_coef_table.ContainsKey(-nu)) {
-                    gamma_coef_table.Add(-nu, new GammaTable(-nu));
+                if (!gammapn_coef_table.ContainsKey(nu)) {
+                    gammapn_coef_table.Add(nu, new GammaPNTable(nu));
                 }
 
                 YCoefTable r = y_coef_table;
-                GammaTable gp = gamma_coef_table[nu], gn = gamma_coef_table[-nu];
+                GammaTable g = gamma_coef_table[nu];
+                GammaPNTable gpn = gammapn_coef_table[nu];
 
                 ddouble cos = CosPI(nu), sin = SinPI(nu);
-                ddouble p = Pow(x, 2 * nu) * cos, q = Pow(4, nu), s = 4 * Pow(2 * x, nu);
+                ddouble p = Pow(x, 2 * nu) * cos, s = 4 * Pow(2 * x, nu);
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
                 ddouble c = 0d, u = 1d / sin;
 
                 for (int k = 0, t = 1, conv_times = 0; k <= terms && conv_times < 2; k++, t += 2) {
-                    ddouble ap = (t + nu) * gp[t], an = (t - nu) * gn[t]; 
-                    ddouble a = t * s * ap, ad = q * ap / an;
+                    ddouble a = t * s * g[t], q = gpn[t];
 
-                    ddouble dc = u * r[k] * ((4 * t * nu) * (p + ad) - (x2 - (4 * t * t)) * (p - ad)) / a;
+                    ddouble dc = u * r[k] * ((4 * t * nu) * (p + q) - (x2 - (4 * t * t)) * (p - q)) / a;
 
                     ddouble c_next = c + dc;
 
@@ -717,7 +718,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public GammaTable(ddouble nu) {
-                    this.c = Gamma(nu);
+                    this.c = Gamma(nu + 1d);
                     this.nu = nu;
                     this.table.Add(c);
                 }
@@ -734,7 +735,39 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        c *= nu + (k - 1);
+                        c *= nu + k;
+
+                        table.Add(c);
+                    }
+
+                    return table[n];
+                }
+            }
+
+            private class GammaPNTable {
+                private readonly ddouble r;
+                private readonly GammaTable positive_table, negative_table;
+                private readonly List<ddouble> table = new();
+
+                public GammaPNTable(ddouble nu) {
+                    this.r = Pow(4, nu);
+                    this.positive_table = new(nu);
+                    this.negative_table = new(-nu);
+                }
+
+                public ddouble this[int n] => Value(n);
+
+                public ddouble Value(int n) {
+                    if (n < 0) {
+                        throw new ArgumentOutOfRangeException(nameof(n));
+                    }
+
+                    if (n < table.Count) {
+                        return table[n];
+                    }
+
+                    for (int k = table.Count; k <= n; k++) {
+                        ddouble c = r * positive_table[k] / negative_table[k];
 
                         table.Add(c);
                     }
