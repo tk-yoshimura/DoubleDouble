@@ -953,7 +953,7 @@ namespace DoubleDouble {
             }
         }
 
-        internal static class BesselMillerBackward {
+        private static class BesselMillerBackward {
             private static Dictionary<ddouble, BesselJPhiTable> phi_table = new();
             private static Dictionary<ddouble, BesselIPsiTable> psi_table = new();
             private static Dictionary<ddouble, BesselYEtaTable> eta_table = new();
@@ -991,7 +991,7 @@ namespace DoubleDouble {
                 }
             }
 
-            public static int BesselJYIterM(double x) {
+            private static int BesselJYIterM(double x) {
                 return (int)Math.Ceiling(74 + 1.36 * x - 54.25 / Math.Sqrt(Math.Sqrt(x))) & ~1;
             }
 
@@ -1011,11 +1011,11 @@ namespace DoubleDouble {
                 }
             }
 
-            public static int BesselIIterM(double x) {
+            private static int BesselIIterM(double x) {
                 return (int)Math.Ceiling(86 + 0.75 * x - 67.25 / Math.Sqrt(Math.Sqrt(x))) & ~1;
             }
 
-            public static ddouble BesselJKernel(int n, ddouble x, int m) {
+            private static ddouble BesselJKernel(int n, ddouble x, int m) {
                 if (m < 2 || (m & 1) != 0 || n >= m) {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
@@ -1052,7 +1052,7 @@ namespace DoubleDouble {
                 return yn;
             }
 
-            public static ddouble BesselJKernel(ddouble nu, ddouble x, int m) {
+            private static ddouble BesselJKernel(ddouble nu, ddouble x, int m) {
                 int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
@@ -1163,7 +1163,7 @@ namespace DoubleDouble {
                 return y1;
             }
 
-            public static ddouble BesselYKernel(int n, ddouble x, int m) {
+            private static ddouble BesselYKernel(int n, ddouble x, int m) {
                 if (m < 2 || (m & 1) != 0 || n >= m) {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
@@ -1223,7 +1223,7 @@ namespace DoubleDouble {
                 return yn;
             }
 
-            public static ddouble BesselYKernel(ddouble nu, ddouble x, int m) {
+            private static ddouble BesselYKernel(ddouble nu, ddouble x, int m) {
                 int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
@@ -1386,7 +1386,7 @@ namespace DoubleDouble {
                 return y1;
             }
 
-            public static ddouble BesselIKernel(int n, ddouble x, int m, bool scale = false) {
+            private static ddouble BesselIKernel(int n, ddouble x, int m, bool scale = false) {
                 if (m < 2 || (m & 1) != 0 || n >= m) {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
@@ -1424,7 +1424,7 @@ namespace DoubleDouble {
                 return yn;
             }
 
-            public static ddouble BesselIKernel(ddouble nu, ddouble x, int m, bool scale = false) {
+            private static ddouble BesselIKernel(ddouble nu, ddouble x, int m, bool scale = false) {
                 int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
@@ -1741,7 +1741,7 @@ namespace DoubleDouble {
             };
         }
 
-        public static class BesselYoshidaPade {
+        private static class BesselYoshidaPade {
             private static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> EssTable;
             private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> CDsTable = new();
 
@@ -1870,7 +1870,7 @@ namespace DoubleDouble {
             }
         }
 
-        internal static class BesselLimit {
+        private static class BesselLimit {
             private static Dictionary<ddouble, ACoefTable> a_table = new();
             private static Dictionary<ddouble, JYCoefTable> jy_table = new();
             private static Dictionary<ddouble, IKCoefTable> ik_table = new();
@@ -1919,7 +1919,7 @@ namespace DoubleDouble {
                 return t;
             }
 
-            public static (ddouble s, ddouble t) BesselJYKernel(ddouble nu, ddouble x, int terms = 64) {
+            private static (ddouble s, ddouble t) BesselJYKernel(ddouble nu, ddouble x, int terms = 64) {
                 if (!a_table.ContainsKey(nu)) {
                     a_table.Add(nu, new ACoefTable(nu));
                 }
@@ -1956,7 +1956,7 @@ namespace DoubleDouble {
                 return (s, t);
             }
 
-            public static ddouble BesselIKKernel(ddouble nu, ddouble x, bool sign_switch, int terms) {
+            private static ddouble BesselIKKernel(ddouble nu, ddouble x, bool sign_switch, int terms) {
                 if (!a_table.ContainsKey(nu)) {
                     a_table.Add(nu, new ACoefTable(nu));
                 }
