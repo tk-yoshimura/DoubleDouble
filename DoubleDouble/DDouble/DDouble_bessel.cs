@@ -73,16 +73,23 @@ namespace DoubleDouble {
                 return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
-            if (x <= 2d) {
-                return BesselNearZero.BesselY(nu, x);
-            }
-            if (nu < 0d && Abs((nu - Floor(nu)) - Point5) < 0.0625) {
-                if (x <= 4d - nu) {
+            ddouble alpha = Round(nu) - nu;
+
+            if (alpha == 0d || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
+                if (x <= 2d) {
                     return BesselNearZero.BesselY(nu, x);
                 }
+                if (nu < 0d && Abs((nu - Floor(nu)) - Point5) < 0.0625) {
+                    if (x <= 4d - nu) {
+                        return BesselNearZero.BesselY(nu, x);
+                    }
+                }
+                if (x <= 40.5d) {
+                    return BesselMillerBackward.BesselY(nu, x);
+                }
             }
-            if (x <= 40.5d) {
-                return BesselMillerBackward.BesselY(nu, x);
+            else if (x <= 40.5d) {
+                return BesselInterpolate.BesselY(nu, x);
             }
 
             return BesselLimit.BesselY(nu, x);
@@ -174,11 +181,18 @@ namespace DoubleDouble {
 
             nu = Abs(nu);
 
-            if (x <= 2d) {
-                return BesselNearZero.BesselK(nu, x, scale);
+            ddouble alpha = Round(nu) - nu;
+
+            if (alpha == 0d || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
+                if (x <= 2d) {
+                    return BesselNearZero.BesselK(nu, x, scale);
+                }
+                if (x <= 35d) {
+                    return BesselYoshidaPade.BesselK(nu, x, scale);
+                }
             }
-            if (x <= 35d) {
-                return BesselYoshidaPade.BesselK(nu, x, scale);
+            else if (x <= 35d) {
+                return BesselInterpolate.BesselK(nu, x, scale);
             }
 
             return BesselLimit.BesselK(nu, x, scale);
@@ -208,18 +222,10 @@ namespace DoubleDouble {
         }
 
         private static class BesselUtil {
-            public static readonly double Eps = Math.ScaleB(1, -96);
+            public static readonly double Eps = Math.ScaleB(1, -96), ThresholdInterpolation = Math.ScaleB(1, -40);
             public const int MaxN = 16;
 
             public static void CheckNu(ddouble nu) {
-                if (nu != Round(nu) && Abs(nu - Round(nu)) < Math.ScaleB(1, -10)) {
-                    throw new ArgumentException(
-                        "The calculation of the Bessel function value is invalid because it loses digits" +
-                        " when nu is extremely close to an integer. (|nu - round(nu)| < 9.765625e-4 and nu != round(nu))",
-                        nameof(nu)
-                    );
-                }
-
                 if (!(Abs(nu) <= MaxN)) {
                     throw new ArgumentOutOfRangeException(
                         nameof(nu),
@@ -286,7 +292,6 @@ namespace DoubleDouble {
 
             public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
                 if (nu.Sign < 0 && nu == Floor(nu)) {
-                    int n = (int)Floor(nu);
                     ddouble y = BesselI(-nu, x);
 
                     if (scale) {
@@ -2081,6 +2086,44 @@ namespace DoubleDouble {
 
                     return table[n];
                 }
+            }
+        }
+
+        private static class BesselInterpolate {
+            public static ddouble BesselY(ddouble nu, ddouble x) {
+                int n = (int)Round(nu);
+                ddouble alpha = nu - n;
+
+                ddouble y0 = ddouble.BesselY(n, x);
+                ddouble y1 = ddouble.BesselY(n + alpha.Sign * BesselUtil.ThresholdInterpolation, x);
+                ddouble y2 = ddouble.BesselY(n + alpha.Sign * BesselUtil.ThresholdInterpolation * 2, x);
+
+                ddouble t = Abs(alpha) / BesselUtil.ThresholdInterpolation;
+                ddouble y = QuadInterpolate(t, y0, y1, y2);
+
+                return y;
+            }
+
+            public static ddouble BesselK(ddouble nu, ddouble x, bool scale) {
+                int n = (int)Round(nu);
+                ddouble alpha = nu - n;
+
+                ddouble y0 = ddouble.BesselK(n, x, scale: true);
+                ddouble y1 = ddouble.BesselK(n + alpha.Sign * BesselUtil.ThresholdInterpolation, x, scale: true);
+                ddouble y2 = ddouble.BesselK(n + alpha.Sign * BesselUtil.ThresholdInterpolation * 2, x, scale: true);
+
+                ddouble t = Abs(alpha) / BesselUtil.ThresholdInterpolation;
+                ddouble y = QuadInterpolate(t, y0, y1, y2);
+
+                if (!scale) {
+                    y *= Exp(-x);
+                }
+
+                return y;
+            }
+
+            private static ddouble QuadInterpolate(ddouble t, ddouble y0, ddouble y1, ddouble y2) {
+                return y0 + ((t - 3d) / 2d * y0 - (t - 2d) * y1 + (t - 1d) / 2d * y2) * t;
             }
         }
     }
