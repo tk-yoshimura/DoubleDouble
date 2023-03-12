@@ -17,11 +17,10 @@ namespace DoubleDouble {
                 if (nu == 0) {
                     return 1d;
                 }
-                if (nu > 0 || nu == Floor(nu)) {
+                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0) {
                     return 0d;
                 }
-                int n = (int)Floor(nu);
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                return (((int)Math.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -81,7 +80,7 @@ namespace DoubleDouble {
                 }
             }
             if (x <= 2d) {
-                if (alpha == 0d || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
+                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
                     return BesselNearZero.BesselY(nu, x);
                 }
                 else {
@@ -90,6 +89,10 @@ namespace DoubleDouble {
             }
 
             if (x <= 40.5d) {
+                if (Ceiling(nu) - nu < BesselUtil.ThresholdInterpolation) { 
+                    return BesselInterpolate.BesselY(nu, x);
+                }
+
                 return BesselMillerBackward.BesselY(nu, x);
             }
 
@@ -131,11 +134,10 @@ namespace DoubleDouble {
                 if (nu == 0) {
                     return 1d;
                 }
-                if (nu > 0 || nu == Floor(nu)) {
+                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0) {
                     return 0d;
                 }
-                int n = (int)Floor(nu);
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                return (((int)Math.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -185,7 +187,7 @@ namespace DoubleDouble {
             ddouble alpha = Round(nu) - nu;
 
             if (x <= 2d) {
-                if (alpha == 0d || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
+                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
                     return BesselNearZero.BesselK(nu, x, scale);
                 }
                 else {
@@ -247,6 +249,12 @@ namespace DoubleDouble {
                     );
                 }
             }
+
+            public static bool NearlyInteger(ddouble nu, out int n) {
+                n = (int)Round(nu);
+
+                return Abs(nu - n) < Eps;
+            }
         }
 
         private static class BesselNearZero {
@@ -263,8 +271,7 @@ namespace DoubleDouble {
             private static K1CoefTable k1_coef_table = new();
 
             public static ddouble BesselJ(ddouble nu, ddouble x) {
-                if (nu.Sign < 0 && nu == Floor(nu)) {
-                    int n = (int)Floor(nu);
+                if (nu.Sign < 0 && BesselUtil.NearlyInteger(nu, out int n)) {
                     ddouble y = BesselJ(-nu, x);
 
                     return ((n & 1) == 0) ? y : -y;
@@ -277,8 +284,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BesselY(ddouble nu, ddouble x) {
-                if (nu == Floor(nu)) {
-                    int n = (int)Floor(nu);
+                if (BesselUtil.NearlyInteger(nu, out int n)) {
                     ddouble y = BesselYKernel(n, x, terms: 9);
 
                     return y;
@@ -296,7 +302,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-                if (nu.Sign < 0 && nu == Floor(nu)) {
+                if (nu.Sign < 0 && BesselUtil.NearlyInteger(nu, out _)) {
                     ddouble y = BesselI(-nu, x);
 
                     if (scale) {
@@ -317,8 +323,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-                if (nu == Floor(nu)) {
-                    int n = (int)Floor(nu);
+                if (BesselUtil.NearlyInteger(nu, out int n)) {
                     ddouble y = BesselKKernel(n, x, terms: 20);
 
                     if (scale) {
@@ -965,11 +970,18 @@ namespace DoubleDouble {
             private static Dictionary<ddouble, BesselYEtaTable> eta_table = new();
             private static Dictionary<ddouble, BesselYXiTable> xi_table = new();
 
+            public static ddouble BesselJ(int n, ddouble x) {
+                int m = BesselJYIterM(x.Hi);
+
+                ddouble y = BesselJKernel(n, x, m);
+
+                return y;
+            }
+
             public static ddouble BesselJ(ddouble nu, ddouble x) {
                 int m = BesselJYIterM(x.Hi);
 
-                if (nu == Floor(nu)) {
-                    int n = (int)Floor(nu);
+                if (BesselUtil.NearlyInteger(nu, out int n)) {
                     ddouble y = BesselJKernel(n, x, m);
 
                     return y;
@@ -981,11 +993,18 @@ namespace DoubleDouble {
                 }
             }
 
+            public static ddouble BesselY(int n, ddouble x) {
+                int m = BesselJYIterM(x.Hi);
+
+                ddouble y = BesselYKernel(n, x, m);
+
+                return y;
+            }
+
             public static ddouble BesselY(ddouble nu, ddouble x) {
                 int m = BesselJYIterM(x.Hi);
 
-                if (nu == Floor(nu)) {
-                    int n = (int)Floor(nu);
+                if (BesselUtil.NearlyInteger(nu, out int n)) {
                     ddouble y = BesselYKernel(n, x, m);
 
                     return y;
@@ -1001,11 +1020,18 @@ namespace DoubleDouble {
                 return (int)Math.Ceiling(74 + 1.36 * x - 54.25 / Math.Sqrt(Math.Sqrt(x))) & ~1;
             }
 
+            public static ddouble BesselI(int n, ddouble x, bool scale = false) {
+                int m = BesselIIterM(x.Hi);
+
+                ddouble y = BesselIKernel(n, x, m, scale);
+
+                return y;
+            }
+
             public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
                 int m = BesselIIterM(x.Hi);
 
-                if (nu == Floor(nu)) {
-                    int n = (int)Floor(nu);
+                if (BesselUtil.NearlyInteger(nu, out int n)) {
                     ddouble y = BesselIKernel(n, x, m, scale);
 
                     return y;

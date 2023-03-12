@@ -1329,6 +1329,10 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble actual = ddouble.BesselJ(nu, x);
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-27d + 8e-54d, $"{x},{nu}");
 
+                    if (nu == ddouble.Round(nu)) {
+                        Assert.AreEqual(actual, ddouble.BesselJ((int)ddouble.Round(nu), x));
+                    }
+
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselJ(nu, ddouble.BitDecrement(x));
                         HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-27d + 8e-54d, $"{x}-eps,{nu}");
@@ -2663,6 +2667,10 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble actual = ddouble.BesselY(nu, x);
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-28d + 8e-56d, $"{x},{nu}");
 
+                    if (nu == ddouble.Round(nu)) {
+                        Assert.AreEqual(actual, ddouble.BesselY((int)ddouble.Round(nu), x));
+                    }
+
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselY(nu, ddouble.BitDecrement(x));
                         HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-28d + 8e-56d, $"{x}-eps,{nu}");
@@ -2835,7 +2843,7 @@ namespace DoubleDoubleTest.DDouble {
                         continue;
                     }
 
-                    for (ddouble x = 0; x <= 2; x += 1d / 4) {
+                    for (ddouble x = 0; x <= 64; x += 1d / 4) {
                         ddouble y = ddouble.BesselY(nu, x);
                         ddouble y_dec = ddouble.BesselY(ddouble.BitDecrement(nu), x);
                         ddouble y_inc = ddouble.BesselY(ddouble.BitIncrement(nu), x);
@@ -2864,7 +2872,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = nup16meps_expecteds[i];
 
                     ddouble actual = ddouble.BesselY(nu, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-17d, $"{x},{nu}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-18d, $"{x},{nu}"); // TODO improve
                 }
             }
         }
@@ -4060,8 +4068,11 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.BesselI(nu, x);
-
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-25d, $"{x},{nu}");
+
+                    if (nu == ddouble.Round(nu)) {
+                        Assert.AreEqual(actual, ddouble.BesselI((int)ddouble.Round(nu), x));
+                    }
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselI(nu, ddouble.BitDecrement(x));
@@ -4706,6 +4717,10 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble actual = ddouble.BesselK(nu, x);
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-28d, $"{x},{nu}");
+
+                    if (nu == ddouble.Round(nu)) {
+                        Assert.AreEqual(actual, ddouble.BesselK((int)ddouble.Round(nu), x));
+                    }
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselK(nu, ddouble.BitDecrement(x));
