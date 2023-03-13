@@ -2217,20 +2217,17 @@ namespace DoubleDouble {
 
                 ddouble y0 = ddouble.BesselK(n, x, scale: true);
                 ddouble y1 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold, x, scale: true);
-                ddouble y2 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x, scale: true);
+                ddouble y2 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold * 1.5, x, scale: true);
+                ddouble y3 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x, scale: true);
 
                 ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
-                ddouble y = QuadInterpolate(t, y0, y1, y2);
+                ddouble y = CubicInterpolate(t, y0, y1, y2, y3);
 
                 if (!scale) {
                     y *= Exp(-x);
                 }
 
                 return y;
-            }
-
-            private static ddouble QuadInterpolate(ddouble t, ddouble y0, ddouble y1, ddouble y2) {
-                return y0 + ((t - 3d) / 2d * y0 - (t - 2d) * y1 + (t - 1d) / 2d * y2) * t;
             }
 
             private static ddouble CubicInterpolate(ddouble t, ddouble y0, ddouble y1, ddouble y2, ddouble y3) {
