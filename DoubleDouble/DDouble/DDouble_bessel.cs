@@ -89,9 +89,7 @@ namespace DoubleDouble {
             }
 
             if (x <= 40.5d) {
-                ddouble ceiling_alpha = Ceiling(nu) - nu;
-
-                if (ceiling_alpha > BesselUtil.Eps && ceiling_alpha < BesselUtil.InterpolationThreshold) { 
+                if (!BesselUtil.NearlyInteger(nu, out _) && (Ceiling(nu) - nu) < BesselUtil.InterpolationThreshold) {
                     return BesselInterpolate.BesselY(nu, x);
                 }
 
@@ -2204,10 +2202,11 @@ namespace DoubleDouble {
 
                 ddouble y0 = ddouble.BesselY(n, x);
                 ddouble y1 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold, x);
-                ddouble y2 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x);
+                ddouble y2 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold * 1.5, x);
+                ddouble y3 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x);
 
                 ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
-                ddouble y = QuadInterpolate(t, y0, y1, y2);
+                ddouble y = CubicInterpolate(t, y0, y1, y2, y3);
 
                 return y;
             }
@@ -2232,6 +2231,14 @@ namespace DoubleDouble {
 
             private static ddouble QuadInterpolate(ddouble t, ddouble y0, ddouble y1, ddouble y2) {
                 return y0 + ((t - 3d) / 2d * y0 - (t - 2d) * y1 + (t - 1d) / 2d * y2) * t;
+            }
+
+            private static ddouble CubicInterpolate(ddouble t, ddouble y0, ddouble y1, ddouble y2, ddouble y3) {
+                return y0 + (
+                    -(13d + t * (-9d + t * 2d)) / 6d * y0
+                    + (6d + t * (-7d + t * 2d)) * y1
+                    - (16d + t * (-24d + t * 8d)) / 3d * y2
+                    + (3d + t * (-5d + t * 2d)) / 2d * y3) * t;
             }
         }
     }
