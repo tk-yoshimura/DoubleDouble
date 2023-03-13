@@ -69,10 +69,10 @@ MaxValue : 2^1024 = 1.79769e308
 |inverse_erfc|&#40;0,2&#41;|3||ddouble.InverseErfc(x)|
 |erfi|&#40;-inf,+inf&#41;|4||ddouble.Erfi(x)|
 |dawson_f|&#40;-inf,+inf&#41;|4||ddouble.DawsonF(x)|
-|bessel_j|&#91;0,+inf&#41;|4|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselJ(nu, x)|
-|bessel_y|&#91;0,+inf&#41;|4|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselY(nu, x)|
-|bessel_i|&#91;0,+inf&#41;|4|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselI(nu, x)|
-|bessel_k|&#91;0,+inf&#41;|4|abs(nu) &leq; 16 |ddouble.BesselK(nu, x)|
+|bessel_j|&#91;0,+inf&#41;|8|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselJ(nu, x)|
+|bessel_y|&#91;0,+inf&#41;|8|Accuracy deteriorates near the root and <br/>at non-interger nu very close (&lt; 2^-25) to the integer.<br/>abs(nu) &leq; 16 |ddouble.BesselY(nu, x)|
+|bessel_i|&#91;0,+inf&#41;|6|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselI(nu, x)|
+|bessel_k|&#91;0,+inf&#41;|6|Accuracy deteriorates with non-interger nu very close <br/> (&lt; 2^-25) to an integer.<br/>abs(nu) &leq; 16 |ddouble.BesselK(nu, x)|
 |struve_h|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveH(n, x)|
 |struve_k|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveK(n, x)|
 |struve_l|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|ddouble.StruveL(n, x)|
