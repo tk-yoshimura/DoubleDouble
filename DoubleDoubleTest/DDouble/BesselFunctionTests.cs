@@ -2836,7 +2836,7 @@ namespace DoubleDoubleTest.DDouble {
             };
 
             for (int n = -16; n <= 16; n++) {
-                foreach (ddouble u in new ddouble[] { Math.ScaleB(-1, -40), Math.ScaleB(-1, -60), Math.ScaleB(1, -60), Math.ScaleB(1, -40) }) {
+                foreach (ddouble u in new ddouble[] { Math.ScaleB(-1, -25), Math.ScaleB(-1, -50), Math.ScaleB(1, -25), Math.ScaleB(1, -50) }) {
                     ddouble nu = n + u;
 
                     if (ddouble.Abs(nu) > 16) {
@@ -2861,7 +2861,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = num16peps_expecteds[i];
 
                     ddouble actual = ddouble.BesselY(nu, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-24d, $"{x},{nu}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-26d, $"{x},{nu}");
                 }
             }
 
@@ -2872,7 +2872,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = nup16meps_expecteds[i];
 
                     ddouble actual = ddouble.BesselY(nu, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-18d, $"{x},{nu}"); // TODO improve
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-26d, $"{x},{nu}");
                 }
             }
         }

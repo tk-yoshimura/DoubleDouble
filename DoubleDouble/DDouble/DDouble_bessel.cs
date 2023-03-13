@@ -80,7 +80,7 @@ namespace DoubleDouble {
                 }
             }
             if (x <= 2d) {
-                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
+                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.InterpolationThreshold) {
                     return BesselNearZero.BesselY(nu, x);
                 }
                 else {
@@ -89,7 +89,9 @@ namespace DoubleDouble {
             }
 
             if (x <= 40.5d) {
-                if (Ceiling(nu) - nu < BesselUtil.ThresholdInterpolation) { 
+                ddouble ceiling_alpha = Ceiling(nu) - nu;
+
+                if (ceiling_alpha > BesselUtil.Eps && ceiling_alpha < BesselUtil.InterpolationThreshold) { 
                     return BesselInterpolate.BesselY(nu, x);
                 }
 
@@ -187,7 +189,7 @@ namespace DoubleDouble {
             ddouble alpha = Round(nu) - nu;
 
             if (x <= 2d) {
-                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.ThresholdInterpolation) {
+                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.InterpolationThreshold) {
                     return BesselNearZero.BesselK(nu, x, scale);
                 }
                 else {
@@ -227,7 +229,7 @@ namespace DoubleDouble {
 
         private static class BesselUtil {
             public static readonly double Eps = Math.ScaleB(1, -96);
-            public static readonly double ThresholdInterpolation = Math.ScaleB(1, -40);
+            public static readonly double InterpolationThreshold = Math.ScaleB(1, -25);
             public static readonly double MillerBwdBesselYEps = Math.ScaleB(1, -30);
 
             public const int MaxN = 16;
@@ -2201,10 +2203,10 @@ namespace DoubleDouble {
                 ddouble alpha = nu - n;
 
                 ddouble y0 = ddouble.BesselY(n, x);
-                ddouble y1 = ddouble.BesselY(n + alpha.Sign * BesselUtil.ThresholdInterpolation, x);
-                ddouble y2 = ddouble.BesselY(n + alpha.Sign * BesselUtil.ThresholdInterpolation * 2, x);
+                ddouble y1 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold, x);
+                ddouble y2 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x);
 
-                ddouble t = Abs(alpha) / BesselUtil.ThresholdInterpolation;
+                ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
                 ddouble y = QuadInterpolate(t, y0, y1, y2);
 
                 return y;
@@ -2215,10 +2217,10 @@ namespace DoubleDouble {
                 ddouble alpha = nu - n;
 
                 ddouble y0 = ddouble.BesselK(n, x, scale: true);
-                ddouble y1 = ddouble.BesselK(n + alpha.Sign * BesselUtil.ThresholdInterpolation, x, scale: true);
-                ddouble y2 = ddouble.BesselK(n + alpha.Sign * BesselUtil.ThresholdInterpolation * 2, x, scale: true);
+                ddouble y1 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold, x, scale: true);
+                ddouble y2 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x, scale: true);
 
-                ddouble t = Abs(alpha) / BesselUtil.ThresholdInterpolation;
+                ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
                 ddouble y = QuadInterpolate(t, y0, y1, y2);
 
                 if (!scale) {
