@@ -188,7 +188,7 @@ namespace DoubleDoubleSandbox {
 
                 ddouble scosp1 = scos + 1d, sqscosp1 = scosp1 * scosp1;
 
-                ddouble f_pow2d3 = f_cbrt * f_cbrt, f_pow5d3 = f_cbrt * f, f_pow8d3 = f_pow5d3 * f;
+                ddouble f_pow2d3 = f_cbrt * f_cbrt, f_pow5d3 = f_pow2d3 * f, f_pow8d3 = f_pow5d3 * f;
 
                 ddouble g1 = scosp1 / (3 * f_pow2d3);
                 ddouble g2 = (-2 * sqscosp1 - 3 * f * ssin) / (9 * f_pow5d3);
@@ -217,6 +217,74 @@ namespace DoubleDoubleSandbox {
 
                 ddouble dv = 3 * delta * (sqg1 + sqg1_deltag2) /
                     (ddouble.PI * (6 * g1 * sqg1_deltag2 + delta * delta * g3));
+                return dv;
+            }
+        }
+
+        public static class Hyperbolic {
+            public static double InitValue(double u, double s) {
+                return double.Asinh(u / s);
+            }
+
+            public static (double v, bool convergenced) HyperbolicIter(double v, double u, double s) {
+                double sinh = double.Sinh(v), cosh = double.Cosh(v);
+                double ssinh = s * sinh, scosh = s * cosh;
+
+                double delta = v + ssinh - u;
+                if (double.Abs(delta) < u * 1e-10) {
+                    return (v, convergenced: true);
+                }
+
+                double g1 = scosh + 1d;
+                double g2 = ssinh;
+                double g3 = scosh;
+                double dv = Householder4(delta, g1, g2, g3);
+
+                if (!double.IsFinite(dv)) {
+                    return (v, convergenced: true);
+                }
+
+                v -= dv;
+
+                return (v, convergenced: false);
+            }
+
+            public static (ddouble v, bool convergenced) HyperbolicIter(ddouble v, ddouble u, ddouble s) {
+                ddouble sin = ddouble.Sinh(v), cos = ddouble.Cosh(v);
+                ddouble ssinh = s * sin, scosh = s * cos;
+
+                ddouble delta = v + ssinh - u;
+                if (double.Abs(delta.Hi) < u.Hi * 1e-30) {
+                    return (v, convergenced: true);
+                }
+
+                ddouble g1 = scosh + 1d;
+                ddouble g2 = ssinh;
+                ddouble g3 = scosh;
+                ddouble dv = Householder4(delta, g1, g2, g3);
+
+                if (!ddouble.IsFinite(dv)) {
+                    return (v, convergenced: true);
+                }
+
+                v -= dv;
+
+                return (v, convergenced: false);
+            }
+
+            private static double Householder4(double delta, double g1, double g2, double g3) {
+                double sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+
+                double dv = 3 * delta * (sqg1 + sqg1_deltag2) /
+                    (6 * g1 * sqg1_deltag2 + delta * delta * g3);
+                return dv;
+            }
+
+            private static ddouble Householder4(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
+                ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+
+                ddouble dv = 3 * delta * (sqg1 + sqg1_deltag2) /
+                    (6 * g1 * sqg1_deltag2 + delta * delta * g3);
                 return dv;
             }
         }
