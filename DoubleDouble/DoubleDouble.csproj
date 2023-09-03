@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Deterministic>false</Deterministic>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -11,11 +11,13 @@
     <DebugType>portable</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <NoWarn>1701;1702;CS8981</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <NoWarn>1701;1702;CS8981</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

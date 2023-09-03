@@ -216,7 +216,7 @@ namespace DoubleDouble {
 
                 int index = 0;
 
-                for (int h = Math.Max(1, Consts.Ei.PadeThresholdTable.Count / 2); h >= 1; h /= 2) {
+                for (int h = int.Max(1, Consts.Ei.PadeThresholdTable.Count / 2); h >= 1; h /= 2) {
                     for (int i = index; i < Consts.Ei.PadeThresholdTable.Count - h; i += h) {
                         if (Consts.Ei.PadeThresholdTable[i + h] > x) {
                             index = i;

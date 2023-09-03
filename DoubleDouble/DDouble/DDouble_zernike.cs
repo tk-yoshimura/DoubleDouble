@@ -17,7 +17,7 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            m = Math.Abs(m);
+            m = int.Abs(m);
 
             if (n < m || ((n - m) & 1) == 1) {
                 return Zero;

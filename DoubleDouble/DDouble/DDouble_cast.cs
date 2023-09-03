@@ -53,7 +53,7 @@ namespace DoubleDouble {
         public static implicit operator ddouble(long n) {
             (int sign, UInt64 hi, UInt64 lo) = IntegerSplitter.Split(n);
 
-            ddouble v = new ddouble(Math.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo);
+            ddouble v = new ddouble(double.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo);
 
             return sign >= 0 ? v : -v;
         }
@@ -88,7 +88,7 @@ namespace DoubleDouble {
         public static implicit operator ddouble(ulong n) {
             (int sign, UInt64 hi, UInt64 lo) = IntegerSplitter.Split(n);
 
-            ddouble v = new ddouble(Math.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo);
+            ddouble v = new ddouble(double.ScaleB((double)hi, IntegerSplitter.MantissaBits), (double)lo);
 
             return sign >= 0 ? v : -v;
         }
@@ -199,8 +199,8 @@ namespace DoubleDouble {
             (UInt64 hi52, UInt64 lo53) = IntegerSplitter.Split(bits.hi, bits.lo);
 
             ddouble v = new ddouble(
-                Math.ScaleB((double)hi52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits)),
-                Math.ScaleB((double)lo53, checked(bits.exponent - IntegerSplitter.MantissaBits * 2))
+                double.ScaleB((double)hi52, checked(bits.exponent + 1 - IntegerSplitter.MantissaBits)),
+                double.ScaleB((double)lo53, checked(bits.exponent - IntegerSplitter.MantissaBits * 2))
             );
 
             return bits.sign >= 0 ? v : -v;

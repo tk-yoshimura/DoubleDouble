@@ -20,7 +20,7 @@ namespace DoubleDouble {
                 if (BesselUtil.NearlyInteger(nu, out _) || nu > 0) {
                     return 0d;
                 }
-                return (((int)Math.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -137,7 +137,7 @@ namespace DoubleDouble {
                 if (BesselUtil.NearlyInteger(nu, out _) || nu > 0) {
                     return 0d;
                 }
-                return (((int)Math.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             if (x <= 2d) {
@@ -213,7 +213,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            n = Math.Abs(n);
+            n = int.Abs(n);
 
             if (x <= 2d) {
                 return BesselNearZero.BesselK(n, x, scale);
@@ -226,9 +226,9 @@ namespace DoubleDouble {
         }
 
         private static class BesselUtil {
-            public static readonly double Eps = Math.ScaleB(1, -96);
-            public static readonly double InterpolationThreshold = Math.ScaleB(1, -25);
-            public static readonly double MillerBwdBesselYEps = Math.ScaleB(1, -30);
+            public static readonly double Eps = double.ScaleB(1, -96);
+            public static readonly double InterpolationThreshold = double.ScaleB(1, -25);
+            public static readonly double MillerBwdBesselYEps = double.ScaleB(1, -30);
 
             public const int MaxN = 16;
 
@@ -1017,7 +1017,7 @@ namespace DoubleDouble {
             }
 
             private static int BesselJYIterM(double x) {
-                return (int)Math.Ceiling(74 + 1.36 * x - 54.25 / Math.Sqrt(Math.Sqrt(x))) & ~1;
+                return (int)double.Ceiling(74 + 1.36 * x - 54.25 / double.Sqrt(double.Sqrt(x))) & ~1;
             }
 
             public static ddouble BesselI(int n, ddouble x, bool scale = false) {
@@ -1044,7 +1044,7 @@ namespace DoubleDouble {
             }
 
             private static int BesselIIterM(double x) {
-                return (int)Math.Ceiling(86 + 0.75 * x - 67.25 / Math.Sqrt(Math.Sqrt(x))) & ~1;
+                return (int)double.Ceiling(86 + 0.75 * x - 67.25 / double.Sqrt(double.Sqrt(x))) & ~1;
             }
 
             private static ddouble BesselJKernel(int n, ddouble x, int m) {
@@ -1312,12 +1312,12 @@ namespace DoubleDouble {
                 ddouble r = 2 * RcpPI * sqs;
                 ddouble p = sqs * rsqgamma * RcpPI;
 
-                ddouble eta0 = (Math.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
+                ddouble eta0 = (double.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
                     ? (rcot - p / alpha)
                     : BesselYEta0Eps(alpha, x);
 
                 ddouble xi0 = -2 * v * p;
-                ddouble xi1 = (Math.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
+                ddouble xi1 = (double.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
                     ? rcot + p * (alpha * (alpha + 1d) + 1d) / (alpha * (alpha - 1d))
                     : BesselYXi1Eps(alpha, x);
 
@@ -1498,7 +1498,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                n = Math.Abs(n);
+                n = int.Abs(n);
 
                 if (n == 0) {
                     return BesselI0Kernel(x, m, scale);

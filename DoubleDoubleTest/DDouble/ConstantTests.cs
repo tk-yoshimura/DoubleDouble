@@ -6,6 +6,12 @@ namespace DoubleDoubleTest.DDouble {
     [TestClass]
     public class ConstantTests {
         [TestMethod]
+        public void BasicTest() {
+            Assert.IsTrue(ddouble.One == 1);
+            Assert.IsTrue(ddouble.MinusOne == -1);
+        }
+
+        [TestMethod]
         public void ETest() {
             ddouble expected = (ddouble)"2.71828182845904523536028747135266250";
             ddouble actual = ddouble.E;

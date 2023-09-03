@@ -106,7 +106,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class RiemannZeta {
-                public static readonly double Eps = Math.ScaleB(1, -64);
+                public static readonly double Eps = double.ScaleB(1, -64);
 
                 public static readonly (ReadOnlyCollection<ddouble> cs, ReadOnlyCollection<ddouble> ds) PadeX0Table;
                 public static readonly (ReadOnlyCollection<ddouble> cs, ReadOnlyCollection<ddouble> ds) PadeX1Table;

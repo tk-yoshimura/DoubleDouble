@@ -2,7 +2,7 @@
     public partial struct ddouble {
         public static ddouble Sinc(ddouble x, bool normalized = true) {
             if (normalized) {
-                if (Abs(x) < Math.ScaleB(1, -64)) {
+                if (Abs(x) < double.ScaleB(1, -64)) {
                     return 1d - Square(x * PI) / 6d;
                 }
 
@@ -15,7 +15,7 @@
                 return SinPI(x) / c;
             }
             else {
-                if (Abs(x) < Math.ScaleB(1, -64)) {
+                if (Abs(x) < double.ScaleB(1, -64)) {
                     return 1d - x * x / 6d;
                 }
 
@@ -28,7 +28,7 @@
         }
 
         public static ddouble Sinhc(ddouble x) {
-            if (Abs(x) < Math.ScaleB(1, -64)) {
+            if (Abs(x) < double.ScaleB(1, -64)) {
                 return 1d + x * x / 6d;
             }
 

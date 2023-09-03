@@ -137,10 +137,10 @@ namespace DoubleDouble {
 
         internal static class Mathieu {
             public const int MaxN = 16;
-            public static readonly double Eps = Math.ScaleB(1, -50);
+            public static readonly double Eps = double.ScaleB(1, -50);
             public const double NZThreshold = 0.25;
 
-            public static double NearZeroLimit(int n) => 64 * Math.Max(1, n * n);
+            public static double NearZeroLimit(int n) => 64 * int.Max(1, n * n);
             private static readonly Dictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
 
             public static ddouble MPade(int n, ddouble q) {
@@ -234,7 +234,7 @@ namespace DoubleDouble {
                 }
 
                 int s = 2 * n + 1;
-                ddouble h = Sqrt(q), invh = 1d / h, u = invh * Math.Max(1, n);
+                ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
 
                 ReadOnlyCollection<ddouble> limit_coef = Consts.Mathieu.LimitTable[s];
 
@@ -277,7 +277,7 @@ namespace DoubleDouble {
                 }
 
                 int s = 2 * n - 1;
-                ddouble h = Sqrt(q), invh = 1d / h, u = invh * Math.Max(1, n);
+                ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
 
                 ReadOnlyCollection<ddouble> limit_coef = Consts.Mathieu.LimitTable[s];
 
@@ -393,7 +393,7 @@ namespace DoubleDouble {
                     return GenerateCCoefZeroShifted(n, q);
                 }
 
-                terms = (terms > 0) ? terms : Math.Max(128, checked((int)(Math.Pow(q.Hi, 0.2475) * (0.100 * n + 12.056))));
+                terms = (terms > 0) ? terms : int.Max(128, checked((int)(double.Pow(q.Hi, 0.2475) * (0.100 * n + 12.056))));
 
                 ddouble inv_q = 1d / q;
 
@@ -405,17 +405,17 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                    if (double.ILogB(cs[m - 1].Hi) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
 
-                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = ddouble.Ldexp(cs[m], -scale);
                 }
 
-                for (int m = Math.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -475,7 +475,7 @@ namespace DoubleDouble {
                         cs_q0[n / 2] = 1d;
                     }
 
-                    int terms = Math.Max(cs_q0.Length, cs_eps.Count);
+                    int terms = int.Max(cs_q0.Length, cs_eps.Count);
                     ddouble[] cs = new ddouble[terms];
                     ddouble w = q / Eps;
 
@@ -513,7 +513,7 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                    if (double.ILogB(cs[m - 1].Hi) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
@@ -523,12 +523,12 @@ namespace DoubleDouble {
                     cs[m - 1] = c;
                 }
 
-                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = ddouble.Ldexp(cs[m], -scale);
                 }
 
-                for (int m = Math.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -567,7 +567,7 @@ namespace DoubleDouble {
                     return GenerateSCoefZeroShifted(n, q);
                 }
 
-                terms = (terms > 0) ? terms : Math.Max(128, checked((int)(Math.Pow(q.Hi, 0.2475) * (0.094 * n + 11.830))));
+                terms = (terms > 0) ? terms : int.Max(128, checked((int)(double.Pow(q.Hi, 0.2475) * (0.094 * n + 11.830))));
 
                 ddouble inv_q = 1d / q;
 
@@ -579,17 +579,17 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                    if (double.ILogB(cs[m - 1].Hi) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
 
-                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = ddouble.Ldexp(cs[m], -scale);
                 }
 
-                for (int m = Math.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -644,7 +644,7 @@ namespace DoubleDouble {
 
                     cs_q0[(n - 1) / 2] = 1d;
 
-                    int terms = Math.Max(cs_q0.Length, cs_eps.Count);
+                    int terms = int.Max(cs_q0.Length, cs_eps.Count);
                     ddouble[] cs = new ddouble[terms];
                     ddouble w = q / Eps;
 
@@ -682,7 +682,7 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (Math.ILogB(cs[m - 1].Hi) > 0) {
+                    if (double.ILogB(cs[m - 1].Hi) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
@@ -692,12 +692,12 @@ namespace DoubleDouble {
                     cs[m - 1] = c;
                 }
 
-                int scale = cs.Select(c => Math.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = ddouble.Ldexp(cs[m], -scale);
                 }
 
-                for (int m = Math.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -794,7 +794,7 @@ namespace DoubleDouble {
 
             private static ddouble[] ScaleAndTruncateCoef(ddouble[] cs, int m) {
                 for (int j = m - 1; j < cs.Length; j++) {
-                    if (Math.ILogB(cs[j - 1].Hi) < -128 && Math.ILogB(cs[j].Hi) < -128 && m >= Mathieu.MaxN * 2) {
+                    if (double.ILogB(cs[j - 1].Hi) < -128 && double.ILogB(cs[j].Hi) < -128 && m >= Mathieu.MaxN * 2) {
                         cs = cs[..j];
                         cs[^1] = ddouble.Zero;
                         break;

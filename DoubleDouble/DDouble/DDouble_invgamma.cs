@@ -18,22 +18,22 @@
                     y = x * (60.0 + x * (114.0 + x * 17.0)) / (60.0 + x * (174.0 + x * 101.0));
                 }
                 else {
-                    double logx = Math.Log(x), loglogx = Math.Log(logx);
+                    double logx = double.Log(x), loglogx = double.Log(logx);
 
                     y = logx - loglogx + loglogx / (logx + logx);
                 }
 
                 double exp_y, d;
 
-                exp_y = Math.Exp(y);
+                exp_y = double.Exp(y);
                 d = y * exp_y - x;
                 y -= d / (exp_y * (y + 1d) - (y + 2d) * d / (y + y + 2d));
 
                 return y;
             };
 
-            double l = Math.Log((x.hi + c) * s);
-            ddouble y = l / (crude_lambertw(l / Math.E)) + 0.5;
+            double l = double.Log((x.hi + c) * s);
+            ddouble y = l / (crude_lambertw(l / double.E)) + 0.5;
 
             ddouble lnx = Log(x);
 
@@ -43,7 +43,7 @@
 
                 y += delta;
 
-                if (Math.Abs(delta.hi) < y.hi * 5e-32) {
+                if (double.Abs(delta.hi) < y.hi * 5e-32) {
                     break;
                 }
             }
@@ -59,7 +59,7 @@
 
                 y += delta;
 
-                if (Math.Abs(delta.hi) < y.hi * 5e-32) {
+                if (double.Abs(delta.hi) < y.hi * 5e-32) {
                     break;
                 }
             }

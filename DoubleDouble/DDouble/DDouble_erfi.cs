@@ -107,7 +107,7 @@ namespace DoubleDouble {
                 ddouble y;
 
                 if (x < 3.75) {
-                    int n = Math.Max(0, (int)Round(x * 2 - 1d));
+                    int n = int.Max(0, (int)Round(x * 2 - 1d));
                     ddouble v = x - (n + 1) * 0.5;
 
                     ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfi.Xp5PadeTables[n];
@@ -127,7 +127,7 @@ namespace DoubleDouble {
                     y = sd / sc;
                 }
                 else {
-                    int n = Math.Max(0, (int)Round(x - 4d));
+                    int n = int.Max(0, (int)Round(x - 4d));
                     ddouble v = x - n - 4d;
 
                     ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfi.X1PadeTables[n];

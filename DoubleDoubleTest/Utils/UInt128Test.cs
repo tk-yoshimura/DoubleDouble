@@ -1,9 +1,10 @@
-using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Numerics;
+
+using UInt128 = DoubleDouble.UInt128;
 
 namespace DoubleDoubleTest.Utils {
     [TestClass]

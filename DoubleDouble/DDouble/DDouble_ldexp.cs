@@ -8,7 +8,7 @@ namespace DoubleDouble {
                 return x;
             }
 
-            return new ddouble(Math.ScaleB(x.hi, n), Math.ScaleB(x.lo, n));
+            return new ddouble(double.ScaleB(x.hi, n), double.ScaleB(x.lo, n));
         }
     }
 }

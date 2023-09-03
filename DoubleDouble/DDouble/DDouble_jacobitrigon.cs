@@ -108,7 +108,7 @@
 
         internal static class JacobiTrigon {
             public static ddouble NearOne = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
-            public static ddouble Eps = Math.ScaleB(1, -51);
+            public static ddouble Eps = double.ScaleB(1, -51);
 
             private static Dictionary<ddouble, ddouble> period_table = new();
 

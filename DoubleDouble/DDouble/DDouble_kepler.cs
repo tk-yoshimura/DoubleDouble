@@ -90,7 +90,7 @@
                     double xd = InitValue(m.Hi, e.Hi);
 
                     for (int i = 0; i < 16; i++) {
-                        (double esin, double ecos) = (e.Hi * Math.Sin(xd), e.Hi * Math.Cos(xd));
+                        (double esin, double ecos) = (e.Hi * double.Sin(xd), e.Hi * double.Cos(xd));
                         double u = xd - esin;
 
                         double dx = (m.Hi - u) * (1.0 + ecos) / (1.0 - ecos * ecos);
@@ -101,7 +101,7 @@
 
                         xd += dx;
 
-                        if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
+                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
                             break;
                         }
                     }
@@ -120,7 +120,7 @@
 
                         x += dx;
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -142,11 +142,11 @@
 
                     ddouble sqrt_m = Sqrt(m);
 
-                    double xd = Math.Sqrt(InitValue(m.Hi, e.Hi));
+                    double xd = double.Sqrt(InitValue(m.Hi, e.Hi));
 
                     for (int i = 0; i < 16; i++) {
-                        (double esin, double ecos) = (e.Hi * Math.Sin(xd), e.Hi * Math.Cos(xd));
-                        double u = xd - esin, v = Math.Sign(u) * Math.Sqrt(Math.Abs(u));
+                        (double esin, double ecos) = (e.Hi * double.Sin(xd), e.Hi * double.Cos(xd));
+                        double u = xd - esin, v = double.Sign(u) * double.Sqrt(double.Abs(u));
 
                         double dx = (sqrt_m.Hi - v) * (2.0 * v) / (1.0 - ecos);
 
@@ -154,9 +154,9 @@
                             break;
                         }
 
-                        xd = Math.Max(0.0, xd + dx);
+                        xd = double.Max(0.0, xd + dx);
 
-                        if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
+                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
                             break;
                         }
                     }
@@ -175,7 +175,7 @@
 
                         x = Max(0.0, x + dx);
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -192,7 +192,7 @@
 
                         x += dx;
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -214,11 +214,11 @@
 
                     ddouble cbrt_m = Cbrt(m);
 
-                    double xd = Math.Cbrt(InitValue(m.Hi, e.Hi));
+                    double xd = double.Cbrt(InitValue(m.Hi, e.Hi));
 
                     for (int i = 0; i < 16; i++) {
-                        (double esin, double ecos) = (e.Hi * Math.Sin(xd), e.Hi * Math.Cos(xd));
-                        double u = xd - esin, v = Math.Cbrt(u);
+                        (double esin, double ecos) = (e.Hi * double.Sin(xd), e.Hi * double.Cos(xd));
+                        double u = xd - esin, v = double.Cbrt(u);
 
                         double dx = (cbrt_m.Hi - v) * (3.0 * v * v) / (1.0 - ecos);
 
@@ -226,9 +226,9 @@
                             break;
                         }
 
-                        xd = Math.Max(0.0, xd + dx);
+                        xd = double.Max(0.0, xd + dx);
 
-                        if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
+                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
                             break;
                         }
                     }
@@ -247,7 +247,7 @@
 
                         x = Max(0.0, x + dx);
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -264,7 +264,7 @@
 
                         x += dx;
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -284,7 +284,7 @@
                     }
 #endif
 
-                    double s = Math.Cbrt(6.0 * m), s2 = s * s;
+                    double s = double.Cbrt(6.0 * m), s2 = s * s;
                     double d = s * (1.0 +
                                s2 * (1.6666666666666666667e-2 +
                                s2 * (7.1428571428571428571e-4 +
@@ -293,7 +293,7 @@
                     double a = (m > 0.0) ? (m / (1.0 - e)) : 0.0;
                     double b = d * e + m * (1.0 - e);
 
-                    double x = Math.Min(a, b);
+                    double x = double.Min(a, b);
 
                     return x;
                 }
@@ -348,7 +348,7 @@
                     double xd = InitValue(m.Hi, e);
 
                     for (int i = 0; i < 16; i++) {
-                        (double esinh, double ecosh) = (e.Hi * Math.Sinh(xd), e.Hi * Math.Cosh(xd));
+                        (double esinh, double ecosh) = (e.Hi * double.Sinh(xd), e.Hi * double.Cosh(xd));
                         double u = esinh - xd, ecosh_m1 = ecosh - 1.0, err = u - m.Hi;
 
                         double dx = err * (2.0 * ecosh_m1) / (err * esinh - 2.0 * ecosh_m1 * ecosh_m1);
@@ -359,7 +359,7 @@
 
                         xd += dx;
 
-                        if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
+                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
                             break;
                         }
                     }
@@ -378,7 +378,7 @@
 
                         x += dx;
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -398,11 +398,11 @@
 
                     ddouble sqrt_m = Sqrt(m);
 
-                    double xd = Math.Sqrt(InitValue(m.Hi, e));
+                    double xd = double.Sqrt(InitValue(m.Hi, e));
 
                     for (int i = 0; i < 16; i++) {
-                        (double esinh, double ecosh) = (e.Hi * Math.Sinh(xd), e.Hi * Math.Cosh(xd));
-                        double u = esinh - xd, v = Math.Sign(u) * Math.Sqrt(Math.Abs(u)), err = v - sqrt_m.Hi;
+                        (double esinh, double ecosh) = (e.Hi * double.Sinh(xd), e.Hi * double.Cosh(xd));
+                        double u = esinh - xd, v = double.Sign(u) * double.Sqrt(double.Abs(u)), err = v - sqrt_m.Hi;
 
                         double dx = 2.0 * err * v / (1.0 - ecosh);
 
@@ -410,9 +410,9 @@
                             break;
                         }
 
-                        xd = Math.Max(0.0, xd + dx);
+                        xd = double.Max(0.0, xd + dx);
 
-                        if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
+                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
                             break;
                         }
                     }
@@ -431,7 +431,7 @@
 
                         x = Max(0.0, x + dx);
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -448,7 +448,7 @@
 
                         x += dx;
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -468,11 +468,11 @@
 
                     ddouble cbrt_m = Cbrt(m);
 
-                    double xd = Math.Cbrt(InitValue(m.Hi, e));
+                    double xd = double.Cbrt(InitValue(m.Hi, e));
 
                     for (int i = 0; i < 16; i++) {
-                        (double esinh, double ecosh) = (e.Hi * Math.Sinh(xd), e.Hi * Math.Cosh(xd));
-                        double u = esinh - xd, v = Math.Cbrt(u), err = v - cbrt_m.Hi;
+                        (double esinh, double ecosh) = (e.Hi * double.Sinh(xd), e.Hi * double.Cosh(xd));
+                        double u = esinh - xd, v = double.Cbrt(u), err = v - cbrt_m.Hi;
 
                         double dx = 3.0 * err * v * v / (1.0 - ecosh);
 
@@ -480,9 +480,9 @@
                             break;
                         }
 
-                        xd = Math.Max(0.0, xd + dx);
+                        xd = double.Max(0.0, xd + dx);
 
-                        if (Math.Abs(dx) <= Math.Abs(xd) * 1e-15) {
+                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
                             break;
                         }
                     }
@@ -501,7 +501,7 @@
 
                         x = Max(0.0, x + dx);
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -518,7 +518,7 @@
 
                         x += dx;
 
-                        if (Math.Abs(dx.Hi) <= Math.Abs(x.Hi) * 2.5e-31) {
+                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
                             break;
                         }
                     }
@@ -537,9 +537,9 @@
 #endif
 
                     double a = (m > 0.0) ? (m / (e - 1.0).Hi) : 0.0;
-                    double b = Math.Log(2 * m / e.Hi + 1 + Math.Sqrt(m / (Math.Sqrt((e - 1.0).Hi))) / 4);
+                    double b = double.Log(2 * m / e.Hi + 1 + double.Sqrt(m / (double.Sqrt((e - 1.0).Hi))) / 4);
 
-                    double t = Math.Exp(-(e - 1.0).Hi / (2 * Math.Pow(m, 13.0 / 16.0)));
+                    double t = double.Exp(-(e - 1.0).Hi / (2 * double.Pow(m, 13.0 / 16.0)));
 
                     double x = (t < 0.9999) ? (a * (1.0 - t) + b * t) : b;
 

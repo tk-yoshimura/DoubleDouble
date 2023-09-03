@@ -23,7 +23,7 @@ namespace DoubleDouble {
                 if (x <= FresnelPade.PadeApproxMax) {
                     (f, g) = FresnelPade.Coef(x);
                 }
-                else if (x <= Math.ScaleB(1, 256)) {
+                else if (x <= double.ScaleB(1, 256)) {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {
@@ -56,7 +56,7 @@ namespace DoubleDouble {
                 if (x <= FresnelPade.PadeApproxMax) {
                     (f, g) = FresnelPade.Coef(x);
                 }
-                else if (x <= Math.ScaleB(1, 256)) {
+                else if (x <= double.ScaleB(1, 256)) {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {

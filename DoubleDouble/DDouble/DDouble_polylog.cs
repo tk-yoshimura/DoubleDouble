@@ -92,7 +92,7 @@ namespace DoubleDouble {
                 return y;
             }
 
-            private static readonly ddouble RegardedOneThreshold = 1 - (ddouble)Math.ScaleB(1, -100);
+            private static readonly ddouble RegardedOneThreshold = 1 - (ddouble)double.ScaleB(1, -100);
 
             public static class CoefTable {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
@@ -317,14 +317,14 @@ namespace DoubleDouble {
                 double t = n - 1;
 
                 for (int i = 0; i < 8; i++) {
-                    double xexp = Math.Exp(-t) * x;
+                    double xexp = double.Exp(-t) * x;
                     double d = (n - 1) * (xexp + 1) - t;
                     double dv = (n - 1) * xexp + 1;
                     double dt = d / dv;
 
                     t += dt;
 
-                    if (Math.Abs(dt / t) < 1e-15) {
+                    if (double.Abs(dt / t) < 1e-15) {
                         break;
                     }
                 }

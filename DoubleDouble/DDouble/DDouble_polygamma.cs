@@ -46,7 +46,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble Polygamma(int n, ddouble x) {
-                if (x <= Math.ScaleB(1, -96)) {
+                if (x <= double.ScaleB(1, -96)) {
                     return ((n & 1) == 1) ? PositiveInfinity : NaN;
                 }
                 if (x <= 64) {
@@ -65,7 +65,7 @@ namespace DoubleDouble {
                     return y;
                 }
 
-                ddouble scale = Math.Max(1, 8d / n), r = scale * n / x;
+                ddouble scale = double.Max(1, 8d / n), r = scale * n / x;
                 ddouble ir = 0, it = 0;
 
                 Func<ddouble, ddouble> polygamma_ir =
@@ -138,7 +138,7 @@ namespace DoubleDouble {
 
         private static class PolygammaMinusX {
             public static ddouble Polygamma(int n, ddouble x) {
-                if (Abs(x - Round(x)) <= Math.ScaleB(1, -96)) {
+                if (Abs(x - Round(x)) <= double.ScaleB(1, -96)) {
                     return ((n & 1) == 1) ? PositiveInfinity : NaN;
                 }
 

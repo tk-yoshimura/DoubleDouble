@@ -387,12 +387,12 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble BitIncrement(ddouble v) {
-            return new ddouble(v.hi, Math.BitIncrement(v.lo));
+            return new ddouble(v.hi, double.BitIncrement(v.lo));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble BitDecrement(ddouble v) {
-            return new ddouble(v.hi, Math.BitDecrement(v.lo));
+            return new ddouble(v.hi, double.BitDecrement(v.lo));
         }
 
         public override bool Equals(object obj) {

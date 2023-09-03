@@ -15,7 +15,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
             if (x <= -RcpE) {
-                return (x <= -RcpE - Math.ScaleB(1, -104)) ? NaN : -1;
+                return (x <= -RcpE - double.ScaleB(1, -104)) ? NaN : -1;
             }
 
             ddouble y;
@@ -26,7 +26,7 @@ namespace DoubleDouble {
                     yd = xd * (60.0 + xd * (114.0 + xd * 17.0)) / (60.0 + xd * (174.0 + xd * 101.0));
                 }
                 else {
-                    double logx = Math.Log(xd), loglogx = Math.Log(logx);
+                    double logx = double.Log(xd), loglogx = double.Log(logx);
 
                     yd = logx - loglogx + loglogx / (logx + logx);
                 }
@@ -35,7 +35,7 @@ namespace DoubleDouble {
                     double exp_y, d, dy;
 
                     for (int i = 0; i < 4; i++) {
-                        exp_y = Math.Exp(yd);
+                        exp_y = double.Exp(yd);
                         d = yd * exp_y - xd;
                         dy = d / (exp_y * (yd + 1d) - (yd + 2d) * d / (yd + yd + 2d));
 
@@ -45,7 +45,7 @@ namespace DoubleDouble {
 
                         yd -= dy;
 
-                        if (Math.Abs(dy) <= Math.Abs(yd) * 1e-15) {
+                        if (double.Abs(dy) <= double.Abs(yd) * 1e-15) {
                             break;
                         }
                     }

@@ -331,8 +331,8 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             internal static class CarlsonIntegrals {
-                public static double Eps = Math.ScaleB(1, -1000);
-                public static double RGLimitEps = Math.ScaleB(1, -105);
+                public static double Eps = double.ScaleB(1, -1000);
+                public static double RGLimitEps = double.ScaleB(1, -105);
 
                 public static ddouble Rcp3 = Rcp(3d);
                 public static ddouble Rcp5 = Rcp(5d);

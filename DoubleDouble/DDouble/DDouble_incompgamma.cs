@@ -59,7 +59,7 @@ namespace DoubleDouble {
         }
 
         internal static class UpperIncompleteGammaNearZero {
-            public static double Eps = Math.ScaleB(1, -105);
+            public static double Eps = double.ScaleB(1, -105);
 
             public static ddouble Value(ddouble nu, ddouble x) {
                 int n = (int)Floor(nu);
@@ -154,9 +154,9 @@ namespace DoubleDouble {
                 int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
-                double log2x = Math.Log2((double)x);
+                double log2x = double.Log2((double)x);
 
-                int m = (x > 64) ? 14 : (int)Math.Pow(2, ((0.04525 * log2x - 1) * log2x + 8.250)) + 1;
+                int m = (x > 64) ? 14 : (int)double.Pow(2, ((0.04525 * log2x - 1) * log2x + 8.250)) + 1;
 
                 ddouble f = 1;
 
@@ -181,9 +181,9 @@ namespace DoubleDouble {
 
         internal static class LowerIncompleteGammaCFrac {
             public static ddouble Value(ddouble nu, ddouble x) {
-                double log2x = Math.Log2((double)x);
+                double log2x = double.Log2((double)x);
 
-                int m = (int)Math.Pow(2, ((0.01478 * log2x + 0.2829) * log2x + 3.528)) + 1;
+                int m = (int)double.Pow(2, ((0.01478 * log2x + 0.2829) * log2x + 3.528)) + 1;
 
                 ddouble f = 1;
 

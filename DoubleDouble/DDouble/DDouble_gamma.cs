@@ -26,7 +26,7 @@ namespace DoubleDouble {
             }
 
             if (x <= Consts.Gamma.Threshold) {
-                int n = Math.Max(0, (int)Round(x - 1d));
+                int n = int.Max(0, (int)Round(x - 1d));
                 ddouble v = x - n - 1d;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Gamma.PadeTables[n];
@@ -107,7 +107,7 @@ namespace DoubleDouble {
             }
 
             if (x < Consts.LogGamma.Threshold) {
-                int n = Math.Max(0, (int)Round(x - 2d));
+                int n = int.Max(0, (int)Round(x - 2d));
                 ddouble v = x - n - 2d;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LogGamma.PadeTables[n];
@@ -161,7 +161,7 @@ namespace DoubleDouble {
             }
 
             ddouble x_zsft = x - DigammaZero;
-            if (Abs(x_zsft) < Math.ScaleB(1, -3)) {
+            if (Abs(x_zsft) < double.ScaleB(1, -3)) {
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeZeroPointTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -182,7 +182,7 @@ namespace DoubleDouble {
             }
 
             if (x < Consts.Digamma.Threshold) {
-                int n = Math.Max(0, (int)Round(x - 1d));
+                int n = int.Max(0, (int)Round(x - 1d));
                 ddouble v = x - n - 1d;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeTables[n];

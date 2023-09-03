@@ -2969,7 +2969,7 @@ namespace DoubleDoubleTest.DDouble {
 
             for (int n = -16; n <= 16; n++) {
                 foreach (ddouble u in new ddouble[] {
-                    Math.ScaleB(-1, -25), Math.ScaleB(-1, -30), Math.ScaleB(-1, -50), Math.ScaleB(-1, 96), 
+                    Math.ScaleB(-1, -25), Math.ScaleB(-1, -30), Math.ScaleB(-1, -50), Math.ScaleB(-1, 96),
                     Math.ScaleB(1, -25), Math.ScaleB(1, -30), Math.ScaleB(1, -50), Math.ScaleB(-1, -96) }) {
                     ddouble nu = n + u;
 
@@ -5608,8 +5608,8 @@ namespace DoubleDoubleTest.DDouble {
             };
 
             for (int n = -16; n <= 16; n++) {
-                foreach (ddouble u in new ddouble[] { 
-                    Math.ScaleB(-1, -25), Math.ScaleB(-1, -30), Math.ScaleB(-1, -50), Math.ScaleB(-1, 96), 
+                foreach (ddouble u in new ddouble[] {
+                    Math.ScaleB(-1, -25), Math.ScaleB(-1, -30), Math.ScaleB(-1, -50), Math.ScaleB(-1, 96),
                     Math.ScaleB(1, -25), Math.ScaleB(1, -30), Math.ScaleB(1, -50), Math.ScaleB(-1, -96) }) {
                     ddouble nu = n + u;
 

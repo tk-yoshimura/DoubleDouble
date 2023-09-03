@@ -21,7 +21,7 @@
                 return (a < 1d) ? PositiveInfinity : Zero;
             }
 
-            double a_convergence = 12d + 0.24d * (double)a + 1.35d * Math.Log2((double)a + 1d);
+            double a_convergence = 12d + 0.24d * (double)a + 1.35d * double.Log2((double)a + 1d);
 
             ddouble y = 0d;
             while (a < a_convergence) {

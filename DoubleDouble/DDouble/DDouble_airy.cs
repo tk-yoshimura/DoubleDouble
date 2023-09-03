@@ -74,8 +74,8 @@ namespace DoubleDouble {
                 public static ddouble Rcp3 { get; } = Rcp(3);
                 public static ddouble RcpSqrt3 { get; } = Rcp(Sqrt(3));
                 public static ddouble Cbrt3 { get; } = Cbrt(3);
-                public static ddouble NearZero { get; } = Math.ScaleB(1, -4);
-                public static ddouble MaxRange { get; } = Math.ScaleB(1, 128);
+                public static ddouble NearZero { get; } = double.ScaleB(1, -4);
+                public static ddouble MaxRange { get; } = double.ScaleB(1, 128);
 
                 public static readonly ReadOnlyCollection<ddouble> TaylorNearZero;
 

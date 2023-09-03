@@ -19,7 +19,7 @@ namespace DoubleDouble {
                 if (x <= CiSiPade.PadeApproxMax) {
                     (f, g) = CiSiPade.Coef(x);
                 }
-                else if (x <= Math.ScaleB(1, 256)) {
+                else if (x <= double.ScaleB(1, 256)) {
                     (f, g) = CiSiLimit.Coef(x);
                 }
                 else {
@@ -51,7 +51,7 @@ namespace DoubleDouble {
                 if (x <= CiSiPade.PadeApproxMax) {
                     (f, g) = CiSiPade.Coef(x);
                 }
-                else if (x <= Math.ScaleB(1, 256)) {
+                else if (x <= double.ScaleB(1, 256)) {
                     (f, g) = CiSiLimit.Coef(x);
                 }
                 else {
@@ -252,7 +252,7 @@ namespace DoubleDouble {
             public static (ddouble f, ddouble g) Coef(ddouble x) {
                 ddouble v = Log2(x);
 
-                int table_index = Math.Max(0, (int)Floor(v));
+                int table_index = int.Max(0, (int)Floor(v));
                 ddouble w = v - table_index - Point5;
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 

@@ -1,13 +1,13 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Floor(ddouble x) {
-            double nhi = Math.Floor(x.hi), nlo = Math.Floor(x.lo);
+            double nhi = double.Floor(x.hi), nlo = double.Floor(x.lo);
 
             return (nhi < x.hi) ? nhi : new ddouble(nhi, nlo);
         }
 
         public static ddouble Ceiling(ddouble x) {
-            double nhi = Math.Ceiling(x.hi), nlo = Math.Ceiling(x.lo);
+            double nhi = double.Ceiling(x.hi), nlo = double.Ceiling(x.lo);
 
             return (nhi > x.hi) ? nhi : new ddouble(nhi, nlo);
         }
@@ -28,15 +28,15 @@
                 return x;
             }
 
-            int exponent = Math.ILogB(x.hi);
-            double rem = Math.ScaleB(1, exponent - keep_bits);
+            int exponent = double.ILogB(x.hi);
+            double rem = double.ScaleB(1, exponent - keep_bits);
 
             if (!double.IsFinite(rem) || rem == 0) {
                 return x;
             }
 
-            double hi = Math.Truncate(x.hi / rem) * rem;
-            double lo = Math.Truncate(x.lo / rem) * rem;
+            double hi = double.Truncate(x.hi / rem) * rem;
+            double lo = double.Truncate(x.lo / rem) * rem;
 
             return new ddouble(hi, lo);
         }
@@ -49,15 +49,15 @@
                 return x;
             }
 
-            int exponent = Math.ILogB(x.hi);
-            double rem = Math.ScaleB(1, exponent - keep_bits);
+            int exponent = double.ILogB(x.hi);
+            double rem = double.ScaleB(1, exponent - keep_bits);
 
             if (!double.IsFinite(rem) || rem == 0) {
                 return x;
             }
 
-            double hi = Math.Round(x.hi / rem) * rem;
-            double lo = Math.Round(x.lo / rem) * rem;
+            double hi = double.Round(x.hi / rem) * rem;
+            double lo = double.Round(x.lo / rem) * rem;
 
             return new ddouble(hi, lo);
         }

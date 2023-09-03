@@ -20,7 +20,7 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            if ((double)a >= 11.5380 / Math.Pow((double)h, 0.9892)) {
+            if ((double)a >= 11.5380 / double.Pow((double)h, 0.9892)) {
                 return Erfc(h / Sqrt2) / 4;
             }
 
@@ -43,7 +43,7 @@ namespace DoubleDouble {
 
         internal static class OwenTIntegrate {
 
-            public static readonly double Eps = Math.ScaleB(1, -64);
+            public static readonly double Eps = double.ScaleB(1, -64);
 
             private static readonly ReadOnlyCollection<(ddouble x, ddouble w)> Legendre45Table;
 

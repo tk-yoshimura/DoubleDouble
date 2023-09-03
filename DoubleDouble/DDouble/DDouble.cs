@@ -26,7 +26,7 @@ namespace DoubleDouble {
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public int Sign => (int)Math.CopySign(1, hi);
+        public int Sign => (int)double.CopySign(1, hi);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal double Hi => hi;
@@ -37,11 +37,15 @@ namespace DoubleDouble {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble Zero { get; } = new ddouble(0d);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble One { get; } = new ddouble(1d);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public static ddouble MinusOne { get; } = new ddouble(-1d);
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble PlusZero => Zero;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble MinusZero { get; } = new ddouble(-0d);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static ddouble Epsilon { get; } = Math.ScaleB(1, -968);
+        public static ddouble Epsilon { get; } = double.ScaleB(1, -968);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble MaxValue { get; } = double.MaxValue;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -73,11 +77,11 @@ namespace DoubleDouble {
 
         internal static bool IsRegulared(ddouble v) {
             if (v.lo < 0) {
-                double vd = Math.BitDecrement(v.hi) - v.hi;
+                double vd = double.BitDecrement(v.hi) - v.hi;
                 return vd < v.lo;
             }
             if (v.lo > 0) {
-                double vi = Math.BitIncrement(v.hi) - v.hi;
+                double vi = double.BitIncrement(v.hi) - v.hi;
                 return vi > v.lo;
             }
             return true;

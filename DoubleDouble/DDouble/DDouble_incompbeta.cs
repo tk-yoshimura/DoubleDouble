@@ -79,7 +79,7 @@
             }
 
             private static int ConvergenceCfracM(double a, double b) {
-                double c = Math.Max(a, b);
+                double c = double.Max(a, b);
 
                 if (c <= 21.5d) {
                     return 21;

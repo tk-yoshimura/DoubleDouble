@@ -113,7 +113,7 @@ namespace DoubleDouble {
             public static ddouble EllipticKCore(ddouble m) {
                 ddouble y;
 
-                if (m > Math.ScaleB(1, -8)) {
+                if (m > double.ScaleB(1, -8)) {
                     ddouble c = Sqrt(1d - m), cp1 = 1d + c, cm1 = 1d - c;
 
                     y = 2d / cp1 * EllipticKCore(Square(cm1 / cp1));
@@ -172,7 +172,7 @@ namespace DoubleDouble {
 
                 int iters = 0;
 
-                while (Math.Abs(q.hi) > Math.Abs(sum_q.hi) * 8e-31 && iters < 256) {
+                while (double.Abs(q.hi) > double.Abs(sum_q.hi) * 8e-31 && iters < 256) {
                     ddouble ab = a * b, p_squa = p * p;
                     ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
 

@@ -143,7 +143,7 @@
                 (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL)
             );
 
-            public static double Eps = Math.ScaleB(1, -994);
+            public static double Eps = double.ScaleB(1, -994);
 
             private static Dictionary<ddouble, ddouble> q0_table = new() {
                 { 0, 1 }

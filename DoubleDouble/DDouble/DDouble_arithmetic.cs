@@ -375,8 +375,8 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ddouble MultiplyAdd(ddouble v, double a, double b) {
-            double hi = Math.FusedMultiplyAdd(a, b, v.hi);
-            double lo = v.lo + Math.FusedMultiplyAdd(a, b, v.hi - hi);
+            double hi = double.FusedMultiplyAdd(a, b, v.hi);
+            double lo = v.lo + double.FusedMultiplyAdd(a, b, v.hi - hi);
 
             return new ddouble(hi, lo);
         }
@@ -384,7 +384,7 @@ namespace DoubleDouble {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static ddouble Multiply(double a, double b) {
             double hi = a * b;
-            double lo = Math.FusedMultiplyAdd(a, b, -hi);
+            double lo = double.FusedMultiplyAdd(a, b, -hi);
 
             return new ddouble(hi, lo);
         }
