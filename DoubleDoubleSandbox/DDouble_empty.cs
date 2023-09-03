@@ -6,7 +6,77 @@ namespace DoubleDoubleSandbox {
     internal static class KeplerEUtil {
 
         public static class Elliptic {
-            public static (double x, bool convergenced) InitValue(double m, double e) {
+            public static ddouble Value(ddouble m, ddouble e) {
+#if DEBUG
+                if (!(m >= 0 && m <= 1)) {
+                    throw new ArgumentOutOfRangeException(nameof(m));
+                }
+                if (!(e >= 0 && e <= 1)) {
+                    throw new ArgumentOutOfRangeException(nameof(e));
+                }
+#endif
+
+                double md = m.Hi, ed = Math.Min(1, e.Hi);
+                ddouble x;
+
+                if (md <= 0.75 || ed < 0.9375) {
+                    double xd = InitValue(md, ed);
+
+                    for (int i = 0; i < 4; i++) {
+                        (xd, bool convergenced) = TrigonIter(xd, md, ed);
+                        if (convergenced) {
+                            break;
+                        }
+                    }
+                    x = xd;
+                    for (int i = 0; i < 2; i++) {
+                        (x, bool convergenced) = TrigonIter(x, m, e);
+                        if (convergenced) {
+                            break;
+                        }
+                    }
+                }
+                else {
+                    double xd = InitValue(1d - md, -ed);
+
+                    if (ed < 0.999755859375) {
+                        for (int i = 0; i < 4; i++) {
+                            (xd, bool convergenced) = SqrtTrigonIter(xd, 1d - md, -ed);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+                        x = xd;
+                        for (int i = 0; i < 2; i++) {
+                            (x, bool convergenced) = SqrtTrigonIter(x, 1d - m, -e);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        for (int i = 0; i < 4; i++) {
+                            (xd, bool convergenced) = CbrtTrigonIter(xd, 1d - md, -ed);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+                        x = xd;
+                        for (int i = 0; i < 2; i++) {
+                            (x, bool convergenced) = CbrtTrigonIter(x, 1d - m, -e);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+                    }
+
+                    x = 1d - x;
+                }
+
+                return x;
+            }
+
+            public static double InitValue(double m, double e) {
                 double ep1 = e + 1d;
 
                 double x = (ep1 - double.Sqrt(ep1 * ep1 - 4 * e * m)) / (2 * e);
@@ -15,7 +85,7 @@ namespace DoubleDoubleSandbox {
                 double delta = x * (ep1 + e * x2 * (-2d + x)) - m;
 
                 if (delta == 0d) {
-                    return (x, convergenced: true);
+                    return x;
                 }
 
                 double g1 = ep1 + e * x2 * (-6d + 4 * x);
@@ -24,13 +94,12 @@ namespace DoubleDoubleSandbox {
                 double dx = (2 * delta * g1) / (2 * g1 * g1 - delta * g2);
 
                 if (!double.IsFinite(dx)) {
-                    return (x, convergenced: true);
+                    return x;
                 }
 
                 x -= dx;
 
-                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
-                return (x, convergenced);
+                return x;
             }
 
             public static (double x, bool convergenced) TrigonIter(double x, double m, double e) {
@@ -39,7 +108,7 @@ namespace DoubleDoubleSandbox {
                 double esin = e * sin, ecos = e * cos;
 
                 double delta = x_pi + esin - m_pi;
-                if (double.Abs(delta) < m_pi * 1e-10) {
+                if (double.Abs(delta) <= m_pi * 1e-10) {
                     return (x, convergenced: true);
                 }
 
@@ -54,7 +123,7 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-10;
                 return (x, convergenced);
             }
 
@@ -64,7 +133,7 @@ namespace DoubleDoubleSandbox {
                 ddouble esin = e * sin, ecos = e * cos;
 
                 ddouble delta = x_pi + esin - m_pi;
-                if (double.Abs(delta.Hi) < m_pi.Hi * 1e-30) {
+                if (double.Abs(delta.Hi) <= m_pi.Hi * 1e-31) {
                     return (x, convergenced: true);
                 }
 
@@ -79,7 +148,7 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
                 return (x, convergenced);
             }
 
@@ -92,7 +161,7 @@ namespace DoubleDoubleSandbox {
                 double f_sqrt = double.Sqrt(f), m_sqrt = double.Sqrt(m_pi);
 
                 double delta = f_sqrt - m_sqrt;
-                if (double.Abs(delta) < m_sqrt * 1e-10) {
+                if (double.Abs(delta) <= m_sqrt * 1e-10) {
                     return (x, convergenced: true);
                 }
 
@@ -109,9 +178,9 @@ namespace DoubleDoubleSandbox {
                     return (x, convergenced: true);
                 }
 
-                x -= dx;
+                x = double.Max(0d, x - dx);
 
-                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-10;
                 return (x, convergenced);
             }
 
@@ -124,7 +193,7 @@ namespace DoubleDoubleSandbox {
                 ddouble f_sqrt = ddouble.Sqrt(f), m_sqrt = ddouble.Sqrt(m_pi);
 
                 ddouble delta = f_sqrt - m_sqrt;
-                if (double.Abs(delta.Hi) < m_sqrt.Hi * 1e-30) {
+                if (double.Abs(delta.Hi) <= m_sqrt.Hi * 1e-31) {
                     return (x, convergenced: true);
                 }
 
@@ -141,9 +210,9 @@ namespace DoubleDoubleSandbox {
                     return (x, convergenced: true);
                 }
 
-                x -= dx;
+                x = ddouble.Max(0d, x - dx);
 
-                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
                 return (x, convergenced);
             }
 
@@ -156,7 +225,7 @@ namespace DoubleDoubleSandbox {
                 double f_cbrt = double.Cbrt(f), m_cbrt = double.Cbrt(m_pi);
 
                 double delta = f_cbrt - m_cbrt;
-                if (double.Abs(delta) < m_cbrt * 1e-10) {
+                if (double.Abs(delta) <= m_cbrt * 1e-10) {
                     return (x, convergenced: true);
                 }
 
@@ -175,7 +244,7 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-10;
                 return (x, convergenced);
             }
 
@@ -188,7 +257,7 @@ namespace DoubleDoubleSandbox {
                 ddouble f_cbrt = ddouble.Cbrt(f), m_cbrt = ddouble.Cbrt(m_pi);
 
                 ddouble delta = f_cbrt - m_cbrt;
-                if (double.Abs(delta.Hi) < m_cbrt.Hi * 1e-30) {
+                if (double.Abs(delta.Hi) <= m_cbrt.Hi * 1e-31) {
                     return (x, convergenced: true);
                 }
 
@@ -207,7 +276,7 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
                 return (x, convergenced);
             }
 
@@ -230,6 +299,38 @@ namespace DoubleDoubleSandbox {
 
         public static class Hyperbolic {
 
+            public static ddouble Value(ddouble m, ddouble e) {
+#if DEBUG
+                if (!(m >= 0)) {
+                    throw new ArgumentOutOfRangeException(nameof(m));
+                }
+                if (!(e >= 1)) {
+                    throw new ArgumentOutOfRangeException(nameof(e));
+                }
+#endif
+
+                double md = m.Hi, ed = Math.Min(1, e.Hi);
+                double xd = InitValue(md, ed);
+
+                for (int i = 0; i < 4; i++) {
+                    (xd, bool convergenced) = HyperbolicIter(xd, md, ed);
+                    if (convergenced) {
+                        Console.WriteLine(i);
+                        break;
+                    }
+                }
+                ddouble x = xd;
+                for (int i = 0; i < 4; i++) {
+                    (x, bool convergenced) = HyperbolicIter(x, m, e);
+                    if (convergenced) {
+                        Console.WriteLine(i);
+                        break;
+                    }
+                }
+
+                return x;
+            }
+
             public static double InitValue(double m, double e) {
                 double x = double.Asinh(m * (1 - 1 / ((e + 1) * (m * 0.1 + 1))) / e);
                 return x;
@@ -240,7 +341,7 @@ namespace DoubleDoubleSandbox {
                 double esinh = e * sinh, ecosh = e * cosh;
 
                 double delta = x + esinh - m;
-                if (double.Abs(delta) < m * 1e-10) {
+                if (double.Abs(delta) <= m * 1e-10) {
                     return (x, convergenced: true);
                 }
 
@@ -255,7 +356,7 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-10;
                 return (x, convergenced);
             }
 
@@ -264,7 +365,7 @@ namespace DoubleDoubleSandbox {
                 ddouble esinh = e * sinh, ecosh = e * cosh;
 
                 ddouble delta = x + esinh - m;
-                if (double.Abs(delta.Hi) < m.Hi * 1e-30) {
+                if (double.Abs(delta.Hi) <= m.Hi * 1e-31) {
                     return (x, convergenced: true);
                 }
 
@@ -279,7 +380,7 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
                 return (x, convergenced);
             }
 
