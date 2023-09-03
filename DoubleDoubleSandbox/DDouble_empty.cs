@@ -29,7 +29,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                return (x, convergenced);
             }
 
             public static (double x, bool convergenced) TrigonIter(double x, double m, double e) {
@@ -53,7 +54,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                return (x, convergenced);
             }
 
             public static (ddouble x, bool convergenced) TrigonIter(ddouble x, ddouble m, ddouble e) {
@@ -77,7 +79,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                return (x, convergenced);
             }
 
             public static (double x, bool convergenced) SqrtTrigonIter(double x, double m, double e) {
@@ -108,7 +111,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                return (x, convergenced);
             }
 
             public static (ddouble x, bool convergenced) SqrtTrigonIter(ddouble x, ddouble m, ddouble e) {
@@ -139,7 +143,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                return (x, convergenced);
             }
 
             public static (double x, bool convergenced) CbrtTrigonIter(double x, double m, double e) {
@@ -170,7 +175,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                return (x, convergenced);
             }
 
             public static (ddouble x, bool convergenced) CbrtTrigonIter(ddouble x, ddouble m, ddouble e) {
@@ -201,7 +207,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                return (x, convergenced);
             }
 
             private static double Householder4(double delta, double g1, double g2, double g3) {
@@ -224,7 +231,8 @@ namespace DoubleDoubleSandbox {
         public static class Hyperbolic {
 
             public static double InitValue(double m, double e) {
-                return double.Asinh(m / e);
+                double x = double.Asinh(m * (1 - 1 / ((e + 1) * (m * 0.1 + 1))) / e);
+                return x;
             }
 
             public static (double x, bool convergenced) HyperbolicIter(double x, double m, double e) {
@@ -247,7 +255,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx) < double.Abs(x) * 1e-10;
+                return (x, convergenced);
             }
 
             public static (ddouble x, bool convergenced) HyperbolicIter(ddouble x, ddouble m, ddouble e) {
@@ -270,7 +279,8 @@ namespace DoubleDoubleSandbox {
 
                 x -= dx;
 
-                return (x, convergenced: false);
+                bool convergenced = double.Abs(dx.Hi) < double.Abs(x.Hi) * 1e-30;
+                return (x, convergenced);
             }
 
             private static double Householder4(double delta, double g1, double g2, double g3) {
