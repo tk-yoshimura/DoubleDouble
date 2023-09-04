@@ -134,7 +134,7 @@ MaxValue : 2^1024 = 1.79769e308
 |mathieu_se|&#40;-inf,+inf&#41;|4|n &leq; 16, Accuracy deteriorates when q is very large.|ddouble.MathieuS(n, q, x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |binomial|N/A|1|n &leq; 1000|ddouble.Binomial(n, k)|
-|hypot|N/A|N/A|2|ddouble.Hypot(x, y)|
+|hypot|N/A|2||ddouble.Hypot(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
 |clamp|N/A|N/A||ddouble.Clamp(v, min, max)|
