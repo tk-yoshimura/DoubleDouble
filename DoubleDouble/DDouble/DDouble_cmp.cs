@@ -386,6 +386,15 @@ namespace DoubleDouble {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble Clamp(ddouble v, ddouble min, ddouble max) {
+            if (!(min <= max)) {
+                throw new ArgumentException($"{nameof(min)},{nameof(max)}");
+            }
+
+            return Min(Max(v, min), max);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble BitIncrement(ddouble v) {
             return new ddouble(v.hi, double.BitIncrement(v.lo));
         }

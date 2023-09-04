@@ -66,6 +66,7 @@ namespace DoubleDouble {
         public static bool IsNegativeInfinity(ddouble v) => double.IsNegativeInfinity(v.hi);
 
         public static bool IsNormal(ddouble v) => !IsNaN(v) && !IsInfinity(v) && (v < -Epsilon || v > Epsilon);
+        public static bool IsSubnormal(ddouble v) => !IsNaN(v) && !IsInfinity(v) && (v >= -Epsilon && v <= Epsilon);
 
         public static bool IsFinite(ddouble v) => double.IsFinite(v.hi);
 

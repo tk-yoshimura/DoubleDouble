@@ -74,5 +74,124 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNegativeInfinity(cbrt_ninf), nameof(cbrt_ninf));
             Assert.IsTrue(ddouble.IsNaN(cbrt_nan), nameof(cbrt_nan));
         }
+
+        [TestMethod]
+        public void RootOddNTest() {
+            for (int n = 1; n <= 63; n += 2) {
+                for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                    ddouble v = (ddouble)d;
+                    ddouble w = ddouble.RootN(v, n);
+                    ddouble u = ddouble.Pow(w, n) - (ddouble)d;
+
+                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    Assert.IsTrue(ddouble.IsRegulared(v));
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+
+                for (decimal d = -10000m; d <= +10000m; d += 10m) {
+                    ddouble v = (ddouble)d;
+                    ddouble w = ddouble.RootN(v, n);
+                    ddouble u = ddouble.Pow(w, n) - (ddouble)d;
+
+                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    Assert.IsTrue(ddouble.IsRegulared(v));
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+
+                ddouble nroot_pzero = ddouble.RootN(0d, n);
+                ddouble nroot_mzero = ddouble.RootN(-0d, n);
+                ddouble nroot_pinf = ddouble.RootN(double.PositiveInfinity, n);
+                ddouble nroot_ninf = ddouble.RootN(double.NegativeInfinity, n);
+                ddouble nroot_nan = ddouble.RootN(double.NaN, n);
+
+                Assert.IsTrue(ddouble.IsPlusZero(nroot_pzero), nameof(nroot_pzero));
+                Assert.IsTrue(ddouble.IsMinusZero(nroot_mzero), nameof(nroot_mzero));
+                Assert.IsTrue(ddouble.IsPositiveInfinity(nroot_pinf), nameof(nroot_pinf));
+                Assert.IsTrue(ddouble.IsNegativeInfinity(nroot_ninf), nameof(nroot_ninf));
+                Assert.IsTrue(ddouble.IsNaN(nroot_nan), nameof(nroot_nan));
+            }
+
+            for (int n = 9; n <= 951; n += 2) {
+                ddouble p = ddouble.Ldexp(1, +n);
+                foreach (ddouble v in new ddouble[] { p - 1, ddouble.BitDecrement(p), p, ddouble.BitIncrement(p), p + 1 }) {
+                    ddouble w = ddouble.RootN(v, n);
+                    ddouble u = ddouble.Pow(w, n) - (ddouble)v;
+
+                    HPAssert.AreEqual(0, u, v * 8e-30, $"{v},{n}");
+                    Assert.IsTrue(ddouble.IsRegulared(v));
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void RootEvenNTest() {
+            for (int n = 2; n <= 64; n += 2) {
+                for (decimal d = 0; d <= +10m; d += 0.01m) {
+                    ddouble v = (ddouble)d;
+                    ddouble w = ddouble.RootN(v, n);
+                    ddouble u = ddouble.Pow(w, n) - (ddouble)d;
+
+                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    Assert.IsTrue(ddouble.IsRegulared(v));
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+
+                for (decimal d = 10m; d <= +10000m; d += 10m) {
+                    ddouble v = (ddouble)d;
+                    ddouble w = ddouble.RootN(v, n);
+                    ddouble u = ddouble.Pow(w, n) - (ddouble)d;
+
+                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    Assert.IsTrue(ddouble.IsRegulared(v));
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+
+                ddouble nroot_pzero = ddouble.RootN(0d, n);
+                ddouble nroot_mzero = ddouble.RootN(-0d, n);
+                ddouble nroot_pinf = ddouble.RootN(double.PositiveInfinity, n);
+                ddouble nroot_ninf = ddouble.RootN(double.NegativeInfinity, n);
+                ddouble nroot_nan = ddouble.RootN(double.NaN, n);
+
+                Assert.IsTrue(ddouble.IsPlusZero(nroot_pzero), nameof(nroot_pzero));
+                Assert.IsTrue(ddouble.IsNaN(nroot_mzero), nameof(nroot_mzero));
+                Assert.IsTrue(ddouble.IsPositiveInfinity(nroot_pinf), nameof(nroot_pinf));
+                Assert.IsTrue(ddouble.IsNaN(nroot_ninf), nameof(nroot_ninf));
+                Assert.IsTrue(ddouble.IsNaN(nroot_nan), nameof(nroot_nan));
+            }
+
+            for (int n = 10; n <= 952; n += 2) {
+                ddouble p = ddouble.Ldexp(1, +n);
+                foreach (ddouble v in new ddouble[] { p - 1, ddouble.BitDecrement(p), p, ddouble.BitIncrement(p), p + 1 }) {
+                    ddouble w = ddouble.RootN(v, n);
+                    ddouble u = ddouble.Pow(w, n) - (ddouble)v;
+
+                    HPAssert.AreEqual(0, u, v * 8e-30, $"{v},{n}");
+                    Assert.IsTrue(ddouble.IsRegulared(v));
+                    Assert.IsTrue(ddouble.IsRegulared(u));
+                }
+            }
+        }
+
+        [TestMethod]
+        public void HypotTest() {
+            Assert.AreEqual(ddouble.Zero, ddouble.Hypot(0, 0));
+            Assert.AreEqual(ddouble.Zero, ddouble.Hypot(0, 0, 0));
+
+            Assert.AreEqual(5, ddouble.Hypot(3, 4));
+            Assert.AreEqual(ddouble.Sqrt(195), ddouble.Hypot(5, 7, 11));
+
+            HPAssert.AreEqual("5e-250", ddouble.Hypot("3e-250", "4e-250"), "1e-280");
+            HPAssert.AreEqual(ddouble.Sqrt(195) * "1e-250", ddouble.Hypot("5e-250", "7e-250", "11e-250"), "1e-280");
+
+            HPAssert.AreEqual("5e+250", ddouble.Hypot("3e+250", "4e+250"), "1e+220");
+            HPAssert.AreEqual(ddouble.Sqrt(195) * "1e+250", ddouble.Hypot("5e+250", "7e+250", "11e+250"), "1e+220");
+
+            HPAssert.AreEqual("3e+250", ddouble.Hypot("3e+250", "4e-250"), "1e-280");
+            HPAssert.AreEqual("5e+250", ddouble.Hypot("5e+250", "7e-250", "11e-250"), "1e+220");
+
+            Assert.IsTrue(ddouble.IsNaN(ddouble.Hypot(0, ddouble.NaN)));
+            Assert.IsTrue(ddouble.IsNaN(ddouble.Hypot(0, 0, ddouble.NaN)));
+        }
     }
 }

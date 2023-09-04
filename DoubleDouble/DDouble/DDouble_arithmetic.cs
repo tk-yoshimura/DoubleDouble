@@ -397,5 +397,15 @@ namespace DoubleDouble {
 
             return (s, c);
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble operator ++(ddouble v) {
+            return v + 1d;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble operator --(ddouble v) {
+            return v - 1d;
+        }
     }
 }
