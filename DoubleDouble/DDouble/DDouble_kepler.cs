@@ -5,314 +5,351 @@
                 return NaN;
             }
 
-            if (e > 128) {
+            if (m.Sign < 0) {
+                return -KeplerE(-m, e, centered);
+            }
+
+            if (e > 256) {
                 throw new ArgumentOutOfRangeException(
                     nameof(e),
-                    "In the calculation of the KeplerE function, eccentricity greater than 128 is not supported."
+                    "In the calculation of the KeplerE function, eccentricity greater than 256 is not supported."
                 );
             }
 
-            e = RoundMantissa(e, 106);
-
             if (e <= 1) {
-                if (!ddouble.IsFinite(m)) {
-                    return NaN;
-                }
-
-                ddouble y = KeplerEUtil.Elliptic.Value(m, e);
-                return centered ? y : y + m;
-            }
-            else {
                 if (!ddouble.IsFinite(m)) {
                     return centered ? NaN : m.Sign * PositiveInfinity;
                 }
 
+                ddouble m_cycle = (m * RcpPI) % 2d;
+
+                if (centered) {
+                    ddouble y = (m_cycle <= 1d)
+                        ? KeplerEUtil.Elliptic.Value(m_cycle, e) - m_cycle
+                        : (2d - m_cycle) - KeplerEUtil.Elliptic.Value(2d - m_cycle, e);
+
+                    y *= PI;
+
+                    return y;
+                }
+                else {
+                    ddouble y = (m_cycle <= 1d)
+                        ? KeplerEUtil.Elliptic.Value(m_cycle, e)
+                        : 2d - KeplerEUtil.Elliptic.Value(2d - m_cycle, e);
+
+                    y *= PI;
+                    y += m - m_cycle * PI;
+
+                    return y;
+                }
+            }
+            else {
+                if (!ddouble.IsFinite(m)) {
+                    return PositiveInfinity;
+                }
+
                 ddouble y = KeplerEUtil.Hyperbolic.Value(m, e);
+
                 return centered ? y - m : y;
             }
         }
 
-        private static class KeplerEUtil {
-
+        internal static class KeplerEUtil {
             public static class Elliptic {
-
                 public static ddouble Value(ddouble m, ddouble e) {
-                    ddouble t = m * RcpPI * 0.5, s = (t - Round(t)) * (2 * PI);
+#if DEBUG
+                    if (!(m >= 0 && m <= 1)) {
+                        throw new ArgumentOutOfRangeException(nameof(m));
+                    }
+                    if (!(e >= 0 && e <= 1)) {
+                        throw new ArgumentOutOfRangeException(nameof(e));
+                    }
+#endif
 
-                    if (s < -PI) {
-                        return -RootFinding(-2 * PI - s, e);
+                    double md = m.Hi, ed = Math.Min(1, e.Hi);
+                    double xd = InitValue(md, ed);
+
+                    if (md >= 0.25 || ed < 0.9375) {
+                        for (int i = 0; i < 4; i++) {
+                            (xd, bool convergenced) = TrigonIter(xd, md, ed);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+                        ddouble x = xd;
+                        for (int i = 0; i < 2; i++) {
+                            (x, bool convergenced) = TrigonIter(x, m, e);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+
+                        return x;
                     }
-                    else if (s < 0) {
-                        return -RootFinding(-s, e);
-                    }
-                    else if (s < PI) {
-                        return RootFinding(s, e);
+                    if (ed < 0.999755859375) {
+                        for (int i = 0; i < 4; i++) {
+                            (xd, bool convergenced) = SqrtTrigonIter(xd, md, ed);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+                        ddouble x = xd;
+                        for (int i = 0; i < 2; i++) {
+                            (x, bool convergenced) = SqrtTrigonIter(x, m, e);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+
+                        return x;
                     }
                     else {
-                        return -RootFinding(2 * PI - s, e);
+                        for (int i = 0; i < 4; i++) {
+                            (xd, bool convergenced) = CbrtTrigonIter(xd, md, ed);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+                        ddouble x = xd;
+                        for (int i = 0; i < 2; i++) {
+                            (x, bool convergenced) = CbrtTrigonIter(x, m, e);
+                            if (convergenced) {
+                                break;
+                            }
+                        }
+
+                        return x;
                     }
                 }
 
-                private static ddouble RootFinding(ddouble m, ddouble e) {
-#if DEBUG
-                    if (m < 0 || !(m <= PI)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 0) || e > 1) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
+                public static double InitValue(double m, double e) {
+                    double em1 = 1d - e;
 
-                    if (m >= PI / 4) {
-                        return HalleyRootFinding(m, e);
-                    }
+                    double x = (e < 3.90625e-3)
+                        ? m
+                        : (em1 - double.Sqrt(em1 * em1 + 4 * e * m)) / (-2 * e);
 
-                    if (e < 0.9375) {
-                        return HalleyRootFinding(m, e);
-                    }
-                    else if (e < 0.999755859375) {
-                        return SqrtNewtonRootFinding(m, e);
-                    }
-                    else {
-                        return CbrtNewtonRootFinding(m, e);
-                    }
-                }
+                    double x2 = x * x;
+                    double delta = x * (em1 - e * x2 * (-2d + x)) - m;
 
-                private static ddouble HalleyRootFinding(ddouble m, ddouble e) {
-#if DEBUG
-                    if (m < 0 || !(m <= PI)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 0) || e > 1) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-                    double xd = InitValue(m.Hi, e.Hi);
-
-                    for (int i = 0; i < 16; i++) {
-                        (double esin, double ecos) = (e.Hi * double.Sin(xd), e.Hi * double.Cos(xd));
-                        double u = xd - esin;
-
-                        double dx = (m.Hi - u) * (1.0 + ecos) / (1.0 - ecos * ecos);
-
-                        if (!double.IsFinite(dx)) {
-                            break;
-                        }
-
-                        xd += dx;
-
-                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
-                            break;
-                        }
+                    if (delta == 0d) {
+                        return x;
                     }
 
-                    ddouble x = xd;
+                    double g1 = em1 - e * x2 * (-6d + 4 * x);
+                    double g2 = -12 * e * x * (-1d + x);
 
-                    for (int i = 0; i < 2; i++) {
-                        (ddouble esin, ddouble ecos) = (e * Sin(x), e * Cos(x));
-                        ddouble u = x - esin;
+                    double dx = (2 * delta * g1) / (2 * g1 * g1 - delta * g2);
 
-                        ddouble dx = (m - u) * (1.0 + ecos) / (1.0 - ecos * ecos);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x += dx;
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
+                    if (!double.IsFinite(dx)) {
+                        return x;
                     }
 
-                    ddouble y = x - m;
-
-                    return y;
-                }
-
-                private static ddouble SqrtNewtonRootFinding(ddouble m, ddouble e) {
-#if DEBUG
-                    if (m < 0 || !(m <= PI / 4)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 0.9375) || e > 1) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-
-                    ddouble sqrt_m = Sqrt(m);
-
-                    double xd = double.Sqrt(InitValue(m.Hi, e.Hi));
-
-                    for (int i = 0; i < 16; i++) {
-                        (double esin, double ecos) = (e.Hi * double.Sin(xd), e.Hi * double.Cos(xd));
-                        double u = xd - esin, v = double.Sign(u) * double.Sqrt(double.Abs(u));
-
-                        double dx = (sqrt_m.Hi - v) * (2.0 * v) / (1.0 - ecos);
-
-                        if (!double.IsFinite(dx)) {
-                            break;
-                        }
-
-                        xd = double.Max(0.0, xd + dx);
-
-                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
-                            break;
-                        }
-                    }
-
-                    ddouble x = xd;
-
-                    for (int i = 0; i < 2; i++) {
-                        (ddouble esin, ddouble ecos) = (e * Sin(x), e * Cos(x));
-                        ddouble u = x - esin, v = u.Sign * Sqrt(Abs(u));
-
-                        ddouble dx = (sqrt_m - v) * (2.0 * v) / (1.0 - ecos);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x = Max(0.0, x + dx);
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
-
-                    for (int i = 0; i < 4; i++) {
-                        (ddouble esin, ddouble ecos) = (e * Sin(x), e * Cos(x));
-                        ddouble u = x - esin;
-
-                        ddouble dx = (m - u) * (1.0 + ecos) / (1.0 - ecos * ecos);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x += dx;
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
-
-                    ddouble y = x - m;
-
-                    return y;
-                }
-
-                private static ddouble CbrtNewtonRootFinding(ddouble m, ddouble e) {
-#if DEBUG
-                    if (m < 0 || !(m <= PI / 4)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 0.999755859375) || e > 1) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-
-                    ddouble cbrt_m = Cbrt(m);
-
-                    double xd = double.Cbrt(InitValue(m.Hi, e.Hi));
-
-                    for (int i = 0; i < 16; i++) {
-                        (double esin, double ecos) = (e.Hi * double.Sin(xd), e.Hi * double.Cos(xd));
-                        double u = xd - esin, v = double.Cbrt(u);
-
-                        double dx = (cbrt_m.Hi - v) * (3.0 * v * v) / (1.0 - ecos);
-
-                        if (!double.IsFinite(dx)) {
-                            break;
-                        }
-
-                        xd = double.Max(0.0, xd + dx);
-
-                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
-                            break;
-                        }
-                    }
-
-                    ddouble x = xd;
-
-                    for (int i = 0; i < 4; i++) {
-                        (ddouble esin, ddouble ecos) = (e * Sin(x), e * Cos(x));
-                        ddouble u = x - esin, v = Cbrt(u);
-
-                        ddouble dx = (cbrt_m - v) * (3.0 * v * v) / (1.0 - ecos);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x = Max(0.0, x + dx);
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
-
-                    for (int i = 0; i < 8; i++) {
-                        (ddouble esin, ddouble ecos) = (e * Sin(x), e * Cos(x));
-                        ddouble u = x - esin;
-
-                        ddouble dx = (m - u) * (1.0 + ecos) / (1.0 - ecos * ecos);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x += dx;
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
-
-                    ddouble y = x - m;
-
-                    return y;
-                }
-
-                private static double InitValue(double m, double e) {
-#if DEBUG
-                    if (m < 0 || !(m <= PI)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 0) || e > 1) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-
-                    double s = double.Cbrt(6.0 * m), s2 = s * s;
-                    double d = s * (1.0 +
-                               s2 * (1.6666666666666666667e-2 +
-                               s2 * (7.1428571428571428571e-4 +
-                               s2 * (7.4801639817849724809e-5))));
-
-                    double a = (m > 0.0) ? (m / (1.0 - e)) : 0.0;
-                    double b = d * e + m * (1.0 - e);
-
-                    double x = double.Min(a, b);
+                    x -= dx;
 
                     return x;
+                }
+
+                public static (double x, bool convergenced) TrigonIter(double x, double m, double e) {
+                    double x_pi = x * double.Pi, m_pi = m * double.Pi;
+                    (double sin, double cos) = double.SinCosPi(x);
+                    double esin = e * sin, ecos = e * cos;
+
+                    double delta = x_pi - esin - m_pi;
+                    if (double.Abs(delta) <= m_pi * 1e-12) {
+                        return (x, convergenced: true);
+                    }
+
+                    double g1 = -ecos + 1d;
+                    double g2 = esin;
+                    double g3 = ecos;
+                    double dx = Householder4(delta, g1, g2, g3);
+
+                    if (!double.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = double.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-12;
+                    return (x, convergenced);
+                }
+
+                public static (ddouble x, bool convergenced) TrigonIter(ddouble x, ddouble m, ddouble e) {
+                    ddouble x_pi = x * ddouble.PI, m_pi = m * ddouble.PI;
+                    ddouble sin = ddouble.SinPI(x), cos = ddouble.CosPI(x);
+                    ddouble esin = e * sin, ecos = e * cos;
+
+                    ddouble delta = x_pi - esin - m_pi;
+                    if (double.Abs(delta.Hi) <= m_pi.Hi * 1e-31) {
+                        return (x, convergenced: true);
+                    }
+
+                    ddouble g1 = -ecos + 1d;
+                    ddouble g2 = esin;
+                    ddouble g3 = ecos;
+                    ddouble dx = Householder4(delta, g1, g2, g3);
+
+                    if (!ddouble.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = ddouble.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
+                    return (x, convergenced);
+                }
+
+                public static (double x, bool convergenced) SqrtTrigonIter(double x, double m, double e) {
+                    double x_pi = x * double.Pi, m_pi = m * double.Pi;
+                    (double sin, double cos) = double.SinCosPi(x);
+                    double esin = e * sin, ecos = e * cos;
+
+                    double f = x_pi - esin;
+                    double f_sqrt = double.Sqrt(f), m_sqrt = double.Sqrt(m_pi);
+
+                    double delta = f_sqrt - m_sqrt;
+                    if (double.Abs(delta) <= m_sqrt * 1e-12) {
+                        return (x, convergenced: true);
+                    }
+
+                    double ecosm1 = 1d - ecos, sqecosm1 = ecosm1 * ecosm1;
+
+                    double f_pow3d2 = f_sqrt * f, f_pow5d2 = f_pow3d2 * f;
+
+                    double g1 = ecosm1 / (2 * f_sqrt);
+                    double g2 = (-sqecosm1 + 2 * f * esin) / (4 * f_pow3d2);
+                    double g3 = (3 * ecosm1 * sqecosm1 + 2 * f * (-3 * esin * ecosm1 + 2 * f * ecos)) / (8 * f_pow5d2);
+                    double dx = Householder4(delta, g1, g2, g3);
+
+                    if (!double.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = double.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-12;
+                    return (x, convergenced);
+                }
+
+                public static (ddouble x, bool convergenced) SqrtTrigonIter(ddouble x, ddouble m, ddouble e) {
+                    ddouble x_pi = x * ddouble.PI, m_pi = m * ddouble.PI;
+                    ddouble sin = ddouble.SinPI(x), cos = ddouble.CosPI(x);
+                    ddouble esin = e * sin, ecos = e * cos;
+
+                    ddouble f = x_pi - esin;
+                    ddouble f_sqrt = ddouble.Sqrt(f), m_sqrt = ddouble.Sqrt(m_pi);
+
+                    ddouble delta = f_sqrt - m_sqrt;
+                    if (double.Abs(delta.Hi) <= m_sqrt.Hi * 1e-31) {
+                        return (x, convergenced: true);
+                    }
+
+                    ddouble ecosm1 = 1d - ecos, sqecosm1 = ecosm1 * ecosm1;
+
+                    ddouble f_pow3d2 = f_sqrt * f, f_pow5d2 = f_pow3d2 * f;
+
+                    ddouble g1 = ecosm1 / (2 * f_sqrt);
+                    ddouble g2 = (-sqecosm1 + 2 * f * esin) / (4 * f_pow3d2);
+                    ddouble g3 = (3 * ecosm1 * sqecosm1 + 2 * f * (-3 * esin * ecosm1 + 2 * f * ecos)) / (8 * f_pow5d2);
+                    ddouble dx = Householder4(delta, g1, g2, g3);
+
+                    if (!ddouble.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = ddouble.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
+                    return (x, convergenced);
+                }
+
+                public static (double x, bool convergenced) CbrtTrigonIter(double x, double m, double e) {
+                    double x_pi = x * double.Pi, m_pi = m * double.Pi;
+                    (double sin, double cos) = double.SinCosPi(x);
+                    double esin = e * sin, ecos = e * cos;
+
+                    double f = x_pi - esin;
+                    double f_cbrt = double.Cbrt(f), m_cbrt = double.Cbrt(m_pi);
+
+                    double delta = f_cbrt - m_cbrt;
+                    if (double.Abs(delta) <= m_cbrt * 1e-12) {
+                        return (x, convergenced: true);
+                    }
+
+                    double ecosm1 = 1d - ecos, sqecosm1 = ecosm1 * ecosm1;
+
+                    double f_pow2d3 = f_cbrt * f_cbrt, f_pow5d3 = f_pow2d3 * f, f_pow8d3 = f_pow5d3 * f;
+
+                    double g1 = ecosm1 / (3 * f_pow2d3);
+                    double g2 = (-2 * sqecosm1 + 3 * f * esin) / (9 * f_pow5d3);
+                    double g3 = (10 * ecosm1 * sqecosm1 + 9 * f * (-2 * esin * ecosm1 + f * ecos)) / (27 * f_pow8d3);
+                    double dx = Householder4(delta, g1, g2, g3);
+
+                    if (!double.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = double.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-12;
+                    return (x, convergenced);
+                }
+
+                public static (ddouble x, bool convergenced) CbrtTrigonIter(ddouble x, ddouble m, ddouble e) {
+                    ddouble x_pi = x * ddouble.PI, m_pi = m * ddouble.PI;
+                    ddouble sin = ddouble.SinPI(x), cos = ddouble.CosPI(x);
+                    ddouble esin = e * sin, ecos = e * cos;
+
+                    ddouble f = x_pi - esin;
+                    ddouble f_cbrt = ddouble.Cbrt(f), m_cbrt = ddouble.Cbrt(m_pi);
+
+                    ddouble delta = f_cbrt - m_cbrt;
+                    if (double.Abs(delta.Hi) <= m_cbrt.Hi * 1e-31) {
+                        return (x, convergenced: true);
+                    }
+
+                    ddouble ecosm1 = 1d - ecos, sqecosm1 = ecosm1 * ecosm1;
+
+                    ddouble f_pow2d3 = f_cbrt * f_cbrt, f_pow5d3 = f_pow2d3 * f, f_pow8d3 = f_pow5d3 * f;
+
+                    ddouble g1 = ecosm1 / (3 * f_pow2d3);
+                    ddouble g2 = (-2 * sqecosm1 - 3 * f * esin) / (9 * f_pow5d3);
+                    ddouble g3 = (10 * ecosm1 * sqecosm1 + 9 * f * (2 * esin * ecosm1 - f * ecos)) / (27 * f_pow8d3);
+                    ddouble dx = Householder4(delta, g1, g2, g3);
+
+                    if (!ddouble.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = ddouble.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
+                    return (x, convergenced);
+                }
+
+                private static double Householder4(double delta, double g1, double g2, double g3) {
+                    double sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+
+                    double dx = 3 * delta * (sqg1 + sqg1_deltag2) /
+                        (double.Pi * (6 * g1 * sqg1_deltag2 + delta * delta * g3));
+                    return dx;
+                }
+
+                private static ddouble Householder4(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
+                    ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+
+                    ddouble dx = 3 * delta * (sqg1 + sqg1_deltag2) /
+                        (ddouble.PI * (6 * g1 * sqg1_deltag2 + delta * delta * g3));
+                    return dx;
                 }
             }
 
             public static class Hyperbolic {
 
                 public static ddouble Value(ddouble m, ddouble e) {
-                    if (m < 0) {
-                        return -RootFinding(-m, e);
-                    }
-                    else {
-                        return RootFinding(m, e);
-                    }
-                }
-
-                private static ddouble RootFinding(ddouble m, ddouble e) {
 #if DEBUG
-                    if (m < 0) {
+                    if (!(m >= 0)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
                     }
                     if (!(e >= 1)) {
@@ -320,205 +357,19 @@
                     }
 #endif
 
-                    if (m >= PI / 4) {
-                        return HalleyRootFinding(m, e);
-                    }
-
-                    if (e >= 1.0625) {
-                        return HalleyRootFinding(m, e);
-                    }
-                    else if (e >= 1.000244140625) {
-                        return SqrtNewtonRootFinding(m, e);
-                    }
-                    else {
-                        return CbrtNewtonRootFinding(m, e);
-                    }
-                }
-
-                private static ddouble HalleyRootFinding(ddouble m, ddouble e) {
-#if DEBUG
-                    if (m < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 1)) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-
-                    double xd = InitValue(m.Hi, e);
-
-                    for (int i = 0; i < 16; i++) {
-                        (double esinh, double ecosh) = (e.Hi * double.Sinh(xd), e.Hi * double.Cosh(xd));
-                        double u = esinh - xd, ecosh_m1 = ecosh - 1.0, err = u - m.Hi;
-
-                        double dx = err * (2.0 * ecosh_m1) / (err * esinh - 2.0 * ecosh_m1 * ecosh_m1);
-
-                        if (!double.IsFinite(dx)) {
-                            break;
-                        }
-
-                        xd += dx;
-
-                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
-                            break;
-                        }
-                    }
-
-                    ddouble x = xd;
-
-                    for (int i = 0; i < 2; i++) {
-                        (ddouble esinh, ddouble ecosh) = (e * Sinh(x), e * Cosh(x));
-                        ddouble u = esinh - x, ecosh_m1 = ecosh - 1.0, err = u - m;
-
-                        ddouble dx = err * (2.0 * ecosh_m1) / (err * esinh - 2.0 * ecosh_m1 * ecosh_m1);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x += dx;
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
-
-                    return x;
-                }
-
-                private static ddouble SqrtNewtonRootFinding(ddouble m, ddouble e) {
-#if DEBUG
-                    if (m < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 1) || e >= 1.0625) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-
-                    ddouble sqrt_m = Sqrt(m);
-
-                    double xd = double.Sqrt(InitValue(m.Hi, e));
-
-                    for (int i = 0; i < 16; i++) {
-                        (double esinh, double ecosh) = (e.Hi * double.Sinh(xd), e.Hi * double.Cosh(xd));
-                        double u = esinh - xd, v = double.Sign(u) * double.Sqrt(double.Abs(u)), err = v - sqrt_m.Hi;
-
-                        double dx = 2.0 * err * v / (1.0 - ecosh);
-
-                        if (!double.IsFinite(dx)) {
-                            break;
-                        }
-
-                        xd = double.Max(0.0, xd + dx);
-
-                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
-                            break;
-                        }
-                    }
-
-                    ddouble x = xd;
-
-                    for (int i = 0; i < 2; i++) {
-                        (ddouble esinh, ddouble ecosh) = (e * Sinh(x), e * Cosh(x));
-                        ddouble u = esinh - x, v = u.Sign * Sqrt(Abs(u)), err = v - sqrt_m;
-
-                        ddouble dx = 2.0 * err * v / (1.0 - ecosh);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x = Max(0.0, x + dx);
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
-
-                    for (int i = 0; i < 4; i++) {
-                        (ddouble esinh, ddouble ecosh) = (e * Sinh(x), e * Cosh(x));
-                        ddouble u = esinh - x, ecosh_m1 = ecosh - 1.0, err = u - m;
-
-                        ddouble dx = err * (2.0 * ecosh_m1) / (err * esinh - 2.0 * ecosh_m1 * ecosh_m1);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x += dx;
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
-
-                    return x;
-                }
-
-                private static ddouble CbrtNewtonRootFinding(ddouble m, ddouble e) {
-#if DEBUG
-                    if (m < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 1) || e >= 1.000244140625) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-
-                    ddouble cbrt_m = Cbrt(m);
-
-                    double xd = double.Cbrt(InitValue(m.Hi, e));
-
-                    for (int i = 0; i < 16; i++) {
-                        (double esinh, double ecosh) = (e.Hi * double.Sinh(xd), e.Hi * double.Cosh(xd));
-                        double u = esinh - xd, v = double.Cbrt(u), err = v - cbrt_m.Hi;
-
-                        double dx = 3.0 * err * v * v / (1.0 - ecosh);
-
-                        if (!double.IsFinite(dx)) {
-                            break;
-                        }
-
-                        xd = double.Max(0.0, xd + dx);
-
-                        if (double.Abs(dx) <= double.Abs(xd) * 1e-15) {
-                            break;
-                        }
-                    }
-
-                    ddouble x = xd;
-
-                    for (int i = 0; i < 4; i++) {
-                        (ddouble esinh, ddouble ecosh) = (e * Sinh(x), e * Cosh(x));
-                        ddouble u = esinh - x, v = Cbrt(u), err = v - cbrt_m;
-
-                        ddouble dx = 3.0 * err * v * v / (1.0 - ecosh);
-
-                        if (!IsFinite(dx)) {
-                            break;
-                        }
-
-                        x = Max(0.0, x + dx);
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
-                            break;
-                        }
-                    }
+                    double md = m.Hi, ed = Math.Min(1, e.Hi);
+                    double xd = InitValue(md, ed);
 
                     for (int i = 0; i < 8; i++) {
-                        (ddouble esinh, ddouble ecosh) = (e * Sinh(x), e * Cosh(x));
-                        ddouble u = esinh - x, ecosh_m1 = ecosh - 1.0, err = u - m;
-
-                        ddouble dx = err * (2.0 * ecosh_m1) / (err * esinh - 2.0 * ecosh_m1 * ecosh_m1);
-
-                        if (!IsFinite(dx)) {
+                        (xd, bool convergenced) = HyperbolicIter(xd, md, ed);
+                        if (convergenced) {
                             break;
                         }
-
-                        x += dx;
-
-                        if (double.Abs(dx.Hi) <= double.Abs(x.Hi) * 2.5e-31) {
+                    }
+                    ddouble x = xd;
+                    for (int i = 0; i < 4; i++) {
+                        (x, bool convergenced) = HyperbolicIter(x, m, e);
+                        if (convergenced) {
                             break;
                         }
                     }
@@ -526,24 +377,73 @@
                     return x;
                 }
 
-                private static double InitValue(double m, ddouble e) {
-#if DEBUG
-                    if (m < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 1)) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
-
-                    double a = (m > 0.0) ? (m / (e - 1.0).Hi) : 0.0;
-                    double b = double.Log(2 * m / e.Hi + 1 + double.Sqrt(m / (double.Sqrt((e - 1.0).Hi))) / 4);
-
-                    double t = double.Exp(-(e - 1.0).Hi / (2 * double.Pow(m, 13.0 / 16.0)));
-
-                    double x = (t < 0.9999) ? (a * (1.0 - t) + b * t) : b;
-
+                public static double InitValue(double m, double e) {
+                    double x = double.Asinh(m / e);
                     return x;
+                }
+
+                public static (double x, bool convergenced) HyperbolicIter(double x, double m, double e) {
+                    double sinh = double.Sinh(x), cosh = double.Cosh(x);
+                    double esinh = e * sinh, ecosh = e * cosh;
+
+                    double delta = esinh - x - m;
+                    if (double.Abs(delta) <= m * 1e-12) {
+                        return (x, convergenced: true);
+                    }
+
+                    double g1 = ecosh - 1d;
+                    double g2 = esinh;
+                    double g3 = ecosh;
+                    double dx = Householder4(delta, g1, g2, g3);
+
+                    if (!double.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = double.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx) <= double.Abs(x) * 1e-12;
+                    return (x, convergenced);
+                }
+
+                public static (ddouble x, bool convergenced) HyperbolicIter(ddouble x, ddouble m, ddouble e) {
+                    ddouble sinh = ddouble.Sinh(x), cosh = ddouble.Cosh(x);
+                    ddouble esinh = e * sinh, ecosh = e * cosh;
+
+                    ddouble delta = esinh - x - m;
+                    if (double.Abs(delta.Hi) <= m.Hi * 1e-31) {
+                        return (x, convergenced: true);
+                    }
+
+                    ddouble g1 = ecosh - 1d;
+                    ddouble g2 = esinh;
+                    ddouble g3 = ecosh;
+                    ddouble dx = Householder4(delta, g1, g2, g3);
+
+                    if (!ddouble.IsFinite(dx)) {
+                        return (x, convergenced: true);
+                    }
+
+                    x = ddouble.Max(0d, x - dx);
+
+                    bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
+                    return (x, convergenced);
+                }
+
+                private static double Householder4(double delta, double g1, double g2, double g3) {
+                    double sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+
+                    double dx = 3 * delta * (sqg1 + sqg1_deltag2) /
+                        (6 * g1 * sqg1_deltag2 + delta * delta * g3);
+                    return dx;
+                }
+
+                private static ddouble Householder4(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
+                    ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+
+                    ddouble dx = 3 * delta * (sqg1 + sqg1_deltag2) /
+                        (6 * g1 * sqg1_deltag2 + delta * delta * g3);
+                    return dx;
                 }
             }
         }

@@ -84,7 +84,7 @@ MaxValue : 2^1024 = 1.79769e308
 |incomplete_elliptic_e|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2|ddouble.EllipticE(x, m)|
 |incomplete_elliptic_pi|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2<br/>Argument order follows wolfram.|ddouble.EllipticPi(n, x, m)|
 |elliptic_theta|&#40;-inf,+inf&#41;|4|a=1...4, q &leq; 0.995|ddouble.EllipticTheta(a, x, q)|
-|kepler_e|&#40;-inf,+inf&#41;|6|inverse kepler's equation, e(eccentricity) &leq; 128|ddouble.KeplerE(m, e, centered)|
+|kepler_e|&#40;-inf,+inf&#41;|6|inverse kepler's equation, e(eccentricity) &leq; 256|ddouble.KeplerE(m, e, centered)|
 |agm|&#91;0,+inf&#41;|2||ddouble.Agm(a, b)|
 |fresnel_c|&#40;-inf,+inf&#41;|4||ddouble.FresnelC(x)|
 |fresnel_s|&#40;-inf,+inf&#41;|4||ddouble.FresnelS(x)|

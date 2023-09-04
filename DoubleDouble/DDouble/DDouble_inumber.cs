@@ -159,12 +159,8 @@ namespace DoubleDouble {
             }
         }
 
-        public bool Equals(ddouble x, ddouble y) {
-            return x == y;
-        }
-
-        public int GetHashCode([DisallowNull] ddouble obj) {
-            return obj.GetHashCode();
-        }
+        public bool Equals(ddouble x, ddouble y) => x == y;
+    
+        public int GetHashCode([DisallowNull] ddouble obj) => obj.GetHashCode();
     }
 }
