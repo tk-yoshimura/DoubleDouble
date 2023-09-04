@@ -27,6 +27,7 @@ MaxValue : 2^1024 = 1.79769e308
 |----|----|----|----|----|
 |sqrt|&#91;0,+inf&#41;|2||ddouble.Sqrt(x)|
 |cbrt|&#40;-inf,+inf&#41;|2||ddouble.Cbrt(x)|
+|root_n|&#40;-inf,+inf&#41;|3||ddouble.RootN(x, n)|
 |log2|&#40;0,+inf&#41;|2||ddouble.Log2(x)|
 |log|&#40;0,+inf&#41;|3||ddouble.Log(x)|
 |log10|&#40;0,+inf&#41;|3||ddouble.Log10(x)|
@@ -133,8 +134,10 @@ MaxValue : 2^1024 = 1.79769e308
 |mathieu_se|&#40;-inf,+inf&#41;|4|n &leq; 16, Accuracy deteriorates when q is very large.|ddouble.MathieuS(n, q, x)|
 |ldexp|&#40;-inf,+inf&#41;|N/A||ddouble.Ldexp(x, y)|
 |binomial|N/A|1|n &leq; 1000|ddouble.Binomial(n, k)|
+|hypot|N/A|N/A|2|ddouble.Hypot(x, y)|
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
+|clamp|N/A|N/A||ddouble.Clamp(v, min, max)|
 |floor|N/A|N/A||ddouble.Floor(x)|
 |ceiling|N/A|N/A||ddouble.Ceiling(x)|
 |round|N/A|N/A||ddouble.Round(x)|
