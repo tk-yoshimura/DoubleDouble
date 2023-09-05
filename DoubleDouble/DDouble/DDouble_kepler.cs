@@ -70,15 +70,17 @@
                     double xd = InitValue(md, ed);
 
                     if (md >= 0.25 || ed < 0.9375) {
+                        ddouble m_pi = m * PI;
+
                         for (int i = 0; i < 4; i++) {
-                            (xd, bool convergenced) = TrigonIter(xd, md, ed);
+                            (xd, bool convergenced) = TrigonIter(xd, m_pi.Hi, ed);
                             if (convergenced) {
                                 break;
                             }
                         }
                         ddouble x = xd;
                         for (int i = 0; i < 2; i++) {
-                            (x, bool convergenced) = TrigonIter(x, m, e);
+                            (x, bool convergenced) = TrigonIter(x, m_pi, e);
                             if (convergenced) {
                                 break;
                             }
@@ -87,15 +89,17 @@
                         return x;
                     }
                     if (ed < 0.999755859375) {
+                        ddouble m_sqrt = Sqrt(m * PI);
+
                         for (int i = 0; i < 4; i++) {
-                            (xd, bool convergenced) = SqrtTrigonIter(xd, md, ed);
+                            (xd, bool convergenced) = SqrtTrigonIter(xd, m_sqrt.Hi, ed);
                             if (convergenced) {
                                 break;
                             }
                         }
                         ddouble x = xd;
                         for (int i = 0; i < 2; i++) {
-                            (x, bool convergenced) = SqrtTrigonIter(x, m, e);
+                            (x, bool convergenced) = SqrtTrigonIter(x, m_sqrt, e);
                             if (convergenced) {
                                 break;
                             }
@@ -104,15 +108,17 @@
                         return x;
                     }
                     else {
+                        ddouble m_cbrt = Cbrt(m * PI);
+
                         for (int i = 0; i < 4; i++) {
-                            (xd, bool convergenced) = CbrtTrigonIter(xd, md, ed);
+                            (xd, bool convergenced) = CbrtTrigonIter(xd, m_cbrt.Hi, ed);
                             if (convergenced) {
                                 break;
                             }
                         }
                         ddouble x = xd;
                         for (int i = 0; i < 2; i++) {
-                            (x, bool convergenced) = CbrtTrigonIter(x, m, e);
+                            (x, bool convergenced) = CbrtTrigonIter(x, m_cbrt, e);
                             if (convergenced) {
                                 break;
                             }
@@ -151,12 +157,12 @@
                 }
 
                 public static (double x, bool convergenced) TrigonIter(double x, double m, double e) {
-                    double x_pi = x * double.Pi, m_pi = m * double.Pi;
+                    double x_pi = x * double.Pi;
                     (double sin, double cos) = double.SinCosPi(x);
                     double esin = e * sin, ecos = e * cos;
 
-                    double delta = x_pi - esin - m_pi;
-                    if (double.Abs(delta) <= m_pi * 1e-12) {
+                    double delta = x_pi - esin - m;
+                    if (double.Abs(delta) <= m * 1e-12) {
                         return (x, convergenced: true);
                     }
 
@@ -176,12 +182,12 @@
                 }
 
                 public static (ddouble x, bool convergenced) TrigonIter(ddouble x, ddouble m, ddouble e) {
-                    ddouble x_pi = x * ddouble.PI, m_pi = m * ddouble.PI;
+                    ddouble x_pi = x * ddouble.PI;
                     ddouble sin = ddouble.SinPI(x), cos = ddouble.CosPI(x);
                     ddouble esin = e * sin, ecos = e * cos;
 
-                    ddouble delta = x_pi - esin - m_pi;
-                    if (double.Abs(delta.Hi) <= m_pi.Hi * 1e-31) {
+                    ddouble delta = x_pi - esin - m;
+                    if (double.Abs(delta.Hi) <= m.Hi * 1e-31) {
                         return (x, convergenced: true);
                     }
 
@@ -201,15 +207,15 @@
                 }
 
                 public static (double x, bool convergenced) SqrtTrigonIter(double x, double m, double e) {
-                    double x_pi = x * double.Pi, m_pi = m * double.Pi;
+                    double x_pi = x * double.Pi;
                     (double sin, double cos) = double.SinCosPi(x);
                     double esin = e * sin, ecos = e * cos;
 
                     double f = x_pi - esin;
-                    double f_sqrt = double.Sqrt(f), m_sqrt = double.Sqrt(m_pi);
+                    double f_sqrt = double.Sqrt(f);
 
-                    double delta = f_sqrt - m_sqrt;
-                    if (double.Abs(delta) <= m_sqrt * 1e-12) {
+                    double delta = f_sqrt - m;
+                    if (double.Abs(delta) <= m * 1e-12) {
                         return (x, convergenced: true);
                     }
 
@@ -233,15 +239,15 @@
                 }
 
                 public static (ddouble x, bool convergenced) SqrtTrigonIter(ddouble x, ddouble m, ddouble e) {
-                    ddouble x_pi = x * ddouble.PI, m_pi = m * ddouble.PI;
+                    ddouble x_pi = x * ddouble.PI;
                     ddouble sin = ddouble.SinPI(x), cos = ddouble.CosPI(x);
                     ddouble esin = e * sin, ecos = e * cos;
 
                     ddouble f = x_pi - esin;
-                    ddouble f_sqrt = ddouble.Sqrt(f), m_sqrt = ddouble.Sqrt(m_pi);
+                    ddouble f_sqrt = ddouble.Sqrt(f);
 
-                    ddouble delta = f_sqrt - m_sqrt;
-                    if (double.Abs(delta.Hi) <= m_sqrt.Hi * 1e-31) {
+                    ddouble delta = f_sqrt - m;
+                    if (double.Abs(delta.Hi) <= m.Hi * 1e-31) {
                         return (x, convergenced: true);
                     }
 
@@ -265,15 +271,15 @@
                 }
 
                 public static (double x, bool convergenced) CbrtTrigonIter(double x, double m, double e) {
-                    double x_pi = x * double.Pi, m_pi = m * double.Pi;
+                    double x_pi = x * double.Pi;
                     (double sin, double cos) = double.SinCosPi(x);
                     double esin = e * sin, ecos = e * cos;
 
                     double f = x_pi - esin;
-                    double f_cbrt = double.Cbrt(f), m_cbrt = double.Cbrt(m_pi);
+                    double f_cbrt = double.Cbrt(f);
 
-                    double delta = f_cbrt - m_cbrt;
-                    if (double.Abs(delta) <= m_cbrt * 1e-12) {
+                    double delta = f_cbrt - m;
+                    if (double.Abs(delta) <= m * 1e-12) {
                         return (x, convergenced: true);
                     }
 
@@ -297,15 +303,15 @@
                 }
 
                 public static (ddouble x, bool convergenced) CbrtTrigonIter(ddouble x, ddouble m, ddouble e) {
-                    ddouble x_pi = x * ddouble.PI, m_pi = m * ddouble.PI;
+                    ddouble x_pi = x * ddouble.PI;
                     ddouble sin = ddouble.SinPI(x), cos = ddouble.CosPI(x);
                     ddouble esin = e * sin, ecos = e * cos;
 
                     ddouble f = x_pi - esin;
-                    ddouble f_cbrt = ddouble.Cbrt(f), m_cbrt = ddouble.Cbrt(m_pi);
+                    ddouble f_cbrt = ddouble.Cbrt(f);
 
-                    ddouble delta = f_cbrt - m_cbrt;
-                    if (double.Abs(delta.Hi) <= m_cbrt.Hi * 1e-31) {
+                    ddouble delta = f_cbrt - m;
+                    if (double.Abs(delta.Hi) <= m.Hi * 1e-31) {
                         return (x, convergenced: true);
                     }
 
