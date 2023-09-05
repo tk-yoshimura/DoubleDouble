@@ -404,14 +404,6 @@ namespace DoubleDouble {
             return new ddouble(v.hi, double.BitDecrement(v.lo));
         }
 
-        public override bool Equals(object obj) {
-            return obj is ddouble v && this == v;
-        }
-
-        public bool Equals(ddouble other) {
-            return this == other;
-        }
-
         public override int GetHashCode() {
             return hi.GetHashCode() ^ lo.GetHashCode();
         }
