@@ -314,8 +314,8 @@
                     ddouble f_pow2d3 = f_cbrt * f_cbrt, f_pow5d3 = f_pow2d3 * f, f_pow8d3 = f_pow5d3 * f;
 
                     ddouble g1 = ecosm1 / (3 * f_pow2d3);
-                    ddouble g2 = (-2 * sqecosm1 - 3 * f * esin) / (9 * f_pow5d3);
-                    ddouble g3 = (10 * ecosm1 * sqecosm1 + 9 * f * (2 * esin * ecosm1 - f * ecos)) / (27 * f_pow8d3);
+                    ddouble g2 = (-2 * sqecosm1 + 3 * f * esin) / (9 * f_pow5d3);
+                    ddouble g3 = (10 * ecosm1 * sqecosm1 + 9 * f * (-2 * esin * ecosm1 + f * ecos)) / (27 * f_pow8d3);
                     ddouble dx = Householder4(delta, g1, g2, g3);
 
                     if (!ddouble.IsFinite(dx)) {
@@ -378,7 +378,22 @@
                 }
 
                 public static double InitValue(double m, double e) {
+                    if (double.ILogB(m) < -64) {
+                        return 0;
+                    }
+
                     double x = double.Asinh(m / e);
+
+                    if (m >= 10d) {
+                        return x;
+                    }
+
+                    double u = m / 10, em1 = e - 1;
+                    double t = double.Cbrt((double.Sqrt((9 * e * m * m + 8 * em1 * em1 * em1) / e) + 3 * m) / e);
+                    double v = t - 6 * em1 / (3 * e * t);
+
+                    x = x * double.Min(1, u) + v * double.Max(0, 1 - u);
+
                     return x;
                 }
 
