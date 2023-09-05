@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -58,6 +59,27 @@ namespace DoubleDouble {
             ddouble w = 1d + v * (Consts.Pow.Pow2C1 + v * (Consts.Pow.Pow2C2 + v * (Consts.Pow.Pow2C3 + v * Consts.Pow.Pow2C4)));
 
             ddouble y = c * r0 * r1 * w;
+
+            return y;
+        }
+
+        public static ddouble Pow2m1(ddouble x) {
+            if (x < -0.1376953125d || x > 0.1533203125d) {
+                return Pow2(x) - 1d;
+            }
+            if (IsPlusZero(x)) {
+                return PlusZero;
+            }
+            if (IsMinusZero(x)) {
+                return MinusZero;
+            }
+
+            x *= Ln2;
+
+            ddouble sc = 259459200d + x * (8648640d + x * (8648640d + x * (277200d + x * (55440d + x * (1512d + x * (72d + x * 1d))))));
+            ddouble sd = 259459200d + x * (-121080960d + x * (25945920d + x * (-3326400d + x * (277200d + x * (-15120d + x * (504d + x * -8d))))));
+
+            ddouble y = x * sc / sd;
 
             return y;
         }

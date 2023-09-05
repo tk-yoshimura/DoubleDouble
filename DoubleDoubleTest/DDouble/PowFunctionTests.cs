@@ -204,6 +204,56 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void Pow2m1Test() {
+            for (decimal d = -10m; d <= +10m; d += 0.01m) {
+                if (d == 0) {
+                    continue;
+                }
+
+                ddouble v = (ddouble)d;
+                ddouble u = ddouble.Pow2m1(v);
+
+                Assert.AreEqual(Math.Pow(2, (double)d) - 1, (double)u, Math.Abs((double)u) * 1e-12);
+                Assert.IsTrue(ddouble.IsRegulared(u));
+            }
+
+            HPAssert.AreEqual(0, ddouble.Pow2m1(ddouble.BitDecrement(0)), 1e-300);
+            HPAssert.AreEqual(0, ddouble.Pow2m1(ddouble.BitIncrement(0)), 1e-300);
+
+            Console.WriteLine(ddouble.Pow2m1(ddouble.BitDecrement(0)));
+            Console.WriteLine(ddouble.Pow2m1(0));
+            Console.WriteLine(ddouble.Pow2m1(ddouble.BitIncrement(0)));
+
+            Console.WriteLine(FloatSplitter.Split(ddouble.Pow2m1(ddouble.BitDecrement(-0.1376953125d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Pow2m1(-0.1376953125d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Pow2m1(ddouble.BitIncrement(-0.1376953125d))).mantissa);
+
+            Console.WriteLine(FloatSplitter.Split(ddouble.Pow2m1(ddouble.BitDecrement(0.1533203125d))).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Pow2m1(0.1533203125d)).mantissa);
+            Console.WriteLine(FloatSplitter.Split(ddouble.Pow2m1(ddouble.BitIncrement(0.1533203125d))).mantissa);
+
+            Console.WriteLine(ddouble.Pow2m1(ddouble.BitDecrement(-0.1376953125d)));
+            Console.WriteLine(ddouble.Pow2m1(-0.1376953125d));
+            Console.WriteLine(ddouble.Pow2m1(ddouble.BitIncrement(-0.1376953125d)));
+
+            Console.WriteLine(ddouble.Pow2m1(ddouble.BitDecrement(0.1533203125d)));
+            Console.WriteLine(ddouble.Pow2m1(0.1533203125d));
+            Console.WriteLine(ddouble.Pow2m1(ddouble.BitIncrement(0.1533203125d)));
+
+            ddouble exp_pzero = ddouble.Pow2m1(0d);
+            ddouble exp_mzero = ddouble.Pow2m1(-0d);
+            ddouble exp_pinf = ddouble.Pow2m1(double.PositiveInfinity);
+            ddouble exp_ninf = ddouble.Pow2m1(double.NegativeInfinity);
+            ddouble exp_nan = ddouble.Pow2m1(double.NaN);
+
+            Assert.IsTrue(ddouble.IsPlusZero(exp_pzero), nameof(exp_pzero));
+            Assert.IsTrue(ddouble.IsMinusZero(exp_mzero), nameof(exp_mzero));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(exp_pinf), nameof(exp_pinf));
+            Assert.IsTrue(exp_ninf == -1, nameof(exp_ninf));
+            Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
+        }
+
+        [TestMethod]
         public void Expm1Test() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
                 if (d == 0) {
