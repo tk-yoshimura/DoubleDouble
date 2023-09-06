@@ -77,6 +77,27 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
+            {
+                ddouble e = 1;
+
+                Console.WriteLine(e);
+
+                for (ddouble m = -16; m <= 16; m += 1d / 32) {
+                    ddouble x = ddouble.KeplerE(m, e);
+                    ddouble y = x - e * ddouble.Sin(x);
+
+                    HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-30, $"{m},{e}");
+                    Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
+                }
+
+                for (ddouble m = 1d / 64; m > 0; m /= 2) {
+                    ddouble x = ddouble.KeplerE(m, e);
+                    ddouble y = x - e * ddouble.Sin(x);
+
+                    Assert.IsTrue(x > 0, $"{m},{e}");
+                }
+            }
+
             for (ddouble m = -32; m <= 32; m += 1d / 32) {
                 ddouble x = ddouble.KeplerE(m, 0.5, centered: true) + m;
                 ddouble y = x - 0.5 * ddouble.Sin(x);
@@ -184,6 +205,26 @@ namespace DoubleDoubleTest.DDouble {
                         HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-10 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
 
                     }
+                }
+            }
+
+            {
+                ddouble e = ddouble.BitIncrement(1);
+
+                Console.WriteLine(e);
+
+                for (ddouble m = -16; m <= 16; m += 1d / 32) {
+                    ddouble x = ddouble.KeplerE(m, e);
+                    ddouble y = e * ddouble.Sinh(x) - x;
+
+                    HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-30, $"{m},{e}");
+                }
+
+                for (ddouble m = 1d / 64; m > 0; m /= 2) {
+                    ddouble x = ddouble.KeplerE(m, e);
+                    ddouble y = e * ddouble.Sinh(x) - x;
+
+                    Assert.IsTrue(x > 0, $"{m},{e}");
                 }
             }
 
