@@ -58,12 +58,22 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
                 }
 
-                for (ddouble m = 1d / 64; m > Math.ScaleB(1, -16); m /= 16) {
+                for (ddouble m = 1d / 64; m > Math.ScaleB(1, -72); m /= 2) {
                     ddouble x = ddouble.KeplerE(m, e);
                     ddouble y = x - e * ddouble.Sin(x);
 
-                    HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-20 + 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
-                    Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
+                    if (e < (ddouble)1 - Math.ScaleB(1, -18)) {
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-25 + 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
+                        Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
+                    }
+                    else if (e < (ddouble)1 - Math.ScaleB(1, -36)) {
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-20 + 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
+                        Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
+                    }
+                    else {
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-10 + 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
+                        Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
+                    }
                 }
             }
 
@@ -160,11 +170,20 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
 
-                for (ddouble m = 1d / 64; m > Math.ScaleB(1, -16); m /= 16) {
+                for (ddouble m = 1d / 64; m > Math.ScaleB(1, -72); m /= 2) {
                     ddouble x = ddouble.KeplerE(m, e);
                     ddouble y = e * ddouble.Sinh(x) - x;
 
-                    HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-20 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
+                    if (e > (ddouble)1 + Math.ScaleB(1, -18)) {
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-25 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
+                    }
+                    else if (e > (ddouble)1 + Math.ScaleB(1, -36)) {
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-20 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
+                    }
+                    else {
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-10 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
+
+                    }
                 }
             }
 
