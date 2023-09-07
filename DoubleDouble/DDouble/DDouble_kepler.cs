@@ -16,6 +16,10 @@
                 );
             }
 
+            if (double.ILogB(m.Hi) <= -52 && double.ILogB((e - 1d).Hi) <= -105) {
+                return KeplerEUtil.NearOneE.Value(m, e);   
+            }
+
             if (e <= 1) {
                 if (!ddouble.IsFinite(m)) {
                     return centered ? NaN : m.Sign * PositiveInfinity;
@@ -139,13 +143,18 @@
 
                     ddouble em1 = 1d - e;
 
-                    ddouble x = (double.ILogB(e.Hi) < -26)
-                        ? m
-                        : (em1 - Sqrt(em1 * em1 + 4 * e * m)) / (-2 * e);
+                    if (double.ILogB(em1.Hi) >= -76) {
+                        ddouble x = (double.ILogB(e.Hi) < -26)
+                            ? m
+                            : (em1 - Sqrt(em1 * em1 + 4 * e * m)) / (-2 * e);
 
-                    x = IsFinite(x) ? x : Zero;
+                        x = IsFinite(x) ? x : Zero;
 
-                    return x;
+                        return x;
+                    }
+                    else {
+                        return NearOneE.Value(m * PI, e);
+                    }
                 }
 
                 public static (double x, bool convergenced) TrigonIter(double x, double m, double e) {
@@ -291,12 +300,15 @@
                     ddouble x;
                     ddouble em1 = e - 1d;
 
-                    if (double.ILogB(m.Hi) > -104) {
+                    if (double.ILogB(m.Hi) > -128) {
                         ddouble t = Cbrt((Sqrt((9 * e * m * m + 8 * em1 * em1 * em1) / e) + 3 * m) / e);
                         x = t - 6 * em1 / (3 * e * t);
                     }
-                    else {
+                    else if (double.ILogB(em1.Hi) >= -76) {
                         x = m / em1;
+                    }
+                    else {
+                        x = NearOneE.Value(m, e);
                     }
 
                     x = IsFinite(x) ? x : Zero;
@@ -366,6 +378,23 @@
                     ddouble dx = 3 * delta * (sqg1 + sqg1_deltag2) /
                         (6 * g1 * sqg1_deltag2 + delta * delta * g3);
                     return dx;
+                }
+            }
+
+            public static class NearOneE {
+                public static ddouble Value(ddouble m, ddouble e) {
+                    ddouble em1 = 1d - e;
+                    
+                    if (double.ILogB(em1.Hi) < -100) {
+                        ddouble s = Cbrt(6 * m), s2 = s * s;
+
+                        ddouble x = s * (155232000d + s2 * (2587200d + s2 * (110880d + s2 * (6160d + s2 * 387d)))) / 155232000d;
+
+                        return x;
+                    }
+                    else {
+                        return m / em1;
+                    }
                 }
             }
         }
