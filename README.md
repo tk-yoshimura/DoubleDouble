@@ -29,7 +29,7 @@ MaxValue : 2^1024 = 1.79769e308
 |cbrt|&#40;-inf,+inf&#41;|2||ddouble.Cbrt(x)|
 |root_n|&#40;-inf,+inf&#41;|3||ddouble.RootN(x, n)|
 |log2|&#40;0,+inf&#41;|2||ddouble.Log2(x)|
-|log|&#40;0,+inf&#41;|3||ddouble.Log(x)|
+|log|&#40;0,+inf&#41;|3||ddouble.Log(x), ddouble.Log(x, b)|
 |log10|&#40;0,+inf&#41;|3||ddouble.Log10(x)|
 |log1p|&#40;-1,+inf&#41;|3|log(1+x)|ddouble.Log1p(x)|
 |pow2|&#40;-inf,+inf&#41;|1||ddouble.Pow2(x)|
@@ -139,6 +139,7 @@ MaxValue : 2^1024 = 1.79769e308
 |min|N/A|N/A||ddouble.Min(x, y)|
 |max|N/A|N/A||ddouble.Max(x, y)|
 |clamp|N/A|N/A||ddouble.Clamp(v, min, max)|
+|copysign|N/A|N/A||ddouble.CopySign(value, sign)|
 |floor|N/A|N/A||ddouble.Floor(x)|
 |ceiling|N/A|N/A||ddouble.Ceiling(x)|
 |round|N/A|N/A||ddouble.Round(x)|

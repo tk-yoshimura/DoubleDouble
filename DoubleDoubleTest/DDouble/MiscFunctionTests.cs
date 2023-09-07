@@ -89,6 +89,25 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void CopySignTest() {
+            ddouble[] tests = new ddouble[] {
+                ddouble.NegativeInfinity, -10, -1, -ddouble.Rcp(10), -0d, 0d, ddouble.Rcp(10), 1, 10, ddouble.PositiveInfinity, ddouble.NaN
+            };
+
+            foreach (ddouble value in tests) {
+                foreach (ddouble sign in tests) {
+                    double expected = double.CopySign(value.Hi, sign.Hi);
+                    ddouble actual = ddouble.CopySign(value, sign);
+
+                    Assert.AreEqual(double.IsPositive(expected), ddouble.IsPositive(actual), $"{value},{sign}");
+                    Assert.AreEqual(double.IsNegative(expected), ddouble.IsNegative(actual), $"{value},{sign}");
+                    Assert.AreEqual(sign.Sign * ddouble.Abs(value), actual);
+                }
+            }
+
+        }
+
+        [TestMethod]
         public void SquareTest() {
             Assert.AreEqual(4, ddouble.Square(2));
             Assert.AreEqual(9, ddouble.Square(3));

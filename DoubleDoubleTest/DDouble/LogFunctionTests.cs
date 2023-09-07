@@ -181,6 +181,39 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void LogBaseTest() {
+            for (double b = 2; b <= 16; b += 0.5) {
+                for (double p = -4; p <= 4; p += 0.25) {
+                    ddouble x = ddouble.Pow(b, p);
+                    ddouble y = ddouble.Log(x, b);
+
+                    ddouble err = p - y;
+                    if (ddouble.IsInteger(p)) {
+                        Assert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
+                    }
+                    else {
+                        HPAssert.AreEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
+                    }
+                }
+            }
+
+            for (double p = -4; p <= 4; p += 0.25) {
+                for (double b = 2; b <= 16; b += 0.5) {
+                    ddouble x = ddouble.Pow(b, p);
+                    ddouble y = ddouble.Log(x, b);
+
+                    ddouble err = p - y;
+                    if (ddouble.IsInteger(p)) {
+                        Assert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
+                    }
+                    else {
+                        HPAssert.AreEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void Log1pTest() {
             for (decimal d = -0.99m; d <= +10m; d += 0.01m) {
                 if (d == 0) {

@@ -180,7 +180,7 @@ namespace DoubleDouble {
         public bool Equals(ddouble x, ddouble y) => (x == y) || (IsNaN(x) && IsNaN(y));
         public bool Equals(ddouble other) => (this == other) || (IsNaN(this) && IsNaN(other));
         public override bool Equals(object obj) => obj is ddouble v && Equals(v);
-    
+
         public int GetHashCode([DisallowNull] ddouble obj) => obj.GetHashCode();
     }
 }

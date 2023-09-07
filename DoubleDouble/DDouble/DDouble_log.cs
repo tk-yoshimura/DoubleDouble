@@ -38,6 +38,15 @@ namespace DoubleDouble {
             return Log2(x) * Ln2;
         }
 
+        public static ddouble Log(ddouble x, ddouble b) {
+            if (b != LogCache.B) {
+                LogCache.B = b;
+                LogCache.RcpLbB = Rcp(Log2(b));
+            }
+
+            return RoundMantissa(Log2(x) * LogCache.RcpLbB, keep_bits: 103);
+        }
+
         public static ddouble Log1p(ddouble x) {
             if (!(x >= -0.0625d) || x > 0.0625d) {
                 return Log(1d + x);
@@ -112,6 +121,10 @@ namespace DoubleDouble {
                     return y;
                 }
             }
+        }
+
+        internal static class LogCache {
+            public static ddouble B = NaN, RcpLbB = NaN;
         }
     }
 }
