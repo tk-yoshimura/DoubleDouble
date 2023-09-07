@@ -16,7 +16,7 @@
                 );
             }
 
-            if (double.ILogB(m.Hi) <= -52 && double.ILogB((e - 1d).Hi) <= -105) {
+            if (double.ILogB(m.Hi) <= -128 && double.ILogB((e - 1d).Hi) <= -105) {
                 return KeplerEUtil.NearOneE.Value(m, e);   
             }
 
@@ -143,7 +143,7 @@
 
                     ddouble em1 = 1d - e;
 
-                    if (double.ILogB(em1.Hi) >= -76) {
+                    if (double.ILogB(em1.Hi) >= -95 || double.ILogB(m.Hi) > -64) {
                         ddouble x = (double.ILogB(e.Hi) < -26)
                             ? m
                             : (em1 - Sqrt(em1 * em1 + 4 * e * m)) / (-2 * e);
@@ -304,7 +304,7 @@
                         ddouble t = Cbrt((Sqrt((9 * e * m * m + 8 * em1 * em1 * em1) / e) + 3 * m) / e);
                         x = t - 6 * em1 / (3 * e * t);
                     }
-                    else if (double.ILogB(em1.Hi) >= -76) {
+                    else if (double.ILogB(em1.Hi) >= -95) {
                         x = m / em1;
                     }
                     else {
@@ -393,7 +393,7 @@
                         return x;
                     }
                     else {
-                        return m / em1;
+                        return m / Abs(em1);
                     }
                 }
             }
