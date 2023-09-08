@@ -4,8 +4,9 @@
 
         private const UInt64 bitshifts = 0x100000000uL;
         private const UInt32 signmask = 0x80000000u, expmask = 0x7FFFFFFFu;
-        private const int mantissa_shiftbits = 12, exponent_shiftbits = 20, exponent_bias = 1023;
+        private const int exponent_shiftbits = 20, exponent_bias = 1023;
         private const UInt64 mantissa_topbit = 0x0010000000000000uL;
+        private const UInt64 mantissa_mask   = 0x000FFFFFFFFFFFFFuL;
 
         private static UInt64 ToUInt64(double v) {
             return unchecked((UInt64)BitConverter.DoubleToInt64Bits(v));
@@ -21,16 +22,20 @@
 
             int sign = val_hi >= signmask ? -1 : 1;
 
-            if (v == 0) {
+            if (v == 0d) {
                 return (sign, 0, 0uL, iszero: true);
             }
 
-            int exponent = unchecked((int)((val_hi & expmask) >> exponent_shiftbits)) - exponent_bias;
+            int exponent = double.ILogB(v);
 
-            UInt64 mantissa = (val << mantissa_shiftbits) >> mantissa_shiftbits;
+            UInt64 mantissa = val & mantissa_mask;
+
+            if (exponent <= -exponent_bias) {
+                mantissa <<= -(exponent_bias + exponent) + 1;
+            }
 
             if (!hidden_bit) {
-                mantissa += MantissaTopBit;
+                mantissa |= MantissaTopBit;
             }
 
             return (sign, exponent, mantissa, iszero: false);

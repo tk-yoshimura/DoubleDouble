@@ -270,5 +270,66 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNegativeInfinity(ninf2));
             Assert.IsTrue(ddouble.IsNegativeInfinity(ninf3));
         }
+
+        [TestMethod]
+        public void SubnormalTest() {
+            for ((ddouble x, int exp) = (double.ScaleB(1, -950), -950); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+                Assert.AreEqual(exp, double.ILogB(y.Hi));
+            }
+
+            for ((ddouble x, int exp) = (double.BitDecrement(double.ScaleB(1, -950)), -950); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+            }
+
+            for ((ddouble x, int exp) = (double.BitIncrement(double.ScaleB(1, -950)), -950); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+            }
+
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) + ddouble.Ldexp(1, -964), -868); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+                Assert.AreEqual(exp, double.ILogB(y.Hi));
+            }
+
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) + ddouble.Ldexp(1, -932), -868); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+                Assert.AreEqual(exp, double.ILogB(y.Hi));
+            }
+
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) + ddouble.Ldexp(1, -900), -868); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+                Assert.AreEqual(exp, double.ILogB(y.Hi));
+            }
+        }
     }
 }

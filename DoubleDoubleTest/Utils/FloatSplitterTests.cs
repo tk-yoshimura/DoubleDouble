@@ -74,5 +74,50 @@ namespace DoubleDoubleTest.Utils {
                 }
             }
         }
+
+        [TestMethod]
+        public void SplitSubnormalTest() {
+            const UInt64 mantissa_mask = 0x000F_FFFF_FFFF_FFFFuL;
+            const UInt64 mantissa_topbit = 0x0010_0000_0000_0000uL;
+
+            for ((double x, int exp) = (double.ScaleB(1, -500), -500); x > 0; x /= 2, exp--) {
+                (int sign, int exponent, UInt64 mantissa, bool iszero) x_split = FloatSplitter.Split(x);
+                (int sign, int exponent, UInt64 mantissa, bool iszero) xinc_split = FloatSplitter.Split(double.BitIncrement(x));
+                (int sign, int exponent, UInt64 mantissa, bool iszero) xdec_split = FloatSplitter.Split(double.BitDecrement(x));
+
+                Assert.AreEqual(1, x_split.sign);
+                Assert.AreEqual(1, xinc_split.sign);
+                Assert.AreEqual(1, xdec_split.sign);
+
+                Assert.AreEqual(exp, x_split.exponent);
+                Assert.AreEqual(Math.Max(-1073, exp), xinc_split.exponent);
+
+                if (double.BitDecrement(x) > 0) {
+                    Assert.AreEqual(exp - 1, xdec_split.exponent);
+                    Assert.IsFalse(xdec_split.iszero);
+                }
+                else { 
+                    Assert.AreEqual(0, xdec_split.exponent);
+                    Assert.IsTrue(xdec_split.iszero);
+                }
+
+                {
+                    int sfts = Math.Max(0, -(exp + 1022));
+                    UInt64 mantissa_expected = (1uL << sfts) | mantissa_topbit;
+
+                    Assert.AreEqual(mantissa_expected, xinc_split.mantissa, $"{exp}");
+                }
+
+                if (double.BitDecrement(x) > 0) {
+                    int sfts = Math.Max(0, -(exp + 1021));
+                    UInt64 mantissa_expected = ((mantissa_mask >> sfts) << sfts) | mantissa_topbit;
+
+                    Assert.AreEqual(mantissa_expected, xdec_split.mantissa, $"{exp}");
+                }
+                else { 
+                    Assert.AreEqual(0uL, xdec_split.mantissa, $"{exp}");
+                }
+            }
+        }
     }
 }
