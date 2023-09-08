@@ -1,7 +1,7 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
-            if (!(e >= 0) || ddouble.IsNaN(m) || !ddouble.IsFinite(e)) {
+            if (!(e >= 0) || IsNaN(m) || !IsFinite(e)) {
                 return NaN;
             }
 
@@ -21,7 +21,7 @@
             }
 
             if (e <= 1) {
-                if (!ddouble.IsFinite(m)) {
+                if (!IsFinite(m)) {
                     return centered ? NaN : m.Sign * PositiveInfinity;
                 }
 
@@ -49,7 +49,7 @@
                 }
             }
             else {
-                if (!ddouble.IsFinite(m)) {
+                if (!IsFinite(m)) {
                     return PositiveInfinity;
                 }
 
@@ -168,8 +168,8 @@
                 }
 
                 public static (ddouble x, bool convergenced) TrigonIter(ddouble x, ddouble m, ddouble e) {
-                    ddouble x_pi = x * ddouble.PI;
-                    ddouble sin = ddouble.SinPI(x), cos = ddouble.CosPI(x);
+                    ddouble x_pi = x * PI;
+                    ddouble sin = SinPI(x), cos = CosPI(x);
                     ddouble esin = e * sin, ecos = e * cos;
 
                     ddouble delta = x_pi - esin - m;
@@ -182,12 +182,12 @@
                     ddouble g3 = ecos;
                     ddouble dx = Householder4(delta, g1, g2, g3);
 
-                    if (!ddouble.IsFinite(dx)) {
+                    if (!IsFinite(dx)) {
                         return (x, convergenced: true);
                     }
 
                     bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
-                    x = ddouble.Max(0d, x - dx);
+                    x = Max(0d, x - dx);
 
                     return (x, convergenced);
                 }
@@ -223,12 +223,12 @@
 
                         ddouble dx = delta / (g * PI + eps);
 
-                        if (!ddouble.IsFinite(dx)) {
+                        if (!IsFinite(dx)) {
                             return (x, convergenced: true);
                         }
 
                         convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
-                        x = ddouble.Max(0d, x - dx);
+                        x = Max(0d, x - dx);
                     }
 
                     return (x, convergenced);
@@ -246,7 +246,7 @@
                     ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
 
                     ddouble dx = 3 * delta * (sqg1 + sqg1_deltag2) /
-                        (ddouble.PI * (6 * g1 * sqg1_deltag2 + delta * delta * g3));
+                        (PI * (6 * g1 * sqg1_deltag2 + delta * delta * g3));
                     return dx;
                 }
             }
@@ -349,7 +349,7 @@
                 }
 
                 public static (ddouble x, bool convergenced) HyperbolicIter(ddouble x, ddouble m, ddouble e) {
-                    ddouble sinh = ddouble.Sinh(x), cosh = ddouble.Cosh(x);
+                    ddouble sinh = Sinh(x), cosh = Cosh(x);
                     ddouble esinh = e * sinh, ecosh = e * cosh;
 
                     ddouble delta = esinh - x - m;
@@ -362,12 +362,12 @@
                     ddouble g3 = ecosh;
                     ddouble dx = Householder4(delta, g1, g2, g3);
 
-                    if (!ddouble.IsFinite(dx)) {
+                    if (!IsFinite(dx)) {
                         return (x, convergenced: true);
                     }
 
                     bool convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
-                    x = ddouble.Max(0d, x - dx);
+                    x = Max(0d, x - dx);
 
                     return (x, convergenced);
                 }
@@ -402,12 +402,12 @@
 
                         ddouble dx = delta / (g + eps);
 
-                        if (!ddouble.IsFinite(dx)) {
+                        if (!IsFinite(dx)) {
                             return (x, convergenced: true);
                         }
 
                         convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
-                        x = ddouble.Max(0d, x - dx);
+                        x = Max(0d, x - dx);
                     }
 
                     return (x, convergenced);
