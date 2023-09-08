@@ -6,7 +6,7 @@
         private const UInt32 signmask = 0x80000000u, expmask = 0x7FFFFFFFu;
         private const int exponent_shiftbits = 20, exponent_bias = 1023;
         private const UInt64 mantissa_topbit = 0x0010000000000000uL;
-        private const UInt64 mantissa_mask   = 0x000FFFFFFFFFFFFFuL;
+        private const UInt64 mantissa_mask = 0x000FFFFFFFFFFFFFuL;
 
         private static UInt64 ToUInt64(double v) {
             return unchecked((UInt64)BitConverter.DoubleToInt64Bits(v));

@@ -96,7 +96,7 @@ namespace DoubleDoubleTest.Utils {
                     Assert.AreEqual(exp - 1, xdec_split.exponent);
                     Assert.IsFalse(xdec_split.iszero);
                 }
-                else { 
+                else {
                     Assert.AreEqual(0, xdec_split.exponent);
                     Assert.IsTrue(xdec_split.iszero);
                 }
@@ -114,7 +114,7 @@ namespace DoubleDoubleTest.Utils {
 
                     Assert.AreEqual(mantissa_expected, xdec_split.mantissa, $"{exp}");
                 }
-                else { 
+                else {
                     Assert.AreEqual(0uL, xdec_split.mantissa, $"{exp}");
                 }
             }

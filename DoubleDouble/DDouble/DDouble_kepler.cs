@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
             if (!(e >= 0) || ddouble.IsNaN(m) || !ddouble.IsFinite(e)) {
@@ -19,7 +17,7 @@ namespace DoubleDouble {
             }
 
             if (double.ILogB(m.Hi) < -1000) {
-                return KeplerE(double.ScaleB(1, -1000), e, centered) * Ldexp(m, 1000);   
+                return KeplerE(double.ScaleB(1, -1000), e, centered) * Ldexp(m, 1000);
             }
 
             if (e <= 1) {
