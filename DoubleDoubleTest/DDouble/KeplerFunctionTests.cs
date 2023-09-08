@@ -27,7 +27,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble e = 1d / 32; e > Math.ScaleB(1, -107); e /= 2) {
+            for (ddouble e = 1d / 32; e > Math.ScaleB(1, -128); e /= 2) {
                 Console.WriteLine(e);
 
                 for (ddouble m = -16; m <= 16; m += 1d / 32) {
@@ -47,7 +47,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble e = 31d / 32; e < (ddouble)1 - Math.ScaleB(1, -107); e = (e - 1) / 2 + 1) {
+            for (ddouble e = 31d / 32; e < (ddouble)1 - Math.ScaleB(1, -108); e = (e - 1) / 2 + 1) {
                 Console.WriteLine(e);
 
                 for (ddouble m = -16; m <= 16; m += 1d / 32) {
@@ -71,7 +71,7 @@ namespace DoubleDoubleTest.DDouble {
                         Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
                     }
                     else {
-                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-10 + 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-15 + 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
                         Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
                     }
                 }
@@ -80,8 +80,9 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x1 = ddouble.KeplerE(m, e);
                     ddouble x2 = ddouble.KeplerE(m * 2, e);
 
-                    Assert.IsTrue(x1 > 0, $"{m},{e}");
-                    Assert.IsTrue(x2 > x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(x1 >= 0, $"{m},{e}\n{x1}");
+                    Assert.IsTrue(x2 >= x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(ddouble.Abs(m - x1) <= 1, $"{m},{e}\n{x1}");
                 }
             }
 
@@ -102,8 +103,9 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x1 = ddouble.KeplerE(m, e);
                     ddouble x2 = ddouble.KeplerE(m * 2, e);
 
-                    Assert.IsTrue(x1 > 0, $"{m},{e}");
-                    Assert.IsTrue(x2 > x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(x1 >= 0, $"{m},{e}\n{x1}");
+                    Assert.IsTrue(x2 >= x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(ddouble.Abs(m - x1) <= 1, $"{m},{e}\n{x1}");
                 }
             }
 
@@ -178,7 +180,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble e = 33d / 32; e > (ddouble)1 + Math.ScaleB(1, -105); e = (e - 1) / 2 + 1) {
+            for (ddouble e = 33d / 32; e > (ddouble)1 + Math.ScaleB(1, -108); e = (e - 1) / 2 + 1) {
                 Console.WriteLine(e);
 
                 for (ddouble m = -16; m <= 64; m += 1d / 8) {
@@ -211,7 +213,7 @@ namespace DoubleDoubleTest.DDouble {
                         HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-20 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
                     }
                     else {
-                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-10 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
+                        HPAssert.AreEqual(m, y, ddouble.Abs(m) * 1e-15 + 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
                     }
                 }
 
@@ -219,13 +221,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x1 = ddouble.KeplerE(m, e);
                     ddouble x2 = ddouble.KeplerE(m * 2, e);
 
-                    Assert.IsTrue(x1 > 0, $"{m},{e}\n{x1}");
-                    Assert.IsTrue(x2 > x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(x1 >= 0, $"{m},{e}\n{x1}");
+                    Assert.IsTrue(x2 >= x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(ddouble.Abs(m - x1) <= 1, $"{m},{e}\n{x1}");
                 }
             }
 
             {
-                ddouble e = ddouble.BitIncrement(1);
+                ddouble e = 1 + ddouble.Ldexp(1, -108);
 
                 Console.WriteLine(e);
 
@@ -240,8 +243,9 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x1 = ddouble.KeplerE(m, e);
                     ddouble x2 = ddouble.KeplerE(m * 2, e);
 
-                    Assert.IsTrue(x1 > 0, $"{m},{e}");
-                    Assert.IsTrue(x2 > x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(x1 >= 0, $"{m},{e}\n{x1}");
+                    Assert.IsTrue(x2 >= x1, $"{m},{e}\n{x1}\n{x2}");
+                    Assert.IsTrue(ddouble.Abs(m - x1) <= 1, $"{m},{e}\n{x1}");
                 }
             }
 

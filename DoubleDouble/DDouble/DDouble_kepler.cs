@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Runtime.CompilerServices;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
             if (!(e >= 0) || ddouble.IsNaN(m) || !ddouble.IsFinite(e)) {
@@ -16,8 +18,8 @@
                 );
             }
 
-            if (double.ILogB(m.Hi) <= -128 && double.ILogB((e - 1d).Hi) <= -105) {
-                return KeplerEUtil.NearOneE.Value(m, e);   
+            if (double.ILogB(m.Hi) < -1000) {
+                return KeplerE(double.ScaleB(1, -1000), e, centered) * Ldexp(m, 1000);   
             }
 
             if (e <= 1) {
@@ -43,6 +45,7 @@
 
                     y *= PI;
                     y += m - m_cycle * PI;
+                    y = Max(0d, y);
 
                     return y;
                 }
@@ -72,7 +75,7 @@
 
                     ddouble m_pi = m * PI;
 
-                    if (double.ILogB(m.Hi) > -52 || e.Hi < 0.9375) {
+                    if (double.ILogB(m.Hi) > -32 || double.ILogB((e - 1d).Hi) > -16) {
                         double ed = Math.Min(1, e.Hi);
                         double xd = InitValue(m.Hi, ed);
 
@@ -94,13 +97,7 @@
                     }
                     else {
                         ddouble x = NearZero(m, e);
-
-                        for (int i = 0; i < 8; i++) {
-                            (x, bool convergenced) = TrigonIter(x, m_pi, e);
-                            if (convergenced) {
-                                break;
-                            }
-                        }
+                        (x, bool convergenced) = PadeNewton(x, m_pi, e, max_iters: 16);
 
                         return x;
                     }
@@ -136,25 +133,15 @@
 
                 public static ddouble NearZero(ddouble m, ddouble e) {
 #if DEBUG
-                    if (double.ILogB(m.Hi) > -52) {
+                    if (double.ILogB(m.Hi) > -32) {
                         throw new ArgumentOutOfRangeException(nameof(m));
+                    }
+                    if (double.ILogB((e - 1d).Hi) > -16) {
+                        throw new ArgumentOutOfRangeException(nameof(e));
                     }
 #endif
 
-                    ddouble em1 = 1d - e;
-
-                    if (double.ILogB(em1.Hi) >= -95 || double.ILogB(m.Hi) > -64) {
-                        ddouble x = (double.ILogB(e.Hi) < -26)
-                            ? m
-                            : (em1 - Sqrt(em1 * em1 + 4 * e * m)) / (-2 * e);
-
-                        x = IsFinite(x) ? x : Zero;
-
-                        return x;
-                    }
-                    else {
-                        return NearOneE.Value(m * PI, e);
-                    }
+                    return NearOneE.Value(m * PI, e);
                 }
 
                 public static (double x, bool convergenced) TrigonIter(double x, double m, double e) {
@@ -207,6 +194,48 @@
                     return (x, convergenced);
                 }
 
+                public static (ddouble x, bool convergenced) PadeNewton(ddouble x, ddouble m, ddouble e, int max_iters) {
+                    ddouble r0 = 2520d + e * 5880d, r2 = 60d + e * 360d, r4 = e * 11d;
+                    ddouble s1 = 20d * (126d + e * (168d + e * -294d)), s3 = 20d * (3d + e * (36d + e * 31d));
+
+                    (ddouble f, ddouble g) pade(ddouble x, ddouble e) {
+                        ddouble x2 = x * x;
+
+                        ddouble r = r0 + x2 * ((r2) + x2 * (r4));
+                        ddouble gr = x * ((r2 * 2d) + x2 * (r4 * 4d));
+
+                        ddouble s = x * ((s1) + x2 * (s3));
+                        ddouble gs = s1 + x2 * (s3 * 3d);
+
+                        return (s / r, (gs * r - s * gr) / (r * r));
+                    }
+
+                    bool convergenced = false;
+
+                    for (int i = 0; i < max_iters && !convergenced; i++) {
+                        ddouble x_pi = x * PI;
+                        (ddouble f, ddouble g) = pade(x_pi, e);
+
+                        ddouble delta = f - m;
+                        if (double.Abs(delta.Hi) <= m.Hi * 1e-31) {
+                            return (x, convergenced: true);
+                        }
+
+                        const double eps = 1e-100;
+
+                        ddouble dx = delta / (g * PI + eps);
+
+                        if (!ddouble.IsFinite(dx)) {
+                            return (x, convergenced: true);
+                        }
+
+                        convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
+                        x = ddouble.Max(0d, x - dx);
+                    }
+
+                    return (x, convergenced);
+                }
+
                 private static double Householder4(double delta, double g1, double g2, double g3) {
                     double sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
 
@@ -236,7 +265,7 @@
                     }
 #endif
 
-                    if (double.ILogB(m.Hi) > -52 || e.Hi > 1.0625) {
+                    if (double.ILogB(m.Hi) > -32 || double.ILogB((1d - e).Hi) > -16) {
                         double md = m.Hi, ed = Math.Max(1, e.Hi);
                         double xd = InitValue(md, ed);
 
@@ -258,20 +287,14 @@
                     }
                     else {
                         ddouble x = InitValue(m, e);
-
-                        for (int i = 0; i < 4; i++) {
-                            (x, bool convergenced) = HyperbolicIter(x, m, e);
-                            if (convergenced) {
-                                break;
-                            }
-                        }
+                        (x, bool convergenced) = PadeNewton(x, m, e, max_iters: 16);
 
                         return x;
                     }
                 }
 
                 public static double InitValue(double m, double e) {
-                    if (double.ILogB(m) <= -52) {
+                    if (double.ILogB(m) <= -32) {
                         return 0;
                     }
 
@@ -292,28 +315,15 @@
 
                 public static ddouble InitValue(ddouble m, ddouble e) {
 #if DEBUG
-                    if (double.ILogB(m.Hi) > -52) {
+                    if (double.ILogB(m.Hi) > -32) {
                         throw new ArgumentOutOfRangeException(nameof(m));
+                    }
+                    if (double.ILogB((1d - e).Hi) > -16) {
+                        throw new ArgumentOutOfRangeException(nameof(e));
                     }
 #endif
 
-                    ddouble x;
-                    ddouble em1 = e - 1d;
-
-                    if (double.ILogB(m.Hi) > -128) {
-                        ddouble t = Cbrt((Sqrt((9 * e * m * m + 8 * em1 * em1 * em1) / e) + 3 * m) / e);
-                        x = t - 6 * em1 / (3 * e * t);
-                    }
-                    else if (double.ILogB(em1.Hi) >= -95) {
-                        x = m / em1;
-                    }
-                    else {
-                        x = NearOneE.Value(m, e);
-                    }
-
-                    x = IsFinite(x) ? x : Zero;
-
-                    return x;
+                    return NearOneE.Value(m, e);
                 }
 
                 public static (double x, bool convergenced) HyperbolicIter(double x, double m, double e) {
@@ -364,6 +374,47 @@
                     return (x, convergenced);
                 }
 
+                public static (ddouble x, bool convergenced) PadeNewton(ddouble x, ddouble m, ddouble e, int max_iters) {
+                    ddouble r0 = 2520d + e * 5880d, r2 = -60d + e * -360d, r4 = e * 11d;
+                    ddouble s1 = 20d * (-126d + e * (-168d + e * 294d)), s3 = 20d * (3d + e * (36d + e * 31d));
+
+                    (ddouble f, ddouble g) pade(ddouble x, ddouble e) {
+                        ddouble x2 = x * x;
+
+                        ddouble r = r0 + x2 * ((r2) + x2 * (r4));
+                        ddouble gr = x * ((r2 * 2d) + x2 * (r4 * 4d));
+
+                        ddouble s = x * ((s1) + x2 * (s3));
+                        ddouble gs = s1 + x2 * (s3 * 3d);
+
+                        return (s / r, (gs * r - s * gr) / (r * r));
+                    }
+
+                    bool convergenced = false;
+
+                    for (int i = 0; i < max_iters && !convergenced; i++) {
+                        (ddouble f, ddouble g) = pade(x, e);
+
+                        ddouble delta = f - m;
+                        if (double.Abs(delta.Hi) <= m.Hi * 1e-31) {
+                            return (x, convergenced: true);
+                        }
+
+                        const double eps = 1e-100;
+
+                        ddouble dx = delta / (g + eps);
+
+                        if (!ddouble.IsFinite(dx)) {
+                            return (x, convergenced: true);
+                        }
+
+                        convergenced = double.Abs(dx.Hi) <= double.Abs(x.Hi) * 1e-31;
+                        x = ddouble.Max(0d, x - dx);
+                    }
+
+                    return (x, convergenced);
+                }
+
                 private static double Householder4(double delta, double g1, double g2, double g3) {
                     double sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
 
@@ -383,18 +434,11 @@
 
             public static class NearOneE {
                 public static ddouble Value(ddouble m, ddouble e) {
-                    ddouble em1 = 1d - e;
-                    
-                    if (double.ILogB(em1.Hi) < -100) {
-                        ddouble s = Cbrt(6 * m), s2 = s * s;
+                    ddouble s = Cbrt(6 * m), s2 = s * s;
 
-                        ddouble x = s * (155232000d + s2 * (2587200d + s2 * (110880d + s2 * (6160d + s2 * 387d)))) / 155232000d;
+                    ddouble x = s * (155232000d + s2 * (2587200d + s2 * (110880d + s2 * (6160d + s2 * 387d)))) / 155232000d;
 
-                        return x;
-                    }
-                    else {
-                        return m / Abs(em1);
-                    }
+                    return x;
                 }
             }
         }
