@@ -109,9 +109,9 @@ namespace DoubleDouble {
 
                         if (x >= 2) {
                             y += p;
-                            x /= 2;
+                            x = Ldexp(x, -1);
                         }
-                        p /= 2;
+                        p = Ldexp(p, -1);
 
                         if (y == (y + p) || x == 1) {
                             break;
