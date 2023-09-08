@@ -360,6 +360,33 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(x, y, x * 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
+
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -964) * ddouble.Rcp(15), -868); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+            }
+
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -932) * ddouble.Rcp(31), -868); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+            }
+
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -900) * ddouble.Rcp(63), -868); x > 0; x /= 2, exp--) {
+                ddouble y = x.ToString();
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+
+                HPAssert.AreEqual(x, y, x * 1e-30);
+            }
         }
     }
 }

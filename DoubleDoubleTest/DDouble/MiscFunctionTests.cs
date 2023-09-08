@@ -104,7 +104,6 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.AreEqual(sign.Sign * ddouble.Abs(value), actual);
                 }
             }
-
         }
 
         [TestMethod]
