@@ -45,7 +45,7 @@ namespace DoubleDouble {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble MinusZero { get; } = new ddouble(-0d);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static ddouble Epsilon { get; } = double.ScaleB(1, -968);
+        public static ddouble Epsilon { get; } = double.ScaleB(1, NormalMinExponent);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble MaxValue { get; } = double.MaxValue;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -65,8 +65,8 @@ namespace DoubleDouble {
 
         public static bool IsNegativeInfinity(ddouble v) => double.IsNegativeInfinity(v.hi);
 
-        public static bool IsNormal(ddouble v) => !IsNaN(v) && !IsInfinity(v) && (v < -Epsilon || v > Epsilon);
-        public static bool IsSubnormal(ddouble v) => !IsNaN(v) && !IsInfinity(v) && (v >= -Epsilon && v <= Epsilon);
+        public static bool IsNormal(ddouble v) => !IsNaN(v) && !IsInfinity(v) && double.ILogB(v.Hi) >= NormalMinExponent;
+        public static bool IsSubnormal(ddouble v) => !IsZero(v) && !IsNaN(v) && !IsInfinity(v) && double.ILogB(v.Hi) < NormalMinExponent;
 
         public static bool IsFinite(ddouble v) => double.IsFinite(v.hi);
 
@@ -75,6 +75,9 @@ namespace DoubleDouble {
         public static bool IsPlusZero(ddouble v) => IsZero(v) && v.Sign > 0;
 
         public static bool IsMinusZero(ddouble v) => IsZero(v) && v.Sign < 0;
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        public const int NormalMinExponent = -968;
 
         internal static bool IsRegulared(ddouble v) {
             if (v.lo < 0) {

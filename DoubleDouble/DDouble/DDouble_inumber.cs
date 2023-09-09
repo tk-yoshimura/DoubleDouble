@@ -95,6 +95,10 @@ namespace DoubleDouble {
                 result = vdec;
                 return true;
             }
+            if (value is BigInteger vbint) {
+                result = vbint;
+                return true;
+            }
 
             result = default;
             return false;
@@ -140,7 +144,7 @@ namespace DoubleDouble {
                 return true;
             }
             if (typeof(TOther) == typeof(float)) {
-                result = (TOther)(object)(float)ddouble.Clamp(value, float.MinValue, float.MaxValue);
+                result = (TOther)(object)(float)value;
                 return true;
             }
             if (typeof(TOther) == typeof(long)) {
