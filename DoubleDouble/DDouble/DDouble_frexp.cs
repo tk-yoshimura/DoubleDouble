@@ -38,7 +38,7 @@ namespace DoubleDouble {
         }
 
         public static (int exp, (ddouble a, ddouble b) scaled) AdjustScale(int exp, (ddouble a, ddouble b) v) {
-            ddouble x = Max(v.a, v.b);
+            ddouble x = MaxMagnitude(v.a, v.b);
 
             if (!IsFinite(x)) {
                 return (0, (NaN, NaN));
@@ -56,7 +56,7 @@ namespace DoubleDouble {
         }
 
         public static (int exp, (ddouble a, ddouble b, ddouble c) scaled) AdjustScale(int exp, (ddouble a, ddouble b, ddouble c) v) {
-            ddouble x = Max(v.a, v.b, v.c);
+            ddouble x = MaxMagnitude(v.a, MaxMagnitude(v.b, v.c));
 
             if (!IsFinite(x)) {
                 return (0, (NaN, NaN, NaN));
@@ -75,7 +75,7 @@ namespace DoubleDouble {
         }
 
         public static (int exp, (ddouble a, ddouble b, ddouble c, ddouble d) scaled) AdjustScale(int exp, (ddouble a, ddouble b, ddouble c, ddouble d) v) {
-            ddouble x = Max(v.a, v.b, v.c, v.d);
+            ddouble x = MaxMagnitude(MaxMagnitude(v.a, v.b), MaxMagnitude(v.c, v.d));
 
             if (!IsFinite(x)) {
                 return (0, (NaN, NaN, NaN, NaN));

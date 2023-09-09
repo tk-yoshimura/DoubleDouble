@@ -181,6 +181,22 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(5, ddouble.Hypot(3, 4));
             Assert.AreEqual(ddouble.Sqrt(195), ddouble.Hypot(5, 7, 11));
 
+            Assert.AreEqual(3, ddouble.Hypot(3, 0));
+            Assert.AreEqual(4, ddouble.Hypot(0, 4));
+            Assert.AreEqual(5, ddouble.Hypot(5, 0, 0));
+            Assert.AreEqual(7, ddouble.Hypot(0, 7, 0));
+            Assert.AreEqual(11, ddouble.Hypot(0, 0, 11));
+
+            Assert.AreEqual(5, ddouble.Hypot(-3, 4));
+            Assert.AreEqual(ddouble.Sqrt(195), ddouble.Hypot(-5, 7, 11));
+            Assert.AreEqual(ddouble.Sqrt(195), ddouble.Hypot(5, -7, 11));
+            Assert.AreEqual(ddouble.Sqrt(195), ddouble.Hypot(5, 7, -11));
+
+            Assert.AreEqual(3, ddouble.Hypot(-3, 0));
+            Assert.AreEqual(5, ddouble.Hypot(-5, 0, 0));
+            Assert.AreEqual(7, ddouble.Hypot(0, -7, 0));
+            Assert.AreEqual(11, ddouble.Hypot(0, 0, -11));
+
             HPAssert.AreEqual("5e-250", ddouble.Hypot("3e-250", "4e-250"), "1e-280");
             HPAssert.AreEqual(ddouble.Sqrt(195) * "1e-250", ddouble.Hypot("5e-250", "7e-250", "11e-250"), "1e-280");
 
