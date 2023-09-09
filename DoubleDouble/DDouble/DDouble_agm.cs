@@ -1,7 +1,7 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Agm(ddouble a, ddouble b) {
-            if (a.Sign < 0 || b.Sign < 0 || IsNaN(a) || IsNaN(b)) {
+            if (IsNegative(a) || IsNegative(b) || IsNaN(a) || IsNaN(b)) {
                 return NaN;
             }
 

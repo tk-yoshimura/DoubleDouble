@@ -3,7 +3,7 @@
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Log2(ddouble x) {
-            if (x.Sign < 0 || IsNaN(x)) {
+            if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
             }
             if (IsZero(x)) {

@@ -20,7 +20,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble TanPI(ddouble x) {
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return -TanPI(-x);
             }
 
@@ -48,7 +48,7 @@ namespace DoubleDouble {
             if (!IsFinite(x)) {
                 return NaN;
             }
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return -SinPIHalf(-x);
             }
             if (x >= 4d) {

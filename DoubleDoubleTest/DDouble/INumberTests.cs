@@ -7,6 +7,26 @@ namespace DoubleDoubleTest.DDouble {
     [TestClass]
     public class INumberTests {
         [TestMethod]
+        public void SignTest() {
+            Assert.AreEqual(double.Sign(0d), ddouble.Sign(0d));
+            Assert.AreEqual(double.Sign(-0d), ddouble.Sign(-0d));
+            Assert.AreEqual(double.Sign(1d), ddouble.Sign(1d));
+            Assert.AreEqual(double.Sign(-1d), ddouble.Sign(-1d));
+            Assert.AreEqual(double.Sign(double.MaxValue), ddouble.Sign(double.MaxValue));
+            Assert.AreEqual(double.Sign(double.MinValue), ddouble.Sign(double.MinValue));
+            Assert.AreEqual(double.Sign(double.PositiveInfinity), ddouble.Sign(double.PositiveInfinity));
+            Assert.AreEqual(double.Sign(double.NegativeInfinity), ddouble.Sign(double.NegativeInfinity));
+
+            Assert.ThrowsException<ArithmeticException>(() => {
+                _ = double.Sign(double.NaN);
+            });
+
+            Assert.ThrowsException<ArithmeticException>(() => {
+                _ = ddouble.Sign(double.NaN);
+            });
+        }
+
+        [TestMethod]
         public void IsNormalTest() {
             Assert.AreEqual(double.IsNormal(0d), ddouble.IsNormal(0d));
             Assert.AreEqual(double.IsNormal(-0d), ddouble.IsNormal(-0d));

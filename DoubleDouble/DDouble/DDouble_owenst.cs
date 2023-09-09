@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble OwenT(ddouble h, ddouble a) {
-            if (a.Sign < 0) {
-                return -OwenT(h, -a);
-            }
             if (IsNaN(h) || IsNaN(a)) {
                 return NaN;
+            }
+            if (IsNegative(a)) {
+                return -OwenT(h, -a);
             }
 
             h = Abs(h);

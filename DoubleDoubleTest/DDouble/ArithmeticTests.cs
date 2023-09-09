@@ -384,11 +384,11 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine($"{(Math.CopySign(1, m) >= 0 ? m : "-" + Math.Abs(m))} % {(Math.CopySign(1, n) >= 0 ? n : "-" + Math.Abs(n))}");
 
-                    Console.WriteLine($"= sign {v.Sign}");
+                    Console.WriteLine($"= sign {ddouble.Sign(v)}");
                     Console.WriteLine($"= sign {Math.CopySign(1, u)}");
 
                     HPAssert.AreEqual(0, u - v, 1e-30);
-                    Assert.AreEqual((int)Math.CopySign(1, u), v.Sign);
+                    Assert.AreEqual(double.IsPositive(u), ddouble.IsPositive(v));
                     Assert.IsTrue(ddouble.IsRegulared(v));
 
                     if (m == 0) {
@@ -398,10 +398,10 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble mdec = ddouble.BitDecrement(m), minc = ddouble.BitIncrement(m);
                     ddouble ndec = ddouble.BitDecrement(n), ninc = ddouble.BitIncrement(n);
 
-                    Assert.AreEqual((int)Math.CopySign(1, u), (mdec % ndec).Sign);
-                    Assert.AreEqual((int)Math.CopySign(1, u), (mdec % ninc).Sign);
-                    Assert.AreEqual((int)Math.CopySign(1, u), (minc % ndec).Sign);
-                    Assert.AreEqual((int)Math.CopySign(1, u), (minc % ninc).Sign);
+                    Assert.AreEqual(double.IsPositive(u), ddouble.IsPositive(mdec % ndec));
+                    Assert.AreEqual(double.IsPositive(u), ddouble.IsPositive(mdec % ninc));
+                    Assert.AreEqual(double.IsPositive(u), ddouble.IsPositive(minc % ndec));
+                    Assert.AreEqual(double.IsPositive(u), ddouble.IsPositive(minc % ninc));
 
                     ddouble dd = mdec % ndec;
                     ddouble di = mdec % ninc;

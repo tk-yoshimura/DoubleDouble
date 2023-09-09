@@ -7,11 +7,11 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble FresnelC(ddouble x) {
-            if (x.Sign < 0) {
-                return -FresnelC(-x);
-            }
             if (IsNaN(x)) {
                 return NaN;
+            }
+            if (IsNegative(x)) {
+                return -FresnelC(-x);
             }
 
             if (x <= FresnelPade.PadeApproxMin) {
@@ -40,11 +40,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble FresnelS(ddouble x) {
-            if (x.Sign < 0) {
-                return -FresnelS(-x);
-            }
             if (IsNaN(x)) {
                 return NaN;
+            }
+            if (IsNegative(x)) {
+                return -FresnelS(-x);
             }
 
             if (x <= FresnelPade.PadeApproxMin) {

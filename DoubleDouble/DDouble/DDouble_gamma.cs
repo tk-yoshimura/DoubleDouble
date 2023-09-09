@@ -73,7 +73,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble LogGamma(ddouble x) {
-            if (IsNaN(x) || IsMinusZero(x) || x.Sign < 0) {
+            if (IsNaN(x) || IsNegative(x) || IsMinusZero(x)) {
                 return NaN;
             }
             if (IsPlusZero(x) || IsPositiveInfinity(x)) {

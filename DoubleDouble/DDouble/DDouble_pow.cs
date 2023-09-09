@@ -38,7 +38,7 @@ namespace DoubleDouble {
                 return 1d;
             }
             if (IsInfinity(x)) {
-                return (x.Sign < 0) ? PlusZero : PositiveInfinity;
+                return IsNegative(x) ? PlusZero : PositiveInfinity;
             }
             if (x >= 1024d) {
                 return PositiveInfinity;
@@ -84,7 +84,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow(ddouble x, ddouble y) {
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return NaN;
             }
             if (IsZero(y)) {

@@ -8,9 +8,9 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (!IsFinite(x)) {
-                return x.Sign >= 0 ? Consts.AsinAcos.HalfPI : -Consts.AsinAcos.HalfPI;
+                return IsPositive(x) ? Consts.AsinAcos.HalfPI : -Consts.AsinAcos.HalfPI;
             }
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return -Atan(-x);
             }
 
@@ -56,7 +56,7 @@ namespace DoubleDouble {
 
             ddouble y = Atan(Sqrt(Rcp(1d - x * x) - 1d));
 
-            return x.Sign >= 0 ? y : -y;
+            return IsPositive(x) ? y : -y;
         }
 
         public static ddouble Acos(ddouble x) {
@@ -72,11 +72,11 @@ namespace DoubleDouble {
             }
             if (Abs(x) >= Abs(y)) {
                 ddouble yx = y / x;
-                return x.Sign >= 0 ? Atan(yx) : ((y.Sign >= 0) ? (Atan(yx) + PI) : (Atan(yx) - PI));
+                return IsPositive(x) ? Atan(yx) : (IsPositive(y) ? (Atan(yx) + PI) : (Atan(yx) - PI));
             }
             else {
                 ddouble xy = x / y;
-                return y.Sign >= 0 ? (Consts.AsinAcos.HalfPI - Atan(xy)) : (-Consts.AsinAcos.HalfPI - Atan(xy));
+                return IsPositive(y) ? (Consts.AsinAcos.HalfPI - Atan(xy)) : (-Consts.AsinAcos.HalfPI - Atan(xy));
             }
         }
 

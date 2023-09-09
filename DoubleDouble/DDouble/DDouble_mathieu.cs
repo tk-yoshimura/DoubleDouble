@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -326,7 +327,7 @@ namespace DoubleDouble {
                 if (!c_coef_cache.ContainsKey((n, q))) {
                     ReadOnlyCollection<ddouble> coef;
 
-                    if (q.Sign >= 0) {
+                    if (IsPositive(q)) {
                         ddouble a = MathieuA(n, q);
                         coef = GenerateCCoef(n, q, a);
                     }
@@ -351,7 +352,7 @@ namespace DoubleDouble {
                 if (!s_coef_cache.ContainsKey((n, q))) {
                     ReadOnlyCollection<ddouble> coef;
 
-                    if (q.Sign >= 0) {
+                    if (IsPositive(q)) {
                         ddouble b = MathieuB(n, q);
                         coef = GenerateSCoef(n, q, b);
                     }
@@ -776,7 +777,7 @@ namespace DoubleDouble {
                     norm += cs[i] * cs[i];
                 }
 
-                ddouble r = ddouble.Sqrt(norm) * cs.Sum().Sign;
+                ddouble r = ddouble.Sqrt(norm) * Sign(cs.Sum());
                 for (int i = 0; i < cs.Length; i++) {
                     cs[i] /= r;
                 }

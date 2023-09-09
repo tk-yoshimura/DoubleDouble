@@ -9,7 +9,7 @@ namespace DoubleDouble {
                 return (0, NaN);
             }
             if (IsZero(x)) {
-                return (0, x.Sign > 0 ? PlusZero : MinusZero);
+                return (0, IsPositive(x) ? PlusZero : MinusZero);
             }
 
             int n = double.ILogB(x.hi);
@@ -28,7 +28,7 @@ namespace DoubleDouble {
                 return (0, NaN);
             }
             if (IsZero(x)) {
-                return (0, x.Sign > 0 ? PlusZero : MinusZero);
+                return (0, IsPositive(x) ? PlusZero : MinusZero);
             }
 
             int n = (exp - double.ILogB(x.hi));
@@ -45,8 +45,8 @@ namespace DoubleDouble {
             }
             if (IsZero(x)) {
                 return (0,
-                    (v.a.Sign > 0 ? PlusZero : MinusZero,
-                     v.b.Sign > 0 ? PlusZero : MinusZero)
+                    (IsPositive(v.a) ? PlusZero : MinusZero,
+                     IsPositive(v.b) ? PlusZero : MinusZero)
                 );
             }
 
@@ -63,9 +63,9 @@ namespace DoubleDouble {
             }
             if (IsZero(x)) {
                 return (0,
-                    (v.a.Sign > 0 ? PlusZero : MinusZero,
-                     v.b.Sign > 0 ? PlusZero : MinusZero,
-                     v.c.Sign > 0 ? PlusZero : MinusZero)
+                    (IsPositive(v.a) ? PlusZero : MinusZero,
+                     IsPositive(v.b) ? PlusZero : MinusZero,
+                     IsPositive(v.c) ? PlusZero : MinusZero)
                 );
             }
 
@@ -82,10 +82,10 @@ namespace DoubleDouble {
             }
             if (IsZero(x)) {
                 return (0,
-                    (v.a.Sign > 0 ? PlusZero : MinusZero,
-                     v.b.Sign > 0 ? PlusZero : MinusZero,
-                     v.c.Sign > 0 ? PlusZero : MinusZero,
-                     v.d.Sign > 0 ? PlusZero : MinusZero)
+                    (IsPositive(v.a) ? PlusZero : MinusZero,
+                     IsPositive(v.b) ? PlusZero : MinusZero,
+                     IsPositive(v.c) ? PlusZero : MinusZero,
+                     IsPositive(v.d) ? PlusZero : MinusZero)
                 );
             }
 

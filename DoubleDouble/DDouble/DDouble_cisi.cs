@@ -6,7 +6,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble Ci(ddouble x) {
-            if (x.Sign < 0 || IsNaN(x)) {
+            if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
             }
 
@@ -35,11 +35,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble Si(ddouble x, bool limit_zero = false) {
-            if (x.Sign < 0) {
-                return -Si(-x, limit_zero) - (limit_zero ? PI : Zero);
-            }
             if (IsNaN(x)) {
                 return NaN;
+            }
+            if (IsNegative(x)) {
+                return -Si(-x, limit_zero) - (limit_zero ? PI : Zero);
             }
 
             if (x <= CiSiPade.PadeApproxMin) {
@@ -67,7 +67,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Shi(ddouble x) {
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return -Shi(-x);
             }
 
@@ -81,7 +81,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Chi(ddouble x) {
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return NaN;
             }
 

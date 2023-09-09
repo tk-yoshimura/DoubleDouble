@@ -1,7 +1,7 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Sqrt(ddouble x) {
-            if (x.Sign < 0 || IsNaN(x)) {
+            if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
             }
             if (IsZero(x)) {

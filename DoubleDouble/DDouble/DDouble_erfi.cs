@@ -5,11 +5,11 @@ using System.Diagnostics;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Erfi(ddouble x) {
-            if (x.Sign < 0) {
-                return -Erfi(-x);
-            }
             if (IsNaN(x)) {
                 return NaN;
+            }
+            if (IsNegative(x)) {
+                return -Erfi(-x);
             }
             if (IsZero(x)) {
                 return PlusZero;
@@ -28,11 +28,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble DawsonF(ddouble x) {
-            if (x.Sign < 0) {
-                return -DawsonF(-x);
-            }
             if (IsNaN(x)) {
                 return NaN;
+            }
+            if (IsNegative(x)) {
+                return -DawsonF(-x);
             }
             if (IsZero(x)) {
                 return PlusZero;

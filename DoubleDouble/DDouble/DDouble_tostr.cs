@@ -12,13 +12,13 @@ namespace DoubleDouble {
                 return double.NaN.ToString();
             }
             if (!IsFinite(this)) {
-                return (Sign > 0) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
+                return IsPositive(this) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
             }
 
             (int sign, int exponent_dec, UInt128 mantissa_dec) = ToStringCore(DecimalDigits);
 
             if (mantissa_dec.IsZero) {
-                return (Sign > 0) ? "0" : "-0";
+                return IsPositive(this) ? "0" : "-0";
             }
 
             string num = mantissa_dec.ToString().TrimEnd('0');
@@ -29,17 +29,17 @@ namespace DoubleDouble {
                 }
 
                 if (exponent_dec != 0) {
-                    return $"{((Sign > 0) ? "" : "-")}{num}e{exponent_dec}";
+                    return $"{(IsPositive(this) ? "" : "-")}{num}e{exponent_dec}";
                 }
                 else {
-                    return $"{((Sign > 0) ? "" : "-")}{num}";
+                    return $"{(IsPositive(this) ? "" : "-")}{num}";
                 }
             }
             else if (exponent_dec < 0) {
                 num = new string('0', checked((int)-exponent_dec)) + num;
                 num = num.Insert(1, ".");
 
-                return $"{((Sign > 0) ? "" : "-")}{num}";
+                return $"{(IsPositive(this) ? "" : "-")}{num}";
             }
             else {
                 if (num.Length < checked((int)exponent_dec + 1)) {
@@ -49,7 +49,7 @@ namespace DoubleDouble {
                     num = num.Insert(checked((int)exponent_dec + 1), ".");
                 }
 
-                return $"{((Sign > 0) ? "" : "-")}{num}";
+                return $"{(IsPositive(this) ? "" : "-")}{num}";
             }
         }
 
@@ -72,19 +72,19 @@ namespace DoubleDouble {
                 return double.NaN.ToString();
             }
             if (!IsFinite(this)) {
-                return (Sign > 0) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
+                return IsPositive(this) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
             }
 
             (int sign, int exponent_dec, UInt128 mantissa_dec) = ToStringCore(digits);
 
             if (mantissa_dec.IsZero) {
-                return ((Sign > 0) ? "0." : "-0.") + new string('0', digits) + $"{format[0]}0";
+                return (IsPositive(this) ? "0." : "-0.") + new string('0', digits) + $"{format[0]}0";
             }
 
             string num = mantissa_dec.ToString();
             num = num.Insert(1, ".");
 
-            return $"{((Sign > 0) ? "" : "-")}{num}{format[0]}{exponent_dec}";
+            return $"{(IsPositive(this) ? "" : "-")}{num}{format[0]}{exponent_dec}";
         }
 
         public string ToString(string format) {
@@ -102,7 +102,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(this)) {
-                return (Sign, 0, 0);
+                return (IsPositive(this) ? 1 : -1, 0, 0);
             }
 
             (int sign, int exponent, UInt128 mantissa, _) = FloatSplitter.Split(this);

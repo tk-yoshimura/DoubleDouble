@@ -5,7 +5,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble StruveH(int n, ddouble x) {
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return ((n & 1) == 0) ? -StruveH(n, -x) : StruveH(n, -x);
             }
 
@@ -48,7 +48,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (x.Sign < 0 || IsNaN(x)) {
+            if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
             }
 
@@ -71,7 +71,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble StruveL(int n, ddouble x) {
-            if (x.Sign < 0) {
+            if (IsNegative(x)) {
                 return ((n & 1) == 0) ? -StruveL(n, -x) : StruveL(n, -x);
             }
 
@@ -107,7 +107,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (x.Sign < 0 || IsNaN(x)) {
+            if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
             }
 

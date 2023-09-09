@@ -25,8 +25,7 @@ namespace DoubleDouble {
             this.lo = 0d;
         }
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public int Sign => (int)double.CopySign(1, hi);
+        public static int Sign(ddouble value) => double.Sign(value.hi);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal double Hi => hi;
@@ -72,9 +71,9 @@ namespace DoubleDouble {
 
         public static bool IsZero(ddouble v) => v.hi == 0d;
 
-        public static bool IsPlusZero(ddouble v) => IsZero(v) && v.Sign > 0;
+        public static bool IsPlusZero(ddouble v) => IsZero(v) && IsPositive(v);
 
-        public static bool IsMinusZero(ddouble v) => IsZero(v) && v.Sign < 0;
+        public static bool IsMinusZero(ddouble v) => IsZero(v) && IsNegative(v);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public const int NormalMinExponent = -968;

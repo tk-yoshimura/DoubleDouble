@@ -271,7 +271,7 @@ namespace DoubleDouble {
             private static K1CoefTable k1_coef_table = new();
 
             public static ddouble BesselJ(ddouble nu, ddouble x) {
-                if (nu.Sign < 0 && BesselUtil.NearlyInteger(nu, out int n)) {
+                if (IsNegative(nu) && BesselUtil.NearlyInteger(nu, out int n)) {
                     ddouble y = BesselJ(-nu, x);
 
                     return ((n & 1) == 0) ? y : -y;
@@ -302,7 +302,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-                if (nu.Sign < 0 && BesselUtil.NearlyInteger(nu, out _)) {
+                if (IsNegative(nu) && BesselUtil.NearlyInteger(nu, out _)) {
                     ddouble y = BesselI(-nu, x);
 
                     if (scale) {
@@ -2201,9 +2201,9 @@ namespace DoubleDouble {
                 ddouble alpha = nu - n;
 
                 ddouble y0 = ddouble.BesselY(n, x);
-                ddouble y1 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold, x);
-                ddouble y2 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold * 1.5, x);
-                ddouble y3 = ddouble.BesselY(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x);
+                ddouble y1 = ddouble.BesselY(n + Sign(alpha) * BesselUtil.InterpolationThreshold, x);
+                ddouble y2 = ddouble.BesselY(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 1.5, x);
+                ddouble y3 = ddouble.BesselY(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 2, x);
 
                 ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
                 ddouble y = CubicInterpolate(t, y0, y1, y2, y3);
@@ -2216,9 +2216,9 @@ namespace DoubleDouble {
                 ddouble alpha = nu - n;
 
                 ddouble y0 = ddouble.BesselK(n, x, scale: true);
-                ddouble y1 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold, x, scale: true);
-                ddouble y2 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold * 1.5, x, scale: true);
-                ddouble y3 = ddouble.BesselK(n + alpha.Sign * BesselUtil.InterpolationThreshold * 2, x, scale: true);
+                ddouble y1 = ddouble.BesselK(n + Sign(alpha) * BesselUtil.InterpolationThreshold, x, scale: true);
+                ddouble y2 = ddouble.BesselK(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 1.5, x, scale: true);
+                ddouble y3 = ddouble.BesselK(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 2, x, scale: true);
 
                 ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
                 ddouble y = CubicInterpolate(t, y0, y1, y2, y3);

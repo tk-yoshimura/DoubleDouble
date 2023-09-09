@@ -10,7 +10,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsInfinity(x)) {
-                return x.Sign > 0 ? PositiveInfinity : Zero;
+                return IsPositive(x) ? PositiveInfinity : Zero;
             }
 
             if (x <= Consts.Ei.PadeApproxMin || x >= Consts.Ei.PadeApproxMax) {
@@ -34,7 +34,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsInfinity(x)) {
-                return x.Sign > 0 ? PositiveInfinity : NegativeInfinity;
+                return IsPositive(x) ? PositiveInfinity : NegativeInfinity;
             }
 
             if (x <= Consts.Ei.PadeApproxMin || x >= Consts.Ei.PadeApproxMax) {

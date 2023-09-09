@@ -5,7 +5,7 @@
                 return NaN;
             }
 
-            if (m.Sign < 0) {
+            if (IsNegative(m)) {
                 return -KeplerE(-m, e, centered);
             }
 
@@ -22,7 +22,7 @@
 
             if (e <= 1) {
                 if (!IsFinite(m)) {
-                    return centered ? NaN : m.Sign * PositiveInfinity;
+                    return centered ? NaN : Sign(m) * PositiveInfinity;
                 }
 
                 ddouble m_cycle = (m * RcpPI) % 2d;

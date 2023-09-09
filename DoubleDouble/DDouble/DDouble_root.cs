@@ -15,8 +15,8 @@
                 6 => Sqrt(Cbrt(x)),
                 8 => Sqrt(Sqrt(Sqrt(x))),
                 9 => Cbrt(Cbrt(x)),
-                <= 256 => ((n_abs & 1) == 0) ? RootNUtil.Value(x, n) : x.Sign * RootNUtil.Value(Abs(x), n),
-                _ => ((n_abs & 1) == 0) ? Pow(x, Rcp(n)) : x.Sign * Pow(Abs(x), Rcp(n))
+                <= 256 => ((n_abs & 1) == 0) ? RootNUtil.Value(x, n) : CopySign(RootNUtil.Value(Abs(x), n), x),
+                _ => ((n_abs & 1) == 0) ? Pow(x, Rcp(n)) : CopySign(Pow(Abs(x), Rcp(n)), x)
             };
 
             y = (n > 0) ? y : Rcp(y);
@@ -56,7 +56,7 @@
                 }
 #endif
 
-                if (x.Sign < 0 || IsNaN(x)) {
+                if (IsNegative(x) || IsNaN(x)) {
                     return NaN;
                 }
                 if (ddouble.IsZero(x)) {

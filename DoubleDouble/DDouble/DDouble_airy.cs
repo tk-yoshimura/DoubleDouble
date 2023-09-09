@@ -39,7 +39,7 @@ namespace DoubleDouble {
 
         public static ddouble AiryBi(ddouble x) {
             if (Abs(x) > Consts.Airy.MaxRange) {
-                return x.Sign > 0 ? PositiveInfinity : Zero;
+                return IsPositive(x) ? PositiveInfinity : Zero;
             }
 
             ddouble v = Sqrt(Abs(x)), w = 2 * v * v * v * Consts.Airy.Rcp3;

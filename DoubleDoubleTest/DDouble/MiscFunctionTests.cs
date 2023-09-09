@@ -101,7 +101,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Assert.AreEqual(double.IsPositive(expected), ddouble.IsPositive(actual), $"{value},{sign}");
                     Assert.AreEqual(double.IsNegative(expected), ddouble.IsNegative(actual), $"{value},{sign}");
-                    Assert.AreEqual(sign.Sign * ddouble.Abs(value), actual);
+                    Assert.AreEqual(ddouble.IsPositive(sign) ? ddouble.Abs(value) : -ddouble.Abs(value), actual);
                 }
             }
         }

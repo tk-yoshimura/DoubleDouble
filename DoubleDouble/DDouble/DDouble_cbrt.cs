@@ -1,11 +1,11 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Cbrt(ddouble x) {
-            if (x.Sign < 0) {
-                return -Cbrt(-x);
-            }
             if (IsNaN(x)) {
                 return NaN;
+            }
+            if (IsNegative(x)) {
+                return -Cbrt(-x);
             }
             if (IsZero(x)) {
                 return Zero;

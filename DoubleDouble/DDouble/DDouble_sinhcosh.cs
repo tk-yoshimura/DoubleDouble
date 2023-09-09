@@ -2,7 +2,7 @@
     public partial struct ddouble {
         public static ddouble Sinh(ddouble x) {
             if (IsZero(x)) {
-                return x.Sign > 0 ? PlusZero : MinusZero;
+                return IsPositive(x) ? PlusZero : MinusZero;
             }
 
             return Ldexp(Expm1(x) - Expm1(-x), -1);
