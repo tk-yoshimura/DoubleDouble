@@ -426,11 +426,13 @@ namespace DoubleDoubleTest.DDouble {
             ddouble erfcx_mzero = ddouble.Erfcx(-0d);
             ddouble erfcx_pinf = ddouble.Erfcx(double.PositiveInfinity);
             ddouble erfcx_ninf = ddouble.Erfcx(double.NegativeInfinity);
+            ddouble erfcx_maxval = ddouble.Erfcx(double.MaxValue);
             ddouble erfcx_nan = ddouble.Erfcx(double.NaN);
 
             Assert.IsTrue(erfcx_pzero == 1, nameof(erfcx_pzero));
             Assert.IsTrue(erfcx_mzero == 1, nameof(erfcx_mzero));
             Assert.IsTrue(ddouble.IsPlusZero(erfcx_pinf), nameof(erfcx_pinf));
+            Assert.IsTrue(erfcx_maxval >= 0, nameof(erfcx_maxval));
             Assert.IsTrue(ddouble.IsPositiveInfinity(erfcx_ninf), nameof(erfcx_ninf));
             Assert.IsTrue(ddouble.IsNaN(erfcx_nan), nameof(erfcx_nan));
         }
