@@ -181,6 +181,9 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(5, ddouble.Hypot(3, 4));
             Assert.AreEqual(ddouble.Sqrt(195), ddouble.Hypot(5, 7, 11));
 
+            Assert.AreEqual(5, ddouble.Hypot(-3, -4));
+            Assert.AreEqual(ddouble.Sqrt(195), ddouble.Hypot(-5, -7, -11));
+
             Assert.AreEqual(3, ddouble.Hypot(3, 0));
             Assert.AreEqual(4, ddouble.Hypot(0, 4));
             Assert.AreEqual(5, ddouble.Hypot(5, 0, 0));

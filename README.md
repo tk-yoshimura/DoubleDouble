@@ -69,6 +69,7 @@ MaxValue : 2^1024 = 1.79769e308
 |erfc|&#40;-inf,+inf&#41;|3||ddouble.Erfc(x)|
 |inverse_erf|&#40;-1,1&#41;|3||ddouble.InverseErf(x)|
 |inverse_erfc|&#40;0,2&#41;|3||ddouble.InverseErfc(x)|
+|erfcx|&#40;-inf,+inf&#41;|3||ddouble.Erfcx(x)|
 |erfi|&#40;-inf,+inf&#41;|4||ddouble.Erfi(x)|
 |dawson_f|&#40;-inf,+inf&#41;|4||ddouble.DawsonF(x)|
 |bessel_j|&#91;0,+inf&#41;|8|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |ddouble.BesselJ(nu, x)|
