@@ -180,7 +180,7 @@ namespace DoubleDouble {
         }
 
         internal static class LowerIncompleteGammaCFrac {
-            public static ddouble Value(ddouble nu, ddouble x) {
+            public static ddouble Value(ddouble nu, ddouble x, bool log_scale = false) {
                 double log2x = double.Log2((double)x);
 
                 int m = (int)double.Pow(2, ((0.01478 * log2x + 0.2829) * log2x + 3.528)) + 1;
@@ -193,7 +193,11 @@ namespace DoubleDouble {
 
                 ddouble powx = Pow(x, nu), expx = Exp(-x);
 
-                ddouble y = powx * expx / f;
+                ddouble y = nu * Log(x) - x - Log(f);
+
+                if (!log_scale) {
+                    y = Exp(y);
+                }
 
                 return y;
             }
