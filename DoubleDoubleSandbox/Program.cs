@@ -152,7 +152,7 @@ namespace DoubleDoubleSandbox {
 
                 for (int i = 1; i < 8192; i++) {
                     ddouble a1 = i * x, a2 = -(nu + i) * x;
-                    ddouble b1 = nu + (2 * i), b2 = b1 + 1;
+                    ddouble b1 = nu + (2 * i), b2 = b1 + 1d;
 
                     p1 = a1 * p3 + b1 * p2;
                     q1 = a1 * q3 + b1 * q2;
