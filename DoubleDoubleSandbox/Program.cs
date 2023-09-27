@@ -9,6 +9,7 @@ namespace DoubleDoubleSandbox {
         static void Main() {
             ddouble t1 = LowerIncompleteGammaCFrac.Value(128.5, 5.5);
             ddouble t2 = LowerIncompleteGammaCFrac.ValueType2(128.5, 5.5).v;
+            ddouble t3 = LowerIncompleteGammaCFrac.ValueType3(128.5, 5.5).v;
 
             //using StreamWriter sw = new StreamWriter("../../upper_imcomp_gamma3.csv");
 
@@ -22,7 +23,7 @@ namespace DoubleDoubleSandbox {
             //        if (!success) {
             //            sw.WriteLine($"{x},{nu},{v}");
             //            Console.WriteLine($"{x},{nu},{v}");
-                        
+
             //            nu -= 1d / 32;
             //            break;
             //        }
@@ -129,6 +130,47 @@ namespace DoubleDoubleSandbox {
 
                     (p1, p2) = (p0, p1);
                     (q1, q2) = (q0, q1);
+                }
+
+                ddouble c = p0 / q0;
+                ddouble f = nu + c;
+
+#if DEBUG
+                if (nu * c < 0 && int.Abs(double.ILogB(nu.Hi) - double.ILogB(c.Hi)) <= 1) {
+                    Trace.WriteLine("digit loss!");
+
+                    return (f, false);
+                }
+#endif
+
+                return (f, true);
+            }
+
+            public static (ddouble v, bool success) ValueType3(ddouble nu, ddouble x) {
+                ddouble p0 = 0d, p1 = 0d, p2 = -nu * x, p3 = 0;
+                ddouble q0 = 0d, q1 = 0d, q2 = nu + 1, q3 = 1;
+
+                for (int i = 1; i < 8192; i++) {
+                    ddouble a1 = i * x, a2 = -(nu + i) * x;
+                    ddouble b1 = nu + (2 * i), b2 = b1 + 1;
+
+                    p1 = a1 * p3 + b1 * p2;
+                    q1 = a1 * q3 + b1 * q2;
+                    p0 = a2 * p2 + b2 * p1;
+                    q0 = a2 * q2 + b2 * q1;
+
+                    (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
+                    (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
+
+                    if (i >= 16 && (i & 3) == 0) {
+                        ddouble r0 = p0 * q1, r1 = p1 * q0;
+                        if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-31)) {
+                            break;
+                        }
+                    }
+
+                    (p2, p3) = (p0, p1);
+                    (q2, q3) = (q0, q1);
                 }
 
                 ddouble c = p0 / q0;
