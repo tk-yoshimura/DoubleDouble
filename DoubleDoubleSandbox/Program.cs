@@ -7,8 +7,8 @@ using System.Diagnostics;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble t1 = IncompleteBetaCFrac.Value(0.25, 2, 3.5, 63);
-            ddouble t2 = IncompleteBetaCFrac.ValueType2(0.25, 2, 3.5);
+            ddouble t1 = UpperIncompleteGammaCFrac.Value(8.5, 5.5, 64);
+            ddouble t2 = UpperIncompleteGammaCFrac.ValueType2(8.5, 5.5).v;
 
             //using StreamWriter sw = new StreamWriter("../../upper_imcomp_gamma3.csv");
 
@@ -47,13 +47,15 @@ namespace DoubleDoubleSandbox {
             }
 
             public static (ddouble v, bool success) ValueType2(ddouble nu, ddouble x) {
-                ddouble xmnu = x - nu;
-                ddouble p0 = 0d, p1 = nu - 1, p2 = 0;
-                ddouble q0 = 0d, q1 = 3 + xmnu, q2 = 1;
+                ddouble xmnu = x - nu, xmnui = x - nu + 3d, nui = nu - 1d;
+                ddouble p0 = 0d, p1 = nui, p2 = 0;
+                ddouble q0 = 0d, q1 = xmnui, q2 = 1;
 
                 for (int i = 2; i < 8192; i++) {
-                    ddouble a = i * (nu - i);
-                    ddouble b = (2 * i + 1) + xmnu;
+                    nui -= 1d;  xmnui += 2d;
+
+                    ddouble a = i * nui;
+                    ddouble b = xmnui;
 
                     p0 = a * p2 + b * p1;
                     q0 = a * q2 + b * q1;
@@ -72,7 +74,7 @@ namespace DoubleDoubleSandbox {
                     (q1, q2) = (q0, q1);
                 }
 
-                ddouble s = 1 + xmnu, c = p0 / q0;
+                ddouble s = xmnu + 1d, c = p0 / q0;
                 ddouble f = s + c;
 
 #if DEBUG
@@ -146,12 +148,17 @@ namespace DoubleDoubleSandbox {
             }
 
             public static (ddouble v, bool success) ValueType3(ddouble nu, ddouble x) {
-                ddouble p0 = 0d, p1 = 0d, p2 = -nu * x, p3 = 0;
-                ddouble q0 = 0d, q1 = 0d, q2 = nu + 1, q3 = 1;
+                ddouble nux = nu * x;
+                ddouble p0 = 0d, p1 = 0d, p2 = -nux, p3 = 0d;
+                ddouble q0 = 0d, q1 = 0d, q2 = nu + 1d, q3 = 1d;
+
+                ddouble ix = 0d, nu2i = nu;
 
                 for (int i = 1; i < 8192; i++) {
-                    ddouble a1 = i * x, a2 = -(nu + i) * x;
-                    ddouble b1 = nu + (2 * i), b2 = b1 + 1d;
+                    ix += x;  nu2i += 2d;
+
+                    ddouble a1 = ix, a2 = -nux - ix;
+                    ddouble b1 = nu2i, b2 = b1 + 1d;
 
                     p1 = a1 * p3 + b1 * p2;
                     q1 = a1 * q3 + b1 * q2;
@@ -207,7 +214,6 @@ namespace DoubleDoubleSandbox {
 
             public static ddouble ValueType2(ddouble x, ddouble a, ddouble b) {
                 ddouble ab = a + b;
-
                 ddouble p0 = 0d, p1 = 0d, p2 = -(ab * x) / (a + 1d), p3 = 0d;
                 ddouble q0 = 0d, q1 = 0d, q2 = 1d, q3 = 1d;
 
