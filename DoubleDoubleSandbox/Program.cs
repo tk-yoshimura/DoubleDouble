@@ -7,8 +7,8 @@ using System.Diagnostics;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble t1 = IncompleteBetaCFrac.Value(0.25, 2, 5.5, 63);
-            ddouble t2 = IncompleteBetaCFrac.ValueType2(0.25, 2, 5.5);
+            ddouble t1 = IncompleteBetaCFrac.Value(0.25, 2, 3.5, 63);
+            ddouble t2 = IncompleteBetaCFrac.ValueType2(0.25, 2, 3.5);
 
             //using StreamWriter sw = new StreamWriter("../../upper_imcomp_gamma3.csv");
 
@@ -208,14 +208,17 @@ namespace DoubleDoubleSandbox {
             public static ddouble ValueType2(ddouble x, ddouble a, ddouble b) {
                 ddouble ab = a + b;
 
-                ddouble p0 = 0d, p1 = 0d, p2 = -((ab) * x) / (a + 1d), p3 = 0;
-                ddouble q0 = 0d, q1 = 0d, q2 = 1, q3 = 1;
+                ddouble p0 = 0d, p1 = 0d, p2 = -(ab * x) / (a + 1d), p3 = 0d;
+                ddouble q0 = 0d, q1 = 0d, q2 = 1d, q3 = 1d;
+
+                ddouble a2i = a, ai = a, bi = b, abi = ab;
 
                 for (int i = 1; i < 8192; i++) {
-                    ddouble a2i = a + 2 * i;
-                    ddouble a1 = ((b - i) * i * x) / ((a2i - 1d) * a2i);
-                    ddouble a2 = ((a + i) * (ab + i) * x) / ((a2i + 1d) * a2i);
-                    
+                    a2i += 2d; ai += 1d; bi -= 1d; abi += 1d;
+
+                    ddouble a1 = (bi * i * x) / ((a2i - 1d) * a2i);
+                    ddouble a2 = (ai * abi * x) / ((a2i + 1d) * a2i);
+
                     p1 = p2 + a1 * p3;
                     q1 = q2 + a1 * q3;
                     p0 = p1 - a2 * p2;
