@@ -7,8 +7,10 @@ using System.Diagnostics;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble t1 = UpperIncompleteGammaCFrac.Value(8.5, 5.5, 64);
-            ddouble t2 = UpperIncompleteGammaCFrac.ValueType2(8.5, 5.5).v;
+            ddouble t1 = IncompleteBetaCFrac.ValueType2(0.25, 3, 2);
+            ddouble t2 = IncompleteBetaCFrac.ValueType2(0.75, 2, 3);
+
+            ddouble v1 = ddouble.IncompleteBeta(0.75, 2, 3);
 
             //using StreamWriter sw = new StreamWriter("../../upper_imcomp_gamma3.csv");
 

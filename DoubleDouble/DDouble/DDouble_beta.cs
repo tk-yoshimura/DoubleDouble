@@ -18,5 +18,15 @@
                 return y;
             }
         }
+
+        public static ddouble LogBeta(ddouble a, ddouble b) {
+            if (!(a > 0d) || !(b > 0d)) {
+                return NaN;
+            }
+
+            ddouble y = LogGamma(a) + LogGamma(b) - LogGamma(a + b);
+
+            return y;
+        }
     }
 }

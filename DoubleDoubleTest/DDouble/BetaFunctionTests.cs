@@ -7,8 +7,8 @@ namespace DoubleDoubleTest.DDouble {
     public class BetaFunctionTests {
         [TestMethod]
         public void BetaTest() {
-            for (ddouble b = 1d / 32; b <= 64; b *= 2) {
-                for (ddouble a = 1d / 32; a <= 64; a *= 2) {
+            for (ddouble b = 1d / 32; b <= 128; b *= 2) {
+                for (ddouble a = 1d / 32; a <= 128; a *= 2) {
                     Console.WriteLine($"{a},{b}");
 
                     ddouble f = ddouble.Beta(a, b);
@@ -27,8 +27,8 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void IncompleteBetaTest() {
 
-            for (ddouble b = 1d / 64; b <= 32; b *= 2) {
-                for (ddouble a = 1d / 64; a <= 32; a *= 2) {
+            for (ddouble b = 1d / 64; b <= 128; b *= 2) {
+                for (ddouble a = 1d / 64; a <= 128; a *= 2) {
 
                     for (ddouble x = 0; x <= 1; x += 1d / 8) {
                         Console.WriteLine($"{x},{a},{b}");
@@ -45,7 +45,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble a = 1d / 32; a <= 64; a += 1d / 16) {
+            for (ddouble a = 1d / 32; a <= 128; a += 1d / 16) {
                 for (ddouble x = 1d / 16; x <= 1; x += 1d / 16) {
                     Console.WriteLine($"{x},{a}");
 
@@ -60,7 +60,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble b = 1d / 16; b <= 64; b += 1d / 16) {
+            for (ddouble b = 1d / 16; b <= 128; b += 1d / 16) {
                 for (ddouble x = 1d / 16; x <= 1; x += 1d / 16) {
                     Console.WriteLine($"{x},{b}");
 
@@ -77,6 +77,32 @@ namespace DoubleDoubleTest.DDouble {
             HPAssert.AreEqual(
                 "0.0107206939812333955315378535295139067594857737069262075239118707",
                 ddouble.IncompleteBeta(1 / 8d, 15 / 8d, 35 / 32d), 1e-30);
+        }
+
+        [TestMethod]
+        public void LogBetaTest() {
+            for (ddouble a = 0.25; a <= 4; a *= 2) {
+                for (ddouble b = 0.25; b <= 4; b *= 2) {
+                    ddouble expected = ddouble.Log(ddouble.Beta(a, b));
+                    ddouble actual = ddouble.LogBeta(a, b);
+
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30, $"{a}, {b}");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void IncompleteBetaRegularizedTest() {
+            for (ddouble a = 0.25; a <= 4; a *= 2) {
+                for (ddouble b = 0.25; b <= 4; b *= 2) {
+                    for (ddouble x = 0; x <= 1; x += 0.125) {
+                        ddouble expected = ddouble.IncompleteBeta(x, a, b) / ddouble.Beta(a, b);
+                        ddouble actual = ddouble.IncompleteBetaRegularized(x, a, b);
+
+                        HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 8e-31, $"{x}, {a}, {b}");
+                    }
+                }
+            }
         }
     }
 }
