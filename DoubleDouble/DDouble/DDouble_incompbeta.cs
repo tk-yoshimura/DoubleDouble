@@ -9,7 +9,7 @@
             if (a + b - Max(a, b) > Consts.IncompleteBeta.MaxAB) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteBeta function, " +
-                    $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)} greater than " +
+                    $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)}) greater than " +
                     $"{Consts.IncompleteBeta.MaxAB} is not supported."
                 );
             }
@@ -48,7 +48,7 @@
             if (a + b - Max(a, b) > Consts.IncompleteBeta.MaxABRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteBetaRegularized function, " +
-                    $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)} greater than" +
+                    $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)}) greater than" +
                     $" {Consts.IncompleteBeta.MaxABRegularized} is not supported."
                 );
             }
