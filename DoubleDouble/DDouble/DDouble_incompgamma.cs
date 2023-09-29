@@ -1,8 +1,4 @@
-﻿using DoubleDouble.Utils;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x) {

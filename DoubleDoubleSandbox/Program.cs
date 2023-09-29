@@ -1,8 +1,7 @@
 ﻿using DoubleDouble;
-using static DoubleDouble.ddouble;
 using System;
-using System.IO;
 using System.Diagnostics;
+using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {
     public static class Program {
@@ -54,7 +53,7 @@ namespace DoubleDoubleSandbox {
                 ddouble q0 = 0d, q1 = xmnui, q2 = 1;
 
                 for (int i = 2; i < 8192; i++) {
-                    nui -= 1d;  xmnui += 2d;
+                    nui -= 1d; xmnui += 2d;
 
                     ddouble a = i * nui;
                     ddouble b = xmnui;
@@ -157,7 +156,7 @@ namespace DoubleDoubleSandbox {
                 ddouble ix = 0d, nu2i = nu;
 
                 for (int i = 1; i < 8192; i++) {
-                    ix += x;  nu2i += 2d;
+                    ix += x; nu2i += 2d;
 
                     ddouble a1 = ix, a2 = -nux - ix;
                     ddouble b1 = nu2i, b2 = b1 + 1d;

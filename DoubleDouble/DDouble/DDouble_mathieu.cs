@@ -1,7 +1,6 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using static DoubleDouble.ddouble.Consts;
 
 namespace DoubleDouble {
     public partial struct ddouble {
