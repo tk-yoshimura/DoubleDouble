@@ -187,11 +187,11 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble s = DiffLogSterlingTerm(x);
                 ddouble p = Log(x);
-                ddouble c = Rcp(x) / 2;
+                ddouble s = DiffLogSterlingTerm(x);
+                ddouble c = Ldexp(Rcp(x), -1);
 
-                ddouble y = -s + p - c;
+                ddouble y = p - s - c;
 
                 return y;
             }
