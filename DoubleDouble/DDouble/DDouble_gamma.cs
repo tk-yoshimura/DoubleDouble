@@ -47,28 +47,13 @@ namespace DoubleDouble {
 
                 return y;
             }
+            else {
+                ddouble p = (x - 0.5d) * Log(x);
+                ddouble s = SterlingTerm(x);
 
-            if (x <= Consts.Gamma.ExtremeLarge) {
-                ddouble r = Sqrt(2 * PI / x);
-                ddouble s = Exp(SterlingTerm(x));
-
-                ddouble p = (x < 128.0)
-                    ? (Pow(x, x) / Exp(x))
-                    : Pow(Pow(x, 128) / Exp(128), Ldexp(x, -7));
-
-                ddouble y = r * p * s;
+                ddouble y = Consts.Gamma.SqrtPI2 * Exp(p + s - x);
 
                 return y;
-            }
-            else {
-                ddouble u = x - 1.0;
-
-                if (u <= Consts.Gamma.ExtremeLarge) {
-                    return u * Gamma(u);
-                }
-                else {
-                    return PositiveInfinity;
-                }
             }
         }
 
@@ -132,9 +117,7 @@ namespace DoubleDouble {
                 ddouble p = (x - 0.5d) * Log(x);
                 ddouble s = SterlingTerm(x);
 
-                ddouble k = Consts.LogGamma.SterlingLogBias;
-
-                ddouble y = k + p + s - x;
+                ddouble y = Consts.LogGamma.LogPI2Half + p + s - x;
 
                 return y;
             }
@@ -256,6 +239,7 @@ namespace DoubleDouble {
             public static class Gamma {
                 public const double Threshold = 36.25;
                 public const double ExtremeLarge = 170.625;
+                public static readonly ddouble SqrtPI2 = (+1, 1, 0xA06C98FFB1382CB2uL, 0xBE520FD739167717uL);
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable;
@@ -308,7 +292,7 @@ namespace DoubleDouble {
             }
 
             public static class LogGamma {
-                public static readonly ddouble SterlingLogBias = Log(PI * 2) / 2;
+                public static readonly ddouble LogPI2Half = (+1, -1, 0xEB3F8E4325F5A534uL, 0x94BC900144192023uL);
                 public const int Threshold = 16;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
