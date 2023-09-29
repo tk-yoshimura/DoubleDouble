@@ -86,7 +86,7 @@
                     (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
                     (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
 
-                    if (i >= 16 && (i & 3) == 0) {
+                    if (i > 0 && (i & 3) == 0) {
                         ddouble r0 = p0 * q1, r1 = p1 * q0;
                         if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-31)) {
                             break;
