@@ -151,9 +151,6 @@
   <data name="GaussIntegralTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\GaussIntegralTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="IncompGammaTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resource\IncompGammaTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="InverseErfcTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\InverseErfcTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

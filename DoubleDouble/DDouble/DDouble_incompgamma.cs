@@ -1,205 +1,162 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d || nu > 128d) {
+            if (nu < 0d) {
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0d) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
+            if (nu > IncompleteGamma.MaxNu) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteGamma function, " +
+                    $"{nameof(nu)} greater than {IncompleteGamma.MaxNu} is not supported."
+                );
+            }
+
             if (IsNaN(nu) || IsNaN(x)) {
                 return NaN;
             }
 
-            if (x < UpperIncompleteGammaNearZero.Eps) {
-                return 0;
-            }
-            if (nu < UpperIncompleteGammaNearZero.Eps) {
-                return PositiveInfinity;
-            }
+            if (x < (double)nu + IncompleteGamma.ULBias) {
+                ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = Exp(nu * Log(x) - x) / f;
 
-            if (x < 1.0975d * (double)nu + 0.7725d) {
-                return LowerIncompleteGammaCFrac.Value(nu, x);
+                return y;
             }
             else {
-                return Gamma(nu) - UpperIncompleteGamma(nu, x);
+                ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = Gamma(nu) - Exp(nu * Log(x) - x) / f;
+
+                return y;
             }
         }
 
         public static ddouble UpperIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d || nu > 128d) {
+            if (nu < 0d) {
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
             if (x < 0d) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
+            if (nu > IncompleteGamma.MaxNu) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteGamma function, " +
+                    $"{nameof(nu)} greater than {IncompleteGamma.MaxNu} is not supported."
+                );
+            }
+
             if (IsNaN(nu) || IsNaN(x)) {
                 return NaN;
             }
 
-            if (x < UpperIncompleteGammaNearZero.Eps) {
+            if (x < IncompleteGamma.Eps) {
                 return Gamma(nu);
             }
-            if (nu < UpperIncompleteGammaNearZero.Eps) {
+            if (nu < IncompleteGamma.Eps) {
                 return -Ei(-x);
             }
 
-            if (x <= 3d) {
-                return UpperIncompleteGammaNearZero.Value(nu, x);
+            if (x < (double)nu + IncompleteGamma.ULBias) {
+                ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = Gamma(nu) - Exp(nu * Log(x) - x) / f;
+
+                return y;
             }
             else {
-                return UpperIncompleteGammaCFrac.Value(nu, x);
+                ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = Exp(nu * Log(x) - x) / f;
+
+                return y;
             }
         }
 
-        internal static class UpperIncompleteGammaNearZero {
+        internal static class IncompleteGamma {
             public static double Eps = double.ScaleB(1, -105);
-
-            public static ddouble Value(ddouble nu, ddouble x) {
-                int n = (int)Floor(nu);
-                ddouble alpha = nu - n;
-
-                ddouble a = UpperIncompleteGammaNearZero.A1(alpha);
-                ddouble a0 = (1d + alpha) * a - 1d;
-                ddouble phi = UpperIncompleteGammaNearZero.Phi(alpha, x);
-                ddouble g0 = Gamma(1d + alpha), g = g0 * (1d + alpha);
-
-                ddouble s = a0 + phi / g0 + x * (a + phi / g);
-
-                ddouble u = x * x;
-
-                for (int k = 2; k < TaylorSequence.Count; k++) {
-                    a = 1d / (k + alpha) * (a + TaylorSequence[k]);
-                    g *= k + alpha;
-
-                    ddouble ds = u * (a + phi / g);
-                    ddouble s_next = s + ds;
-
-                    if (s == s_next) {
-                        break;
-                    }
-
-                    u *= x;
-                    s = s_next;
-                }
-
-                ddouble expx = Exp(-x);
-
-                ddouble y = g0 * expx * s;
-
-                if (n > 0) {
-                    ddouble powx = Pow(x, alpha);
-
-                    for (int k = 0; k < n; k++) {
-                        y = (alpha + k) * y + powx * expx;
-                        powx *= x;
-                    }
-                }
-
-                return y;
-            }
-
-            public static ddouble A1(ddouble nu) {
-                if (nu >= 0.15625d) {
-                    return (1d - 1d / Gamma(2 + nu)) / nu;
-                }
-                else {
-                    ddouble s = TaylorA1ZeroTable[0];
-                    for (int i = 1; i < TaylorA1ZeroTable.Count; i++) {
-                        s = s * nu + TaylorA1ZeroTable[i];
-                    }
-
-                    return (1d - s) / (1d + nu);
-                }
-            }
-
-            public static ddouble Phi(ddouble nu, ddouble x) {
-                ddouble x_nu = Pow(x, nu);
-
-                if (x_nu <= 0.5d || x_nu >= 2d) {
-                    return (1d - x_nu) / nu;
-                }
-
-                ddouble logx = Log(x);
-                ddouble v = nu * logx, s = 1, u = v;
-
-                for (int k = 2; k < TaylorSequence.Count; k++) {
-                    ddouble s_next = s + u * TaylorSequence[k];
-
-                    if (s == s_next) {
-                        break;
-                    }
-
-                    u *= v;
-                    s = s_next;
-                }
-
-                ddouble y = -s * logx;
-
-                return y;
-            }
-
-            public static ReadOnlyCollection<ddouble> TaylorA1ZeroTable { get; } =
-                ResourceUnpack.NumTable(Resource.IncompGammaTable, reverse: true)[nameof(TaylorA1ZeroTable)];
+            public static double ULBias = 0.125;
+            public static double MaxNu = 196d;
         }
 
         internal static class UpperIncompleteGammaCFrac {
+            public static double Eps = double.ScaleB(1, -105);
+
             public static ddouble Value(ddouble nu, ddouble x) {
-                int n = (int)Floor(nu);
-                ddouble alpha = nu - n;
+                ddouble xmnu = x - nu, xmnui = x - nu + 3d, nui = nu - 1d;
+                ddouble p0 = 0d, p1 = nui, p2 = 0;
+                ddouble q0 = 0d, q1 = xmnui, q2 = 1;
 
-                double log2x = double.Log2((double)x);
+                for (int i = 2; i < 8192; i++) {
+                    nui -= 1d; xmnui += 2d;
 
-                int m = (x > 64) ? 14 : (int)double.Pow(2, ((0.04525 * log2x - 1) * log2x + 8.250)) + 1;
+                    ddouble a = i * nui;
+                    ddouble b = xmnui;
 
-                ddouble f = 1;
+                    p0 = a * p2 + b * p1;
+                    q0 = a * q2 + b * q1;
 
-                for (int i = m; i >= 1; i--) {
-                    f = x + f * (i - alpha) / (f + i);
-                }
+                    (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
+                    (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
 
-                ddouble powx = Pow(x, alpha), expx = Exp(-x);
-
-                ddouble y = powx * expx / f;
-
-                if (n > 0) {
-                    for (int k = 0; k < n; k++) {
-                        y = (alpha + k) * y + powx * expx;
-                        powx *= x;
+                    if (i > 0 && (i & 3) == 0) {
+                        ddouble r0 = p0 * q1, r1 = p1 * q0;
+                        if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-31)) {
+                            break;
+                        }
                     }
+
+                    (p1, p2) = (p0, p1);
+                    (q1, q2) = (q0, q1);
                 }
 
-                return y;
+                ddouble f = xmnu + 1d + p0 / q0;
+
+                return f;
             }
         }
 
         internal static class LowerIncompleteGammaCFrac {
-            public static ddouble Value(ddouble nu, ddouble x, bool log_scale = false) {
-                double log2x = double.Log2((double)x);
+            public static ddouble Value(ddouble nu, ddouble x) {
+                ddouble nux = nu * x;
+                ddouble p0 = 0d, p1 = 0d, p2 = -nux, p3 = 0d;
+                ddouble q0 = 0d, q1 = 0d, q2 = nu + 1d, q3 = 1d;
 
-                int m = (int)double.Pow(2, ((0.01478 * log2x + 0.2829) * log2x + 3.528)) + 1;
+                ddouble ix = 0d, nu2i = nu;
 
-                ddouble f = 1;
+                for (int i = 1; i < 8192; i++) {
+                    ix += x; nu2i += 2d;
 
-                for (int i = m; i >= 0; i--) {
-                    f = nu + (2 * i) - (f * (nu + i) * x) / (((i + 1) * x) + f * (nu + (2 * i + 1)));
+                    ddouble a1 = ix, a2 = -nux - ix;
+                    ddouble b1 = nu2i, b2 = b1 + 1d;
+
+                    p1 = a1 * p3 + b1 * p2;
+                    q1 = a1 * q3 + b1 * q2;
+                    p0 = a2 * p2 + b2 * p1;
+                    q0 = a2 * q2 + b2 * q1;
+
+                    (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
+                    (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
+
+                    if (i > 0 && (i & 3) == 0) {
+                        ddouble r0 = p0 * q1, r1 = p1 * q0;
+                        if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-31)) {
+                            break;
+                        }
+                    }
+
+                    (p2, p3) = (p0, p1);
+                    (q2, q3) = (q0, q1);
                 }
 
-                ddouble powx = Pow(x, nu), expx = Exp(-x);
+                ddouble f = nu + p0 / q0;
 
-                ddouble y = nu * Log(x) - x - Log(f);
-
-                if (!log_scale) {
-                    y = Exp(y);
-                }
-
-                return y;
+                return f;
             }
         }
     }

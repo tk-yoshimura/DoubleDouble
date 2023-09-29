@@ -112,13 +112,6 @@
             }
         }
 
-        internal static byte[] IncompGammaTable {
-            get {
-                object obj = ResourceManager.GetObject("IncompGammaTable", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-
         internal static byte[] InverseErfcTable {
             get {
                 object obj = ResourceManager.GetObject("InverseErfcTable", resourceCulture);
