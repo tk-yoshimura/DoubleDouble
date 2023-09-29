@@ -61,10 +61,14 @@ MaxValue : 2^1024 = 1.79769e308
 |digamma|&#40;-inf,+inf&#41;|4|Near the positive root, polynomial interpolation is used.|ddouble.Digamma(x)|
 |polygamma|&#40;-inf,+inf&#41;|4|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|ddouble.Polygamma(n, x)|
 |inverse_gamma|&#91;1,+inf&#41;|4|gamma^-1(x)|ddouble.InverseGamma(x)|
-|lower_incomplete_gamma|&#91;0,+inf&#41;|4|nu &leq; 128|ddouble.LowerIncompleteGamma(nu, x)|
-|upper_incomplete_gamma|&#91;0,+inf&#41;|4|nu &leq; 128|ddouble.UpperIncompleteGamma(nu, x)|
+|lower_incomplete_gamma|&#91;0,+inf&#41;|4|nu &leq; 170.625|ddouble.LowerIncompleteGamma(nu, x)|
+|upper_incomplete_gamma|&#91;0,+inf&#41;|4|nu &leq; 170.625|ddouble.UpperIncompleteGamma(nu, x)|
+|lower_incomplete_gamma_regularized|&#91;0,+inf&#41;|4|nu &leq; 8192|ddouble.LowerIncompleteGammaRegularized(nu, x)|
+|upper_incomplete_gamma_regularized|&#91;0,+inf&#41;|4|nu &leq; 8192|ddouble.UpperIncompleteGammaRegularized(nu, x)|
 |beta|&#91;0,+inf&#41;|4||ddouble.Beta(a, b)|
-|incomplete_beta|&#91;0,1&#93;|4|Accuracy decreases when the radio of a,b is too large. a,b &leq; 64|ddouble.IncompleteBeta(x, a, b)|
+|logbeta|&#91;0,+inf&#41;|4||ddouble.LogBeta(a, b)|
+|incomplete_beta|&#91;0,1&#93;|4|Accuracy decreases when the radio of a,b is too large. a+b-max(a,b) &leq; 512|ddouble.IncompleteBeta(x, a, b)|
+|incomplete_beta_regularized|&#91;0,1&#93;|4|Accuracy decreases when the radio of a,b is too large. a+b-max(a,b) &leq; 8192|ddouble.IncompleteBetaRegularized(x, a, b)|
 |erf|&#40;-inf,+inf&#41;|3||ddouble.Erf(x)|
 |erfc|&#40;-inf,+inf&#41;|3||ddouble.Erfc(x)|
 |inverse_erf|&#40;-1,1&#41;|3||ddouble.InverseErf(x)|
