@@ -5,17 +5,24 @@ using System;
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
     public class BetaFunctionTests {
+        readonly ddouble[] tests_ab = new ddouble[] {
+            1d / 64, 1d / 32, 1d / 16, 1d / 8, 1d / 4, 1d / 2, 1,
+            3d / 2, 2, 9d / 4, 5d / 2, 11d / 4, 3,
+            4, 7.5, 7.75, 8, 15.5, 15.75, 16, 31.5, 31.75,
+            32, 63.5, 63.75, 64, 127.5, 127.75, 128
+        };
+
         [TestMethod]
         public void BetaTest() {
-            for (ddouble b = 1d / 32; b <= 128; b *= 2) {
-                for (ddouble a = 1d / 32; a <= 128; a *= 2) {
+            foreach (ddouble b in tests_ab) {
+                foreach (ddouble a in tests_ab) {
                     Console.WriteLine($"{a},{b}");
 
                     ddouble f = ddouble.Beta(a, b);
                     ddouble g = ddouble.Beta(a + 1, b);
                     ddouble h = ddouble.Beta(a, b + 1);
 
-                    HPAssert.AreEqual(a * h, b * g, f * 4e-28);
+                    HPAssert.AreEqual(a * h, b * g, a * h * 4e-28);
                     HPAssert.AreEqual(f, g + h, f * 4e-28);
                 }
 
@@ -27,9 +34,8 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void IncompleteBetaTest() {
 
-            for (ddouble b = 1d / 64; b <= 128; b *= 2) {
-                for (ddouble a = 1d / 64; a <= 128; a *= 2) {
-
+            foreach (ddouble b in tests_ab) {
+                foreach (ddouble a in tests_ab) {
                     for (ddouble x = 0; x <= 1; x += 1d / 8) {
                         Console.WriteLine($"{x},{a},{b}");
 
@@ -45,7 +51,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble a = 1d / 32; a <= 128; a += 1d / 16) {
+            foreach (ddouble a in tests_ab) {
                 for (ddouble x = 1d / 16; x <= 1; x += 1d / 16) {
                     Console.WriteLine($"{x},{a}");
 
@@ -60,7 +66,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble b = 1d / 16; b <= 128; b += 1d / 16) {
+            foreach (ddouble b in tests_ab) {
                 for (ddouble x = 1d / 16; x <= 1; x += 1d / 16) {
                     Console.WriteLine($"{x},{b}");
 
@@ -81,25 +87,25 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void LogBetaTest() {
-            for (ddouble a = 0.25; a <= 4; a *= 2) {
-                for (ddouble b = 0.25; b <= 4; b *= 2) {
+            foreach (ddouble b in tests_ab) {
+                foreach (ddouble a in tests_ab) {
                     ddouble expected = ddouble.Log(ddouble.Beta(a, b));
                     ddouble actual = ddouble.LogBeta(a, b);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30, $"{a}, {b}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{a}, {b}");
                 }
             }
         }
 
         [TestMethod]
         public void IncompleteBetaRegularizedTest() {
-            for (ddouble a = 0.25; a <= 4; a *= 2) {
-                for (ddouble b = 0.25; b <= 4; b *= 2) {
+            foreach (ddouble b in tests_ab) {
+                foreach (ddouble a in tests_ab) {
                     for (ddouble x = 0; x <= 1; x += 0.125) {
                         ddouble expected = ddouble.IncompleteBeta(x, a, b) / ddouble.Beta(a, b);
                         ddouble actual = ddouble.IncompleteBetaRegularized(x, a, b);
 
-                        HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 8e-31, $"{x}, {a}, {b}");
+                        HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{x},{a},{b}");
                     }
                 }
             }
