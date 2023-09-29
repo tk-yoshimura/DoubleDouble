@@ -9,6 +9,8 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void GammaTest() {
+            ddouble.Gamma(36.5);
+
             for (BigInteger i = 1, y = 1; i <= 36; i++, y = y * (i - 1)) {
                 ddouble x = ddouble.Gamma(i);
 
@@ -18,10 +20,15 @@ namespace DoubleDoubleTest.DDouble {
             ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
 
             for (BigInteger i = 1, y = 1, z = 1; i <= 128; i++, y *= 2, z *= 2 * i - 3) {
-                ddouble x = ddouble.Gamma((2 * (int)i - 1) * 0.5d);
+                double u = (2 * (int)i - 1) * 0.5d;
+                ddouble x = ddouble.Gamma(u);
                 ddouble v = sqrtpi * z / y;
 
-                HPAssert.NeighborBits(v, x, 8);
+                Console.WriteLine(u);
+                Console.WriteLine(v);
+                Console.WriteLine(x);
+
+                HPAssert.NeighborBits(v, x, $"{u}", 8);
             }
 
             HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 8);

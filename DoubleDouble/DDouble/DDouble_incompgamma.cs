@@ -9,10 +9,10 @@
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (nu > IncompleteGamma.MaxNu) {
+            if (nu > Consts.IncompleteGamma.MaxNu) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
-                    $"{nameof(nu)} greater than {IncompleteGamma.MaxNu} is not supported."
+                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNu} is not supported."
                 );
             }
 
@@ -20,7 +20,7 @@
                 return NaN;
             }
 
-            if (x < (double)nu + IncompleteGamma.ULBias) {
+            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Exp(nu * Log(x) - x) / f;
 
@@ -42,10 +42,10 @@
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (nu > IncompleteGamma.MaxNu) {
+            if (nu > Consts.IncompleteGamma.MaxNu) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
-                    $"{nameof(nu)} greater than {IncompleteGamma.MaxNu} is not supported."
+                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNu} is not supported."
                 );
             }
 
@@ -53,14 +53,14 @@
                 return NaN;
             }
 
-            if (x < IncompleteGamma.Eps) {
+            if (x < Consts.IncompleteGamma.Eps) {
                 return Gamma(nu);
             }
-            if (nu < IncompleteGamma.Eps) {
+            if (nu < Consts.IncompleteGamma.Eps) {
                 return -Ei(-x);
             }
 
-            if (x < (double)nu + IncompleteGamma.ULBias) {
+            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Gamma(nu) - Exp(nu * Log(x) - x) / f;
 
@@ -74,10 +74,88 @@
             }
         }
 
-        internal static class IncompleteGamma {
-            public static double Eps = double.ScaleB(1, -105);
-            public static double ULBias = 0.125;
-            public static double MaxNu = 196d;
+        public static ddouble LowerIncompleteGammaRegularized(ddouble nu, ddouble x) {
+            if (nu < 0d) {
+                throw new ArgumentOutOfRangeException(nameof(nu));
+            }
+            if (x < 0d) {
+                throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteGammaRegularized function, " +
+                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                );
+            }
+
+            if (IsNaN(nu) || IsNaN(x)) {
+                return NaN;
+            }
+
+            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
+                ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                y = Min(y, One);
+
+                return y;
+            }
+            else {
+                ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = 1d - Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                y = Max(y, Zero);
+
+                return y;
+            }
+        }
+
+        public static ddouble UpperIncompleteGammaRegularized(ddouble nu, ddouble x) {
+            if (nu < 0d) {
+                throw new ArgumentOutOfRangeException(nameof(nu));
+            }
+            if (x < 0d) {
+                throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteGammaRegularized function, " +
+                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                );
+            }
+
+            if (IsNaN(nu) || IsNaN(x)) {
+                return NaN;
+            }
+
+            if (x < Consts.IncompleteGamma.Eps) {
+                return One;
+            }
+
+            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
+                ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = One - Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                y = Max(y, Zero);
+
+                return y;
+            }
+            else {
+                ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
+                ddouble y = Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                y = Min(y, One);
+
+                return y;
+            }
+        }
+
+        internal static partial class Consts {
+            internal static class IncompleteGamma {
+                public static readonly double Eps = double.ScaleB(1, -105);
+                public const double ULBias = 0.125;
+                public const double MaxNu = Consts.Gamma.ExtremeLarge;
+                public const double MaxNuRegularized = 8192d;
+                public const int CFracMaxIter = 8192;
+            }
         }
 
         internal static class UpperIncompleteGammaCFrac {
@@ -88,7 +166,7 @@
                 ddouble p0 = 0d, p1 = nui, p2 = 0;
                 ddouble q0 = 0d, q1 = xmnui, q2 = 1;
 
-                for (int i = 2; i < 8192; i++) {
+                for (int i = 2; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
                     nui -= 1d; xmnui += 2d;
 
                     ddouble a = i * nui;
@@ -125,7 +203,7 @@
 
                 ddouble ix = 0d, nu2i = nu;
 
-                for (int i = 1; i < 8192; i++) {
+                for (int i = 1; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
                     ix += x; nu2i += 2d;
 
                     ddouble a1 = ix, a2 = -nux - ix;

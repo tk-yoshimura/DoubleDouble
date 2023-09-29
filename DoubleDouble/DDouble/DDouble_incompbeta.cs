@@ -6,6 +6,14 @@
                 return NaN;
             }
 
+            if (a + b - Max(a, b) > Consts.IncompleteBeta.MaxAB) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteBeta function, " +
+                    $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)} greater than " +
+                    $"{Consts.IncompleteBeta.MaxAB} is not supported."
+                );
+            }
+
             if (IsZero(x)) {
                 return Zero;
             }
@@ -37,6 +45,14 @@
                 return NaN;
             }
 
+            if (a + b - Max(a, b) > Consts.IncompleteBeta.MaxABRegularized) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteBetaRegularized function, " +
+                    $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)} greater than" +
+                    $" {Consts.IncompleteBeta.MaxABRegularized} is not supported."
+                );
+            }
+
             if (IsZero(x)) {
                 return Zero;
             }
@@ -57,10 +73,18 @@
             else {
                 ddouble f = IncompleteBetaCFrac.Value(1d - x, b, a);
 
-                ddouble y = One - Exp(a * Log(x) + b * Log(1d - x) - LogBeta(a, b)) / f;
+                ddouble y = 1d - Exp(a * Log(x) + b * Log(1d - x) - LogBeta(a, b)) / f;
                 y = Max(y, Zero);
 
                 return y;
+            }
+        }
+
+        internal static partial class Consts {
+            internal static class IncompleteBeta {
+                public const double MaxAB = 512d;
+                public const double MaxABRegularized = 8192d;
+                public const int CFracMaxIter = 8192;
             }
         }
 
@@ -72,7 +96,7 @@
 
                 ddouble a2i = a, ai = a, bi = b, abi = ab;
 
-                for (int i = 1; i < 8192; i++) {
+                for (int i = 1; i < Consts.IncompleteBeta.CFracMaxIter; i++) {
                     a2i += 2d; ai += 1d; bi -= 1d; abi += 1d;
 
                     ddouble a1 = (bi * i * x) / ((a2i - 1d) * a2i);

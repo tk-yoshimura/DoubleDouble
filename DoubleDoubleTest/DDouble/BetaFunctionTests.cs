@@ -83,6 +83,13 @@ namespace DoubleDoubleTest.DDouble {
             HPAssert.AreEqual(
                 "0.0107206939812333955315378535295139067594857737069262075239118707",
                 ddouble.IncompleteBeta(1 / 8d, 15 / 8d, 35 / 32d), 1e-30);
+
+            for (ddouble ab = 500; ab <= 512; ab += 0.125) {
+                ddouble v = ddouble.IncompleteBeta(0.5, ab, ab);
+
+                Console.WriteLine(v);
+                Assert.IsTrue(ddouble.IsFinite(v));
+            }
         }
 
         [TestMethod]
@@ -108,6 +115,13 @@ namespace DoubleDoubleTest.DDouble {
                         HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{x},{a},{b}");
                     }
                 }
+            }
+
+            for (ddouble ab = 4000; ab <= 4096; ab += 0.5) {
+                ddouble v = ddouble.IncompleteBetaRegularized(0.5, ab, ab);
+
+                Console.WriteLine(v);
+                Assert.IsTrue(ddouble.IsFinite(v));
             }
         }
     }

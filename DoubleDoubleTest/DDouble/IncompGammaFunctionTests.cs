@@ -3151,5 +3151,29 @@ namespace DoubleDoubleTest.DDouble {
             HPAssert.AreEqual("1.541742173506604322781460596927986833764e213", ddouble.LowerIncompleteGamma(128, 128), 1e185);
             HPAssert.AreEqual("3.012660018457659543894743089302033651578e213", ddouble.LowerIncompleteGamma(128, 256), 1e185);
         }
+
+        [TestMethod]
+        public void LowerIncompleteGammaRegularizedTest() {
+            foreach (double x in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 127.5, 128, 165.5, 170 }) {
+                foreach (double nu in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 127.5, 128, 165.5, 170 }) {
+                    ddouble expected = ddouble.LowerIncompleteGamma(nu, x) / ddouble.Gamma(nu);
+                    ddouble actual = ddouble.LowerIncompleteGammaRegularized(nu, x);
+
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{nu},{x}");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UpperIncompleteGammaRegularizedTest() {
+            foreach (double x in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 127.5, 128, 165.5, 170 }) {
+                foreach (double nu in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 127.5, 128, 165.5, 170 }) {
+                    ddouble expected = ddouble.UpperIncompleteGamma(nu, x) / ddouble.Gamma(nu);
+                    ddouble actual = ddouble.UpperIncompleteGammaRegularized(nu, x);
+
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{nu},{x}");
+                }
+            }
+        }
     }
 }
