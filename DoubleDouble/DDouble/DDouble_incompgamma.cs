@@ -203,7 +203,7 @@ namespace DoubleDouble {
                 }
 
 #if DEBUG
-                Trace.Assert(convergenced, $"[LowerIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
+                Trace.Assert(convergenced, $"[UpperIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
 #endif
 
                 ddouble f = xmnu + 1d + p0 / q0;
