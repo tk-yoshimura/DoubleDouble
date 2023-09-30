@@ -148,7 +148,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Floor(x)|N/A|N/A||
 |ddouble.Ceiling(x)|N/A|N/A||
 |ddouble.Round(x)|N/A|N/A||
-|ddouble.Truncate(x)||N/A|N/A||
+|ddouble.Truncate(x)|N/A|N/A||
 |IEnumerable&lt;ddouble&gt;.Sum()|N/A|N/A||
 |IEnumerable&lt;ddouble&gt;.Average()|N/A|N/A||
 |IEnumerable&lt;ddouble&gt;.Min()|N/A|N/A||
