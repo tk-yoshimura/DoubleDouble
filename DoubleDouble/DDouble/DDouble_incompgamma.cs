@@ -164,19 +164,23 @@ namespace DoubleDouble {
             public static double Eps = double.ScaleB(1, -105);
 
             public static ddouble Value(ddouble nu, ddouble x) {
-                ddouble xmnu = x - nu, xmnui = x - nu + 3d, nui = nu - 1d;
-                ddouble p0 = 0d, p1 = nui, p2 = 0;
-                ddouble q0 = 0d, q1 = xmnui, q2 = 1;
+                ddouble xmnu = x - nu;
+                ddouble p0 = 0d, p1 = 0d, p2 = nu - 1d, p3 = 0;
+                ddouble q0 = 0d, q1 = 0d, q2 = xmnu + 3d, q3 = 1;
+
+                ddouble nu2i = nu, xmnu4i = xmnu + 1d;
 
                 bool convergenced = false;
-                for (int i = 2; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
-                    nui -= 1d; xmnui += 2d;
+                for (int i = 1; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
+                    nu2i -= 2d; xmnu4i += 4d;
 
-                    ddouble a = i * nui;
-                    ddouble b = xmnui;
+                    ddouble a1 = (2 * i) * nu2i, a2 = (2 * i + 1) * (nu2i - 1d);
+                    ddouble b1 = xmnu4i, b2 = xmnu4i + 2d;
 
-                    p0 = a * p2 + b * p1;
-                    q0 = a * q2 + b * q1;
+                    p1 = a1 * p3 + b1 * p2;
+                    q1 = a1 * q3 + b1 * q2;
+                    p0 = a2 * p2 + b2 * p1;
+                    q0 = a2 * q2 + b2 * q1;
 
                     (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
                     (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
@@ -194,8 +198,8 @@ namespace DoubleDouble {
                         }
                     }
 
-                    (p1, p2) = (p0, p1);
-                    (q1, q2) = (q0, q1);
+                    (p2, p3) = (p0, p1);
+                    (q2, q3) = (q0, q1);
                 }
 
 #if DEBUG
