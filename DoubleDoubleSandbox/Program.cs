@@ -6,11 +6,10 @@ using static DoubleDouble.ddouble;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble x = 0; x <= 16; x += 1d / 64) {
-                ddouble t1 = ddouble.LowerIncompleteGammaRegularized(4, x);
-                ddouble t2 = ddouble.UpperIncompleteGammaRegularized(4, x);
+            for (ddouble x = 0; x <= 32; x += 1d / 4) {
+                ddouble y = ddouble.Erfc(x);
 
-                Console.WriteLine($"{x},{t1},{t2}");
+                Console.WriteLine($"{x},{y}");
             }
 
             Console.WriteLine("END");

@@ -243,6 +243,8 @@ namespace DoubleDoubleTest.DDouble {
                 (24.50d, "4.749361264067378997552878283177710144873e-263"),
                 (24.75d, "2.113403975655410135839019349039793114209e-268"),
                 (25.00d, "8.300172571196522752044012769513722768714e-274"),
+                (25.25d, "2.877054827329395001623818934268684745980e-279"),
+                (25.50d, "8.801662690727950571267149831749167485576e-285"),
             }) {
                 ddouble x_dec = ddouble.BitDecrement(x);
                 ddouble x_inc = ddouble.BitIncrement(x);
@@ -258,6 +260,28 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 2e-30);
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 2e-30);
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_inc) - 1) < 2e-30);
+            }
+
+            foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
+                (25.75d, "2.376490305702940641629790365675264980174e-290"),
+                (26.00d, "5.663192408856142846475727896926092580329e-296"),
+                (26.25d, "1.191076770672623004031205883061718715195e-301"),
+                (26.50d, "2.210907664263734275929239022915826039075e-307"),
+            }) {
+                ddouble x_dec = ddouble.BitDecrement(x);
+                ddouble x_inc = ddouble.BitIncrement(x);
+
+                Console.WriteLine(ddouble.Erfc(x_dec));
+                Console.WriteLine(ddouble.Erfc(x));
+                Console.WriteLine(ddouble.Erfc(x_inc));
+
+                HPAssert.AreEqual(expected, ddouble.Erfc(x_dec), expected * 2e-20d);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 2e-20d);
+                HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 2e-20d);
+
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 2e-20);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 2e-20);
+                Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_inc) - 1) < 2e-20);
             }
 
             ddouble erfc_pzero = ddouble.Erfc(0d);

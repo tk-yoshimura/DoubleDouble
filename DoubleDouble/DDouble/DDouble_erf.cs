@@ -276,9 +276,16 @@ namespace DoubleDouble {
                 Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
 #endif
 
-                ddouble y = sc / (sd * Exp(x * x));
+                if (x <= 25.75d) {
+                    ddouble y = sc / (sd * Exp(x * x));
 
-                return y;
+                    return y;
+                }
+                else {
+                    ddouble y = Pow2(Log2(sc / sd) - x * x * LbE);
+
+                    return y;
+                }
             }
 
             public static ddouble ErfcxGtP5(ddouble x) {
