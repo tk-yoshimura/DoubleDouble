@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Diagnostics;
+
+namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble IncompleteBeta(ddouble x, ddouble a, ddouble b) {
@@ -96,6 +98,7 @@
 
                 ddouble a2i = a, ai = a, bi = b, abi = ab;
 
+                bool convergenced = false;
                 for (int i = 1; i < Consts.IncompleteBeta.CFracMaxIter; i++) {
                     a2i += 2d; ai += 1d; bi -= 1d; abi += 1d;
 
@@ -110,16 +113,26 @@
                     (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
                     (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
 
-                    if (i > 0 && (i & 3) == 0) {
+                    if (convergenced || (i > 0 && (i & 3) == 0)) {
                         ddouble r0 = p0 * q1, r1 = p1 * q0;
                         if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-31)) {
-                            break;
+                            if (convergenced) {
+                                break;
+                            }
+                            convergenced = true;
+                        }
+                        else {
+                            convergenced = false;
                         }
                     }
 
                     (p2, p3) = (p0, p1);
                     (q2, q3) = (q0, q1);
                 }
+
+#if DEBUG
+                Trace.Assert(convergenced, $"[IncompleteBeta x={x},a={a},b={b}] Continued fraction not convergenced!!");
+#endif
 
                 ddouble f = a * (1d + p0 / q0);
 

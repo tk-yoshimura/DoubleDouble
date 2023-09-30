@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Diagnostics;
+
+namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x) {
@@ -166,6 +168,7 @@
                 ddouble p0 = 0d, p1 = nui, p2 = 0;
                 ddouble q0 = 0d, q1 = xmnui, q2 = 1;
 
+                bool convergenced = false;
                 for (int i = 2; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
                     nui -= 1d; xmnui += 2d;
 
@@ -178,16 +181,26 @@
                     (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
                     (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
 
-                    if (i > 0 && (i & 3) == 0) {
+                    if (convergenced || (i > 0 && (i & 3) == 0)) {
                         ddouble r0 = p0 * q1, r1 = p1 * q0;
                         if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-31)) {
-                            break;
+                            if (convergenced) {
+                                break;
+                            }
+                            convergenced = true;
+                        }
+                        else {
+                            convergenced = false;
                         }
                     }
 
                     (p1, p2) = (p0, p1);
                     (q1, q2) = (q0, q1);
                 }
+
+#if DEBUG
+                Trace.Assert(convergenced, $"[LowerIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
+#endif
 
                 ddouble f = xmnu + 1d + p0 / q0;
 
@@ -203,6 +216,7 @@
 
                 ddouble ix = 0d, nu2i = nu;
 
+                bool convergenced = false;
                 for (int i = 1; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
                     ix += x; nu2i += 2d;
 
@@ -217,16 +231,26 @@
                     (int exp, (p0, q0)) = AdjustScale(0, (p0, q0));
                     (p1, q1) = (Ldexp(p1, exp), Ldexp(q1, exp));
 
-                    if (i > 0 && (i & 3) == 0) {
+                    if (convergenced || (i > 0 && (i & 3) == 0)) {
                         ddouble r0 = p0 * q1, r1 = p1 * q0;
                         if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-31)) {
-                            break;
+                            if (convergenced) {
+                                break;
+                            }
+                            convergenced = true;
+                        }
+                        else {
+                            convergenced = false;
                         }
                     }
 
                     (p2, p3) = (p0, p1);
                     (q2, q3) = (q0, q1);
                 }
+
+#if DEBUG
+                Trace.Assert(convergenced, $"[LowerIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
+#endif
 
                 ddouble f = nu + p0 / q0;
 
