@@ -99,7 +99,7 @@ namespace DoubleDouble {
                 ddouble a2i = a, ai = a, bi = b, abi = ab;
 
                 bool convergenced = false;
-                for (int i = 1; i < Consts.IncompleteBeta.CFracMaxIter; i++) {
+                for (int i = 1; i <= Consts.IncompleteBeta.CFracMaxIter; i++) {
                     a2i += 2d; ai += 1d; bi -= 1d; abi += 1d;
 
                     ddouble a1 = (bi * i * x) / ((a2i - 1d) * a2i);

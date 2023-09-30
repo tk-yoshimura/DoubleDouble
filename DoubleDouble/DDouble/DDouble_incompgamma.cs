@@ -171,7 +171,7 @@ namespace DoubleDouble {
                 ddouble nu2i = nu, xmnu4i = xmnu + 1d;
 
                 bool convergenced = false;
-                for (int i = 1; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
+                for (int i = 1; i <= Consts.IncompleteGamma.CFracMaxIter; i++) {
                     nu2i -= 2d; xmnu4i += 4d;
 
                     ddouble a1 = (2 * i) * nu2i, a2 = (2 * i + 1) * (nu2i - 1d);
@@ -221,7 +221,7 @@ namespace DoubleDouble {
                 ddouble ix = 0d, nu2i = nu;
 
                 bool convergenced = false;
-                for (int i = 1; i < Consts.IncompleteGamma.CFracMaxIter; i++) {
+                for (int i = 1; i <= Consts.IncompleteGamma.CFracMaxIter; i++) {
                     ix += x; nu2i += 2d;
 
                     ddouble a1 = ix, a2 = -nux - ix;
