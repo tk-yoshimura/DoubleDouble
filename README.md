@@ -88,9 +88,9 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.EllipticE(m)|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|
 |ddouble.EllipticPi(n, m)|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|
 |ddouble.EllipticK(x, m)|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2|
-|ddouble.EllipticE(x, m)|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2|
-|ddouble.EllipticPi(n, x, m)|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2<br/>Argument order follows wolfram.|
-|ddouble.EllipticTheta(a, x, q)|&#40;-inf,+inf&#41;|4|a=1...4, q &leq; 0.995|
+|ddouble.EllipticE(x, m)|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2, incomplete elliptic integral|
+|ddouble.EllipticPi(n, x, m)|&#91;0,2pi&#93;|4|k: elliptic modulus, m=k^2<br/>Argument order follows wolfram. incomplete elliptic integral|
+|ddouble.EllipticTheta(a, x, q)|&#40;-inf,+inf&#41;|4|a=1...4, q &leq; 0.995, incomplete elliptic integral|
 |ddouble.KeplerE(m, e, centered)|&#40;-inf,+inf&#41;|6|inverse kepler's equation, e(eccentricity) &leq; 256|
 |ddouble.Agm(a, b)|&#91;0,+inf&#41;|2||
 |ddouble.FresnelC(x)|&#40;-inf,+inf&#41;|4||
@@ -125,9 +125,9 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Bump(x)|&#40;-inf,+inf&#41;|4|C-infinity smoothness basis function, bump(x)=1/(exp(1/x-1/(1-x))+1)|
 |ddouble.HermiteH(n, x)|&#40;-inf,+inf&#41;|3|n &leq; 64|
 |ddouble.LaguerreL(n, x)|&#40;-inf,+inf&#41;|3|n &leq; 64|
-|ddouble.LaguerreL(n, alpha, x)|&#40;-inf,+inf&#41;|3|n &leq; 64|
+|ddouble.LaguerreL(n, alpha, x)|&#40;-inf,+inf&#41;|3|n &leq; 64, associated|
 |ddouble.LegendreP(n, x)|&#40;-inf,+inf&#41;|3|n &leq; 64|
-|ddouble.LegendreP(n, m, x)|&#91;-1,1&#93;|3|n &leq; 64|
+|ddouble.LegendreP(n, m, x)|&#91;-1,1&#93;|3|n &leq; 64, associated|
 |ddouble.ChebyshevT(n, x)|&#40;-inf,+inf&#41;|3|n &leq; 64|
 |ddouble.ChebyshevU(n, x)|&#40;-inf,+inf&#41;|3|n &leq; 64|
 |ddouble.ZernikeR(n, m, x)|&#91;0,1&#93;|3|n &leq; 64|
