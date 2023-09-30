@@ -24,13 +24,13 @@ namespace DoubleDouble {
 
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = Exp(nu * Log(x) - x) / f;
+                ddouble y = Pow2(nu * Log2(x) - x * LbE) / f;
 
                 return y;
             }
             else {
                 ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = Gamma(nu) - Exp(nu * Log(x) - x) / f;
+                ddouble y = Gamma(nu) - Pow2(nu * Log2(x) - x * LbE) / f;
 
                 return y;
             }
@@ -64,13 +64,13 @@ namespace DoubleDouble {
 
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = Gamma(nu) - Exp(nu * Log(x) - x) / f;
+                ddouble y = Gamma(nu) - Pow2(nu * Log2(x) - x * LbE) / f;
 
                 return y;
             }
             else {
                 ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = Exp(nu * Log(x) - x) / f;
+                ddouble y = Pow2(nu * Log2(x) - x * LbE) / f;
 
                 return y;
             }
@@ -97,14 +97,14 @@ namespace DoubleDouble {
 
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                ddouble y = Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
                 y = Min(y, One);
 
                 return y;
             }
             else {
                 ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = 1d - Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                ddouble y = 1d - Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
                 y = Max(y, Zero);
 
                 return y;
@@ -136,14 +136,14 @@ namespace DoubleDouble {
 
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = One - Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                ddouble y = 1d - Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
                 y = Max(y, Zero);
 
                 return y;
             }
             else {
                 ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
-                ddouble y = Exp(nu * Log(x) - x - LogGamma(nu)) / f;
+                ddouble y = Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
                 y = Min(y, One);
 
                 return y;
