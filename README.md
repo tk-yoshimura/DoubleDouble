@@ -156,29 +156,29 @@ MaxValue : 2^1024 = 1.79769e308
 
 ## Constants
 
-|constant|value|note|usage|
-|----|----|----|----|
-|Pi|3.141592653589793238462...||ddouble.PI|
-|Napier's E|2.718281828459045235360...||ddouble.E|
-|Euler's Gamma|0.577215664901532860606...||ddouble.EulerGamma|
-|&zeta;(3)|1.202056903159594285399...|Apery const.|ddouble.Zeta3|
-|&zeta;(5)|1.036927755143369926331...||ddouble.Zeta5|
-|&zeta;(7)|1.008349277381922826839...||ddouble.Zeta7|
-|&zeta;(9)|1.002008392826082214418...||ddouble.Zeta9|
-|Positive root of digamma|1.461632144968362341263...||ddouble.DigammaZero|
-|Erdös Borwein constant|1.606695152415291763783...||ddouble.ErdosBorwein|
-|Feigenbaum constant|4.669201609102990671853...||ddouble.FeigenbaumDelta|
-|Lemniscate constant|2.622057554292119810465...||ddouble.LemniscatePI|
+|constant|value|note|
+|----|----|----|
+|ddouble.PI|3.141592653589793238462...|Pi|
+|ddouble.E|2.718281828459045235360...|Napier's E|
+|ddouble.EulerGamma|0.577215664901532860606...|Euler's Gamma|
+|ddouble.Zeta3|1.202056903159594285399...|&zeta;(3), Apery const.|
+|ddouble.Zeta5|1.036927755143369926331...|&zeta;(5)|
+|ddouble.Zeta7|1.008349277381922826839...|&zeta;(7)|
+|ddouble.Zeta9|1.002008392826082214418...|&zeta;(9)|
+|ddouble.DigammaZero|1.461632144968362341263...|Positive root of digamma|
+|ddouble.ErdosBorwein|1.606695152415291763783...|Erdös Borwein constant|
+|ddouble.FeigenbaumDelta|4.669201609102990671853...|Feigenbaum constant|
+|ddouble.LemniscatePI|2.622057554292119810465...|Lemniscate constant|
 
 ## Sequence
 
-|sequence|note|usage|
-|----|----|----|
-|Taylor|1/n!|ddouble.TaylorSequence|
-|Factorial|n!|ddouble.Factorial|
-|Bernoulli|B(2k)|ddouble.BernoulliSequence|
-|HarmonicNumber|H_n|ddouble.HarmonicNumber|
-|StieltjesGamma|&gamma;_n|ddouble.StieltjesGamma|
+|sequence|note|
+|----|----|
+|ddouble.TaylorSequence|Taylor,1/n!|
+|ddouble.Factorial|Factorial,n!|
+|ddouble.BernoulliSequence|Bernoulli,B(2k)|
+|ddouble.HarmonicNumber|HarmonicNumber, H_n|
+|ddouble.StieltjesGamma|StieltjesGamma, &gamma;_n|
 
 ## Casts
 
