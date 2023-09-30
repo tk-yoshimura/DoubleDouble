@@ -48,10 +48,10 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble p = (x - 0.5d) * Log(x);
+                ddouble p = (x - 0.5d) * Log2(x);
                 ddouble s = SterlingTerm(x);
 
-                ddouble y = Consts.Gamma.SqrtPI2 * Exp(p + s - x);
+                ddouble y = Consts.Gamma.SqrtPI2 * Pow2(p + (s - x) * LbE);
 
                 return y;
             }
