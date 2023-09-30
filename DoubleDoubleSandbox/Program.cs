@@ -1,7 +1,5 @@
 ﻿using DoubleDouble;
 using System;
-using System.Diagnostics;
-using static DoubleDouble.ddouble;
 
 namespace DoubleDoubleSandbox {
     public static class Program {
