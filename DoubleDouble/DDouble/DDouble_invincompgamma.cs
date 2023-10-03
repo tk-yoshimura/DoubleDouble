@@ -13,26 +13,39 @@
                 return InverseUpperIncompleteGamma(nu, 1d - x);
             }
 
-            ddouble u = Log2(x), lngamma = LogGamma(nu);
-            //ddouble v = nu;
+            ddouble u = Log(x), lngamma = LogGamma(nu);
+            ddouble v = nu, prev_dv = 1;
 
-            for (ddouble v = 1d / 64; v <= nu; v += 1d / 64) {
-                ddouble lnv = Log2(v);
+            for (int i = 0; i < 16; i++) {
+                ddouble lnv = Log(v);
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, v);
-                ddouble y = nu * lnv - (v + lngamma) * LbE - Log2(f);
-                ddouble g = Exp(-v) * Pow(v, nu - 1d) / LowerIncompleteGamma(nu, v) * LbE;
-                ddouble g2 = Exp(-v) * Pow(v, nu - 2d) * (nu - v - 1) / LowerIncompleteGamma(nu, v) * LbE - g * g / LbE;
-                ddouble dv = (y - u) / g;
+                ddouble y = nu * lnv - (v + lngamma) - Log(f);
 
-                ddouble c = Pow2(y);
+                ddouble g1 = f / v;
+                ddouble g2 = g1 * (nu - 1d - v - f) / v;
+                ddouble delta = y - u;
+
+                ddouble dv_raw = -Ldexp(delta * g1, 1) / (delta * g2 - Ldexp(g1 * g1, 1));
+                ddouble dv = Ldexp(delta * v, 1) / (delta * (v + f - nu + 1d) + Ldexp(f, 1));
+
+                ddouble c = Exp(y);
                 ddouble p = LowerIncompleteGammaRegularized(nu, v);
 
-                Console.WriteLine($"{v},{y},{g},{g2}");
+                if (IsNaN(dv)) {
+                    break;
+                }
+                if (Sign(dv) != Sign(prev_dv)) {
+                    dv /= 2;
+                }
 
-                //v = Max(0d, v - dv);
+                v = Max(Ldexp(v, -6), v - dv);
+
+                if (double.Abs(dv.hi) <= double.Abs(v.hi) * 5e-32) {
+                    break;
+                }
             }
 
-            return 0;
+            return v;
         }
 
         public static ddouble InverseUpperIncompleteGamma(ddouble nu, ddouble x) {
