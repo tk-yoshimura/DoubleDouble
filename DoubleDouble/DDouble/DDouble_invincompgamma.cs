@@ -14,7 +14,13 @@
             }
 
             ddouble u = Log(x), lngamma = LogGamma(nu);
-            ddouble v = nu, prev_dv = 1;
+            ddouble prev_dv = 1;
+
+            ddouble v = x > 1e-64
+                ? nu 
+                : nu > 1d / 64
+                ? Exp((Log(nu) + u + lngamma) / nu)
+                : Pow(x, 1d / nu);
 
             for (int i = 0; i < 16; i++) {
                 ddouble lnv = Log(v);
