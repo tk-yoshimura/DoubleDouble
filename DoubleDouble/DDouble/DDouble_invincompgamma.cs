@@ -5,12 +5,12 @@
                 return NaN;
             }
 
-            if (x == 1d) {
-                return PositiveInfinity;
-            }
-
             if (x > 0.5d) {
                 return InverseUpperIncompleteGamma(nu, 1d - x);
+            }
+
+            if (x == 0d) {
+                return Zero;
             }
 
             ddouble u = Log(x), lngamma = LogGamma(nu);
@@ -55,6 +55,10 @@
 
             if (x > 0.5d) {
                 return InverseLowerIncompleteGamma(nu, 1d - x);
+            }
+
+            if (x == 0d) {
+                return PositiveInfinity;
             }
 
             ddouble u = Log2(x), lngamma = LogGamma(nu);
