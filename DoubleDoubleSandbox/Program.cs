@@ -4,7 +4,8 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble.InverseLowerIncompleteGamma("0.01", "1e-2");
+            //ddouble.InverseLowerIncompleteGamma(4, "1e-2");
+            ddouble.InverseUpperIncompleteGamma("0.125", "1e-8");
 
             ddouble nu = "0.001";
 
