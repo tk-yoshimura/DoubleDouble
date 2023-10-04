@@ -16,13 +16,9 @@
             ddouble u = Log(x), lngamma = LogGamma(nu);
             ddouble prev_dv = 1;
 
-            ddouble v = x > 1e-64
-                ? nu 
-                : nu > 1d / 64
-                ? Exp((Log(nu) + u + lngamma) / nu)
-                : Pow(x, 1d / nu);
+            ddouble v = Min(nu, nu > 1d / 32 ? Exp((Log(nu) + u + lngamma) / nu) : Pow(x, 1d / nu));
 
-            for (int i = 0; i < 16; i++) {
+            for (int i = 0, convergence_times = 0; i < 16 && convergence_times < 4; i++) {
                 ddouble lnv = Log(v);
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, v);
                 ddouble y = nu * lnv - (v + lngamma) - Log(f);
@@ -44,11 +40,17 @@
                     dv /= 2;
                 }
 
-                v = Max(Ldexp(v, -6), v - dv);
+                v = Max(Ldexp(v, -2), v - dv);
 
                 if (double.Abs(dv.hi) <= double.Abs(v.hi) * 5e-32) {
                     break;
                 }
+
+                if (double.Abs(dv.hi) <= double.Abs(v.hi) * 1e-28) {
+                    convergence_times++;
+                }
+
+                prev_dv = dv;
             }
 
             return v;
