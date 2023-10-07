@@ -5,55 +5,11 @@
                 return NaN;
             }
 
-            if (x > 0.5d) {
-                return InverseUpperIncompleteGamma(nu, 1d - x);
-            }
-
-            if (x == 0d) {
+            if (x == 0d || nu < Consts.IncompleteGamma.MinNu) {
                 return Zero;
             }
 
-            ddouble u = Log(x), lngamma = LogGamma(nu);
-            ddouble prev_dv = 1;
-
-            ddouble v = Min(nu, nu > 1d / 32 ? Exp((Log(nu) + u + lngamma) / nu) : Pow(x, 1d / nu));
-
-            for (int i = 0, convergence_times = 0; i < 16 && convergence_times < 4; i++) {
-                ddouble lnv = Log(v);
-                ddouble f = LowerIncompleteGammaCFrac.Value(nu, v);
-                ddouble y = nu * lnv - (v + lngamma) - Log(f);
-
-                ddouble g1 = f / v;
-                ddouble g2 = g1 * (nu - 1d - v - f) / v;
-                ddouble delta = y - u;
-
-                ddouble dv_raw = -Ldexp(delta * g1, 1) / (delta * g2 - Ldexp(g1 * g1, 1));
-                ddouble dv = Ldexp(delta * v, 1) / (delta * (v + f - nu + 1d) + Ldexp(f, 1));
-
-                ddouble c = Exp(y);
-                ddouble p = LowerIncompleteGammaRegularized(nu, v);
-
-                if (IsNaN(dv)) {
-                    break;
-                }
-                if (Sign(dv) != Sign(prev_dv)) {
-                    dv /= 2;
-                }
-
-                v = Max(Ldexp(v, -2), v - dv);
-
-                if (double.Abs(dv.hi) <= double.Abs(v.hi) * 5e-32) {
-                    break;
-                }
-
-                if (double.Abs(dv.hi) <= double.Abs(v.hi) * 1e-28) {
-                    convergence_times++;
-                }
-
-                prev_dv = dv;
-            }
-
-            return v;
+            return InverseIncompleteGamma.Kernel(nu, x, Log(x), Log(1d - x));
         }
 
         public static ddouble InverseUpperIncompleteGamma(ddouble nu, ddouble x) {
@@ -61,55 +17,94 @@
                 return NaN;
             }
 
-            if (x > 0.5d) {
-                return InverseLowerIncompleteGamma(nu, 1d - x);
-            }
-
-            if (x == 0d) {
+            if (x == 0d || nu < Consts.IncompleteGamma.MinNu) {
                 return PositiveInfinity;
             }
 
-            ddouble u = Log(x), lngamma = LogGamma(nu);
-            ddouble prev_dv = 1;
+            return InverseIncompleteGamma.Kernel(nu, 1d - x, Log(1d - x), Log(x));
+        }
 
-            ddouble v = nu;
 
-            for (int i = 0, convergence_times = 0; i < 16 && convergence_times < 4; i++) {
-                ddouble lnv = Log(v);
-                ddouble f = UpperIncompleteGammaCFrac.Value(nu, v);
-                ddouble y = nu * lnv - (v + lngamma) - Log(f);
+        internal static class InverseIncompleteGamma {
+            public static ddouble Kernel(ddouble nu, ddouble p, ddouble lnp_lower, ddouble lnp_upper) {
+                double p5 = IncompleteGammaP5(nu.hi);
 
-                ddouble g1 = -f / v;
-                ddouble g2 = -g1 * (nu - 1d - v - f) / v;
-                ddouble delta = y - u;
+                ddouble lngamma = LogGamma(nu);
+                ddouble prev_dx = 1;
 
-                ddouble dv_raw = Ldexp(delta * g1, 1) / (delta * g2 - Ldexp(g1 * g1, 1));
-                ddouble dv = Ldexp(delta * v, 1) / (delta * (v + f - nu + 1d) + Ldexp(f, 1));
+                ddouble x = Min(p5, nu > 1d / 32 ? Exp((Log(nu) + lnp_lower + lngamma) / nu) : Pow(p, 1d / nu));
 
-                ddouble c = Exp(y);
-                ddouble p = UpperIncompleteGammaRegularized(nu, v);
+                ddouble v0 = LowerIncompleteGammaRegularized(nu, x);
+                Console.WriteLine($"{x},{v0}");
 
-                if (IsNaN(dv)) {
-                    break;
+                for (int i = 0, convergence_times = 0; i < 32 && convergence_times < 4; i++) {
+                    bool lower = x < (double)nu + Consts.IncompleteGamma.ULBias;
+
+                    ddouble f = lower
+                        ? LowerIncompleteGammaCFrac.Value(nu, x)
+                        : UpperIncompleteGammaCFrac.Value(nu, x);
+
+                    ddouble lnv = Log(x);
+                    ddouble y = nu * lnv - (x + lngamma) - Log(f);
+
+                    ddouble delta = lower ? (y - lnp_lower) : (y - lnp_upper);
+
+                    ddouble r = delta * (x + f - nu + 1d);
+                    ddouble c = Ldexp(delta * x, 1) / (delta * (x + f - nu + 1d) + Ldexp(f, 1));
+                    ddouble d = delta * x / f;
+
+                    Console.WriteLine($"{f},{r},{c},{d}");
+
+                    ddouble dx = x >= 0.25
+                        ? Ldexp(delta * x, 1) / (delta * (x + f - nu + 1d) + Ldexp(f, 1))
+                        : delta * x / f;
+
+                    if (IsNaN(dx)) {
+                        break;
+                    }
+                    if (Sign(dx) != Sign(prev_dx)) {
+                        dx /= 2;
+                    }
+
+                    x = lower ? Max(Ldexp(x, -4), x - dx) : Min(Ldexp(x, 4), x + dx);
+
+                    if (double.Abs(dx.hi) <= double.Abs(x.hi) * 5e-32) {
+                        break;
+                    }
+
+                    if (double.Abs(dx.hi) <= double.Abs(x.hi) * 1e-28) {
+                        convergence_times++;
+                    }
+
+                    ddouble v = LowerIncompleteGammaRegularized(nu, x);
+                    Console.WriteLine($"{x},{dx},{v},{lower}");
+
+                    prev_dx = dx;
                 }
-                if (Sign(dv) != Sign(prev_dv)) {
-                    dv /= 2;
-                }
 
-                v = Min(Ldexp(v, 2), v + dv);
-
-                if (double.Abs(dv.hi) <= double.Abs(v.hi) * 5e-32) {
-                    break;
-                }
-
-                if (double.Abs(dv.hi) <= double.Abs(v.hi) * 1e-28) {
-                    convergence_times++;
-                }
-
-                prev_dv = dv;
+                return x;
             }
 
-            return v;
+            public static double IncompleteGammaP5(double nu) {
+                double nu_ln2 = double.Log2(nu);
+
+                if (nu <= 1) {
+                    double b = nu * (1.184797 + nu * (-1.64793 + nu * (-1.87704 + nu * (3.354884 + nu * (-1.93304)))));
+                    double c = b - nu_ln2;
+                    double x = double.Exp2(-double.Exp2(c));
+
+                    return x;
+                }
+                else {
+                    double b =
+                        (-0.92055 + nu_ln2 * (-1.34724 + nu_ln2 * (-0.41283 + nu_ln2 * (-0.11429))))
+                        / (1 + nu_ln2 * (0.295360 + nu_ln2 * (0.114197)));
+
+                    double x = nu * double.Exp2(-double.Exp2(b));
+
+                    return x;
+                }
+            }
         }
     }
 }
