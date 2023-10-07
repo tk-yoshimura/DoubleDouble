@@ -65,6 +65,8 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.UpperIncompleteGamma(nu, x)|&#91;0,+inf&#41;|4|nu &leq; 170.625|
 |ddouble.LowerIncompleteGammaRegularized(nu, x)|&#91;0,+inf&#41;|4|nu &leq; 8192|
 |ddouble.UpperIncompleteGammaRegularized(nu, x)|&#91;0,+inf&#41;|4|nu &leq; 8192|
+|ddouble.InverseLowerIncompleteGamma(nu, x)|&#91;0,1&#93;|8|nu &leq; 8192|
+|ddouble.InverseUpperIncompleteGamma(nu, x)|&#91;0,1&#93;|8|nu &leq; 8192|
 |ddouble.Beta(a, b)|&#91;0,+inf&#41;|4||
 |ddouble.LogBeta(a, b)|&#91;0,+inf&#41;|4||
 |ddouble.IncompleteBeta(x, a, b)|&#91;0,1&#93;|4|Accuracy decreases when the radio of a,b is too large. a+b-max(a,b) &leq; 512|

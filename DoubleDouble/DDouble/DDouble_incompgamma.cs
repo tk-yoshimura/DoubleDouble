@@ -95,6 +95,10 @@ namespace DoubleDouble {
                 return NaN;
             }
 
+            if (nu < Consts.IncompleteGamma.MinNu) {
+                return IsZero(x) ? Zero : One;
+            }
+
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
@@ -130,8 +134,8 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x < Consts.IncompleteGamma.Eps) {
-                return One;
+            if (nu < Consts.IncompleteGamma.MinNu) {
+                return IsZero(x) ? One : Zero;
             }
 
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
@@ -153,9 +157,10 @@ namespace DoubleDouble {
         internal static partial class Consts {
             internal static class IncompleteGamma {
                 public static readonly double Eps = double.ScaleB(1, -105);
-                public const double ULBias = 0.125;
+                public const double MinNu = 1d / 1024;
                 public const double MaxNu = Consts.Gamma.ExtremeLarge;
                 public const double MaxNuRegularized = 8192d;
+                public const double ULBias = 0.125;
                 public const int CFracMaxIter = 8192;
             }
         }

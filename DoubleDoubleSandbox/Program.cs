@@ -1,14 +1,12 @@
 ﻿using DoubleDouble;
 using System;
+using System.IO;
 
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble x = 0; x <= 32; x += 1d / 4) {
-                ddouble y = ddouble.Erfc(x);
-
-                Console.WriteLine($"{x},{y}");
-            }
+            ddouble.InverseLowerIncompleteGamma(0.001, 0.125);
+            ddouble.InverseLowerIncompleteGamma(0.001, 0.875);
 
             Console.WriteLine("END");
             Console.Read();
