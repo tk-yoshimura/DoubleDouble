@@ -1,8 +1,23 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseLowerIncompleteGamma(ddouble nu, ddouble x) {
+            if (nu < 0d) {
+                throw new ArgumentOutOfRangeException(nameof(nu));
+            }
+
+            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteGamma function, " +
+                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                );
+            }
+
             if (!(x >= 0d && x <= 1d)) {
                 return NaN;
+            }
+
+            if (x == 1d) {
+                return PositiveInfinity;
             }
 
             if (x == 0d || nu < Consts.IncompleteGamma.MinNu) {
@@ -13,12 +28,27 @@
         }
 
         public static ddouble InverseUpperIncompleteGamma(ddouble nu, ddouble x) {
+            if (nu < 0d) {
+                throw new ArgumentOutOfRangeException(nameof(nu));
+            }
+
+            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+                throw new ArgumentOutOfRangeException(
+                    $"In the calculation of the IncompleteGamma function, " +
+                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                );
+            }
+
             if (!(x >= 0d && x <= 1d)) {
                 return NaN;
             }
 
-            if (x == 0d || nu < Consts.IncompleteGamma.MinNu) {
+            if (x == 0d) {
                 return PositiveInfinity;
+            }
+
+            if (x == 1d || nu < Consts.IncompleteGamma.MinNu) {
+                return Zero;
             }
 
             return InverseIncompleteGamma.Kernel(nu, 1d - x, Log(1d - x), Log(x));
@@ -30,12 +60,9 @@
                 double p5 = IncompleteGammaP5(nu.hi);
 
                 ddouble lngamma = LogGamma(nu);
-                ddouble prev_dx = 1;
+                ddouble prev_dx = 0d;
 
-                ddouble x = Min(p5, nu > 1d / 32 ? Exp((Log(nu) + lnp_lower + lngamma) / nu) : Pow(p, 1d / nu));
-
-                ddouble v0 = LowerIncompleteGammaRegularized(nu, x);
-                Console.WriteLine($"{x},{v0}");
+                ddouble x = (nu > 1d) ? Min(p5, Exp((Log(nu) + lnp_lower + lngamma) / nu)) : Pow(p, 1d / nu);
 
                 for (int i = 0, convergence_times = 0; i < 32 && convergence_times < 2; i++) {
                     bool lower = x < (double)nu + Consts.IncompleteGamma.ULBias;
@@ -57,11 +84,11 @@
                     if (IsNaN(dx)) {
                         break;
                     }
-                    if (Sign(dx) != Sign(prev_dx)) {
-                        dx /= 2;
+                    if (dx.hi * prev_dx.hi < 0d) {
+                        dx = Ldexp(dx, -1);
                     }
 
-                    x = lower ? Max(Ldexp(x, -4), x - dx) : Min(Ldexp(x, 4), x + dx);
+                    x = lower ? Max(Ldexp(x, -2), x - dx) : Min(Ldexp(x, 2), x + dx);
 
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 5e-32) {
                         break;
@@ -70,9 +97,6 @@
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 1e-28) {
                         convergence_times++;
                     }
-
-                    ddouble v = LowerIncompleteGammaRegularized(nu, x);
-                    Console.WriteLine($"{x},{dx},{v},{lower}");
 
                     prev_dx = dx;
                 }

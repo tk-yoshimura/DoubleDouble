@@ -138,10 +138,6 @@ namespace DoubleDouble {
                 return IsZero(x) ? One : Zero;
             }
 
-            if (x < Consts.IncompleteGamma.Eps) {
-                return One;
-            }
-
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = 1d - Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
