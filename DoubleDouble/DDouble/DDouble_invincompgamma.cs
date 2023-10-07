@@ -37,7 +37,7 @@
                 ddouble v0 = LowerIncompleteGammaRegularized(nu, x);
                 Console.WriteLine($"{x},{v0}");
 
-                for (int i = 0, convergence_times = 0; i < 32 && convergence_times < 4; i++) {
+                for (int i = 0, convergence_times = 0; i < 32 && convergence_times < 2; i++) {
                     bool lower = x < (double)nu + Consts.IncompleteGamma.ULBias;
 
                     ddouble f = lower
@@ -48,15 +48,10 @@
                     ddouble y = nu * lnv - (x + lngamma) - Log(f);
 
                     ddouble delta = lower ? (y - lnp_lower) : (y - lnp_upper);
-
                     ddouble r = delta * (x + f - nu + 1d);
-                    ddouble c = Ldexp(delta * x, 1) / (delta * (x + f - nu + 1d) + Ldexp(f, 1));
-                    ddouble d = delta * x / f;
 
-                    Console.WriteLine($"{f},{r},{c},{d}");
-
-                    ddouble dx = x >= 0.25
-                        ? Ldexp(delta * x, 1) / (delta * (x + f - nu + 1d) + Ldexp(f, 1))
+                    ddouble dx = (double.Abs(r.hi) <= double.Abs(f.hi) * 0.125)
+                        ? Ldexp(delta * x, 1) / (r + Ldexp(f, 1))
                         : delta * x / f;
 
                     if (IsNaN(dx)) {
