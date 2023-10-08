@@ -1,6 +1,7 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -122,6 +123,38 @@ namespace DoubleDoubleTest.DDouble {
 
                 Console.WriteLine(v);
                 Assert.IsTrue(ddouble.IsFinite(v));
+            }
+        }
+
+        [TestMethod]
+        public void InverseIncompleteBetaTest() {
+            List<ddouble> xs = new();
+
+            xs.Add(0.5);
+            for (ddouble x = 0.25; x > ddouble.Ldexp(1, -100); x = (x > 0.125) ? x / 2 : (x > 0.03125) ? x / 4 : x / 8) {
+                xs.Add(x);
+
+                if (x >= 1d / 1024) {
+                    xs.Add(1d - x);
+                }
+            }
+            xs.Sort();
+
+            foreach (ddouble b in new ddouble[] { 1d / 4, 1d / 2, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 64, 128 }) {
+                foreach (ddouble a in new ddouble[] { 1d / 4, 1d / 2, 1, 2, 3, 4, 6, 8, 12, 16, 24, 32, 64, 128 }) {
+                    foreach (ddouble x in xs) {
+                        ddouble y = ddouble.InverseIncompleteBeta(x, a, b);
+                        ddouble z = ddouble.IncompleteBetaRegularized(y, a, b);
+
+                        Console.WriteLine($"{a},{b},{x},{y},{z}");
+
+                        if (ddouble.Log2(a / b) > 6) {
+                            continue;
+                        }
+
+                        HPAssert.AreEqual(x, z, ddouble.Abs(x) * 4e-24, $"{a},{b},{x}");
+                    }
+                }
             }
         }
     }

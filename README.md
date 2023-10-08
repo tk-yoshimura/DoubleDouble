@@ -71,6 +71,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.LogBeta(a, b)|&#91;0,+inf&#41;|4||
 |ddouble.IncompleteBeta(x, a, b)|&#91;0,1&#93;|4|Accuracy decreases when the radio of a,b is too large. a+b-max(a,b) &leq; 512|
 |ddouble.IncompleteBetaRegularized(x, a, b)|&#91;0,1&#93;|4|Accuracy decreases when the radio of a,b is too large. a+b-max(a,b) &leq; 8192|
+|ddouble.InverseIncompleteBeta(x, a, b)|&#91;0,1&#93;|8|Accuracy decreases when the radio of a,b is too large. a+b-max(a,b) &leq; 8192|
 |ddouble.Erf(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.Erfc(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.InverseErf(x)|&#40;-1,1&#41;|3||

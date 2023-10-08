@@ -61,7 +61,7 @@
             public static ddouble Kernel(ddouble nu, ddouble p, ddouble lnp_lower, ddouble lnp_upper) {
                 double p5 = IncompleteGammaP5(nu.hi);
 
-                ddouble lngamma = LogGamma(nu);
+                ddouble lngamma = LogGamma(nu), num1 = nu - 1d;
                 ddouble prev_dx = 0d;
 
                 ddouble x = (nu > 1d) ? Min(p5, Exp((Log(nu) + lnp_lower + lngamma) / nu)) : Pow(p, 1d / nu);
@@ -77,11 +77,11 @@
                     ddouble y = nu * lnv - (x + lngamma) - Log(f);
 
                     ddouble delta = lower ? (y - lnp_lower) : (y - lnp_upper);
-                    ddouble r = delta * (x + f - nu + 1d);
+                    ddouble r = delta * (x - num1 + f);
 
                     ddouble dx = (double.Abs(r.hi) <= double.Abs(f.hi) * 0.125)
-                        ? Ldexp(delta * x, 1) / (r + Ldexp(f, 1))
-                        : delta * x / f;
+                        ? (delta * x) / (f + Ldexp(r, -1))
+                        : (delta * x) / f;
 
                     if (IsNaN(dx)) {
                         break;
@@ -90,7 +90,7 @@
                         dx = Ldexp(dx, -1);
                     }
 
-                    x = lower ? Max(Ldexp(x, -2), x - dx) : Min(Ldexp(x, 2), x + dx);
+                    x = Clamp(lower ? (x - dx) : (x + dx), Ldexp(x, -2), Ldexp(x, 2));
 
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 5e-32) {
                         break;
