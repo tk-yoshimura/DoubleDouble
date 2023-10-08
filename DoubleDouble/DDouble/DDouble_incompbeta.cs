@@ -63,19 +63,20 @@ namespace DoubleDouble {
             }
 
             double thr = (a.hi + 1d) / (a.hi + b.hi + 1d);
+            ddouble xr = 1d - x;
 
             if (x < thr) {
                 ddouble f = IncompleteBetaCFrac.Value(x, a, b);
 
-                ddouble y = Pow2(a * Log2(x) + b * Log2(1d - x) - LogBeta(a, b) * LbE) / f;
+                ddouble y = Pow2(a * Log2(x) + b * Log2(xr) - LogBeta(a, b) * LbE) / f;
                 y = Min(y, One);
 
                 return y;
             }
             else {
-                ddouble f = IncompleteBetaCFrac.Value(1d - x, b, a);
+                ddouble f = IncompleteBetaCFrac.Value(xr, b, a);
 
-                ddouble y = 1d - Pow2(a * Log2(x) + b * Log2(1d - x) - LogBeta(a, b) * LbE) / f;
+                ddouble y = 1d - Pow2(a * Log2(x) + b * Log2(xr) - LogBeta(a, b) * LbE) / f;
                 y = Max(y, Zero);
 
                 return y;

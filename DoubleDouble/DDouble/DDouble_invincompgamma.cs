@@ -24,7 +24,7 @@
                 return Zero;
             }
 
-            return InverseIncompleteGamma.Kernel(nu, x, Log(x), Log(1d - x));
+            return InverseIncompleteGammaUtil.Kernel(nu, x, Log(x), Log(1d - x));
         }
 
         public static ddouble InverseUpperIncompleteGamma(ddouble nu, ddouble x) {
@@ -51,11 +51,11 @@
                 return Zero;
             }
 
-            return InverseIncompleteGamma.Kernel(nu, 1d - x, Log(1d - x), Log(x));
+            return InverseIncompleteGammaUtil.Kernel(nu, 1d - x, Log(1d - x), Log(x));
         }
 
 
-        internal static class InverseIncompleteGamma {
+        internal static class InverseIncompleteGammaUtil {
             const int RootFindMaxIter = 32;
 
             public static ddouble Kernel(ddouble nu, ddouble p, ddouble lnp_lower, ddouble lnp_upper) {
