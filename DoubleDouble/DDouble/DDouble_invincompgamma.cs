@@ -90,7 +90,7 @@
                         dx = Ldexp(dx, -1);
                     }
 
-                    x = lower ? Max(Ldexp(x, -2), x - dx) : Min(Ldexp(x, 2), x + dx);
+                    x = Clamp(lower ? (x - dx) : (x + dx), Ldexp(x, -2), Ldexp(x, 2));
 
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 5e-32) {
                         break;

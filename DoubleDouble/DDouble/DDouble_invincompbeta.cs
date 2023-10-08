@@ -24,7 +24,7 @@
         }
 
         internal static class InverseIncompleteBetaUtil {
-            const int RootFindMaxIter = 32;
+            const int RootFindMaxIter = 64;
 
             public static ddouble Kernel(ddouble a, ddouble b, ddouble p, ddouble lnp_lower, ddouble lnp_upper) {
                 double thr = (a.hi + 1d) / (a.hi + b.hi + 1d);
@@ -60,7 +60,7 @@
                         dx = Ldexp(dx, -1);
                     }
 
-                    x = lower ? Max(Ldexp(x, -16), x - dx) : Min(1d - Ldexp(xr, -16), x + dx);
+                    x = Clamp(lower ? (x - dx) : (x + dx), Ldexp(x, -16), 1d - Ldexp(xr, -16));
 
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 5e-32) {
                         break;
@@ -69,9 +69,6 @@
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 1e-28) {
                         convergence_times++;
                     }
-
-                    ddouble c = ddouble.IncompleteBetaRegularized(x, a, b);
-                    Console.WriteLine($"{x},{dx},{c},{lower}");
 
                     prev_dx = dx;
                 }
