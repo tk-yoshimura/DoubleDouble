@@ -29,10 +29,10 @@
             public static ddouble Kernel(ddouble a, ddouble b, ddouble p, ddouble lnp_lower, ddouble lnp_upper) {
                 double thr = (a.hi + 1d) / (a.hi + b.hi + 1d);
 
-                ddouble lnbeta = LogBeta(a, b);
+                ddouble lnbeta = LogBeta(a, b), abm2 = a + b - 2d, am1 = a - 1d;
                 ddouble prev_dx = 0d;
 
-                ddouble x = p;
+                ddouble x = Clamp(p, 1 / 65536d, 65535 / 65536d);
 
                 for (int i = 0, convergence_times = 0; i < RootFindMaxIter && convergence_times < 2; i++) {
                     bool lower = x < thr;
@@ -47,19 +47,11 @@
                     ddouble y = a * Log(x) + b * Log(xr) - lnbeta - Log(f);
 
                     ddouble delta = lower ? (y - lnp_lower) : (y - lnp_upper);
+                    ddouble r = delta * (abm2 * x - am1 + f);
 
-                    ddouble g1 = Exp((a - 1) * Log(x) + (b - 1) * Log(xr)) / (Exp(a * Log(x) + b * Log(xr)) / f);
-                    ddouble g1_r = f / (x * xr);
-
-                    ddouble g2 = f * ((2 - a - b) * x - f + a - 1) / (x * x * xr * xr);
-
-                    ddouble dx_2 = -Ldexp(delta * g1, 1) / (delta * g2 - Ldexp(g1 * g1, 1));
-
-                    ddouble dx = delta * x * xr / f;
-
-                    ddouble r = delta * ((a + b - 2) * x - (a - 1) + f);
-
-                    ddouble dx_r2 = Ldexp(delta * x * xr, 1) / (r + Ldexp(f, 1));
+                    ddouble dx = (double.Abs(r.hi) <= double.Abs(f.hi) * 0.125)
+                        ? (delta * x * xr) / (f + Ldexp(r, -1))
+                        : (delta * x * xr) / f;
 
                     if (IsNaN(dx)) {
                         break;
@@ -68,7 +60,7 @@
                         dx = Ldexp(dx, -1);
                     }
 
-                    x = lower ? Max(Ldexp(x, -16), x - dx) : Min(Ldexp(x, 16), x + dx);
+                    x = lower ? Max(Ldexp(x, -16), x - dx) : Min(1d - Ldexp(xr, -16), x + dx);
 
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 5e-32) {
                         break;
@@ -77,6 +69,9 @@
                     if (double.Abs(dx.hi) <= double.Abs(x.hi) * 1e-28) {
                         convergence_times++;
                     }
+
+                    ddouble c = ddouble.IncompleteBetaRegularized(x, a, b);
+                    Console.WriteLine($"{x},{dx},{c},{lower}");
 
                     prev_dx = dx;
                 }
