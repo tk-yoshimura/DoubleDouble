@@ -49,7 +49,7 @@
                     ddouble delta = lower ? (y - lnp_lower) : (y - lnp_upper);
                     ddouble r = delta * (abm2 * x - am1 + f);
 
-                    ddouble dx = (double.Abs(r.hi) <= double.Abs(f.hi) * 0.125)
+                    ddouble dx = (double.Abs(r.hi) <= double.Abs(f.hi) * 6.25e-2)
                         ? (delta * x * xr) / (f + Ldexp(r, -1))
                         : (delta * x * xr) / f;
 
