@@ -56,6 +56,8 @@
 
 
         internal static class InverseIncompleteGamma {
+            const int RootFindMaxIter = 32;
+
             public static ddouble Kernel(ddouble nu, ddouble p, ddouble lnp_lower, ddouble lnp_upper) {
                 double p5 = IncompleteGammaP5(nu.hi);
 
@@ -64,7 +66,7 @@
 
                 ddouble x = (nu > 1d) ? Min(p5, Exp((Log(nu) + lnp_lower + lngamma) / nu)) : Pow(p, 1d / nu);
 
-                for (int i = 0, convergence_times = 0; i < 32 && convergence_times < 2; i++) {
+                for (int i = 0, convergence_times = 0; i < RootFindMaxIter && convergence_times < 2; i++) {
                     bool lower = x < (double)nu + Consts.IncompleteGamma.ULBias;
 
                     ddouble f = lower

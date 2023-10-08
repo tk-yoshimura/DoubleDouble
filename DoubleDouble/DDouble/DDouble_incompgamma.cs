@@ -55,9 +55,6 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x < Consts.IncompleteGamma.Eps) {
-                return Gamma(nu);
-            }
             if (nu < Consts.IncompleteGamma.Eps) {
                 return -Ei(-x);
             }
