@@ -57,6 +57,10 @@
 
                     ddouble dx = delta * x * xr / f;
 
+                    ddouble r = delta * ((a + b - 2) * x - (a - 1) + f);
+
+                    ddouble dx_r2 = Ldexp(delta * x * xr, 1) / (r + Ldexp(f, 1));
+
                     if (IsNaN(dx)) {
                         break;
                     }
