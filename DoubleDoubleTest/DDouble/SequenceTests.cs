@@ -42,11 +42,11 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void HarmonicTest() {
-            for (int n = 0; n <= 64; n += 4) {
+            for (int n = 0; n <= 1024; n += 4) {
                 Console.WriteLine($"H({n}) = {ddouble.HarmonicNumber(n)}");
             }
 
-            for (int n = 0; n <= 64; n++) {
+            for (int n = 0; n <= 1024; n++) {
                 Console.WriteLine($"H({n}) = {ddouble.HarmonicNumber(n)}");
             }
 

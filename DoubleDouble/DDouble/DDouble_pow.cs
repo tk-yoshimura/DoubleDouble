@@ -57,7 +57,7 @@ namespace DoubleDouble {
 
             ddouble w = 1d + v * (Consts.Pow.Pow2C1 + v * (Consts.Pow.Pow2C2 + v * (Consts.Pow.Pow2C3 + v * Consts.Pow.Pow2C4)));
 
-            ddouble y = c * r0 * r1 * w;
+            ddouble y = Ldexp(r0 * r1 * w, exp);
 
             return y;
         }
@@ -273,23 +273,20 @@ namespace DoubleDouble {
                     if (x == 1d) {
                         return 2;
                     }
-                    if (x >= 0.5d) {
-                        ddouble value = Pow2Prime(x - 0.5d);
 
-                        return Sqrt2 * value;
-                    }
-
-                    ddouble w = x * Ln2, u = w, y = 1d;
+                    ddouble w = x * Ln2, u = w, y = 1d, c = 0d;
 
                     foreach (ddouble f in TaylorSequence.Skip(1)) {
                         ddouble dy = f * u;
-                        ddouble y_next = y + dy;
+                        ddouble d = dy - c;
+                        ddouble y_next = y + d;
 
                         if (y == y_next) {
                             break;
                         }
 
                         u *= w;
+                        c = (y_next - y) - d;
                         y = y_next;
                     }
 
