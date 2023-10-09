@@ -48,7 +48,7 @@ namespace DoubleDouble {
             }
 
             int exp = (int)Floor(x);
-            ddouble s = x - exp, c = Ldexp(1d, exp);
+            ddouble s = x - exp;
 
             int index = (int)Floor(s * (Consts.Pow.Pow2TableN * Consts.Pow.Pow2TableN));
             ddouble v = s - Consts.Pow.Pow2TableDx * index;
@@ -57,7 +57,7 @@ namespace DoubleDouble {
 
             ddouble w = 1d + v * (Consts.Pow.Pow2C1 + v * (Consts.Pow.Pow2C2 + v * (Consts.Pow.Pow2C3 + v * Consts.Pow.Pow2C4)));
 
-            ddouble y = c * r0 * r1 * w;
+            ddouble y = Ldexp(r0 * r1 * w, exp);
 
             return y;
         }
