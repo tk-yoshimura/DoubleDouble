@@ -9,8 +9,6 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void GammaTest() {
-            ddouble.Gamma(46.5);
-
             for (BigInteger i = 1, y = 1; i <= 36; i++, y = y * (i - 1)) {
                 ddouble x = ddouble.Gamma(i);
 
@@ -53,6 +51,21 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_pinf), nameof(gamma_pinf));
             Assert.IsTrue(ddouble.IsNaN(gamma_ninf), nameof(gamma_ninf));
             Assert.IsTrue(ddouble.IsNaN(gamma_nan), nameof(gamma_nan));
+        }
+
+        [TestMethod]
+        public void GammaMonotoneTest() {
+            for (int n = 2; n <= 170; n++) {
+                ddouble x = ddouble.Gamma(n);
+
+                for (int exp = -108; exp < -95; exp++) { 
+                    ddouble xdec = ddouble.Gamma((ddouble)n - ddouble.Ldexp(1, exp));
+                    ddouble xinc = ddouble.Gamma((ddouble)n + ddouble.Ldexp(1, exp));
+
+                    Assert.IsTrue(xdec <= x, $"{n},{exp},dec");
+                    Assert.IsTrue(x <= xinc, $"{n},{exp},inc");
+                }
+            }
         }
 
         [TestMethod]

@@ -187,9 +187,9 @@ namespace DoubleDouble {
                 public static readonly IReadOnlyList<ddouble> Pow2Table = GeneratePow2Table();
                 public static readonly ddouble Pow2TableDx = Rcp(Pow2TableN * Pow2TableN);
                 public static readonly ddouble Pow2C1 = Ln2;
-                public static readonly ddouble Pow2C2 = Ln2 * Ln2 / 2;
-                public static readonly ddouble Pow2C3 = Ln2 * Ln2 * Ln2 / 6;
-                public static readonly ddouble Pow2C4 = Ln2 * Ln2 * Ln2 * Ln2 / 24;
+                public static readonly ddouble Pow2C2 = (+1, -3, 0xF5FDEFFC162C7543uL, 0x78B583764B9AFE55uL);
+                public static readonly ddouble Pow2C3 = (+1, -5, 0xE35846B82505FC59uL, 0x9D3B15D995E96F74uL);
+                public static readonly ddouble Pow2C4 = (+1, -7, 0x9D955B7DD273B94EuL, 0x65DF05A9F7562839uL);
 
                 public static readonly IReadOnlyList<ddouble> ExpNTable = GenerateExpNTable();
 

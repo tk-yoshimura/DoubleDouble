@@ -48,6 +48,11 @@ namespace DoubleDouble {
                 return y;
             }
             else {
+                x = RoundMantissa(x, 104);
+                if (x < Consts.Gamma.ExtremeLarge && IsInteger(x)) {
+                    return Factorial[((int)x) - 1];
+                }
+
                 ddouble p = (x - 0.5d) * Log2(x);
                 ddouble s = SterlingTerm(x);
 
