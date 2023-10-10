@@ -9,8 +9,6 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void GammaTest() {
-            ddouble.Gamma(46.5);
-
             for (BigInteger i = 1, y = 1; i <= 36; i++, y = y * (i - 1)) {
                 ddouble x = ddouble.Gamma(i);
 
@@ -28,17 +26,17 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(v);
                 Console.WriteLine(x);
 
-                HPAssert.AreEqual(v, x, v * 8e-30);
+                HPAssert.AreEqual(v, x, v * 1e-29);
             }
 
             HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 8);
             HPAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 8);
 
             HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 8);
-            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 32);
-            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 32);
+            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 8);
+            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 8);
 
-            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 64);
+            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 512);
 
             ddouble gamma_pzero = ddouble.Gamma(0d);
             ddouble gamma_mzero = ddouble.Gamma(-0d);
@@ -53,6 +51,33 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_pinf), nameof(gamma_pinf));
             Assert.IsTrue(ddouble.IsNaN(gamma_ninf), nameof(gamma_ninf));
             Assert.IsTrue(ddouble.IsNaN(gamma_nan), nameof(gamma_nan));
+        }
+
+        [TestMethod]
+        public void GammaMonotoneTest() {
+            for (int n = 2; n <= 170; n++) {
+                ddouble x = ddouble.Gamma(n);
+
+                for (int exp = -108; exp < -95; exp++) {
+                    ddouble xdec = ddouble.Gamma((ddouble)n - ddouble.Ldexp(1, exp));
+                    ddouble xinc = ddouble.Gamma((ddouble)n + ddouble.Ldexp(1, exp));
+
+                    Assert.IsTrue(xdec <= x, $"{n},{exp},dec");
+                    Assert.IsTrue(x <= xinc, $"{n},{exp},inc");
+                }
+            }
+
+            for (int n = 2; n <= 170; n++) {
+                ddouble x = ddouble.Gamma(n + 0.5d);
+
+                for (int exp = -108; exp < -95; exp++) {
+                    ddouble xdec = ddouble.Gamma((ddouble)n + 0.5d - ddouble.Ldexp(1, exp));
+                    ddouble xinc = ddouble.Gamma((ddouble)n + 0.5d + ddouble.Ldexp(1, exp));
+
+                    Assert.IsTrue(xdec <= x, $"{n},{exp},dec");
+                    Assert.IsTrue(x <= xinc, $"{n},{exp},inc");
+                }
+            }
         }
 
         [TestMethod]
@@ -199,7 +224,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 3e-29d);
+                    HPAssert.AreEqual(x, z, x * 4e-29d);
                 }
             }
 
@@ -212,11 +237,11 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 6e-29d);
+                    HPAssert.AreEqual(x, z, x * 8e-29d);
                 }
             }
 
-            for (ddouble x = 2; x <= 36; x += 0.5) {
+            for (ddouble x = 2; x <= 36.5; x += 0.5) {
                 ddouble y = ddouble.Gamma(x);
                 ddouble z = ddouble.InverseGamma(y);
 

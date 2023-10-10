@@ -126,6 +126,13 @@
             }
         }
 
+        internal static byte[] InverseGammaTable {
+            get {
+                object obj = ResourceManager.GetObject("InverseGammaTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] LambertWTable {
             get {
                 object obj = ResourceManager.GetObject("LambertWTable", resourceCulture);

@@ -41,6 +41,10 @@
                 LogGammaTable.Pack(sw);
             }
 
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(InverseGammaTable) + ".bin", FileMode.Create))) {
+                InverseGammaTable.Pack(sw);
+            }
+
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(DigammaTable) + ".bin", FileMode.Create))) {
                 DigammaTable.Pack(sw);
             }

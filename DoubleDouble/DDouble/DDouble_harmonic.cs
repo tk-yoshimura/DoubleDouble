@@ -9,12 +9,13 @@
         internal static partial class Consts {
             public static class Harmonic {
                 private static readonly List<ddouble> a_table = new();
-                private static ddouble acc;
+                private static ddouble acc, carry;
 
                 static Harmonic() {
                     a_table.Add(0);
                     a_table.Add(1);
                     acc = 1d;
+                    carry = 0d;
                 }
 
                 public static ddouble Value(int n) {
@@ -27,7 +28,13 @@
                     }
 
                     for (int k = a_table.Count; k <= n; k++) {
-                        acc += Rcp(k);
+                        ddouble v = Rcp(k);
+                        ddouble d = v - carry;
+                        ddouble acc_next = acc + d;
+
+                        carry = (acc_next - acc) - d;
+                        acc = acc_next;
+
                         a_table.Add(acc);
                     }
 
