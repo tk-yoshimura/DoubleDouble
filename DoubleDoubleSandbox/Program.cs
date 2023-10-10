@@ -1,6 +1,5 @@
 ﻿using DoubleDouble;
 using System;
-using System.IO;
 
 namespace DoubleDoubleSandbox {
     public static class Program {
@@ -196,7 +195,7 @@ namespace DoubleDoubleSandbox {
              + x * ("821802743361600"
              + x * ("13546199066400"
              + x * ("98517811392"
-             + x * ("178474296"       ))))))))))))))))))))))));          
+             + x * ("178474296"))))))))))))))))))))))));
 
             y *= ddouble.LbE;
 

@@ -58,7 +58,7 @@ namespace DoubleDoubleTest.DDouble {
             for (int n = 2; n <= 170; n++) {
                 ddouble x = ddouble.Gamma(n);
 
-                for (int exp = -108; exp < -95; exp++) { 
+                for (int exp = -108; exp < -95; exp++) {
                     ddouble xdec = ddouble.Gamma((ddouble)n - ddouble.Ldexp(1, exp));
                     ddouble xinc = ddouble.Gamma((ddouble)n + ddouble.Ldexp(1, exp));
 
@@ -70,7 +70,7 @@ namespace DoubleDoubleTest.DDouble {
             for (int n = 2; n <= 170; n++) {
                 ddouble x = ddouble.Gamma(n + 0.5d);
 
-                for (int exp = -108; exp < -95; exp++) { 
+                for (int exp = -108; exp < -95; exp++) {
                     ddouble xdec = ddouble.Gamma((ddouble)n + 0.5d - ddouble.Ldexp(1, exp));
                     ddouble xinc = ddouble.Gamma((ddouble)n + 0.5d + ddouble.Ldexp(1, exp));
 
