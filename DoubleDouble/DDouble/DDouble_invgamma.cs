@@ -1,4 +1,8 @@
-﻿namespace DoubleDouble {
+﻿using DoubleDouble.Utils;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseGamma(ddouble x) {
             if (!(x >= 1)) {
@@ -9,64 +13,65 @@
                 return PositiveInfinity;
             }
 
-            const double c = 0.036533814484900416, s = 0.3989422804014327;
+            ddouble u = ddouble.Log2(x);
 
-            static double crude_lambertw(double x) {
-                double y;
-
-                if (x < 8) {
-                    y = x * (60.0 + x * (114.0 + x * 17.0)) / (60.0 + x * (174.0 + x * 101.0));
-                }
-                else {
-                    double logx = double.Log(x), loglogx = double.Log(logx);
-
-                    y = logx - loglogx + loglogx / (logx + logx);
+            foreach ((double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)> table) in Consts.InverseGamma.PadeTables) {
+                if (u >= umax) {
+                    continue;
                 }
 
-                double exp_y, d;
+                ddouble v = u - umin;
 
-                exp_y = double.Exp(y);
-                d = y * exp_y - x;
-                y -= d / (exp_y * (y + 1d) - (y + 2d) * d / (y + y + 2d));
+#if DEBUG
+                Trace.Assert(v >= 0d, $"[InverseGamma x={x}] Invalid pade v!!");
+#endif
+
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    (ddouble c, ddouble d) = table[i];
+
+                    sc = sc * v + c;
+                    sd = sd * v + d;
+                }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[InverseGamma x={x}] Too small pade denom!!");
+#endif
+
+                ddouble y = sc / sd;
+
+                y = RoundMantissa(y, keep_bits: 103);
 
                 return y;
-            };
-
-            double l = double.Log((x.hi + c) * s);
-            ddouble y = l / (crude_lambertw(l / double.E)) + 0.5;
-
-            ddouble lnx = Log(x);
-
-            for (int i = 0; i < 8; i++) {
-                ddouble lng = LogGamma(y), psi = Digamma(y);
-                ddouble delta = (lnx - lng) / psi;
-
-                y += delta;
-
-                if (double.Abs(delta.hi) < y.hi * 5e-32) {
-                    break;
-                }
             }
 
-            for (int i = 0; i < 8; i++) {
-                ddouble g = Gamma(y);
-                if (x == g || !ddouble.IsFinite(g)) {
-                    break;
-                }
+            return NaN;
+        }
 
-                ddouble psi = Digamma(y);
-                ddouble delta = (x / g - 1.0) / psi;
+        internal static partial class Consts {
+            public static class InverseGamma {
+                public static readonly ReadOnlyCollection<(double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)>)> PadeTables;
 
-                y += delta;
+                static InverseGamma() {
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
+                        ResourceUnpack.NumTableX2(Resource.InverseGammaTable, reverse: true);
 
-                if (double.Abs(delta.hi) < y.hi * 5e-32) {
-                    break;
+                    PadeTables = Array.AsReadOnly(new (double, double, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
+                        (0d, 0.5d, tables["PadeX0Table"]),
+                        (0.5d, 1d, tables["PadeX0p5Table"]),
+                        (1d, 2d, tables["PadeX1Table"]),
+                        (2d, 4d, tables["PadeX2Table"]),
+                        (4d, 8d, tables["PadeX4Table"]),
+                        (8d, 16d, tables["PadeX8Table"]),
+                        (16d, 32d, tables["PadeX16Table"]),
+                        (32d, 64d, tables["PadeX32Table"]),
+                        (64d, 128d, tables["PadeX64Table"]),
+                        (128d, 256d, tables["PadeX128Table"]),
+                        (256d, 512d, tables["PadeX256Table"]),
+                        (512d, double.MaxValue, tables["PadeX512Table"]),
+                    });
                 }
             }
-
-            y = RoundMantissa(y, keep_bits: 105);
-
-            return y;
         }
     }
 }

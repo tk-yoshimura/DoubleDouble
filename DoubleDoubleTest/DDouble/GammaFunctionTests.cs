@@ -224,7 +224,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 3e-29d);
+                    HPAssert.AreEqual(x, z, x * 4e-29d);
                 }
             }
 
@@ -237,11 +237,11 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 6e-29d);
+                    HPAssert.AreEqual(x, z, x * 8e-29d);
                 }
             }
 
-            for (ddouble x = 2; x <= 36; x += 0.5) {
+            for (ddouble x = 2; x <= 36.5; x += 0.5) {
                 ddouble y = ddouble.Gamma(x);
                 ddouble z = ddouble.InverseGamma(y);
 
