@@ -109,10 +109,15 @@ namespace DoubleDouble {
                 return x < 1 ? Zero : PositiveInfinity;
             }
 
+            if (x != PowCache.X) {
+                PowCache.X = x;
+                PowCache.LbX = Log2(x);
+            }
+
             long n = (long)Truncate(y);
             ddouble f = y - n;
 
-            ddouble z = Pow(x, n) * Pow2(f * Log2(x));
+            ddouble z = Pow(x, n) * Pow2(f * PowCache.LbX);
 
             return z;
         }
@@ -293,6 +298,10 @@ namespace DoubleDouble {
                     return y;
                 }
             }
+        }
+
+        internal static class PowCache {
+            public static ddouble X = NaN, LbX = NaN;
         }
     }
 }
