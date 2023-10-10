@@ -2,10 +2,14 @@
 
     public static class DoubleDoubleEnumerableExpand {
         public static ddouble Sum(this IEnumerable<ddouble> source) {
-            ddouble acc = ddouble.Zero;
+            ddouble acc = ddouble.Zero, carry = ddouble.Zero;
 
             foreach (var v in source) {
-                acc += v;
+                ddouble d = v - carry;
+                ddouble acc_next = acc + d;
+
+                carry = (acc_next - acc) - d;
+                acc = acc_next;
             }
 
             return acc;

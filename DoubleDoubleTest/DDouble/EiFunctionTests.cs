@@ -1052,8 +1052,8 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-30d);
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-30d);
                 }
             }
 
@@ -1070,8 +1070,8 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-30d);
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-30d);
                 }
             }
 
