@@ -9,7 +9,7 @@ namespace DoubleDouble {
             if (IsNaN(x) || IsNegativeInfinity(x)) {
                 return NaN;
             }
-            if (IsZero(x) || IsPositiveInfinity(x)) {
+            if (IsZero(x) || x > Consts.Gamma.ExtremeLarge) {
                 return PositiveInfinity;
             }
 
@@ -26,6 +26,8 @@ namespace DoubleDouble {
             }
 
             if (x <= Consts.Gamma.Threshold) {
+                x = RoundMantissa(x, 105);
+
                 int n = int.Max(0, (int)Round(x - 1d));
                 ddouble v = x - n - 1d;
 
@@ -49,14 +51,33 @@ namespace DoubleDouble {
             }
             else {
                 x = RoundMantissa(x, 104);
-                if (x < Consts.Gamma.ExtremeLarge && IsInteger(x)) {
+
+                if (IsInteger(x)) {
                     return Factorial[((int)x) - 1];
                 }
 
-                ddouble p = (x - 0.5d) * Log2(x);
-                ddouble s = SterlingTerm(x);
+                int n = int.Max(0, (int)Floor((x - Consts.Gamma.Log2PadeX0) / Consts.Gamma.Log2PadeBin));
+                ddouble v = x - Consts.Gamma.Log2PadeX0 - n * Consts.Gamma.Log2PadeBin;
 
-                ddouble y = Consts.Gamma.SqrtPI2 * Pow2(p + (s - x) * LbE);
+#if DEBUG
+                Trace.Assert(v >= 0d && v < Consts.Gamma.Log2PadeBin, $"[Gamma x={x}] Invalid pade v!!");
+#endif
+
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Gamma.Log2PadeTables[n];
+
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    (ddouble c, ddouble d) = table[i];
+
+                    sc = sc * v + c;
+                    sd = sd * v + d;
+                }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
+#endif
+
+                ddouble y = Pow2(x * sc / sd);
 
                 return y;
             }
@@ -242,12 +263,12 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Gamma {
-                public const double Threshold = 36.25;
-                public const double ExtremeLarge = 170.625;
-                public static readonly ddouble SqrtPI2 = (+1, 1, 0xA06C98FFB1382CB2uL, 0xBE520FD739167717uL);
+                public const double Threshold = 36.25, Log2PadeX0 = 36, Log2PadeBin = 8;
+                public const double ExtremeLarge = 171.625;
 
-                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable;
+                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
+                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> Log2PadeTables;
 
                 static Gamma() {
                     Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
@@ -292,6 +313,26 @@ namespace DoubleDouble {
                         tables["PadeX34Table"],
                         tables["PadeX35Table"],
                         tables["PadeX36Table"],
+                    });
+
+                    Log2PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                        tables["PadeX36to44Table"],
+                        tables["PadeX44to52Table"],
+                        tables["PadeX52to60Table"],
+                        tables["PadeX60to68Table"],
+                        tables["PadeX68to76Table"],
+                        tables["PadeX76to84Table"],
+                        tables["PadeX84to92Table"],
+                        tables["PadeX92to100Table"],
+                        tables["PadeX100to108Table"],
+                        tables["PadeX108to116Table"],
+                        tables["PadeX116to124Table"],
+                        tables["PadeX124to132Table"],
+                        tables["PadeX132to140Table"],
+                        tables["PadeX140to148Table"],
+                        tables["PadeX148to156Table"],
+                        tables["PadeX156to164Table"],
+                        tables["PadeX164to172Table"],
                     });
                 }
             }

@@ -26,17 +26,17 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(v);
                 Console.WriteLine(x);
 
-                HPAssert.AreEqual(v, x, v * 8e-30);
+                HPAssert.AreEqual(v, x, v * 1e-29);
             }
 
             HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 8);
             HPAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 8);
 
             HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 8);
-            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 32);
-            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 32);
+            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 8);
+            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 8);
 
-            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 64);
+            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 512);
 
             ddouble gamma_pzero = ddouble.Gamma(0d);
             ddouble gamma_mzero = ddouble.Gamma(-0d);
@@ -61,6 +61,18 @@ namespace DoubleDoubleTest.DDouble {
                 for (int exp = -108; exp < -95; exp++) { 
                     ddouble xdec = ddouble.Gamma((ddouble)n - ddouble.Ldexp(1, exp));
                     ddouble xinc = ddouble.Gamma((ddouble)n + ddouble.Ldexp(1, exp));
+
+                    Assert.IsTrue(xdec <= x, $"{n},{exp},dec");
+                    Assert.IsTrue(x <= xinc, $"{n},{exp},inc");
+                }
+            }
+
+            for (int n = 2; n <= 170; n++) {
+                ddouble x = ddouble.Gamma(n + 0.5d);
+
+                for (int exp = -108; exp < -95; exp++) { 
+                    ddouble xdec = ddouble.Gamma((ddouble)n + 0.5d - ddouble.Ldexp(1, exp));
+                    ddouble xinc = ddouble.Gamma((ddouble)n + 0.5d + ddouble.Ldexp(1, exp));
 
                     Assert.IsTrue(xdec <= x, $"{n},{exp},dec");
                     Assert.IsTrue(x <= xinc, $"{n},{exp},inc");

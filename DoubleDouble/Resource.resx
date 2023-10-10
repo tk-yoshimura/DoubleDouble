@@ -157,6 +157,9 @@
   <data name="InverseErfTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\InverseErfTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="InverseGammaTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resource\InverseGammaTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="LambertWTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\LambertWTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
