@@ -40,7 +40,16 @@ namespace DoubleDouble {
 
                 ddouble y = sc / sd;
 
-                y = RoundMantissa(y, keep_bits: 103);
+                ddouble g = Gamma(y);
+                
+                if (x != g && ddouble.IsFinite(g)) {
+                    ddouble psi = Digamma(y);
+                    ddouble delta = (x / g - 1.0) / psi;
+
+                    y += delta;
+                }
+
+                y = RoundMantissa(y, keep_bits: 105);
 
                 return y;
             }
