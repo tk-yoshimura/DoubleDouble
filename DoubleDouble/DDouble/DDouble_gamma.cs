@@ -274,7 +274,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Gamma {
-                public const double Threshold = 16.25, Log2PadeWise2X0 = 4, Log2PadeWise4X0 = 16;
+                public const double Log2PadeWise2X0 = 4, Log2PadeWise4X0 = 16;
                 public const double ExtremeLarge = 171.625;
 
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable;
