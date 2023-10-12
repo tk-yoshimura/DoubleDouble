@@ -88,7 +88,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class SinCos {
-                public const int SinPIHalfTableN = 512;
+                public const int SinPIHalfTableN = 1024;
 
                 public static readonly IReadOnlyList<ddouble> SinPIHalfTable = GenerateSinPITable();
 
@@ -115,20 +115,26 @@ namespace DoubleDouble {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
 
+                    if (x == 0.5d) {
+                        return Ldexp(Sqrt(2), -1);
+                    }
+
                     if (x < 0.5d) {
                         ddouble w = Ldexp(x * PI, -1), w2 = w * w, w4 = w2 * w2, u = 1;
-                        ddouble y = Zero;
+                        ddouble y = Zero, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 3; i < n; i += 4) {
                             ddouble f = TaylorSequence[i + 3];
                             ddouble dy = u * f * ((i + 2) * (i + 3) - w2);
-                            ddouble y_next = y + dy;
+                            ddouble d = dy - c;
+                            ddouble y_next = y + d;
 
                             if (y == y_next) {
                                 break;
                             }
 
                             u *= w4;
+                            c = (y_next - y) - d;
                             y = y_next;
                         }
 
@@ -136,18 +142,20 @@ namespace DoubleDouble {
                     }
                     else {
                         ddouble w = Ldexp((x - 1d) * PI, -1), w2 = w * w, w4 = w2 * w2, u = w2;
-                        ddouble y = 1d;
+                        ddouble y = 1d, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 4; i < n; i += 4) {
                             ddouble f = TaylorSequence[i + 4];
-                            ddouble dy = u * f * ((i + 3) * (i + 4) - w2);
-                            ddouble y_next = y - dy;
+                            ddouble dy = u * f * (w2 - (i + 3) * (i + 4));
+                            ddouble d = dy - c;
+                            ddouble y_next = y + d;
 
                             if (y == y_next) {
                                 break;
                             }
 
                             u *= w4;
+                            c = (y_next - y) - d;
                             y = y_next;
                         }
 
