@@ -19,14 +19,17 @@ namespace DoubleDouble {
 
                 return y;
             }
-            if (x > 0) {
-                return EiNearZero.Positive(x);
-            }
-            if (x < 0) {
-                return EiNearZero.Negative(x);
+
+            if (x == 0d) { 
+                return NegativeInfinity;
             }
 
-            return NegativeInfinity;
+            if (IsPositive(x)) {
+                return EiNearZero.Positive(x);
+            }
+            else {
+                return EiNearZero.Negative(x);
+            }
         }
 
         public static ddouble Ein(ddouble x) {
@@ -41,18 +44,20 @@ namespace DoubleDouble {
                 ddouble g = EiPade.Coef(-x) - x;
                 ddouble ei = Exp(-x) / g;
 
-                ddouble y = (x > 0) ? (EulerGamma + Log(x) - ei) : (EulerGamma + Log(-x) - ei);
+                ddouble y = (x > 0d) ? (EulerGamma + Log(x) - ei) : (EulerGamma + Log(-x) - ei);
 
                 return y;
             }
-            if (x > 0) {
-                return -EiNearZero.Negative(-x, offset: false);
-            }
-            if (x < 0) {
-                return -EiNearZero.Positive(-x, offset: false);
+            if (x == 0d) { 
+                return Zero;
             }
 
-            return Zero;
+            if (IsPositive(x)) {
+                return -EiNearZero.Negative(-x, offset: false);
+            }
+            else {
+                return -EiNearZero.Positive(-x, offset: false);
+            }
         }
 
         public static ddouble Li(ddouble x) {
@@ -86,7 +91,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble Negative(ddouble x, bool offset = true, int max_terms = 12) {
-                if (!(x <= 0)) {
+                if (!(x <= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 

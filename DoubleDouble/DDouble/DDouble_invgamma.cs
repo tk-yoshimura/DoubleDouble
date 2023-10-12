@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseGamma(ddouble x) {
-            if (!(x >= 1)) {
+            if (!(x >= 1d)) {
                 return NaN;
             }
 

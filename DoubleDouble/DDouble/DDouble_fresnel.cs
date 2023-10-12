@@ -190,7 +190,7 @@ namespace DoubleDouble {
                     ddouble s = ((8 * k + 1) * (8 * k + 3)) * v2;
                     ddouble t = ((8 * k + 3) * (8 * k + 5)) * v2;
 
-                    if (s > 1 || t > 1) {
+                    if (s > 1d || t > 1d) {
                         return (NaN, NaN);
                     }
 

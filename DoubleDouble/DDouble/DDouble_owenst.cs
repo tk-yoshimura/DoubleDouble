@@ -74,7 +74,7 @@ namespace DoubleDouble {
                     sp += u;
                 }
 
-                if (ad > 0) {
+                if (ad > 0d) {
                     for (int k = 0; k < Legendre45Table.Count; k++) {
                         (ddouble x, ddouble w) = Legendre45Table[k];
                         ddouble x_sft = x * ad + ap;

@@ -93,7 +93,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (x < 1) {
+            if (x < 1d) {
                 return StruveHLNearZero.Value(n, x, sign_switch: false, terms: 32);
             }
 
@@ -126,7 +126,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (x < 1) {
+            if (x < 1d) {
                 return StruveHLNearZero.Value(n, x, sign_switch: false, terms: 32) - BesselI(n, x);
             }
 

@@ -99,14 +99,14 @@ namespace DoubleDouble {
                     return 1;
                 }
 
-                return x < 1 ? PositiveInfinity : Zero;
+                return x < 1d ? PositiveInfinity : Zero;
             }
             if (y >= long.MaxValue) {
                 if (x == 1d) {
                     return 1;
                 }
 
-                return x < 1 ? Zero : PositiveInfinity;
+                return x < 1d ? Zero : PositiveInfinity;
             }
 
             if (x != PowCache.X) {

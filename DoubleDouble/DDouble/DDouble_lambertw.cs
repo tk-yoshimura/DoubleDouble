@@ -22,7 +22,7 @@ namespace DoubleDouble {
             if (x >= -0.303265) {
                 double xd = x.hi, yd;
 
-                if (x < 8) {
+                if (x < 8d) {
                     yd = xd * (60.0 + xd * (114.0 + xd * 17.0)) / (60.0 + xd * (174.0 + xd * 101.0));
                 }
                 else {

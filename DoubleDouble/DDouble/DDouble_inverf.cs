@@ -27,7 +27,7 @@ namespace DoubleDouble {
                 return -InverseErfc(2.0 - x);
             }
 
-            if (!(x >= 0)) {
+            if (!(x >= 0d)) {
                 return NaN;
             }
 
@@ -52,7 +52,7 @@ namespace DoubleDouble {
             if (exp >= -256) {
                 return InverseErfUtil.InverseErfcLtRcpBinpow64(x);
             }
-            if (x > 0) {
+            if (x > 0d) {
                 return InverseErfUtil.InverseErfcLtRcpBinpow256(x);
             }
 
@@ -64,7 +64,7 @@ namespace DoubleDouble {
                 ddouble w = x * x;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -86,7 +86,7 @@ namespace DoubleDouble {
                 ddouble w = Sqrt(-Log2(x)) - 1.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -113,7 +113,7 @@ namespace DoubleDouble {
                 ddouble w = Sqrt(-Log2(x)) - 2.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -140,7 +140,7 @@ namespace DoubleDouble {
                 ddouble w = Sqrt(-Log2(x)) - 4.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -167,7 +167,7 @@ namespace DoubleDouble {
                 ddouble w = Sqrt(-Log2(x)) - 8.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -194,7 +194,7 @@ namespace DoubleDouble {
                 ddouble w = Sqrt(-Log2(x)) - 16.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif

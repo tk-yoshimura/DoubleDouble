@@ -349,7 +349,7 @@ namespace DoubleDouble {
 
             public static class LogGamma {
                 public static readonly ddouble LogPI2Half = (+1, -1, 0xEB3F8E4325F5A534uL, 0x94BC900144192023uL);
-                public const int Threshold = 16;
+                public const double Threshold = 16d;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
 
@@ -378,7 +378,7 @@ namespace DoubleDouble {
             }
 
             public static class Digamma {
-                public const int Threshold = 16;
+                public const double Threshold = 16d;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable, PadeZeroPointTable;

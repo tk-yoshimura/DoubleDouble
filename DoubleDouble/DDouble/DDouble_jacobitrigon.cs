@@ -4,7 +4,7 @@
             if (m < 0d || m > 1d) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
-            if (x < 0) {
+            if (IsNegative(x)) {
                 return -JacobiSn(-x, m);
             }
 
@@ -34,7 +34,7 @@
             if (m < 0d || m > 1d) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
-            if (x < 0) {
+            if (IsNegative(x)) {
                 return JacobiCn(-x, m);
             }
 
@@ -66,7 +66,7 @@
             if (m < 0d || m > 1d) {
                 throw new ArgumentOutOfRangeException(nameof(m));
             }
-            if (x < 0) {
+            if (IsNegative(x)) {
                 return JacobiDn(-x, m);
             }
 

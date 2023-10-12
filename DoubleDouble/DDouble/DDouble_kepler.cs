@@ -1,7 +1,7 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
-            if (!(e >= 0) || IsNaN(m) || !IsFinite(e)) {
+            if (!(e >= 0d) || IsNaN(m) || !IsFinite(e)) {
                 return NaN;
             }
 
@@ -9,7 +9,7 @@
                 return -KeplerE(-m, e, centered);
             }
 
-            if (e > 256) {
+            if (e > 256d) {
                 throw new ArgumentOutOfRangeException(
                     nameof(e),
                     "In the calculation of the KeplerE function, eccentricity greater than 256 is not supported."
@@ -20,7 +20,7 @@
                 return KeplerE(double.ScaleB(1, -1000), e, centered) * Ldexp(m, 1000);
             }
 
-            if (e <= 1) {
+            if (e <= 1d) {
                 if (!IsFinite(m)) {
                     return centered ? NaN : Sign(m) * PositiveInfinity;
                 }
@@ -63,10 +63,10 @@
             public static class Elliptic {
                 public static ddouble Value(ddouble m, ddouble e) {
 #if DEBUG
-                    if (!(m >= 0 && m <= 1)) {
+                    if (!(m >= 0d && m <= 1d)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
                     }
-                    if (!(e >= 0 && e <= 1)) {
+                    if (!(e >= 0d && e <= 1d)) {
                         throw new ArgumentOutOfRangeException(nameof(e));
                     }
 #endif
@@ -255,10 +255,10 @@
 
                 public static ddouble Value(ddouble m, ddouble e) {
 #if DEBUG
-                    if (!(m >= 0)) {
+                    if (!(m >= 0d)) {
                         throw new ArgumentOutOfRangeException(nameof(m));
                     }
-                    if (!(e >= 1)) {
+                    if (!(e >= 1d)) {
                         throw new ArgumentOutOfRangeException(nameof(e));
                     }
 #endif

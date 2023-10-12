@@ -17,7 +17,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (!(x <= 1)) {
+            if (!(x <= 1d)) {
                 return NaN;
             }
 
@@ -336,7 +336,7 @@ namespace DoubleDouble {
         private static class PolylogParticularN {
             public static ddouble Polylog(int n, ddouble x) {
 #if DEBUG
-                if (!(x < 1)) {
+                if (!(x < 1d)) {
                     return NaN;
                 }
 #endif

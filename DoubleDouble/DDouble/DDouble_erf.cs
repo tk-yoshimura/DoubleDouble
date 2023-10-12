@@ -96,7 +96,7 @@ namespace DoubleDouble {
                 ddouble w = x * x;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -123,7 +123,7 @@ namespace DoubleDouble {
                 ddouble w = x - 0.5;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -150,7 +150,7 @@ namespace DoubleDouble {
                 ddouble w = x - 1.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -177,7 +177,7 @@ namespace DoubleDouble {
                 ddouble w = x - 2.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -204,7 +204,7 @@ namespace DoubleDouble {
                 ddouble w = x - 4.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -231,7 +231,7 @@ namespace DoubleDouble {
                 ddouble w = x - 8.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -258,7 +258,7 @@ namespace DoubleDouble {
                 ddouble w = x - 16.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -292,7 +292,7 @@ namespace DoubleDouble {
                 ddouble w = x - 0.5;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -319,7 +319,7 @@ namespace DoubleDouble {
                 ddouble w = x - 1.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -346,7 +346,7 @@ namespace DoubleDouble {
                 ddouble w = x - 2.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -373,7 +373,7 @@ namespace DoubleDouble {
                 ddouble w = x - 4.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -400,7 +400,7 @@ namespace DoubleDouble {
                 ddouble w = x - 8.0;
 
 #if DEBUG
-                if (!(w >= 0)) {
+                if (!(w >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
@@ -425,7 +425,7 @@ namespace DoubleDouble {
 
             public static ddouble ErfcxGt16(ddouble x) {
 #if DEBUG
-                if (!(x >= 16)) {
+                if (!(x >= 16d)) {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif

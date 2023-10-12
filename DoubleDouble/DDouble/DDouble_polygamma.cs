@@ -23,7 +23,7 @@ namespace DoubleDouble {
                 return Zero;
             }
 
-            if (x >= 0) {
+            if (x >= 0d) {
                 ddouble y = PolygammaPlusX.Polygamma(n, x);
 
                 return ((n & 1) == 1) ? y : -y;
@@ -49,7 +49,7 @@ namespace DoubleDouble {
                 if (x <= double.ScaleB(1, -96)) {
                     return ((n & 1) == 1) ? PositiveInfinity : NaN;
                 }
-                if (x <= 64) {
+                if (x <= 64d) {
                     return PolygammaPlusX.PolygammaNearZero(n, x);
                 }
                 else {
@@ -58,7 +58,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble PolygammaNearZero(int n, ddouble x) {
-                if (x < 1) {
+                if (x < 1d) {
                     ddouble v = PolygammaNearZero(n, x + 1d);
                     ddouble y = v + Factorial[n] / Pow(x, n + 1);
 

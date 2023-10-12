@@ -1,10 +1,10 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble HurwitzZeta(ddouble x, ddouble a) {
-            if (x < 1) {
+            if (x < 1d) {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
-            if (a < 0) {
+            if (IsNegative(a)) {
                 throw new ArgumentOutOfRangeException(nameof(a));
             }
 
@@ -53,7 +53,7 @@
                 ddouble dy = dy0 + dy1;
                 ddouble y_next = y + dy;
 
-                if (y == y_next || !(dy <= 0)) {
+                if (y == y_next || !(dy <= 0d)) {
                     break;
                 }
 

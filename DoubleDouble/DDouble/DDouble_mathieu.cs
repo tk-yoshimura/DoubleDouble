@@ -144,7 +144,7 @@ namespace DoubleDouble {
             private static readonly Dictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
 
             public static ddouble MPade(int n, ddouble q) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
 
@@ -177,7 +177,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble DPade(int n, ddouble q) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
 
@@ -229,7 +229,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble APade(int n, ddouble q) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
 
@@ -272,7 +272,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BPade(int n, ddouble q) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
 
@@ -383,7 +383,7 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int terms = -1) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
                 if (q < Eps) {
@@ -427,7 +427,7 @@ namespace DoubleDouble {
                             (scs, rm, d) = SolveCoef(a, q, m, 1, 1, 1 + q, cs[m]);
                         }
 
-                        if (m <= 2 + n / 2 || d < 1) {
+                        if (m <= 2 + n / 2 || d < 1d) {
                             Array.Copy(scs, cs, m);
                             break;
                         }
@@ -493,7 +493,7 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateCCoefZeroShifted(int n, ddouble q) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
                 if (q < Eps) {
@@ -540,7 +540,7 @@ namespace DoubleDouble {
                             (scs, rm, d) = SolveCoefZeroShifted(arms, q, m, 1, cs[m]);
                         }
 
-                        if (m <= 2 + n / 2 || d < 1) {
+                        if (m <= 2 + n / 2 || d < 1d) {
                             Array.Copy(scs, cs, m);
                             break;
                         }
@@ -557,7 +557,7 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble b, int terms = -1) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
                 if (q < Eps) {
@@ -601,7 +601,7 @@ namespace DoubleDouble {
                             (scs, rm, d) = SolveCoef(b, q, m, 1, 1, 1 - q, cs[m]);
                         }
 
-                        if (m <= 2 + n / 2 || d < 1) {
+                        if (m <= 2 + n / 2 || d < 1d) {
                             Array.Copy(scs, cs, m);
                             break;
                         }
@@ -662,7 +662,7 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateSCoefZeroShifted(int n, ddouble q) {
-                if (!(q >= 0)) {
+                if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
                 if (q < Eps) {
@@ -704,7 +704,7 @@ namespace DoubleDouble {
 
                         (scs, rm, d) = SolveCoefZeroShifted(brms, q, m, 1, cs[m]);
 
-                        if (m <= 2 + n / 2 || d < 1) {
+                        if (m <= 2 + n / 2 || d < 1d) {
                             Array.Copy(scs, cs, m);
                             break;
                         }

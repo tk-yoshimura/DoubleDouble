@@ -19,7 +19,7 @@ namespace DoubleDouble {
                 }
             }
             else {
-                if (!(x >= 0) || (x > 1)) {
+                if (!(x >= 0d) || (x > 1d)) {
                     return NaN;
                 }
             }

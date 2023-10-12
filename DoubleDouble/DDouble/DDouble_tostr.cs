@@ -115,7 +115,7 @@ namespace DoubleDouble {
             (_, int exponent_frac, UInt128 mantissa_frac, _) = FloatSplitter.Split(log10_frac);
 
 #if DEBUG
-            Debug<ArithmeticException>.Assert(log10_frac >= 1 && log10_frac < 10);
+            Debug<ArithmeticException>.Assert(log10_frac >= 1d && log10_frac < 10d);
 #endif
 
             mantissa = UInt128.MulShift(mantissa, Consts.Dec.Decimal(digits + presicion), FloatSplitter.MantissaBits * 2);

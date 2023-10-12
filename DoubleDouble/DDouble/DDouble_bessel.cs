@@ -14,10 +14,10 @@ namespace DoubleDouble {
             }
 
             if (x <= BesselUtil.Eps) {
-                if (nu == 0) {
+                if (nu == 0d) {
                     return 1d;
                 }
-                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0) {
+                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0d) {
                     return 0d;
                 }
                 return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
@@ -62,7 +62,7 @@ namespace DoubleDouble {
             }
 
             if (x <= BesselUtil.Eps) {
-                if (nu > 0) {
+                if (nu > 0d) {
                     return NegativeInfinity;
                 }
                 if (nu - Floor(nu) == Point5) {
@@ -131,10 +131,10 @@ namespace DoubleDouble {
             }
 
             if (x <= BesselUtil.Eps) {
-                if (nu == 0) {
+                if (nu == 0d) {
                     return 1d;
                 }
-                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0) {
+                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0d) {
                     return 0d;
                 }
                 return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
@@ -233,7 +233,7 @@ namespace DoubleDouble {
             public const int MaxN = 16;
 
             public static void CheckNu(ddouble nu) {
-                if (!(Abs(nu) <= MaxN)) {
+                if (!(Abs(nu) <= (double)MaxN)) {
                     throw new ArgumentOutOfRangeException(
                         nameof(nu),
                         $"In the calculation of the Bessel function, nu with an absolute value greater than {MaxN} is not supported."
@@ -1088,7 +1088,7 @@ namespace DoubleDouble {
                 int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
-                if (alpha == 0) {
+                if (alpha == 0d) {
                     return BesselJKernel(n, x, m);
                 }
 
@@ -1259,7 +1259,7 @@ namespace DoubleDouble {
                 int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
-                if (alpha == 0) {
+                if (alpha == 0d) {
                     return BesselYKernel(n, x, m);
                 }
 
@@ -1535,7 +1535,7 @@ namespace DoubleDouble {
                 int n = (int)Floor(nu);
                 ddouble alpha = nu - n;
 
-                if (alpha == 0) {
+                if (alpha == 0d) {
                     return BesselIKernel(n, x, m, scale);
                 }
 
@@ -1657,7 +1657,7 @@ namespace DoubleDouble {
                 private ddouble g;
 
                 public BesselJPhiTable(ddouble alpha) {
-                    if (!(alpha > 0) || alpha >= 1) {
+                    if (!(alpha > 0d) || alpha >= 1d) {
                         throw new ArgumentOutOfRangeException(nameof(alpha));
                     }
 
@@ -1702,7 +1702,7 @@ namespace DoubleDouble {
                 private ddouble g;
 
                 public BesselIPsiTable(ddouble alpha) {
-                    if (!(alpha > 0) || alpha >= 1) {
+                    if (!(alpha > 0d) || alpha >= 1d) {
                         throw new ArgumentOutOfRangeException(nameof(alpha));
                     }
 
@@ -1747,14 +1747,14 @@ namespace DoubleDouble {
                 private ddouble g;
 
                 public BesselYEtaTable(ddouble alpha) {
-                    if (!(alpha >= 0) || alpha >= 1) {
+                    if (!(alpha >= 0d) || alpha >= 1d) {
                         throw new ArgumentOutOfRangeException(nameof(alpha));
                     }
 
                     this.alpha = alpha;
                     this.table.Add(NaN);
 
-                    if (alpha > 0) {
+                    if (alpha > 0d) {
                         ddouble c = Gamma(1d + alpha);
                         c *= c;
                         this.g = 1d / (1d - alpha) * c;
@@ -1777,7 +1777,7 @@ namespace DoubleDouble {
                     }
 
                     for (int m = table.Count; m <= n; m++) {
-                        if (alpha > 0) {
+                        if (alpha > 0d) {
                             g = -g * (alpha + m - 1) * (2 * alpha + m - 1d) / (m * (m - alpha));
 
                             ddouble eta = g * (alpha + 2 * m);
@@ -1801,7 +1801,7 @@ namespace DoubleDouble {
                 private readonly BesselYEtaTable eta;
 
                 public BesselYXiTable(ddouble alpha, BesselYEtaTable eta) {
-                    if (!(alpha >= 0) || alpha >= 1) {
+                    if (!(alpha >= 0d) || alpha >= 1d) {
                         throw new ArgumentOutOfRangeException(nameof(alpha));
                     }
 
@@ -1824,7 +1824,7 @@ namespace DoubleDouble {
                     }
 
                     for (int m = table.Count; m <= n; m++) {
-                        if (alpha > 0) {
+                        if (alpha > 0d) {
                             if ((m & 1) == 0) {
                                 table.Add(eta[m / 2]);
                             }
@@ -1888,7 +1888,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-                if (nu < 2) {
+                if (nu < 2d) {
                     if (!CDsTable.ContainsKey(nu)) {
                         CDsTable.Add(nu, Table(nu));
                     }
