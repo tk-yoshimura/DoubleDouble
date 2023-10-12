@@ -179,16 +179,51 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void TruncateMantissaTest() {
-            foreach (ddouble v in new ddouble[] {
-                -1, -ddouble.Rcp(3), -ddouble.Rcp(7), -ddouble.BitDecrement(2),
-                1, ddouble.Rcp(3), ddouble.Rcp(7), ddouble.BitDecrement(2) }) {
+            ddouble s = ddouble.Ldexp(1d, -1018) + ddouble.Ldexp(1d, -1074);
+            ddouble.TruncateMantissa(s, 120);
 
-                for (int keep_bits = 1; keep_bits <= 110; keep_bits++) {
-                    ddouble v_round = ddouble.TruncateMantissa(v, keep_bits);
+            for (int hi_exp = -1090; hi_exp <= 1024; hi_exp += 4) {
+                ddouble hi = ddouble.Ldexp(1d, hi_exp);
 
-                    Console.WriteLine(v_round);
-                    Console.WriteLine($"0x{FloatSplitter.Split(v_round).mantissa:X14}");
-                    Console.WriteLine(v_round - v);
+                if (hi == 0d) {
+                    continue;
+                }
+                
+                for (int lo_exp = hi_exp - 125; lo_exp < hi_exp; lo_exp++) {
+                    ddouble lo = ddouble.Ldexp(1d, lo_exp);
+
+                    ddouble v = hi + lo;
+
+                    Console.WriteLine($"2^{hi_exp}+2^{lo_exp}={v}");
+
+                    ddouble round_120 = ddouble.TruncateMantissa(v, 120);
+                    ddouble round_115 = ddouble.TruncateMantissa(v, 115);
+                    ddouble round_110 = ddouble.TruncateMantissa(v, 110);
+                    ddouble round_105 = ddouble.TruncateMantissa(v, 105);
+                    ddouble round_100 = ddouble.TruncateMantissa(v, 100);
+                    ddouble round_95 = ddouble.TruncateMantissa(v, 95);
+                    ddouble round_53 = ddouble.TruncateMantissa(v, 53);
+                    ddouble round_52 = ddouble.TruncateMantissa(v, 52);
+                    ddouble round_51 = ddouble.TruncateMantissa(v, 51);
+
+                    Assert.AreEqual(v == round_120, hi_exp - lo_exp <= 120 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 120) = {round_120}");
+                    Assert.AreEqual(v == round_115, hi_exp - lo_exp <= 115 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 115) = {round_115}");
+                    Assert.AreEqual(v == round_110, hi_exp - lo_exp <= 110 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 110) = {round_110}");
+                    Assert.AreEqual(v == round_105, hi_exp - lo_exp <= 105 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 105) = {round_105}");
+                    Assert.AreEqual(v == round_100, hi_exp - lo_exp <= 100 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 100) = {round_100}");
+                    Assert.AreEqual(v == round_95, hi_exp - lo_exp <= 95 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 95) = {round_95}");
+                    Assert.AreEqual(v == round_53, hi_exp - lo_exp <= 53 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 53) = {round_53}");
+                    Assert.AreEqual(v == round_52, hi_exp - lo_exp <= 52 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 52) = {round_52}");
+                    Assert.AreEqual(v == round_51, hi_exp - lo_exp <= 51 || lo == 0d, 
+                        $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 51) = {round_51}");
                 }
             }
         }

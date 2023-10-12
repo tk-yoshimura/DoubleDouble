@@ -25,7 +25,7 @@ namespace DoubleDouble {
                 return y;
             }
 
-            x = RoundMantissa(x, 105);
+            x = TruncateMantissa(x, 105);
 
             if (x <= Consts.Gamma.Log2PadeWise2X0) {
                 int n = int.Max(0, (int)Round(x - 1d));
