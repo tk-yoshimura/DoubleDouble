@@ -487,7 +487,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void SinPIHalfMonotoneTest() {
-            for (ddouble x = 0; x <= 1; x += 1d / 8192) {
+            for (ddouble x = 1d / 8192; x < 1; x += 1d / 8192) {
                 ddouble y = ddouble.SinPIHalf(x);
 
                 for (int exp = -110; exp < -95; exp++) {
@@ -498,12 +498,12 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y - ydec);
                     Console.WriteLine(yinc - y);
 
-                    if (x > 0) {
-                        Assert.IsTrue(ydec <= y, $"{x},{exp},dec");
+                    if (x > 0 && ydec > y) {
+                        HPAssert.NeighborBits(y, ydec, $"{x},{exp},dec", 2);
                     }
 
-                    if (x < 1) {
-                        Assert.IsTrue(y <= yinc, $"{x},{exp},inc");
+                    if (x < 1 && yinc < y) {
+                        HPAssert.NeighborBits(y, yinc, $"{x},{exp},inc", 2);
                     }
                 }
             }

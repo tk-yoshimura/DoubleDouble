@@ -179,9 +179,6 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void TruncateMantissaTest() {
-            ddouble s = ddouble.Ldexp(1d, -1018) + ddouble.Ldexp(1d, -1074);
-            ddouble.TruncateMantissa(s, 120);
-
             for (int hi_exp = -1090; hi_exp <= 1024; hi_exp += 4) {
                 ddouble hi = ddouble.Ldexp(1d, hi_exp);
 

@@ -69,7 +69,7 @@ namespace DoubleDouble {
 
             ddouble s = x - Floor(x);
 
-            int index = (int)Floor(s * Consts.SinCos.SinPIHalfTableN);
+            int index = (int)Round(s * Consts.SinCos.SinPIHalfTableN);
             ddouble v = s - Consts.SinCos.SinPIHalfTableDx * index;
             ddouble sna = Consts.SinCos.SinPIHalfTable[index];
             ddouble cna = Consts.SinCos.SinPIHalfTable[Consts.SinCos.SinPIHalfTableN - index];
