@@ -76,10 +76,13 @@ namespace DoubleDouble {
 
             ddouble u = Ldexp(v * PI, -1), u2 = u * u;
 
-            ddouble sc = 166320d + u2 * (-22260d + u2 * 551d);
-            ddouble sd = 166320d + u2 * (5460d + u2 * 75d);
+            ddouble ssc = 166320d + u2 * (-22260d + u2 * 551d);
+            ddouble ssd = 166320d + u2 * (5460d + u2 * 75d);
 
-            ddouble snb = u * sc / sd, cnb = Sqrt(1d - snb * snb);
+            ddouble scc = 15120d + u2 * (-6900d + u2 * 313d);
+            ddouble scd = 15120d + u2 * (660d + u2 * 13d);
+
+            ddouble snb = u * ssc / ssd, cnb = scc / scd;
 
             ddouble y = sna * cnb + cna * snb;
 

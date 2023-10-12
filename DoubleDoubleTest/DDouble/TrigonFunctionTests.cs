@@ -499,11 +499,11 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(yinc - y);
 
                     if (x > 0 && ydec > y) {
-                        HPAssert.NeighborBits(y, ydec, $"{x},{exp},dec", 2);
+                        HPAssert.NeighborBits(y, ydec, $"{x},{exp},dec", 1);
                     }
 
                     if (x < 1 && yinc < y) {
-                        HPAssert.NeighborBits(y, yinc, $"{x},{exp},inc", 2);
+                        HPAssert.NeighborBits(y, yinc, $"{x},{exp},inc", 1);
                     }
                 }
             }
