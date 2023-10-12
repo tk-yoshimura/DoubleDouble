@@ -21,7 +21,7 @@
             }
 
             for (int i = 0; i < 16; i++) {
-                (a, b) = ((a + b) / 2, Sqrt(a * b));
+                (a, b) = (Ldexp(a + b, -1), Sqrt(a * b));
 
                 if (a == b) {
                     break;
