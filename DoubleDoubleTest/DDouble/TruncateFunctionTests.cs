@@ -185,7 +185,7 @@ namespace DoubleDoubleTest.DDouble {
                 if (hi == 0d) {
                     continue;
                 }
-                
+
                 for (int lo_exp = hi_exp - 125; lo_exp < hi_exp; lo_exp++) {
                     ddouble lo = ddouble.Ldexp(1d, lo_exp);
 
@@ -203,23 +203,23 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble round_52 = ddouble.TruncateMantissa(v, 52);
                     ddouble round_51 = ddouble.TruncateMantissa(v, 51);
 
-                    Assert.AreEqual(v == round_120, hi_exp - lo_exp <= 120 || lo == 0d, 
+                    Assert.AreEqual(v == round_120, hi_exp - lo_exp <= 120 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 120) = {round_120}");
-                    Assert.AreEqual(v == round_115, hi_exp - lo_exp <= 115 || lo == 0d, 
+                    Assert.AreEqual(v == round_115, hi_exp - lo_exp <= 115 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 115) = {round_115}");
-                    Assert.AreEqual(v == round_110, hi_exp - lo_exp <= 110 || lo == 0d, 
+                    Assert.AreEqual(v == round_110, hi_exp - lo_exp <= 110 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 110) = {round_110}");
-                    Assert.AreEqual(v == round_105, hi_exp - lo_exp <= 105 || lo == 0d, 
+                    Assert.AreEqual(v == round_105, hi_exp - lo_exp <= 105 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 105) = {round_105}");
-                    Assert.AreEqual(v == round_100, hi_exp - lo_exp <= 100 || lo == 0d, 
+                    Assert.AreEqual(v == round_100, hi_exp - lo_exp <= 100 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 100) = {round_100}");
-                    Assert.AreEqual(v == round_95, hi_exp - lo_exp <= 95 || lo == 0d, 
+                    Assert.AreEqual(v == round_95, hi_exp - lo_exp <= 95 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 95) = {round_95}");
-                    Assert.AreEqual(v == round_53, hi_exp - lo_exp <= 53 || lo == 0d, 
+                    Assert.AreEqual(v == round_53, hi_exp - lo_exp <= 53 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 53) = {round_53}");
-                    Assert.AreEqual(v == round_52, hi_exp - lo_exp <= 52 || lo == 0d, 
+                    Assert.AreEqual(v == round_52, hi_exp - lo_exp <= 52 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 52) = {round_52}");
-                    Assert.AreEqual(v == round_51, hi_exp - lo_exp <= 51 || lo == 0d, 
+                    Assert.AreEqual(v == round_51, hi_exp - lo_exp <= 51 || lo == 0d,
                         $"\nTruncate(2^{hi_exp}+2^{lo_exp}={v}, 51) = {round_51}");
                 }
             }
