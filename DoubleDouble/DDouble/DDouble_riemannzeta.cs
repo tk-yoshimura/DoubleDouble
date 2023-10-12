@@ -16,7 +16,7 @@ namespace DoubleDouble {
             if (x <= Eps) {
                 ddouble y = -(1d + x * Log(2 * PI)) / 2;
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
 
             static ddouble pade(ddouble x, (ReadOnlyCollection<ddouble> cs, ReadOnlyCollection<ddouble> ds) table) {
@@ -38,49 +38,49 @@ namespace DoubleDouble {
             if (x < 1d) {
                 ddouble y = 1d + pade(1d - x, PadeX0Table) / (1d - x);
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 2d) {
                 ddouble y = pade(x - 1d, PadeX1Table) + 1d / (x - 1d);
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 4d) {
                 ddouble b = (+1, -1, 0xB2DB600000000000uL, 0x0000000000000000uL);
                 ddouble y = pade(x - 2d, PadeX2Table) + 1d / (x - 1d) + b;
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 6d) {
                 ddouble b = (-1, 1, 0xD224A00000000000uL, 0x0000000000000000uL);
                 ddouble y = 1d + Exp(pade(x - 4d, PadeX4Table) + b);
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 10d) {
                 ddouble y = 1d + Exp(pade(x - 6d, PadeX6Table));
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 17d) {
                 ddouble y = 1d + Exp(pade(x - 10d, PadeX10Table));
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 30d) {
                 ddouble y = 1d + Exp(pade(x - 17d, PadeX17Table));
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 74d) {
                 ddouble y = 1d + Exp(pade(x - 30d, PadeX30Table));
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (x < 106d) {
                 ddouble y = 1d + Pow2(-x);
 
-                return RoundMantissa(y, keep_bits: 105);
+                return TruncateMantissa(y, keep_bits: 105);
             }
             if (!IsNaN(x)) {
                 return 1d;

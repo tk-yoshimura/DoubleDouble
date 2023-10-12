@@ -69,17 +69,20 @@ namespace DoubleDouble {
 
             ddouble s = x - Floor(x);
 
-            int index = (int)Floor(s * Consts.SinCos.SinPIHalfTableN);
+            int index = (int)Round(s * Consts.SinCos.SinPIHalfTableN);
             ddouble v = s - Consts.SinCos.SinPIHalfTableDx * index;
             ddouble sna = Consts.SinCos.SinPIHalfTable[index];
             ddouble cna = Consts.SinCos.SinPIHalfTable[Consts.SinCos.SinPIHalfTableN - index];
 
             ddouble u = Ldexp(v * PI, -1), u2 = u * u;
 
-            ddouble sc = 166320d + u2 * (-22260d + u2 * 551d);
-            ddouble sd = 166320d + u2 * (5460d + u2 * 75d);
+            ddouble ssc = 166320d + u2 * (-22260d + u2 * 551d);
+            ddouble ssd = 166320d + u2 * (5460d + u2 * 75d);
 
-            ddouble snb = u * sc / sd, cnb = Sqrt(1d - snb * snb);
+            ddouble scc = 15120d + u2 * (-6900d + u2 * 313d);
+            ddouble scd = 15120d + u2 * (660d + u2 * 13d);
+
+            ddouble snb = u * ssc / ssd, cnb = scc / scd;
 
             ddouble y = sna * cnb + cna * snb;
 
@@ -88,7 +91,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class SinCos {
-                public const int SinPIHalfTableN = 512;
+                public const int SinPIHalfTableN = 1024;
 
                 public static readonly IReadOnlyList<ddouble> SinPIHalfTable = GenerateSinPITable();
 
@@ -115,20 +118,26 @@ namespace DoubleDouble {
                         throw new ArgumentOutOfRangeException(nameof(x));
                     }
 
+                    if (x == 0.5d) {
+                        return Ldexp(Sqrt(2), -1);
+                    }
+
                     if (x < 0.5d) {
                         ddouble w = Ldexp(x * PI, -1), w2 = w * w, w4 = w2 * w2, u = 1;
-                        ddouble y = Zero;
+                        ddouble y = Zero, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 3; i < n; i += 4) {
                             ddouble f = TaylorSequence[i + 3];
                             ddouble dy = u * f * ((i + 2) * (i + 3) - w2);
-                            ddouble y_next = y + dy;
+                            ddouble d = dy - c;
+                            ddouble y_next = y + d;
 
                             if (y == y_next) {
                                 break;
                             }
 
                             u *= w4;
+                            c = (y_next - y) - d;
                             y = y_next;
                         }
 
@@ -136,18 +145,20 @@ namespace DoubleDouble {
                     }
                     else {
                         ddouble w = Ldexp((x - 1d) * PI, -1), w2 = w * w, w4 = w2 * w2, u = w2;
-                        ddouble y = 1d;
+                        ddouble y = 1d, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 4; i < n; i += 4) {
                             ddouble f = TaylorSequence[i + 4];
-                            ddouble dy = u * f * ((i + 3) * (i + 4) - w2);
-                            ddouble y_next = y - dy;
+                            ddouble dy = u * f * (w2 - (i + 3) * (i + 4));
+                            ddouble d = dy - c;
+                            ddouble y_next = y + d;
 
                             if (y == y_next) {
                                 break;
                             }
 
                             u *= w4;
+                            c = (y_next - y) - d;
                             y = y_next;
                         }
 

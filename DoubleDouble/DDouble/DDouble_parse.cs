@@ -97,7 +97,7 @@ namespace DoubleDouble {
 
             ddouble exponent = Consts.Dec.Pow5(p);
 
-            return RoundMantissa(Ldexp(mantissa * exponent, p), keep_bits: 105);
+            return TruncateMantissa(Ldexp(mantissa * exponent, p), keep_bits: 105);
         }
 
         private static ddouble FromIrregularString(string str) {

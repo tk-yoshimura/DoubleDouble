@@ -49,7 +49,7 @@ namespace DoubleDouble {
                     y += delta;
                 }
 
-                y = RoundMantissa(y, keep_bits: 105);
+                y = TruncateMantissa(y, keep_bits: 105);
 
                 return y;
             }

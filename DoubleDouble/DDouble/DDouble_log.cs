@@ -31,7 +31,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Log10(ddouble x) {
-            return RoundMantissa(Log2(x) * Lg2, keep_bits: 103);
+            return TruncateMantissa(Log2(x) * Lg2, keep_bits: 103);
         }
 
         public static ddouble Log(ddouble x) {
@@ -44,7 +44,7 @@ namespace DoubleDouble {
                 LogCache.RcpLbB = Rcp(Log2(b));
             }
 
-            return RoundMantissa(Log2(x) * LogCache.RcpLbB, keep_bits: 103);
+            return TruncateMantissa(Log2(x) * LogCache.RcpLbB, keep_bits: 103);
         }
 
         public static ddouble Log1p(ddouble x) {

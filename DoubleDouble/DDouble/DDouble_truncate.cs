@@ -28,36 +28,9 @@
                 return x;
             }
 
-            int exponent = double.ILogB(x.hi);
-            double rem = double.ScaleB(1, exponent - keep_bits);
-
-            if (!double.IsFinite(rem) || rem == 0) {
-                return x;
-            }
-
-            double hi = double.Truncate(x.hi / rem) * rem;
-            double lo = double.Truncate(x.lo / rem) * rem;
-
-            return new ddouble(hi, lo);
-        }
-
-        public static ddouble RoundMantissa(ddouble x, int keep_bits) {
-            if (keep_bits <= 0) {
-                throw new ArgumentOutOfRangeException(nameof(keep_bits));
-            }
-            if (!IsFinite(x) || IsZero(x)) {
-                return x;
-            }
-
-            int exponent = double.ILogB(x.hi);
-            double rem = double.ScaleB(1, exponent - keep_bits);
-
-            if (!double.IsFinite(rem) || rem == 0) {
-                return x;
-            }
-
-            double hi = double.Round(x.hi / rem) * rem;
-            double lo = double.Round(x.lo / rem) * rem;
+            int shifts = double.ILogB(x.hi) - keep_bits;
+            double hi = double.ScaleB(double.Round(double.ScaleB(x.hi, -shifts)), shifts);
+            double lo = double.ScaleB(double.Round(double.ScaleB(x.lo, -shifts)), shifts);
 
             return new ddouble(hi, lo);
         }
