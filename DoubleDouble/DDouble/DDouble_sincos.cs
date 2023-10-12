@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -74,7 +75,7 @@ namespace DoubleDouble {
             ddouble sna = Consts.SinCos.SinPIHalfTable[index];
             ddouble cna = Consts.SinCos.SinPIHalfTable[Consts.SinCos.SinPIHalfTableN - index];
 
-            ddouble u = Ldexp(v * PI, -1), u2 = u * u;
+            ddouble u = v * Consts.SinCos.PIHalf, u2 = u * u;
 
             ddouble ssc = 166320d + u2 * (-22260d + u2 * 551d);
             ddouble ssd = 166320d + u2 * (5460d + u2 * 75d);
@@ -91,6 +92,8 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class SinCos {
+                public static readonly ddouble PIHalf = Ldexp(PI, -1);
+
                 public const int SinPIHalfTableN = 1024;
 
                 public static readonly IReadOnlyList<ddouble> SinPIHalfTable = GenerateSinPITable();
@@ -123,7 +126,7 @@ namespace DoubleDouble {
                     }
 
                     if (x < 0.5d) {
-                        ddouble w = Ldexp(x * PI, -1), w2 = w * w, w4 = w2 * w2, u = 1;
+                        ddouble w = x * PIHalf, w2 = w * w, w4 = w2 * w2, u = 1;
                         ddouble y = Zero, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 3; i < n; i += 4) {
@@ -144,7 +147,7 @@ namespace DoubleDouble {
                         return w * y;
                     }
                     else {
-                        ddouble w = Ldexp((x - 1d) * PI, -1), w2 = w * w, w4 = w2 * w2, u = w2;
+                        ddouble w = (x - 1d) * PIHalf, w2 = w * w, w4 = w2 * w2, u = w2;
                         ddouble y = 1d, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 4; i < n; i += 4) {
