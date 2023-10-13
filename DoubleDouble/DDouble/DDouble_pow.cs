@@ -44,7 +44,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
             if (x <= -1024d) {
-                return Zero;
+                return double.Exp2(x.hi);
             }
 
             int exp = (int)Floor(x);
@@ -127,11 +127,11 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= -310d) {
-                return Zero;
-            }
             if (x >= 310d) {
                 return PositiveInfinity;
+            }
+            if (x <= -310d) {
+                return double.Exp10(x.hi);
             }
 
             int n = (int)Truncate(x);
@@ -149,11 +149,11 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= -710d) {
-                return Zero;
-            }
             if (x >= 710d) {
                 return PositiveInfinity;
+            }
+            if (x <= -710d) {
+                return double.Exp(x.hi);
             }
 
             int n = (int)Truncate(x);
