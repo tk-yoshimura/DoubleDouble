@@ -154,7 +154,7 @@ namespace DoubleDouble {
                 return a.hi * b;
             }
 
-            ddouble y = MultiplyAdd(Zero, a.hi, b);
+            ddouble y = MultiplyAdd(0d, a.hi, b);
             y = MultiplyAdd(y, a.lo, b);
 
             return y;

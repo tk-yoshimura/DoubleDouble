@@ -6,7 +6,7 @@
             }
 
             if (IsZero(a) || IsZero(b)) {
-                return Zero;
+                return 0d;
             }
 
             if (IsInfinity(a) || IsInfinity(b)) {
@@ -17,7 +17,7 @@
             (scale, (a, b)) = AdjustScale(exp: 0, (a, b));
 
             if (IsZero(a) || IsZero(b)) {
-                return Zero;
+                return 0d;
             }
 
             for (int i = 0; i < 16; i++) {

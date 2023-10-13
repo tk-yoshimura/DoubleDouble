@@ -38,7 +38,7 @@ namespace DoubleDouble {
                 return 1d;
             }
             if (IsInfinity(x)) {
-                return IsNegative(x) ? PlusZero : PositiveInfinity;
+                return IsNegative(x) ? 0d : PositiveInfinity;
             }
             if (x >= 1024d) {
                 return PositiveInfinity;
@@ -67,10 +67,10 @@ namespace DoubleDouble {
                 return Pow2(x) - 1d;
             }
             if (IsPlusZero(x)) {
-                return PlusZero;
+                return 0d;
             }
             if (IsMinusZero(x)) {
-                return MinusZero;
+                return -0d;
             }
 
             x *= Ln2;
@@ -91,22 +91,22 @@ namespace DoubleDouble {
                 return IsNaN(x) ? NaN : 1d;
             }
             if (IsZero(x)) {
-                return Zero;
+                return 0d;
             }
 
             if (y <= long.MinValue) {
                 if (x == 1d) {
-                    return 1;
+                    return 1d;
                 }
 
-                return x < 1d ? PositiveInfinity : Zero;
+                return x < 1d ? PositiveInfinity : 0d;
             }
             if (y >= long.MaxValue) {
                 if (x == 1d) {
                     return 1;
                 }
 
-                return x < 1d ? Zero : PositiveInfinity;
+                return x < 1d ? 0d : PositiveInfinity;
             }
 
             if (x != PowCache.X) {
@@ -171,10 +171,10 @@ namespace DoubleDouble {
                 return Exp(x) - 1d;
             }
             if (IsPlusZero(x)) {
-                return PlusZero;
+                return 0d;
             }
             if (IsMinusZero(x)) {
-                return MinusZero;
+                return -0d;
             }
 
             ddouble sc = 259459200d + x * (8648640d + x * (8648640d + x * (277200d + x * (55440d + x * (1512d + x * (72d + x * 1d))))));

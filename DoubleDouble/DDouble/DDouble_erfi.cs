@@ -38,7 +38,7 @@ namespace DoubleDouble {
                 return PlusZero;
             }
             if (IsInfinity(x)) {
-                return Zero;
+                return 0d;
             }
 
             if (x < Consts.Erfi.PadeApproxMin) {

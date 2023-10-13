@@ -2,7 +2,7 @@
 
     public static class DoubleDoubleEnumerableExpand {
         public static ddouble Sum(this IEnumerable<ddouble> source) {
-            ddouble acc = ddouble.Zero, carry = ddouble.Zero;
+            ddouble acc = 0d, carry = 0d;
 
             foreach (var v in source) {
                 ddouble d = v - carry;

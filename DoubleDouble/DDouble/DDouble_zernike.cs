@@ -20,7 +20,7 @@ namespace DoubleDouble {
             m = int.Abs(m);
 
             if (n < m || ((n - m) & 1) == 1) {
-                return Zero;
+                return 0d;
             }
 
             if (n == m) {

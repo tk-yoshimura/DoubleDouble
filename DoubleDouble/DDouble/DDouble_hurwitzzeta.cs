@@ -18,7 +18,7 @@
                 return RiemannZeta(x);
             }
             if (IsInfinity(x)) {
-                return (a < 1d) ? PositiveInfinity : Zero;
+                return (a < 1d) ? PositiveInfinity : 0d;
             }
 
             double a_convergence = 12d + 0.24d * (double)a + 1.35d * double.Log2((double)a + 1d);

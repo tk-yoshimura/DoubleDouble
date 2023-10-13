@@ -20,7 +20,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsPositiveInfinity(x)) {
-                return Zero;
+                return 0d;
             }
 
             if (x >= 0d) {
@@ -126,7 +126,7 @@ namespace DoubleDouble {
                         break;
                     }
                     if (IsNaN(next_v)) {
-                        return Zero;
+                        return 0d;
                     }
 
                     v = next_v;

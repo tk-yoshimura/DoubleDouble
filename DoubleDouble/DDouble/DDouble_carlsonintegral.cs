@@ -7,7 +7,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsInfinity(x) || IsInfinity(y)) {
-                return Zero;
+                return 0d;
             }
 
             int scale;
@@ -60,7 +60,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z)) {
-                return Zero;
+                return 0d;
             }
 
             int scale;
@@ -137,7 +137,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z)) {
-                return Zero;
+                return 0d;
             }
 
             int scale;
@@ -208,7 +208,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z) || IsInfinity(w)) {
-                return Zero;
+                return 0d;
             }
 
             int scale;
@@ -290,7 +290,7 @@ namespace DoubleDouble {
             ddouble kappa = Pow2(-scale * 0.5);
 
             if (x <= Eps && y <= Eps && z <= Eps) {
-                return Zero;
+                return 0d;
             }
 
             if (Max(x, y) <= RGLimitEps) {

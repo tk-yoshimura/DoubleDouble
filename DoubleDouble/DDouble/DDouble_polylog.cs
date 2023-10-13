@@ -367,7 +367,7 @@ namespace DoubleDouble {
                         y = x * (1d + x) * (1d + x * (10d + x)) / Pow(1d - x, 5);
                     }
 
-                    return IsNaN(y) ? Zero : y;
+                    return IsNaN(y) ? 0d : y;
                 }
 
                 throw new NotImplementedException();

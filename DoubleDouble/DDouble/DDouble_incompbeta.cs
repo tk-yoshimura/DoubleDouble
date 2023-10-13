@@ -17,7 +17,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(x)) {
-                return Zero;
+                return 0d;
             }
             if (x == 1d) {
                 return Beta(a, b);
@@ -36,7 +36,7 @@ namespace DoubleDouble {
                 ddouble f = IncompleteBetaCFrac.Value(1d - x, b, a);
 
                 ddouble y = Beta(a, b) - Pow2(a * Log2(x) + b * Log2(1d - x)) / f;
-                y = Max(y, Zero);
+                y = Max(y, 0d);
 
                 return y;
             }
@@ -56,7 +56,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(x)) {
-                return Zero;
+                return 0d;
             }
             if (x == 1d) {
                 return One;
@@ -77,7 +77,7 @@ namespace DoubleDouble {
                 ddouble f = IncompleteBetaCFrac.Value(xr, b, a);
 
                 ddouble y = 1d - Pow2(a * Log2(x) + b * Log2(xr) - LogBeta(a, b) * LbE) / f;
-                y = Max(y, Zero);
+                y = Max(y, 0d);
 
                 return y;
             }

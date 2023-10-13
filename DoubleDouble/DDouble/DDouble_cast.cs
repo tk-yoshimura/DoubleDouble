@@ -122,7 +122,7 @@ namespace DoubleDouble {
             int sign = n.Sign;
 
             if (sign == 0) {
-                return Zero;
+                return 0d;
             }
             if (sign == -1) {
                 return -(ddouble)BigInteger.Negate(n);
@@ -193,7 +193,7 @@ namespace DoubleDouble {
                     throw new ArgumentException("Invalid zero set.");
                 }
 
-                return Zero;
+                return 0d;
             }
 
             (UInt64 hi52, UInt64 lo53) = IntegerSplitter.Split(bits.hi, bits.lo);
@@ -209,7 +209,7 @@ namespace DoubleDouble {
 
         internal static ddouble FromUInt128(UInt128 n) {
             if (n.IsZero) {
-                return Zero;
+                return 0d;
             }
 
             int lzc = UInt128.LeadingZeroCount(n);

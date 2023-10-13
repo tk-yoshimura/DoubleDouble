@@ -21,7 +21,7 @@
             }
 
             if (x == 0d || nu < Consts.IncompleteGamma.MinNu) {
-                return Zero;
+                return 0d;
             }
 
             return InverseIncompleteGammaUtil.Kernel(nu, x, Log(x), Log(1d - x));
@@ -48,7 +48,7 @@
             }
 
             if (x == 1d || nu < Consts.IncompleteGamma.MinNu) {
-                return Zero;
+                return 0d;
             }
 
             return InverseIncompleteGammaUtil.Kernel(nu, 1d - x, Log(1d - x), Log(x));

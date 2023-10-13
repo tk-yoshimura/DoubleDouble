@@ -17,7 +17,7 @@ namespace DoubleDouble {
                 return Atan(a) / (2 * PI);
             }
             if (h > 36d) {
-                return Zero;
+                return 0d;
             }
 
             if ((double)a >= 11.5380 / double.Pow((double)h, 0.9892)) {

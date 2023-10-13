@@ -10,7 +10,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsInfinity(x)) {
-                return IsPositive(x) ? PositiveInfinity : Zero;
+                return IsPositive(x) ? PositiveInfinity : 0d;
             }
 
             if (x <= Consts.Ei.PadeApproxMin || x >= Consts.Ei.PadeApproxMax) {
@@ -49,7 +49,7 @@ namespace DoubleDouble {
                 return y;
             }
             if (x == 0d) { 
-                return Zero;
+                return 0d;
             }
 
             if (IsPositive(x)) {
@@ -68,7 +68,7 @@ namespace DoubleDouble {
             public static ddouble Positive(ddouble x, bool offset = true, int max_terms = 12) {
                 ddouble x2 = x * x;
 
-                ddouble s = (offset) ? (EulerGamma + Log(x)) : Zero;
+                ddouble s = (offset) ? (EulerGamma + Log(x)) : 0d;
                 ddouble u = x * Exp(x / 2);
 
                 for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
@@ -97,7 +97,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x;
 
-                ddouble s = (offset) ? (EulerGamma + Log(-x)) : Zero;
+                ddouble s = (offset) ? (EulerGamma + Log(-x)) : 0d;
                 ddouble u = x;
 
                 for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {

@@ -68,7 +68,7 @@ namespace DoubleDouble {
 
         public static ddouble Atan2(ddouble y, ddouble x) {
             if (IsZero(x) && IsZero(y)) {
-                return Zero;
+                return 0d;
             }
             if (!IsFinite(x) || !IsFinite(y)) {
                 return NaN;

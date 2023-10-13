@@ -12,7 +12,7 @@
 
         public static ddouble Arcosh(ddouble x) {
             if (x == 1d) {
-                return Zero;
+                return 0d;
             }
 
             ddouble y = Log(x + Sqrt(x * x - 1d));
@@ -25,7 +25,7 @@
                 return NaN;
             }
             if (IsZero(x)) {
-                return IsPositive(x) ? PlusZero : MinusZero;
+                return IsPositive(x) ? 0d : -0d;
             }
 
             if (x == -1d) {

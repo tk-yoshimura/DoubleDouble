@@ -127,7 +127,7 @@ namespace DoubleDouble {
 
                     if (x < 0.5d) {
                         ddouble w = x * PIHalf, w2 = w * w, w4 = w2 * w2, u = 1;
-                        ddouble y = Zero, c = 0d;
+                        ddouble y = 0d, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 3; i < n; i += 4) {
                             ddouble f = TaylorSequence[i + 3];

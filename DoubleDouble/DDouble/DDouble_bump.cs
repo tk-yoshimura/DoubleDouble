@@ -2,7 +2,7 @@
     public partial struct ddouble {
         public static ddouble Bump(ddouble x) {
             if (x <= 0.00140380859375d) {
-                return Zero;
+                return 0d;
             }
             if (x >= 0.98828125d) {
                 return 1d;

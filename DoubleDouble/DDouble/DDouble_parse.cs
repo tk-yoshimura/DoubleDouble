@@ -77,7 +77,7 @@ namespace DoubleDouble {
                 return true;
             }
             catch (FormatException) {
-                result = ddouble.Zero;
+                result = 0d;
                 return false;
             }
         }

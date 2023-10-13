@@ -60,7 +60,7 @@ namespace DoubleDouble {
             }
 
             if (n < int.Abs(m)) {
-                return Zero;
+                return 0d;
             }
 
             ReadOnlyCollection<ddouble> coefs = Consts.LegendreP.Table(n, m);

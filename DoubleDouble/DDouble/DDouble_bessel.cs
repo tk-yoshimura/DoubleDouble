@@ -1062,7 +1062,7 @@ namespace DoubleDouble {
                     return BesselJ1Kernel(x, m);
                 }
 
-                ddouble f0 = 1e-256, f1 = Zero, fn = Zero, lambda = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, fn = 0d, lambda = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1102,11 +1102,11 @@ namespace DoubleDouble {
 
                 BesselJPhiTable phi = phi_table[alpha];
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
 
                 if (n >= 0) {
-                    ddouble fn = Zero;
+                    ddouble fn = 0d;
 
                     for (int k = m; k >= 1; k--) {
                         if ((k & 1) == 0) {
@@ -1154,7 +1154,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1177,7 +1177,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1222,8 +1222,8 @@ namespace DoubleDouble {
 
                 BesselYXiTable xi = xi_table[0];
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero;
-                ddouble se = Zero, sx = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                ddouble se = 0d, sx = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1285,8 +1285,8 @@ namespace DoubleDouble {
 
                 BesselJPhiTable phi = phi_table[alpha];
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero;
-                ddouble se = Zero, sxo = Zero, sxe = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                ddouble se = 0d, sxo = 0d, sxe = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1435,8 +1435,8 @@ namespace DoubleDouble {
 
                 BesselYEtaTable eta = eta_table[0];
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero;
-                ddouble se = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                ddouble se = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1471,8 +1471,8 @@ namespace DoubleDouble {
 
                 BesselYXiTable xi = xi_table[0];
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero;
-                ddouble sx = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                ddouble sx = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1507,7 +1507,7 @@ namespace DoubleDouble {
                     return BesselI1Kernel(x, m, scale);
                 }
 
-                ddouble f0 = 1e-256, f1 = Zero, lambda = Zero, fn = Zero;
+                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d, fn = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1549,11 +1549,11 @@ namespace DoubleDouble {
 
                 BesselIPsiTable psi = psi_table[alpha];
 
-                ddouble g0 = 1e-256, g1 = Zero, lambda = Zero;
+                ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
 
                 if (n >= 0) {
-                    ddouble gn = Zero;
+                    ddouble gn = 0d;
 
                     for (int k = m; k >= 1; k--) {
                         lambda += g0 * psi[k];
@@ -1605,7 +1605,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                ddouble g0 = 1e-256, g1 = Zero, lambda = Zero;
+                ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {
@@ -1630,7 +1630,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                ddouble g0 = 1e-256, g1 = Zero, lambda = Zero;
+                ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
 
                 for (int k = m; k >= 1; k--) {

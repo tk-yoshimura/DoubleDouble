@@ -86,7 +86,7 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            ddouble s = Zero;
+            ddouble s = 0d;
 
             if ((n & 1) == 0) {
                 s += coef[0];
@@ -119,7 +119,7 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            ddouble s = Zero;
+            ddouble s = 0d;
 
             if ((n & 1) == 1) {
                 for (int m = 0; m < coef.Count; m++) {
@@ -398,7 +398,7 @@ namespace DoubleDouble {
                 ddouble inv_q = 1d / q;
 
                 ddouble[] cs = new ddouble[terms];
-                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+                (cs[^2], cs[^1]) = (Epsilon, 0d);
 
                 for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
                     ddouble c = (a - k * k) * cs[m] * inv_q - cs[m + 1];
@@ -412,11 +412,11 @@ namespace DoubleDouble {
 
                 int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
-                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                    cs[m] = Ldexp(cs[m], -scale);
                 }
 
                 for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
-                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                    if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
 
@@ -436,7 +436,7 @@ namespace DoubleDouble {
 
                 cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
 
-                if (!ddouble.IsFinite(cs[0])) {
+                if (!IsFinite(cs[0])) {
                     return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
                 }
 
@@ -480,8 +480,8 @@ namespace DoubleDouble {
                     ddouble w = q / Eps;
 
                     for (int i = 0; i < cs.Length; i++) {
-                        ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : Zero;
-                        ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : Zero;
+                        ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : 0d;
+                        ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : 0d;
 
                         cs[i] = c_q0 + (c_eps - c_q0) * w;
                     }
@@ -506,7 +506,7 @@ namespace DoubleDouble {
                 ddouble inv_q = 1d / q;
 
                 ddouble[] cs = new ddouble[128];
-                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+                (cs[^2], cs[^1]) = (Epsilon, 0d);
 
                 for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m >= arms.Count; m--, k -= 2) {
                     ddouble c = (a_sft - (k * k - sq_n)) * cs[m] * inv_q - cs[m + 1];
@@ -525,11 +525,11 @@ namespace DoubleDouble {
 
                 int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
-                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                    cs[m] = Ldexp(cs[m], -scale);
                 }
 
                 for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
-                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                    if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
 
@@ -549,7 +549,7 @@ namespace DoubleDouble {
 
                 cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
 
-                if (!ddouble.IsFinite(cs[0])) {
+                if (!IsFinite(cs[0])) {
                     return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
                 }
 
@@ -572,7 +572,7 @@ namespace DoubleDouble {
                 ddouble inv_q = 1d / q;
 
                 ddouble[] cs = new ddouble[terms];
-                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+                (cs[^2], cs[^1]) = (Epsilon, 0d);
 
                 for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
                     ddouble c = (b - k * k) * cs[m] * inv_q - cs[m + 1];
@@ -586,11 +586,11 @@ namespace DoubleDouble {
 
                 int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
-                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                    cs[m] = Ldexp(cs[m], -scale);
                 }
 
                 for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
-                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                    if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
 
@@ -610,7 +610,7 @@ namespace DoubleDouble {
 
                 cs = NormalizeAndTruncateCoef(n, 1, cs);
 
-                if (!ddouble.IsFinite(cs[0])) {
+                if (!IsFinite(cs[0])) {
                     return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
                 }
 
@@ -649,8 +649,8 @@ namespace DoubleDouble {
                     ddouble w = q / Eps;
 
                     for (int i = 0; i < cs.Length; i++) {
-                        ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : Zero;
-                        ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : Zero;
+                        ddouble c_q0 = i < cs_q0.Length ? cs_q0[i] : 0d;
+                        ddouble c_eps = i < cs_eps.Count ? cs_eps[i] : 0d;
 
                         cs[i] = c_q0 + (c_eps - c_q0) * w;
                     }
@@ -675,7 +675,7 @@ namespace DoubleDouble {
                 ddouble inv_q = 1d / q;
 
                 ddouble[] cs = new ddouble[128];
-                (cs[^2], cs[^1]) = (ddouble.Epsilon, ddouble.Zero);
+                (cs[^2], cs[^1]) = (Epsilon, 0d);
 
                 for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m >= brms.Count; m--, k -= 2) {
                     ddouble c = (b_sft - (k * k - sq_n)) * cs[m] * inv_q - cs[m + 1];
@@ -694,11 +694,11 @@ namespace DoubleDouble {
 
                 int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
                 for (int m = 0; m < cs.Length; m++) {
-                    cs[m] = ddouble.Ldexp(cs[m], -scale);
+                    cs[m] = Ldexp(cs[m], -scale);
                 }
 
                 for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
-                    if (m == 2 || ddouble.Abs(cs[m]) > ddouble.Abs(cs[m - 1])) {
+                    if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
 
@@ -713,7 +713,7 @@ namespace DoubleDouble {
 
                 cs = NormalizeAndTruncateCoef(n, 1, cs);
 
-                if (!ddouble.IsFinite(cs[0])) {
+                if (!IsFinite(cs[0])) {
                     return Array.AsReadOnly(Enumerable.Empty<ddouble>().ToArray());
                 }
 
@@ -740,7 +740,7 @@ namespace DoubleDouble {
                     cs[i] = qs[m - i - 1] * ts[i] / ts[m];
                 }
 
-                ddouble d = ddouble.Abs(ts[m - 1] / ts[m]);
+                ddouble d = Abs(ts[m - 1] / ts[m]);
 
                 return (cs, ts[m], d);
             }
@@ -765,7 +765,7 @@ namespace DoubleDouble {
                     cs[i] = qs[m - i - 1] * ts[i] / ts[m];
                 }
 
-                ddouble d = ddouble.Abs(ts[m - 1] / ts[m]);
+                ddouble d = Abs(ts[m - 1] / ts[m]);
 
                 return (cs, ts[m], d);
             }
@@ -776,14 +776,14 @@ namespace DoubleDouble {
                     norm += cs[i] * cs[i];
                 }
 
-                ddouble r = ddouble.Sqrt(norm) * Sign(cs.Sum());
+                ddouble r = Sqrt(norm) * Sign(cs.Sum());
                 for (int i = 0; i < cs.Length; i++) {
                     cs[i] /= r;
                 }
 
-                ddouble threshold = ddouble.Ldexp(cs.Select(c => ddouble.Abs(c)).Max(), -128);
+                ddouble threshold = Ldexp(cs.Select(c => Abs(c)).Max(), -128);
                 for (int i = cs.Length - 1; i > 0; i--) {
-                    if (ddouble.Abs(cs[i]) > threshold) {
+                    if (Abs(cs[i]) > threshold) {
                         cs = cs[..(i + 1)];
                         break;
                     }
@@ -796,11 +796,11 @@ namespace DoubleDouble {
                 for (int j = m - 1; j < cs.Length; j++) {
                     if (double.ILogB(cs[j - 1].Hi) < -128 && double.ILogB(cs[j].Hi) < -128 && m >= Mathieu.MaxN * 2) {
                         cs = cs[..j];
-                        cs[^1] = ddouble.Zero;
+                        cs[^1] = 0d;
                         break;
                     }
 
-                    cs[j] = ddouble.Ldexp(cs[j], -128);
+                    cs[j] = Ldexp(cs[j], -128);
                 }
 
                 return cs;

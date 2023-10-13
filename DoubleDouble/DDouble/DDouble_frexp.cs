@@ -9,7 +9,7 @@ namespace DoubleDouble {
                 return (0, NaN);
             }
             if (IsZero(x)) {
-                return (0, IsPositive(x) ? PlusZero : MinusZero);
+                return (0, IsPositive(x) ? 0d : -0d);
             }
 
             int n = double.ILogB(x.hi);
@@ -28,7 +28,7 @@ namespace DoubleDouble {
                 return (0, NaN);
             }
             if (IsZero(x)) {
-                return (0, IsPositive(x) ? PlusZero : MinusZero);
+                return (0, IsPositive(x) ? 0d : -0d);
             }
 
             int n = (exp - double.ILogB(x.hi));
@@ -45,8 +45,8 @@ namespace DoubleDouble {
             }
             if (IsZero(x)) {
                 return (0,
-                    (IsPositive(v.a) ? PlusZero : MinusZero,
-                     IsPositive(v.b) ? PlusZero : MinusZero)
+                    (IsPositive(v.a) ? 0d : -0d,
+                     IsPositive(v.b) ? 0d : -0d)
                 );
             }
 
@@ -63,9 +63,9 @@ namespace DoubleDouble {
             }
             if (IsZero(x)) {
                 return (0,
-                    (IsPositive(v.a) ? PlusZero : MinusZero,
-                     IsPositive(v.b) ? PlusZero : MinusZero,
-                     IsPositive(v.c) ? PlusZero : MinusZero)
+                    (IsPositive(v.a) ? 0d : -0d,
+                     IsPositive(v.b) ? 0d : -0d,
+                     IsPositive(v.c) ? 0d : -0d)
                 );
             }
 
@@ -82,10 +82,10 @@ namespace DoubleDouble {
             }
             if (IsZero(x)) {
                 return (0,
-                    (IsPositive(v.a) ? PlusZero : MinusZero,
-                     IsPositive(v.b) ? PlusZero : MinusZero,
-                     IsPositive(v.c) ? PlusZero : MinusZero,
-                     IsPositive(v.d) ? PlusZero : MinusZero)
+                    (IsPositive(v.a) ? 0d : -0d,
+                     IsPositive(v.b) ? 0d : -0d,
+                     IsPositive(v.c) ? 0d : -0d,
+                     IsPositive(v.d) ? 0d : -0d)
                 );
             }
 

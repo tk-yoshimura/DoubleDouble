@@ -93,20 +93,20 @@ namespace DoubleDouble {
             }
 
             if (nu < Consts.IncompleteGamma.MinNu) {
-                return IsZero(x) ? Zero : One;
+                return IsZero(x) ? 0d : 1d;
             }
 
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
-                y = Min(y, One);
+                y = Min(y, 1d);
 
                 return y;
             }
             else {
                 ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = 1d - Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
-                y = Max(y, Zero);
+                y = Max(y, 0d);
 
                 return y;
             }
@@ -132,20 +132,20 @@ namespace DoubleDouble {
             }
 
             if (nu < Consts.IncompleteGamma.MinNu) {
-                return IsZero(x) ? One : Zero;
+                return IsZero(x) ? 1d : 0d;
             }
 
             if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = 1d - Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
-                y = Max(y, Zero);
+                y = Max(y, 0d);
 
                 return y;
             }
             else {
                 ddouble f = UpperIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
-                y = Min(y, One);
+                y = Min(y, 1d);
 
                 return y;
             }
@@ -167,8 +167,8 @@ namespace DoubleDouble {
 
             public static ddouble Value(ddouble nu, ddouble x) {
                 ddouble xmnu = x - nu;
-                ddouble p0 = 0d, p1 = 0d, p2 = nu - 1d, p3 = 0;
-                ddouble q0 = 0d, q1 = 0d, q2 = xmnu + 3d, q3 = 1;
+                ddouble p0 = 0d, p1 = 0d, p2 = nu - 1d, p3 = 0d;
+                ddouble q0 = 0d, q1 = 0d, q2 = xmnu + 3d, q3 = 1d;
 
                 ddouble nu2i = nu, xmnu4i = xmnu + 1d;
 

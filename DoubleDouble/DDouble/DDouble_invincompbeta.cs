@@ -14,10 +14,10 @@
             }
 
             if (IsZero(x)) {
-                return Zero;
+                return 0d;
             }
             if (x == 1d) {
-                return One;
+                return 1d;
             }
 
             return InverseIncompleteBetaUtil.Kernel(a, b, x, Log(x), Log(1d - x));

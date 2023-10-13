@@ -9,7 +9,7 @@
                 ddouble c = PI * x;
 
                 if (IsInfinity(c)) {
-                    return Zero;
+                    return 0d;
                 }
 
                 return SinPI(x) / c;
@@ -20,7 +20,7 @@
                 }
 
                 if (IsInfinity(x)) {
-                    return Zero;
+                    return 0d;
                 }
 
                 return Sin(x) / x;

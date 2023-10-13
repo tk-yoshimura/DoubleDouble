@@ -16,7 +16,7 @@ namespace DoubleDouble {
             }
 
             if (x < Epsilon) {
-                return Zero;
+                return 0d;
             }
 
             if (IsNaN(x)) {
@@ -25,10 +25,10 @@ namespace DoubleDouble {
 
             if (IsInfinity(x)) {
                 if (n == 0) {
-                    return PlusZero;
+                    return 0d;
                 }
                 if (n == 1) {
-                    return 2d * RcpPI;
+                    return 2 * RcpPI;
                 }
 
                 return PositiveInfinity;
@@ -54,10 +54,10 @@ namespace DoubleDouble {
 
             if (IsInfinity(x)) {
                 if (n == 0) {
-                    return PlusZero;
+                    return 0d;
                 }
                 if (n == 1) {
-                    return 2d * RcpPI;
+                    return 2 * RcpPI;
                 }
 
                 return PositiveInfinity;
@@ -86,7 +86,7 @@ namespace DoubleDouble {
             }
 
             if (x < Epsilon) {
-                return Zero;
+                return 0d;
             }
 
             if (IsInfinity(x)) {
@@ -112,15 +112,15 @@ namespace DoubleDouble {
             }
 
             if (x < Epsilon) {
-                return (n >= 1) ? Zero : -1d;
+                return (n >= 1) ? 0d : -1d;
             }
 
             if (IsInfinity(x)) {
                 if (n == 0) {
-                    return MinusZero;
+                    return -0d;
                 }
                 if (n == 1) {
-                    return -2d * RcpPI;
+                    return -2 * RcpPI;
                 }
 
                 return PositiveInfinity;

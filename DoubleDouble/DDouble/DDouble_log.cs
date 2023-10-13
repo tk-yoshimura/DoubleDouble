@@ -52,10 +52,10 @@ namespace DoubleDouble {
                 return Log(1d + x);
             }
             if (IsPlusZero(x)) {
-                return PlusZero;
+                return 0d;
             }
             if (IsMinusZero(x)) {
-                return MinusZero;
+                return -0d;
             }
 
             ddouble sc = 116396280d + x * (493152660d + x * (865824960d + x * (814143330d + x * (442197756d

@@ -60,7 +60,7 @@
                     return NaN;
                 }
                 if (ddouble.IsZero(x)) {
-                    return Zero;
+                    return 0d;
                 }
                 if (IsInfinity(x)) {
                     return PositiveInfinity;

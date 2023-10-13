@@ -4,7 +4,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble AiryAi(ddouble x) {
             if (Abs(x) > Consts.Airy.MaxRange) {
-                return Zero;
+                return 0d;
             }
 
             ddouble v = Sqrt(Abs(x)), w = 2 * v * v * v * Consts.Airy.Rcp3;
@@ -39,7 +39,7 @@ namespace DoubleDouble {
 
         public static ddouble AiryBi(ddouble x) {
             if (Abs(x) > Consts.Airy.MaxRange) {
-                return IsPositive(x) ? PositiveInfinity : Zero;
+                return IsPositive(x) ? PositiveInfinity : 0d;
             }
 
             ddouble v = Sqrt(Abs(x)), w = 2 * v * v * v * Consts.Airy.Rcp3;

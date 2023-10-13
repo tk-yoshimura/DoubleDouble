@@ -6,7 +6,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble LambertW(ddouble x) {
             if (IsZero(x)) {
-                return Zero;
+                return 0d;
             }
             if (IsNaN(x)) {
                 return NaN;
@@ -15,7 +15,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
             if (x <= -RcpE) {
-                return (x <= -RcpE - double.ScaleB(1, -104)) ? NaN : -1;
+                return (x <= -RcpE - double.ScaleB(1, -104)) ? NaN : -1d;
             }
 
             ddouble y;

@@ -12,7 +12,7 @@
                 return NaN;
             }
             if (IsZero(x)) {
-                return Zero;
+                return 0d;
             }
             if (m >= JacobiTrigon.NearOne) {
                 return Tanh(x);
