@@ -63,15 +63,15 @@ namespace DoubleDouble {
                     ddouble[] p2 = new ddouble[n / 2 + 1];
 
                     if ((n & 1) == 0) {
-                        p2[0] = -p0[0] * (n - 1) / 2;
+                        p2[0] = Ldexp(-p0[0] * (n - 1), -1);
 
                         for (int m = 2; m < n; m += 2) {
-                            p2[m / 2] = p1[(m - 1) / 2] - p0[m / 2] * (n - 1) / 2;
+                            p2[m / 2] = p1[(m - 1) / 2] - Ldexp(p0[m / 2] * (n - 1), -1);
                         }
                     }
                     else {
                         for (int m = 1; m < n; m += 2) {
-                            p2[m / 2] = p1[(m - 1) / 2] - p0[m / 2] * (n - 1) / 2;
+                            p2[m / 2] = p1[(m - 1) / 2] - Ldexp(p0[m / 2] * (n - 1), -1);
                         }
                     }
 

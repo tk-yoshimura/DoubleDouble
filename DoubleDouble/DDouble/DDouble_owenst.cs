@@ -21,7 +21,7 @@ namespace DoubleDouble {
             }
 
             if ((double)a >= 11.5380 / double.Pow((double)h, 0.9892)) {
-                return Erfc(h / Sqrt2) / 4;
+                return Ldexp(Erfc(h / Sqrt2), -2);
             }
 
             if (a <= OwenTIntegrate.Eps) {
@@ -32,7 +32,7 @@ namespace DoubleDouble {
                 return OwenTIntegrate.GaussQuadrature(h, a);
             }
             else {
-                ddouble c = (1d - Erf(h / Sqrt2) * Erf(h * a / Sqrt2)) / 4;
+                ddouble c = Ldexp((1d - Erf(h / Sqrt2) * Erf(h * a / Sqrt2)), -2);
                 ddouble t = OwenTIntegrate.GaussQuadrature(h * a, 1d / a);
 
                 ddouble y = c - t;
@@ -53,11 +53,11 @@ namespace DoubleDouble {
             }
 
             public static ddouble GaussQuadrature(ddouble h, ddouble a) {
-                ddouble h2 = h * h, n_half_h2 = -h2 / 2;
+                ddouble h2 = h * h, n_half_h2 = -Ldexp(h2, -1);
 
-                ddouble ig = Sqrt(PI / 2) / h * Exp(n_half_h2) * Erf(h * a / Sqrt2);
+                ddouble ig = Sqrt(Ldexp(PI, -1)) / h * Exp(n_half_h2) * Erf(h * a / Sqrt2);
 
-                ddouble x_peak = Sqrt((Sqrt(8d / h2 + 1d) - 1d) / 2);
+                ddouble x_peak = Sqrt(Ldexp(Sqrt(8d / h2 + 1d) - 1d, -1));
                 ddouble ap = Min(a, x_peak * 2), ad = a - ap;
 
                 ddouble sp = 0d, sd = 0d;
@@ -106,7 +106,7 @@ namespace DoubleDouble {
                 ddouble p3 = h6 + 6 * p2;
 
                 ddouble s = a * (1680d + (a2 * (-280d * p1 + (a2 * (42d * p2 - a2 * (5d * p3)))))) / 1680d;
-                ddouble c = Exp(-h2 / 2) / (2 * PI);
+                ddouble c = Exp(-Ldexp(h2, -1)) / (2 * PI);
 
                 ddouble y = s * c;
 

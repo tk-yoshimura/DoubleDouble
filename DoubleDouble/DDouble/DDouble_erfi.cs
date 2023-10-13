@@ -77,7 +77,7 @@ namespace DoubleDouble {
             public static ddouble Value(ddouble x, bool scale, int max_terms = 32) {
                 ddouble v = 1d / x, v2 = v * v;
 
-                ddouble s = 0d, ds = v / 2;
+                ddouble s = 0d, ds = Ldexp(v, -1);
 
                 for (int k = 0; k <= max_terms; k++) {
                     ddouble s_next = s + ds;
@@ -87,7 +87,7 @@ namespace DoubleDouble {
                     }
 
                     s = s_next;
-                    ds *= v2 * (2 * k + 1) / 2;
+                    ds *= v2 * Ldexp(2 * k + 1, -1);
                 }
 
                 if (!scale) {

@@ -129,7 +129,7 @@
             public static ddouble SnNearZeroK(ddouble x, ddouble m) {
                 ddouble sinx = Sin(x), cosx = Cos(x);
 
-                ddouble y = sinx - m * (x - sinx * cosx) * cosx / 4;
+                ddouble y = sinx - Ldexp(m * (x - sinx * cosx) * cosx, -2);
 
                 return y;
             }
@@ -149,7 +149,7 @@
             public static ddouble CnNearZeroK(ddouble x, ddouble m) {
                 ddouble sinx = Sin(x), cosx = Cos(x);
 
-                ddouble y = cosx - m * (x - sinx * cosx) * sinx / 4;
+                ddouble y = cosx - Ldexp(m * (x - sinx * cosx) * sinx, -2);
 
                 return y;
             }
@@ -171,7 +171,7 @@
             public static ddouble DnNearZeroK(ddouble x, ddouble m) {
                 ddouble sinx = Sin(x);
 
-                ddouble y = 1d - m * sinx * sinx / 4;
+                ddouble y = 1d - Ldexp(m * sinx * sinx, -2);
 
                 return y;
             }
@@ -182,7 +182,7 @@
                 ddouble phi = Ldexp(a * x, ds.Length);
 
                 for (int i = ds.Length - 1; i >= 0; i--) {
-                    phi = (phi + Asin(ds[i] * Sin(phi))) / 2;
+                    phi = Ldexp(phi + Asin(ds[i] * Sin(phi)), -1);
                 }
 
                 return phi;
@@ -212,7 +212,7 @@
                 List<ddouble> d_list = new();
 
                 for (int n = 1; n < 32; n++) {
-                    (a, b, c) = ((a + b) / 2, Sqrt(a * b), (a - b) / 2);
+                    (a, b, c) = (Ldexp(a + b, -1), Sqrt(a * b), Ldexp(a - b, -1));
 
                     a_list.Add(a);
                     c_list.Add(c);

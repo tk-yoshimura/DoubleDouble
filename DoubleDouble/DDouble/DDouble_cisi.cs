@@ -75,7 +75,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            ddouble y = (Ein(x) - Ein(-x)) / 2;
+            ddouble y = Ldexp(Ein(x) - Ein(-x), -1);
 
             return y;
         }
@@ -89,7 +89,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            ddouble y = EulerGamma + Log(x) - (Ein(x) + Ein(-x)) / 2;
+            ddouble y = EulerGamma + Log(x) - Ldexp(Ein(x) + Ein(-x), -1);
 
             return y;
         }

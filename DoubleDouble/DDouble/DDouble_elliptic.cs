@@ -150,10 +150,7 @@ namespace DoubleDouble {
                     ddouble dq = Ldexp(squa_c, n - 1);
                     q -= dq;
 
-                    (a, b) = (
-                        (a + b) / 2,
-                        Sqrt(a * b)
-                    );
+                    (a, b) = (Ldexp(a + b, -1), Sqrt(a * b));
 
                     c = squa_c / (4 * a);
                 }
@@ -177,7 +174,7 @@ namespace DoubleDouble {
                     ddouble p_squa_pab = p_squa + ab, p_squa_mab = p_squa - ab;
 
                     (a, b, p, q) = (
-                        (a + b) / 2,
+                        Ldexp(a + b, -1),
                         Sqrt(ab),
                         p_squa_pab / (2 * p),
                         q * p_squa_mab / (2 * p_squa_pab)
@@ -187,7 +184,7 @@ namespace DoubleDouble {
                     iters++;
                 }
 
-                ddouble y = (2d + sum_q * n / (1d - n)) * EllipticK(m) / 2;
+                ddouble y = Ldexp((2d + sum_q * n / (1d - n)) * EllipticK(m), -1);
 
                 return y;
             }

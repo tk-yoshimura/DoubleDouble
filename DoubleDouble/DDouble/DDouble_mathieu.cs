@@ -445,7 +445,7 @@ namespace DoubleDouble {
 
             private static ReadOnlyCollection<ddouble> QNearZeroCCoef(int n, ddouble q) {
                 if (n <= 1) {
-                    ddouble t = q / 4, sq_t = t * t;
+                    ddouble t = Ldexp(q, -2), sq_t = t * t;
                     ddouble[] cs = new ddouble[4];
                     cs[0] = 1d;
 
@@ -619,7 +619,7 @@ namespace DoubleDouble {
 
             private static ReadOnlyCollection<ddouble> QNearZeroSCoef(int n, ddouble q) {
                 if (n <= 2) {
-                    ddouble t = q / 4, sq_t = t * t;
+                    ddouble t = Ldexp(q, -2), sq_t = t * t;
                     ddouble[] cs = new ddouble[4];
                     cs[0] = 1d;
 

@@ -35,7 +35,7 @@
                 return PositiveInfinity;
             }
 
-            ddouble y = (Log1p(x) - Log1p(-x)) / 2;
+            ddouble y = Ldexp(Log1p(x) - Log1p(-x), -1);
 
             return y;
         }

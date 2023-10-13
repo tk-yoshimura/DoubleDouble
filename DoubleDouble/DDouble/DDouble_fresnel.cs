@@ -30,7 +30,7 @@ namespace DoubleDouble {
                     return Point5;
                 }
 
-                ddouble theta = x * x / 2;
+                ddouble theta = Ldexp(x * x, -1);
                 ddouble cos = CosPI(theta), sin = SinPI(theta);
 
                 ddouble c = Point5 + sin * f - cos * g;
@@ -63,7 +63,7 @@ namespace DoubleDouble {
                     return Point5;
                 }
 
-                ddouble theta = x * x / 2;
+                ddouble theta = Ldexp(x * x, -1);
                 ddouble cos = CosPI(theta), sin = SinPI(theta);
 
                 ddouble s = Point5 - cos * f - sin * g;
@@ -109,7 +109,7 @@ namespace DoubleDouble {
                 ddouble v = x * x * PI;
                 ddouble v2 = v * v, v4 = v2 * v2;
 
-                ddouble s = 0d, u = v * x / 2;
+                ddouble s = 0d, u = Ldexp(v * x, -1);
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble f = Ldexp(u * TaylorSequence[4 * k + 1], -4 * k);

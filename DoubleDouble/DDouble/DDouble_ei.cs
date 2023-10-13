@@ -69,7 +69,7 @@ namespace DoubleDouble {
                 ddouble x2 = x * x;
 
                 ddouble s = (offset) ? (EulerGamma + Log(x)) : 0d;
-                ddouble u = x * Exp(x / 2);
+                ddouble u = x * Exp(Ldexp(x, -1));
 
                 for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
                     ddouble f = TaylorSequence[2 * k + 1] * (1d - x * K4Series.Value(k));

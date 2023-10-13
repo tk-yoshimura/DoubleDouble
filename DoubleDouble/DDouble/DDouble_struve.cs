@@ -172,7 +172,7 @@ namespace DoubleDouble {
                     s += w * v;
                 }
 
-                ddouble y = s * Pow(x / 2, n - 1) * RcpPI * StruveGTable.Value(n);
+                ddouble y = s * Pow(Ldexp(x, -1), n - 1) * RcpPI * StruveGTable.Value(n);
 
                 return y;
             }
@@ -187,7 +187,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble Value(int n, ddouble x) {
-                ddouble divs = Ceiling(x / 16);
+                ddouble divs = Ceiling(Ldexp(x, -4));
                 ddouble q = Rcp(divs);
 
                 ddouble s = 0d;
@@ -210,7 +210,7 @@ namespace DoubleDouble {
                     }
                 }
 
-                ddouble y = -s * Pow(x / 2, n) * StruveGTable.Value(n) * q;
+                ddouble y = -s * Pow(Ldexp(x, -1), n) * StruveGTable.Value(n) * q;
 
                 return y;
             }
@@ -220,7 +220,7 @@ namespace DoubleDouble {
             public static ddouble Value(int n, ddouble x, bool sign_switch, int terms) {
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble s = 0d, u = Pow(x / 2, n + 1) * RcpPI;
+                ddouble s = 0d, u = Pow(Ldexp(x, -1), n + 1) * RcpPI;
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble w = x2 * FTable.Value(2 * k) * FTable.Value(2 * k + n);

@@ -14,7 +14,7 @@ namespace DoubleDouble {
             }
 
             if (x <= Eps) {
-                ddouble y = -(1d + x * Log(2 * PI)) / 2;
+                ddouble y = -Ldexp(1d + x * Log(2 * PI), -1);
 
                 return TruncateMantissa(y, keep_bits: 105);
             }
@@ -98,7 +98,7 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble y = Ln2 * (1d + v * (EulerGamma - Ln2 / 2));
+                ddouble y = Ln2 * (1d + v * (EulerGamma - Ldexp(Ln2, -1)));
 
                 return y;
             }

@@ -356,7 +356,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble c = 0d, u = Pow(x / 2, nu);
+                ddouble c = 0d, u = Pow(Ldexp(x, -1), nu);
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble w = x2 * d[k];
@@ -456,7 +456,7 @@ namespace DoubleDouble {
                 X2DenomTable d = x2denom_coef_table[0];
                 Y0CoefTable q = y0_coef_table;
 
-                ddouble h = Log(x / 2) + EulerGamma;
+                ddouble h = Log(Ldexp(x, -1)) + EulerGamma;
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
@@ -493,7 +493,7 @@ namespace DoubleDouble {
                 X2DenomTable d = x2denom_coef_table[1];
                 Y1CoefTable q = y1_coef_table;
 
-                ddouble h = Ldexp(Log(x / 2) + EulerGamma, 1);
+                ddouble h = Ldexp(Log(Ldexp(x, -1)) + EulerGamma, 1);
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
@@ -529,7 +529,7 @@ namespace DoubleDouble {
                 KCoefTable r = k_coef_table;
                 GammaDenomTable gp = gammadenom_coef_table[nu], gn = gammadenom_coef_table[-nu];
 
-                ddouble tp = Pow(x / 2, nu), tn = 1d / tp;
+                ddouble tp = Pow(Ldexp(x, -1), nu), tn = 1d / tp;
 
                 ddouble x2 = x * x;
 
@@ -575,7 +575,7 @@ namespace DoubleDouble {
 
             private static ddouble BesselK0Kernel(ddouble x, int terms) {
                 K0CoefTable r = k0_coef_table;
-                ddouble h = -Log(x / 2) - EulerGamma;
+                ddouble h = -Log(Ldexp(x, -1)) - EulerGamma;
 
                 ddouble x2 = x * x;
 
@@ -602,14 +602,14 @@ namespace DoubleDouble {
 
             private static ddouble BesselK1Kernel(ddouble x, int terms) {
                 K1CoefTable r = k1_coef_table;
-                ddouble h = Log(x / 2) + EulerGamma;
+                ddouble h = Log(Ldexp(x, -1)) + EulerGamma;
 
                 ddouble x2 = x * x;
 
-                ddouble c = 1d / x, u = x / 2;
+                ddouble c = 1d / x, u = Ldexp(x, -1);
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * (h - (HarmonicNumber(k) + HarmonicNumber(k + 1)) / 2);
+                    ddouble dc = u * r[k] * (h - Ldexp(HarmonicNumber(k) + HarmonicNumber(k + 1), -1));
 
                     ddouble c_next = c + dc;
 
@@ -1241,7 +1241,7 @@ namespace DoubleDouble {
 
                 lambda = 2 * lambda + f0;
 
-                ddouble c = Log(x / 2) + EulerGamma;
+                ddouble c = Log(Ldexp(x, -1)) + EulerGamma;
 
                 ddouble y0 = se + f0 * c;
                 ddouble y1 = sx - v * f0 + (c - 1d) * f1;
@@ -1355,7 +1355,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselYEta0Eps(ddouble alpha, ddouble x) {
-                ddouble lnx = Log(x), lnhalfx = Log(x / 2);
+                ddouble lnx = Log(x), lnhalfx = Log(Ldexp(x, -1));
                 ddouble pi = PI, sqpi = pi * pi;
                 ddouble ln2 = Ln2, sqln2 = ln2 * ln2, cbln2 = sqln2 * ln2, qdln2 = sqln2 * sqln2;
                 ddouble g = EulerGamma;
@@ -1385,7 +1385,7 @@ namespace DoubleDouble {
             }
 
             static ddouble BesselYXi1Eps(ddouble alpha, ddouble x) {
-                ddouble lnx = Log(x), lnhalfx = Log(x / 2), lnxm1 = lnx - 1, lnhalfxm1 = lnhalfx - 1;
+                ddouble lnx = Log(x), lnhalfx = Log(Ldexp(x, -1)), lnxm1 = lnx - 1, lnhalfxm1 = lnhalfx - 1;
                 ddouble pi = PI, sqpi = pi * pi;
                 ddouble ln2 = Ln2, sqln2 = ln2 * ln2, cbln2 = sqln2 * ln2, qdln2 = sqln2 * sqln2;
                 ddouble g = EulerGamma;
@@ -1451,7 +1451,7 @@ namespace DoubleDouble {
 
                 lambda = 2 * lambda + f0;
 
-                ddouble y0 = 2 * (se + f0 * (Log(x / 2) + EulerGamma)) / (PI * lambda);
+                ddouble y0 = 2 * (se + f0 * (Log(Ldexp(x, -1)) + EulerGamma)) / (PI * lambda);
 
                 return y0;
             }
@@ -1488,7 +1488,7 @@ namespace DoubleDouble {
 
                 lambda = 2 * lambda + f0;
 
-                ddouble y1 = 2 * (sx - v * f0 + (Log(x / 2) + EulerGamma - 1d) * f1) / (lambda * PI);
+                ddouble y1 = 2 * (sx - v * f0 + (Log(Ldexp(x, -1)) + EulerGamma - 1d) * f1) / (lambda * PI);
 
                 return y1;
             }
@@ -1931,7 +1931,7 @@ namespace DoubleDouble {
                 Trace.Assert(sd > 0.0625d, $"[BesselK x={x}] Too small pade denom!!");
 #endif
 
-                ddouble y = Sqrt(t * PI / 2) * sc / sd;
+                ddouble y = Sqrt(Ldexp(t * PI, -1)) * sc / sd;
 
                 if (!scale) {
                     y *= Exp(-x);
@@ -1985,7 +1985,7 @@ namespace DoubleDouble {
             public static ddouble BesselJ(ddouble nu, ddouble x) {
                 (ddouble c, ddouble s) = BesselJYKernel(nu, x, terms: 32);
 
-                ddouble omega = x - (2 * nu + 1d) * PI / 4;
+                ddouble omega = x - Ldexp((2 * nu + 1d) * PI, -2);
                 ddouble m = c * Cos(omega) - s * Sin(omega);
                 ddouble t = m * Sqrt(2d / (PI * x));
 
@@ -1995,7 +1995,7 @@ namespace DoubleDouble {
             public static ddouble BesselY(ddouble nu, ddouble x) {
                 (ddouble s, ddouble c) = BesselJYKernel(nu, x, terms: 32);
 
-                ddouble omega = x - (2 * nu + 1d) * PI / 4;
+                ddouble omega = x - Ldexp((2 * nu + 1d) * PI, -2);
                 ddouble m = s * Sin(omega) + c * Cos(omega);
                 ddouble t = m * Sqrt(2d / (PI * x));
 

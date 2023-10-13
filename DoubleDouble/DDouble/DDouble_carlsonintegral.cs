@@ -30,10 +30,7 @@ namespace DoubleDouble {
 
                 ddouble lambda = y + 2 * sqrtx * sqrty;
 
-                (x, y) = (
-                    (x + lambda) / 4,
-                    (y + lambda) / 4
-                );
+                (x, y) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2));
 
                 if ((i & 1) == 0) {
                     mu = (x + 2 * y) * Rcp3;
@@ -84,23 +81,15 @@ namespace DoubleDouble {
 
                 ddouble lambda = (sqrtx + sqrtz) * sqrty + sqrtx * sqrtz;
                 s += exp4 / (sqrtz * (z + lambda));
-                exp4 /= 4;
+                exp4 = Ldexp(exp4, -2);
 
-                (x, y, z) = (
-                    (x + lambda) / 4,
-                    (y + lambda) / 4,
-                    (z + lambda) / 4
-                );
+                (x, y, z) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2));
 
                 if ((i & 1) == 0) {
                     mu = (x + y + 3d * z) * Rcp5;
                     invmu = Rcp(mu);
 
-                    (xd, yd, zd) = (
-                        (mu - x) * invmu,
-                        (mu - y) * invmu,
-                        (mu - z) * invmu
-                    );
+                    (xd, yd, zd) = ((mu - x) * invmu, (mu - y) * invmu, (mu - z) * invmu);
 
                     ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd));
 
@@ -160,21 +149,13 @@ namespace DoubleDouble {
 
                 ddouble lambda = (sqrtx + sqrtz) * sqrty + sqrtx * sqrtz;
 
-                (x, y, z) = (
-                    (x + lambda) / 4,
-                    (y + lambda) / 4,
-                    (z + lambda) / 4
-                );
+                (x, y, z) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2));
 
                 if ((i & 1) == 0) {
                     mu = (x + y + z) * Rcp3;
                     invmu = Rcp(mu);
 
-                    (xd, yd, zd) = (
-                        2d - (mu + x) * invmu,
-                        2d - (mu + y) * invmu,
-                        2d - (mu + z) * invmu
-                    );
+                    (xd, yd, zd) = (2d - (mu + x) * invmu, 2d - (mu + y) * invmu, 2d - (mu + z) * invmu);
 
                     ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd));
 
@@ -226,34 +207,22 @@ namespace DoubleDouble {
             ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
-                (ddouble sqrtx, ddouble sqrty, ddouble sqrtz) = (
-                    Sqrt(x), Sqrt(y), Sqrt(z)
-                );
+                (ddouble sqrtx, ddouble sqrty, ddouble sqrtz) = (Sqrt(x), Sqrt(y), Sqrt(z));
 
                 ddouble lambda = (sqrtx + sqrtz) * sqrty + sqrtx * sqrtz;
                 ddouble alpha = Square(w * (sqrtx + sqrty + sqrtz) + (sqrtx * sqrty * sqrtz));
                 ddouble beta = w * Square(w + lambda);
 
                 s += exp4 * CarlsonRC(alpha, beta);
-                exp4 /= 4;
+                exp4 = Ldexp(exp4, -2);
 
-                (x, y, z, w) = (
-                    (x + lambda) / 4,
-                    (y + lambda) / 4,
-                    (z + lambda) / 4,
-                    (w + lambda) / 4
-                );
+                (x, y, z, w) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2), Ldexp(w + lambda, -2));
 
                 if ((i & 1) == 0) {
                     mu = (x + y + z + 2 * w) * Rcp5;
                     invmu = Rcp(mu);
 
-                    (xd, yd, zd, wd) = (
-                        (mu - x) * invmu,
-                        (mu - y) * invmu,
-                        (mu - z) * invmu,
-                        (mu - w) * invmu
-                    );
+                    (xd, yd, zd, wd) = ((mu - x) * invmu, (mu - y) * invmu, (mu - z) * invmu, (mu - w) * invmu);
 
                     ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd), Abs(wd));
 
@@ -294,13 +263,13 @@ namespace DoubleDouble {
             }
 
             if (Max(x, y) <= RGLimitEps) {
-                return kappa * Sqrt(z) / 2;
+                return Ldexp(kappa * Sqrt(z), -1);
             }
             if (Max(y, z) <= RGLimitEps) {
-                return kappa * Sqrt(x) / 2;
+                return Ldexp(kappa * Sqrt(x), -1);
             }
             if (Max(z, x) <= RGLimitEps) {
-                return kappa * Sqrt(y) / 2;
+                return Ldexp(kappa * Sqrt(y), -1);
             }
 
             if (x <= RGLimitEps) {
@@ -313,7 +282,7 @@ namespace DoubleDouble {
                 return kappa * CarlsonRG(x, y);
             }
 
-            ddouble v = (z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z)) / 2;
+            ddouble v =  Ldexp(z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z), -1);
             v *= kappa;
 
             if (IsNaN(v)) {
@@ -325,8 +294,8 @@ namespace DoubleDouble {
         }
 
         private static ddouble CarlsonRG(ddouble a, ddouble b) {
-            return (a < b) ? Sqrt(b) * EllipticE(1d - a / b) / 2
-                           : Sqrt(a) * EllipticE(1d - b / a) / 2;
+            return (a < b) ? Sqrt(b) * Ldexp(EllipticE(1d - a / b), -1)
+                           : Sqrt(a) * Ldexp(EllipticE(1d - b / a), -1);
         }
 
         internal static partial class Consts {
