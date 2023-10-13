@@ -80,7 +80,7 @@
                 ddouble y = double.RootN(x.Hi, n);
                 ddouble yn = Pow(y, n), delta = yn - x;
 
-                ddouble dy = 3 * delta * y * ((n - 1) * delta - 2 * n * yn)
+                ddouble dy = 3d * delta * y * ((n - 1) * delta - 2 * n * yn)
                     / ((n - 1) * (n - 2) * delta * delta + yn * (-6 * n * (n - 1) * delta + yn * (6 * n * n)));
 
                 y += dy;

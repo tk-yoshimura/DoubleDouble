@@ -7,7 +7,7 @@ namespace DoubleDouble {
                 return 0d;
             }
 
-            ddouble v = Sqrt(Abs(x)), w = 2 * v * v * v * Consts.Airy.Rcp3;
+            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Consts.Airy.Rcp3, 1);
 
             if (x >= Consts.Airy.NearZero) {
                 return v * RcpPI * Consts.Airy.RcpSqrt3 * BesselK(Consts.Airy.Rcp3, w);
@@ -42,7 +42,7 @@ namespace DoubleDouble {
                 return IsPositive(x) ? PositiveInfinity : 0d;
             }
 
-            ddouble v = Sqrt(Abs(x)), w = 2 * v * v * v * Consts.Airy.Rcp3;
+            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Consts.Airy.Rcp3, 1);
 
             if (x >= Consts.Airy.NearZero) {
                 return v * Consts.Airy.RcpSqrt3 * (BesselI(-Consts.Airy.Rcp3, w) + BesselI(Consts.Airy.Rcp3, w));
@@ -82,8 +82,8 @@ namespace DoubleDouble {
                 static Airy() {
                     ddouble[] taylor_nz = new ddouble[17];
 
-                    taylor_nz[0] = Gamma(Rcp3) * Sqrt(3) / 2;
-                    taylor_nz[1] = Gamma(Rcp3 * 2) * Cbrt3 * Sqrt(3) / 2;
+                    taylor_nz[0] = Gamma(Rcp3) * Sqrt(3) / 2d;
+                    taylor_nz[1] = Gamma(Rcp3 * 2d) * Cbrt3 * Sqrt(3) / 2d;
                     taylor_nz[2] = 0d;
 
                     for (int k = 3; k < taylor_nz.Length; k++) {

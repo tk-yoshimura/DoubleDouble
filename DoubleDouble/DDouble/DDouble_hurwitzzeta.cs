@@ -37,7 +37,7 @@
             }
 
             ddouble r = Pow(a, x);
-            ddouble u = x / (2 * a * r), a2 = a * a;
+            ddouble u = x / (Ldexp(a, 1) * r), a2 = a * a;
 
             y += (a / (x - 1d) + 0.5d) / r + u / 6;
 

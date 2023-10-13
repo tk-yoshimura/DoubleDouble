@@ -80,7 +80,7 @@
                 return 1d / Cosh(x);
             }
 
-            ddouble period = JacobiTrigon.Period(m) * 2;
+            ddouble period = Ldexp(JacobiTrigon.Period(m), 1);
 
             int n = (int)Floor(x / period);
             ddouble v = x - n * period;

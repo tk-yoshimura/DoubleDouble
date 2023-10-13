@@ -111,7 +111,7 @@ namespace DoubleDouble {
 
             public static ddouble PolygammaLimit(int n, ddouble x) {
                 ddouble inv_x2 = 1d / (x * x), c = Pow(x, -n);
-                ddouble v = c * Factorial[n - 1] * (2 * x + n) / (2 * x);
+                ddouble v = c * Factorial[n - 1] * (Ldexp(x, 1) + n) / Ldexp(x, 1);
                 ddouble u = c * Factorial[n + 1] / 2 * inv_x2;
                 ddouble dv = BernoulliSequence[1] * u;
 
@@ -154,20 +154,20 @@ namespace DoubleDouble {
                (x) => 1d / TanPI(x),
                (x) => -1d / Square(SinPI(x)),
                (x) => 2d / (TanPI(x) * Square(SinPI(x))),
-               (x) => -2d * (2d + CosPI(2 * x)) / Pow(SinPI(x), 4),
-               (x) => 4d * (5d + CosPI(2 * x)) / (TanPI(x) * Pow(SinPI(x), 4)),
-               (x) => -2d * (33d + 26d * CosPI(2 * x) + CosPI(4 * x)) / Pow(SinPI(x), 6),
-               (x) => 4d * (123d + 56d * CosPI(2 * x) + CosPI(4 * x)) / (TanPI(x) * Pow(SinPI(x), 6)),
-               (x) => -2d * (1208d + 1191d * CosPI(2 * x) + 120d * CosPI(4 * x) + CosPI(6 * x)) / Pow(SinPI(x), 8),
-               (x) => 4d * (5786d + 4047d * CosPI(2 * x) + 246d * CosPI(4 * x) + CosPI(6 * x)) / (TanPI(x) * Pow(SinPI(x), 8)),
-               (x) => -2d * (78095d + 88234d * CosPI(2 * x) + 14608d * CosPI(4 * x) + 502d * CosPI(6 * x) + CosPI(8 * x)) / Pow(SinPI(x), 10),
-               (x) => 4d * (450995d + 408364d * CosPI(2 * x) + 46828d * CosPI(4 * x) + 1012d * CosPI(6 * x) + CosPI(8 * x)) / (TanPI(x) * Pow(SinPI(x), 10)),
-               (x) => -2d * (7862124d + 9738114d * CosPI(2 * x) + 2203488d * CosPI(4 * x) + 152637d * CosPI(6 * x) + 2036d * CosPI(8 * x) + CosPI(10 * x)) / Pow(SinPI(x), 12),
-               (x) => 4d * (52953654d + 56604978d * CosPI(2 * x) + 9713496d * CosPI(4 * x) + 474189d * CosPI(6 * x) + 4082d * CosPI(8 * x) + CosPI(10 * x)) / (TanPI(x) * Pow(SinPI(x), 12)),
-               (x) => -2d * (1137586002d + 1505621508d * CosPI(2 * x) + 423281535d * CosPI(4 * x) + 45533450d * CosPI(6 * x) + 1479726d * CosPI(8 * x) + 8178d * CosPI(10 * x) + CosPI(12 * x)) / Pow(SinPI(x), 14),
-               (x) => 4d * (8752882782d + 10465410528d * CosPI(2 * x) + 2377852335d * CosPI(4 * x) + 193889840d * CosPI(6 * x) + 4520946d * CosPI(8 * x) + 16368d * CosPI(10 * x) + CosPI(12 * x)) / (TanPI(x) * Pow(SinPI(x), 14)),
-               (x) => -2d * (223769408736d + 311387598411d * CosPI(2 * x) + 102776998928d * CosPI(4 * x) + 15041229521d * CosPI(6 * x) + 848090912d * CosPI(8 * x) + 13824739d * CosPI(10 * x) + 32752d * CosPI(12 * x) + CosPI(14 * x)) / Pow(SinPI(x), 16),
-               (x) => 4d * (1937789122548d + 2507220680379d * CosPI(2 * x) + 700262497778d * CosPI(4 * x) + 81853020521d * CosPI(6 * x) + 3530218028d * CosPI(8 * x) + 41867227d * CosPI(10 * x) + 65518d * CosPI(12 * x) + CosPI(14 * x)) / (TanPI(x) * Pow(SinPI(x), 16)),
+               (x) => -2d * (2d + CosPI(2d * x)) / Pow(SinPI(x), 4),
+               (x) => 4d * (5d + CosPI(2d * x)) / (TanPI(x) * Pow(SinPI(x), 4)),
+               (x) => -2d * (33d + 26d * CosPI(2d * x) + CosPI(4d * x)) / Pow(SinPI(x), 6),
+               (x) => 4d * (123d + 56d * CosPI(2d * x) + CosPI(4d * x)) / (TanPI(x) * Pow(SinPI(x), 6)),
+               (x) => -2d * (1208d + 1191d * CosPI(2d * x) + 120d * CosPI(4d * x) + CosPI(6d * x)) / Pow(SinPI(x), 8),
+               (x) => 4d * (5786d + 4047d * CosPI(2d * x) + 246d * CosPI(4d * x) + CosPI(6d * x)) / (TanPI(x) * Pow(SinPI(x), 8)),
+               (x) => -2d * (78095d + 88234d * CosPI(2d * x) + 14608d * CosPI(4d * x) + 502d * CosPI(6d * x) + CosPI(8d * x)) / Pow(SinPI(x), 10),
+               (x) => 4d * (450995d + 408364d * CosPI(2d * x) + 46828d * CosPI(4d * x) + 1012d * CosPI(6d * x) + CosPI(8d * x)) / (TanPI(x) * Pow(SinPI(x), 10)),
+               (x) => -2d * (7862124d + 9738114d * CosPI(2d * x) + 2203488d * CosPI(4d * x) + 152637d * CosPI(6d * x) + 2036d * CosPI(8d * x) + CosPI(10d * x)) / Pow(SinPI(x), 12),
+               (x) => 4d * (52953654d + 56604978d * CosPI(2d * x) + 9713496d * CosPI(4d * x) + 474189d * CosPI(6d * x) + 4082d * CosPI(8d * x) + CosPI(10d * x)) / (TanPI(x) * Pow(SinPI(x), 12)),
+               (x) => -2d * (1137586002d + 1505621508d * CosPI(2d * x) + 423281535d * CosPI(4d * x) + 45533450d * CosPI(6d * x) + 1479726d * CosPI(8d * x) + 8178d * CosPI(10d * x) + CosPI(12d * x)) / Pow(SinPI(x), 14),
+               (x) => 4d * (8752882782d + 10465410528d * CosPI(2d * x) + 2377852335d * CosPI(4d * x) + 193889840d * CosPI(6d * x) + 4520946d * CosPI(8d * x) + 16368d * CosPI(10d * x) + CosPI(12d * x)) / (TanPI(x) * Pow(SinPI(x), 14)),
+               (x) => -2d * (223769408736d + 311387598411d * CosPI(2d * x) + 102776998928d * CosPI(4d * x) + 15041229521d * CosPI(6d * x) + 848090912d * CosPI(8d * x) + 13824739d * CosPI(10d * x) + 32752d * CosPI(12d * x) + CosPI(14d * x)) / Pow(SinPI(x), 16),
+               (x) => 4d * (1937789122548d + 2507220680379d * CosPI(2d * x) + 700262497778d * CosPI(4d * x) + 81853020521d * CosPI(6d * x) + 3530218028d * CosPI(8d * x) + 41867227d * CosPI(10d * x) + 65518d * CosPI(12d * x) + CosPI(14d * x)) / (TanPI(x) * Pow(SinPI(x), 16)),
             });
         }
     }

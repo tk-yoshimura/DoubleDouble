@@ -70,7 +70,7 @@ namespace DoubleDouble {
                 return 1d;
             }
             else {
-                return 2 * x;
+                return Ldexp(x, 1);
             }
         }
 
@@ -100,16 +100,16 @@ namespace DoubleDouble {
                         p2[0] = -p0[0];
 
                         for (int m = 2; m < n; m += 2) {
-                            p2[m / 2] = 2 * p1[(m - 1) / 2] - p0[m / 2];
+                            p2[m / 2] = Ldexp(p1[(m - 1) / 2], 1) - p0[m / 2];
                         }
                     }
                     else {
                         for (int m = 1; m < n; m += 2) {
-                            p2[m / 2] = 2 * p1[(m - 1) / 2] - p0[m / 2];
+                            p2[m / 2] = Ldexp(p1[(m - 1) / 2], 1) - p0[m / 2];
                         }
                     }
 
-                    p2[n / 2] = 2 * p1[(n - 1) / 2];
+                    p2[n / 2] = Ldexp(p1[(n - 1) / 2], 1);
 
                     return new ReadOnlyCollection<ddouble>(p2);
                 }
@@ -140,16 +140,16 @@ namespace DoubleDouble {
                         p2[0] = -p0[0];
 
                         for (int m = 2; m < n; m += 2) {
-                            p2[m / 2] = 2 * p1[(m - 1) / 2] - p0[m / 2];
+                            p2[m / 2] = Ldexp(p1[(m - 1) / 2], 1) - p0[m / 2];
                         }
                     }
                     else {
                         for (int m = 1; m < n; m += 2) {
-                            p2[m / 2] = 2 * p1[(m - 1) / 2] - p0[m / 2];
+                            p2[m / 2] = Ldexp(p1[(m - 1) / 2], 1) - p0[m / 2];
                         }
                     }
 
-                    p2[n / 2] = 2 * p1[(n - 1) / 2];
+                    p2[n / 2] = Ldexp(p1[(n - 1) / 2], 1);
 
                     return new ReadOnlyCollection<ddouble>(p2);
                 }

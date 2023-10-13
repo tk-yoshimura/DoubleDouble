@@ -391,7 +391,7 @@ namespace DoubleDouble {
                 GammaPNTable gpn = gammapn_coef_table[nu];
 
                 ddouble cos = CosPI(nu), sin = SinPI(nu);
-                ddouble p = Pow(x, 2 * nu) * cos, s = 4 * Pow(2 * x, nu);
+                ddouble p = Pow(x, Ldexp(nu, 1)) * cos, s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
@@ -460,7 +460,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble c = 0d, u = 2 * RcpPI;
+                ddouble c = 0d, u = Ldexp(RcpPI, 1);
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k)) * (1d - x2 * d[k]) + x2 * q[k]);
@@ -497,7 +497,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble c = -2d / (x * PI), u = x / (2 * PI);
+                ddouble c = -2d / (x * PI), u = x / (Ldexp(PI, 1));
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
@@ -533,7 +533,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x;
 
-                ddouble c = 0d, u = PI / (2 * SinPI(nu));
+                ddouble c = 0d, u = PI / (Ldexp(SinPI(nu), 1));
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble dc = u * r[k] * (tn * gn[k] - tp * gp[k]);
@@ -664,7 +664,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public X2DenomTable(ddouble nu) {
-                    ddouble a = Rcp(4 * (nu + 1d));
+                    ddouble a = Rcp(4d * (nu + 1d));
 
                     this.nu = nu;
                     this.table.Add(a);
@@ -682,7 +682,7 @@ namespace DoubleDouble {
                     }
 
                     for (int k = table.Count; k <= n; k++) {
-                        ddouble a = Rcp(4 * (2 * k + 1) * (2 * k + 1 + nu));
+                        ddouble a = Rcp(4d * (2 * k + 1) * (2 * k + 1 + nu));
 
                         table.Add(a);
                     }
@@ -1077,7 +1077,7 @@ namespace DoubleDouble {
                     }
                 }
 
-                lambda = 2 * lambda + f0;
+                lambda = Ldexp(lambda, 1) + f0;
 
                 ddouble yn = fn / lambda;
 
@@ -1113,7 +1113,7 @@ namespace DoubleDouble {
                             lambda += f0 * phi[k / 2];
                         }
 
-                        (f0, f1) = ((2 * (k + alpha)) * v * f0 - f1, f0);
+                        (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
 
                         if (k - 1 == n) {
                             fn = f0;
@@ -1121,7 +1121,7 @@ namespace DoubleDouble {
                     }
 
                     lambda += f0 * phi[0];
-                    lambda *= Pow(2 * v, alpha);
+                    lambda *= Pow(Ldexp(v, 1), alpha);
 
                     ddouble yn = fn / lambda;
 
@@ -1133,14 +1133,14 @@ namespace DoubleDouble {
                             lambda += f0 * phi[k / 2];
                         }
 
-                        (f0, f1) = ((2 * (k + alpha)) * v * f0 - f1, f0);
+                        (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
                     }
 
                     lambda += f0 * phi[0];
-                    lambda *= Pow(2 * v, alpha);
+                    lambda *= Pow(Ldexp(v, 1), alpha);
 
                     for (int k = 0; k > n; k--) {
-                        (f0, f1) = ((2 * (k + alpha)) * v * f0 - f1, f0);
+                        (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
                     }
 
                     ddouble yn = f0 / lambda;
@@ -1165,7 +1165,7 @@ namespace DoubleDouble {
                     (f0, f1) = ((2 * k) * v * f0 - f1, f0);
                 }
 
-                lambda = 2 * lambda + f0;
+                lambda = Ldexp(lambda, 1) + f0;
 
                 ddouble y0 = f0 / lambda;
 
@@ -1188,7 +1188,7 @@ namespace DoubleDouble {
                     (f0, f1) = ((2 * k) * v * f0 - f1, f0);
                 }
 
-                lambda = 2 * lambda + f0;
+                lambda = Ldexp(lambda, 1) + f0;
 
                 ddouble y1 = f1 / lambda;
 
@@ -1239,7 +1239,7 @@ namespace DoubleDouble {
                     (f0, f1) = ((2 * k) * v * f0 - f1, f0);
                 }
 
-                lambda = 2 * lambda + f0;
+                lambda = Ldexp(lambda, 1) + f0;
 
                 ddouble c = Log(Ldexp(x, -1)) + EulerGamma;
 
@@ -1250,7 +1250,7 @@ namespace DoubleDouble {
                     (y1, y0) = ((2 * k) * v * y1 - y0, y1);
                 }
 
-                ddouble yn = 2 * y1 / (lambda * PI);
+                ddouble yn = Ldexp(y1 / (lambda * PI), 1);
 
                 return yn;
             }
@@ -1300,29 +1300,29 @@ namespace DoubleDouble {
                         sxo += f0 * xi[k];
                     }
 
-                    (f0, f1) = ((2 * (k + alpha)) * v * f0 - f1, f0);
+                    (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
                 }
 
-                ddouble s = Pow(2 * v, alpha), sqs = s * s;
+                ddouble s = Pow(Ldexp(v, 1), alpha), sqs = s * s;
 
                 lambda += f0 * phi[0];
                 lambda *= s;
 
-                ddouble rcot = 1d / TanPI(alpha), rgamma = Gamma(1 + alpha), rsqgamma = rgamma * rgamma;
-                ddouble r = 2 * RcpPI * sqs;
+                ddouble rcot = 1d / TanPI(alpha), rgamma = Gamma(1d + alpha), rsqgamma = rgamma * rgamma;
+                ddouble r = Ldexp(RcpPI * sqs, 1);
                 ddouble p = sqs * rsqgamma * RcpPI;
 
                 ddouble eta0 = (double.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
                     ? (rcot - p / alpha)
                     : BesselYEta0Eps(alpha, x);
 
-                ddouble xi0 = -2 * v * p;
+                ddouble xi0 = -Ldexp(v, 1) * p;
                 ddouble xi1 = (double.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
                     ? rcot + p * (alpha * (alpha + 1d) + 1d) / (alpha * (alpha - 1d))
                     : BesselYXi1Eps(alpha, x);
 
                 ddouble y0 = r * se + eta0 * f0;
-                ddouble y1 = r * (3 * alpha * v * sxe + sxo) + xi0 * f0 + xi1 * f1;
+                ddouble y1 = r * (3d * alpha * v * sxe + sxo) + xi0 * f0 + xi1 * f1;
 
                 if (n == 0) {
                     ddouble yn = y0 / lambda;
@@ -1336,7 +1336,7 @@ namespace DoubleDouble {
                 }
                 if (n >= 0) {
                     for (int k = 1; k < n; k++) {
-                        (y1, y0) = ((2 * (k + alpha)) * v * y1 - y0, y1);
+                        (y1, y0) = (Ldexp(k + alpha, 1) * v * y1 - y0, y1);
                     }
 
                     ddouble yn = y1 / lambda;
@@ -1345,7 +1345,7 @@ namespace DoubleDouble {
                 }
                 else {
                     for (int k = 0; k > n; k--) {
-                        (y0, y1) = ((2 * (k + alpha)) * v * y0 - y1, y0);
+                        (y0, y1) = (Ldexp(k + alpha, 1) * v * y0 - y1, y0);
                     }
 
                     ddouble yn = y0 / lambda;
@@ -1362,24 +1362,24 @@ namespace DoubleDouble {
 
                 ddouble r0 = lnhalfx + g;
                 ddouble r1 =
-                    (-sqln2 + lnx * (ln2 * 2 - lnx)) * 4
+                    (-sqln2 + lnx * (ln2 * 2d - lnx)) * 4d
                     - sqpi
-                    - g * (lnhalfx * 2 + g) * 4;
+                    - g * (lnhalfx * 2d + g) * 4d;
                 ddouble r2 =
-                    (-cbln2 + lnx * (sqln2 * 3 + lnx * (ln2 * -3 + lnx))) * 4
-                    + Zeta3 * 2
+                    (-cbln2 + lnx * (sqln2 * 3d + lnx * (ln2 * -3d + lnx))) * 4d
+                    + Zeta3 * 2d
                     + sqpi * (lnhalfx + g)
-                    + g * ((sqln2 + lnx * (ln2 * -2 + lnx)) * 3 + g * (lnhalfx * 3 + g)) * 4;
+                    + g * ((sqln2 + lnx * (ln2 * -2d + lnx)) * 3d + g * (lnhalfx * 3d + g)) * 4d;
                 ddouble r3 =
-                    (-qdln2 + lnx * (cbln2 * 4 + lnx * (sqln2 * -6 + lnx * (ln2 * 4 - lnx)))) * 16
-                    - Zeta3 * (lnhalfx + g) * 32
-                    - sqpi * (((sqln2 + lnx * (-ln2 * 2 + lnx) + g * (lnhalfx * 2 + g)) * 8) + sqpi)
-                    + g * ((cbln2 + lnx * (sqln2 * -3 + lnx * (ln2 * 3 + -lnx))) * 4
-                    + g * ((sqln2 + lnx * (ln2 * -2 + lnx)) * -6
-                    + g * (lnhalfx * -4
-                    - g))) * 16;
+                    (-qdln2 + lnx * (cbln2 * 4d + lnx * (sqln2 * -6d + lnx * (ln2 * 4d - lnx)))) * 16d
+                    - Zeta3 * (lnhalfx + g) * 32d
+                    - sqpi * (((sqln2 + lnx * (-ln2 * 2d + lnx) + g * (lnhalfx * 2d + g)) * 8d) + sqpi)
+                    + g * ((cbln2 + lnx * (sqln2 * -3d + lnx * (ln2 * 3d - lnx))) * 4d
+                    + g * ((sqln2 + lnx * (ln2 * -2d + lnx)) * -6d
+                    + g * (lnhalfx * -4d
+                    - g))) * 16d;
 
-                ddouble eta0 = (r0 * 48 + alpha * (r1 * 12 + alpha * (r2 * 8 + alpha * r3))) / (24 * PI);
+                ddouble eta0 = (r0 * 48d + alpha * (r1 * 12d + alpha * (r2 * 8d + alpha * r3))) / (24d * PI);
 
                 return eta0;
             }
@@ -1392,34 +1392,34 @@ namespace DoubleDouble {
 
                 ddouble r0 = lnhalfxm1 + g;
                 ddouble r1 =
-                    (-sqln2 + ln2 * lnxm1 * 2 + lnx * (2 - lnx)) * 4
+                    (-sqln2 + ln2 * lnxm1 * 2d + lnx * (2 - lnx)) * 4d
                     - sqpi
-                    - g * (lnhalfxm1 * 2 + g) * 4
-                    - 6;
+                    - g * (lnhalfxm1 * 2d + g) * 4d
+                    - 6d;
                 ddouble r2 =
-                    (-cbln2 * 4 + sqln2 * lnxm1 * 12 + lnx * (18 + lnx * (-12 + lnx * 4)))
-                    + ln2 * (lnx * (2 - lnx) * 12 - 18)
-                    + Zeta3 * 2
+                    (-cbln2 * 4d + sqln2 * lnxm1 * 12d + lnx * (18d + lnx * (-12d + lnx * 4d)))
+                    + ln2 * (lnx * (2d - lnx) * 12d - 18d)
+                    + Zeta3 * 2d
                     + sqpi * (lnhalfxm1 + g)
-                    + g * ((((sqln2 - ln2 * lnxm1 * 2) + lnx * (-2 + lnx)) * 12 + 18)
-                    + g * (lnhalfxm1 * 12
-                    + g * 4))
-                    - 9;
+                    + g * ((((sqln2 - ln2 * lnxm1 * 2d) + lnx * (-2d + lnx)) * 12d + 18d)
+                    + g * (lnhalfxm1 * 12d
+                    + g * 4d))
+                    - 9d;
                 ddouble r3 =
-                    -qdln2 * 16
-                    + cbln2 * lnxm1 * 64
-                    + sqln2 * (lnx * (2 - lnx) * 96 - 144)
-                    + ln2 * (lnx * (9 + lnx * (-6 + lnx * 2)) * 32 - 144)
-                    + lnx * (9 + lnx * (-9 + lnx * (4 - lnx))) * 16
-                    + Zeta3 * (lnhalfxm1 + g) * -32
-                    + sqpi * (((-sqln2 + ln2 * lnxm1 * 2 + lnx * (2 - lnx) - g * (lnhalfxm1 * 2 + g)) * 8 - 12) - sqpi)
-                    + g * (((cbln2 - sqln2 * lnxm1 * 3) * 64 + ln2 * (lnx * (-2 + lnx) * 192 + 288) + lnx * (-9 + lnx * (6 - lnx * 2)) * 32 + 144)
-                    + g * (((-sqln2 + ln2 * lnxm1 * 2 + lnx * (2 - lnx)) * 96 - 144)
-                    + g * (lnhalfxm1 * -64
-                    - g * 16)))
-                    - 72;
+                    -qdln2 * 16d
+                    + cbln2 * lnxm1 * 64d
+                    + sqln2 * (lnx * (2d - lnx) * 96d - 144d)
+                    + ln2 * (lnx * (9d + lnx * (-6d + lnx * 2d)) * 32d - 144d)
+                    + lnx * (9d + lnx * (-9d + lnx * (4d - lnx))) * 16d
+                    + Zeta3 * (lnhalfxm1 + g) * -32d
+                    + sqpi * (((-sqln2 + ln2 * lnxm1 * 2d + lnx * (2d - lnx) - g * (lnhalfxm1 * 2d + g)) * 8d - 12d) - sqpi)
+                    + g * (((cbln2 - sqln2 * lnxm1 * 3d) * 64d + ln2 * (lnx * (-2d + lnx) * 192d + 288d) + lnx * (-9d + lnx * (6d - lnx * 2d)) * 32d + 144d)
+                    + g * (((-sqln2 + ln2 * lnxm1 * 2d + lnx * (2d - lnx)) * 96d - 144d)
+                    + g * (lnhalfxm1 * -64d
+                    - g * 16d)))
+                    - 72d;
 
-                ddouble xi1 = (r0 * 48 + alpha * (r1 * 12 + alpha * (r2 * 8 + alpha * r3))) / (24 * PI);
+                ddouble xi1 = (r0 * 48d + alpha * (r1 * 12d + alpha * (r2 * 8d + alpha * r3))) / (24d * PI);
 
                 return xi1;
             }
@@ -1449,9 +1449,9 @@ namespace DoubleDouble {
                     (f0, f1) = ((2 * k) * v * f0 - f1, f0);
                 }
 
-                lambda = 2 * lambda + f0;
+                lambda = Ldexp(lambda, 1) + f0;
 
-                ddouble y0 = 2 * (se + f0 * (Log(Ldexp(x, -1)) + EulerGamma)) / (PI * lambda);
+                ddouble y0 = Ldexp((se + f0 * (Log(Ldexp(x, -1)) + EulerGamma)) / (PI * lambda), 1);
 
                 return y0;
             }
@@ -1486,9 +1486,9 @@ namespace DoubleDouble {
                     (f0, f1) = ((2 * k) * v * f0 - f1, f0);
                 }
 
-                lambda = 2 * lambda + f0;
+                lambda = Ldexp(lambda, 1) + f0;
 
-                ddouble y1 = 2 * (sx - v * f0 + (Log(Ldexp(x, -1)) + EulerGamma - 1d) * f1) / (lambda * PI);
+                ddouble y1 = Ldexp((sx - v * f0 + (Log(Ldexp(x, -1)) + EulerGamma - 1d) * f1) / (lambda * PI), 1);
 
                 return y1;
             }
@@ -1520,7 +1520,7 @@ namespace DoubleDouble {
                     }
                 }
 
-                lambda = 2 * lambda + f0;
+                lambda = Ldexp(lambda, 1) + f0;
 
                 ddouble yn = fn / lambda;
 
@@ -1558,7 +1558,7 @@ namespace DoubleDouble {
                     for (int k = m; k >= 1; k--) {
                         lambda += g0 * psi[k];
 
-                        (g0, g1) = ((2 * (k + alpha)) * v * g0 + g1, g0);
+                        (g0, g1) = (Ldexp(k + alpha, 1) * v * g0 + g1, g0);
 
                         if (k - 1 == n) {
                             gn = g0;
@@ -1566,7 +1566,7 @@ namespace DoubleDouble {
                     }
 
                     lambda += g0 * psi[0];
-                    lambda *= Pow(2 * v, alpha);
+                    lambda *= Pow(Ldexp(v, 1), alpha);
 
                     ddouble yn = gn / lambda;
 
@@ -1580,14 +1580,14 @@ namespace DoubleDouble {
                     for (int k = m; k >= 1; k--) {
                         lambda += g0 * psi[k];
 
-                        (g0, g1) = ((2 * (k + alpha)) * v * g0 + g1, g0);
+                        (g0, g1) = (Ldexp(k + alpha, 1) * v * g0 + g1, g0);
                     }
 
                     lambda += g0 * psi[0];
-                    lambda *= Pow(2 * v, alpha);
+                    lambda *= Pow(Ldexp(v, 1), alpha);
 
                     for (int k = 0; k > n; k--) {
-                        (g0, g1) = ((2 * (k + alpha)) * v * g0 + g1, g0);
+                        (g0, g1) = (Ldexp(k + alpha, 1) * v * g0 + g1, g0);
                     }
 
                     ddouble yn = g0 / lambda;
@@ -1614,7 +1614,7 @@ namespace DoubleDouble {
                     (g0, g1) = ((2 * k) * v * g0 + g1, g0);
                 }
 
-                lambda = 2 * lambda + g0;
+                lambda = Ldexp(lambda, 1) + g0;
 
                 ddouble y0 = g0 / lambda;
 
@@ -1639,7 +1639,7 @@ namespace DoubleDouble {
                     (g0, g1) = ((2 * k) * v * g0 + g1, g0);
                 }
 
-                lambda = 2 * lambda + g0;
+                lambda = Ldexp(lambda, 1) + g0;
 
                 ddouble y1 = g1 / lambda;
 
@@ -1709,9 +1709,9 @@ namespace DoubleDouble {
                     this.alpha = alpha;
 
                     ddouble psi0 = Gamma(1d + alpha);
-                    ddouble psi1 = 2 * psi0 * (1d + alpha);
+                    ddouble psi1 = Ldexp(psi0, 1) * (1d + alpha);
 
-                    this.g = 2 * psi0;
+                    this.g = Ldexp(psi0, 1);
 
                     this.table.Add(psi0);
                     this.table.Add(psi1);
@@ -1729,7 +1729,7 @@ namespace DoubleDouble {
                     }
 
                     for (int m = table.Count; m <= n; m++) {
-                        g = g * (2 * alpha + m - 1d) / m;
+                        g = g * (Ldexp(alpha, 1) + m - 1d) / m;
 
                         ddouble phi = g * (alpha + m);
 
@@ -1778,7 +1778,7 @@ namespace DoubleDouble {
 
                     for (int m = table.Count; m <= n; m++) {
                         if (alpha > 0d) {
-                            g = -g * (alpha + m - 1) * (2 * alpha + m - 1d) / (m * (m - alpha));
+                            g = -g * (alpha + m - 1) * (Ldexp(alpha, 1) + m - 1d) / (m * (m - alpha));
 
                             ddouble eta = g * (alpha + 2 * m);
 
@@ -1909,7 +1909,7 @@ namespace DoubleDouble {
                     ddouble v = 1d / x;
 
                     for (int k = 1; k < n; k++) {
-                        (y1, y0) = ((2 * (k + alpha)) * v * y1 + y0, y1);
+                        (y1, y0) = (Ldexp(k + alpha, 1) * v * y1 + y0, y1);
                     }
 
                     return y1;
@@ -1985,7 +1985,7 @@ namespace DoubleDouble {
             public static ddouble BesselJ(ddouble nu, ddouble x) {
                 (ddouble c, ddouble s) = BesselJYKernel(nu, x, terms: 32);
 
-                ddouble omega = x - Ldexp((2 * nu + 1d) * PI, -2);
+                ddouble omega = x - Ldexp((Ldexp(nu, 1) + 1d) * PI, -2);
                 ddouble m = c * Cos(omega) - s * Sin(omega);
                 ddouble t = m * Sqrt(2d / (PI * x));
 
@@ -1995,7 +1995,7 @@ namespace DoubleDouble {
             public static ddouble BesselY(ddouble nu, ddouble x) {
                 (ddouble s, ddouble c) = BesselJYKernel(nu, x, terms: 32);
 
-                ddouble omega = x - Ldexp((2 * nu + 1d) * PI, -2);
+                ddouble omega = x - Ldexp((Ldexp(nu, 1) + 1d) * PI, -2);
                 ddouble m = s * Sin(omega) + c * Cos(omega);
                 ddouble t = m * Sqrt(2d / (PI * x));
 
@@ -2005,7 +2005,7 @@ namespace DoubleDouble {
             public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
                 ddouble c = BesselIKKernel(nu, x, sign_switch: true, terms: 36);
 
-                ddouble t = c / Sqrt(2 * PI * x);
+                ddouble t = c / Sqrt(Ldexp(PI, 1) * x);
 
                 if (!scale) {
                     t *= Exp(x);
@@ -2017,7 +2017,7 @@ namespace DoubleDouble {
             public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
                 ddouble c = BesselIKKernel(nu, x, sign_switch: false, terms: 34);
 
-                ddouble t = c * Sqrt(PI / (2 * x));
+                ddouble t = c * Sqrt(PI / Ldexp(x, 1));
 
                 if (!scale) {
                     t *= Exp(-x);
@@ -2102,9 +2102,9 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public ACoefTable(ddouble nu) {
-                    this.squa_nu4 = 4 * nu * nu;
+                    this.squa_nu4 = Ldexp(nu * nu, 2);
 
-                    ddouble a1 = (squa_nu4 - 1d) / 8;
+                    ddouble a1 = Ldexp(squa_nu4 - 1d, -3);
 
                     this.table.Add(1d);
                     this.table.Add(a1);
@@ -2136,7 +2136,7 @@ namespace DoubleDouble {
                 private readonly List<(ddouble p0, ddouble p1)> table = new();
 
                 public JYCoefTable(ddouble nu) {
-                    this.squa_nu4 = 4 * nu * nu;
+                    this.squa_nu4 = Ldexp(nu * nu, 2);
                 }
 
                 public (ddouble p0, ddouble p1) this[int n] => Value(n);
@@ -2168,7 +2168,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public IKCoefTable(ddouble nu) {
-                    this.squa_nu4 = 4 * nu * nu;
+                    this.squa_nu4 = Ldexp(nu * nu, 2);
                 }
 
                 public ddouble this[int n] => Value(n);

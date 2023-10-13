@@ -26,11 +26,11 @@
                 return NaN;
             }
 
-            ddouble sinx = Sin(x), cos2x = Cos(2 * x);
+            ddouble sinx = Sin(x), cos2x = Cos(Ldexp(x, 1));
             ddouble qdrt_q = Sqrt(Sqrt(q));
 
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
-            ddouble u = 2 * q2 * cos2x, v = q4, s = 1d - u + v;
+            ddouble u = Ldexp(q2, 1) * cos2x, v = q4, s = 1d - u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
 
@@ -41,7 +41,7 @@
                 s = 1d - u + v;
             }
 
-            ddouble y = 2 * qdrt_q * q0 * sinx * p;
+            ddouble y = Ldexp(qdrt_q, 1) * q0 * sinx * p;
 
             return y;
         }
@@ -57,11 +57,11 @@
                 return NaN;
             }
 
-            ddouble cosx = Cos(x), cos2x = Cos(2 * x);
+            ddouble cosx = Cos(x), cos2x = Cos(Ldexp(x, 1));
             ddouble qdrt_q = Sqrt(Sqrt(q));
 
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
-            ddouble u = 2 * q2 * cos2x, v = q4, s = 1d + u + v;
+            ddouble u = Ldexp(q2, 1) * cos2x, v = q4, s = 1d + u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
 
@@ -72,7 +72,7 @@
                 s = 1d + u + v;
             }
 
-            ddouble y = 2 * qdrt_q * q0 * cosx * p;
+            ddouble y = Ldexp(qdrt_q, 1) * q0 * cosx * p;
 
             return y;
         }
@@ -88,10 +88,10 @@
                 return NaN;
             }
 
-            ddouble cos2x = Cos(2 * x);
+            ddouble cos2x = Cos(Ldexp(x, 1));
 
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
-            ddouble u = 2 * q * cos2x, v = q2, s = 1d + u + v;
+            ddouble u = Ldexp(q, 1) * cos2x, v = q2, s = 1d + u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
 
@@ -118,10 +118,10 @@
                 return NaN;
             }
 
-            ddouble cos2x = Cos(2 * x);
+            ddouble cos2x = Cos(Ldexp(x, 1));
 
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
-            ddouble u = 2 * q * cos2x, v = q2, s = 1d - u + v;
+            ddouble u = Ldexp(q, 1) * cos2x, v = q2, s = 1d - u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
 

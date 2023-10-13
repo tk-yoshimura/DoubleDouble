@@ -62,7 +62,7 @@ namespace DoubleDouble {
                 }
             }
             else {
-                ddouble v = Sqrt(2 * (x * E + 1d));
+                ddouble v = Sqrt(Ldexp(x * E + 1d, 1));
 
                 if (v >= 1e-8d) {
                     ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LambertW.NearSingularPadeTable;

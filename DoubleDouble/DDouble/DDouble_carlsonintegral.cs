@@ -28,12 +28,12 @@ namespace DoubleDouble {
                     Sqrt(x), Sqrt(y)
                 );
 
-                ddouble lambda = y + 2 * sqrtx * sqrty;
+                ddouble lambda = y + Ldexp(sqrtx * sqrty, 1);
 
                 (x, y) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2));
 
                 if ((i & 1) == 0) {
-                    mu = (x + 2 * y) * Rcp3;
+                    mu = (x + Ldexp(y, 1)) * Rcp3;
                     invmu = Rcp(mu);
 
                     s = (y + mu) * invmu - 2d;
@@ -101,7 +101,7 @@ namespace DoubleDouble {
             }
 
             ddouble xy = xd * yd, zz = zd * zd;
-            ddouble xymzz6 = xy - 6d * zz, xy3mzz8 = 3d * xy - 8 * zz;
+            ddouble xymzz6 = xy - 6d * zz, xy3mzz8 = 3d * xy - 8d * zz;
 
             ddouble v1 = xymzz6 * (-C3d14 + xymzz6 * C9d88 - zd * xy3mzz8 * C9d52);
             ddouble v2 = zd * (xy3mzz8 * Rcp6 + zd * (zd * xy * C3d26 - (xy - zz) * C9d22));
@@ -219,7 +219,7 @@ namespace DoubleDouble {
                 (x, y, z, w) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2), Ldexp(w + lambda, -2));
 
                 if ((i & 1) == 0) {
-                    mu = (x + y + z + 2 * w) * Rcp5;
+                    mu = (x + y + z + Ldexp(w, 1)) * Rcp5;
                     invmu = Rcp(mu);
 
                     (xd, yd, zd, wd) = ((mu - x) * invmu, (mu - y) * invmu, (mu - z) * invmu, (mu - w) * invmu);
@@ -239,7 +239,7 @@ namespace DoubleDouble {
 
             ddouble v1 = xyz * (Rcp6 - wd * (C3d11 - wd * C3d26));
             ddouble v2 = wd * ((xyyzzx - ww) * Rcp3 - xyyzzx * wd * C3d22);
-            ddouble v3 = xyyzzxmww3 * (-C3d14 + xyyzzxmww3 * C9d88 - (xyz + 2 * wd * (xyyzzx - ww)) * C9d52);
+            ddouble v3 = xyyzzxmww3 * (-C3d14 + xyyzzxmww3 * C9d88 - (xyz + 2d * wd * (xyyzzx - ww)) * C9d52);
 
             ddouble v = kappa * (3d * s + exp4 * (1d + v1 + v2 + v3) * (invmu * Sqrt(invmu)));
 

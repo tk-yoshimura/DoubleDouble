@@ -8,13 +8,13 @@ namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble RiemannZeta(ddouble x) {
             if (x < -Eps) {
-                ddouble y = Pow(2 * PI, x) * RcpPI * SinPIHalf(x) * Gamma(1d - x) * RiemannZeta(1d - x);
+                ddouble y = Pow(Ldexp(PI, 1), x) * RcpPI * SinPIHalf(x) * Gamma(1d - x) * RiemannZeta(1d - x);
 
                 return y;
             }
 
             if (x <= Eps) {
-                ddouble y = -Ldexp(1d + x * Log(2 * PI), -1);
+                ddouble y = -Ldexp(1d + x * Log(Ldexp(PI, 1)), -1);
 
                 return TruncateMantissa(y, keep_bits: 105);
             }

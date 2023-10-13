@@ -28,7 +28,7 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 if (n == 1) {
-                    return 2 * RcpPI;
+                    return Ldexp(RcpPI, 1);
                 }
 
                 return PositiveInfinity;
@@ -57,7 +57,7 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 if (n == 1) {
-                    return 2 * RcpPI;
+                    return Ldexp(RcpPI, 1);
                 }
 
                 return PositiveInfinity;
@@ -120,7 +120,7 @@ namespace DoubleDouble {
                     return -0d;
                 }
                 if (n == 1) {
-                    return -2 * RcpPI;
+                    return -Ldexp(RcpPI, 1);
                 }
 
                 return PositiveInfinity;

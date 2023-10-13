@@ -48,7 +48,7 @@ namespace DoubleDouble {
                 return Max(1, y);
             }
             else {
-                ddouble y = 2 * CarlsonRG(0d, 1d - m, 1d);
+                ddouble y = Ldexp(CarlsonRG(0d, 1d - m, 1d), 1);
 
                 return y;
             }
@@ -68,7 +68,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return PI / (2 * Sqrt(1d - n));
+                return PI / (Ldexp(Sqrt(1d - n), 1));
             }
 
             if (m == 1d) {
@@ -152,10 +152,10 @@ namespace DoubleDouble {
 
                     (a, b) = (Ldexp(a + b, -1), Sqrt(a * b));
 
-                    c = squa_c / (4 * a);
+                    c = squa_c / Ldexp(a, 2);
                 }
 
-                ddouble y = q * PI / (2 * a);
+                ddouble y = q * PI / Ldexp(a, 1);
 
                 return y;
             }
@@ -176,8 +176,8 @@ namespace DoubleDouble {
                     (a, b, p, q) = (
                         Ldexp(a + b, -1),
                         Sqrt(ab),
-                        p_squa_pab / (2 * p),
-                        q * p_squa_mab / (2 * p_squa_pab)
+                        p_squa_pab / (Ldexp(p, 1)),
+                        q * p_squa_mab / (Ldexp(p_squa_pab, 1))
                     );
 
                     sum_q += q;

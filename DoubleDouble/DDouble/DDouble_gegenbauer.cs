@@ -38,7 +38,7 @@ namespace DoubleDouble {
                 return 1d;
             }
             else {
-                return 2 * alpha * x;
+                return Ldexp(alpha, 1) * x;
             }
         }
 
@@ -62,8 +62,8 @@ namespace DoubleDouble {
 
                         ddouble[] p2 = new ddouble[n / 2 + 1];
 
-                        ddouble c0 = n + 2 * alpha - 2d;
-                        ddouble c1 = 2 * (n + alpha - 1d);
+                        ddouble c0 = n + Ldexp(alpha, 1) - 2d;
+                        ddouble c1 = Ldexp((n + alpha - 1d), 1);
 
                         if ((n & 1) == 0) {
                             p2[0] = (-p0[0] * c0) / n;
@@ -87,7 +87,7 @@ namespace DoubleDouble {
                         return new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
                     }
                     else {
-                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 2 * alpha });
+                        return new ReadOnlyCollection<ddouble>(new ddouble[] { Ldexp(alpha, 1) });
                     }
                 }
             }

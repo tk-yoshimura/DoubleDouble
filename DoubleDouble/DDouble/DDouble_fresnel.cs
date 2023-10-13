@@ -263,7 +263,7 @@ namespace DoubleDouble {
             public static (ddouble f, ddouble g) Coef(ddouble x) {
                 ddouble v = Log2(x);
 
-                int table_index = (int)Round(v * 2);
+                int table_index = (int)Round(Ldexp(v, 1));
                 ddouble w = v - table_index * 0.5d;
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 

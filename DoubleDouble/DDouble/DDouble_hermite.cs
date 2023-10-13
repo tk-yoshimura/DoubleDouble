@@ -34,7 +34,7 @@ namespace DoubleDouble {
             }
 
             if (n == 1) {
-                return 2 * x;
+                return Ldexp(x, 1);
             }
 
             throw new ArgumentOutOfRangeException(nameof(n));

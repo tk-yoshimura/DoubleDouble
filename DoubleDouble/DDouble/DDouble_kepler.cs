@@ -245,8 +245,8 @@
                 private static ddouble Householder4(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
                     ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
 
-                    ddouble dx = 3 * delta * (sqg1 + sqg1_deltag2) /
-                        (PI * (6 * g1 * sqg1_deltag2 + delta * delta * g3));
+                    ddouble dx = 3d * delta * (sqg1 + sqg1_deltag2) /
+                        (PI * (6d * g1 * sqg1_deltag2 + delta * delta * g3));
                     return dx;
                 }
             }
@@ -424,15 +424,15 @@
                 private static ddouble Householder4(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
                     ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
 
-                    ddouble dx = 3 * delta * (sqg1 + sqg1_deltag2) /
-                        (6 * g1 * sqg1_deltag2 + delta * delta * g3);
+                    ddouble dx = 3d * delta * (sqg1 + sqg1_deltag2) /
+                        (6d * g1 * sqg1_deltag2 + delta * delta * g3);
                     return dx;
                 }
             }
 
             public static class NearOneE {
                 public static ddouble Value(ddouble m, ddouble e) {
-                    ddouble s = Cbrt(6 * m), s2 = s * s;
+                    ddouble s = Cbrt(6d * m), s2 = s * s;
 
                     ddouble x = s * (155232000d + s2 * (2587200d + s2 * (110880d + s2 * (6160d + s2 * 387d)))) / 155232000d;
 
