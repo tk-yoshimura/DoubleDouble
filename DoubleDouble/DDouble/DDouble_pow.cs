@@ -63,7 +63,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow2m1(ddouble x) {
-            if (x < -0.1376953125d || x > 0.1533203125d) {
+            if (x < -0.1376953125d || x > 0.149658203125d) {
                 return Pow2(x) - 1d;
             }
             if (IsPlusZero(x)) {
@@ -167,7 +167,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Expm1(ddouble x) {
-            if (x < -0.09375d || x > 0.1015625d) {
+            if (x < -0.09375d || x > 0.102294921875d) {
                 return Exp(x) - 1d;
             }
             if (IsPlusZero(x)) {
