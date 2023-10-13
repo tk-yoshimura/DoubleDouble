@@ -8,7 +8,7 @@
                 return 1d;
             }
 
-            ddouble v = 1d / x - 1d / (1d - x);
+            ddouble v = Ldexp(0.5d - x, 1) / (x * (1d - x));
             ddouble y = 1d / (Exp(v) + 1d);
 
             return y;
