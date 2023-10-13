@@ -111,7 +111,7 @@ namespace DoubleDouble {
 
             public static ddouble PolygammaLimit(int n, ddouble x) {
                 ddouble inv_x2 = 1d / (x * x), c = Pow(x, -n);
-                ddouble v = c * Factorial[n - 1] * (Ldexp(x, 1) + n) / Ldexp(x, 1);
+                ddouble v = c * Factorial[n - 1] * (1d + n / Ldexp(x, 1));
                 ddouble u = c * Factorial[n + 1] / 2 * inv_x2;
                 ddouble dv = BernoulliSequence[1] * u;
 
