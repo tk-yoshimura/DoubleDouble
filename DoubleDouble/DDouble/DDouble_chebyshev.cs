@@ -117,8 +117,8 @@ namespace DoubleDouble {
 
             public static class ChebyshevU {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
-                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
-                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 2 })},
+                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
+                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 2d })},
                 };
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {

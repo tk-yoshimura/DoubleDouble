@@ -14,7 +14,7 @@ namespace DoubleDouble {
             if (IsZero(x)) {
                 return PlusZero;
             }
-            if (x >= 26.65625) {
+            if (x >= 26.65625d) {
                 return PositiveInfinity;
             }
 
@@ -34,10 +34,7 @@ namespace DoubleDouble {
             if (IsNegative(x)) {
                 return -DawsonF(-x);
             }
-            if (IsZero(x)) {
-                return PlusZero;
-            }
-            if (IsInfinity(x)) {
+            if (IsZero(x) || IsInfinity(x)) {
                 return 0d;
             }
 
@@ -54,7 +51,7 @@ namespace DoubleDouble {
             public static ddouble Value(ddouble x, bool scale, int max_terms = 32) {
                 ddouble x2 = x * x;
 
-                ddouble s = 0, u = x;
+                ddouble s = 0d, u = x;
 
                 for (int k = 0; k <= max_terms; k++) {
                     ddouble ds = u / (2 * k + 1) * TaylorSequence[k];
@@ -80,7 +77,7 @@ namespace DoubleDouble {
             public static ddouble Value(ddouble x, bool scale, int max_terms = 32) {
                 ddouble v = 1d / x, v2 = v * v;
 
-                ddouble s = 0, ds = v / 2;
+                ddouble s = 0d, ds = v / 2;
 
                 for (int k = 0; k <= max_terms; k++) {
                     ddouble s_next = s + ds;

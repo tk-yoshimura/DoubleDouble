@@ -81,7 +81,7 @@ namespace DoubleDouble {
                 ddouble v = x * x * PI;
                 ddouble v2 = v * v, v4 = v2 * v2;
 
-                ddouble s = 0, u = x;
+                ddouble s = 0d, u = x;
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble f = Ldexp(u * TaylorSequence[4 * k], -4 * k);
@@ -109,7 +109,7 @@ namespace DoubleDouble {
                 ddouble v = x * x * PI;
                 ddouble v2 = v * v, v4 = v2 * v2;
 
-                ddouble s = 0, u = v * x / 2;
+                ddouble s = 0d, u = v * x / 2;
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble f = Ldexp(u * TaylorSequence[4 * k + 1], -4 * k);
@@ -182,7 +182,7 @@ namespace DoubleDouble {
                 ddouble v = Rcp(x * x * PI);
                 ddouble v2 = v * v, v4 = v2 * v2;
 
-                ddouble p = 0, q = 0;
+                ddouble p = 0d, q = 0d;
                 ddouble a = Rcp(x * PI);
                 ddouble b = Rcp(x * x * x * PI * PI);
 
@@ -217,7 +217,7 @@ namespace DoubleDouble {
 
                 static RSeries() {
                     v = 1;
-                    table = new List<ddouble>() { 1 };
+                    table = new List<ddouble>() { 1d };
                 }
 
                 public static ddouble Value(int n) {

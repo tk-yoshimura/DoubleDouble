@@ -202,10 +202,10 @@ namespace DoubleDouble {
                 ddouble v = 1d / x;
                 ddouble v2 = v * v, v4 = v2 * v2;
 
-                ddouble p = 0, q = 0;
+                ddouble p = 0d, q = 0d;
                 ddouble c = v;
                 ddouble d = v2;
-                ddouble t = 1;
+                ddouble t = 1d;
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble dp = t * c * (1d - v2 * ((4 * k + 1) * (4 * k + 2)));

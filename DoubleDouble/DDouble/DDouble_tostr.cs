@@ -163,7 +163,7 @@ namespace DoubleDouble {
 
                 public static ddouble Pow5(int n) {
                     if (!pow5s.ContainsKey(n)) {
-                        ddouble pow5 = Pow(5, n);
+                        ddouble pow5 = Pow(5d, n);
 
                         pow5s.Add(n, pow5);
                     }

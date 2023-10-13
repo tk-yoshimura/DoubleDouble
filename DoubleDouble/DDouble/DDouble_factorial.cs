@@ -12,8 +12,8 @@ namespace DoubleDouble {
 
                 static Factorial() {
                     List<ddouble> table = new() {
-                        1,
-                        1
+                        1d,
+                        1d
                     };
 
                     for (int i = 2; i <= 256; i++) {

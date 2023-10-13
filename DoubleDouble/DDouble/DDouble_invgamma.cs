@@ -44,7 +44,7 @@ namespace DoubleDouble {
 
                 if (x != g && ddouble.IsFinite(g)) {
                     ddouble psi = Digamma(y);
-                    ddouble delta = (x / g - 1.0) / psi;
+                    ddouble delta = (x / g - 1d) / psi;
 
                     y += delta;
                 }

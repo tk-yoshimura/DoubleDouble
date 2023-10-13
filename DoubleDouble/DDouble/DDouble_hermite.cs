@@ -43,8 +43,8 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class HermiteH {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
-                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
-                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
+                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
+                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
                 };
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {

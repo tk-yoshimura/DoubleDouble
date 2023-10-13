@@ -365,7 +365,7 @@ namespace DoubleDouble {
 
             ddouble abs_y = abs_a - Truncate(abs_a / abs_b) * abs_b;
             if (IsNegative(abs_y) || abs_y >= abs_b) {
-                abs_y = 0;
+                abs_y = 0d;
             }
 
             ddouble y = IsPositive(a) ? abs_y : -abs_y;

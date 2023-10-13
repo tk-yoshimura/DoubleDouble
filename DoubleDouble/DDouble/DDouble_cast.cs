@@ -15,7 +15,7 @@ namespace DoubleDouble {
         }
 
         public static implicit operator ddouble(int n) {
-            return new ddouble(n);
+            return new ddouble((double)n);
         }
 
         public static explicit operator int(ddouble v) {
@@ -33,7 +33,7 @@ namespace DoubleDouble {
         }
 
         public static implicit operator ddouble(uint n) {
-            return new ddouble(n);
+            return new ddouble((double)n);
         }
 
         public static explicit operator uint(ddouble v) {

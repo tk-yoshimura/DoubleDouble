@@ -9,13 +9,13 @@ namespace DoubleDouble {
                 return -InverseErf(Abs(x));
             }
 
-            if (x < 0.5) {
+            if (x < 0.5d) {
                 return InverseErfUtil.InverseErfNearZero(x);
             }
-            if (x < 1.0) {
-                return InverseErfc(1.0 - x);
+            if (x < 1d) {
+                return InverseErfc(1d - x);
             }
-            if (x == 1.0) {
+            if (x == 1d) {
                 return PositiveInfinity;
             }
 
@@ -23,18 +23,18 @@ namespace DoubleDouble {
         }
 
         public static ddouble InverseErfc(ddouble x) {
-            if (x > 1.0) {
-                return -InverseErfc(2.0 - x);
+            if (x > 1d) {
+                return -InverseErfc(2d - x);
             }
 
             if (!(x >= 0d)) {
                 return NaN;
             }
 
-            if (x > 0.5) {
-                return InverseErfUtil.InverseErfNearZero(1.0 - x);
+            if (x > 0.5d) {
+                return InverseErfUtil.InverseErfNearZero(1d - x);
             }
-            if (x == 0.0) {
+            if (x == 0d) {
                 return PositiveInfinity;
             }
 
@@ -83,7 +83,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble InverseErfcLtRcpBinpow1(ddouble x) {
-                ddouble w = Sqrt(-Log2(x)) - 1.0;
+                ddouble w = Sqrt(-Log2(x)) - 1d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -110,7 +110,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble InverseErfcLtRcpBinpow4(ddouble x) {
-                ddouble w = Sqrt(-Log2(x)) - 2.0;
+                ddouble w = Sqrt(-Log2(x)) - 2d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -137,7 +137,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble InverseErfcLtRcpBinpow16(ddouble x) {
-                ddouble w = Sqrt(-Log2(x)) - 4.0;
+                ddouble w = Sqrt(-Log2(x)) - 4d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -164,7 +164,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble InverseErfcLtRcpBinpow64(ddouble x) {
-                ddouble w = Sqrt(-Log2(x)) - 8.0;
+                ddouble w = Sqrt(-Log2(x)) - 8d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -191,7 +191,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble InverseErfcLtRcpBinpow256(ddouble x) {
-                ddouble w = Sqrt(-Log2(x)) - 16.0;
+                ddouble w = Sqrt(-Log2(x)) - 16d;
 
 #if DEBUG
                 if (!(w >= 0d)) {

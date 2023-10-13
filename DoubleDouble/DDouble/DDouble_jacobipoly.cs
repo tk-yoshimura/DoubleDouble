@@ -48,8 +48,8 @@ namespace DoubleDouble {
 
                         ddouble[] p2 = new ddouble[n + 1];
 
-                        ddouble a = n + alpha, b = n + beta, c = a + b, r = 2 * n * (c - n) * (c - 2);
-                        ddouble s = c * (c - 1) * (c - 2), t = (a - b) * (c - 1) * (c - 2 * n), u = 2 * (a - 1) * (b - 1) * c;
+                        ddouble a = n + alpha, b = n + beta, c = a + b, r = 2 * n * (c - n) * (c - 2d);
+                        ddouble s = c * (c - 1d) * (c - 2d), t = (a - b) * (c - 1d) * (c - 2 * n), u = 2 * (a - 1d) * (b - 1d) * c;
 
                         p2[0] = (p1[0] * t - p0[0] * u) / r;
                         for (int i = 1; i < n - 1; i++) {
@@ -62,10 +62,10 @@ namespace DoubleDouble {
                     }
 
                     if (n == 0) {
-                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1 });
+                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
                     }
                     else {
-                        return new ReadOnlyCollection<ddouble>(new ddouble[] { (alpha - beta) / 2, (alpha + beta + 2) / 2 });
+                        return new ReadOnlyCollection<ddouble>(new ddouble[] { (alpha - beta) / 2, (alpha + beta + 2d) / 2 });
                     }
                 }
             }

@@ -447,7 +447,7 @@ namespace DoubleDouble {
                 if (n <= 1) {
                     ddouble t = q / 4, sq_t = t * t;
                     ddouble[] cs = new ddouble[4];
-                    cs[0] = 1;
+                    cs[0] = 1d;
 
                     if (n == 0) {
                         cs[1] = -t * (2 + sq_t * -3.5);
@@ -621,7 +621,7 @@ namespace DoubleDouble {
                 if (n <= 2) {
                     ddouble t = q / 4, sq_t = t * t;
                     ddouble[] cs = new ddouble[4];
-                    cs[0] = 1;
+                    cs[0] = 1d;
 
                     if (n == 1) {
                         cs[1] = -t * (0.5 + t * (-0.25 + t * (ddouble)1 / 24));

@@ -60,7 +60,7 @@ namespace DoubleDouble {
                 ddouble x_peak = Sqrt((Sqrt(8d / h2 + 1d) - 1d) / 2);
                 ddouble ap = Min(a, x_peak * 2), ad = a - ap;
 
-                ddouble sp = 0, sd = 0;
+                ddouble sp = 0d, sd = 0d;
 
                 for (int k = 0; k < Legendre45Table.Count; k++) {
                     (ddouble x, ddouble w) = Legendre45Table[k];

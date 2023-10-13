@@ -104,9 +104,9 @@
                 public static double InitValue(double m, double e) {
                     double em1 = 1d - e;
 
-                    double x = (e < 3.90625e-3)
+                    double x = (e < 3.90625e-3d)
                         ? m
-                        : (em1 - double.Sqrt(em1 * em1 + 4 * e * m)) / (-2 * e);
+                        : (em1 - double.Sqrt(em1 * em1 + 4d * e * m)) / (-2d * e);
 
                     double x2 = x * x;
                     double delta = x * (em1 - e * x2 * (-2d + x)) - m;
@@ -115,10 +115,10 @@
                         return x;
                     }
 
-                    double g1 = em1 - e * x2 * (-6d + 4 * x);
+                    double g1 = em1 - e * x2 * (-6d + x * 4d);
                     double g2 = -12 * e * x * (-1d + x);
 
-                    double dx = (2 * delta * g1) / (2 * g1 * g1 - delta * g2);
+                    double dx = (2d * delta * g1) / (2d * g1 * g1 - delta * g2);
 
                     if (!double.IsFinite(dx)) {
                         return x;
@@ -303,8 +303,8 @@
                     }
 
                     double u = m / 10, em1 = e - 1;
-                    double t = double.Cbrt((double.Sqrt((9 * e * m * m + 8 * em1 * em1 * em1) / e) + 3 * m) / e);
-                    double v = t - 6 * em1 / (3 * e * t);
+                    double t = double.Cbrt((double.Sqrt((9d * e * m * m + 8d * em1 * em1 * em1) / e) + 3d * m) / e);
+                    double v = t - 6d * em1 / (3d * e * t);
 
                     x = x * double.Min(1, u) + v * double.Max(0, 1 - u);
 

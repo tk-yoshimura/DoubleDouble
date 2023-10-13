@@ -12,8 +12,8 @@
                 private static ddouble acc, carry;
 
                 static Harmonic() {
-                    a_table.Add(0);
-                    a_table.Add(1);
+                    a_table.Add(0d);
+                    a_table.Add(1d);
                     acc = 1d;
                     carry = 0d;
                 }

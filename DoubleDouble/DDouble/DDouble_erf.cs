@@ -8,30 +8,30 @@ namespace DoubleDouble {
             if (IsNaN(x)) {
                 return NaN;
             }
-            if (x < 0.0) {
+            if (x < 0d) {
                 return -Erf(Abs(x));
             }
 
-            if (x < 0.5) {
+            if (x < 0.5d) {
                 return ErfUtil.ErfNearZero(x);
             }
-            if (x < 1.0) {
-                return 1.0 - ErfUtil.ErfcGtP5(x);
+            if (x < 1d) {
+                return 1d - ErfUtil.ErfcGtP5(x);
             }
-            if (x < 2.0) {
-                return 1.0 - ErfUtil.ErfcGt1(x);
+            if (x < 2d) {
+                return 1d - ErfUtil.ErfcGt1(x);
             }
-            if (x < 4.0) {
-                return 1.0 - ErfUtil.ErfcGt2(x);
+            if (x < 4d) {
+                return 1d - ErfUtil.ErfcGt2(x);
             }
-            if (x < 8.0) {
-                return 1.0 - ErfUtil.ErfcGt4(x);
+            if (x < 8d) {
+                return 1d - ErfUtil.ErfcGt4(x);
             }
-            if (x < 8.5) {
-                return 1.0 - ErfUtil.ErfcGt8(x);
+            if (x < 8.5d) {
+                return 1d - ErfUtil.ErfcGt8(x);
             }
 
-            return 1.0;
+            return 1d;
         }
 
         public static ddouble Erfc(ddouble x) {
@@ -39,29 +39,29 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x < 0.5) {
-                return 1.0 - Erf(x);
+            if (x < 0.5d) {
+                return 1d - Erf(x);
             }
-            if (x < 1.0) {
+            if (x < 1d) {
                 return ErfUtil.ErfcGtP5(x);
             }
-            if (x < 2.0) {
+            if (x < 2d) {
                 return ErfUtil.ErfcGt1(x);
             }
-            if (x < 4.0) {
+            if (x < 4d) {
                 return ErfUtil.ErfcGt2(x);
             }
-            if (x < 8.0) {
+            if (x < 8d) {
                 return ErfUtil.ErfcGt4(x);
             }
-            if (x < 16.0) {
+            if (x < 16d) {
                 return ErfUtil.ErfcGt8(x);
             }
-            if (x < 27.25) {
+            if (x < 27.25d) {
                 return ErfUtil.ErfcGt16(x);
             }
 
-            return 0.0;
+            return 0d;
         }
 
         public static ddouble Erfcx(ddouble x) {
@@ -72,19 +72,19 @@ namespace DoubleDouble {
             if (x < 0.5) {
                 return Erfc(x) * Exp(x * x);
             }
-            if (x < 1.0) {
+            if (x < 1d) {
                 return ErfUtil.ErfcxGtP5(x);
             }
-            if (x < 2.0) {
+            if (x < 2d) {
                 return ErfUtil.ErfcxGt1(x);
             }
-            if (x < 4.0) {
+            if (x < 4d) {
                 return ErfUtil.ErfcxGt2(x);
             }
-            if (x < 8.0) {
+            if (x < 8d) {
                 return ErfUtil.ErfcxGt4(x);
             }
-            if (x < 16.0) {
+            if (x < 16d) {
                 return ErfUtil.ErfcxGt8(x);
             }
 
@@ -120,7 +120,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcGtP5(ddouble x) {
-                ddouble w = x - 0.5;
+                ddouble w = x - 0.5d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -147,7 +147,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcGt1(ddouble x) {
-                ddouble w = x - 1.0;
+                ddouble w = x - 1d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -174,7 +174,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcGt2(ddouble x) {
-                ddouble w = x - 2.0;
+                ddouble w = x - 2d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -201,7 +201,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcGt4(ddouble x) {
-                ddouble w = x - 4.0;
+                ddouble w = x - 4d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -228,7 +228,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcGt8(ddouble x) {
-                ddouble w = x - 8.0;
+                ddouble w = x - 8d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -255,7 +255,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcGt16(ddouble x) {
-                ddouble w = x - 16.0;
+                ddouble w = x - 16d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -289,7 +289,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcxGtP5(ddouble x) {
-                ddouble w = x - 0.5;
+                ddouble w = x - 0.5d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -316,7 +316,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcxGt1(ddouble x) {
-                ddouble w = x - 1.0;
+                ddouble w = x - 1d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -343,7 +343,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcxGt2(ddouble x) {
-                ddouble w = x - 2.0;
+                ddouble w = x - 2d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -370,7 +370,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcxGt4(ddouble x) {
-                ddouble w = x - 4.0;
+                ddouble w = x - 4d;
 
 #if DEBUG
                 if (!(w >= 0d)) {
@@ -397,7 +397,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcxGt8(ddouble x) {
-                ddouble w = x - 8.0;
+                ddouble w = x - 8d;
 
 #if DEBUG
                 if (!(w >= 0d)) {

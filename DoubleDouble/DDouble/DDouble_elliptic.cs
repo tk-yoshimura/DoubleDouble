@@ -10,7 +10,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return Consts.AsinAcos.HalfPI;
+                return Consts.SinCos.PIHalf;
             }
 
             if (m == 1d) {
@@ -23,7 +23,7 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble y = CarlsonRF(0, 1d - m, 1d);
+                ddouble y = CarlsonRF(0d, 1d - m, 1d);
 
                 return y;
             }
@@ -35,7 +35,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return Consts.AsinAcos.HalfPI;
+                return Consts.SinCos.PIHalf;
             }
 
             if (m == 1d) {
@@ -48,7 +48,7 @@ namespace DoubleDouble {
                 return Max(1, y);
             }
             else {
-                ddouble y = 2 * CarlsonRG(0, 1d - m, 1d);
+                ddouble y = 2 * CarlsonRG(0d, 1d - m, 1d);
 
                 return y;
             }
@@ -81,7 +81,7 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble y = CarlsonRF(0, 1d - m, 1d) + n / 3d * CarlsonRJ(0, 1d - m, 1d, 1d - n);
+                ddouble y = CarlsonRF(0d, 1d - m, 1d) + n / 3d * CarlsonRJ(0d, 1d - m, 1d, 1d - n);
 
                 return y;
             }
@@ -119,7 +119,7 @@ namespace DoubleDouble {
                     y = 2d / cp1 * EllipticKCore(Square(cm1 / cp1));
                 }
                 else {
-                    ddouble x = 1, w = m;
+                    ddouble x = 1d, w = m;
 
                     for (int i = 1; i < int.MaxValue; i++) {
                         ddouble dx = Consts.Elliptic.KTable(i) * w;
@@ -133,7 +133,7 @@ namespace DoubleDouble {
                         x = x_next;
                     }
 
-                    y = x * Consts.AsinAcos.HalfPI;
+                    y = x * Consts.SinCos.PIHalf;
                 }
 
                 return y;
@@ -198,7 +198,7 @@ namespace DoubleDouble {
                 private static readonly List<ddouble> k_table;
 
                 static Elliptic() {
-                    k_table = new() { 1 };
+                    k_table = new() { 1d };
 
 #if DEBUG
                     Trace.WriteLine($"Elliptic initialized.");

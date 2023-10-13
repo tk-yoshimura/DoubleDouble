@@ -62,9 +62,9 @@ namespace DoubleDouble {
                 }
             }
             else {
-                ddouble v = Sqrt(2 * (x * E + 1));
+                ddouble v = Sqrt(2 * (x * E + 1d));
 
-                if (v >= 1e-8) {
+                if (v >= 1e-8d) {
                     ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LambertW.NearSingularPadeTable;
 
                     (ddouble sc, ddouble sd) = table[0];
@@ -82,7 +82,7 @@ namespace DoubleDouble {
                     y = sc / sd;
                 }
                 else {
-                    y = (-1080.0 + v * (1080.0 + v * (-360.0 + v * (165.0 + v * -86.0)))) / 1080;
+                    y = (-1080d + v * (1080d + v * (-360d + v * (165d + v * -86d)))) / 1080d;
                 }
             }
 

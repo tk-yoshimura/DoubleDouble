@@ -29,7 +29,7 @@
             ddouble sinx = Sin(x), cos2x = Cos(2 * x);
             ddouble qdrt_q = Sqrt(Sqrt(q));
 
-            ddouble q2 = q * q, q4 = q2 * q2, p = 1;
+            ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = 2 * q2 * cos2x, v = q4, s = 1d - u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
@@ -60,7 +60,7 @@
             ddouble cosx = Cos(x), cos2x = Cos(2 * x);
             ddouble qdrt_q = Sqrt(Sqrt(q));
 
-            ddouble q2 = q * q, q4 = q2 * q2, p = 1;
+            ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = 2 * q2 * cos2x, v = q4, s = 1d + u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
@@ -90,7 +90,7 @@
 
             ddouble cos2x = Cos(2 * x);
 
-            ddouble q2 = q * q, q4 = q2 * q2, p = 1;
+            ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = 2 * q * cos2x, v = q2, s = 1d + u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
@@ -120,7 +120,7 @@
 
             ddouble cos2x = Cos(2 * x);
 
-            ddouble q2 = q * q, q4 = q2 * q2, p = 1;
+            ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = 2 * q * cos2x, v = q2, s = 1d - u + v;
 
             while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
@@ -146,7 +146,7 @@
             public static double Eps = double.ScaleB(1, -994);
 
             private static Dictionary<ddouble, ddouble> q0_table = new() {
-                { 0, 1 }
+                { 0d, 1d }
             };
 
             public static ddouble Q0(ddouble q) {
@@ -158,7 +158,7 @@
                     return q0_table[q];
                 }
 
-                ddouble q2 = q * q, u = q2, q0 = 1, s = 1d - u;
+                ddouble q2 = q * q, u = q2, q0 = 1d, s = 1d - u;
 
                 while (s <= NearOne.lower && q0 > Eps) {
                     q0 *= s;

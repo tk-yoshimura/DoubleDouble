@@ -75,8 +75,8 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class LaguerreL {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
-                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
-                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1, -1 })},
+                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
+                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d, -1d })},
                 };
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
@@ -121,17 +121,17 @@ namespace DoubleDouble {
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n, ddouble alpha) {
                     if (n == 0) {
-                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1 });
+                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
                     }
                     if (n == 1) {
-                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1 + alpha, -1 });
+                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1d + alpha, -1d });
                     }
 
                     ReadOnlyCollection<ddouble> p0 = Table(n - 2, alpha);
                     ReadOnlyCollection<ddouble> p1 = Table(n - 1, alpha);
 
-                    ddouble c0 = (n + alpha - 1) * (n - 1);
-                    ddouble c1 = (2 * n + alpha - 1);
+                    ddouble c0 = ((n - 1) + alpha) * (n - 1);
+                    ddouble c1 = ((2 * n - 1) + alpha);
 
                     ddouble[] p2 = new ddouble[n + 1];
 

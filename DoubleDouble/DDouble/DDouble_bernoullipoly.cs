@@ -84,12 +84,12 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class BernoulliPoly {
                 private static readonly List<ReadOnlyCollection<ddouble>> center_table = new List<ReadOnlyCollection<ddouble>>{
-                    new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 }),
-                    new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 }),
+                    new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d }),
+                    new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d }),
                 };
                 private static readonly List<ReadOnlyCollection<ddouble>> normal_table = new List<ReadOnlyCollection<ddouble>>{
-                    new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 }),
-                    new ReadOnlyCollection<ddouble>(new ddouble[]{ -0.5, 1 }),
+                    new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d }),
+                    new ReadOnlyCollection<ddouble>(new ddouble[]{ -0.5d, 1d }),
                 };
 
                 public static ReadOnlyCollection<ddouble> Table(int n, bool centered) {
@@ -123,7 +123,7 @@ namespace DoubleDouble {
                             }
                         }
 
-                        p1[n / 2] = 1;
+                        p1[n / 2] = 1d;
                     }
                     else {
                         p1 = new ddouble[n + 1];
@@ -132,8 +132,8 @@ namespace DoubleDouble {
                             p1[i] = p0[i - 1] * n / i;
                         }
 
-                        p1[0] = ((n & 1) == 0) ? BernoulliSequence[n / 2] : 0;
-                        p1[n] = 1;
+                        p1[0] = ((n & 1) == 0) ? BernoulliSequence[n / 2] : 0d;
+                        p1[n] = 1d;
                     }
 
                     return new ReadOnlyCollection<ddouble>(p1);

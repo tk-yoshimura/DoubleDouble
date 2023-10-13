@@ -84,7 +84,7 @@ namespace DoubleDouble {
 
                     taylor_nz[0] = Gamma(Rcp3) * Sqrt(3) / 2;
                     taylor_nz[1] = Gamma(Rcp3 * 2) * Cbrt3 * Sqrt(3) / 2;
-                    taylor_nz[2] = 0;
+                    taylor_nz[2] = 0d;
 
                     for (int k = 3; k < taylor_nz.Length; k++) {
                         taylor_nz[k] = taylor_nz[k - 3] / ((k - 1) * k);

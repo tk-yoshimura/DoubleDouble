@@ -84,7 +84,7 @@ namespace DoubleDouble {
                     }
 
                     if (n == 0) {
-                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1 });
+                        return new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
                     }
                     else {
                         return new ReadOnlyCollection<ddouble>(new ddouble[] { 2 * alpha });

@@ -58,7 +58,7 @@ namespace DoubleDouble {
 
                 ddouble v = Log(x), v2 = v * v;
                 ddouble y = Pow(v, n - 1) * TaylorSequence[n - 1] * (HarmonicNumber(n - 1) - Log(-v));
-                ddouble u = 1;
+                ddouble u = 1d;
 
                 for (int k = 0; k <= n; k++) {
                     if (k == n - 1) {
@@ -265,7 +265,7 @@ namespace DoubleDouble {
                 };
 
                 int iter = Iters[n];
-                ddouble ir = 0, it = 0;
+                ddouble ir = 0d, it = 0d;
 
                 for (int k = 0; k < iter; k++) {
                     foreach ((ddouble t, ddouble w) in Legendre37Table) {

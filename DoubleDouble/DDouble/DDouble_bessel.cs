@@ -606,7 +606,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x;
 
-                ddouble c = 1d / x, u = x / 2d;
+                ddouble c = 1d / x, u = x / 2;
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble dc = u * r[k] * (h - (HarmonicNumber(k) + HarmonicNumber(k + 1)) / 2);
@@ -908,7 +908,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public K0CoefTable() {
-                    this.c = 1;
+                    this.c = 1d;
                     this.table.Add(1d);
                 }
 
@@ -938,7 +938,7 @@ namespace DoubleDouble {
                 private readonly List<ddouble> table = new();
 
                 public K1CoefTable() {
-                    this.c = 1;
+                    this.c = 1d;
                     this.table.Add(1d);
                 }
 
@@ -1947,7 +1947,7 @@ namespace DoubleDouble {
                 List<(ddouble c, ddouble d)> cds = new();
                 ddouble[] us = new ddouble[m + 1], vs = new ddouble[m];
 
-                ddouble u = 1;
+                ddouble u = 1d;
                 for (int i = 0; i <= m; i++) {
                     us[i] = u;
                     u *= squa_nu;
@@ -1959,7 +1959,7 @@ namespace DoubleDouble {
 
                 for (int i = 0; i <= m; i++) {
                     ReadOnlyCollection<ddouble> es = EssTable[i];
-                    ddouble d = es[i], c = 0;
+                    ddouble d = es[i], c = 0d;
 
                     for (int l = 0; l < i; l++) {
                         d *= vs[l];

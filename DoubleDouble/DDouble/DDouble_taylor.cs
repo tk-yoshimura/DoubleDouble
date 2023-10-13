@@ -13,8 +13,8 @@ namespace DoubleDouble {
 
                 static Taylor() {
                     List<ddouble> table = new() {
-                        1,
-                        1
+                        1d,
+                        1d
                     };
 
                     BigInteger v = 2;

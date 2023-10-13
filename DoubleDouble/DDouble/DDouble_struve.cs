@@ -164,9 +164,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble Value(int n, ddouble x) {
-                ddouble r = 1d / x;
-
-                ddouble s = 0;
+                ddouble r = 1d / x, s = 0d;
 
                 foreach ((ddouble u, ddouble w) in PointTable) {
                     ddouble v = Pow(Sqrt(1d + Square(u * r)), 2 * n - 1);
@@ -192,7 +190,7 @@ namespace DoubleDouble {
                 ddouble divs = Ceiling(x / 16);
                 ddouble q = Rcp(divs);
 
-                ddouble s = 0;
+                ddouble s = 0d;
 
                 bool convergenced = false;
 
@@ -222,7 +220,7 @@ namespace DoubleDouble {
             public static ddouble Value(int n, ddouble x, bool sign_switch, int terms) {
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble s = 0, u = Pow(x / 2, n + 1) * RcpPI;
+                ddouble s = 0d, u = Pow(x / 2, n + 1) * RcpPI;
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble w = x2 * FTable.Value(2 * k) * FTable.Value(2 * k + n);

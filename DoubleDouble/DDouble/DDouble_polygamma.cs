@@ -66,7 +66,7 @@ namespace DoubleDouble {
                 }
 
                 ddouble scale = double.Max(1, 8d / n), r = scale * n / x;
-                ddouble ir = 0, it = 0;
+                ddouble ir = 0d, it = 0d;
 
                 Func<ddouble, ddouble> polygamma_ir =
                 (n > 1) ? (t) => {

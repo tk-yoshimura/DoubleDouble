@@ -122,7 +122,7 @@ namespace DoubleDouble {
             }
 
             internal class FSeries {
-                private static ddouble v = 0;
+                private static ddouble v = 0d;
                 private static readonly List<ddouble> table = new();
 
                 public static ddouble Value(int n) {

@@ -12,7 +12,7 @@ namespace DoubleDouble {
 
             int scale;
             (scale, (x, y)) = AdjustScale(exp: 0, (x, y));
-            ddouble kappa = Pow2(scale * 0.5);
+            ddouble kappa = Pow2(Ldexp(scale, -1));
 
             if (y <= Eps) {
                 return PositiveInfinity;
@@ -20,7 +20,7 @@ namespace DoubleDouble {
 
             const int max_iters = 64;
 
-            ddouble s = 0, mu = 0, invmu = 0;
+            ddouble s = 0d, mu = 0d, invmu = 0d;
             ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
@@ -65,7 +65,7 @@ namespace DoubleDouble {
 
             int scale;
             (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
-            ddouble kappa = Pow2(scale * 1.5);
+            ddouble kappa = Pow2(Ldexp(scale * 3, -1));
 
             if (x <= Eps && y <= Eps && z <= Eps) {
                 return PositiveInfinity;
@@ -73,8 +73,8 @@ namespace DoubleDouble {
 
             const int max_iters = 64;
 
-            ddouble s = 0, exp4 = 1;
-            ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0;
+            ddouble s = 0d, exp4 = 1d;
+            ddouble mu = 0d, invmu = 0d, xd = 0d, yd = 0d, zd = 0d;
             ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
@@ -142,7 +142,7 @@ namespace DoubleDouble {
 
             int scale;
             (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
-            ddouble kappa = Pow2(scale * 0.5);
+            ddouble kappa = Pow2(Ldexp(scale, -1));
 
             if ((x <= Eps && y <= Eps) || (y <= Eps && z <= Eps) || (z <= Eps && x <= Eps)) {
                 return PositiveInfinity;
@@ -150,7 +150,7 @@ namespace DoubleDouble {
 
             const int max_iters = 64;
 
-            ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0;
+            ddouble mu = 0d, invmu = 0d, xd = 0d, yd = 0d, zd = 0d;
             ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
@@ -213,7 +213,7 @@ namespace DoubleDouble {
 
             int scale;
             (scale, (x, y, z, w)) = AdjustScale(exp: 0, (x, y, z, w));
-            ddouble kappa = Pow2(scale * 1.5);
+            ddouble kappa = Pow2(Ldexp(scale * 3, -1));
 
             if ((x <= Eps && y <= Eps) || (y <= Eps && z <= Eps) || (z <= Eps && x <= Eps)) {
                 return PositiveInfinity;
@@ -221,8 +221,8 @@ namespace DoubleDouble {
 
             const int max_iters = 64;
 
-            ddouble s = 0, exp4 = 1;
-            ddouble mu = 0, invmu = 0, xd = 0, yd = 0, zd = 0, wd = 0;
+            ddouble s = 0d, exp4 = 1d;
+            ddouble mu = 0d, invmu = 0d, xd = 0d, yd = 0d, zd = 0d, wd = 0d;
             ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
@@ -287,7 +287,7 @@ namespace DoubleDouble {
 
             int scale;
             (scale, (x, y, z)) = AdjustScale(exp: 0, (x, y, z));
-            ddouble kappa = Pow2(-scale * 0.5);
+            ddouble kappa = Pow2(-Ldexp(scale, -1));
 
             if (x <= Eps && y <= Eps && z <= Eps) {
                 return 0d;

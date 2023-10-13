@@ -59,7 +59,7 @@ namespace DoubleDouble {
                 return 0d;
             }
             if (x == 1d) {
-                return One;
+                return 1d;
             }
 
             double thr = (a.hi + 1d) / (a.hi + b.hi + 1d);
@@ -69,7 +69,7 @@ namespace DoubleDouble {
                 ddouble f = IncompleteBetaCFrac.Value(x, a, b);
 
                 ddouble y = Pow2(a * Log2(x) + b * Log2(xr) - LogBeta(a, b) * LbE) / f;
-                y = Min(y, One);
+                y = Min(y, 1d);
 
                 return y;
             }

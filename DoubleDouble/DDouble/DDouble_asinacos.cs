@@ -8,14 +8,14 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (!IsFinite(x)) {
-                return IsPositive(x) ? Consts.AsinAcos.HalfPI : -Consts.AsinAcos.HalfPI;
+                return IsPositive(x) ? Consts.SinCos.PIHalf : -Consts.SinCos.PIHalf;
             }
             if (IsNegative(x)) {
                 return -Atan(-x);
             }
 
             if (x > 1d) {
-                return Consts.AsinAcos.HalfPI - Atan(Rcp(x));
+                return Consts.SinCos.PIHalf - Atan(Rcp(x));
             }
 
             ddouble x2 = x * x;
@@ -24,8 +24,8 @@ namespace DoubleDouble {
                 return Ldexp(Atan(x / (1d + Sqrt(1d + x2))), 1);
             }
 
-            ddouble f = 86d * x + 13.5d;
-            int n = (int)Floor(33.5d * x + 9d);
+            ddouble f = 86d * x.hi + 13.5d;
+            int n = (int)double.Floor(33.5d * x.hi + 9d);
 
             for (int i = n; i >= 1; i--) {
                 f = (2 * i - 1) + (i * i) * x2 / f;
@@ -39,10 +39,10 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (x == -1d) {
-                return -Consts.AsinAcos.HalfPI;
+                return -Consts.SinCos.PIHalf;
             }
             if (x == 1d) {
-                return Consts.AsinAcos.HalfPI;
+                return Consts.SinCos.PIHalf;
             }
             if (x > -0.03125d && x < 0.03125d) {
                 ddouble x2 = x * x;
@@ -63,7 +63,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Acos(ddouble x) {
-            return Consts.AsinAcos.HalfPI - Asin(x);
+            return Consts.SinCos.PIHalf - Asin(x);
         }
 
         public static ddouble Atan2(ddouble y, ddouble x) {
@@ -79,15 +79,11 @@ namespace DoubleDouble {
             }
             else {
                 ddouble xy = x / y;
-                return IsPositive(y) ? (Consts.AsinAcos.HalfPI - Atan(xy)) : (-Consts.AsinAcos.HalfPI - Atan(xy));
+                return IsPositive(y) ? (Consts.SinCos.PIHalf - Atan(xy)) : (-Consts.SinCos.PIHalf - Atan(xy));
             }
         }
 
         internal static partial class Consts {
-            public static class AsinAcos {
-                public static readonly ddouble HalfPI = PI / 2;
-            }
-
             public static class Asin {
                 public static readonly ReadOnlyCollection<ddouble> TaylorXZeroCoefTable = new(new ddouble[] {
                     (ddouble)1 / 6,

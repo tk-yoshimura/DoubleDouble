@@ -88,8 +88,8 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class LegendreP {
                 private static readonly Dictionary<(int n, int m), ReadOnlyCollection<ddouble>> table = new Dictionary<(int n, int m), ReadOnlyCollection<ddouble>>{
-                    { (0, 0), new ReadOnlyCollection<ddouble>(new ddouble[]{ 1 })},
-                    { (1, 0), new ReadOnlyCollection<ddouble>(new ddouble[]{ 2 })},
+                    { (0, 0), new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
+                    { (1, 0), new ReadOnlyCollection<ddouble>(new ddouble[]{ 2d })},
                 };
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {

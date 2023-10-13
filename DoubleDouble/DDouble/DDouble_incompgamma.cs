@@ -157,7 +157,7 @@ namespace DoubleDouble {
                 public const double MinNu = 1d / 1024;
                 public const double MaxNu = Consts.Gamma.ExtremeLarge;
                 public const double MaxNuRegularized = 8192d;
-                public const double ULBias = 0.125;
+                public const double ULBias = 0.125d;
                 public const int CFracMaxIter = 8192;
             }
         }

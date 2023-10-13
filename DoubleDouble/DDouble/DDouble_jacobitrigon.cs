@@ -205,7 +205,7 @@
             }
 
             private static (ddouble a, ddouble[] ds) GeneratePhiTable(ddouble m) {
-                ddouble a = 1, b = Sqrt(1d - m), c = Sqrt(m);
+                ddouble a = 1d, b = Sqrt(1d - m), c = Sqrt(m);
 
                 List<ddouble> a_list = new() { a };
                 List<ddouble> c_list = new() { c };
