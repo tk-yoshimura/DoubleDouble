@@ -282,7 +282,7 @@ namespace DoubleDouble {
                 return kappa * CarlsonRG(x, y);
             }
 
-            ddouble v =  Ldexp(z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z), -1);
+            ddouble v = Ldexp(z * CarlsonRF(x, y, z) - (x - z) * (y - z) * Rcp3 * CarlsonRD(x, y, z) + Sqrt(x * y / z), -1);
             v *= kappa;
 
             if (IsNaN(v)) {

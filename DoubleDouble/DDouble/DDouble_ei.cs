@@ -20,7 +20,7 @@ namespace DoubleDouble {
                 return y;
             }
 
-            if (x == 0d) { 
+            if (x == 0d) {
                 return NegativeInfinity;
             }
 
@@ -48,7 +48,7 @@ namespace DoubleDouble {
 
                 return y;
             }
-            if (x == 0d) { 
+            if (x == 0d) {
                 return 0d;
             }
 

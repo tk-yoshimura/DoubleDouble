@@ -68,7 +68,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return PI / (Ldexp(Sqrt(1d - n), 1));
+                return PI / Ldexp(Sqrt(1d - n), 1);
             }
 
             if (m == 1d) {
@@ -176,8 +176,8 @@ namespace DoubleDouble {
                     (a, b, p, q) = (
                         Ldexp(a + b, -1),
                         Sqrt(ab),
-                        p_squa_pab / (Ldexp(p, 1)),
-                        q * p_squa_mab / (Ldexp(p_squa_pab, 1))
+                        p_squa_pab / Ldexp(p, 1),
+                        q * p_squa_mab / Ldexp(p_squa_pab, 1)
                     );
 
                     sum_q += q;

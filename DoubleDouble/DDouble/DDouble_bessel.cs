@@ -497,7 +497,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble c = -2d / (x * PI), u = x / (Ldexp(PI, 1));
+                ddouble c = -2d / (x * PI), u = x / Ldexp(PI, 1);
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
@@ -533,7 +533,7 @@ namespace DoubleDouble {
 
                 ddouble x2 = x * x;
 
-                ddouble c = 0d, u = PI / (Ldexp(SinPI(nu), 1));
+                ddouble c = 0d, u = PI / Ldexp(SinPI(nu), 1);
 
                 for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                     ddouble dc = u * r[k] * (tn * gn[k] - tp * gp[k]);
