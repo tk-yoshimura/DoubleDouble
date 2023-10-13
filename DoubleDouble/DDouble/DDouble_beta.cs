@@ -7,7 +7,7 @@
 
             ddouble c = a + b;
 
-            if (a >= 0.25d && b >= 0.25d && c <= 36d) {
+            if (a >= 0.25d && b >= 0.25d && c <= 100d) {
                 ddouble y = Gamma(a) * Gamma(b) / Gamma(c);
 
                 return y;
