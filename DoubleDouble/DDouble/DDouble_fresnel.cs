@@ -27,13 +27,13 @@ namespace DoubleDouble {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {
-                    return Point5;
+                    return 0.5d;
                 }
 
                 ddouble theta = Ldexp(x * x, -1);
                 ddouble cos = CosPI(theta), sin = SinPI(theta);
 
-                ddouble c = Point5 + sin * f - cos * g;
+                ddouble c = 0.5d + sin * f - cos * g;
 
                 return c;
             }
@@ -60,15 +60,63 @@ namespace DoubleDouble {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {
-                    return Point5;
+                    return 0.5d;
                 }
 
                 ddouble theta = Ldexp(x * x, -1);
                 ddouble cos = CosPI(theta), sin = SinPI(theta);
 
-                ddouble s = Point5 - cos * f - sin * g;
+                ddouble s = 0.5d - cos * f - sin * g;
 
                 return s;
+            }
+        }
+
+        public static ddouble FresnelF(ddouble x) {
+            if (IsNaN(x) || IsNegativeInfinity(x)) {
+                return NaN;
+            }
+            if (x <= FresnelPade.PadeApproxMin) {
+                ddouble theta = Ldexp(x * x, -1);
+                ddouble cos = CosPI(theta), sin = SinPI(theta);
+
+                ddouble c = FresnelC(x);
+                ddouble s = FresnelS(x);
+
+                ddouble f = (0.5d - s) * cos - (0.5d - c) * sin;
+
+                return f;
+            }
+
+            if (x <= FresnelPade.PadeApproxMax) {
+                return FresnelPade.FCoef(x);
+            }
+            else {
+                return FresnelLimit.FCoef(x);
+            }
+        }
+
+        public static ddouble FresnelG(ddouble x) {
+            if (IsNaN(x) || IsNegativeInfinity(x)) {
+                return NaN;
+            }
+            if (x <= FresnelPade.PadeApproxMin) {
+                ddouble theta = Ldexp(x * x, -1);
+                ddouble cos = CosPI(theta), sin = SinPI(theta);
+
+                ddouble c = FresnelC(x);
+                ddouble s = FresnelS(x);
+
+                ddouble f = (0.5d - c) * cos + (0.5d - s) * sin;
+
+                return f;
+            }
+
+            if (x <= FresnelPade.PadeApproxMax) {
+                return FresnelPade.GCoef(x);
+            }
+            else {
+                return FresnelLimit.GCoef(x);
             }
         }
 
@@ -211,6 +259,62 @@ namespace DoubleDouble {
                 return (p, q);
             }
 
+            public static ddouble FCoef(ddouble x, int max_terms = 10) {
+                ddouble v = Rcp(x * x * PI);
+                ddouble v2 = v * v, v4 = v2 * v2;
+
+                ddouble p = 0d;
+                ddouble a = Rcp(x * PI);
+
+                for (int k = 0; k < max_terms; k++) {
+                    ddouble s = ((8 * k + 1) * (8 * k + 3)) * v2;
+
+                    if (s > 1d) {
+                        return NaN;
+                    }
+
+                    ddouble dp = a * (1d - s) * RSeries.Value(4 * k);
+                    ddouble p_next = dp + p;
+
+                    if (p == p_next) {
+                        break;
+                    }
+
+                    a *= v4;
+                    p = p_next;
+                }
+
+                return p;
+            }
+
+            public static ddouble GCoef(ddouble x, int max_terms = 10) {
+                ddouble v = Rcp(x * x * PI);
+                ddouble v2 = v * v, v4 = v2 * v2;
+
+                ddouble q = 0d;
+                ddouble b = Rcp(x * x * x * PI * PI);
+
+                for (int k = 0; k < max_terms; k++) {
+                    ddouble t = ((8 * k + 3) * (8 * k + 5)) * v2;
+
+                    if (t > 1d) {
+                        return NaN;
+                    }
+
+                    ddouble dq = b * (1d - t) * RSeries.Value(4 * k + 1);
+                    ddouble q_next = dq + q;
+
+                    if (q == q_next) {
+                        break;
+                    }
+
+                    b *= v4;
+                    q = q_next;
+                }
+
+                return q;
+            }
+
             private static class RSeries {
                 private static BigInteger v;
                 private static readonly List<ddouble> table;
@@ -242,6 +346,7 @@ namespace DoubleDouble {
         private static class FresnelPade {
             public static readonly ddouble PadeApproxMin = 0.85d, PadeApproxMax = 16d;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
+            public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeFTables, PadeGTables;
 
             static FresnelPade() {
                 Dictionary<string, ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> tables =
@@ -257,6 +362,30 @@ namespace DoubleDouble {
                     tables["PadeX3p0Table"],
                     tables["PadeX3p5Table"],
                     tables["PadeX4p0Table"]
+                });
+
+                PadeFTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX4p0Table"].Select(v => (v.fc, v.fd)).ToArray())
+                });
+
+                PadeGTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX4p0Table"].Select(v => (v.gc, v.gd)).ToArray())
                 });
             }
 
@@ -287,6 +416,58 @@ namespace DoubleDouble {
                 (f, g) = (Pow2(f), Pow2(g));
 
                 return (f, g);
+            }
+
+            public static ddouble FCoef(ddouble x) {
+                ddouble v = Log2(x);
+
+                int table_index = (int)Round(Ldexp(v, 1));
+                ddouble w = v - table_index * 0.5d;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeFTables[table_index];
+
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    (ddouble c, ddouble d) = table[i];
+
+                    sc = sc * w + c;
+                    sd = sd * w + d;
+                }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+#endif
+
+                ddouble f = sc / sd;
+
+                f = Pow2(f);
+
+                return f;
+            }
+
+            public static ddouble GCoef(ddouble x) {
+                ddouble v = Log2(x);
+
+                int table_index = (int)Round(Ldexp(v, 1));
+                ddouble w = v - table_index * 0.5d;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeGTables[table_index];
+
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    (ddouble c, ddouble d) = table[i];
+
+                    sc = sc * w + c;
+                    sd = sd * w + d;
+                }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+#endif
+
+                ddouble f = sc / sd;
+
+                f = Pow2(f);
+
+                return f;
             }
         }
     }
