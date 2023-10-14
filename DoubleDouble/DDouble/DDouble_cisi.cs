@@ -253,7 +253,7 @@ namespace DoubleDouble {
                 ddouble v = Log2(x);
 
                 int table_index = int.Max(0, (int)Floor(v));
-                ddouble w = v - table_index - Point5;
+                ddouble w = v - table_index - 0.5d;
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 
                 (ddouble sfc, ddouble sfd, ddouble sgc, ddouble sgd) = table[0];

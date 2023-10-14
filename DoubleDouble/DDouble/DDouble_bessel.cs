@@ -65,16 +65,16 @@ namespace DoubleDouble {
                 if (nu > 0d) {
                     return NegativeInfinity;
                 }
-                if (nu - Floor(nu) == Point5) {
+                if (nu - Floor(nu) == 0.5d) {
                     return 0d;
                 }
-                int n = (int)(Floor(nu + Point5));
+                int n = (int)(Floor(nu + 0.5d));
                 return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
             }
 
             ddouble alpha = Round(nu) - nu;
 
-            if (nu < 0d && Abs((nu - Floor(nu)) - Point5) < 0.0625) {
+            if (nu < 0d && Abs((nu - Floor(nu)) - 0.5d) < 0.0625d) {
                 if (x <= 4d - nu) {
                     return BesselNearZero.BesselY(nu, x);
                 }
@@ -289,7 +289,7 @@ namespace DoubleDouble {
 
                     return y;
                 }
-                else if (nu < 0d && Abs((nu - Floor(nu)) - Point5) < 0.0625) {
+                else if (nu < 0d && Abs((nu - Floor(nu)) - 0.5d) < 0.0625d) {
                     ddouble y = BesselYKernel(nu, x, terms: 32);
 
                     return y;

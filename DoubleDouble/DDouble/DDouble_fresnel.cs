@@ -27,13 +27,13 @@ namespace DoubleDouble {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {
-                    return Point5;
+                    return 0.5d;
                 }
 
                 ddouble theta = Ldexp(x * x, -1);
                 ddouble cos = CosPI(theta), sin = SinPI(theta);
 
-                ddouble c = Point5 + sin * f - cos * g;
+                ddouble c = 0.5d + sin * f - cos * g;
 
                 return c;
             }
@@ -60,13 +60,13 @@ namespace DoubleDouble {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {
-                    return Point5;
+                    return 0.5d;
                 }
 
                 ddouble theta = Ldexp(x * x, -1);
                 ddouble cos = CosPI(theta), sin = SinPI(theta);
 
-                ddouble s = Point5 - cos * f - sin * g;
+                ddouble s = 0.5d - cos * f - sin * g;
 
                 return s;
             }
