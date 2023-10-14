@@ -98,6 +98,8 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Agm(a, b)|&#91;0,+inf&#41;|2||
 |ddouble.FresnelC(x)|&#40;-inf,+inf&#41;|4||
 |ddouble.FresnelS(x)|&#40;-inf,+inf&#41;|4||
+|ddouble.FresnelF(x)|&#40;-inf,+inf&#41;|4||
+|ddouble.FresnelG(x)|&#40;-inf,+inf&#41;|4||
 |ddouble.Ei(x)|&#40;-inf,+inf&#41;|4|exponential integral|
 |ddouble.Ein(x)|&#40;-inf,+inf&#41;|4|complementary exponential integral|
 |ddouble.Li(x)|&#91;0,+inf&#41;|5|logarithmic integral li(x)=ei(log(x))|
