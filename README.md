@@ -174,6 +174,8 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.ErdosBorwein|1.606695152415291763783...|Erdös Borwein constant|
 |ddouble.FeigenbaumDelta|4.669201609102990671853...|Feigenbaum constant|
 |ddouble.LemniscatePI|2.622057554292119810465...|Lemniscate constant|
+|ddouble.GlaisherA|1.282427129100622636875...|Glaisher–Kinkelin constant|
+|ddouble.CatalanG|0.915965594177219015055...|Catalan's constant|
 
 ## Sequence
 

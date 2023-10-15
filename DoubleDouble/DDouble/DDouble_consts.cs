@@ -23,6 +23,7 @@ namespace DoubleDouble {
             ErdosBorwein = (+1, 0, 0xCDA82FCF21F9121BuL, 0xF9B9629409231DE0uL),
             FeigenbaumDelta = (+1, 2, 0x956A197E30E4BA3AuL, 0x3809DA8B5C4C87EDuL),
             LemniscatePI = (+1, 1, 0xA7CFCA7CFA858373uL, 0xCC3BB5D6046CF0BDuL),
-            GlaisherA = (+1, 0, 0xA42692797EC39898uL, 0x9F6AB71A1ED3BABCuL);
+            GlaisherA = (+1, 0, 0xA42692797EC39898uL, 0x9F6AB71A1ED3BABCuL),
+            CatalanG = (+1, -1, 0xEA7CB89F409AE845uL, 0x215822E37D32D0C6uL);
     }
 }
