@@ -107,6 +107,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Ci(x)|&#91;0,+inf&#41;|4|cos integral|
 |ddouble.Shi(x)|&#40;-inf,+inf&#41;|5|hyperbolic sin integral|
 |ddouble.Chi(x)|&#91;0,+inf&#41;|5|hyperbolic cos integral|
+|ddouble.Clausen(x)|&#40;-inf,+inf&#41;|3|Clausen function of order 2, Cl_2(x)|
 |ddouble.LambertW(x)|&#91;-1/e,+inf&#41;|4||
 |ddouble.AiryAi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
 |ddouble.AiryBi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
