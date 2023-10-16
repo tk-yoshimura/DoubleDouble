@@ -1129,5 +1129,19 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(y_x2, 2 * (y - y_1m), 1e-31d);
             }
         }
+
+        [TestMethod]
+        public void ClausenLimitTest() {
+            for (ddouble x = 0.125d; x > 0; x /= 2) {
+                ddouble y = ddouble.Clausen(x, normalized: true);
+                ddouble y2 = ddouble.Clausen(x * 2, normalized: true);
+
+                Console.WriteLine($"{x},{y}");
+
+                Assert.IsTrue(ddouble.IsFinite(y));
+                Assert.IsTrue(ddouble.IsPositive(y));
+                Assert.IsTrue(y <= y2);
+            }
+        }
     }
 }
