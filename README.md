@@ -54,7 +54,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Arsinh(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Arcosh(x)|&#91;1,+inf&#41;|2||
 |ddouble.Artanh(x)|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|
-|ddouble.Sinc(x, normalized)|&#40;-inf,+inf&#41;|2||
+|ddouble.Sinc(x, normalized)|&#40;-inf,+inf&#41;|2|normalized: x -> &pi;x|
 |ddouble.Sinhc(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.Gamma(x)|&#40;-inf,+inf&#41;|2|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |
 |ddouble.LogGamma(x)|&#40;0,+inf&#41;|4||
@@ -107,7 +107,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Ci(x)|&#91;0,+inf&#41;|4|cos integral|
 |ddouble.Shi(x)|&#40;-inf,+inf&#41;|5|hyperbolic sin integral|
 |ddouble.Chi(x)|&#91;0,+inf&#41;|5|hyperbolic cos integral|
-|ddouble.Clausen(x)|&#40;-inf,+inf&#41;|3|Clausen function of order 2, Cl_2(x)|
+|ddouble.Clausen(x, normalized)|&#40;-inf,+inf&#41;|3|Clausen function of order 2, Cl_2(x), normalized: x -> &pi;x|
 |ddouble.LambertW(x)|&#91;-1/e,+inf&#41;|4||
 |ddouble.AiryAi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
 |ddouble.AiryBi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
