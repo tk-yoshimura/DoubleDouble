@@ -35,6 +35,13 @@
             }
         }
 
+        internal static byte[] BarnesGTable {
+            get {
+                object obj = ResourceManager.GetObject("BarnesGTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] BernoulliTable {
             get {
                 object obj = ResourceManager.GetObject("BernoulliTable", resourceCulture);

@@ -5,6 +5,10 @@
 
             Directory.CreateDirectory(dirpath_root);
 
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(BarnesGTable) + ".bin", FileMode.Create))) {
+                BarnesGTable.Pack(sw);
+            }
+
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(BernoulliTable) + ".bin", FileMode.Create))) {
                 BernoulliTable.Pack(sw);
             }
