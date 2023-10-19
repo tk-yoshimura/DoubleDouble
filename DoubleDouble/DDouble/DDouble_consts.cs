@@ -25,6 +25,7 @@ namespace DoubleDouble {
             LemniscatePI = (+1, 1, 0xA7CFCA7CFA858373uL, 0xCC3BB5D6046CF0BDuL),
             GlaisherA = (+1, 0, 0xA42692797EC39898uL, 0x9F6AB71A1ED3BABCuL),
             CatalanG = (+1, -1, 0xEA7CB89F409AE845uL, 0x215822E37D32D0C6uL), 
-            FransenRobinson = (+1, 1, 0xB3B281F50C729CB8uL, 0x7D0615AD23F4DC47uL);
+            FransenRobinson = (+1, 1, 0xB3B281F50C729CB8uL, 0x7D0615AD23F4DC47uL),
+            KhinchinK = (+1, 1, 0xABDE7211E3686BBCuL, 0xBF7CF8E5199FE70CuL);
     }
 }
