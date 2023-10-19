@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.IncompleteGamma;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -11,10 +12,10 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (nu > Consts.IncompleteGamma.MaxNu) {
+            if (nu > MaxNu) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
-                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNu} is not supported."
+                    $"{nameof(nu)} greater than {MaxNu} is not supported."
                 );
             }
 
@@ -22,7 +23,7 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
+            if (x < (double)nu + ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Pow2(nu * Log2(x) - x * LbE) / f;
 
@@ -44,10 +45,10 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (nu > Consts.IncompleteGamma.MaxNu) {
+            if (nu > MaxNu) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
-                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNu} is not supported."
+                    $"{nameof(nu)} greater than {MaxNu} is not supported."
                 );
             }
 
@@ -55,11 +56,11 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (nu < Consts.IncompleteGamma.Eps) {
+            if (nu < Eps) {
                 return -Ei(-x);
             }
 
-            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
+            if (x < (double)nu + ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Gamma(nu) - Pow2(nu * Log2(x) - x * LbE) / f;
 
@@ -81,10 +82,10 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+            if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGammaRegularized function, " +
-                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                    $"{nameof(nu)} greater than {MaxNuRegularized} is not supported."
                 );
             }
 
@@ -92,11 +93,11 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (nu < Consts.IncompleteGamma.MinNu) {
+            if (nu < MinNu) {
                 return IsZero(x) ? 0d : 1d;
             }
 
-            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
+            if (x < (double)nu + ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
                 y = Min(y, 1d);
@@ -120,10 +121,10 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(x));
             }
 
-            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+            if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGammaRegularized function, " +
-                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                    $"{nameof(nu)} greater than {MaxNuRegularized} is not supported."
                 );
             }
 
@@ -131,11 +132,11 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (nu < Consts.IncompleteGamma.MinNu) {
+            if (nu < MinNu) {
                 return IsZero(x) ? 1d : 0d;
             }
 
-            if (x < (double)nu + Consts.IncompleteGamma.ULBias) {
+            if (x < (double)nu + ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = 1d - Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
                 y = Max(y, 0d);
@@ -173,7 +174,7 @@ namespace DoubleDouble {
                 ddouble nu2i = nu, xmnu4i = xmnu + 1d;
 
                 bool convergenced = false;
-                for (int i = 1; i <= Consts.IncompleteGamma.CFracMaxIter; i++) {
+                for (int i = 1; i <= CFracMaxIter; i++) {
                     nu2i -= 2d; xmnu4i += 4d;
 
                     ddouble a1 = (2 * i) * nu2i, a2 = (2 * i + 1) * (nu2i - 1d);
@@ -223,7 +224,7 @@ namespace DoubleDouble {
                 ddouble ix = 0d, nu2i = nu;
 
                 bool convergenced = false;
-                for (int i = 1; i <= Consts.IncompleteGamma.CFracMaxIter; i++) {
+                for (int i = 1; i <= CFracMaxIter; i++) {
                     ix += x; nu2i += 2d;
 
                     ddouble a1 = ix, a2 = -nux - ix;

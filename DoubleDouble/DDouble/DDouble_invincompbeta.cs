@@ -1,15 +1,17 @@
-﻿namespace DoubleDouble {
+﻿using static DoubleDouble.ddouble.Consts.IncompleteBeta;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseIncompleteBeta(ddouble x, ddouble a, ddouble b) {
             if (x < 0d || !(x <= 1d) || !(a > 0d) || !(b > 0d)) {
                 return NaN;
             }
 
-            if (a + b - Max(a, b) > Consts.IncompleteBeta.MaxABRegularized) {
+            if (a + b - Max(a, b) > MaxABRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteBetaRegularized function, " +
                     $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)}) greater than" +
-                    $" {Consts.IncompleteBeta.MaxABRegularized} is not supported."
+                    $" {MaxABRegularized} is not supported."
                 );
             }
 

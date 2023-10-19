@@ -1,14 +1,16 @@
-﻿namespace DoubleDouble {
+﻿using static DoubleDouble.ddouble.Consts.IncompleteGamma;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseLowerIncompleteGamma(ddouble nu, ddouble x) {
             if (nu < 0d) {
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
 
-            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+            if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
-                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                    $"{nameof(nu)} greater than {MaxNuRegularized} is not supported."
                 );
             }
 
@@ -20,7 +22,7 @@
                 return PositiveInfinity;
             }
 
-            if (x == 0d || nu < Consts.IncompleteGamma.MinNu) {
+            if (x == 0d || nu < MinNu) {
                 return 0d;
             }
 
@@ -32,10 +34,10 @@
                 throw new ArgumentOutOfRangeException(nameof(nu));
             }
 
-            if (nu > Consts.IncompleteGamma.MaxNuRegularized) {
+            if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
-                    $"{nameof(nu)} greater than {Consts.IncompleteGamma.MaxNuRegularized} is not supported."
+                    $"{nameof(nu)} greater than {MaxNuRegularized} is not supported."
                 );
             }
 
@@ -47,7 +49,7 @@
                 return PositiveInfinity;
             }
 
-            if (x == 1d || nu < Consts.IncompleteGamma.MinNu) {
+            if (x == 1d || nu < MinNu) {
                 return 0d;
             }
 
@@ -67,7 +69,7 @@
                 ddouble x = (nu > 1d) ? Min(p5, Exp((Log(nu) + lnp_lower + lngamma) / nu)) : Pow(p, 1d / nu);
 
                 for (int i = 0, convergence_times = 0; i < RootFindMaxIter && convergence_times < 2; i++) {
-                    bool lower = x < (double)nu + Consts.IncompleteGamma.ULBias;
+                    bool lower = x < (double)nu + ULBias;
 
                     ddouble f = lower
                         ? LowerIncompleteGammaCFrac.Value(nu, x)

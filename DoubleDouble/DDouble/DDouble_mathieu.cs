@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Mathieu;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -9,9 +10,9 @@ namespace DoubleDouble {
             if (n < 0) {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
-            if (n > Mathieu.MaxN) {
+            if (n > MathieuUtil.MaxN) {
                 throw new ArgumentException(
-                    $"In the calculation of the MathieuA function, n greater than {Mathieu.MaxN} is not supported."
+                    $"In the calculation of the MathieuA function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }
 
@@ -26,13 +27,13 @@ namespace DoubleDouble {
                 return NegativeInfinity;
             }
 
-            if (q < Mathieu.NearZeroLimit(n)) {
-                ddouble m = Mathieu.MPade(n, q), d = Mathieu.DPade(n, q);
+            if (q < MathieuUtil.NearZeroLimit(n)) {
+                ddouble m = MathieuUtil.MPade(n, q), d = MathieuUtil.DPade(n, q);
 
                 return m + d;
             }
             else {
-                return Mathieu.APade(n, q);
+                return MathieuUtil.APade(n, q);
             }
         }
 
@@ -43,9 +44,9 @@ namespace DoubleDouble {
             if (n == 0) {
                 return MathieuA(n, q);
             }
-            if (n > Mathieu.MaxN) {
+            if (n > MathieuUtil.MaxN) {
                 throw new ArgumentException(
-                    $"In the calculation of the MathieuB function, n greater than {Mathieu.MaxN} is not supported."
+                    $"In the calculation of the MathieuB function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }
 
@@ -60,13 +61,13 @@ namespace DoubleDouble {
                 return NegativeInfinity;
             }
 
-            if (q <= Mathieu.NearZeroLimit(n)) {
-                ddouble m = Mathieu.MPade(n, q), d = Mathieu.DPade(n, q);
+            if (q <= MathieuUtil.NearZeroLimit(n)) {
+                ddouble m = MathieuUtil.MPade(n, q), d = MathieuUtil.DPade(n, q);
 
                 return m - d;
             }
             else {
-                return Mathieu.BPade(n, q);
+                return MathieuUtil.BPade(n, q);
             }
         }
 
@@ -74,13 +75,13 @@ namespace DoubleDouble {
             if (n < 0) {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
-            if (n > Mathieu.MaxN) {
+            if (n > MathieuUtil.MaxN) {
                 throw new ArgumentException(
-                    $"In the calculation of the MathieuC function, n greater than {Mathieu.MaxN} is not supported."
+                    $"In the calculation of the MathieuC function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }
 
-            ReadOnlyCollection<ddouble> coef = Mathieu.CCoef(n, q);
+            ReadOnlyCollection<ddouble> coef = MathieuUtil.CCoef(n, q);
 
             if (coef.Count < 1) {
                 return NaN;
@@ -107,13 +108,13 @@ namespace DoubleDouble {
             if (n < 1) {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
-            if (n > Mathieu.MaxN) {
+            if (n > MathieuUtil.MaxN) {
                 throw new ArgumentException(
-                    $"In the calculation of the MathieuS function, n greater than {Mathieu.MaxN} is not supported."
+                    $"In the calculation of the MathieuS function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }
 
-            ReadOnlyCollection<ddouble> coef = Mathieu.SCoef(n, q);
+            ReadOnlyCollection<ddouble> coef = MathieuUtil.SCoef(n, q);
 
             if (coef.Count < 1) {
                 return NaN;
@@ -135,7 +136,7 @@ namespace DoubleDouble {
             return s;
         }
 
-        internal static class Mathieu {
+        internal static class MathieuUtil {
             public const int MaxN = 16;
             public static readonly double Eps = double.ScaleB(1, -50);
             public const double NZThreshold = 0.25;
@@ -150,7 +151,7 @@ namespace DoubleDouble {
 
                 ddouble u = Square((n <= 1) ? q : q / (n * n));
 
-                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = Consts.Mathieu.PadeMTables[n];
+                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = PadeMTables[n];
                 (ddouble u0, ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef) = PadeMDParam(u, pade_table);
 
                 ddouble v = u - u0;
@@ -187,7 +188,7 @@ namespace DoubleDouble {
 
                 ddouble u = Square((n <= 1) ? q : q / (n * n));
 
-                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = Consts.Mathieu.PadeDTables[n];
+                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = PadeDTables[n];
                 (ddouble u0, ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef) = PadeMDParam(u, pade_table);
 
                 ddouble v = u - u0;
@@ -236,7 +237,7 @@ namespace DoubleDouble {
                 int s = 2 * n + 1;
                 ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
 
-                ReadOnlyCollection<ddouble> limit_coef = Consts.Mathieu.LimitTable[s];
+                ReadOnlyCollection<ddouble> limit_coef = LimitTable[s];
 
                 ddouble asymp = limit_coef[0];
                 for (int i = 1; i < limit_coef.Count; i++) {
@@ -244,7 +245,7 @@ namespace DoubleDouble {
                 }
                 asymp = 2 * (s * h - q) - asymp;
 
-                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = Consts.Mathieu.PadeATables[n];
+                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = PadeATables[n];
                 (ddouble u0, ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef) = PadeABParam(u, pade_table);
 
                 ddouble v = u - u0;
@@ -279,7 +280,7 @@ namespace DoubleDouble {
                 int s = 2 * n - 1;
                 ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
 
-                ReadOnlyCollection<ddouble> limit_coef = Consts.Mathieu.LimitTable[s];
+                ReadOnlyCollection<ddouble> limit_coef = LimitTable[s];
 
                 ddouble asymp = limit_coef[0];
                 for (int i = 1; i < limit_coef.Count; i++) {
@@ -287,7 +288,7 @@ namespace DoubleDouble {
                 }
                 asymp = 2 * (s * h - q) - asymp;
 
-                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = Consts.Mathieu.PadeBTables[n];
+                ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = PadeBTables[n];
                 (ddouble u0, ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef) = PadeABParam(u, pade_table);
 
                 ddouble v = u - u0;
@@ -415,7 +416,7 @@ namespace DoubleDouble {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
 
-                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(MathieuUtil.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -528,7 +529,7 @@ namespace DoubleDouble {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
 
-                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(MathieuUtil.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -589,7 +590,7 @@ namespace DoubleDouble {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
 
-                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(MathieuUtil.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -697,7 +698,7 @@ namespace DoubleDouble {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
 
-                for (int m = int.Min(Mathieu.MaxN / 2, cs.Length - 1); m >= 2; m--) {
+                for (int m = int.Min(MathieuUtil.MaxN / 2, cs.Length - 1); m >= 2; m--) {
                     if (m == 2 || Abs(cs[m]) > Abs(cs[m - 1])) {
                         ddouble[] scs;
                         ddouble rm, d;
@@ -794,7 +795,7 @@ namespace DoubleDouble {
 
             private static ddouble[] ScaleAndTruncateCoef(ddouble[] cs, int m) {
                 for (int j = m - 1; j < cs.Length; j++) {
-                    if (double.ILogB(cs[j - 1].Hi) < -128 && double.ILogB(cs[j].Hi) < -128 && m >= Mathieu.MaxN * 2) {
+                    if (double.ILogB(cs[j - 1].Hi) < -128 && double.ILogB(cs[j].Hi) < -128 && m >= MathieuUtil.MaxN * 2) {
                         cs = cs[..j];
                         cs[^1] = 0d;
                         break;
@@ -807,22 +808,22 @@ namespace DoubleDouble {
             }
 
             internal static (ddouble zerosft, ReadOnlyCollection<ddouble> arms) AZeroShift(int n, ddouble q) {
-                if (n < 0 || n > Mathieu.MaxN) {
+                if (n < 0 || n > MathieuUtil.MaxN) {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
-                if (q > Mathieu.NZThreshold) {
+                if (q > MathieuUtil.NZThreshold) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
 
                 if (n == 0) {
                     ddouble a = MathieuA(n, q);
-                    ddouble[] arms = (new ddouble[(Mathieu.MaxN + 2) / 2])
+                    ddouble[] arms = (new ddouble[(MathieuUtil.MaxN + 2) / 2])
                         .Select((_, m) => a - checked((2 * m) * (2 * m))).ToArray();
 
                     return (a, Array.AsReadOnly(arms));
                 }
                 else {
-                    ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef = Consts.Mathieu.PadeAzTables[n];
+                    ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef = PadeAzTables[n];
 
                     (ddouble sc, ddouble sd) = pade_coef[0];
                     for (int i = 1; i < pade_coef.Count; i++) {
@@ -837,7 +838,7 @@ namespace DoubleDouble {
 #endif
                     ddouble a = q * q * sc / sd;
                     int s = ((n & 1) == 0) ? 0 : 1;
-                    ddouble[] arms = (new ddouble[(Mathieu.MaxN + 2) / 2])
+                    ddouble[] arms = (new ddouble[(MathieuUtil.MaxN + 2) / 2])
                         .Select((_, m) => a - checked((2 * m + s) * (2 * m + s) - (n * n))).ToArray();
 
                     if (n == 1) {
@@ -859,14 +860,14 @@ namespace DoubleDouble {
             }
 
             internal static (ddouble zerosft, ReadOnlyCollection<ddouble> brms) BZeroShift(int n, ddouble q) {
-                if (n < 1 || n > Mathieu.MaxN) {
+                if (n < 1 || n > MathieuUtil.MaxN) {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
-                if (q > Mathieu.NZThreshold) {
+                if (q > MathieuUtil.NZThreshold) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
 
-                ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef = Consts.Mathieu.PadeBzTables[n];
+                ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef = PadeBzTables[n];
 
                 (ddouble sc, ddouble sd) = pade_coef[0];
                 for (int i = 1; i < pade_coef.Count; i++) {
@@ -881,7 +882,7 @@ namespace DoubleDouble {
 #endif
                 ddouble b = q * q * sc / sd;
                 int s = ((n & 1) == 0) ? 2 : 1;
-                ddouble[] brms = (new ddouble[(Mathieu.MaxN + 2) / 2])
+                ddouble[] brms = (new ddouble[(MathieuUtil.MaxN + 2) / 2])
                     .Select((_, m) => b - checked((2 * m + s) * (2 * m + s) - (n * n))).ToArray();
 
                 if (n == 1) {
@@ -919,7 +920,7 @@ namespace DoubleDouble {
 
                         List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = new();
 
-                        for (int n = 0; n <= ddouble.Mathieu.MaxN; n++) {
+                        for (int n = 0; n <= MathieuUtil.MaxN; n++) {
                             List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
 
                             for (int i = 0; i < 12; i++) {
@@ -940,7 +941,7 @@ namespace DoubleDouble {
                             Array.AsReadOnly(Enumerable.Empty<ReadOnlyCollection<(ddouble c, ddouble d)>>().ToArray())
                         };
 
-                        for (int n = 1; n <= ddouble.Mathieu.MaxN; n++) {
+                        for (int n = 1; n <= MathieuUtil.MaxN; n++) {
                             List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
 
                             for (int i = 0; i < 12; i++) {
@@ -959,7 +960,7 @@ namespace DoubleDouble {
 
                         List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = new();
 
-                        for (int n = 0; n <= ddouble.Mathieu.MaxN; n++) {
+                        for (int n = 0; n <= MathieuUtil.MaxN; n++) {
                             List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
 
                             for (int i = 0; i < 3; i++) {
@@ -980,7 +981,7 @@ namespace DoubleDouble {
                             Array.AsReadOnly(Enumerable.Empty<ReadOnlyCollection<(ddouble c, ddouble d)>>().ToArray())
                         };
 
-                        for (int n = 1; n <= ddouble.Mathieu.MaxN; n++) {
+                        for (int n = 1; n <= MathieuUtil.MaxN; n++) {
                             List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
 
                             for (int i = 0; i < 3; i++) {
@@ -1008,7 +1009,7 @@ namespace DoubleDouble {
                             az_table.Add(tables[$"PadeAz{n}Table"]);
                             bz_table.Add(tables[$"PadeBz{n}Table"]);
                         }
-                        for (int n = 13; n <= ddouble.Mathieu.MaxN; n++) {
+                        for (int n = 13; n <= MathieuUtil.MaxN; n++) {
                             az_table.Add(tables[$"PadeABz{n}Table"]);
                             bz_table.Add(tables[$"PadeABz{n}Table"]);
                         }
@@ -1020,14 +1021,14 @@ namespace DoubleDouble {
                     {
                         Dictionary<int, ReadOnlyCollection<ddouble>> limit_table = new();
 
-                        for (long s = 1; s <= ddouble.Mathieu.MaxN * 2 + 1; s += 2) {
+                        for (long s = 1; s <= MathieuUtil.MaxN * 2 + 1; s += 2) {
                             ReadOnlyCollection<ddouble> coef = new(Array.AsReadOnly(new ddouble[] {
-                                ddouble.Ldexp(1 + s * s, -3),
-                                ddouble.Ldexp(s * (3 + s * s), -7),
-                                ddouble.Ldexp(9 + s * s * (34 + s * s * 5), -12),
-                                ddouble.Ldexp(s * (405 + s * s * (410 + s * s * 33)), -17),
-                                ddouble.Ldexp(486 + s * s * (2943 + s * s * (1260 + s * s * 63)), -20),
-                                ddouble.Ldexp(checked(s * (41607 + s * s * (69001 + s * s * (15617 + s * s * 527)))), -25),
+                                Ldexp(1 + s * s, -3),
+                                Ldexp(s * (3 + s * s), -7),
+                                Ldexp(9 + s * s * (34 + s * s * 5), -12),
+                                Ldexp(s * (405 + s * s * (410 + s * s * 33)), -17),
+                                Ldexp(486 + s * s * (2943 + s * s * (1260 + s * s * 63)), -20),
+                                Ldexp(checked(s * (41607 + s * s * (69001 + s * s * (15617 + s * s * 527)))), -25),
                             }.Reverse().ToArray()));
 
                             limit_table.Add((int)s, coef);

@@ -1,6 +1,8 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Erf;
+using static DoubleDouble.ddouble.Consts.Erfc;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -100,7 +102,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erf.PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -127,7 +129,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.GtP5PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = GtP5PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -154,7 +156,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt1PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt1PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -181,7 +183,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt2PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt2PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -208,7 +210,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt4PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt4PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -235,7 +237,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt8PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt8PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -262,7 +264,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt16PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt16PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -296,7 +298,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.GtP5PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = GtP5PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -323,7 +325,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt1PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt1PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -350,7 +352,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt2PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt2PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -377,7 +379,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt4PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt4PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -404,7 +406,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfc.Gt8PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt8PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -441,7 +443,7 @@ namespace DoubleDouble {
                     f = w + k * (c0 + c1) / (d0 + d1);
                 }
 
-                ddouble y = x * Consts.Erf.RcpSqrtPI / f;
+                ddouble y = x * RcpSqrtPI / f;
 
                 return IsNaN(y) ? PlusZero : y;
             }

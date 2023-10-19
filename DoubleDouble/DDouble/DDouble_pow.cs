@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using static DoubleDouble.ddouble.Consts.Pow;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -50,12 +51,12 @@ namespace DoubleDouble {
             int exp = (int)Floor(x);
             ddouble s = x - exp;
 
-            int index = (int)Floor(s * (Consts.Pow.Pow2TableN * Consts.Pow.Pow2TableN));
-            ddouble v = s - Consts.Pow.Pow2TableDx * index;
-            ddouble r0 = Consts.Pow.Pow2Table[index / Consts.Pow.Pow2TableN];
-            ddouble r1 = Consts.Pow.Pow2Table[index % Consts.Pow.Pow2TableN + Consts.Pow.Pow2TableN + 1];
+            int index = (int)Floor(s * (Pow2TableN * Pow2TableN));
+            ddouble v = s - Pow2TableDx * index;
+            ddouble r0 = Pow2Table[index / Pow2TableN];
+            ddouble r1 = Pow2Table[index % Pow2TableN + Pow2TableN + 1];
 
-            ddouble w = 1d + v * (Consts.Pow.Pow2C1 + v * (Consts.Pow.Pow2C2 + v * (Consts.Pow.Pow2C3 + v * Consts.Pow.Pow2C4)));
+            ddouble w = 1d + v * (Pow2C1 + v * (Pow2C2 + v * (Pow2C3 + v * Pow2C4)));
 
             ddouble y = Ldexp(r0 * r1 * w, exp);
 
@@ -137,7 +138,7 @@ namespace DoubleDouble {
             int n = (int)Truncate(x);
             ddouble f = x - n;
 
-            ddouble pow10n = (n >= 0) ? Consts.Pow.Pow10NTable[n] : (1d / Consts.Pow.Pow10NTable[-n]);
+            ddouble pow10n = (n >= 0) ? Pow10NTable[n] : (1d / Pow10NTable[-n]);
 
             ddouble z = pow10n * Pow2(f * Lb10);
 
@@ -159,7 +160,7 @@ namespace DoubleDouble {
             int n = (int)Truncate(x);
             ddouble f = x - n;
 
-            ddouble expn = (n >= 0) ? Consts.Pow.ExpNTable[n] : (1d / Consts.Pow.ExpNTable[-n]);
+            ddouble expn = (n >= 0) ? ExpNTable[n] : (1d / ExpNTable[-n]);
 
             ddouble z = expn * Pow2(f * LbE);
 

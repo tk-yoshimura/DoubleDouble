@@ -4538,10 +4538,10 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             for (int n = 0; n <= 16; n++) {
-                ddouble v0 = ddouble.MathieuC(n, ddouble.Mathieu.Eps, 1);
-                ddouble v1 = ddouble.MathieuC(n, ddouble.BitDecrement(ddouble.Mathieu.Eps), 1);
-                ddouble v2 = ddouble.MathieuC(n, ddouble.BitIncrement(ddouble.Mathieu.Eps), 1);
-                ddouble v3 = ddouble.MathieuC(n, ddouble.Mathieu.Eps * 2, 1);
+                ddouble v0 = ddouble.MathieuC(n, ddouble.MathieuUtil.Eps, 1);
+                ddouble v1 = ddouble.MathieuC(n, ddouble.BitDecrement(ddouble.MathieuUtil.Eps), 1);
+                ddouble v2 = ddouble.MathieuC(n, ddouble.BitIncrement(ddouble.MathieuUtil.Eps), 1);
+                ddouble v3 = ddouble.MathieuC(n, ddouble.MathieuUtil.Eps * 2, 1);
 
                 Assert.IsTrue(ddouble.IsFinite(v0));
                 Assert.IsTrue(ddouble.IsFinite(v1));
@@ -5281,10 +5281,10 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             for (int n = 1; n <= 16; n++) {
-                ddouble v0 = ddouble.MathieuS(n, ddouble.Mathieu.Eps, 1);
-                ddouble v1 = ddouble.MathieuS(n, ddouble.BitDecrement(ddouble.Mathieu.Eps), 1);
-                ddouble v2 = ddouble.MathieuS(n, ddouble.BitIncrement(ddouble.Mathieu.Eps), 1);
-                ddouble v3 = ddouble.MathieuS(n, ddouble.Mathieu.Eps * 2, 1);
+                ddouble v0 = ddouble.MathieuS(n, ddouble.MathieuUtil.Eps, 1);
+                ddouble v1 = ddouble.MathieuS(n, ddouble.BitDecrement(ddouble.MathieuUtil.Eps), 1);
+                ddouble v2 = ddouble.MathieuS(n, ddouble.BitIncrement(ddouble.MathieuUtil.Eps), 1);
+                ddouble v3 = ddouble.MathieuS(n, ddouble.MathieuUtil.Eps * 2, 1);
 
                 Assert.IsTrue(ddouble.IsFinite(v0));
                 Assert.IsTrue(ddouble.IsFinite(v1));

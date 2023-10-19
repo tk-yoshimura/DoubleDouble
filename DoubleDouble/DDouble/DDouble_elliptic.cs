@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.SinCos;
 
 namespace DoubleDouble {
 
@@ -10,7 +11,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return Consts.SinCos.PIHalf;
+                return PIHalf;
             }
 
             if (m == 1d) {
@@ -35,7 +36,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return Consts.SinCos.PIHalf;
+                return PIHalf;
             }
 
             if (m == 1d) {
@@ -133,7 +134,7 @@ namespace DoubleDouble {
                         x = x_next;
                     }
 
-                    y = x * Consts.SinCos.PIHalf;
+                    y = x * PIHalf;
                 }
 
                 return y;

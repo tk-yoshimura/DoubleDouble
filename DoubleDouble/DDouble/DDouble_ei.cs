@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Ei;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -13,7 +14,7 @@ namespace DoubleDouble {
                 return IsPositive(x) ? PositiveInfinity : 0d;
             }
 
-            if (x <= Consts.Ei.PadeApproxMin || x >= Consts.Ei.PadeApproxMax) {
+            if (x <= PadeApproxMin || x >= PadeApproxMax) {
                 ddouble g = EiPade.Coef(x) + x;
                 ddouble y = Exp(x) / g;
 
@@ -40,7 +41,7 @@ namespace DoubleDouble {
                 return IsPositive(x) ? PositiveInfinity : NegativeInfinity;
             }
 
-            if (x <= Consts.Ei.PadeApproxMin || x >= Consts.Ei.PadeApproxMax) {
+            if (x <= PadeApproxMin || x >= PadeApproxMax) {
                 ddouble g = EiPade.Coef(-x) - x;
                 ddouble ei = Exp(-x) / g;
 
@@ -191,8 +192,8 @@ namespace DoubleDouble {
                 ddouble v = 1d / x;
 
                 int table_index = SegmentIndex(v);
-                ddouble w = v - Consts.Ei.PadeCenterTable[table_index];
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Ei.PadeTables[table_index];
+                ddouble w = v - PadeCenterTable[table_index];
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[table_index];
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -212,18 +213,18 @@ namespace DoubleDouble {
             }
 
             private static int SegmentIndex(ddouble x) {
-                if (Consts.Ei.PadeThresholdTable[0] >= x) {
+                if (PadeThresholdTable[0] >= x) {
                     return 0;
                 }
-                if (Consts.Ei.PadeThresholdTable[^1] <= x) {
-                    return Consts.Ei.PadeThresholdTable.Count - 1;
+                if (PadeThresholdTable[^1] <= x) {
+                    return PadeThresholdTable.Count - 1;
                 }
 
                 int index = 0;
 
-                for (int h = int.Max(1, Consts.Ei.PadeThresholdTable.Count / 2); h >= 1; h /= 2) {
-                    for (int i = index; i < Consts.Ei.PadeThresholdTable.Count - h; i += h) {
-                        if (Consts.Ei.PadeThresholdTable[i + h] > x) {
+                for (int h = int.Max(1, PadeThresholdTable.Count / 2); h >= 1; h /= 2) {
+                    for (int i = index; i < PadeThresholdTable.Count - h; i += h) {
+                        if (PadeThresholdTable[i + h] > x) {
                             index = i;
                             break;
                         }

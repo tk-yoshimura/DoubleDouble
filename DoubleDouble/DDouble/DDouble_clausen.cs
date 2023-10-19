@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Clausen;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -53,15 +54,15 @@ namespace DoubleDouble {
 #endif
 
                 ddouble x2 = x * x;
-                ddouble c = -Log(x * Consts.Clausen.PIDivE * (1d - Ldexp(x2, -2)));
+                ddouble c = -Log(x * PIDivE * (1d - Ldexp(x2, -2)));
 
                 if (!IsFinite(c)) {
                     return 0d;
                 }
 
-                ddouble s = Consts.Clausen.NearZeroTable[0];
-                for (int i = 1; i < Consts.Clausen.NearZeroTable.Count; i++) {
-                    s = s * x2 + Consts.Clausen.NearZeroTable[i];
+                ddouble s = NearZeroTable[0];
+                for (int i = 1; i < NearZeroTable.Count; i++) {
+                    s = s * x2 + NearZeroTable[i];
                 }
                 s *= x2;
 
@@ -84,7 +85,7 @@ namespace DoubleDouble {
                 int n = (int)Floor(Ldexp(x, 2));
                 ddouble v = x - Ldexp(n, -2);
 
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Clausen.PadeTables[n - 1];
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[n - 1];
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {

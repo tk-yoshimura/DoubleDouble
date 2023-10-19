@@ -102,13 +102,13 @@ namespace DoubleDouble {
 
         private static ddouble FromIrregularString(string str) {
             if (str == double.NaN.ToString() || str.ToLower() == "nan") {
-                return ddouble.NaN;
+                return NaN;
             }
             if (str == double.PositiveInfinity.ToString() || str.ToLower() == "inf" || str.ToLower() == "+inf") {
-                return ddouble.PositiveInfinity;
+                return PositiveInfinity;
             }
             if (str == double.NegativeInfinity.ToString() || str.ToLower() == "-inf") {
-                return ddouble.NegativeInfinity;
+                return NegativeInfinity;
             }
 
             throw new FormatException($"Invalid numeric string. : {str}");

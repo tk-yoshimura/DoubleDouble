@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Log;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -15,8 +16,8 @@ namespace DoubleDouble {
 
             (int n, ddouble v) = Frexp(x);
 
-            int index = (int)Floor((v - 1d) * Consts.Log.Log2TableN);
-            ddouble v_offset = 1d + Consts.Log.Log2TableDx * index;
+            int index = (int)Floor((v - 1d) * Log2TableN);
+            ddouble v_offset = 1d + Log2TableDx * index;
 
             ddouble u = v / v_offset;
 
@@ -25,7 +26,7 @@ namespace DoubleDouble {
 
             ddouble w = (u - 1d) * sc / (sd * Ln2);
 
-            ddouble y = n + Consts.Log.Log2Table[index] + w;
+            ddouble y = n + Log2Table[index] + w;
 
             return y;
         }
@@ -154,7 +155,7 @@ namespace DoubleDouble {
                         + x
                         )))))))))))))))))))))));
 
-                    y *= ddouble.LbE;
+                    y *= LbE;
 
                     return y;
                 }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.SinCos;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -79,12 +80,12 @@ namespace DoubleDouble {
 
             ddouble s = x - Floor(x);
 
-            int index = (int)Round(s * Consts.SinCos.SinPIHalfTableN);
-            ddouble v = s - Consts.SinCos.SinPIHalfTableDx * index;
-            ddouble sna = Consts.SinCos.SinPIHalfTable[index];
-            ddouble cna = Consts.SinCos.SinPIHalfTable[Consts.SinCos.SinPIHalfTableN - index];
+            int index = (int)Round(s * SinPIHalfTableN);
+            ddouble v = s - SinPIHalfTableDx * index;
+            ddouble sna = SinPIHalfTable[index];
+            ddouble cna = SinPIHalfTable[SinPIHalfTableN - index];
 
-            ddouble u = v * Consts.SinCos.PIHalf, u2 = u * u;
+            ddouble u = v * PIHalf, u2 = u * u;
 
             ddouble ssc = 166320d + u2 * (-22260d + u2 * 551d);
             ddouble ssd = 166320d + u2 * (5460d + u2 * 75d);

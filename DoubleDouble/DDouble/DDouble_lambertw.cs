@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.LambertW;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -65,7 +66,7 @@ namespace DoubleDouble {
                 ddouble v = Sqrt(Ldexp(x * E + 1d, 1));
 
                 if (v >= 1e-8d) {
-                    ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LambertW.NearSingularPadeTable;
+                    ReadOnlyCollection<(ddouble c, ddouble d)> table = NearSingularPadeTable;
 
                     (ddouble sc, ddouble sd) = table[0];
                     for (int i = 1; i < table.Count; i++) {

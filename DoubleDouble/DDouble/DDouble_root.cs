@@ -59,7 +59,7 @@
                 if (IsNegative(x) || IsNaN(x)) {
                     return NaN;
                 }
-                if (ddouble.IsZero(x)) {
+                if (IsZero(x)) {
                     return 0d;
                 }
                 if (IsInfinity(x)) {

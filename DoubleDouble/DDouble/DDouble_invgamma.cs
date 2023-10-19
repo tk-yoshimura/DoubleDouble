@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.InverseGamma;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -13,9 +14,9 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            ddouble u = ddouble.Log2(x);
+            ddouble u = Log2(x);
 
-            foreach ((double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)> table) in Consts.InverseGamma.PadeTables) {
+            foreach ((double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)> table) in PadeTables) {
                 if (u >= umax) {
                     continue;
                 }
@@ -42,7 +43,7 @@ namespace DoubleDouble {
 
                 ddouble g = Gamma(y);
 
-                if (x != g && ddouble.IsFinite(g)) {
+                if (x != g && IsFinite(g)) {
                     ddouble psi = Digamma(y);
                     ddouble delta = (x / g - 1d) / psi;
 

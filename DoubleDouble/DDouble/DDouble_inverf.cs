@@ -1,6 +1,8 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.InverseErf;
+using static DoubleDouble.ddouble.Consts.InverseErfc;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -68,7 +70,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<ddouble> table = Consts.InverseErf.CoefTable;
+                ReadOnlyCollection<ddouble> table = CoefTable;
 
                 ddouble s = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -90,7 +92,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow1PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow1PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -117,7 +119,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow4PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow4PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -144,7 +146,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow16PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow16PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -171,7 +173,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow64PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow64PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -198,7 +200,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.InverseErfc.LtRcpBinpow256PadeTable;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow256PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {

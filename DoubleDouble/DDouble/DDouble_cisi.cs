@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.SinCos;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -55,12 +56,12 @@ namespace DoubleDouble {
                     (f, g) = CiSiLimit.Coef(x);
                 }
                 else {
-                    return limit_zero ? 0d : Consts.SinCos.PIHalf;
+                    return limit_zero ? 0d : PIHalf;
                 }
 
                 ddouble cos = Cos(x), sin = Sin(x);
 
-                ddouble s = (limit_zero ? 0d : Consts.SinCos.PIHalf) - cos * f - sin * g;
+                ddouble s = (limit_zero ? 0d : PIHalf) - cos * f - sin * g;
 
                 return s;
             }
@@ -124,12 +125,12 @@ namespace DoubleDouble {
 
             public static ddouble Si(ddouble x, bool limit_zero, int max_terms = 7) {
                 if (IsZero(x)) {
-                    return limit_zero ? -Consts.SinCos.PIHalf : 0d;
+                    return limit_zero ? -PIHalf : 0d;
                 }
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble s = limit_zero ? -Consts.SinCos.PIHalf : 0d, u = x;
+                ddouble s = limit_zero ? -PIHalf : 0d, u = x;
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble f = u * TaylorSequence[4 * k + 1];

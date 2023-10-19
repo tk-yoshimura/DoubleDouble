@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Erfi;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -18,13 +19,13 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (x < Consts.Erfi.PadeApproxMin) {
-                return ErfiNearZero.Value(x, scale: false) * Consts.Erfi.C;
+            if (x < PadeApproxMin) {
+                return ErfiNearZero.Value(x, scale: false) * RcpSqrtPI2;
             }
-            if (x < Consts.Erfi.PadeApproxMax) {
-                return ErfiPade.Value(x, scale: false) * Consts.Erfi.C;
+            if (x < PadeApproxMax) {
+                return ErfiPade.Value(x, scale: false) * RcpSqrtPI2;
             }
-            return ErfiLimit.Value(x, scale: false) * Consts.Erfi.C;
+            return ErfiLimit.Value(x, scale: false) * RcpSqrtPI2;
         }
 
         public static ddouble DawsonF(ddouble x) {
@@ -38,10 +39,10 @@ namespace DoubleDouble {
                 return 0d;
             }
 
-            if (x < Consts.Erfi.PadeApproxMin) {
+            if (x < PadeApproxMin) {
                 return ErfiNearZero.Value(x, scale: true);
             }
-            if (x < Consts.Erfi.PadeApproxMax) {
+            if (x < PadeApproxMax) {
                 return ErfiPade.Value(x, scale: true);
             }
             return ErfiLimit.Value(x, scale: true);
@@ -107,7 +108,7 @@ namespace DoubleDouble {
                     int n = int.Max(0, (int)Round(x * 2 - 1d));
                     ddouble v = x - (n + 1) * 0.5;
 
-                    ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfi.Xp5PadeTables[n];
+                    ReadOnlyCollection<(ddouble c, ddouble d)> table = Xp5PadeTables[n];
 
                     (ddouble sc, ddouble sd) = table[0];
                     for (int i = 1; i < table.Count; i++) {
@@ -127,7 +128,7 @@ namespace DoubleDouble {
                     int n = int.Max(0, (int)Round(x - 4d));
                     ddouble v = x - n - 4d;
 
-                    ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Erfi.X1PadeTables[n];
+                    ReadOnlyCollection<(ddouble c, ddouble d)> table = X1PadeTables[n];
 
                     (ddouble sc, ddouble sd) = table[0];
                     for (int i = 1; i < table.Count; i++) {
@@ -154,7 +155,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Erfi {
-                public static readonly ddouble C = 2d / Sqrt(PI);
+                public static readonly ddouble RcpSqrtPI2 = 2d / Sqrt(PI);
                 public static readonly ddouble PadeApproxMin = 0.25d, PadeApproxMax = 16d;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> Xp5PadeTables;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> X1PadeTables;

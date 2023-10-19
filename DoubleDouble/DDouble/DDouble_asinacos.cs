@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using static DoubleDouble.ddouble.Consts.Asin;
+using static DoubleDouble.ddouble.Consts.SinCos;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -8,14 +10,14 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (!IsFinite(x)) {
-                return IsPositive(x) ? Consts.SinCos.PIHalf : -Consts.SinCos.PIHalf;
+                return IsPositive(x) ? PIHalf : -PIHalf;
             }
             if (IsNegative(x)) {
                 return -Atan(-x);
             }
 
             if (x > 1d) {
-                return Consts.SinCos.PIHalf - Atan(Rcp(x));
+                return PIHalf - Atan(Rcp(x));
             }
 
             ddouble x2 = x * x;
@@ -39,17 +41,17 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (x == -1d) {
-                return -Consts.SinCos.PIHalf;
+                return -PIHalf;
             }
             if (x == 1d) {
-                return Consts.SinCos.PIHalf;
+                return PIHalf;
             }
             if (x > -0.03125d && x < 0.03125d) {
                 ddouble x2 = x * x;
 
-                ddouble s = Consts.Asin.TaylorXZeroCoefTable[0];
-                for (int i = 1; i < Consts.Asin.TaylorXZeroCoefTable.Count; i++) {
-                    s = s * x2 + Consts.Asin.TaylorXZeroCoefTable[i];
+                ddouble s = TaylorXZeroCoefTable[0];
+                for (int i = 1; i < TaylorXZeroCoefTable.Count; i++) {
+                    s = s * x2 + TaylorXZeroCoefTable[i];
                 }
                 s = s * x2 + 1d;
                 s *= x;
@@ -63,7 +65,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Acos(ddouble x) {
-            return Consts.SinCos.PIHalf - Asin(x);
+            return PIHalf - Asin(x);
         }
 
         public static ddouble Atan2(ddouble y, ddouble x) {
@@ -79,7 +81,7 @@ namespace DoubleDouble {
             }
             else {
                 ddouble xy = x / y;
-                return IsPositive(y) ? (Consts.SinCos.PIHalf - Atan(xy)) : (-Consts.SinCos.PIHalf - Atan(xy));
+                return IsPositive(y) ? (PIHalf - Atan(xy)) : (-PIHalf - Atan(xy));
             }
         }
 

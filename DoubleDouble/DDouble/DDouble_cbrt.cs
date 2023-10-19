@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using static DoubleDouble.ddouble.Consts.Cbrt;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Cbrt(ddouble x) {
             if (IsNaN(x)) {
@@ -24,10 +26,10 @@
             ddouble a = 1d / double.Cbrt(x_frac.hi);
 
             ddouble h = 1d - x_frac * a * a * a;
-            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Cbrt.Rcp81;
+            a *= 1d + h * (27d + h * (18d + h * 14d)) * Rcp81;
 
             h = 1d - x_frac * a * a * a;
-            a *= 1d + h * (27d + h * (18d + h * 14d)) * Consts.Cbrt.Rcp81;
+            a *= 1d + h * (27d + h * (18d + h * 14d)) * Rcp81;
 
             ddouble y = Ldexp(x_frac * a * a, (x_exponent - exponent_rem) / 3);
 

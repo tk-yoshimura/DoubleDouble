@@ -1,69 +1,70 @@
 ﻿using System.Collections.ObjectModel;
+using static DoubleDouble.ddouble.Consts.Airy;
 
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble AiryAi(ddouble x) {
-            if (Abs(x) > Consts.Airy.MaxRange) {
+            if (Abs(x) > MaxRange) {
                 return 0d;
             }
 
-            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Consts.Airy.Rcp3, 1);
+            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Rcp3, 1);
 
-            if (x >= Consts.Airy.NearZero) {
-                return v * RcpPI * Consts.Airy.RcpSqrt3 * BesselK(Consts.Airy.Rcp3, w);
+            if (x >= NearZero) {
+                return v * RcpPI * RcpSqrt3 * BesselK(Rcp3, w);
             }
-            else if (x <= -Consts.Airy.NearZero) {
-                return v * Consts.Airy.Rcp3 * (BesselJ(-Consts.Airy.Rcp3, w) + BesselJ(Consts.Airy.Rcp3, w));
+            else if (x <= -NearZero) {
+                return v * Rcp3 * (BesselJ(-Rcp3, w) + BesselJ(Rcp3, w));
             }
             else {
-                ddouble s = Consts.Airy.TaylorNearZero[^1];
-                for (int i = Consts.Airy.TaylorNearZero.Count - 2; i >= 0; i--) {
+                ddouble s = TaylorNearZero[^1];
+                for (int i = TaylorNearZero.Count - 2; i >= 0; i--) {
                     int m = i % 3;
 
                     if (m == 0) {
-                        s = s * x + Consts.Airy.TaylorNearZero[i];
+                        s = s * x + TaylorNearZero[i];
                     }
                     else if (m == 1) {
-                        s = s * x - Consts.Airy.TaylorNearZero[i];
+                        s = s * x - TaylorNearZero[i];
                     }
                     else {
                         s *= x;
                     }
                 }
 
-                s /= Consts.Airy.Cbrt3 * Consts.Airy.Cbrt3 * PI;
+                s /= Cbrt3 * Cbrt3 * PI;
 
                 return s;
             }
         }
 
         public static ddouble AiryBi(ddouble x) {
-            if (Abs(x) > Consts.Airy.MaxRange) {
+            if (Abs(x) > MaxRange) {
                 return IsPositive(x) ? PositiveInfinity : 0d;
             }
 
-            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Consts.Airy.Rcp3, 1);
+            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Rcp3, 1);
 
-            if (x >= Consts.Airy.NearZero) {
-                return v * Consts.Airy.RcpSqrt3 * (BesselI(-Consts.Airy.Rcp3, w) + BesselI(Consts.Airy.Rcp3, w));
+            if (x >= NearZero) {
+                return v * RcpSqrt3 * (BesselI(-Rcp3, w) + BesselI(Rcp3, w));
             }
-            else if (x <= -Consts.Airy.NearZero) {
-                return v * Consts.Airy.RcpSqrt3 * (BesselJ(-Consts.Airy.Rcp3, w) - BesselJ(Consts.Airy.Rcp3, w));
+            else if (x <= -NearZero) {
+                return v * RcpSqrt3 * (BesselJ(-Rcp3, w) - BesselJ(Rcp3, w));
             }
             else {
-                ddouble s = Consts.Airy.TaylorNearZero[^1];
-                for (int i = Consts.Airy.TaylorNearZero.Count - 2; i >= 0; i--) {
+                ddouble s = TaylorNearZero[^1];
+                for (int i = TaylorNearZero.Count - 2; i >= 0; i--) {
                     int m = i % 3;
 
                     if (m != 2) {
-                        s = s * x + Consts.Airy.TaylorNearZero[i];
+                        s = s * x + TaylorNearZero[i];
                     }
                     else {
                         s *= x;
                     }
                 }
 
-                s /= Sqrt(Consts.Airy.Cbrt3) * PI;
+                s /= Sqrt(Cbrt3) * PI;
 
                 return s;
             }

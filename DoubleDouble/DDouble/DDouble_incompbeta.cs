@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.IncompleteBeta;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -8,11 +9,11 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (a + b - Max(a, b) > Consts.IncompleteBeta.MaxAB) {
+            if (a + b - Max(a, b) > MaxAB) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteBeta function, " +
                     $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)}) greater than " +
-                    $"{Consts.IncompleteBeta.MaxAB} is not supported."
+                    $"{MaxAB} is not supported."
                 );
             }
 
@@ -47,11 +48,11 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (a + b - Max(a, b) > Consts.IncompleteBeta.MaxABRegularized) {
+            if (a + b - Max(a, b) > MaxABRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteBetaRegularized function, " +
                     $"{nameof(a)}+{nameof(b)}-max({nameof(a)},{nameof(b)}) greater than" +
-                    $" {Consts.IncompleteBeta.MaxABRegularized} is not supported."
+                    $" {MaxABRegularized} is not supported."
                 );
             }
 
@@ -100,7 +101,7 @@ namespace DoubleDouble {
                 ddouble a2i = a, ai = a, bi = b, abi = ab;
 
                 bool convergenced = false;
-                for (int i = 1; i <= Consts.IncompleteBeta.CFracMaxIter; i++) {
+                for (int i = 1; i <= CFracMaxIter; i++) {
                     a2i += 2d; ai += 1d; bi -= 1d; abi += 1d;
 
                     ddouble a1 = (bi * i * x) / ((a2i - 1d) * a2i);
