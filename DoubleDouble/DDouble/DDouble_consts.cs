@@ -26,6 +26,14 @@ namespace DoubleDouble {
             GlaisherA = (+1, 0, 0xA42692797EC39898uL, 0x9F6AB71A1ED3BABCuL),
             CatalanG = (+1, -1, 0xEA7CB89F409AE845uL, 0x215822E37D32D0C6uL), 
             FransenRobinson = (+1, 1, 0xB3B281F50C729CB8uL, 0x7D0615AD23F4DC47uL),
-            KhinchinK = (+1, 1, 0xABDE7211E3686BBCuL, 0xBF7CF8E5199FE70CuL);
+            KhinchinK = (+1, 1, 0xABDE7211E3686BBCuL, 0xBF7CF8E5199FE70CuL),
+            MeisselMertens = (+1, -2, 0x85E2F67259FF6A3EuL, 0x6F326DC1668A2F41uL),
+            LambertOmega = (+1, -1, 0x91304D7C74B2BA5EuL, 0xAFDDAA6286DC28E1uL), 
+            LandauRamanujan = (+1, -1, 0xC3A4294EFECE5322uL, 0x1A3AAFEFD88366A3uL),
+            MillsA = (+1, 0, 0xA73763F7B46E5A60uL, 0x831E98883E852FFEuL),
+            SoldnerMu = (+1, 0, 0xB9C677931F512642uL, 0xC676B1774EF3FFCBuL),
+            SierpinskiK = (+1, -1, 0xD2A4ACF1B1952D4CuL, 0xF9B6C08D9048AEA1uL),
+            RcpFibonacci = (+1, 1, 0xD7085DE3B412547AuL, 0x6E1D157303AB3415uL),
+            Niven = (+1, 0, 0xDA445BCFC382C748uL, 0xBAA1D4C214E3C4ADuL);
     }
 }
