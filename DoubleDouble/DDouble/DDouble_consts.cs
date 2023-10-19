@@ -30,7 +30,7 @@ namespace DoubleDouble {
             MeisselMertens = (+1, -2, 0x85E2F67259FF6A3EuL, 0x6F326DC1668A2F41uL),
             LambertOmega = (+1, -1, 0x91304D7C74B2BA5EuL, 0xAFDDAA6286DC28E1uL), 
             LandauRamanujan = (+1, -1, 0xC3A4294EFECE5322uL, 0x1A3AAFEFD88366A3uL),
-            MillsA = (+1, 0, 0xA73763F7B46E5A60uL, 0x831E98883E852FFEuL),
+            MillsTheta = (+1, 0, 0xA73763F7B46E5A60uL, 0x831E98883E852FFEuL),
             SoldnerMu = (+1, 0, 0xB9C677931F512642uL, 0xC676B1774EF3FFCBuL),
             SierpinskiK = (+1, -1, 0xD2A4ACF1B1952D4CuL, 0xF9B6C08D9048AEA1uL),
             RcpFibonacci = (+1, 1, 0xD7085DE3B412547AuL, 0x6E1D157303AB3415uL),

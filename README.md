@@ -182,6 +182,13 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.FransenRobinson|2.807770242028519365222...|Fransén–Robinson constant|
 |ddouble.KhinchinK|2.685452001065306445310...|Khinchin's constant|
 |ddouble.MeisselMertens|0.261497212847642783755...|Meissel–Mertens constant|
+|ddouble.LambertOmega|0.567143290409783873000...|LambertW(1)|
+|ddouble.LandauRamanujan|0.764223653589220662991...|Landau–Ramanujan constant|
+|ddouble.MillsTheta|1.306377883863080690469...|Mills constant|
+|ddouble.SoldnerMu|1.451369234883381050284...|Ramanujan–Soldner constant|
+|ddouble.SierpinskiK|0.822825249678847032995...|Sierpiński's constant, Define follows wolfram.|
+|ddouble.RcpFibonacci|3.359885666243177553172...|Reciprocal Fibonacci constant|
+|ddouble.Niven|1.705211140105367764289...|Niven's constant|
 
 ## Sequence
 
