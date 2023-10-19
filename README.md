@@ -181,6 +181,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.CatalanG|0.915965594177219015055...|Catalan's constant|
 |ddouble.FransenRobinson|2.807770242028519365222...|Fransén–Robinson constant|
 |ddouble.KhinchinK|2.685452001065306445310...|Khinchin's constant|
+|ddouble.MeisselMertens|0.261497212847642783755...|Meissel–Mertens constant|
 
 ## Sequence
 
