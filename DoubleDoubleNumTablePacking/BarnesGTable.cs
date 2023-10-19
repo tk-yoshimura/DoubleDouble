@@ -15,6 +15,7 @@ namespace DoubleDoubleNumTablePacking {
                 { nameof(LogPadeX1p75Table), LogPadeX1p75Table },
                 { nameof(LogPadeX2p25Table), LogPadeX2p25Table },
                 { nameof(LogPadeX2p75Table), LogPadeX2p75Table },
+                { nameof(SterlingTable), SterlingTable },
             };
 
             foreach (var key in tables.Keys) {
@@ -205,5 +206,21 @@ namespace DoubleDoubleNumTablePacking {
                 ((+1, -14, 0xB191077D1AB82FFEuL, 0x0CC49D0323C2F9A8uL), (-1, -30, 0xDEF2198D7E049EF7uL, 0xA082B295E0C120A6uL)),
                 ((+1, -20, 0xC5DA84C140392B3FuL, 0x4CA291A9A6892BCAuL), (+1, -37, 0xC24E4DBC6368EFCBuL, 0x56DD9A2445D80D5FuL)),
         });
+
+        static readonly ReadOnlyCollection<(Hexcode s, Hexcode r)> SterlingTable
+            = new(new (Hexcode s, Hexcode r)[]{
+                ((-1, -8, 0x8888888888888888uL, 0x8888888888888888uL), (+1, -3, 0xF3CF3CF3CF3CF3CFuL, 0x3CF3CF3CF3CF3CF3uL)),
+                ((-1, -11, 0xB60B60B60B60B60BuL, 0x60B60B60B60B60B6uL), (+1, 0, 0xAE8BA2E8BA2E8BA2uL, 0xE8BA2E8BA2E8BA2EuL)),
+                ((-1, -9, 0x8A3BD6F0A23D5708uL, 0xA3BD6F0A23D5708AuL), (+1, 1, 0xD2B588B4CB058EA2uL, 0x44E8A8F011C86DA9uL)),
+                ((-1, -5, 0x81AF6641AF6641AFuL, 0x6641AF6641AF6641uL), (+1, 2, 0xC0E9CF771BBFC487uL, 0xE65FE79DC7A709BAuL)),
+                ((-1, 0, 0xBC22107B0495E92CuL, 0xECCBB25AF4093D79uL), (+1, 3, 0x993290AC966E2E82uL, 0xEE61D760E62CB3E0uL)),
+                ((-1, 7, 0xA3FA4DF653C2536BuL, 0x0824DF653C2536B0uL), (+1, 3, 0xDEE8168C29CA49B3uL, 0x78C4D734A052C7D8uL)),
+                ((-1, 15, 0x927991F539CF3304uL, 0xD806E188941F539CuL), (+1, 4, 0x98CAD716EB545A3AuL, 0x13FED0C14F0D60E7uL)),
+                ((-1, 23, 0xF0447241E4286CB0uL, 0xF5397DC2064A8ED3uL), (+1, 4, 0xC89DAE7A6E85BB57uL, 0x3E40D39D2B394231uL)),
+                ((-1, 33, 0xA6ED8202F953184AuL, 0x5F98F54869BD5318uL), (+1, 4, 0xFEEC91B071D9EC6FuL, 0xDD39B5FFB3FCD695uL)),
+                ((-1, 43, 0xB8BCFFF811677446uL, 0x32A2B401BF760104uL), (+1, 5, 0x9DDBC05F3F317631uL, 0x9C611BFA5FECE453uL)),
+                ((-1, 54, 0x9B18D46661E92599uL, 0x3BC04194CB62F8F7uL), (+1, 5, 0xBF7F3DD284B91E2CuL, 0xECD6E9A8E095416DuL)),
+                ((-1, 65, 0xBDEB068B3A62D600uL, 0xF08F4CD7FE9AC1BBuL), (+1, 5, 0xE460C1320E348DF3uL, 0x3CD7F8348EB1DCF8uL)),
+            });
     }
 }

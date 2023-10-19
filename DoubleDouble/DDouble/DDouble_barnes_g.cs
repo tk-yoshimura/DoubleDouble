@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.BarnesG;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -8,7 +9,7 @@ namespace DoubleDouble {
             if (IsNaN(x) || IsNegativeInfinity(x)) {
                 return NaN;
             }
-            if (x >= Consts.BarnesG.ExtremeLarge) {
+            if (x >= ExtremeLarge) {
                 return PositiveInfinity;
             }
 
@@ -17,97 +18,204 @@ namespace DoubleDouble {
             if (x <= 0 && IsInteger(x)) {
                 return Zero;
             }
-
-            if (x < Consts.BarnesG.PadeXMin) {
-                throw new NotImplementedException();
-            }
-            if (x >= Consts.BarnesG.PadeXMax) {
-                throw new NotImplementedException();
+            if (x < ExtremeMinusLarge) {
+                return NaN;
             }
 
-            int n = (int)Floor(x - Consts.BarnesG.PadeXMin);
-            ddouble v = x - n;
-
-            ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.BarnesG.PadeTables[n];
-
-            (ddouble sc, ddouble sd) = table[0];
-            for (int i = 1; i < table.Count; i++) {
-                (ddouble c, ddouble d) = table[i];
-
-                sc = sc * v + c;
-                sd = sd * v + d;
+            if (x >= PadeXMin && x < PadeXMax) {
+                return BarnesGUtil.PadeValue(x);
             }
 
-#if DEBUG
-            Trace.Assert(sd > 0.0625d, $"[BarnesG x={x}] Too small pade denom!!");
-#endif
+            ddouble x_p5 = x + 0.5d;
 
-            ddouble y = sc / sd;
+            if (x < PadeXMin) {
+                int m = int.Min(-1, (int)Floor(x_p5));
 
-            return y;
+                ddouble f = x - m;
+
+                ddouble y = BarnesGUtil.PadeValue(f);
+                ddouble g = Gamma(f);
+
+                for (int k = -1; k >= m; k--) {
+                    g /= f + k;
+                    y /= g;
+                }
+
+                return y;
+            }
+            else {
+                int m = (int)Floor(x_p5);
+
+                ddouble f = x - m;
+
+                ddouble y = BarnesGUtil.PadeValue(f + 3d);
+                ddouble g = Gamma(f + 2d);
+
+                for (int k = 2; k < m - 1; k++) {
+                    g *= f + k;
+                    y *= g;
+                }
+
+                return y;
+            }
         }
 
         public static ddouble LogBarnesG(ddouble x) {
-            if (!IsFinite(x) || IsNegative(x)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
-            if (x < Consts.BarnesG.LogPadeXMin) {
+            if (IsPositiveInfinity(x)) {
+                return PositiveInfinity;
+            }
+
+            if (x < LogPadeXMin) {
                 return Log(BarnesG(x));
             }
-            if (x >= Consts.BarnesG.LogPadeXMax) {
-                throw new NotImplementedException();
+
+            if (x < LogPadeXMax) {
+                return BarnesGUtil.LogPadeValue(x);
             }
+            else if (x < LogSterlingXMin) {
+                int m = (int)Floor(x);
 
-            int n = (int)Floor(Ldexp(x - Consts.BarnesG.LogPadeXMin, 1));
+                ddouble f = x - m;
 
-            (double x0, ReadOnlyCollection<(ddouble c, ddouble d)> table) = Consts.BarnesG.LogPadeTables[n];
-            ddouble v = x - x0;
+                ddouble y = BarnesGUtil.LogPadeValue(f + 2d);
+                ddouble d = 1d, g = Gamma(f + 1d);
 
-            (ddouble sc, ddouble sd) = table[0];
-            for (int i = 1; i < table.Count; i++) {
-                (ddouble c, ddouble d) = table[i];
+                for (int k = 1; k < m - 1; k++) {
+                    g *= f + k;
+                    d *= g;
+                }
 
-                sc = sc * v + c;
-                sd = sd * v + d;
+                y += Log(d);
+
+                return y;
             }
+            else {
+                return BarnesGUtil.LogSterlingValue(x);
+            }
+        }
 
+        internal static class BarnesGUtil {
+            public static ddouble PadeValue(ddouble x) {
 #if DEBUG
-            Trace.Assert(sd > 0.0625d, $"[LogBarnesG x={x}] Too small pade denom!!");
+                if (!(x >= PadeXMin && x <= PadeXMax)) {
+                    throw new ArithmeticException(nameof(x));
+                }
 #endif
 
-            ddouble y = sc / sd;
+                int n = int.Min((int)Floor(x - PadeXMin), PadeTables.Count - 1);
 
-            return y;
+                ddouble v = x - n;
+
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[n];
+
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    (ddouble c, ddouble d) = table[i];
+
+                    sc = sc * v + c;
+                    sd = sd * v + d;
+                }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[BarnesG x={x}] Too small pade denom!!");
+#endif
+
+                ddouble y = sc / sd;
+
+                return y;
+            }
+
+            public static ddouble LogPadeValue(ddouble x) {
+#if DEBUG
+                if (!(x >= LogPadeXMin && x <= LogPadeXMax)) {
+                    throw new ArithmeticException(nameof(x));
+                }
+#endif
+
+                int n = int.Min((int)Floor(Ldexp(x - LogPadeXMin, 1)), LogPadeTables.Count - 1);
+
+                (double x0, ReadOnlyCollection<(ddouble c, ddouble d)> table) = LogPadeTables[n];
+                ddouble v = x - x0;
+
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    (ddouble c, ddouble d) = table[i];
+
+                    sc = sc * v + c;
+                    sd = sd * v + d;
+                }
+
+#if DEBUG
+                Trace.Assert(sd > 0.0625d, $"[LogBarnesG x={x}] Too small pade denom!!");
+#endif
+
+                ddouble y = sc / sd;
+
+                return y;
+            }
+
+            public static ddouble LogSterlingValue(ddouble x) {
+                x -= 1d;
+
+                ddouble lnx = Log(x);
+
+                ddouble c = LogBias - lnx * Rcp12 + x * (Consts.LogGamma.LogPI2Half + x * Ldexp((Ldexp(lnx, 1) - 3d), -2));
+
+                ddouble v = Rcp(x), v2 = v * v, v4 = v2 * v2, u = v2;
+
+                ddouble y = c;
+
+                foreach ((ddouble s, ddouble r) in SterlingTable) {
+                    ddouble dy = u * s * (1d - v2 * r);
+                    ddouble y_next = y + dy;
+
+                    if (y == y_next) {
+                        break;
+                    }
+
+                    u *= v4;
+                    y = y_next;
+                }
+
+                return y;
+            }
         }
 
         internal static partial class Consts {
             public static class BarnesG {
-                public const double ExtremeLarge = 30d;
+                public const double ExtremeLarge = 28.5d, ExtremeMinusLarge = -64d;
                 public const double PadeXMin = -0.5d, PadeXMax = 3.5d;
-                public const double LogPadeXMin = 0.25d, LogPadeXMax = 3.25d;
+                public const double LogPadeXMin = 0.25d, LogPadeXMax = 3.25d, LogSterlingXMin = 12d;
 
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> SterlingTable;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
                 public static readonly ReadOnlyCollection<(double x0, ReadOnlyCollection<(ddouble c, ddouble d)>)> LogPadeTables;
                 public static readonly ddouble Rcp12 = 1.0 / (ddouble)12;
+                public static readonly ddouble LogBias = (-1, -3, 0xA96429090A9A04E6uL, 0xF323011BFAF4EC40uL);
 
                 static BarnesG() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> pade_tables =
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                         ResourceUnpack.NumTableX2(Resource.BarnesGTable, reverse: true);
 
+                    SterlingTable = Array.AsReadOnly(tables[nameof(SterlingTable)].Reverse().ToArray());
+
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
-                        pade_tables["PadeX0Table"],
-                        pade_tables["PadeX1Table"],
-                        pade_tables["PadeX2Table"],
-                        pade_tables["PadeX3Table"],
+                        tables["PadeX0Table"],
+                        tables["PadeX1Table"],
+                        tables["PadeX2Table"],
+                        tables["PadeX3Table"],
                     });
 
                     LogPadeTables = Array.AsReadOnly(new (double x0, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
-                        (0.25d, pade_tables["LogPadeX0p25Table"]),
-                        (1d, pade_tables["LogPadeX0p75Table"]),
-                        (1.25d, pade_tables["LogPadeX1p25Table"]),
-                        (2d, pade_tables["LogPadeX1p75Table"]),
-                        (2.25d, pade_tables["LogPadeX2p25Table"]),
-                        (3d, pade_tables["LogPadeX2p75Table"]),
+                        (0.25d, tables["LogPadeX0p25Table"]),
+                        (1d, tables["LogPadeX0p75Table"]),
+                        (1.25d, tables["LogPadeX1p25Table"]),
+                        (2d, tables["LogPadeX1p75Table"]),
+                        (2.25d, tables["LogPadeX2p25Table"]),
+                        (3d, tables["LogPadeX2p75Table"]),
                     });
                 }
             }
