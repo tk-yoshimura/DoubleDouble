@@ -5,12 +5,23 @@
 
             Directory.CreateDirectory(dirpath_root);
 
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(BarnesGTable) + ".bin", FileMode.Create))) {
+                BarnesGTable.Pack(sw);
+            }
+
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(BernoulliTable) + ".bin", FileMode.Create))) {
                 BernoulliTable.Pack(sw);
             }
 
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(CiSiTable) + ".bin", FileMode.Create))) {
                 CiSiTable.Pack(sw);
+            }
+
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(ClausenTable) + "_NearZero.bin", FileMode.Create))) {
+                ClausenTable.PackNearZero(sw);
+            }
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(ClausenTable) + "_Pade.bin", FileMode.Create))) {
+                ClausenTable.PackPade(sw);
             }
 
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(EiTable) + ".bin", FileMode.Create))) {

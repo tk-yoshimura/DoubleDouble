@@ -51,8 +51,12 @@ namespace DoubleDouble {
             if (IsNegative(x)) {
                 return -SinPIHalf(-x);
             }
+
             if (x >= 4d) {
-                x %= 4d;
+                x -= Ldexp(Floor(Ldexp(x, -2)), 2);
+                if (IsNegative(x)) {
+                    x += 4d;
+                }
             }
 
             int sign = 1;
@@ -66,6 +70,12 @@ namespace DoubleDouble {
             if (x == 1d) {
                 return sign;
             }
+
+#if DEBUG
+            if (x < 0d || !(x < 1d)) {
+                throw new ArithmeticException(nameof(x));
+            }
+#endif
 
             ddouble s = x - Floor(x);
 

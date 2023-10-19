@@ -35,6 +35,13 @@
             }
         }
 
+        internal static byte[] BarnesGTable {
+            get {
+                object obj = ResourceManager.GetObject("BarnesGTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] BernoulliTable {
             get {
                 object obj = ResourceManager.GetObject("BernoulliTable", resourceCulture);
@@ -52,6 +59,20 @@
         internal static byte[] CiSiTable {
             get {
                 object obj = ResourceManager.GetObject("CiSiTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
+        internal static byte[] ClausenTable_NearZero {
+            get {
+                object obj = ResourceManager.GetObject("ClausenTable_NearZero", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] ClausenTable_Pade {
+            get {
+                object obj = ResourceManager.GetObject("ClausenTable_Pade", resourceCulture);
                 return ((byte[])(obj));
             }
         }

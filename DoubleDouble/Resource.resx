@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BarnesGTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resource\BarnesGTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="BernoulliTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\BernoulliTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -126,6 +129,12 @@
   </data>
   <data name="CiSiTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\CiSiTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ClausenTable_NearZero" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resource\ClausenTable_NearZero.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ClausenTable_Pade" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resource\ClausenTable_Pade.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="DigammaTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\DigammaTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
