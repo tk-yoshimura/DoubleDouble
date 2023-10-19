@@ -108,6 +108,8 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Shi(x)|&#40;-inf,+inf&#41;|5|hyperbolic sin integral|
 |ddouble.Chi(x)|&#91;0,+inf&#41;|5|hyperbolic cos integral|
 |ddouble.Clausen(x, normalized)|&#40;-inf,+inf&#41;|3|Clausen function of order 2, Cl_2(x), normalized: x -> &pi;x|
+|ddouble.BarnesG(x)|&#40;-inf,+inf&#41;|3||
+|ddouble.LogBarnesG(x)|&#40;0,+inf&#41;|3||
 |ddouble.LambertW(x)|&#91;-1/e,+inf&#41;|4||
 |ddouble.AiryAi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
 |ddouble.AiryBi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
@@ -177,6 +179,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.LemniscatePI|2.622057554292119810465...|Lemniscate constant|
 |ddouble.GlaisherA|1.282427129100622636875...|Glaisher–Kinkelin constant|
 |ddouble.CatalanG|0.915965594177219015055...|Catalan's constant|
+|ddouble.FransenRobinson|2.807770242028519365222...|Fransén–Robinson constant|
 
 ## Sequence
 
