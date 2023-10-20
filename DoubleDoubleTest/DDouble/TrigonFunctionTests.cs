@@ -341,6 +341,11 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
             }
+
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.Atan2(0d, 0d)));
+            Assert.AreEqual(ddouble.PI, ddouble.Atan2(0d, -0d));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.Atan2(-0d, 0d)));
+            Assert.AreEqual(-ddouble.PI, ddouble.Atan2(-0d, -0d));
         }
 
         [TestMethod]
