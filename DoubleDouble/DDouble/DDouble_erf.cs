@@ -303,7 +303,7 @@ namespace DoubleDouble {
                 ddouble w = x - 2d;
 
                 Debug.Assert(w >= 0d, nameof(w));
-                
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt2PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];

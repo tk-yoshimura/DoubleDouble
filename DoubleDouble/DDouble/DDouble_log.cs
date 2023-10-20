@@ -92,7 +92,7 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble Log2Prime(ddouble x) {
-                     Debug.Assert((x >= 0d && x <= 1d), nameof(x));
+                    Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
                     if (x == 1d) {
                         return 1d;
