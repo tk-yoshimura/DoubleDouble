@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Diagnostics;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble RootN(ddouble x, int n) {
             if (n == 0) {
@@ -50,11 +52,7 @@
 
         internal static class RootNUtil {
             public static ddouble Value(ddouble x, int n) {
-#if DEBUG
-                if (n <= 4 || n > 256) {
-                    throw new ArgumentOutOfRangeException(nameof(n));
-                }
-#endif
+                Debug.Assert((n > 4 && n <= 256), nameof(n));
 
                 if (IsNegative(x) || IsNaN(x)) {
                     return NaN;
@@ -70,10 +68,8 @@
                 int exp_n = (exp >= 0) ? (exp % n) : ((n - (-exp) % n) % n);
                 int exp_scale = exp - exp_n;
 
-#if DEBUG
-                Debug<ArgumentException>.Assert(exp_n >= 0 && exp_n < n);
-                Debug<ArgumentException>.Assert(exp_scale % n == 0);
-#endif
+                Debug.Assert(exp_n >= 0 && exp_n < n);
+                Debug.Assert(exp_scale % n == 0);
 
                 x = Ldexp(x, -exp_scale);
 

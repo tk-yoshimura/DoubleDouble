@@ -406,10 +406,8 @@ namespace DoubleDouble {
                     sgd = sgd * w + gd;
                 }
 
-#if DEBUG
-                Trace.Assert(sfd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
-                Trace.Assert(sgd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sfd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+                Debug.Assert(sgd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
 
                 ddouble f = sfc / sfd, g = sgc / sgd;
 
@@ -433,9 +431,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
 
                 ddouble f = sc / sd;
 
@@ -459,9 +455,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
 
                 ddouble f = sc / sd;
 

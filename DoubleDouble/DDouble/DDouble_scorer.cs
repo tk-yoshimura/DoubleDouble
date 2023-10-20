@@ -84,11 +84,7 @@ namespace DoubleDouble {
         internal static class ScorerUtil {
 
             public static ddouble PadeApprox(ddouble x, ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> tables) {
-#if DEBUG
-                if (x < 0d || !(x <= PadeMax)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert((x >= 0d && x <= PadeMax), nameof(x));
 
                 (int n, double x0) =
                     (x < 1d) ? (0, 0d) :
@@ -111,9 +107,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Scorer x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Scorer x={x}] Too small pade denom!!");
 
                 ddouble y = Pow2(sc / sd);
 

@@ -1,5 +1,6 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -43,11 +44,7 @@ namespace DoubleDouble {
 
         private static class PolylogNearOne {
             public static ddouble Polylog(int n, ddouble x) {
-#if DEBUG
-                if (x < 0.5d || x > 1d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert((x >= 0.5d && x <= 1d), nameof(x));
 
                 if (x > RegardedOneThreshold) {
                     return RiemannZeta(n);
@@ -118,11 +115,7 @@ namespace DoubleDouble {
 
         private static class PolylogPowerSeries {
             public static ddouble PolylogNearZero(int n, ddouble x) {
-#if DEBUG
-                if (x < -0.5d || x > 0.5d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert((x >= -0.5d && x <= 0.5d), nameof(x));
 
                 if (x == 0d) {
                     return x;
@@ -149,11 +142,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble PolylogMinusLimit(int n, ddouble x) {
-#if DEBUG
-                if (x > -1.5d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x <= -1.5d, nameof(x));
 
                 x = -x;
 
@@ -243,11 +232,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble Polylog(int n, ddouble x) {
-#if DEBUG
-                if (x < -1.5d || x > -0.5d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert((x >= -1.5d && x <= -0.5d), nameof(x));
 
                 ddouble h = IntegrandPeak(n, -(double)x);
                 ddouble r = 1d / -x;
@@ -335,11 +320,7 @@ namespace DoubleDouble {
 
         private static class PolylogParticularN {
             public static ddouble Polylog(int n, ddouble x) {
-#if DEBUG
-                if (!(x < 1d)) {
-                    return NaN;
-                }
-#endif
+                Debug.Assert(x < 1d, nameof(x));
 
                 ddouble y;
 

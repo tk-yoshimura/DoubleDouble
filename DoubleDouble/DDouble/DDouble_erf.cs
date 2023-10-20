@@ -97,11 +97,8 @@ namespace DoubleDouble {
             public static ddouble ErfNearZero(ddouble x) {
                 ddouble w = x * x;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -112,9 +109,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erf x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erf x={x}] Too small pade denom!!");
 
                 ddouble y = x * (sc / sd);
 
@@ -124,11 +119,8 @@ namespace DoubleDouble {
             public static ddouble ErfcGtP5(ddouble x) {
                 ddouble w = x - 0.5d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = GtP5PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -139,9 +131,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -151,11 +141,8 @@ namespace DoubleDouble {
             public static ddouble ErfcGt1(ddouble x) {
                 ddouble w = x - 1d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt1PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -166,9 +153,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -178,11 +163,8 @@ namespace DoubleDouble {
             public static ddouble ErfcGt2(ddouble x) {
                 ddouble w = x - 2d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt2PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -193,9 +175,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -205,11 +185,8 @@ namespace DoubleDouble {
             public static ddouble ErfcGt4(ddouble x) {
                 ddouble w = x - 4d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt4PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -220,9 +197,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -232,11 +207,8 @@ namespace DoubleDouble {
             public static ddouble ErfcGt8(ddouble x) {
                 ddouble w = x - 8d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt8PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -247,9 +219,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -259,11 +229,8 @@ namespace DoubleDouble {
             public static ddouble ErfcGt16(ddouble x) {
                 ddouble w = x - 16d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt16PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -274,9 +241,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
 
                 if (x <= 25.75d) {
                     ddouble y = sc / (sd * Exp(x * x));
@@ -293,11 +258,8 @@ namespace DoubleDouble {
             public static ddouble ErfcxGtP5(ddouble x) {
                 ddouble w = x - 0.5d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = GtP5PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -308,9 +270,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -320,11 +280,8 @@ namespace DoubleDouble {
             public static ddouble ErfcxGt1(ddouble x) {
                 ddouble w = x - 1d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt1PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -335,9 +292,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -347,11 +302,8 @@ namespace DoubleDouble {
             public static ddouble ErfcxGt2(ddouble x) {
                 ddouble w = x - 2d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+                
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt2PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -362,9 +314,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -374,11 +324,8 @@ namespace DoubleDouble {
             public static ddouble ErfcxGt4(ddouble x) {
                 ddouble w = x - 4d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt4PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -389,9 +336,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -401,11 +346,8 @@ namespace DoubleDouble {
             public static ddouble ErfcxGt8(ddouble x) {
                 ddouble w = x - 8d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt8PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -416,9 +358,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -426,11 +366,8 @@ namespace DoubleDouble {
             }
 
             public static ddouble ErfcxGt16(ddouble x) {
-#if DEBUG
-                if (!(x >= 16d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x >= 16d, nameof(x));
+
                 ddouble f = 1d, w = x * x;
 
                 const int n = 5;

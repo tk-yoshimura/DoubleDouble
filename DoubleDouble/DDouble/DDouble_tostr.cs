@@ -114,9 +114,7 @@ namespace DoubleDouble {
             ddouble log10_frac = Ldexp(Consts.Dec.Pow5(-exponent_dec), checked(exponent - exponent_dec));
             (_, int exponent_frac, UInt128 mantissa_frac, _) = FloatSplitter.Split(log10_frac);
 
-#if DEBUG
-            Debug<ArithmeticException>.Assert(log10_frac >= 1d && log10_frac < 10d);
-#endif
+            Debug.Assert(log10_frac >= 1d && log10_frac < 10d, "invalid frac");
 
             mantissa = UInt128.MulShift(mantissa, Consts.Dec.Decimal(digits + presicion), FloatSplitter.MantissaBits * 2);
             mantissa = UInt128.MulShift(mantissa, mantissa_frac, FloatSplitter.MantissaBits * 2 - exponent_frac);
@@ -133,10 +131,8 @@ namespace DoubleDouble {
                 mantissa = Consts.Dec.Decimal(digits);
             }
 
-#if DEBUG
-            Debug<ArithmeticException>.Assert(mantissa < Consts.Dec.Decimal(digits + 1), "overflow");
-            Debug<ArithmeticException>.Assert(mantissa.ToString().Length == (digits + 1), "mismatch length");
-#endif
+            Debug.Assert(mantissa < Consts.Dec.Decimal(digits + 1), "overflow");
+            Debug.Assert(mantissa.ToString().Length == (digits + 1), "mismatch length");
 
             return (sign, exponent_dec, mantissa);
         }

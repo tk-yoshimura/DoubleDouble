@@ -41,9 +41,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -62,18 +60,15 @@ namespace DoubleDouble {
                     int n = int.Max(0, (int)Floor(Ldexp(x - Consts.Gamma.Log2PadeWise2X0, -1)));
                     v = x - Consts.Gamma.Log2PadeWise2X0 - n * 2;
                     (exp, table) = Consts.Gamma.Log2PadeWise2Tables[n];
-#if DEBUG
-                    Trace.Assert(v >= 0d && v < 2d, $"[Gamma x={x}] Invalid pade v!!");
-#endif
+
+                    Debug.Assert(v >= 0d && v < 2d, $"[Gamma x={x}] Invalid pade v!!");
                 }
                 else {
                     int n = int.Max(0, (int)Floor(Ldexp(x - Consts.Gamma.Log2PadeWise4X0, -2)));
                     v = x - Consts.Gamma.Log2PadeWise4X0 - n * 4;
                     (exp, table) = Consts.Gamma.Log2PadeWise4Tables[n];
 
-#if DEBUG
-                    Trace.Assert(v >= 0d && v < 4d, $"[Gamma x={x}] Invalid pade v!!");
-#endif
+                    Debug.Assert(v >= 0d && v < 4d, $"[Gamma x={x}] Invalid pade v!!");
                 }
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -84,9 +79,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
 
                 ddouble y = Ldexp(Pow2(sc / sd), exp);
 
@@ -119,9 +112,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd - Log1p(v);
 
@@ -142,9 +133,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -192,9 +181,7 @@ namespace DoubleDouble {
                     sd = sd * x_zsft + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -215,9 +202,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 

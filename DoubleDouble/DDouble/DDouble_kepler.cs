@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Diagnostics;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
             if (!(e >= 0d) || IsNaN(m) || !IsFinite(e)) {
@@ -62,14 +64,8 @@
         internal static class KeplerEUtil {
             public static class Elliptic {
                 public static ddouble Value(ddouble m, ddouble e) {
-#if DEBUG
-                    if (!(m >= 0d && m <= 1d)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 0d && e <= 1d)) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
+                    Debug.Assert((m >= 0d && m <= 1d), nameof(m));
+                    Debug.Assert((e >= 0d && e <= 1d), nameof(e));
 
                     ddouble m_pi = m * PI;
 
@@ -130,14 +126,8 @@
                 }
 
                 public static ddouble NearZero(ddouble m, ddouble e) {
-#if DEBUG
-                    if (double.ILogB(m.Hi) > -32) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (double.ILogB((e - 1d).Hi) > -16) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
+                    Debug.Assert(double.ILogB(m.Hi) <= -32, nameof(m));
+                    Debug.Assert(double.ILogB((e - 1d).Hi) <= -16, nameof(e));
 
                     return NearOneE.Value(m * PI, e);
                 }
@@ -254,14 +244,8 @@
             public static class Hyperbolic {
 
                 public static ddouble Value(ddouble m, ddouble e) {
-#if DEBUG
-                    if (!(m >= 0d)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (!(e >= 1d)) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
+                    Debug.Assert(m >= 0d, nameof(m));
+                    Debug.Assert(e >= 1d, nameof(e));
 
                     if (double.ILogB(m.Hi) > -32 || double.ILogB((1d - e).Hi) > -16) {
                         double md = m.Hi, ed = Math.Max(1, e.Hi);

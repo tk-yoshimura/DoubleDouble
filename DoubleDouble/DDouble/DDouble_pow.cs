@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.Pow;
 
 namespace DoubleDouble {
@@ -273,11 +274,8 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble Pow2Prime(ddouble x) {
-#if DEBUG
-                    if (!(x >= 0d) || x > 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(x));
-                    }
-#endif
+                    Debug.Assert((x >= 0d && x <= 1d), nameof(x));
+
                     if (x == 1d) {
                         return 2;
                     }

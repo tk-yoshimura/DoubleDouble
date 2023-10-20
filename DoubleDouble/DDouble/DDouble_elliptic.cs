@@ -198,9 +198,7 @@ namespace DoubleDouble {
                 static Elliptic() {
                     k_table = new() { 1d };
 
-#if DEBUG
-                    Trace.WriteLine($"Elliptic initialized.");
-#endif
+                    Debug.WriteLine($"Elliptic initialized.");
                 }
 
                 public static ddouble KTable(int n) {

@@ -177,9 +177,7 @@ namespace DoubleDouble {
                     (q2, q3) = (q0, q1);
                 }
 
-#if DEBUG
-                Trace.Assert(convergenced, $"[UpperIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
-#endif
+                Debug.Assert(convergenced, $"[UpperIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
 
                 ddouble f = xmnu + 1d + p0 / q0;
 
@@ -227,9 +225,7 @@ namespace DoubleDouble {
                     (q2, q3) = (q0, q1);
                 }
 
-#if DEBUG
-                Trace.Assert(convergenced, $"[LowerIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
-#endif
+                Debug.Assert(convergenced, $"[LowerIncompleteGamma nu={nu},x={x}] Continued fraction not convergenced!!");
 
                 ddouble f = nu + p0 / q0;
 

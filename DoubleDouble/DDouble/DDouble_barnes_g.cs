@@ -99,11 +99,7 @@ namespace DoubleDouble {
 
         internal static class BarnesGUtil {
             public static ddouble PadeValue(ddouble x) {
-#if DEBUG
-                if (!(x >= PadeXMin && x <= PadeXMax)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x >= PadeXMin && x <= PadeXMax, nameof(x));
 
                 int n = int.Min((int)Floor(x - PadeXMin), PadeTables.Count - 1);
 
@@ -119,9 +115,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[BarnesG x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[BarnesG x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -129,11 +123,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble LogPadeValue(ddouble x) {
-#if DEBUG
-                if (!(x >= LogPadeXMin && x <= LogPadeXMax)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x >= LogPadeXMin && x <= LogPadeXMax, nameof(x));
 
                 int n = int.Min((int)Floor(Ldexp(x - LogPadeXMin, 1)), LogPadeTables.Count - 1);
 
@@ -148,9 +138,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[LogBarnesG x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[LogBarnesG x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 

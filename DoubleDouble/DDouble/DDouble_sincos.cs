@@ -72,11 +72,7 @@ namespace DoubleDouble {
                 return sign;
             }
 
-#if DEBUG
-            if (x < 0d || !(x < 1d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
-            }
-#endif
+            Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
             int index = (int)Round(x * SinPIHalfTableN);
             ddouble v = x - SinPIHalfTableDx * index;
@@ -109,9 +105,7 @@ namespace DoubleDouble {
                 public static readonly ddouble SinPIHalfTableDx = Rcp(SinPIHalfTableN);
 
                 public static ddouble[] GenerateSinPITable() {
-#if DEBUG
-                    Trace.WriteLine($"SinCos initialize.");
-#endif
+                    Debug.WriteLine($"SinCos initialize.");
 
                     ddouble dx = Rcp(SinPIHalfTableN);
                     ddouble[] table = new ddouble[SinPIHalfTableN + 1];

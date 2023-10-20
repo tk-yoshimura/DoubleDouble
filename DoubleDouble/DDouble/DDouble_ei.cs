@@ -92,11 +92,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble Negative(ddouble x, bool offset = true, int max_terms = 12) {
-#if DEBUG
-                if (!(x <= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x <= 0d, nameof(x));
 
                 ddouble x2 = x * x;
 
@@ -205,9 +201,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Ei x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Ei x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 

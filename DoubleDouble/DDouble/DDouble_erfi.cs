@@ -118,9 +118,7 @@ namespace DoubleDouble {
                         sd = sd * v + d;
                     }
 
-#if DEBUG
-                    Trace.Assert(sd > 0.0625d, $"[Erfi x={x}] Too small pade denom!!");
-#endif
+                    Debug.Assert(sd > 0.0625d, $"[Erfi x={x}] Too small pade denom!!");
 
                     y = sd / sc;
                 }
@@ -138,9 +136,7 @@ namespace DoubleDouble {
                         sd = sd * v + d;
                     }
 
-#if DEBUG
-                    Trace.Assert(sd > 0.0625d, $"[Erfi x={x}] Too small pade denom!!");
-#endif
+                    Debug.Assert(sd > 0.0625d, $"[Erfi x={x}] Too small pade denom!!");
 
                     y = sd / sc;
                 }

@@ -23,9 +23,7 @@ namespace DoubleDouble {
 
                 ddouble v = u - umin;
 
-#if DEBUG
-                Trace.Assert(v >= 0d, $"[InverseGamma x={x}] Invalid pade v!!");
-#endif
+                Debug.Assert(v >= 0d, $"[InverseGamma x={x}] Invalid pade v!!");
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -35,9 +33,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[InverseGamma x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[InverseGamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 

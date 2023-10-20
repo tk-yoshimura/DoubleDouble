@@ -1927,9 +1927,7 @@ namespace DoubleDouble {
                     sd = sd * t + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[BesselK x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[BesselK x={x}] Too small pade denom!!");
 
                 ddouble y = Sqrt(Ldexp(t * PI, -1)) * sc / sd;
 

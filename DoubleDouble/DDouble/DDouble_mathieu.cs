@@ -145,11 +145,7 @@ namespace DoubleDouble {
             private static readonly Dictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
 
             public static ddouble MPade(int n, ddouble q) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
 
                 ddouble u = Square((n <= 1) ? q : q / (n * n));
 
@@ -166,9 +162,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -180,11 +174,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble DPade(int n, ddouble q) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
 
                 if (n < 1) {
                     return 0d;
@@ -205,9 +195,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -234,11 +222,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble APade(int n, ddouble q) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
 
                 int s = 2 * n + 1;
                 ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
@@ -264,9 +248,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble delta = sc / sd;
                 if (IsZero(u0)) {
@@ -279,11 +261,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BPade(int n, ddouble q) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
 
                 int s = 2 * n - 1;
                 ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
@@ -309,9 +287,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble delta = sc / sd;
                 if (IsZero(u0)) {
@@ -392,11 +368,8 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int terms = -1) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
+
                 if (q < Eps) {
                     return QNearZeroCCoef(n, q);
                 }
@@ -504,11 +477,8 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateCCoefZeroShifted(int n, ddouble q) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
+
                 if (q < Eps) {
                     return QNearZeroCCoef(n, q);
                 }
@@ -570,11 +540,8 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble b, int terms = -1) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
+
                 if (q < Eps) {
                     return QNearZeroSCoef(n, q);
                 }
@@ -677,11 +644,8 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateSCoefZeroShifted(int n, ddouble q) {
-#if DEBUG
-                if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q >= 0d, nameof(q));
+
                 if (q < Eps) {
                     return QNearZeroSCoef(n, q);
                 }
@@ -827,11 +791,8 @@ namespace DoubleDouble {
                 if (n < 0 || n > MathieuUtil.MaxN) {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
-#if DEBUG
-                if (q > MathieuUtil.NZThreshold) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+
+                Debug.Assert(q <= MathieuUtil.NZThreshold, nameof(q));
 
                 if (n == 0) {
                     ddouble a = MathieuA(n, q);
@@ -851,9 +812,8 @@ namespace DoubleDouble {
                         sd = sd * q + d;
                     }
 
-#if DEBUG
-                    Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
-#endif
+                    Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+
                     ddouble a = q * q * sc / sd;
                     int s = ((n & 1) == 0) ? 0 : 1;
                     ddouble[] arms = (new ddouble[(MathieuUtil.MaxN + 2) / 2])
@@ -882,11 +842,7 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
 
-#if DEBUG
-                if (q > MathieuUtil.NZThreshold) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
-                }
-#endif
+                Debug.Assert(q <= MathieuUtil.NZThreshold, nameof(q));
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef = PadeBzTables[n];
 
@@ -898,9 +854,8 @@ namespace DoubleDouble {
                     sd = sd * q + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+
                 ddouble b = q * q * sc / sd;
                 int s = ((n & 1) == 0) ? 2 : 1;
                 ddouble[] brms = (new ddouble[(MathieuUtil.MaxN + 2) / 2])

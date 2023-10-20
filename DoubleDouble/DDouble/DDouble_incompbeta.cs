@@ -132,9 +132,7 @@ namespace DoubleDouble {
                     (q2, q3) = (q0, q1);
                 }
 
-#if DEBUG
-                Trace.Assert(convergenced, $"[IncompleteBeta x={x},a={a},b={b}] Continued fraction not convergenced!!");
-#endif
+                Debug.Assert(convergenced, $"[IncompleteBeta x={x},a={a},b={b}] Continued fraction not convergenced!!");
 
                 ddouble f = a * (1d + p0 / q0);
 

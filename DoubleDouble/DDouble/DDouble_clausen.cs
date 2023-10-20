@@ -33,11 +33,8 @@ namespace DoubleDouble {
 
         internal static class ClausenUtil {
             public static ddouble Kernel(ddouble x) {
-#if DEBUG
-                if (x < 0d || !(x <= 1d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x >= 0d && x <= 1d, nameof(x));
+
                 if (x <= 0.25d) {
                     return NearZero(x);
                 }
@@ -47,11 +44,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble NearZero(ddouble x) {
-#if DEBUG
-                if (x < 0d || !(x <= 0.25d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x >= 0d && x <= 0.25d, nameof(x));
 
                 ddouble x2 = x * x;
                 ddouble c = -Log(x * PIDivE * (1d - Ldexp(x2, -2)));
@@ -72,11 +65,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble PadeApprox(ddouble x) {
-#if DEBUG
-                if (x < 0.25d || !(x <= 1d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(x >= 0.25d && x <= 1d, nameof(x));
 
                 if (x == 1d) {
                     return 0d;
@@ -95,9 +84,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[Clausen x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[Clausen x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd * (x * (1d - x));
 

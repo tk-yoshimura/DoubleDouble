@@ -65,11 +65,8 @@ namespace DoubleDouble {
             public static ddouble InverseErfNearZero(ddouble x) {
                 ddouble w = x * x;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<ddouble> table = CoefTable;
 
                 ddouble s = table[0];
@@ -87,11 +84,8 @@ namespace DoubleDouble {
             public static ddouble InverseErfcLtRcpBinpow1(ddouble x) {
                 ddouble w = Sqrt(-Log2(x)) - 1d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow1PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -102,9 +96,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -114,11 +106,8 @@ namespace DoubleDouble {
             public static ddouble InverseErfcLtRcpBinpow4(ddouble x) {
                 ddouble w = Sqrt(-Log2(x)) - 2d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow4PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -129,9 +118,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -141,11 +128,8 @@ namespace DoubleDouble {
             public static ddouble InverseErfcLtRcpBinpow16(ddouble x) {
                 ddouble w = Sqrt(-Log2(x)) - 4d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow16PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -156,9 +140,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -168,11 +150,8 @@ namespace DoubleDouble {
             public static ddouble InverseErfcLtRcpBinpow64(ddouble x) {
                 ddouble w = Sqrt(-Log2(x)) - 8d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow64PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -183,9 +162,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -195,11 +172,8 @@ namespace DoubleDouble {
             public static ddouble InverseErfcLtRcpBinpow256(ddouble x) {
                 ddouble w = Sqrt(-Log2(x)) - 16d;
 
-#if DEBUG
-                if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
-                }
-#endif
+                Debug.Assert(w >= 0d, nameof(w));
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow256PadeTable;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -210,9 +184,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-#if DEBUG
-                Trace.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
-#endif
+                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 

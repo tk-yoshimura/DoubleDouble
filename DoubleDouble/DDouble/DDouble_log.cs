@@ -78,9 +78,7 @@ namespace DoubleDouble {
                 public static readonly ddouble Log2TableDx = Rcp(Log2TableN);
 
                 public static ddouble[] GenerateLog2Table() {
-#if DEBUG
-                    Trace.WriteLine($"Log2 initialize.");
-#endif
+                    Debug.WriteLine($"Log2 initialize.");
 
                     ddouble dx = Rcp(Log2TableN);
                     ddouble[] table = new ddouble[Log2TableN + 1];
@@ -94,11 +92,7 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble Log2Prime(ddouble x) {
-#if DEBUG
-                    if (!(x >= 0d) || x > 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(x));
-                    }
-#endif
+                     Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
                     if (x == 1d) {
                         return 1d;
