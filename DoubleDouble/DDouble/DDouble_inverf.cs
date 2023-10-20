@@ -67,7 +67,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<ddouble> table = CoefTable;
@@ -89,7 +89,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow1PadeTable;
@@ -116,7 +116,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow4PadeTable;
@@ -143,7 +143,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow16PadeTable;
@@ -170,7 +170,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow64PadeTable;
@@ -197,7 +197,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = LtRcpBinpow256PadeTable;

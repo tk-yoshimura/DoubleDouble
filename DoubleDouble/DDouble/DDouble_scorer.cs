@@ -86,7 +86,7 @@ namespace DoubleDouble {
             public static ddouble PadeApprox(ddouble x, ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> tables) {
 #if DEBUG
                 if (x < 0d || !(x <= PadeMax)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
 

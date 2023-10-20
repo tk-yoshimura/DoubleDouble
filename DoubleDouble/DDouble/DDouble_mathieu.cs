@@ -147,7 +147,7 @@ namespace DoubleDouble {
             public static ddouble MPade(int n, ddouble q) {
 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
 
@@ -182,7 +182,7 @@ namespace DoubleDouble {
             public static ddouble DPade(int n, ddouble q) {
                 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
 
@@ -236,7 +236,7 @@ namespace DoubleDouble {
             public static ddouble APade(int n, ddouble q) {
                 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
 
@@ -281,7 +281,7 @@ namespace DoubleDouble {
             public static ddouble BPade(int n, ddouble q) {
                 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
 
@@ -394,7 +394,7 @@ namespace DoubleDouble {
             internal static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int terms = -1) {
 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
                 if (q < Eps) {
@@ -506,7 +506,7 @@ namespace DoubleDouble {
             internal static ReadOnlyCollection<ddouble> GenerateCCoefZeroShifted(int n, ddouble q) {
 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
                 if (q < Eps) {
@@ -572,7 +572,7 @@ namespace DoubleDouble {
             internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble b, int terms = -1) {
 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
                 if (q < Eps) {
@@ -679,7 +679,7 @@ namespace DoubleDouble {
             internal static ReadOnlyCollection<ddouble> GenerateSCoefZeroShifted(int n, ddouble q) {
 #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
                 if (q < Eps) {
@@ -829,7 +829,7 @@ namespace DoubleDouble {
                 }
 #if DEBUG
                 if (q > MathieuUtil.NZThreshold) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
 
@@ -884,7 +884,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (q > MathieuUtil.NZThreshold) {
-                    throw new ArithmeticException(nameof(q));
+                    throw new ArgumentOutOfRangeException(nameof(q));
                 }
 #endif
 

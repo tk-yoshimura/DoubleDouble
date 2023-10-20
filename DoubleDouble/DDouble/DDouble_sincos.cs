@@ -74,7 +74,7 @@ namespace DoubleDouble {
 
 #if DEBUG
             if (x < 0d || !(x < 1d)) {
-                throw new ArithmeticException(nameof(x));
+                throw new ArgumentOutOfRangeException(nameof(x));
             }
 #endif
 

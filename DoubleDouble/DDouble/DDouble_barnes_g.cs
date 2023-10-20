@@ -101,7 +101,7 @@ namespace DoubleDouble {
             public static ddouble PadeValue(ddouble x) {
 #if DEBUG
                 if (!(x >= PadeXMin && x <= PadeXMax)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
 
@@ -131,7 +131,7 @@ namespace DoubleDouble {
             public static ddouble LogPadeValue(ddouble x) {
 #if DEBUG
                 if (!(x >= LogPadeXMin && x <= LogPadeXMax)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
 

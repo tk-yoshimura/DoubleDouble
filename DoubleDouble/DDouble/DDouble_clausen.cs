@@ -35,7 +35,7 @@ namespace DoubleDouble {
             public static ddouble Kernel(ddouble x) {
 #if DEBUG
                 if (x < 0d || !(x <= 1d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
                 if (x <= 0.25d) {
@@ -49,7 +49,7 @@ namespace DoubleDouble {
             private static ddouble NearZero(ddouble x) {
 #if DEBUG
                 if (x < 0d || !(x <= 0.25d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
 
@@ -74,7 +74,7 @@ namespace DoubleDouble {
             private static ddouble PadeApprox(ddouble x) {
 #if DEBUG
                 if (x < 0.25d || !(x <= 1d)) {
-                    throw new ArithmeticException(nameof(x));
+                    throw new ArgumentOutOfRangeException(nameof(x));
                 }
 #endif
 
