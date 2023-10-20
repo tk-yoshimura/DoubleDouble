@@ -10,7 +10,7 @@ namespace DoubleDouble {
             BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {
@@ -37,7 +37,7 @@ namespace DoubleDouble {
             BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {
@@ -58,7 +58,7 @@ namespace DoubleDouble {
             BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {
@@ -103,7 +103,7 @@ namespace DoubleDouble {
             BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {
@@ -127,7 +127,7 @@ namespace DoubleDouble {
             BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {
@@ -154,7 +154,7 @@ namespace DoubleDouble {
             BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {
@@ -175,7 +175,7 @@ namespace DoubleDouble {
             BesselUtil.CheckNu(nu);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {
@@ -206,7 +206,7 @@ namespace DoubleDouble {
             BesselUtil.CheckN(n);
 
             if (!(x >= 0d)) {
-                throw new ArgumentOutOfRangeException(nameof(x));
+                return NaN;
             }
 
             if (x <= BesselUtil.Eps) {

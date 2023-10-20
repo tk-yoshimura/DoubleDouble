@@ -92,9 +92,11 @@ namespace DoubleDouble {
             }
 
             public static ddouble Negative(ddouble x, bool offset = true, int max_terms = 12) {
+#if DEBUG
                 if (!(x <= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
+#endif
 
                 ddouble x2 = x * x;
 

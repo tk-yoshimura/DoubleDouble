@@ -5,13 +5,6 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble LowerIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(nu));
-            }
-            if (x < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(x));
-            }
-
             if (nu > MaxNu) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
@@ -19,7 +12,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (IsNaN(nu) || IsNaN(x)) {
+            if (!(nu >= 0d && x >= 0d)) {
                 return NaN;
             }
 
@@ -38,13 +31,6 @@ namespace DoubleDouble {
         }
 
         public static ddouble UpperIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(nu));
-            }
-            if (x < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(x));
-            }
-
             if (nu > MaxNu) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
@@ -52,7 +38,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (IsNaN(nu) || IsNaN(x)) {
+            if (!(nu >= 0d && x >= 0d)) {
                 return NaN;
             }
 
@@ -75,13 +61,6 @@ namespace DoubleDouble {
         }
 
         public static ddouble LowerIncompleteGammaRegularized(ddouble nu, ddouble x) {
-            if (nu < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(nu));
-            }
-            if (x < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(x));
-            }
-
             if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGammaRegularized function, " +
@@ -89,7 +68,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (IsNaN(nu) || IsNaN(x)) {
+            if (!(nu >= 0d && x >= 0d)) {
                 return NaN;
             }
 
@@ -114,13 +93,6 @@ namespace DoubleDouble {
         }
 
         public static ddouble UpperIncompleteGammaRegularized(ddouble nu, ddouble x) {
-            if (nu < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(nu));
-            }
-            if (x < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(x));
-            }
-
             if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGammaRegularized function, " +
@@ -128,7 +100,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (IsNaN(nu) || IsNaN(x)) {
+            if (!(nu >= 0d && x >= 0d)) {
                 return NaN;
             }
 

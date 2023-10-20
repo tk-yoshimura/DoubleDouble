@@ -3,10 +3,6 @@
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseLowerIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(nu));
-            }
-
             if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
@@ -14,7 +10,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (!(x >= 0d && x <= 1d)) {
+            if (!(nu >= 0d && x >= 0d && x <= 1d)) {
                 return NaN;
             }
 
@@ -30,10 +26,6 @@ namespace DoubleDouble {
         }
 
         public static ddouble InverseUpperIncompleteGamma(ddouble nu, ddouble x) {
-            if (nu < 0d) {
-                throw new ArgumentOutOfRangeException(nameof(nu));
-            }
-
             if (nu > MaxNuRegularized) {
                 throw new ArgumentOutOfRangeException(
                     $"In the calculation of the IncompleteGamma function, " +
@@ -41,7 +33,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (!(x >= 0d && x <= 1d)) {
+            if (!(nu >= 0d && x >= 0d && x <= 1d)) {
                 return NaN;
             }
 

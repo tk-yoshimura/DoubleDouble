@@ -64,10 +64,10 @@
                 public static ddouble Value(ddouble m, ddouble e) {
 #if DEBUG
                     if (!(m >= 0d && m <= 1d)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
+                        throw new ArithmeticException(nameof(m));
                     }
                     if (!(e >= 0d && e <= 1d)) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
+                        throw new ArithmeticException(nameof(e));
                     }
 #endif
 
@@ -132,10 +132,10 @@
                 public static ddouble NearZero(ddouble m, ddouble e) {
 #if DEBUG
                     if (double.ILogB(m.Hi) > -32) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
+                        throw new ArithmeticException(nameof(m));
                     }
                     if (double.ILogB((e - 1d).Hi) > -16) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
+                        throw new ArithmeticException(nameof(e));
                     }
 #endif
 
@@ -256,10 +256,10 @@
                 public static ddouble Value(ddouble m, ddouble e) {
 #if DEBUG
                     if (!(m >= 0d)) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
+                        throw new ArithmeticException(nameof(m));
                     }
                     if (!(e >= 1d)) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
+                        throw new ArithmeticException(nameof(e));
                     }
 #endif
 
@@ -314,10 +314,10 @@
                 public static ddouble InitValue(ddouble m, ddouble e) {
 #if DEBUG
                     if (double.ILogB(m.Hi) > -32) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
+                        throw new ArithmeticException(nameof(m));
                     }
                     if (double.ILogB((1d - e).Hi) > -16) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
+                        throw new ArithmeticException(nameof(e));
                     }
 #endif
 

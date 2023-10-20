@@ -45,7 +45,7 @@ namespace DoubleDouble {
             public static ddouble Polylog(int n, ddouble x) {
 #if DEBUG
                 if (x < 0.5d || x > 1d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
 
@@ -120,7 +120,7 @@ namespace DoubleDouble {
             public static ddouble PolylogNearZero(int n, ddouble x) {
 #if DEBUG
                 if (x < -0.5d || x > 0.5d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
 
@@ -151,7 +151,7 @@ namespace DoubleDouble {
             public static ddouble PolylogMinusLimit(int n, ddouble x) {
 #if DEBUG
                 if (x > -1.5d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
 
@@ -245,7 +245,7 @@ namespace DoubleDouble {
             public static ddouble Polylog(int n, ddouble x) {
 #if DEBUG
                 if (x < -1.5d || x > -0.5d) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
 

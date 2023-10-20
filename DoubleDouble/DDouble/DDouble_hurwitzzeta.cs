@@ -1,11 +1,8 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble HurwitzZeta(ddouble x, ddouble a) {
-            if (x < 1d) {
-                throw new ArgumentOutOfRangeException(nameof(x));
-            }
-            if (IsNegative(a)) {
-                throw new ArgumentOutOfRangeException(nameof(a));
+            if (x < 1d || IsNegative(a)) {
+                return NaN;
             }
 
             if (IsNaN(x) || IsNaN(a)) {

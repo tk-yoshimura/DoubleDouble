@@ -273,9 +273,11 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble Pow2Prime(ddouble x) {
+#if DEBUG
                     if (!(x >= 0d) || x > 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(x));
+                        throw new ArithmeticException(nameof(x));
                     }
+#endif
                     if (x == 1d) {
                         return 2;
                     }

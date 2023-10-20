@@ -145,9 +145,11 @@ namespace DoubleDouble {
             private static readonly Dictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
 
             public static ddouble MPade(int n, ddouble q) {
+#if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
 
                 ddouble u = Square((n <= 1) ? q : q / (n * n));
 
@@ -178,9 +180,11 @@ namespace DoubleDouble {
             }
 
             public static ddouble DPade(int n, ddouble q) {
+                #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
 
                 if (n < 1) {
                     return 0d;
@@ -230,9 +234,11 @@ namespace DoubleDouble {
             }
 
             public static ddouble APade(int n, ddouble q) {
+                #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
 
                 int s = 2 * n + 1;
                 ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
@@ -273,9 +279,11 @@ namespace DoubleDouble {
             }
 
             public static ddouble BPade(int n, ddouble q) {
+                #if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
 
                 int s = 2 * n - 1;
                 ddouble h = Sqrt(q), invh = 1d / h, u = invh * int.Max(1, n);
@@ -384,9 +392,11 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateCCoef(int n, ddouble q, ddouble a, int terms = -1) {
+#if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
                 if (q < Eps) {
                     return QNearZeroCCoef(n, q);
                 }
@@ -494,9 +504,11 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateCCoefZeroShifted(int n, ddouble q) {
+#if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
                 if (q < Eps) {
                     return QNearZeroCCoef(n, q);
                 }
@@ -558,9 +570,11 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateSCoef(int n, ddouble q, ddouble b, int terms = -1) {
+#if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
                 if (q < Eps) {
                     return QNearZeroSCoef(n, q);
                 }
@@ -663,9 +677,11 @@ namespace DoubleDouble {
             }
 
             internal static ReadOnlyCollection<ddouble> GenerateSCoefZeroShifted(int n, ddouble q) {
+#if DEBUG
                 if (!(q >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
                 if (q < Eps) {
                     return QNearZeroSCoef(n, q);
                 }
@@ -811,9 +827,11 @@ namespace DoubleDouble {
                 if (n < 0 || n > MathieuUtil.MaxN) {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
+#if DEBUG
                 if (q > MathieuUtil.NZThreshold) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
 
                 if (n == 0) {
                     ddouble a = MathieuA(n, q);
@@ -863,9 +881,12 @@ namespace DoubleDouble {
                 if (n < 1 || n > MathieuUtil.MaxN) {
                     throw new ArgumentOutOfRangeException(nameof(n));
                 }
+
+#if DEBUG
                 if (q > MathieuUtil.NZThreshold) {
-                    throw new ArgumentOutOfRangeException(nameof(q));
+                    throw new ArithmeticException(nameof(q));
                 }
+#endif
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef = PadeBzTables[n];
 

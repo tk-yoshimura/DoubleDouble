@@ -99,7 +99,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTable;
@@ -126,7 +126,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = GtP5PadeTable;
@@ -153,7 +153,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt1PadeTable;
@@ -180,7 +180,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt2PadeTable;
@@ -207,7 +207,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt4PadeTable;
@@ -234,7 +234,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt8PadeTable;
@@ -261,7 +261,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt16PadeTable;
@@ -295,7 +295,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = GtP5PadeTable;
@@ -322,7 +322,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt1PadeTable;
@@ -349,7 +349,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt2PadeTable;
@@ -376,7 +376,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt4PadeTable;
@@ -403,7 +403,7 @@ namespace DoubleDouble {
 
 #if DEBUG
                 if (!(w >= 0d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Gt8PadeTable;
@@ -428,7 +428,7 @@ namespace DoubleDouble {
             public static ddouble ErfcxGt16(ddouble x) {
 #if DEBUG
                 if (!(x >= 16d)) {
-                    throw new ArgumentOutOfRangeException(nameof(x));
+                    throw new ArithmeticException(nameof(x));
                 }
 #endif
                 ddouble f = 1d, w = x * x;
