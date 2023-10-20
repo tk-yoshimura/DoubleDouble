@@ -210,6 +210,13 @@
             }
         }
 
+        internal static byte[] ScorerTable {
+            get {
+                object obj = ResourceManager.GetObject("ScorerTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] StieltjesGammaTable {
             get {
                 object obj = ResourceManager.GetObject("StieltjesGammaTable", resourceCulture);

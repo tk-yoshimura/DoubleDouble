@@ -113,6 +113,8 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.LambertW(x)|&#91;-1/e,+inf&#41;|4||
 |ddouble.AiryAi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
 |ddouble.AiryBi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
+|ddouble.ScorerGi(x)|&#40;-inf,+inf&#41;|5|Accuracy deteriorates near root.|
+|ddouble.ScorerHi(x)|&#40;-inf,+inf&#41;|4||
 |ddouble.JacobiSn(x, m)|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|
 |ddouble.JacobiCn(x, m)|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|
 |ddouble.JacobiDn(x, m)|&#40;-inf,+inf&#41;|4|k: elliptic modulus, m=k^2|
