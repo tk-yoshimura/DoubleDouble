@@ -4,10 +4,10 @@ using System;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            for (ddouble x = -0.5; x <= 3.375; x += 1d / 32) {
-                ddouble y = ddouble.LogBarnesG(x);
-
-                Console.WriteLine($"{x},{y}");
+            Console.WriteLine($"x,Ai,Bi,Gi,Hi");
+            
+            for (ddouble x = -8; x <= 8; x += 1d / 32) {
+                Console.WriteLine($"{x},{ddouble.AiryAi(x)},{ddouble.AiryBi(x)},{ddouble.ScorerGi(x)},{ddouble.ScorerHi(x)}");
             }
 
             Console.WriteLine("END");
