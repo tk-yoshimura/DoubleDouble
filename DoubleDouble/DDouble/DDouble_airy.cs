@@ -4,19 +4,17 @@ using static DoubleDouble.ddouble.Consts.Airy;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble AiryAi(ddouble x) {
-            if (Abs(x) > MaxRange) {
+            if (IsNaN(x)) {
+                return NaN;
+            }
+
+            ddouble x_abs = Abs(x);
+
+            if (x_abs > MaxRange) {
                 return 0d;
             }
 
-            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Rcp3, 1);
-
-            if (x >= NearZero) {
-                return v * RcpPI * RcpSqrt3 * BesselK(Rcp3, w);
-            }
-            else if (x <= -NearZero) {
-                return v * Rcp3 * (BesselJ(-Rcp3, w) + BesselJ(Rcp3, w));
-            }
-            else {
+            if (x_abs < NearZero) {
                 ddouble x2 = x * x;
                 ddouble s = x * TaylorNearZero[0] + TaylorNearZero[1];
 
@@ -29,22 +27,32 @@ namespace DoubleDouble {
 
                 return s;
             }
+            else {
+                ddouble v = Sqrt(x_abs), w = Ldexp(Cube(v) * Rcp3, 1);
+
+                if (IsNegative(x)) {
+                    ddouble y = v * Rcp3 * (BesselJ(-Rcp3, w) + BesselJ(Rcp3, w));
+                    return y;
+                }
+                else {
+                    ddouble y = v * RcpPI * RcpSqrt3 * BesselK(Rcp3, w);
+                    return y;
+                }
+            }
         }
 
         public static ddouble AiryBi(ddouble x) {
-            if (Abs(x) > MaxRange) {
+            if (IsNaN(x)) {
+                return NaN;
+            }
+
+            ddouble x_abs = Abs(x);
+
+            if (x_abs > MaxRange) {
                 return IsPositive(x) ? PositiveInfinity : 0d;
             }
 
-            ddouble v = Sqrt(Abs(x)), w = Ldexp(Cube(v) * Rcp3, 1);
-
-            if (x >= NearZero) {
-                return v * RcpSqrt3 * (BesselI(-Rcp3, w) + BesselI(Rcp3, w));
-            }
-            else if (x <= -NearZero) {
-                return v * RcpSqrt3 * (BesselJ(-Rcp3, w) - BesselJ(Rcp3, w));
-            }
-            else {
+            if (x_abs < NearZero) {
                 ddouble x2 = x * x;
                 ddouble s = x * TaylorNearZero[0] + TaylorNearZero[1];
 
@@ -56,6 +64,18 @@ namespace DoubleDouble {
                 s /= Sqrt(Cbrt3) * PI;
 
                 return s;
+            }
+            else {
+                ddouble v = Sqrt(x_abs), w = Ldexp(Cube(v) * Rcp3, 1);
+
+                if (IsNegative(x)) {
+                    ddouble y = v * RcpSqrt3 * (BesselJ(-Rcp3, w) - BesselJ(Rcp3, w));
+                    return y;
+                }
+                else {
+                    ddouble y = v * RcpSqrt3 * (BesselI(-Rcp3, w) + BesselI(Rcp3, w));
+                    return y;
+                }
             }
         }
 
