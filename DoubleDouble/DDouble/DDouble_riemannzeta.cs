@@ -28,7 +28,7 @@ namespace DoubleDouble {
                     d = d * x + table.ds[i];
                 }
 
-                Trace.Assert(d > 0.0625d, $"[RiemannZeta x={x}] Too small pade denom!!");
+                Debug.Assert(d > 0.0625d, $"[RiemannZeta x={x}] Too small pade denom!!");
 
                 return c / d;
             };
