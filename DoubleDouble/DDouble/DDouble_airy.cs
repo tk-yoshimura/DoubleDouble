@@ -8,22 +8,22 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            ddouble x_abs = Abs(x);
-
-            if (x_abs > MaxRange) {
+            if (x >= AiryAiUnderflow || IsNegativeInfinity(x)) {
                 return 0d;
             }
 
+            ddouble x_abs = Abs(x);
+
             if (x_abs < NearZero) {
                 ddouble x2 = x * x;
-                ddouble s = x * TaylorNearZero[0] + TaylorNearZero[1];
+                ddouble s = x * NearZeroCoefs[0] + NearZeroCoefs[1];
 
-                for (int i = 2; i + 1 < TaylorNearZero.Count; i += 2) {
-                    s = s * x2 - TaylorNearZero[i];
-                    s = s * x + TaylorNearZero[i + 1];
+                for (int i = 2; i + 1 < NearZeroCoefs.Count; i += 2) {
+                    s = s * x2 - NearZeroCoefs[i];
+                    s = s * x + NearZeroCoefs[i + 1];
                 }
 
-                s /= Cbrt3 * Cbrt3 * PI;
+                s /= AiNearZeroC;
 
                 return s;
             }
@@ -46,22 +46,26 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            ddouble x_abs = Abs(x);
-
-            if (x_abs > MaxRange) {
-                return IsPositive(x) ? PositiveInfinity : 0d;
+            if (x >= AiryBiOverflow) {
+                return PositiveInfinity;
             }
+
+            if (IsNegativeInfinity(x)) {
+                return 0d;
+            }
+
+            ddouble x_abs = Abs(x);
 
             if (x_abs < NearZero) {
                 ddouble x2 = x * x;
-                ddouble s = x * TaylorNearZero[0] + TaylorNearZero[1];
+                ddouble s = x * NearZeroCoefs[0] + NearZeroCoefs[1];
 
-                for (int i = 2; i + 1 < TaylorNearZero.Count; i += 2) {
-                    s = s * x2 + TaylorNearZero[i];
-                    s = s * x + TaylorNearZero[i + 1];
+                for (int i = 2; i + 1 < NearZeroCoefs.Count; i += 2) {
+                    s = s * x2 + NearZeroCoefs[i];
+                    s = s * x + NearZeroCoefs[i + 1];
                 }
 
-                s /= Sqrt(Cbrt3) * PI;
+                s /= BiNearZeroC;
 
                 return s;
             }
@@ -85,27 +89,34 @@ namespace DoubleDouble {
                 public static ddouble RcpSqrt3 { get; } = Rcp(Sqrt(3));
                 public static ddouble Cbrt3 { get; } = Cbrt(3);
                 public static ddouble NearZero { get; } = double.ScaleB(1, -4);
-                public static ddouble MaxRange { get; } = double.ScaleB(1, 128);
+
+                public static double AiryAiUnderflow = 108d, AiryBiOverflow = 105d;
+
+                public static ddouble AiNearZeroC = Cbrt3 * Cbrt3 * PI, BiNearZeroC = Sqrt(Cbrt3) * PI;
 
                 public static ddouble Gamma1d3 = (+1, 1, 0xAB73BA9CA4178B3BuL, 0xB234FA4B356011B6uL);
                 public static ddouble Gamma2d3 = (+1, 0, 0xAD53BC9461B3C655uL, 0x97A7F5B815934C85uL);
 
-                public static readonly ReadOnlyCollection<ddouble> TaylorNearZero;
+                public static readonly ReadOnlyCollection<ddouble> NearZeroCoefs;
 
                 static Airy() {
-                    ddouble[] taylor_nz = new ddouble[17];
+                    NearZeroCoefs = Array.AsReadOnly(GenerateNearZeroCoefs());
+                }
 
-                    taylor_nz[0] = Ldexp(Gamma1d3 * Sqrt(3), -1);
-                    taylor_nz[1] = Ldexp(Gamma2d3 * Cbrt3 * Sqrt(3), -1);
-                    taylor_nz[2] = 0d;
+                private static ddouble[] GenerateNearZeroCoefs() {
+                    ddouble[] coefs = new ddouble[17];
 
-                    for (int k = 3; k < taylor_nz.Length; k++) {
-                        taylor_nz[k] = taylor_nz[k - 3] / ((k - 1) * k);
+                    coefs[0] = Ldexp(Gamma1d3 * Sqrt(3), -1);
+                    coefs[1] = Ldexp(Gamma2d3 * Cbrt3 * Sqrt(3), -1);
+                    coefs[2] = 0d;
+
+                    for (int k = 3; k < coefs.Length; k++) {
+                        coefs[k] = coefs[k - 3] / ((k - 1) * k);
                     }
 
-                    taylor_nz = taylor_nz.Where(v => !IsZero(v)).Reverse().ToArray();
+                    coefs = coefs.Where(v => !IsZero(v)).Reverse().ToArray();
 
-                    TaylorNearZero = Array.AsReadOnly(taylor_nz);
+                    return coefs;
                 }
             }
         }
