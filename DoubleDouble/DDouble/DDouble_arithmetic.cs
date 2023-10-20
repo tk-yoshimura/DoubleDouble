@@ -407,5 +407,23 @@ namespace DoubleDouble {
         public static ddouble operator --(ddouble v) {
             return v - 1d;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble operator checked ++(ddouble v) {
+            if (double.ILogB(v.hi) > 102) {
+                throw new ArithmeticException();
+            }
+
+            return v + 1d;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble operator checked --(ddouble v) {
+            if (double.ILogB(v.hi) > 102) {
+                throw new ArithmeticException();
+            }
+
+            return v - 1d;
+        }
     }
 }
