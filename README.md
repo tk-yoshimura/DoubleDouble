@@ -191,6 +191,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.SierpinskiK|0.822825249678847032995...|Sierpiński's constant, Define follows wolfram.|
 |ddouble.RcpFibonacci|3.359885666243177553172...|Reciprocal Fibonacci constant|
 |ddouble.Niven|1.705211140105367764289...|Niven's constant|
+|ddouble.GolombDickman|0.624329988543550870992...|Golomb–Dickman constant|
 
 ## Sequence
 

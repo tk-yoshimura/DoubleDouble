@@ -34,6 +34,7 @@ namespace DoubleDouble {
             SoldnerMu = (+1, 0, 0xB9C677931F512642uL, 0xC676B1774EF3FFCBuL),
             SierpinskiK = (+1, -1, 0xD2A4ACF1B1952D4CuL, 0xF9B6C08D9048AEA1uL),
             RcpFibonacci = (+1, 1, 0xD7085DE3B412547AuL, 0x6E1D157303AB3415uL),
-            Niven = (+1, 0, 0xDA445BCFC382C748uL, 0xBAA1D4C214E3C4ADuL);
+            Niven = (+1, 0, 0xDA445BCFC382C748uL, 0xBAA1D4C214E3C4ADuL),
+            GolombDickman = (+1, -1, 0x9FD41712B4E41BD4uL, 0x26B9F2F254BA047AuL);
     }
 }
