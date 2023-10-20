@@ -17,19 +17,12 @@ namespace DoubleDouble {
                 return v * Rcp3 * (BesselJ(-Rcp3, w) + BesselJ(Rcp3, w));
             }
             else {
-                ddouble s = TaylorNearZero[^1];
-                for (int i = TaylorNearZero.Count - 2; i >= 0; i--) {
-                    int m = i % 3;
+                ddouble x2 = x * x;
+                ddouble s = x * TaylorNearZero[0] + TaylorNearZero[1];
 
-                    if (m == 0) {
-                        s = s * x + TaylorNearZero[i];
-                    }
-                    else if (m == 1) {
-                        s = s * x - TaylorNearZero[i];
-                    }
-                    else {
-                        s *= x;
-                    }
+                for (int i = 2; i + 1 < TaylorNearZero.Count; i += 2) {
+                    s = s * x2 - TaylorNearZero[i];
+                    s = s * x + TaylorNearZero[i + 1];
                 }
 
                 s /= Cbrt3 * Cbrt3 * PI;
@@ -52,16 +45,12 @@ namespace DoubleDouble {
                 return v * RcpSqrt3 * (BesselJ(-Rcp3, w) - BesselJ(Rcp3, w));
             }
             else {
-                ddouble s = TaylorNearZero[^1];
-                for (int i = TaylorNearZero.Count - 2; i >= 0; i--) {
-                    int m = i % 3;
+                ddouble x2 = x * x;
+                ddouble s = x * TaylorNearZero[0] + TaylorNearZero[1];
 
-                    if (m != 2) {
-                        s = s * x + TaylorNearZero[i];
-                    }
-                    else {
-                        s *= x;
-                    }
+                for (int i = 2; i + 1 < TaylorNearZero.Count; i += 2) {
+                    s = s * x2 + TaylorNearZero[i];
+                    s = s * x + TaylorNearZero[i + 1];
                 }
 
                 s /= Sqrt(Cbrt3) * PI;
@@ -78,18 +67,23 @@ namespace DoubleDouble {
                 public static ddouble NearZero { get; } = double.ScaleB(1, -4);
                 public static ddouble MaxRange { get; } = double.ScaleB(1, 128);
 
+                public static ddouble Gamma1d3 = (+1, 1, 0xAB73BA9CA4178B3BuL, 0xB234FA4B356011B6uL);
+                public static ddouble Gamma2d3 = (+1, 0, 0xAD53BC9461B3C655uL, 0x97A7F5B815934C85uL);
+
                 public static readonly ReadOnlyCollection<ddouble> TaylorNearZero;
 
                 static Airy() {
                     ddouble[] taylor_nz = new ddouble[17];
 
-                    taylor_nz[0] = Gamma(Rcp3) * Sqrt(3) / 2d;
-                    taylor_nz[1] = Gamma(Rcp3 * 2d) * Cbrt3 * Sqrt(3) / 2d;
+                    taylor_nz[0] = Ldexp(Gamma1d3 * Sqrt(3), -1);
+                    taylor_nz[1] = Ldexp(Gamma2d3 * Cbrt3 * Sqrt(3), -1);
                     taylor_nz[2] = 0d;
 
                     for (int k = 3; k < taylor_nz.Length; k++) {
                         taylor_nz[k] = taylor_nz[k - 3] / ((k - 1) * k);
                     }
+
+                    taylor_nz = taylor_nz.Where(v => !IsZero(v)).Reverse().ToArray();
 
                     TaylorNearZero = Array.AsReadOnly(taylor_nz);
                 }
