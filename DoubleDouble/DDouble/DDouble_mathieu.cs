@@ -180,7 +180,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble DPade(int n, ddouble q) {
-                #if DEBUG
+#if DEBUG
                 if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
@@ -234,7 +234,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble APade(int n, ddouble q) {
-                #if DEBUG
+#if DEBUG
                 if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
@@ -279,7 +279,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble BPade(int n, ddouble q) {
-                #if DEBUG
+#if DEBUG
                 if (!(q >= 0d)) {
                     throw new ArgumentOutOfRangeException(nameof(q));
                 }
