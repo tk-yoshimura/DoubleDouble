@@ -78,10 +78,8 @@ namespace DoubleDouble {
             }
 #endif
 
-            ddouble s = x - Floor(x);
-
-            int index = (int)Round(s * SinPIHalfTableN);
-            ddouble v = s - SinPIHalfTableDx * index;
+            int index = (int)Round(x * SinPIHalfTableN);
+            ddouble v = x - SinPIHalfTableDx * index;
             ddouble sna = SinPIHalfTable[index];
             ddouble cna = SinPIHalfTable[SinPIHalfTableN - index];
 
