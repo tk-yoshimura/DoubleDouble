@@ -231,7 +231,18 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble x = 2; x <= 36.5; x += 0.5) {
+            for (ddouble x = 1.5; x <= 2; x += 1d / 32) {
+                ddouble y = ddouble.Gamma(x);
+                ddouble z = ddouble.InverseGamma(y);
+
+                Console.WriteLine(x);
+                Console.WriteLine(y);
+                Console.WriteLine(z);
+
+                HPAssert.AreEqual(x, z, x * 1e-31d);
+            }
+
+            for (ddouble x = 1.5; x <= 36.5; x += 0.5) {
                 ddouble y = ddouble.Gamma(x);
                 ddouble z = ddouble.InverseGamma(y);
 
@@ -242,17 +253,21 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreEqual(x, z);
             }
 
-            ddouble digamma_p0p999 = ddouble.InverseGamma(0.999);
-            ddouble digamma_pinf = ddouble.InverseGamma(double.PositiveInfinity);
-            ddouble digamma_pmax = ddouble.InverseGamma(double.MaxValue);
-            ddouble digamma_ninf = ddouble.InverseGamma(double.NegativeInfinity);
-            ddouble digamma_nan = ddouble.InverseGamma(double.NaN);
+            ddouble invgamma_p0p999 = ddouble.InverseGamma(0.999);
+            ddouble invgamma_p0p886 = ddouble.InverseGamma(0.886);
+            ddouble invgamma_pinf = ddouble.InverseGamma(double.PositiveInfinity);
+            ddouble invgamma_pmax = ddouble.InverseGamma(double.MaxValue);
+            ddouble invgamma_ninf = ddouble.InverseGamma(double.NegativeInfinity);
+            ddouble invgamma_nan = ddouble.InverseGamma(double.NaN);
+            ddouble invgamma_polar = ddouble.InverseGamma(ddouble.Sqrt(ddouble.PI) / 2);
 
-            Assert.IsTrue(ddouble.IsNaN(digamma_p0p999), nameof(digamma_p0p999));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_pinf), nameof(digamma_pinf));
-            Assert.IsTrue(ddouble.IsFinite(digamma_pmax), nameof(digamma_pmax));
-            Assert.IsTrue(ddouble.IsNaN(digamma_ninf), nameof(digamma_ninf));
-            Assert.IsTrue(ddouble.IsNaN(digamma_nan), nameof(digamma_nan));
+            Assert.IsTrue(invgamma_p0p999 < 2d, nameof(invgamma_p0p999));
+            Assert.IsTrue(ddouble.IsNaN(invgamma_p0p886), nameof(invgamma_p0p886));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(invgamma_pinf), nameof(invgamma_pinf));
+            Assert.IsTrue(ddouble.IsFinite(invgamma_pmax), nameof(invgamma_pmax));
+            Assert.IsTrue(ddouble.IsNaN(invgamma_ninf), nameof(invgamma_ninf));
+            Assert.IsTrue(ddouble.IsNaN(invgamma_nan), nameof(invgamma_nan));
+            Assert.IsTrue(1.5d == invgamma_polar, nameof(invgamma_polar));
         }
 
         [TestMethod]

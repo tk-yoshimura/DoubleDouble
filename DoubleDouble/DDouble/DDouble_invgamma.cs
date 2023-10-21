@@ -6,7 +6,7 @@ using static DoubleDouble.ddouble.Consts.InverseGamma;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseGamma(ddouble x) {
-            if (!(x >= 1d)) {
+            if (!(x >= XMin)) {
                 return NaN;
             }
 
@@ -14,41 +14,72 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            ddouble u = Log2(x);
+            if (x >= 1d) {
+                ddouble u = Log2(x);
 
-            foreach ((double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)> table) in PadeTables) {
-                if (u >= umax) {
-                    continue;
+                foreach ((double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)> table) in PadeTables) {
+                    if (u >= umax) {
+                        continue;
+                    }
+
+                    ddouble v = u - umin;
+
+                    Debug.Assert(v >= 0d, $"[InverseGamma x={x}] Invalid pade v!!");
+
+                    (ddouble sc, ddouble sd) = table[0];
+                    for (int i = 1; i < table.Count; i++) {
+                        (ddouble c, ddouble d) = table[i];
+
+                        sc = sc * v + c;
+                        sd = sd * v + d;
+                    }
+
+                    Debug.Assert(sd > 0.0625d, $"[InverseGamma x={x}] Too small pade denom!!");
+
+                    ddouble y = sc / sd;
+
+                    ddouble g = Gamma(y);
+
+                    if (x != g && IsFinite(g)) {
+                        ddouble psi = Digamma(y);
+                        ddouble delta = (x / g - 1d) / psi;
+
+                        y += delta;
+                    }
+
+                    y = TruncateMantissa(y, keep_bits: 105);
+
+                    return y;
                 }
+            }
+            else if (x >= XMin) {
+                ddouble u = Max(0d, x - HalfSqrtPI);
 
-                ddouble v = u - umin;
+                foreach ((double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)> table) in SingularPadeTables) {
+                    if (u >= umax) {
+                        continue;
+                    }
 
-                Debug.Assert(v >= 0d, $"[InverseGamma x={x}] Invalid pade v!!");
+                    ddouble v = u - umin;
 
-                (ddouble sc, ddouble sd) = table[0];
-                for (int i = 1; i < table.Count; i++) {
-                    (ddouble c, ddouble d) = table[i];
+                    Debug.Assert(v >= 0d, $"[InverseGamma x={x}] Invalid pade v!!");
 
-                    sc = sc * v + c;
-                    sd = sd * v + d;
+                    (ddouble sc, ddouble sd) = table[0];
+                    for (int i = 1; i < table.Count; i++) {
+                        (ddouble c, ddouble d) = table[i];
+
+                        sc = sc * v + c;
+                        sd = sd * v + d;
+                    }
+
+                    Debug.Assert(sd > 0.0625d, $"[InverseGamma x={x}] Too small pade denom!!");
+
+                    ddouble y = Sqrt(sc / sd) + 1.5d;
+
+                    y = TruncateMantissa(y, keep_bits: 105);
+
+                    return y;
                 }
-
-                Debug.Assert(sd > 0.0625d, $"[InverseGamma x={x}] Too small pade denom!!");
-
-                ddouble y = sc / sd;
-
-                ddouble g = Gamma(y);
-
-                if (x != g && IsFinite(g)) {
-                    ddouble psi = Digamma(y);
-                    ddouble delta = (x / g - 1d) / psi;
-
-                    y += delta;
-                }
-
-                y = TruncateMantissa(y, keep_bits: 105);
-
-                return y;
             }
 
             return NaN;
@@ -56,7 +87,10 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class InverseGamma {
-                public static readonly ReadOnlyCollection<(double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)>)> PadeTables;
+                public static readonly ddouble HalfSqrtPI = Ldexp(Sqrt(PI), -1);
+                public static readonly ddouble XMin = Min(Gamma(1.5d), HalfSqrtPI);
+
+                public static readonly ReadOnlyCollection<(double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)>)> PadeTables, SingularPadeTables;
 
                 static InverseGamma() {
                     Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
@@ -75,6 +109,13 @@ namespace DoubleDouble {
                         (128d, 256d, tables["PadeX128Table"]),
                         (256d, 512d, tables["PadeX256Table"]),
                         (512d, double.MaxValue, tables["PadeX512Table"]),
+                    });
+
+                    SingularPadeTables = Array.AsReadOnly(new (double, double, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
+                        (0d, 1 / 256d, tables["PadeXSingularRcp256Table"]),
+                        (1 / 256d, 1 / 128d, tables["PadeXSingularRcp128Table"]),
+                        (1 / 128d, 1 / 32d, tables["PadeXSingularRcp32Table"]),
+                        (1 / 32d, 1 / 8d, tables["PadeXSingularRcp8Table"]),
                     });
                 }
             }
