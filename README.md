@@ -61,6 +61,7 @@ MaxValue : 2^1024 = 1.79769e308
 |ddouble.Digamma(x)|&#40;-inf,+inf&#41;|4|Near the positive root, polynomial interpolation is used.|
 |ddouble.Polygamma(n, x)|&#40;-inf,+inf&#41;|4|Accuracy deteriorates near non-positive intergers. <br/> n &leq; 16|
 |ddouble.InverseGamma(x)|&#91;sqrt(&pi;)/2,+inf&#41;|2|gamma^-1(x)|
+|ddouble.RcpGamma(x)|&#40;-inf,+inf&#41;|3|1/gamma(x)|
 |ddouble.LowerIncompleteGamma(nu, x)|&#91;0,+inf&#41;|4|nu &leq; 171.625|
 |ddouble.UpperIncompleteGamma(nu, x)|&#91;0,+inf&#41;|4|nu &leq; 171.625|
 |ddouble.LowerIncompleteGammaRegularized(nu, x)|&#91;0,+inf&#41;|4|nu &leq; 8192|

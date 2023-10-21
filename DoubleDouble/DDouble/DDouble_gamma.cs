@@ -1,6 +1,7 @@
 ﻿using DoubleDouble.Utils;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -219,6 +220,27 @@ namespace DoubleDouble {
             }
         }
 
+        public static ddouble RcpGamma(ddouble x) {
+            if (ddouble.IsNaN(x) || ddouble.IsNegativeInfinity(x)) {
+                return NaN;
+            }
+
+            if (ddouble.IsFinite(x) && double.ILogB(x.hi) < -64) {
+                ddouble y = x * (1d + x * EulerGamma);
+                return y;
+            }
+            else if (x <= Consts.Gamma.FiniteLarge) {
+                ddouble y = 1d / Gamma(x);
+                y = IsFinite(y) ? y : 0d;
+                return y;
+            }
+            else {
+                ddouble c = (139d + 180d * x * (1d + 24d * x * (-1d + 12d * x))) / (51840d * Sqrt(Ldexp(PI, 1)) * Pow(Sqrt(x), 5));
+                ddouble y = Pow2(x * (LbE - Log2(x))) * c;
+                return y;
+            }
+        }
+
         private static ddouble SterlingTerm(ddouble x) {
             ddouble v = Rcp(x), v2 = v * v, v4 = v2 * v2, u = v;
 
@@ -260,7 +282,7 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class Gamma {
                 public const double Log2PadeWise2X0 = 4d, Log2PadeWise4X0 = 16d;
-                public const double ExtremeLarge = 171.625d;
+                public const double FiniteLarge = 171.6240234375d, ExtremeLarge = 171.625d;
 
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
