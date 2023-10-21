@@ -224,6 +224,9 @@ namespace DoubleDouble {
             if (ddouble.IsNaN(x) || ddouble.IsNegativeInfinity(x)) {
                 return NaN;
             }
+            if (x > 178.5d) {
+                return 0d;
+            }
 
             if (ddouble.IsFinite(x) && double.ILogB(x.hi) < -64) {
                 ddouble y = x * (1d + x * EulerGamma);

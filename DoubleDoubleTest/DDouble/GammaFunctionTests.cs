@@ -474,6 +474,12 @@ namespace DoubleDoubleTest.DDouble {
 
                 Assert.AreEqual($"{expected:e10}", $"{y:e10}", $"{x}");
             }
+
+            ddouble rcpgamma_pinf = ddouble.RcpGamma(double.PositiveInfinity);
+            ddouble rcpgamma_pmax = ddouble.RcpGamma(double.MaxValue);
+
+            Assert.IsTrue(ddouble.IsPlusZero(rcpgamma_pinf), nameof(rcpgamma_pinf));
+            Assert.IsTrue(ddouble.IsFinite(rcpgamma_pmax), nameof(rcpgamma_pmax));
         }
 
         [TestMethod]
