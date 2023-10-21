@@ -18,8 +18,11 @@
 |----|----|----|
 |ddouble|104|30|
 
-Epsilon: 2^-968 = 4.00833e-292  
-MaxValue : 2^1024 = 1.79769e308
+|stat|bin|dec|
+|---|---|---|
+|MaxValue|2^1024|1.79769e308|
+|Normal MinValue|2^-968|4.00833e-292|
+|Subnormal MinValue|2^-1074|4.94066e-324|
 
 ## Functions
 
