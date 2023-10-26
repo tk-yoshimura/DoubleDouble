@@ -9,7 +9,7 @@ namespace DoubleDouble {
         public static ddouble BesselJ(ddouble nu, ddouble x) {
             BesselUtil.CheckNu(nu);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
 
@@ -36,8 +36,12 @@ namespace DoubleDouble {
         public static ddouble BesselJ(int n, ddouble x) {
             BesselUtil.CheckN(n);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x)) {
                 return NaN;
+            }
+
+            if (IsNegative(x)) {
+                return ((n & 1) == 0) ? BesselJ(n, -x) : -BesselJ(n, -x);
             }
 
             if (x <= BesselUtil.Eps) {
@@ -57,7 +61,7 @@ namespace DoubleDouble {
         public static ddouble BesselY(ddouble nu, ddouble x) {
             BesselUtil.CheckNu(nu);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
 
@@ -102,7 +106,7 @@ namespace DoubleDouble {
         public static ddouble BesselY(int n, ddouble x) {
             BesselUtil.CheckN(n);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
 
@@ -126,7 +130,7 @@ namespace DoubleDouble {
         public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
             BesselUtil.CheckNu(nu);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
 
@@ -153,7 +157,7 @@ namespace DoubleDouble {
         public static ddouble BesselI(int n, ddouble x, bool scale = false) {
             BesselUtil.CheckN(n);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
 
@@ -174,7 +178,7 @@ namespace DoubleDouble {
         public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
             BesselUtil.CheckNu(nu);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
 
@@ -205,7 +209,7 @@ namespace DoubleDouble {
         public static ddouble BesselK(int n, ddouble x, bool scale = false) {
             BesselUtil.CheckN(n);
 
-            if (!(x >= 0d)) {
+            if (IsNaN(x) || IsNegative(x)) {
                 return NaN;
             }
 
@@ -1657,9 +1661,7 @@ namespace DoubleDouble {
                 private ddouble g;
 
                 public BesselJPhiTable(ddouble alpha) {
-                    if (!(alpha > 0d) || alpha >= 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(alpha));
-                    }
+                    Debug.Assert((alpha > 0d && alpha < 1d), nameof(alpha));
 
                     this.alpha = alpha;
 
@@ -1702,9 +1704,7 @@ namespace DoubleDouble {
                 private ddouble g;
 
                 public BesselIPsiTable(ddouble alpha) {
-                    if (!(alpha > 0d) || alpha >= 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(alpha));
-                    }
+                    Debug.Assert((alpha > 0d && alpha < 1d), nameof(alpha));
 
                     this.alpha = alpha;
 
@@ -1747,9 +1747,7 @@ namespace DoubleDouble {
                 private ddouble g;
 
                 public BesselYEtaTable(ddouble alpha) {
-                    if (!(alpha >= 0d) || alpha >= 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(alpha));
-                    }
+                    Debug.Assert((alpha >= 0d && alpha < 1d), nameof(alpha));
 
                     this.alpha = alpha;
                     this.table.Add(NaN);
@@ -1801,9 +1799,7 @@ namespace DoubleDouble {
                 private readonly BesselYEtaTable eta;
 
                 public BesselYXiTable(ddouble alpha, BesselYEtaTable eta) {
-                    if (!(alpha >= 0d) || alpha >= 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(alpha));
-                    }
+                    Debug.Assert((alpha >= 0d && alpha < 1d), nameof(alpha));
 
                     this.alpha = alpha;
                     this.table.Add(NaN);

@@ -119,9 +119,7 @@ namespace DoubleDouble {
                 }
 
                 private static ddouble SinPIHalfPrime(ddouble x) {
-                    if (!(x >= 0d) || x > 1d) {
-                        throw new ArgumentOutOfRangeException(nameof(x));
-                    }
+                    Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
                     if (x == 0.5d) {
                         return Ldexp(Sqrt(2), -1);

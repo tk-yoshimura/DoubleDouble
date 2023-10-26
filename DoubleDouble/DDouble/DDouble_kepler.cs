@@ -296,14 +296,8 @@ namespace DoubleDouble {
                 }
 
                 public static ddouble InitValue(ddouble m, ddouble e) {
-#if DEBUG
-                    if (double.ILogB(m.Hi) > -32) {
-                        throw new ArgumentOutOfRangeException(nameof(m));
-                    }
-                    if (double.ILogB((1d - e).Hi) > -16) {
-                        throw new ArgumentOutOfRangeException(nameof(e));
-                    }
-#endif
+                    Debug.Assert(double.ILogB(m.Hi) <= -32, nameof(m));
+                    Debug.Assert(double.ILogB((1d - e).Hi) <= -16, nameof(e));
 
                     return NearOneE.Value(m, e);
                 }
