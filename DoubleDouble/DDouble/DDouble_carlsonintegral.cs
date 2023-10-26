@@ -70,7 +70,9 @@ namespace DoubleDouble {
 
             const int max_iters = 64;
 
-            ddouble s = 0d, exp4 = 1d;
+            int exp4 = 0;
+
+            ddouble s = 0d;
             ddouble mu = 0d, invmu = 0d, xd = 0d, yd = 0d, zd = 0d;
             ddouble eps_prev = NaN;
 
@@ -80,8 +82,8 @@ namespace DoubleDouble {
                 );
 
                 ddouble lambda = (sqrtx + sqrtz) * sqrty + sqrtx * sqrtz;
-                s += exp4 / (sqrtz * (z + lambda));
-                exp4 = Ldexp(exp4, -2);
+                s += Ldexp(1d / (sqrtz * (z + lambda)), exp4);
+                exp4 -= 2;
 
                 (x, y, z) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2));
 
@@ -106,7 +108,7 @@ namespace DoubleDouble {
             ddouble v1 = xymzz6 * (-C3d14 + xymzz6 * C9d88 - zd * xy3mzz8 * C9d52);
             ddouble v2 = zd * (xy3mzz8 * Rcp6 + zd * (zd * xy * C3d26 - (xy - zz) * C9d22));
 
-            ddouble v = kappa * (3d * s + exp4 * (1d + v1 + v2) * (invmu * Sqrt(invmu)));
+            ddouble v = kappa * (3d * s + Ldexp((1d + v1 + v2) * (invmu * Sqrt(invmu)), exp4));
 
             return v;
         }
@@ -202,7 +204,9 @@ namespace DoubleDouble {
 
             const int max_iters = 64;
 
-            ddouble s = 0d, exp4 = 1d;
+            int exp4 = 0;
+
+            ddouble s = 0d;
             ddouble mu = 0d, invmu = 0d, xd = 0d, yd = 0d, zd = 0d, wd = 0d;
             ddouble eps_prev = NaN;
 
@@ -213,8 +217,8 @@ namespace DoubleDouble {
                 ddouble alpha = Square(w * (sqrtx + sqrty + sqrtz) + (sqrtx * sqrty * sqrtz));
                 ddouble beta = w * Square(w + lambda);
 
-                s += exp4 * CarlsonRC(alpha, beta);
-                exp4 = Ldexp(exp4, -2);
+                s += Ldexp(CarlsonRC(alpha, beta), exp4);
+                exp4 -= 2;
 
                 (x, y, z, w) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2), Ldexp(w + lambda, -2));
 
@@ -241,7 +245,7 @@ namespace DoubleDouble {
             ddouble v2 = wd * ((xyyzzx - ww) * Rcp3 - xyyzzx * wd * C3d22);
             ddouble v3 = xyyzzxmww3 * (-C3d14 + xyyzzxmww3 * C9d88 - (xyz + 2d * wd * (xyyzzx - ww)) * C9d52);
 
-            ddouble v = kappa * (3d * s + exp4 * (1d + v1 + v2 + v3) * (invmu * Sqrt(invmu)));
+            ddouble v = kappa * (3d * s + Ldexp((1d + v1 + v2 + v3) * (invmu * Sqrt(invmu)), exp4));
 
             return v;
         }
