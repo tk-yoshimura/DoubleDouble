@@ -129,7 +129,7 @@
 |ddouble.CarlsonRD(x, y, z)|&#91;0,+inf&#41;|4||
 |ddouble.CarlsonRC(x, y)|&#91;0,+inf&#41;|4||
 |ddouble.CarlsonRF(x, y, z)|&#91;0,+inf&#41;|4||
-|ddouble.CarlsonRJ(x, y, z, pho)|&#91;0,+inf&#41;|4||
+|ddouble.CarlsonRJ(x, y, z, rho)|&#91;0,+inf&#41;|4||
 |ddouble.CarlsonRG(x, y, z)|&#91;0,+inf&#41;|4||
 |ddouble.RiemannZeta(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.HurwitzZeta(x, a)|&#40;1,+inf&#41;|3|a &geq; 0|
