@@ -13,7 +13,7 @@ namespace DoubleDouble {
             if (!(q >= -1d && q <= 1d)) {
                 return NaN;
             }
-            if (Abs(q) == 1d) {
+            if (1d - Abs(q) <= Eps) {
                 return NegativeInfinity;
             }
 
@@ -62,6 +62,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class EulerQ {
+                public static readonly double Eps = double.ScaleB(1, -1024);
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
 
                 static EulerQ() {

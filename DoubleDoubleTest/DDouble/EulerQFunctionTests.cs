@@ -4173,6 +4173,12 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(ddouble.BitIncrement(-1))));
             Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(ddouble.BitDecrement(+1))));
 
+            Assert.IsTrue(ddouble.IsFinite(ddouble.LogEulerQ(-1 + ddouble.Ldexp(1, -1023))));
+            Assert.IsTrue(ddouble.IsFinite(ddouble.LogEulerQ(+1 - ddouble.Ldexp(1, -1023))));
+
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(-1 + ddouble.Ldexp(1, -1024))));
+            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(+1 - ddouble.Ldexp(1, -1024))));
+
             Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.NaN)));
             Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.PositiveInfinity)));
             Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.NegativeInfinity)));
