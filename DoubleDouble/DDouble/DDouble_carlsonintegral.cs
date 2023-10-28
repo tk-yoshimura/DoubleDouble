@@ -176,26 +176,26 @@ namespace DoubleDouble {
             return v;
         }
 
-        public static ddouble CarlsonRJ(ddouble x, ddouble y, ddouble z, ddouble pho) {
-            if (x == pho) {
+        public static ddouble CarlsonRJ(ddouble x, ddouble y, ddouble z, ddouble rho) {
+            if (x == rho) {
                 return CarlsonRD(y, z, x);
             }
-            if (y == pho) {
+            if (y == rho) {
                 return CarlsonRD(z, x, y);
             }
-            if (z == pho) {
+            if (z == rho) {
                 return CarlsonRD(x, y, z);
             }
 
-            if (!(x >= 0d) || !(y >= 0d) || !(z >= 0d) || !(pho >= 0d)) {
+            if (!(x >= 0d) || !(y >= 0d) || !(z >= 0d) || !(rho >= 0d)) {
                 return NaN;
             }
-            if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z) || IsInfinity(pho)) {
+            if (IsInfinity(x) || IsInfinity(y) || IsInfinity(z) || IsInfinity(rho)) {
                 return 0d;
             }
 
             int scale;
-            (scale, (x, y, z, pho)) = AdjustScale(exp: 0, (x, y, z, pho));
+            (scale, (x, y, z, rho)) = AdjustScale(exp: 0, (x, y, z, rho));
             ddouble kappa = Pow2(Ldexp(scale * 3, -1));
 
             if ((x <= Eps && y <= Eps) || (y <= Eps && z <= Eps) || (z <= Eps && x <= Eps)) {
@@ -207,28 +207,28 @@ namespace DoubleDouble {
             int exp4 = 0;
 
             ddouble s = 0d;
-            ddouble mu = 0d, invmu = 0d, xd = 0d, yd = 0d, zd = 0d, phod = 0d;
+            ddouble mu = 0d, invmu = 0d, xd = 0d, yd = 0d, zd = 0d, rhod = 0d;
             ddouble eps_prev = NaN;
 
             for (int i = 0; i <= max_iters; i++) {
                 (ddouble sqrtx, ddouble sqrty, ddouble sqrtz) = (Sqrt(x), Sqrt(y), Sqrt(z));
 
                 ddouble lambda = (sqrtx + sqrtz) * sqrty + sqrtx * sqrtz;
-                ddouble alpha = Square(pho * (sqrtx + sqrty + sqrtz) + (sqrtx * sqrty * sqrtz));
-                ddouble beta = pho * Square(pho + lambda);
+                ddouble alpha = Square(rho * (sqrtx + sqrty + sqrtz) + (sqrtx * sqrty * sqrtz));
+                ddouble beta = rho * Square(rho + lambda);
 
                 s += Ldexp(CarlsonRC(alpha, beta), exp4);
                 exp4 -= 2;
 
-                (x, y, z, pho) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2), Ldexp(pho + lambda, -2));
+                (x, y, z, rho) = (Ldexp(x + lambda, -2), Ldexp(y + lambda, -2), Ldexp(z + lambda, -2), Ldexp(rho + lambda, -2));
 
                 if ((i & 1) == 0) {
-                    mu = (x + y + z + Ldexp(pho, 1)) * Rcp5;
+                    mu = (x + y + z + Ldexp(rho, 1)) * Rcp5;
                     invmu = Rcp(mu);
 
-                    (xd, yd, zd, phod) = ((mu - x) * invmu, (mu - y) * invmu, (mu - z) * invmu, (mu - pho) * invmu);
+                    (xd, yd, zd, rhod) = ((mu - x) * invmu, (mu - y) * invmu, (mu - z) * invmu, (mu - rho) * invmu);
 
-                    ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd), Abs(phod));
+                    ddouble eps = Max(Abs(xd), Abs(yd), Abs(zd), Abs(rhod));
 
                     if (eps < 8e-6 || IsNaN(eps) || eps_prev <= eps) {
                         i = max_iters;
@@ -238,12 +238,12 @@ namespace DoubleDouble {
                 }
             }
 
-            ddouble xyz = xd * yd * zd, xyyzzx = (xd + zd) * yd + xd * zd, pho2 = phod * phod;
-            ddouble xyyzzxmpho2x3 = xyyzzx - 3d * pho2;
+            ddouble xyz = xd * yd * zd, xyyzzx = (xd + zd) * yd + xd * zd, rho2 = rhod * rhod;
+            ddouble xyyzzxmrho2x3 = xyyzzx - 3d * rho2;
 
-            ddouble v1 = xyz * (Rcp6 - phod * (C3d11 - phod * C3d26));
-            ddouble v2 = phod * ((xyyzzx - pho2) * Rcp3 - xyyzzx * phod * C3d22);
-            ddouble v3 = xyyzzxmpho2x3 * (-C3d14 + xyyzzxmpho2x3 * C9d88 - (xyz + 2d * phod * (xyyzzx - pho2)) * C9d52);
+            ddouble v1 = xyz * (Rcp6 - rhod * (C3d11 - rhod * C3d26));
+            ddouble v2 = rhod * ((xyyzzx - rho2) * Rcp3 - xyyzzx * rhod * C3d22);
+            ddouble v3 = xyyzzxmrho2x3 * (-C3d14 + xyyzzxmrho2x3 * C9d88 - (xyz + 2d * rhod * (xyyzzx - rho2)) * C9d52);
 
             ddouble v = kappa * (3d * s + Ldexp((1d + v1 + v2 + v3) * (invmu * Sqrt(invmu)), exp4));
 
