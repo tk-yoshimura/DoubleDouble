@@ -41,8 +41,6 @@ namespace DoubleDouble {
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[pade_idx];
 
-                Debug.Assert(u >= 0, nameof(u));
-
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
