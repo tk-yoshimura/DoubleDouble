@@ -112,6 +112,13 @@
             }
         }
 
+        internal static byte[] EulerQTable {
+            get {
+                object obj = ResourceManager.GetObject("EulerQTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] FresnelTable {
             get {
                 object obj = ResourceManager.GetObject("FresnelTable", resourceCulture);

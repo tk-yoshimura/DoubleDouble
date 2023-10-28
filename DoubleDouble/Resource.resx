@@ -151,6 +151,9 @@
   <data name="ErfTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\ErfTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="EulerQTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resource\EulerQTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="FresnelTable" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resource\FresnelTable.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

@@ -152,6 +152,8 @@
 |ddouble.MathieuB(n, q)|&#40;-inf,+inf&#41;|4|n &leq; 16|
 |ddouble.MathieuC(n, q, x)|&#40;-inf,+inf&#41;|4|n &leq; 16, Accuracy deteriorates when q is very large.|
 |ddouble.MathieuS(n, q, x)|&#40;-inf,+inf&#41;|4|n &leq; 16, Accuracy deteriorates when q is very large.|
+|ddouble.EulerQ(q)|&#40;-1,1&#41;|4||
+|ddouble.LogEulerQ(q)|&#40;-1,1&#41;|4||
 |ddouble.Ldexp(x, y)|&#40;-inf,+inf&#41;|N/A||
 |ddouble.Binomial(n, k)|N/A|1|n &leq; 1000|
 |ddouble.Hypot(x, y)|N/A|2||

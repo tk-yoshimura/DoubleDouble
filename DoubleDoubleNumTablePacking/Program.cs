@@ -40,6 +40,10 @@
                 ErfiTable.Pack(sw);
             }
 
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(EulerQTable) + ".bin", FileMode.Create))) {
+                EulerQTable.Pack(sw);
+            }
+
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(FresnelTable) + ".bin", FileMode.Create))) {
                 FresnelTable.Pack(sw);
             }
