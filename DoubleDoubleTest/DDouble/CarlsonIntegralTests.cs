@@ -326,21 +326,21 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void CarlsonRJTest() {
-            for (ddouble w = 0; w <= 4; w += 0.5) {
+            for (ddouble pho = 0; pho <= 4; pho += 0.5) {
                 for (ddouble z = 0.5d; z <= 4; z += 0.5) {
                     for (ddouble y = 0.5; y <= 4; y += 0.5) {
                         for (ddouble x = 0.5; x <= 4; x += 0.5) {
-                            Console.WriteLine($"{x},{y},{z},{w}");
+                            Console.WriteLine($"{x},{y},{z},{pho}");
 
                             ddouble d = x * y / z;
 
-                            ddouble a = w * w * (x + y + z + d);
-                            ddouble b = w * (w + x) * (w + y);
+                            ddouble a = pho * pho * (x + y + z + d);
+                            ddouble b = pho * (pho + x) * (pho + y);
 
-                            ddouble v1 = ddouble.CarlsonRJ(x, x + z, x + d, x + w);
-                            ddouble v2 = ddouble.CarlsonRJ(y, y + z, y + d, y + w);
+                            ddouble v1 = ddouble.CarlsonRJ(x, x + z, x + d, x + pho);
+                            ddouble v2 = ddouble.CarlsonRJ(y, y + z, y + d, y + pho);
                             ddouble v3 = ddouble.CarlsonRJ(a, b, b, a);
-                            ddouble v4 = ddouble.CarlsonRJ(0, z, d, w);
+                            ddouble v4 = ddouble.CarlsonRJ(0, z, d, pho);
 
                             ddouble f = v1 + v2 + (a - b) * v3 + 3 / ddouble.Sqrt(a);
                             ddouble e = v4;
@@ -356,7 +356,7 @@ namespace DoubleDoubleTest.DDouble {
                                 );
                             }
                             else {
-                                HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z},{w}");
+                                HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z},{pho}");
                             }
                         }
                     }
@@ -366,19 +366,19 @@ namespace DoubleDoubleTest.DDouble {
             for (ddouble z = 0; z <= 4; z += 0.5) {
                 for (ddouble y = 0; y <= 4; y += 0.5) {
                     for (ddouble x = 0; x <= 4; x += 0.5) {
-                        for (ddouble w = ddouble.Max(x, y, z) + 0.5; w <= 4; w += 0.5) {
-                            Console.WriteLine($"{x},{y},{z},{w}");
+                        for (ddouble pho = ddouble.Max(x, y, z) + 0.5; pho <= 4; pho += 0.5) {
+                            Console.WriteLine($"{x},{y},{z},{pho}");
 
-                            (ddouble sqrtx, ddouble sqrty, ddouble sqrtz, ddouble sqrtw) = (
-                                ddouble.Sqrt(x), ddouble.Sqrt(y), ddouble.Sqrt(z), ddouble.Sqrt(w)
+                            (ddouble sqrtx, ddouble sqrty, ddouble sqrtz, ddouble sqrtpho) = (
+                                ddouble.Sqrt(x), ddouble.Sqrt(y), ddouble.Sqrt(z), ddouble.Sqrt(pho)
                             );
 
                             ddouble lambda = sqrtx * sqrty + sqrty * sqrtz + sqrtz * sqrtx;
-                            ddouble m = (w - x) * (w - y) * (w - z);
-                            ddouble d = (sqrtw + sqrtx) * (sqrtw + sqrty) * (sqrtw + sqrtz);
+                            ddouble m = (pho - x) * (pho - y) * (pho - z);
+                            ddouble d = (sqrtpho + sqrtx) * (sqrtpho + sqrty) * (sqrtpho + sqrtz);
 
-                            ddouble v1 = ddouble.CarlsonRJ(x, y, z, w);
-                            ddouble v2 = ddouble.CarlsonRJ(x + lambda, y + lambda, z + lambda, w + lambda);
+                            ddouble v1 = ddouble.CarlsonRJ(x, y, z, pho);
+                            ddouble v2 = ddouble.CarlsonRJ(x + lambda, y + lambda, z + lambda, pho + lambda);
                             ddouble v3 = ddouble.CarlsonRC(1, 1 + m / (d * d));
 
                             ddouble f = 2 * v2 + 6 / d * v3;
@@ -387,7 +387,7 @@ namespace DoubleDoubleTest.DDouble {
                             Console.WriteLine(f);
                             Console.WriteLine(e);
 
-                            HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z},{w}");
+                            HPAssert.AreEqual(e, f, ddouble.Abs(e) * 1e-30d, $"{x},{y},{z},{pho}");
                         }
                     }
                 }
