@@ -18,7 +18,7 @@
 |----|----|----|
 |ddouble|104|30|
 
-|stat|bin|dec|
+|limit|bin|dec|
 |---|---|---|
 |MaxValue|2^1024|1.79769e308|
 |Normal MinValue|2^-968|4.00833e-292|
