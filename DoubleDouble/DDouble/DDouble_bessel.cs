@@ -13,7 +13,13 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= BesselUtil.Eps) {
+            if (x <= 2d) {
+                ddouble y = BesselNearZero.BesselJ(nu, x);
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
                 if (nu == 0d) {
                     return 1d;
                 }
@@ -21,10 +27,6 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
-            }
-
-            if (x <= 2d) {
-                return BesselNearZero.BesselJ(nu, x);
             }
             if (x <= 40.5d) {
                 return BesselMillerBackward.BesselJ(nu, x);
@@ -43,13 +45,14 @@ namespace DoubleDouble {
             if (IsNegative(x)) {
                 return ((n & 1) == 0) ? BesselJ(n, -x) : -BesselJ(n, -x);
             }
-
-            if (x <= BesselUtil.Eps) {
-                return (n == 0) ? 1d : 0d;
-            }
-
             if (x <= 2d) {
-                return BesselNearZero.BesselJ(n, x);
+                ddouble y = BesselNearZero.BesselJ(n, x);
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
+                return (n == 0) ? 1d : 0d;
             }
             if (x <= 40.5d) {
                 return BesselMillerBackward.BesselJ(n, x);
@@ -65,7 +68,36 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= BesselUtil.Eps) {
+            if (nu < 0d && Abs((nu - Floor(nu)) - 0.5d) < 0.0625d) {
+                if (x <= 4d - nu) {
+                    ddouble y = BesselNearZero.BesselY(nu, x);
+
+                    if (IsFinite(y) && !IsZero(y)) {
+                        return y;
+                    }
+
+                    if (nu - Floor(nu) == 0.5d) {
+                        return 0d;
+                    }
+                    int n = (int)(Floor(nu + 0.5d));
+                    return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                }
+            }
+
+            if (x <= 2d) {
+                ddouble y;
+
+                if (BesselUtil.NearlyInteger(nu, out _) || Abs(Round(nu) - nu) >= BesselUtil.InterpolationThreshold) {
+                    y = BesselNearZero.BesselY(nu, x);
+                }
+                else {
+                    y = BesselInterpolate.BesselYCubicInterpolate(nu, x);
+                }
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
                 if (nu > 0d) {
                     return NegativeInfinity;
                 }
@@ -74,22 +106,6 @@ namespace DoubleDouble {
                 }
                 int n = (int)(Floor(nu + 0.5d));
                 return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
-            }
-
-            ddouble alpha = Round(nu) - nu;
-
-            if (nu < 0d && Abs((nu - Floor(nu)) - 0.5d) < 0.0625d) {
-                if (x <= 4d - nu) {
-                    return BesselNearZero.BesselY(nu, x);
-                }
-            }
-            if (x <= 2d) {
-                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.InterpolationThreshold) {
-                    return BesselNearZero.BesselY(nu, x);
-                }
-                else {
-                    return BesselInterpolate.BesselYCubicInterpolate(nu, x);
-                }
             }
 
             if (x <= 40.5d) {
@@ -110,15 +126,17 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= BesselUtil.Eps) {
+            if (x <= 2d) {
+                ddouble y = BesselNearZero.BesselY(n, x);
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
                 if (n > 0) {
                     return NegativeInfinity;
                 }
                 return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
-            }
-
-            if (x <= 2d) {
-                return BesselNearZero.BesselY(n, x);
             }
             if (x <= 40.5d) {
                 return BesselMillerBackward.BesselY(n, x);
@@ -134,7 +152,13 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= BesselUtil.Eps) {
+            if (x <= 2d) {
+                ddouble y = BesselNearZero.BesselI(nu, x, scale);
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
                 if (nu == 0d) {
                     return 1d;
                 }
@@ -142,10 +166,6 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
-            }
-
-            if (x <= 2d) {
-                return BesselNearZero.BesselI(nu, x, scale);
             }
             if (x <= 40d) {
                 return BesselMillerBackward.BesselI(nu, x, scale);
@@ -161,12 +181,14 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= BesselUtil.Eps) {
-                return (n == 0) ? 1d : 0d;
-            }
-
             if (x <= 2d) {
-                return BesselNearZero.BesselI(n, x, scale);
+                ddouble y = BesselNearZero.BesselI(n, x, scale);
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
+                return (n == 0) ? 1d : 0d;
             }
             if (x <= 40d) {
                 return BesselMillerBackward.BesselI(n, x, scale);
@@ -182,21 +204,23 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= BesselUtil.Eps) {
-                return PositiveInfinity;
-            }
-
             nu = Abs(nu);
 
-            ddouble alpha = Round(nu) - nu;
-
             if (x <= 2d) {
-                if (BesselUtil.NearlyInteger(nu, out _) || Abs(alpha) >= BesselUtil.InterpolationThreshold) {
-                    return BesselNearZero.BesselK(nu, x, scale);
+                ddouble y;
+
+                if (BesselUtil.NearlyInteger(nu, out _) || Abs(Round(nu) - nu) >= BesselUtil.InterpolationThreshold) {
+                    y = BesselNearZero.BesselK(nu, x, scale);
                 }
                 else {
-                    return BesselInterpolate.BesselKCubicInterpolate(nu, x, scale);
+                    y = BesselInterpolate.BesselKCubicInterpolate(nu, x, scale);
                 }
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
+                return PositiveInfinity;
             }
 
             if (x <= 35d) {
@@ -213,14 +237,16 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (x <= BesselUtil.Eps) {
-                return PositiveInfinity;
-            }
-
             n = int.Abs(n);
 
             if (x <= 2d) {
-                return BesselNearZero.BesselK(n, x, scale);
+                ddouble y = BesselNearZero.BesselK(n, x, scale);
+
+                if (IsFinite(y) && !IsZero(y)) {
+                    return y;
+                }
+
+                return PositiveInfinity;
             }
             if (x <= 35d) {
                 return BesselYoshidaPade.BesselK(n, x, scale);
@@ -230,7 +256,7 @@ namespace DoubleDouble {
         }
 
         private static class BesselUtil {
-            public static readonly double Eps = double.ScaleB(1, -96);
+            public static readonly double Eps = double.ScaleB(1, -1000);
             public static readonly double InterpolationThreshold = double.ScaleB(1, -25);
             public static readonly double MillerBwdBesselYEps = double.ScaleB(1, -30);
 
@@ -377,6 +403,10 @@ namespace DoubleDouble {
 
                     c = c_next;
                     u *= x4;
+
+                    if (!IsFinite(c)) {
+                        break;
+                    }
                 }
 
                 return c;
@@ -395,7 +425,7 @@ namespace DoubleDouble {
                 GammaPNTable gpn = gammapn_coef_table[nu];
 
                 ddouble cos = CosPI(nu), sin = SinPI(nu);
-                ddouble p = Pow(x, Ldexp(nu, 1)) * cos, s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
+                ddouble p = IsZero(cos) ? 0d : Pow(x, Ldexp(nu, 1)) * cos, s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
@@ -403,8 +433,9 @@ namespace DoubleDouble {
 
                 for (int k = 0, t = 1, conv_times = 0; k <= terms && conv_times < 2; k++, t += 2) {
                     ddouble a = t * s * g[t], q = gpn[t];
+                    ddouble pa = p / a, qa = q / a;
 
-                    ddouble dc = u * r[k] * ((4 * t * nu) * (p + q) - (x2 - (4 * t * t)) * (p - q)) / a;
+                    ddouble dc = u * r[k] * ((4 * t * nu) * (pa + qa) - (x2 - (4 * t * t)) * (pa - qa));
 
                     ddouble c_next = c + dc;
 
@@ -417,6 +448,10 @@ namespace DoubleDouble {
 
                     c = c_next;
                     u *= x4;
+
+                    if (!IsFinite(c)) {
+                        break;
+                    }
                 }
 
                 return c;
@@ -441,9 +476,16 @@ namespace DoubleDouble {
                 ddouble y0 = BesselY0Kernel(x, terms);
                 ddouble y1 = BesselY1Kernel(x, terms);
 
+                int exp_sum = 0;
+
                 for (int k = 1; k < n; k++) {
+                    (int exp, (y0, y1)) = AdjustScale(0, (y0, y1));
                     (y1, y0) = ((2 * k) * v * y1 - y0, y1);
+
+                    exp_sum += exp;
                 }
+
+                y1 = Ldexp(y1, -exp_sum);
 
                 return y1;
             }
@@ -553,6 +595,10 @@ namespace DoubleDouble {
 
                     c = c_next;
                     u *= x2;
+
+                    if (!IsFinite(c)) {
+                        break;
+                    }
                 }
 
                 return c;

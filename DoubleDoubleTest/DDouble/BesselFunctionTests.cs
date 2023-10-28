@@ -5641,5 +5641,185 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
         }
+
+        [TestMethod]
+        public void BesselJLimitZeroXTest() {
+            ddouble eps = ddouble.Ldexp(1, -4);
+
+            for (ddouble nu = -16; nu <= 16; nu += 0.125) {
+                Console.WriteLine($"nu={nu}");
+
+                ddouble y0 = ddouble.BesselJ(nu, eps * 4);
+                ddouble y1 = ddouble.BesselJ(nu, eps * 2);
+
+                if (ddouble.IsInfinity(y0) || ddouble.IsInfinity(y1)) {
+                    continue;
+                }
+
+                for (ddouble x = eps; x > 0; x /= 2) {
+                    ddouble y2 = ddouble.BesselJ(nu, x);
+
+                    Console.WriteLine($"x = {x}\ny = {y2}");
+
+                    Assert.IsFalse(ddouble.IsNaN(y2), $"{nu},{x}");
+
+                    if (y1 > 1e-300) {
+                        if (ddouble.Abs(y0) >= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) >= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                        if (ddouble.Abs(y0) <= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) <= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                    }
+
+                    if (y2 == 0) {
+                        break;
+                    }
+
+                    Assert.AreEqual(ddouble.Sign(y1), ddouble.Sign(y2), $"{nu},{x}");
+
+                    if (ddouble.IsInfinity(y2)) {
+                        break;
+                    }
+
+                    (y0, y1) = (y1, y2);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void BesselYLimitZeroXTest() {
+            ddouble eps = ddouble.Ldexp(1, -4);
+
+            for (ddouble nu = -16; nu <= 16; nu += 0.125) {
+                Console.WriteLine($"nu={nu}");
+
+                ddouble y0 = ddouble.BesselY(nu, eps * 4);
+                ddouble y1 = ddouble.BesselY(nu, eps * 2);
+
+                if (ddouble.IsInfinity(y0) || ddouble.IsInfinity(y1)) {
+                    continue;
+                }
+
+                for (ddouble x = eps; x > 0; x /= 2) {
+                    ddouble y2 = ddouble.BesselY(nu, x);
+
+                    Console.WriteLine($"x = {x}\ny = {y2}");
+
+                    Assert.IsFalse(ddouble.IsNaN(y2), $"{nu},{x}");
+
+                    if (y1 > 1e-300) {
+                        if (ddouble.Abs(y0) >= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) >= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                        if (ddouble.Abs(y0) <= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) <= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                    }
+
+                    if (y2 == 0) {
+                        break;
+                    }
+
+                    Assert.AreEqual(ddouble.Sign(y1), ddouble.Sign(y2), $"{nu},{x}");
+
+                    if (ddouble.IsInfinity(y2)) {
+                        break;
+                    }
+
+                    (y0, y1) = (y1, y2);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void BesselILimitZeroXTest() {
+            ddouble eps = ddouble.Ldexp(1, -4);
+
+            for (ddouble nu = -16; nu <= 16; nu += 0.125) {
+                Console.WriteLine($"nu={nu}");
+
+                ddouble y0 = ddouble.BesselI(nu, eps * 4);
+                ddouble y1 = ddouble.BesselI(nu, eps * 2);
+
+                if (ddouble.IsInfinity(y0) || ddouble.IsInfinity(y1)) {
+                    continue;
+                }
+
+                for (ddouble x = eps; x > 0; x /= 2) {
+                    ddouble y2 = ddouble.BesselI(nu, x);
+
+                    Console.WriteLine($"x = {x}\ny = {y2}");
+
+                    Assert.IsFalse(ddouble.IsNaN(y2), $"{nu},{x}");
+
+                    if (y1 > 1e-300) {
+                        if (ddouble.Abs(y0) >= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) >= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                        if (ddouble.Abs(y0) <= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) <= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                    }
+
+                    if (y2 == 0) {
+                        break;
+                    }
+
+                    Assert.AreEqual(ddouble.Sign(y1), ddouble.Sign(y2), $"{nu},{x}");
+
+                    if (ddouble.IsInfinity(y2)) {
+                        break;
+                    }
+
+                    (y0, y1) = (y1, y2);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void BesselKLimitZeroXTest() {
+            ddouble eps = ddouble.Ldexp(1, -4);
+
+            for (ddouble nu = -16; nu <= 16; nu += 0.125) {
+                Console.WriteLine($"nu={nu}");
+
+                ddouble y0 = ddouble.BesselK(nu, eps * 4);
+                ddouble y1 = ddouble.BesselK(nu, eps * 2);
+
+                if (ddouble.IsInfinity(y0) || ddouble.IsInfinity(y1)) {
+                    continue;
+                }
+
+                for (ddouble x = eps; x > 0; x /= 2) {
+                    ddouble y2 = ddouble.BesselK(nu, x);
+
+                    Console.WriteLine($"x = {x}\ny = {y2}");
+
+                    Assert.IsFalse(ddouble.IsNaN(y2), $"{nu},{x}");
+
+                    if (y1 > 1e-300) {
+                        if (ddouble.Abs(y0) >= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) >= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                        if (ddouble.Abs(y0) <= ddouble.Abs(y1)) {
+                            Assert.IsTrue(ddouble.Abs(y1) <= ddouble.Abs(y2), $"{nu},{x}");
+                        }
+                    }
+
+                    if (y2 == 0) {
+                        break;
+                    }
+
+                    Assert.AreEqual(ddouble.Sign(y1), ddouble.Sign(y2), $"{nu},{x}");
+
+                    if (ddouble.IsInfinity(y2)) {
+                        break;
+                    }
+
+                    (y0, y1) = (y1, y2);
+                }
+            }
+        }
     }
 }
