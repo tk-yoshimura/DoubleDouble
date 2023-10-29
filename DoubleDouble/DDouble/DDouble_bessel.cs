@@ -16,7 +16,7 @@ namespace DoubleDouble {
             if (x <= 2d) {
                 ddouble y = BesselNearZero.BesselJ(nu, x);
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -48,7 +48,7 @@ namespace DoubleDouble {
             if (x <= 2d) {
                 ddouble y = BesselNearZero.BesselJ(n, x);
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -72,7 +72,7 @@ namespace DoubleDouble {
                 if (x <= 4d - nu) {
                     ddouble y = BesselNearZero.BesselY(nu, x);
 
-                    if (IsFinite(y) && !IsZero(y)) {
+                    if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                         return y;
                     }
 
@@ -94,7 +94,7 @@ namespace DoubleDouble {
                     y = BesselInterpolate.BesselYCubicInterpolate(nu, x);
                 }
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -129,7 +129,7 @@ namespace DoubleDouble {
             if (x <= 2d) {
                 ddouble y = BesselNearZero.BesselY(n, x);
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -155,7 +155,7 @@ namespace DoubleDouble {
             if (x <= 2d) {
                 ddouble y = BesselNearZero.BesselI(nu, x, scale);
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -184,7 +184,7 @@ namespace DoubleDouble {
             if (x <= 2d) {
                 ddouble y = BesselNearZero.BesselI(n, x, scale);
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -216,7 +216,7 @@ namespace DoubleDouble {
                     y = BesselInterpolate.BesselKCubicInterpolate(nu, x, scale);
                 }
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -242,7 +242,7 @@ namespace DoubleDouble {
             if (x <= 2d) {
                 ddouble y = BesselNearZero.BesselK(n, x, scale);
 
-                if (IsFinite(y) && !IsZero(y)) {
+                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
                     return y;
                 }
 
@@ -257,6 +257,7 @@ namespace DoubleDouble {
 
         private static class BesselUtil {
             public static readonly double Eps = double.ScaleB(1, -1000);
+            public static readonly double ExtremelyNearZero = double.ScaleB(1, -28);
             public static readonly double InterpolationThreshold = double.ScaleB(1, -25);
             public static readonly double MillerBwdBesselYEps = double.ScaleB(1, -30);
 
