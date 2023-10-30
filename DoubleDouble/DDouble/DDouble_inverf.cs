@@ -7,7 +7,7 @@ using static DoubleDouble.ddouble.Consts.InverseErfc;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseErf(ddouble x) {
-            if (x < 0.0) {
+            if (IsNegative(x)) {
                 return -InverseErf(Abs(x));
             }
 
@@ -29,7 +29,7 @@ namespace DoubleDouble {
                 return -InverseErfc(2d - x);
             }
 
-            if (!(x >= 0d)) {
+            if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
             }
 

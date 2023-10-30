@@ -18,7 +18,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (m >= 0d) {
+            if (IsPositive(m)) {
                 ddouble y = EllipticIntegral.EllipticKCore(m);
 
                 return y;
@@ -43,7 +43,7 @@ namespace DoubleDouble {
                 return 1d;
             }
 
-            if (m >= 0d) {
+            if (IsPositive(m)) {
                 ddouble y = EllipticIntegral.EllipticECore(m);
 
                 return Max(1, y);
@@ -76,7 +76,7 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (m >= 0d) {
+            if (IsPositive(m)) {
                 ddouble y = EllipticIntegral.EllipticPiCore(n, m);
 
                 return y;
