@@ -3,7 +3,7 @@
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble KeplerE(ddouble m, ddouble e, bool centered = false) {
-            if (!(e >= 0d) || IsNaN(m) || !IsFinite(e)) {
+            if (IsNaN(m) || IsNegative(e) || !IsFinite(e)) {
                 return NaN;
             }
 
@@ -145,7 +145,7 @@ namespace DoubleDouble {
                     double g1 = -ecos + 1d;
                     double g2 = esin;
                     double g3 = ecos;
-                    double dx = Householder4(delta, g1, g2, g3);
+                    double dx = RootFind.Iter(delta, g1, g2, g3) / double.Pi;
 
                     if (!double.IsFinite(dx)) {
                         return (x, convergenced: true);
@@ -170,7 +170,7 @@ namespace DoubleDouble {
                     ddouble g1 = -ecos + 1d;
                     ddouble g2 = esin;
                     ddouble g3 = ecos;
-                    ddouble dx = Householder4(delta, g1, g2, g3);
+                    ddouble dx = RootFind.Iter(delta, g1, g2, g3) * RcpPI;
 
                     if (!IsFinite(dx)) {
                         return (x, convergenced: true);
@@ -222,22 +222,6 @@ namespace DoubleDouble {
                     }
 
                     return (x, convergenced);
-                }
-
-                private static double Householder4(double delta, double g1, double g2, double g3) {
-                    double sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
-
-                    double dx = 3 * delta * (sqg1 + sqg1_deltag2) /
-                        (double.Pi * (6 * g1 * sqg1_deltag2 + delta * delta * g3));
-                    return dx;
-                }
-
-                private static ddouble Householder4(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
-                    ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
-
-                    ddouble dx = 3d * delta * (sqg1 + sqg1_deltag2) /
-                        (PI * (6d * g1 * sqg1_deltag2 + delta * delta * g3));
-                    return dx;
                 }
             }
 
@@ -314,7 +298,7 @@ namespace DoubleDouble {
                     double g1 = ecosh - 1d;
                     double g2 = esinh;
                     double g3 = ecosh;
-                    double dx = Householder4(delta, g1, g2, g3);
+                    double dx = RootFind.Iter(delta, g1, g2, g3);
 
                     if (!double.IsFinite(dx)) {
                         return (x, convergenced: true);
@@ -338,7 +322,7 @@ namespace DoubleDouble {
                     ddouble g1 = ecosh - 1d;
                     ddouble g2 = esinh;
                     ddouble g3 = ecosh;
-                    ddouble dx = Householder4(delta, g1, g2, g3);
+                    ddouble dx = RootFind.Iter(delta, g1, g2, g3);
 
                     if (!IsFinite(dx)) {
                         return (x, convergenced: true);
@@ -390,21 +374,47 @@ namespace DoubleDouble {
 
                     return (x, convergenced);
                 }
+            }
 
-                private static double Householder4(double delta, double g1, double g2, double g3) {
-                    double sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+            public static class RootFind {
+                public static double Iter(double delta, double g1, double g2, double g3) {
+                    Debug.Assert(g1 >= 0d, nameof(g1));
 
-                    double dx = 3 * delta * (sqg1 + sqg1_deltag2) /
-                        (6 * g1 * sqg1_deltag2 + delta * delta * g3);
-                    return dx;
+                    double omax = g1 * 0.125d;
+
+                    double o3 = delta * (3d * g1 * g2 - delta * g3) / (3d * (2d * g1 * g1 - delta * g2));
+                    if (o3 <= omax) {
+                        double dx = delta / (g1 - o3);
+                        return dx;
+                    }
+
+                    double o2 = delta * g2 / (2d * g1);
+                    if (o2 <= omax) {
+                        double dx = delta / (g1 - o2);
+                        return dx;
+                    }
+
+                    return delta / g1;
                 }
 
-                private static ddouble Householder4(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
-                    ddouble sqg1 = g1 * g1, sqg1_deltag2 = sqg1 - delta * g2;
+                public static ddouble Iter(ddouble delta, ddouble g1, ddouble g2, ddouble g3) {
+                    Debug.Assert(g1 >= 0d, nameof(g1));
 
-                    ddouble dx = 3d * delta * (sqg1 + sqg1_deltag2) /
-                        (6d * g1 * sqg1_deltag2 + delta * delta * g3);
-                    return dx;
+                    ddouble omax = Ldexp(g1, -3);
+
+                    ddouble o3 = delta * (3d * g1 * g2 - delta * g3) / (3d * (Ldexp(g1 * g1, 1) - delta * g2));
+                    if (o3 <= omax) {
+                        ddouble dx = delta / (g1 - o3);
+                        return dx;
+                    }
+
+                    ddouble o2 = delta * g2 / Ldexp(g1, 1);
+                    if (o2 <= omax) {
+                        ddouble dx = delta / (g1 - o2);
+                        return dx;
+                    }
+
+                    return delta / g1;
                 }
             }
 
