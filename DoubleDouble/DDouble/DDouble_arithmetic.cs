@@ -167,7 +167,7 @@ namespace DoubleDouble {
                 return (b >= 0) ? Ldexp(a, exp) : -Ldexp(a, exp);
             }
 
-            return a * (ddouble)b;
+            return a * (double)b;
         }
 
         public static ddouble operator *(ddouble a, uint b) {
@@ -176,7 +176,7 @@ namespace DoubleDouble {
                 return Ldexp(a, exp);
             }
 
-            return a * (ddouble)b;
+            return a * (double)b;
         }
 
         public static ddouble operator *(ddouble a, long b) {
@@ -244,7 +244,7 @@ namespace DoubleDouble {
                 return (b >= 0) ? Ldexp(a, -exp) : -Ldexp(a, -exp);
             }
 
-            return a / (ddouble)b;
+            return a / (double)b;
         }
 
         public static ddouble operator /(ddouble a, uint b) {
@@ -253,7 +253,7 @@ namespace DoubleDouble {
                 return Ldexp(a, -exp);
             }
 
-            return a / (ddouble)b;
+            return a / (double)b;
         }
 
         public static ddouble operator /(ddouble a, long b) {

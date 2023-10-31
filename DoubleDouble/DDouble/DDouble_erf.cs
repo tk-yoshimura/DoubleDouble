@@ -10,7 +10,7 @@ namespace DoubleDouble {
             if (IsNaN(x)) {
                 return NaN;
             }
-            if (x < 0d) {
+            if (IsNegative(x)) {
                 return -Erf(Abs(x));
             }
 

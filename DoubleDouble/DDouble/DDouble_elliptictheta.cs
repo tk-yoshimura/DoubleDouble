@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Diagnostics;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble EllipticTheta(int a, ddouble x, ddouble q) {
             switch (a) {
@@ -16,7 +18,7 @@
         }
 
         private static ddouble EllipticTheta1(ddouble x, ddouble q) {
-            if (q < 0d || !(q <= 1d)) {
+            if (IsNegative(q) || !(q <= 1d)) {
                 return NaN;
             }
 
@@ -47,7 +49,7 @@
         }
 
         private static ddouble EllipticTheta2(ddouble x, ddouble q) {
-            if (q < 0d || !(q <= 1d)) {
+            if (IsNegative(q) || !(q <= 1d)) {
                 return NaN;
             }
 
@@ -78,7 +80,7 @@
         }
 
         private static ddouble EllipticTheta3(ddouble x, ddouble q) {
-            if (q < 0d || !(q <= 1d)) {
+            if (IsNegative(q) || !(q <= 1d)) {
                 return NaN;
             }
 
@@ -108,7 +110,7 @@
         }
 
         private static ddouble EllipticTheta4(ddouble x, ddouble q) {
-            if (q < 0d || !(q <= 1d)) {
+            if (IsNegative(q) || !(q <= 1d)) {
                 return NaN;
             }
 
@@ -150,21 +152,13 @@
             };
 
             public static ddouble Q0(ddouble q) {
-                if (q < 0d || !(q <= 1d)) {
-                    return NaN;
-                }
+                Debug.Assert(IsPositive(q) && q <= 1d, nameof(q));
 
                 if (q0_table.ContainsKey(q)) {
                     return q0_table[q];
                 }
 
-                ddouble q2 = q * q, u = q2, q0 = 1d, s = 1d - u;
-
-                while (s <= NearOne.lower && q0 > Eps) {
-                    q0 *= s;
-                    u *= q2;
-                    s = 1d - u;
-                }
+                ddouble q0 = EulerQ(q * q);
 
                 q0_table.Add(q, q0);
                 return q0;

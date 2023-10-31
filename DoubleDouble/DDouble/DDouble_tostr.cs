@@ -8,10 +8,10 @@ namespace DoubleDouble {
         public static int DecimalDigits => 30;
 
         public override string ToString() {
-            if (IsNaN(this)) {
-                return double.NaN.ToString();
-            }
             if (!IsFinite(this)) {
+                if (IsNaN(this)) {
+                    return double.NaN.ToString();
+                }
                 return IsPositive(this) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
             }
 
@@ -68,10 +68,10 @@ namespace DoubleDouble {
                 throw new FormatException(format);
             }
 
-            if (IsNaN(this)) {
-                return double.NaN.ToString();
-            }
             if (!IsFinite(this)) {
+                if (IsNaN(this)) {
+                    return double.NaN.ToString();
+                }
                 return IsPositive(this) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
             }
 

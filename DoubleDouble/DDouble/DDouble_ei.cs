@@ -45,7 +45,7 @@ namespace DoubleDouble {
                 ddouble g = EiPade.Coef(-x) - x;
                 ddouble ei = Exp(-x) / g;
 
-                ddouble y = (x > 0d) ? (EulerGamma + Log(x) - ei) : (EulerGamma + Log(-x) - ei);
+                ddouble y = IsPositive(x) ? (EulerGamma + Log(x) - ei) : (EulerGamma + Log(-x) - ei);
 
                 return y;
             }

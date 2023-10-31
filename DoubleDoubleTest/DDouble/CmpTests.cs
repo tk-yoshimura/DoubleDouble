@@ -129,6 +129,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(nrcp3 > nrcp3_bitinc);
             Assert.IsFalse(nrcp3 <= nrcp3_bitinc);
 
+#pragma warning disable CA2242
             Assert.IsFalse(prcp3 > double.NaN);
             Assert.IsFalse(prcp3 < double.NaN);
             Assert.IsFalse(prcp3 >= double.NaN);
@@ -142,6 +143,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsFalse(nrcp3 <= double.NaN);
             Assert.IsFalse(nrcp3 == double.NaN);
             Assert.IsTrue(nrcp3 != double.NaN);
+#pragma warning restore CA2242
 
             Assert.IsFalse(prcp3 > double.PositiveInfinity);
             Assert.IsTrue(prcp3 < double.PositiveInfinity);
@@ -181,6 +183,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsFalse(nrcp3_bitinc > nrcp3);
             Assert.IsTrue(nrcp3_bitinc <= nrcp3);
 
+#pragma warning disable CA2242
             Assert.IsFalse(double.NaN > prcp3);
             Assert.IsFalse(double.NaN < prcp3);
             Assert.IsFalse(double.NaN >= prcp3);
@@ -193,6 +196,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsFalse(double.NaN <= nrcp3);
             Assert.IsFalse(double.NaN == nrcp3);
             Assert.IsTrue(double.NaN != nrcp3);
+#pragma warning restore CA2242
 
             Assert.IsTrue(double.PositiveInfinity > prcp3);
             Assert.IsFalse(double.PositiveInfinity < prcp3);

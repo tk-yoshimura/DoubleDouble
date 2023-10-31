@@ -11,12 +11,13 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
             if (n > MathieuUtil.MaxN) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     $"In the calculation of the MathieuA function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }
 
-            if (q < 0d) {
+            if (IsNegative(q)) {
                 return ((n & 1) == 0) ? MathieuA(n, -q) : MathieuB(n, -q);
             }
 
@@ -45,12 +46,13 @@ namespace DoubleDouble {
                 return MathieuA(n, q);
             }
             if (n > MathieuUtil.MaxN) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     $"In the calculation of the MathieuB function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }
 
-            if (q < 0d) {
+            if (IsNegative(q)) {
                 return ((n & 1) == 0) ? MathieuB(n, -q) : MathieuA(n, -q);
             }
 
@@ -76,7 +78,8 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
             if (n > MathieuUtil.MaxN) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     $"In the calculation of the MathieuC function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }
@@ -109,7 +112,8 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
             if (n > MathieuUtil.MaxN) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     $"In the calculation of the MathieuS function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
             }

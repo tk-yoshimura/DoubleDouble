@@ -10,7 +10,8 @@ namespace DoubleDouble {
             }
 
             if (n < 0 || n > 8) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     "In the calculation of the StruveH function, n greater than 8 and negative integer are not supported."
                 );
             }
@@ -43,7 +44,8 @@ namespace DoubleDouble {
 
         public static ddouble StruveK(int n, ddouble x) {
             if (n < 0 || n > 8) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     "In the calculation of the StruveK function, n greater than 8 and negative integer are not supported."
                 );
             }
@@ -76,7 +78,8 @@ namespace DoubleDouble {
             }
 
             if (n < 0 || n > 8) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     "In the calculation of the StruveL function, n greater than 8 and negative integer are not supported."
                 );
             }
@@ -102,7 +105,8 @@ namespace DoubleDouble {
 
         public static ddouble StruveM(int n, ddouble x) {
             if (n < 0 || n > 8) {
-                throw new ArgumentException(
+                throw new ArgumentOutOfRangeException(
+                    nameof(n),
                     "In the calculation of the StruveM function, n greater than 8 and negative integer are not supported."
                 );
             }

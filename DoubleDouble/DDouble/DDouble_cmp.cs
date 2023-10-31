@@ -230,27 +230,27 @@ namespace DoubleDouble {
         #region cmp ddouble int
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <(ddouble a, int b) {
-            return a < (ddouble)b;
+            return a < (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >(ddouble a, int b) {
-            return a > (ddouble)b;
+            return a > (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <=(ddouble a, int b) {
-            return a <= (ddouble)b;
+            return a <= (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >=(ddouble a, int b) {
-            return a >= (ddouble)b;
+            return a >= (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ddouble a, int b) {
-            return a == (ddouble)b;
+            return a == (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -262,27 +262,27 @@ namespace DoubleDouble {
         #region cmp int ddouble
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <(int a, ddouble b) {
-            return (ddouble)a < b;
+            return (double)a < b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >(int a, ddouble b) {
-            return (ddouble)a > b;
+            return (double)a > b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <=(int a, ddouble b) {
-            return (ddouble)a <= b;
+            return (double)a <= b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >=(int a, ddouble b) {
-            return (ddouble)a >= b;
+            return (double)a >= b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(int a, ddouble b) {
-            return (ddouble)a == b;
+            return (double)a == b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -294,27 +294,27 @@ namespace DoubleDouble {
         #region cmp ddouble uint
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <(ddouble a, uint b) {
-            return a < (ddouble)b;
+            return a < (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >(ddouble a, uint b) {
-            return a > (ddouble)b;
+            return a > (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <=(ddouble a, uint b) {
-            return a <= (ddouble)b;
+            return a <= (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >=(ddouble a, uint b) {
-            return a >= (ddouble)b;
+            return a >= (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(ddouble a, uint b) {
-            return a == (ddouble)b;
+            return a == (double)b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -326,27 +326,27 @@ namespace DoubleDouble {
         #region cmp uint ddouble
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <(uint a, ddouble b) {
-            return (ddouble)a < b;
+            return (double)a < b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >(uint a, ddouble b) {
-            return (ddouble)a > b;
+            return (double)a > b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator <=(uint a, ddouble b) {
-            return (ddouble)a <= b;
+            return (double)a <= b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator >=(uint a, ddouble b) {
-            return (ddouble)a >= b;
+            return (double)a >= b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(uint a, ddouble b) {
-            return (ddouble)a == b;
+            return (double)a == b;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

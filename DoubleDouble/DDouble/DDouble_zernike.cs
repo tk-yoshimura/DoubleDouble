@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -13,7 +14,7 @@ namespace DoubleDouble {
                 throw new ArgumentOutOfRangeException(nameof(n));
             }
 
-            if (x < 0d || x > 1d) {
+            if (IsNegative(x) || x > 1d) {
                 return NaN;
             }
 
@@ -59,9 +60,7 @@ namespace DoubleDouble {
                 }
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n, int m) {
-                    if (m < 0 || n < m || ((n - m) & 1) == 1) {
-                        throw new ArgumentException($"{nameof(n)},{nameof(m)}");
-                    }
+                    Debug.Assert(m >= 0 && n >= m && ((n - m) & 1) == 0, $"{nameof(n)},{nameof(m)}");
 
                     if (n == m) {
                         return new ReadOnlyCollection<ddouble>(new ddouble[] { 1 });

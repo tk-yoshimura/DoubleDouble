@@ -1,8 +1,8 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble JacobiSn(ddouble x, ddouble m) {
-            if (m < 0d || m > 1d) {
-                throw new ArgumentOutOfRangeException(nameof(m));
+            if (IsNegative(m) || m > 1d) {
+                return NaN;
             }
             if (IsNegative(x)) {
                 return -JacobiSn(-x, m);
@@ -31,8 +31,8 @@
         }
 
         public static ddouble JacobiCn(ddouble x, ddouble m) {
-            if (m < 0d || m > 1d) {
-                throw new ArgumentOutOfRangeException(nameof(m));
+            if (IsNegative(m) || m > 1d) {
+                return NaN;
             }
             if (IsNegative(x)) {
                 return JacobiCn(-x, m);
@@ -63,8 +63,8 @@
         }
 
         public static ddouble JacobiDn(ddouble x, ddouble m) {
-            if (m < 0d || m > 1d) {
-                throw new ArgumentOutOfRangeException(nameof(m));
+            if (IsNegative(m) || m > 1d) {
+                return NaN;
             }
             if (IsNegative(x)) {
                 return JacobiDn(-x, m);
