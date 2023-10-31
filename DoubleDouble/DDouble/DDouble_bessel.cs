@@ -2024,6 +2024,10 @@ namespace DoubleDouble {
             private static Dictionary<ddouble, IKCoefTable> ik_table = new();
 
             public static ddouble BesselJ(ddouble nu, ddouble x) {
+                if (IsInfinity(x)) {
+                    return Zero;
+                }
+
                 (ddouble c, ddouble s) = BesselJYKernel(nu, x, terms: 32);
 
                 ddouble omega = x - Ldexp((Ldexp(nu, 1) + 1d) * PI, -2);
@@ -2034,6 +2038,10 @@ namespace DoubleDouble {
             }
 
             public static ddouble BesselY(ddouble nu, ddouble x) {
+                if (IsInfinity(x)) {
+                    return Zero;
+                }
+
                 (ddouble s, ddouble c) = BesselJYKernel(nu, x, terms: 32);
 
                 ddouble omega = x - Ldexp((Ldexp(nu, 1) + 1d) * PI, -2);
@@ -2044,18 +2052,30 @@ namespace DoubleDouble {
             }
 
             public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
+                if (IsInfinity(x)) {
+                    return scale ? PlusZero : PositiveInfinity;
+                }
+
                 ddouble c = BesselIKKernel(nu, x, sign_switch: true, terms: 36);
 
                 ddouble t = c / Sqrt(Ldexp(PI, 1) * x);
 
                 if (!scale) {
                     t *= Exp(x);
+                    
+                    if (IsNaN(t)) { 
+                        return PositiveInfinity;
+                    }
                 }
 
                 return t;
             }
 
             public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
+                if (IsInfinity(x)) {
+                    return Zero;
+                }
+
                 ddouble c = BesselIKKernel(nu, x, sign_switch: false, terms: 34);
 
                 ddouble t = c * Sqrt(PI / Ldexp(x, 1));

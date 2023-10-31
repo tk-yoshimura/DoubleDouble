@@ -5821,5 +5821,55 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
         }
+
+        [TestMethod]
+        public void BesselJAbnormalTest() {
+            for (ddouble nu = -16; nu <= 16; nu += 0.125) {
+                Assert.IsTrue(ddouble.IsZero(ddouble.BesselJ(nu, ddouble.PositiveInfinity)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselJ(nu, ddouble.MaxValue)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselJ(nu, 1e+300)));
+                Assert.IsTrue(ddouble.IsNaN(ddouble.BesselJ(nu, ddouble.NaN)));
+            }
+        }
+
+        [TestMethod]
+        public void BesselYAbnormalTest() {
+            for (ddouble nu = -16; nu <= 16; nu += 0.125) {
+                Assert.IsTrue(ddouble.IsZero(ddouble.BesselY(nu, ddouble.PositiveInfinity)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselY(nu, ddouble.MaxValue)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselY(nu, 1e+300)));
+                Assert.IsTrue(ddouble.IsNaN(ddouble.BesselY(nu, ddouble.NaN)));
+            }
+        }
+
+        [TestMethod]
+        public void BesselIAbnormalTest() {
+            for (ddouble nu = -16; nu <= 16; nu += 0.125) {
+                Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.BesselI(nu, ddouble.PositiveInfinity)));
+                Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.BesselI(nu, ddouble.MaxValue)));
+                Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.BesselI(nu, 1e+300)));
+                Assert.IsTrue(ddouble.IsNaN(ddouble.BesselI(nu, ddouble.NaN)));
+
+                Assert.IsTrue(ddouble.IsPlusZero(ddouble.BesselI(nu, ddouble.PositiveInfinity, scale: true)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselI(nu, ddouble.MaxValue, scale: true)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselI(nu, 1e+300, scale: true)));
+                Assert.IsTrue(ddouble.IsNaN(ddouble.BesselI(nu, ddouble.NaN, scale: true)));
+            }
+        }
+
+        [TestMethod]
+        public void BesselKAbnormalTest() {
+            for (ddouble nu = 0; nu <= 16; nu += 0.125) {
+                Assert.IsTrue(ddouble.IsPlusZero(ddouble.BesselK(nu, ddouble.PositiveInfinity)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselK(nu, ddouble.MaxValue)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselK(nu, 1e+300)));
+                Assert.IsTrue(ddouble.IsNaN(ddouble.BesselK(nu, ddouble.NaN)));
+
+                Assert.IsTrue(ddouble.IsPlusZero(ddouble.BesselK(nu, ddouble.PositiveInfinity, scale: true)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselK(nu, ddouble.MaxValue, scale: true)));
+                Assert.IsTrue(ddouble.IsFinite(ddouble.BesselK(nu, 1e+300, scale: true)));
+                Assert.IsTrue(ddouble.IsNaN(ddouble.BesselK(nu, ddouble.NaN, scale: true)));
+            }
+        }
     }
 }
