@@ -91,6 +91,7 @@
 |ddouble.StruveK(n, x)|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|
 |ddouble.StruveL(n, x)|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|
 |ddouble.StruveM(n, x)|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|
+|ddouble.Jinc(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.EllipticK(m)|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|
 |ddouble.EllipticE(m)|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|
 |ddouble.EllipticPi(n, m)|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|
