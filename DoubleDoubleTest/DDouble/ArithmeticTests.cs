@@ -373,6 +373,13 @@ namespace DoubleDoubleTest.DDouble {
                 HPAssert.AreEqual(0, 0.25d - u, 1e-30);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
+
+            foreach (ddouble x in new[] { ddouble.PI, ddouble.E, ddouble.EulerGamma, ddouble.One + ddouble.Ldexp(1, -900) }) {
+                Assert.AreEqual(ddouble.One, x / x);
+                Assert.AreEqual(ddouble.One, -x / -x);
+                Assert.AreEqual(ddouble.MinusOne, -x / x);
+                Assert.AreEqual(ddouble.MinusOne, x / -x);
+            }
         }
 
         [TestMethod]

@@ -54,11 +54,8 @@ namespace DoubleDouble {
             if (exp >= -256) {
                 return InverseErfUtil.InverseErfcLtRcpBinpow64(x);
             }
-            if (x > 0d) {
-                return InverseErfUtil.InverseErfcLtRcpBinpow256(x);
-            }
-
-            return PositiveInfinity;
+            
+            return InverseErfUtil.InverseErfcLtRcpBinpow256(x);
         }
 
         internal static class InverseErfUtil {

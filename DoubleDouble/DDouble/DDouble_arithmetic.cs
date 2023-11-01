@@ -150,7 +150,7 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator *(ddouble a, double b) {
-            if (IsInfinity(a) || double.IsInfinity(b) || IsZero(a) || b == 0) {
+            if (IsInfinity(a) || double.IsInfinity(b) || IsZero(a) || b == 0d) {
                 return a.hi * b;
             }
 
@@ -276,15 +276,31 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator /(double a, ddouble b) {
-            return (ddouble)a / b;
+            if (double.IsInfinity(a) || IsInfinity(b) || a == 0d || IsZero(b)) {
+                return a / b.hi;
+            }
+
+            double hi = a / b.hi;
+            ddouble hirem = a - hi * b;
+
+            double lo = hirem.hi / b.hi;
+            ddouble lorem = hirem - lo * b;
+
+            double c = lorem.hi / b.hi;
+
+            if (double.IsInfinity(hi)) {
+                return hi;
+            }
+
+            return new ddouble(hi, lo) + c;
         }
 
         public static ddouble operator /(int a, ddouble b) {
-            return (ddouble)a / b;
+            return (double)a / b;
         }
 
         public static ddouble operator /(uint a, ddouble b) {
-            return (ddouble)a / b;
+            return (double)a / b;
         }
 
         public static ddouble operator /(long a, ddouble b) {
