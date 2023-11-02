@@ -140,10 +140,11 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble p = (x - 0.5d) * Log(x);
+                ddouble lnx = Log(x);
+                ddouble p = x * (lnx - 1d) - Ldexp(lnx, -1);
                 ddouble s = SterlingTerm(x);
 
-                ddouble y = Consts.LogGamma.LogPI2Half + p + s - x;
+                ddouble y = Consts.LogGamma.LogPI2Half + p + s;
 
                 return y;
             }

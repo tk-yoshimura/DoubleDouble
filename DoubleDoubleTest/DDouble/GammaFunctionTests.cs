@@ -76,7 +76,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.LogGamma(i);
                 ddouble v = ddouble.Log(y);
 
-                HPAssert.NeighborBits(v, x, 32);
+                HPAssert.NeighborBits(v, x, 16);
             }
 
             ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
