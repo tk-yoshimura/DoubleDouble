@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.Log;
 
 namespace DoubleDouble {
@@ -73,7 +74,7 @@ namespace DoubleDouble {
             public static class Log {
                 public const int Log2TableN = 2048;
 
-                public static readonly IReadOnlyList<ddouble> Log2Table = GenerateLog2Table();
+                public static readonly ReadOnlyCollection<ddouble> Log2Table = Array.AsReadOnly(GenerateLog2Table());
 
                 public static readonly ddouble Log2TableDx = Rcp(Log2TableN);
 

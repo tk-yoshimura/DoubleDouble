@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.SinCos;
 
 namespace DoubleDouble {
@@ -100,7 +101,7 @@ namespace DoubleDouble {
 
                 public const int SinPIHalfTableN = 1024;
 
-                public static readonly IReadOnlyList<ddouble> SinPIHalfTable = GenerateSinPITable();
+                public static readonly ReadOnlyCollection<ddouble> SinPIHalfTable = Array.AsReadOnly(GenerateSinPITable());
 
                 public static readonly ddouble SinPIHalfTableDx = Rcp(SinPIHalfTableN);
 
