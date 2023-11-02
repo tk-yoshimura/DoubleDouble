@@ -1,4 +1,6 @@
-﻿namespace DoubleDouble {
+﻿using System.Collections.ObjectModel;
+
+namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble JacobiSn(ddouble x, ddouble m) {
             if (IsNegative(m) || m > 1d) {
@@ -112,7 +114,7 @@
 
             private static Dictionary<ddouble, ddouble> period_table = new();
 
-            private static Dictionary<ddouble, (ddouble a, ddouble[] ds)> phi_table = new();
+            private static Dictionary<ddouble, (ddouble a, ReadOnlyCollection<ddouble> ds)> phi_table = new();
 
             public static ddouble SnLeqOneK(ddouble x, ddouble m) {
                 if (m < Eps) {
@@ -177,11 +179,11 @@
             }
 
             public static ddouble Phi(ddouble x, ddouble m) {
-                (ddouble a, ddouble[] ds) = Phi(m);
+                (ddouble a, ReadOnlyCollection<ddouble> ds) = Phi(m);
 
-                ddouble phi = Ldexp(a * x, ds.Length);
+                ddouble phi = Ldexp(a * x, ds.Count);
 
-                for (int i = ds.Length - 1; i >= 0; i--) {
+                for (int i = 0; i < ds.Count; i++) {
                     phi = Ldexp(phi + Asin(ds[i] * Sin(phi)), -1);
                 }
 
@@ -196,7 +198,7 @@
                 return period_table[m];
             }
 
-            public static (ddouble a, ddouble[] ds) Phi(ddouble m) {
+            public static (ddouble a, ReadOnlyCollection<ddouble> ds) Phi(ddouble m) {
                 if (!phi_table.ContainsKey(m)) {
                     phi_table.Add(m, GeneratePhiTable(m));
                 }
@@ -204,7 +206,7 @@
                 return phi_table[m];
             }
 
-            private static (ddouble a, ddouble[] ds) GeneratePhiTable(ddouble m) {
+            private static (ddouble a, ReadOnlyCollection<ddouble> ds) GeneratePhiTable(ddouble m) {
                 ddouble a = 1d, b = Sqrt(1d - m), c = Sqrt(m);
 
                 List<ddouble> a_list = new() { a };
@@ -223,7 +225,9 @@
                     }
                 }
 
-                return (a, d_list.ToArray());
+                d_list.Reverse();
+
+                return (a, new ReadOnlyCollection<ddouble>(d_list));
             }
         }
     }
