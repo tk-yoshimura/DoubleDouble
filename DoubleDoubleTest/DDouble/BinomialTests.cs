@@ -8,7 +8,7 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void BinomialTest() {
             for (int n = 0; n <= 1000; n++) {
-                for (int k = 0; k <= n; k += n / 32 + 1) {
+                for (int k = 0; k <= n; k += n / 64 + 1) {
                     Console.WriteLine($"checked {n},{k}");
 
                     if (k == 0 || k == n) {

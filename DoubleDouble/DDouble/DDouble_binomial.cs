@@ -23,13 +23,30 @@
                 return n;
             }
 
-            ddouble v = n;
-            for (int i = 2; i <= k; i++) {
-                v *= (double)(n - i + 1);
-                v /= i;
-            }
+            int i = 2;
+            ddouble v = Ldexp(n, -64);
 
-            v = Round(v);
+#if DEBUG
+            checked {
+#endif
+                for (; i + 6 <= k; i += 6) {
+                    v *= (long)((n - i + 1) * (n - i) * (n - i - 1)) * ((n - i - 2) * (n - i - 3) * (n - i - 4));
+                    v /= (long)(i * (i + 1) * (i + 2)) * ((i + 3) * (i + 4) * (i + 5));
+                }
+                for (; i + 3 <= k; i += 3) {
+                    v *= (n - i + 1) * (n - i) * (n - i - 1);
+                    v /= i * (i + 1) * (i + 2);
+                }
+                for (; i <= k; i++) {
+                    v *= n - i + 1;
+                    v /= i;
+                }
+
+#if DEBUG
+            }
+#endif
+
+            v = Round(Ldexp(v, 64));
 
             return v;
         }
