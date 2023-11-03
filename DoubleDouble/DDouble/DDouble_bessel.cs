@@ -2062,8 +2062,8 @@ namespace DoubleDouble {
 
                 if (!scale) {
                     t *= Exp(x);
-                    
-                    if (IsNaN(t)) { 
+
+                    if (IsNaN(t)) {
                         return PositiveInfinity;
                     }
                 }

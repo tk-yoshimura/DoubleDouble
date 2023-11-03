@@ -43,7 +43,7 @@
 
         public static ddouble Jinc(ddouble x) {
             ddouble x_abs = Abs(x);
-            
+
             if (x_abs < double.ScaleB(1, -64)) {
                 return 0.5d - Ldexp(x * x, -4);
             }

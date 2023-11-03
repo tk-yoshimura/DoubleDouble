@@ -628,7 +628,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x = ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49);
                     x++;
                 });
-                { 
+                {
                     ddouble x = ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 50);
                     x++;
                 }
@@ -641,7 +641,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x = -(ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49));
                     x++;
                 });
-                { 
+                {
                     ddouble x = -(ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 50));
                     x++;
                 }
@@ -667,7 +667,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x = ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49);
                     x--;
                 });
-                { 
+                {
                     ddouble x = ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 50);
                     x--;
                 }
@@ -680,7 +680,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble x = -(ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49));
                     x--;
                 });
-                { 
+                {
                     ddouble x = -(ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 50));
                     x--;
                 }
