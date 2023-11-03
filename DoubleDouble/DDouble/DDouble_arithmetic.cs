@@ -25,11 +25,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator +(ddouble a, int b) {
-            return a + (ddouble)b;
+            return a + (double)b;
         }
 
         public static ddouble operator +(ddouble a, uint b) {
-            return a + (ddouble)b;
+            return a + (double)b;
         }
 
         public static ddouble operator +(ddouble a, long b) {
@@ -53,11 +53,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator +(int a, ddouble b) {
-            return (ddouble)a + b;
+            return (double)a + b;
         }
 
         public static ddouble operator +(uint a, ddouble b) {
-            return (ddouble)a + b;
+            return (double)a + b;
         }
 
         public static ddouble operator +(long a, ddouble b) {
@@ -93,11 +93,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator -(ddouble a, int b) {
-            return a - (ddouble)b;
+            return a - (double)b;
         }
 
         public static ddouble operator -(ddouble a, uint b) {
-            return a - (ddouble)b;
+            return a - (double)b;
         }
 
         public static ddouble operator -(ddouble a, long b) {
@@ -121,11 +121,11 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator -(int a, ddouble b) {
-            return (ddouble)a - b;
+            return (double)a - b;
         }
 
         public static ddouble operator -(uint a, ddouble b) {
-            return (ddouble)a - b;
+            return (double)a - b;
         }
 
         public static ddouble operator -(long a, ddouble b) {
