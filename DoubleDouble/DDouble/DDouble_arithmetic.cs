@@ -234,7 +234,23 @@ namespace DoubleDouble {
         }
 
         public static ddouble operator /(ddouble a, double b) {
-            return a / (ddouble)b;
+            if (IsInfinity(a) || double.IsInfinity(b) || IsZero(a) || b == 0d) {
+                return a.hi / b;
+            }
+
+            double hi = a.hi / b;
+            ddouble hirem = a - Multiply(hi, b);
+
+            double lo = hirem.hi / b;
+            ddouble lorem = hirem - Multiply(lo, b);
+
+            double c = lorem.hi / b;
+
+            if (double.IsInfinity(hi)) {
+                return hi;
+            }
+
+            return new ddouble(hi, lo) + c;
         }
 
         public static ddouble operator /(ddouble a, int b) {
