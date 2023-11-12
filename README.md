@@ -91,6 +91,8 @@
 |ddouble.StruveK(n, x)|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|
 |ddouble.StruveL(n, x)|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|
 |ddouble.StruveM(n, x)|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|
+|ddouble.AngerJ(n, x)|&#40;-inf,+inf&#41;|6||
+|ddouble.WeberE(n, x)|&#40;-inf,+inf&#41;|6|0 &leq; n &leq; 8|
 |ddouble.Jinc(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.EllipticK(m)|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|
 |ddouble.EllipticE(m)|&#91;0,1&#93;|4|k: elliptic modulus, m=k^2|
@@ -110,6 +112,7 @@
 |ddouble.Li(x)|&#91;0,+inf&#41;|5|logarithmic integral li(x)=ei(log(x))|
 |ddouble.Si(x, limit_zero)|&#40;-inf,+inf&#41;|4|sin integral, limit_zero=true: si(x)|
 |ddouble.Ci(x)|&#91;0,+inf&#41;|4|cos integral|
+|ddouble.Ti(x)|&#40;-inf,+inf&#41;|4|arctan integral|
 |ddouble.Shi(x)|&#40;-inf,+inf&#41;|5|hyperbolic sin integral|
 |ddouble.Chi(x)|&#91;0,+inf&#41;|5|hyperbolic cos integral|
 |ddouble.Clausen(x, normalized)|&#40;-inf,+inf&#41;|3|Clausen function of order 2, Cl_2(x), normalized: x -> &pi;x|
@@ -149,6 +152,7 @@
 |ddouble.GegenbauerC(n, alpha, x)|&#40;-inf,+inf&#41;|3|n &leq; 64|
 |ddouble.JacobiP(n, alpha, beta, x)|&#91;-1,1&#93;|3|n &leq; 64, alpha,beta &gt; -1|
 |ddouble.Bernoulli(n, x, centered)|&#91;0,1&#93;|4|n &leq; 64, centered: x->x-1/2|
+|ddouble.Cyclotomic(n, x)|&#40;-inf,+inf&#41;|1|n &leq; 32|
 |ddouble.MathieuA(n, q)|&#40;-inf,+inf&#41;|4|n &leq; 16|
 |ddouble.MathieuB(n, q)|&#40;-inf,+inf&#41;|4|n &leq; 16|
 |ddouble.MathieuC(n, q, x)|&#40;-inf,+inf&#41;|4|n &leq; 16, Accuracy deteriorates when q is very large.|
