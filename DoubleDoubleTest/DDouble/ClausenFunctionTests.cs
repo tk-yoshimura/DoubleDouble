@@ -4,7 +4,7 @@ using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
-    public class ClausenlFunctionTests {
+    public class ClausenFunctionTests {
         [TestMethod]
         public void ClausenTest() {
             ddouble[] expecteds = {

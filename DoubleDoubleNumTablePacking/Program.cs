@@ -124,6 +124,10 @@
                 ScorerTable.Pack(sw);
             }
 
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(TiTable) + ".bin", FileMode.Create))) {
+                TiTable.Pack(sw);
+            }
+
             Console.WriteLine("END");
             Console.Read();
         }

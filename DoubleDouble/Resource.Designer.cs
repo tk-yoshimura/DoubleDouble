@@ -237,5 +237,12 @@
                 return ((byte[])(obj));
             }
         }
+
+        internal static byte[] TiTable {
+            get {
+                object obj = ResourceManager.GetObject("TiTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
