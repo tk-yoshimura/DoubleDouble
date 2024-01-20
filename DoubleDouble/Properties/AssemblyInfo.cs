@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DoubleDouble")]
-[assembly: AssemblyCopyright("Copyright © T.Yoshimura 2021-2023")]
+[assembly: AssemblyCopyright("Copyright © T.Yoshimura 2021-2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("9A19103F-16F7-4668-BE54-9A1E7A4F7556")]
 
-[assembly: AssemblyVersion("3.1.6.*")]
+[assembly: AssemblyVersion("3.2.0.*")]
 
 [assembly: InternalsVisibleTo("DoubleDoubleTest")]
 [assembly: InternalsVisibleTo("DoubleDoubleSandbox")]

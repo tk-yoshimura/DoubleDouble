@@ -2,7 +2,7 @@
  Double-Double Arithmetic and Special Function Implements
  
 ## Requirement
-.NET 7.0
+.NET 8.0
 
 ## Install
 

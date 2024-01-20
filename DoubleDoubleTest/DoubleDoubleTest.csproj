@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
     <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">
@@ -18,13 +18,13 @@
 
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <Reference Include="DoubleDouble">
-      <HintPath>..\DoubleDouble\bin\Debug\net7.0\DoubleDouble.dll</HintPath>
+      <HintPath>..\DoubleDouble\bin\Debug\net8.0\DoubleDouble.dll</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <Reference Include="DoubleDouble">
-      <HintPath>..\DoubleDouble\bin\Release\net7.0\DoubleDouble.dll</HintPath>
+      <HintPath>..\DoubleDouble\bin\Release\net8.0\DoubleDouble.dll</HintPath>
     </Reference>
   </ItemGroup>
 

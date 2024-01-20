@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="DoubleDouble">
-      <HintPath>..\DoubleDouble\bin\Debug\net7.0\DoubleDouble.dll</HintPath>
+      <HintPath>..\DoubleDouble\bin\Debug\net8.0\DoubleDouble.dll</HintPath>
     </Reference>
   </ItemGroup>
 
