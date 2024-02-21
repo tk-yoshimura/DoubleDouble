@@ -100,10 +100,10 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ddouble> NearZeroCoefs;
 
                 static Airy() {
-                    NearZeroCoefs = Array.AsReadOnly(GenerateNearZeroCoefs());
+                    NearZeroCoefs = GenerateNearZeroCoefs();
                 }
 
-                private static ddouble[] GenerateNearZeroCoefs() {
+                private static ReadOnlyCollection<ddouble> GenerateNearZeroCoefs() {
                     ddouble[] coefs = new ddouble[17];
 
                     coefs[0] = Ldexp(Gamma1d3 * Sqrt(3), -1);
@@ -116,7 +116,7 @@ namespace DoubleDouble {
 
                     coefs = coefs.Where(v => !IsZero(v)).Reverse().ToArray();
 
-                    return coefs;
+                    return Array.AsReadOnly(coefs);
                 }
             }
         }

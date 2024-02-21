@@ -698,7 +698,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -728,7 +728,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -758,7 +758,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -788,7 +788,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -818,7 +818,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -846,7 +846,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -872,7 +872,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -898,7 +898,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -926,7 +926,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -954,7 +954,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -982,7 +982,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -1714,7 +1714,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -1755,7 +1755,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -1799,7 +1799,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -1842,7 +1842,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -2161,7 +2161,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -2188,7 +2188,7 @@ namespace DoubleDouble {
                 public (ddouble p0, ddouble p1) this[int n] => Value(n);
 
                 public (ddouble p0, ddouble p1) Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -2218,7 +2218,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n);
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];

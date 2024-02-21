@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace DoubleDouble {
     internal readonly partial struct UInt128 {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private static readonly Regex parse_regex = new(@"^\d+$");
+        private static readonly Regex parse_regex = ParserRegex();
 
         public static implicit operator UInt128(string s) {
             return Parse(s);
@@ -71,5 +71,8 @@ namespace DoubleDouble {
                 return false;
             }
         }
+
+        [GeneratedRegex(@"^\d+$")]
+        private static partial Regex ParserRegex();
     }
 }

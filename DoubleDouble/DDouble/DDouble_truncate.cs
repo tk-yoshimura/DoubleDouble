@@ -21,9 +21,7 @@
         }
 
         public static ddouble TruncateMantissa(ddouble x, int keep_bits) {
-            if (keep_bits <= 0) {
-                throw new ArgumentOutOfRangeException(nameof(keep_bits));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(keep_bits, nameof(keep_bits));
             if (!IsFinite(x) || IsZero(x)) {
                 return x;
             }

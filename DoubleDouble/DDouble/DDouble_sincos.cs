@@ -101,11 +101,11 @@ namespace DoubleDouble {
 
                 public const int SinPIHalfTableN = 1024;
 
-                public static readonly ReadOnlyCollection<ddouble> SinPIHalfTable = Array.AsReadOnly(GenerateSinPITable());
+                public static readonly ReadOnlyCollection<ddouble> SinPIHalfTable = GenerateSinPITable();
 
                 public static readonly ddouble SinPIHalfTableDx = Rcp(SinPIHalfTableN);
 
-                public static ddouble[] GenerateSinPITable() {
+                public static ReadOnlyCollection<ddouble> GenerateSinPITable() {
                     Debug.WriteLine($"SinCos initialize.");
 
                     ddouble dx = Rcp(SinPIHalfTableN);
@@ -116,7 +116,7 @@ namespace DoubleDouble {
                         table[i] = SinPIHalfPrime(x);
                     }
 
-                    return table;
+                    return Array.AsReadOnly(table);
                 }
 
                 private static ddouble SinPIHalfPrime(ddouble x) {

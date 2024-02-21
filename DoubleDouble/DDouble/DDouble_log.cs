@@ -74,11 +74,11 @@ namespace DoubleDouble {
             public static class Log {
                 public const int Log2TableN = 2048;
 
-                public static readonly ReadOnlyCollection<ddouble> Log2Table = Array.AsReadOnly(GenerateLog2Table());
+                public static readonly ReadOnlyCollection<ddouble> Log2Table = GenerateLog2Table();
 
                 public static readonly ddouble Log2TableDx = Rcp(Log2TableN);
 
-                public static ddouble[] GenerateLog2Table() {
+                public static ReadOnlyCollection<ddouble> GenerateLog2Table() {
                     Debug.WriteLine($"Log2 initialize.");
 
                     ddouble dx = Rcp(Log2TableN);
@@ -89,7 +89,7 @@ namespace DoubleDouble {
                         table[i] = Log2Prime(x);
                     }
 
-                    return table;
+                    return Array.AsReadOnly(table);
                 }
 
                 private static ddouble Log2Prime(ddouble x) {

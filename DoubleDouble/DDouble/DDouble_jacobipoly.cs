@@ -9,9 +9,7 @@ namespace DoubleDouble {
                     "In the calculation of the JacobiP function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (!(alpha > -1d && beta > -1d)) {
                 return NaN;

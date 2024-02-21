@@ -9,9 +9,7 @@ namespace DoubleDouble {
                     "In the calculation of the LegendreP function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (n >= 2) {
                 ReadOnlyCollection<ddouble> coefs = Consts.LegendreP.Table(n);
@@ -47,9 +45,7 @@ namespace DoubleDouble {
                     "In the calculation of the LegendreP function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (x < -1d || x > 1d) {
                 return NaN;

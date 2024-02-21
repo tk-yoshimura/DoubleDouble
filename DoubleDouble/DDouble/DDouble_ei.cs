@@ -125,9 +125,7 @@ namespace DoubleDouble {
                 private static readonly List<ddouble> table = new();
 
                 public static ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -146,9 +144,7 @@ namespace DoubleDouble {
                 private static readonly List<ddouble> table = new();
 
                 public static ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];
@@ -166,9 +162,7 @@ namespace DoubleDouble {
                 private static readonly List<(ddouble, ddouble)> table = new();
 
                 public static (ddouble r1, ddouble r2) Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < table.Count) {
                         return table[n];

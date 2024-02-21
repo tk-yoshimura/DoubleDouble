@@ -191,18 +191,18 @@ namespace DoubleDouble {
             public static class Pow {
                 public const int Pow2TableN = 1024;
 
-                public static readonly ReadOnlyCollection<ddouble> Pow2Table = Array.AsReadOnly(GeneratePow2Table());
+                public static readonly ReadOnlyCollection<ddouble> Pow2Table = GeneratePow2Table();
                 public static readonly ddouble Pow2TableDx = Rcp(Pow2TableN * Pow2TableN);
                 public static readonly ddouble Pow2C1 = Ln2;
                 public static readonly ddouble Pow2C2 = (+1, -3, 0xF5FDEFFC162C7543uL, 0x78B583764B9AFE55uL);
                 public static readonly ddouble Pow2C3 = (+1, -5, 0xE35846B82505FC59uL, 0x9D3B15D995E96F74uL);
                 public static readonly ddouble Pow2C4 = (+1, -7, 0x9D955B7DD273B94EuL, 0x65DF05A9F7562839uL);
 
-                public static readonly ReadOnlyCollection<ddouble> ExpNTable = Array.AsReadOnly(GenerateExpNTable());
+                public static readonly ReadOnlyCollection<ddouble> ExpNTable = GenerateExpNTable();
 
-                public static readonly ReadOnlyCollection<ddouble> Pow10NTable = Array.AsReadOnly(GeneratePow10NTable());
+                public static readonly ReadOnlyCollection<ddouble> Pow10NTable = GeneratePow10NTable();
 
-                public static ddouble[] GeneratePow2Table() {
+                public static ReadOnlyCollection<ddouble> GeneratePow2Table() {
                     ddouble dx = Rcp(Pow2TableN), ddx = Rcp(Pow2TableN * Pow2TableN);
                     ddouble[] table = new ddouble[Pow2TableN * 2 + 1];
 
@@ -215,10 +215,10 @@ namespace DoubleDouble {
                         table[i + Pow2TableN + 1] = Pow2Prime(x);
                     }
 
-                    return table;
+                    return Array.AsReadOnly(table);
                 }
 
-                public static ddouble[] GenerateExpNTable() {
+                public static ReadOnlyCollection<ddouble> GenerateExpNTable() {
                     ReadOnlyCollection<ddouble> es = new(new ddouble[10]{
                         E,
                         (+1, 2, 0xEC7325C6A6ED6E61uL, 0x9D1DD1035B455DD4uL),
@@ -246,10 +246,10 @@ namespace DoubleDouble {
                         table[i] = y;
                     }
 
-                    return table;
+                    return Array.AsReadOnly(table);
                 }
 
-                public static ddouble[] GeneratePow10NTable() {
+                public static ReadOnlyCollection<ddouble> GeneratePow10NTable() {
                     ddouble[] pow10s = new ddouble[9];
                     pow10s[0] = 10d;
                     for (int i = 1; i < pow10s.Length; i++) {
@@ -270,7 +270,7 @@ namespace DoubleDouble {
                         table[i] = y;
                     }
 
-                    return table;
+                    return Array.AsReadOnly(table);
                 }
 
                 private static ddouble Pow2Prime(ddouble x) {

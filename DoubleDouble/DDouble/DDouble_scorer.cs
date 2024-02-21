@@ -172,11 +172,11 @@ namespace DoubleDouble {
                         tables["GiPadeX32Table"],
                     });
 
-                    NearZeroCoefs = Array.AsReadOnly(GenerateNearZeroCoefs());
-                    AsymptoticCoefs = Array.AsReadOnly(GenerateAsymptoticCoefs());
+                    NearZeroCoefs = GenerateNearZeroCoefs();
+                    AsymptoticCoefs = GenerateAsymptoticCoefs();
                 }
 
-                private static ddouble[] GenerateNearZeroCoefs() {
+                private static ReadOnlyCollection<ddouble> GenerateNearZeroCoefs() {
                     ddouble[] coefs = new ddouble[18];
 
                     coefs[0] = Gamma1d3;
@@ -189,10 +189,10 @@ namespace DoubleDouble {
 
                     coefs = coefs.Reverse().ToArray();
 
-                    return coefs;
+                    return Array.AsReadOnly(coefs);
                 }
 
-                private static ddouble[] GenerateAsymptoticCoefs() {
+                private static ReadOnlyCollection<ddouble> GenerateAsymptoticCoefs() {
                     ddouble[] coefs = new ddouble[10];
 
                     coefs[0] = 1d;
@@ -203,7 +203,7 @@ namespace DoubleDouble {
 
                     coefs = coefs.Reverse().ToArray();
 
-                    return coefs;
+                    return Array.AsReadOnly(coefs);
                 }
             }
         }

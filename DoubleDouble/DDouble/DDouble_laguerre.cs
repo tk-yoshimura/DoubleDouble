@@ -9,9 +9,7 @@ namespace DoubleDouble {
                     "In the calculation of the LaguerreL function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (n >= 2) {
                 ReadOnlyCollection<ddouble> coefs = Consts.LaguerreL.Table(n);
@@ -42,9 +40,7 @@ namespace DoubleDouble {
                     "In the calculation of the LaguerreL function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (!IsFinite(alpha)) {
                 return NaN;

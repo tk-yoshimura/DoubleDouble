@@ -4,9 +4,7 @@ using System.Collections.ObjectModel;
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Polygamma(int n, ddouble x) {
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
             if (n > 16) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),

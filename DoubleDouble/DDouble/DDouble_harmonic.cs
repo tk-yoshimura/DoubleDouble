@@ -19,9 +19,7 @@
                 }
 
                 public static ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
                     if (n < a_table.Count) {
                         return a_table[n];

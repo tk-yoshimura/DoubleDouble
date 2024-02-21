@@ -9,9 +9,7 @@ namespace DoubleDouble {
                     "In the calculation of the ChebyshevT function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (n >= 2) {
                 ReadOnlyCollection<ddouble> coefs = Consts.ChebyshevT.Table(n);
@@ -45,9 +43,7 @@ namespace DoubleDouble {
                     "In the calculation of the ChebyshevU function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (n >= 2) {
                 ReadOnlyCollection<ddouble> coefs = Consts.ChebyshevU.Table(n);

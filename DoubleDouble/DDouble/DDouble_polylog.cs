@@ -292,9 +292,7 @@ namespace DoubleDouble {
                 new int[] { -1, -1, 7, 4, 3, 2, 2, 2, 2 });
 
             static double IntegrandPeak(int n, double x) {
-                if (n <= 0) {
-                    throw new ArgumentOutOfRangeException(nameof(n));
-                }
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(n, nameof(n));
                 if (n == 1) {
                     return 0;
                 }

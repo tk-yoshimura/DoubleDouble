@@ -10,9 +10,7 @@ namespace DoubleDouble {
                     "In the calculation of the ZernikeR function, n greater than 64 is not supported."
                 );
             }
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
 
             if (IsNegative(x) || x > 1d) {
                 return NaN;

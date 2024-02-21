@@ -7,9 +7,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
 
         public static ddouble MathieuA(int n, ddouble q) {
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
             if (n > MathieuUtil.MaxN) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
@@ -39,9 +37,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble MathieuB(int n, ddouble q) {
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
             if (n == 0) {
                 return MathieuA(n, q);
             }
@@ -74,9 +70,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble MathieuC(int n, ddouble q, ddouble x) {
-            if (n < 0) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
             if (n > MathieuUtil.MaxN) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
@@ -108,9 +102,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble MathieuS(int n, ddouble q, ddouble x) {
-            if (n < 1) {
-                throw new ArgumentOutOfRangeException(nameof(n));
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(n, 1, nameof(n));
             if (n > MathieuUtil.MaxN) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
@@ -706,9 +698,7 @@ namespace DoubleDouble {
             }
 
             public static (ddouble[] cs, ddouble r, ddouble d) SolveCoef(ddouble a, ddouble q, int m, int k, int s, ddouble r0, ddouble cn) {
-                if (m < 2) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                ArgumentOutOfRangeException.ThrowIfLessThan(m, 2, nameof(m));
 
                 ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
                 ddouble sq_q = q * q;
@@ -731,9 +721,7 @@ namespace DoubleDouble {
             }
 
             public static (ddouble[] cs, ddouble r, ddouble d) SolveCoefZeroShifted(ReadOnlyCollection<ddouble> arms, ddouble q, int m, int k, ddouble cn) {
-                if (m < 2) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                ArgumentOutOfRangeException.ThrowIfLessThan(m, 2, nameof(m));
 
                 ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
                 ddouble sq_q = q * q;
