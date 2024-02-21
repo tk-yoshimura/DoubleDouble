@@ -153,15 +153,15 @@ namespace DoubleDouble {
                 }
 
                 public static ddouble Pow5(int n) {
-                    return n >= 0 ? 
-                        pow5s[int.Min(n, pow5s.Count - 1)] : 
+                    return n >= 0 ?
+                        pow5s[int.Min(n, pow5s.Count - 1)] :
                         invpow5s[int.Min(-n, invpow5s.Count - 1)];
                 }
 
-                static ReadOnlyCollection<UInt128> GenerateDecimals() { 
+                static ReadOnlyCollection<UInt128> GenerateDecimals() {
                     List<UInt128> decimals = [];
                     UInt128 num = 1u;
-                    for (int i = 0; i < 38; i++) { 
+                    for (int i = 0; i < 38; i++) {
                         decimals.Add(num);
                         num *= 10u;
                     }

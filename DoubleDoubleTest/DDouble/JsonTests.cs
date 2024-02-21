@@ -1,7 +1,5 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 
 namespace DoubleDoubleTest.DDouble {
