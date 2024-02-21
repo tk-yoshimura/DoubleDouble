@@ -95,8 +95,8 @@ namespace DoubleDouble {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
 
                 public static ReadOnlyCollection<ddouble> Coef(int n) {
-                    if (table.ContainsKey(n)) {
-                        return table[n];
+                    if (table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
+                        return value;
                     }
 
                     List<ddouble> coef = new List<ddouble>();
@@ -203,8 +203,8 @@ namespace DoubleDouble {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
 
                 public static ReadOnlyCollection<ddouble> Coef(int n) {
-                    if (table.ContainsKey(n)) {
-                        return table[n];
+                    if (table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
+                        return value;
                     }
 
                     List<ddouble> coef = new List<ddouble>();

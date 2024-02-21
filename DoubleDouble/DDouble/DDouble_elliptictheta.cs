@@ -154,8 +154,8 @@ namespace DoubleDouble {
             public static ddouble Q0(ddouble q) {
                 Debug.Assert(IsPositive(q) && q <= 1d, nameof(q));
 
-                if (q0_table.ContainsKey(q)) {
-                    return q0_table[q];
+                if (q0_table.TryGetValue(q, out ddouble value)) {
+                    return value;
                 }
 
                 ddouble q0 = EulerQ(q * q);

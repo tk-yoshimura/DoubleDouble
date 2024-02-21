@@ -191,19 +191,21 @@ namespace DoubleDouble {
             }
 
             public static ddouble Period(ddouble m) {
-                if (!period_table.ContainsKey(m)) {
-                    period_table.Add(m, EllipticK(m));
+                if (!period_table.TryGetValue(m, out ddouble value)) {
+                    value = EllipticK(m);
+                    period_table.Add(m, value);
                 }
 
-                return period_table[m];
+                return value;
             }
 
             public static (ddouble a, ReadOnlyCollection<ddouble> ds) Phi(ddouble m) {
-                if (!phi_table.ContainsKey(m)) {
-                    phi_table.Add(m, GeneratePhiTable(m));
+                if (!phi_table.TryGetValue(m, out (ddouble a, ReadOnlyCollection<ddouble> ds) value)) {
+                    value = GeneratePhiTable(m);
+                    phi_table.Add(m, value);
                 }
 
-                return phi_table[m];
+                return value;
             }
 
             private static (ddouble a, ReadOnlyCollection<ddouble> ds) GeneratePhiTable(ddouble m) {

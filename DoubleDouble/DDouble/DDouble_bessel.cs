@@ -289,17 +289,17 @@ namespace DoubleDouble {
         }
 
         private static class BesselNearZero {
-            private static Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = new();
-            private static Dictionary<ddouble, X2DenomTable> x2denom_coef_table = new();
-            private static Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = new();
-            private static Dictionary<ddouble, GammaTable> gamma_coef_table = new();
-            private static Dictionary<ddouble, GammaPNTable> gammapn_coef_table = new();
-            private static YCoefTable y_coef_table = new();
-            private static Y0CoefTable y0_coef_table = new();
-            private static Y1CoefTable y1_coef_table = new();
-            private static KCoefTable k_coef_table = new();
-            private static K0CoefTable k0_coef_table = new();
-            private static K1CoefTable k1_coef_table = new();
+            private static readonly Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = new();
+            private static readonly Dictionary<ddouble, X2DenomTable> x2denom_coef_table = new();
+            private static readonly Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = new();
+            private static readonly Dictionary<ddouble, GammaTable> gamma_coef_table = new();
+            private static readonly Dictionary<ddouble, GammaPNTable> gammapn_coef_table = new();
+            private static readonly YCoefTable y_coef_table = new();
+            private static readonly Y0CoefTable y0_coef_table = new();
+            private static readonly Y1CoefTable y1_coef_table = new();
+            private static readonly KCoefTable k_coef_table = new();
+            private static readonly K0CoefTable k0_coef_table = new();
+            private static readonly K1CoefTable k1_coef_table = new();
 
             public static ddouble BesselJ(ddouble nu, ddouble x) {
                 if (IsNegative(nu) && BesselUtil.NearlyInteger(nu, out int n)) {
@@ -375,15 +375,17 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselJIKernel(ddouble nu, ddouble x, bool sign_switch, int terms) {
-                if (!dfactdenom_coef_table.ContainsKey(nu)) {
-                    dfactdenom_coef_table.Add(nu, new DoubleFactDenomTable(nu));
+                if (!dfactdenom_coef_table.TryGetValue(nu, out DoubleFactDenomTable dfactdenom_table)) {
+                    dfactdenom_table = new DoubleFactDenomTable(nu);
+                    dfactdenom_coef_table.Add(nu, dfactdenom_table);
                 }
-                if (!x2denom_coef_table.ContainsKey(nu)) {
-                    x2denom_coef_table.Add(nu, new X2DenomTable(nu));
+                if (!x2denom_coef_table.TryGetValue(nu, out X2DenomTable x2denom_table)) {
+                    x2denom_table = new X2DenomTable(nu);
+                    x2denom_coef_table.Add(nu, x2denom_table);
                 }
 
-                DoubleFactDenomTable r = dfactdenom_coef_table[nu];
-                X2DenomTable d = x2denom_coef_table[nu];
+                DoubleFactDenomTable r = dfactdenom_table;
+                X2DenomTable d = x2denom_table;
 
                 ddouble x2 = x * x, x4 = x2 * x2;
 
@@ -414,16 +416,18 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselYKernel(ddouble nu, ddouble x, int terms) {
-                if (!gamma_coef_table.ContainsKey(nu)) {
-                    gamma_coef_table.Add(nu, new GammaTable(nu));
+                if (!gamma_coef_table.TryGetValue(nu, out GammaTable gamma_table)) {
+                    gamma_table = new GammaTable(nu);
+                    gamma_coef_table.Add(nu, gamma_table);
                 }
-                if (!gammapn_coef_table.ContainsKey(nu)) {
-                    gammapn_coef_table.Add(nu, new GammaPNTable(nu));
+                if (!gammapn_coef_table.TryGetValue(nu, out GammaPNTable gammapn_table)) {
+                    gammapn_table = new GammaPNTable(nu);
+                    gammapn_coef_table.Add(nu, gammapn_table);
                 }
 
                 YCoefTable r = y_coef_table;
-                GammaTable g = gamma_coef_table[nu];
-                GammaPNTable gpn = gammapn_coef_table[nu];
+                GammaTable g = gamma_table;
+                GammaPNTable gpn = gammapn_table;
 
                 ddouble cos = CosPI(nu), sin = SinPI(nu);
                 ddouble p = IsZero(cos) ? 0d : Pow(x, Ldexp(nu, 1)) * cos, s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
@@ -566,15 +570,17 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselKKernel(ddouble nu, ddouble x, int terms) {
-                if (!gammadenom_coef_table.ContainsKey(nu)) {
-                    gammadenom_coef_table.Add(nu, new GammaDenomTable(nu));
+                if (!gammadenom_coef_table.TryGetValue(nu, out GammaDenomTable gammadenomp_table)) {
+                    gammadenomp_table = new GammaDenomTable(nu);
+                    gammadenom_coef_table.Add(nu, gammadenomp_table);
                 }
-                if (!gammadenom_coef_table.ContainsKey(-nu)) {
-                    gammadenom_coef_table.Add(-nu, new GammaDenomTable(-nu));
+                if (!gammadenom_coef_table.TryGetValue(-nu, out GammaDenomTable gammadenomn_table)) {
+                    gammadenomn_table = new GammaDenomTable(-nu);
+                    gammadenom_coef_table.Add(-nu, gammadenomn_table);
                 }
 
                 KCoefTable r = k_coef_table;
-                GammaDenomTable gp = gammadenom_coef_table[nu], gn = gammadenom_coef_table[-nu];
+                GammaDenomTable gp = gammadenomp_table, gn = gammadenomn_table;
 
                 ddouble tp = Pow(Ldexp(x, -1), nu), tn = 1d / tp;
 
@@ -692,9 +698,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -724,9 +728,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -756,9 +758,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -788,9 +788,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -820,9 +818,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -850,9 +846,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -878,9 +872,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -906,9 +898,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -936,9 +926,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -966,9 +954,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -996,9 +982,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1016,10 +1000,10 @@ namespace DoubleDouble {
         }
 
         private static class BesselMillerBackward {
-            private static Dictionary<ddouble, BesselJPhiTable> phi_table = new();
-            private static Dictionary<ddouble, BesselIPsiTable> psi_table = new();
-            private static Dictionary<ddouble, BesselYEtaTable> eta_table = new();
-            private static Dictionary<ddouble, BesselYXiTable> xi_table = new();
+            private static readonly Dictionary<ddouble, BesselJPhiTable> phi_coef_table = new();
+            private static readonly Dictionary<ddouble, BesselIPsiTable> psi_coef_table = new();
+            private static readonly Dictionary<ddouble, BesselYEtaTable> eta_coef_table = new();
+            private static readonly Dictionary<ddouble, BesselYXiTable> xi_coef_table = new();
 
             public static ddouble BesselJ(int n, ddouble x) {
                 int m = BesselJYIterM(x.Hi);
@@ -1147,11 +1131,12 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                if (!phi_table.ContainsKey(alpha)) {
-                    phi_table.Add(alpha, new BesselJPhiTable(alpha));
+                if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi_table)) {
+                    phi_table = new BesselJPhiTable(alpha);
+                    phi_coef_table.Add(alpha, phi_table);
                 }
 
-                BesselJPhiTable phi = phi_table[alpha];
+                BesselJPhiTable phi = phi_table;
 
                 ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
@@ -1261,17 +1246,17 @@ namespace DoubleDouble {
                     return BesselY1Kernel(x, m);
                 }
 
-                if (!eta_table.ContainsKey(0)) {
-                    eta_table.Add(0, new BesselYEtaTable(0));
+                if (!eta_coef_table.ContainsKey(0)) {
+                    eta_coef_table.Add(0, new BesselYEtaTable(0));
                 }
 
-                BesselYEtaTable eta = eta_table[0];
+                BesselYEtaTable eta = eta_coef_table[0];
 
-                if (!xi_table.ContainsKey(0)) {
-                    xi_table.Add(0, new BesselYXiTable(0, eta));
+                if (!xi_coef_table.ContainsKey(0)) {
+                    xi_coef_table.Add(0, new BesselYXiTable(0, eta));
                 }
 
-                BesselYXiTable xi = xi_table[0];
+                BesselYXiTable xi = xi_coef_table[0];
 
                 ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble se = 0d, sx = 0d;
@@ -1318,23 +1303,26 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                if (!eta_table.ContainsKey(alpha)) {
-                    eta_table.Add(alpha, new BesselYEtaTable(alpha));
+                if (!eta_coef_table.TryGetValue(alpha, out BesselYEtaTable eta_table)) {
+                    eta_table = new BesselYEtaTable(alpha);
+                    eta_coef_table.Add(alpha, eta_table);
                 }
 
-                BesselYEtaTable eta = eta_table[alpha];
+                BesselYEtaTable eta = eta_table;
 
-                if (!xi_table.ContainsKey(alpha)) {
-                    xi_table.Add(alpha, new BesselYXiTable(alpha, eta));
+                if (!xi_coef_table.TryGetValue(alpha, out BesselYXiTable xi_table)) {
+                    xi_table = new BesselYXiTable(alpha, eta);
+                    xi_coef_table.Add(alpha, xi_table);
                 }
 
-                BesselYXiTable xi = xi_table[alpha];
+                BesselYXiTable xi = xi_table;
 
-                if (!phi_table.ContainsKey(alpha)) {
-                    phi_table.Add(alpha, new BesselJPhiTable(alpha));
+                if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi_table)) {
+                    phi_table = new BesselJPhiTable(alpha);
+                    phi_coef_table.Add(alpha, phi_table);
                 }
 
-                BesselJPhiTable phi = phi_table[alpha];
+                BesselJPhiTable phi = phi_table;
 
                 ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble se = 0d, sxo = 0d, sxe = 0d;
@@ -1480,11 +1468,12 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                if (!eta_table.ContainsKey(0)) {
-                    eta_table.Add(0, new BesselYEtaTable(0));
+                if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta_table)) {
+                    eta_table = new BesselYEtaTable(0);
+                    eta_coef_table.Add(0, eta_table);
                 }
 
-                BesselYEtaTable eta = eta_table[0];
+                BesselYEtaTable eta = eta_table;
 
                 ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble se = 0d;
@@ -1512,15 +1501,15 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                if (!xi_table.ContainsKey(0)) {
-                    if (!eta_table.ContainsKey(0)) {
-                        eta_table.Add(0, new BesselYEtaTable(0));
+                if (!xi_coef_table.ContainsKey(0)) {
+                    if (!eta_coef_table.ContainsKey(0)) {
+                        eta_coef_table.Add(0, new BesselYEtaTable(0));
                     }
 
-                    xi_table.Add(0, new BesselYXiTable(0, eta_table[0]));
+                    xi_coef_table.Add(0, new BesselYXiTable(0, eta_coef_table[0]));
                 }
 
-                BesselYXiTable xi = xi_table[0];
+                BesselYXiTable xi = xi_coef_table[0];
 
                 ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble sx = 0d;
@@ -1594,11 +1583,12 @@ namespace DoubleDouble {
                     throw new ArgumentOutOfRangeException(nameof(m));
                 }
 
-                if (!psi_table.ContainsKey(alpha)) {
-                    psi_table.Add(alpha, new BesselIPsiTable(alpha));
+                if (!psi_coef_table.TryGetValue(alpha, out BesselIPsiTable psi_table)) {
+                    psi_table = new BesselIPsiTable(alpha);
+                    psi_coef_table.Add(alpha, psi_table);
                 }
 
-                BesselIPsiTable psi = psi_table[alpha];
+                BesselIPsiTable psi = psi_table;
 
                 ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
@@ -1724,9 +1714,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1767,9 +1755,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1813,9 +1799,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1858,9 +1842,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1892,8 +1874,8 @@ namespace DoubleDouble {
         }
 
         private static class BesselYoshidaPade {
-            private static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> EssTable;
-            private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> CDsTable = new();
+            private static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> ess_coef_table;
+            private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> cds_coef_table = new();
 
             static BesselYoshidaPade() {
                 Dictionary<string, ReadOnlyCollection<ddouble>> tables =
@@ -1918,8 +1900,8 @@ namespace DoubleDouble {
                 cd0.Reverse();
                 cd1.Reverse();
 
-                CDsTable.Add(0, Array.AsReadOnly(cd0.ToArray()));
-                CDsTable.Add(1, Array.AsReadOnly(cd1.ToArray()));
+                cds_coef_table.Add(0, Array.AsReadOnly(cd0.ToArray()));
+                cds_coef_table.Add(1, Array.AsReadOnly(cd1.ToArray()));
 
                 List<ReadOnlyCollection<ddouble>> es = new();
 
@@ -1927,16 +1909,17 @@ namespace DoubleDouble {
                     es.Add(tables[$"ES{i}Table"]);
                 }
 
-                EssTable = Array.AsReadOnly(es.ToArray());
+                ess_coef_table = Array.AsReadOnly(es.ToArray());
             }
 
             public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
                 if (nu < 2d) {
-                    if (!CDsTable.ContainsKey(nu)) {
-                        CDsTable.Add(nu, Table(nu));
+                    if (!cds_coef_table.TryGetValue(nu, out ReadOnlyCollection<(ddouble c, ddouble s)> cds_table)) {
+                        cds_table = Table(nu);
+                        cds_coef_table.Add(nu, cds_table);
                     }
 
-                    ReadOnlyCollection<(ddouble, ddouble)> cds = CDsTable[nu];
+                    ReadOnlyCollection<(ddouble, ddouble)> cds = cds_table;
 
                     ddouble y = Value(x, cds, scale);
 
@@ -1982,7 +1965,7 @@ namespace DoubleDouble {
             }
 
             private static ReadOnlyCollection<(ddouble c, ddouble d)> Table(ddouble nu) {
-                int m = EssTable.Count - 1;
+                int m = ess_coef_table.Count - 1;
 
                 ddouble squa_nu = nu * nu;
                 List<(ddouble c, ddouble d)> cds = new();
@@ -1999,7 +1982,7 @@ namespace DoubleDouble {
                 }
 
                 for (int i = 0; i <= m; i++) {
-                    ReadOnlyCollection<ddouble> es = EssTable[i];
+                    ReadOnlyCollection<ddouble> es = ess_coef_table[i];
                     ddouble d = es[i], c = 0d;
 
                     for (int l = 0; l < i; l++) {
@@ -2019,9 +2002,9 @@ namespace DoubleDouble {
         }
 
         private static class BesselLimit {
-            private static Dictionary<ddouble, ACoefTable> a_table = new();
-            private static Dictionary<ddouble, JYCoefTable> jy_table = new();
-            private static Dictionary<ddouble, IKCoefTable> ik_table = new();
+            private static readonly Dictionary<ddouble, ACoefTable> a_coef_table = new();
+            private static readonly Dictionary<ddouble, JYCoefTable> jy_coef_table = new();
+            private static readonly Dictionary<ddouble, IKCoefTable> ik_coef_table = new();
 
             public static ddouble BesselJ(ddouble nu, ddouble x) {
                 if (IsInfinity(x)) {
@@ -2088,15 +2071,17 @@ namespace DoubleDouble {
             }
 
             private static (ddouble s, ddouble t) BesselJYKernel(ddouble nu, ddouble x, int terms = 64) {
-                if (!a_table.ContainsKey(nu)) {
-                    a_table.Add(nu, new ACoefTable(nu));
+                if (!a_coef_table.TryGetValue(nu, out ACoefTable a_table)) {
+                    a_table = new ACoefTable(nu);
+                    a_coef_table.Add(nu, a_table);
                 }
-                if (!jy_table.ContainsKey(nu)) {
-                    jy_table.Add(nu, new JYCoefTable(nu));
+                if (!jy_coef_table.TryGetValue(nu, out JYCoefTable jy_table)) {
+                    jy_table = new JYCoefTable(nu);
+                    jy_coef_table.Add(nu, jy_table);
                 }
 
-                ACoefTable a = a_table[nu];
-                JYCoefTable c = jy_table[nu];
+                ACoefTable a = a_table;
+                JYCoefTable c = jy_table;
 
                 ddouble v = 1d / x, v2 = v * v, v4 = v2 * v2;
                 ddouble s = 0d, t = 0d, p = 1d, q = v;
@@ -2125,15 +2110,17 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselIKKernel(ddouble nu, ddouble x, bool sign_switch, int terms) {
-                if (!a_table.ContainsKey(nu)) {
-                    a_table.Add(nu, new ACoefTable(nu));
+                if (!a_coef_table.TryGetValue(nu, out ACoefTable a_table)) {
+                    a_table = new ACoefTable(nu);
+                    a_coef_table.Add(nu, a_table);
                 }
-                if (!ik_table.ContainsKey(nu)) {
-                    ik_table.Add(nu, new IKCoefTable(nu));
+                if (!ik_coef_table.TryGetValue(nu, out IKCoefTable ik_table)) {
+                    ik_table = new IKCoefTable(nu);
+                    ik_coef_table.Add(nu, ik_table);
                 }
 
-                ACoefTable a = a_table[nu];
-                IKCoefTable c = ik_table[nu];
+                ACoefTable a = a_table;
+                IKCoefTable c = ik_table;
 
                 ddouble v = 1d / x, v2 = v * v;
                 ddouble r = 0d, u = 1d;
@@ -2174,9 +2161,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -2203,9 +2188,7 @@ namespace DoubleDouble {
                 public (ddouble p0, ddouble p1) this[int n] => Value(n);
 
                 public (ddouble p0, ddouble p1) Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];
@@ -2235,9 +2218,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    if (n < 0) {
-                        throw new ArgumentOutOfRangeException(nameof(n));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(n);
 
                     if (n < table.Count) {
                         return table[n];

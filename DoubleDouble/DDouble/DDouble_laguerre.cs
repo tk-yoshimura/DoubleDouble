@@ -80,12 +80,13 @@ namespace DoubleDouble {
                 };
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
-                    if (!table.ContainsKey(n)) {
+                    if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
                         ReadOnlyCollection<ddouble> coefs = GenerateTable(n);
-                        table.Add(n, coefs);
+                        value = coefs;
+                        table.Add(n, value);
                     }
 
-                    return table[n];
+                    return value;
                 }
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n) {

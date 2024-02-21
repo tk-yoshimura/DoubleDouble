@@ -145,26 +145,27 @@ namespace DoubleDouble {
                 static readonly Dictionary<int, ddouble> pow5s = new();
 
                 public static UInt128 Decimal(int n) {
-                    if (!decimals.ContainsKey(n)) {
+                    if (!decimals.TryGetValue(n, out UInt128 value)) {
                         UInt128 num = 1u;
                         for (int i = 0; i < n; i++) {
                             num *= 10u;
                         }
 
-                        decimals.Add(n, num);
+                        value = num;
+                        decimals.Add(n, value);
                     }
 
-                    return decimals[n];
+                    return value;
                 }
 
                 public static ddouble Pow5(int n) {
-                    if (!pow5s.ContainsKey(n)) {
+                    if (!pow5s.TryGetValue(n, out ddouble value)) {
                         ddouble pow5 = Pow(5d, n);
-
-                        pow5s.Add(n, pow5);
+                        value = pow5;
+                        pow5s.Add(n, value);
                     }
 
-                    return pow5s[n];
+                    return value;
                 }
             }
         }
