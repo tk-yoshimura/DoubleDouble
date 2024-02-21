@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
@@ -116,7 +117,7 @@ namespace DoubleDouble {
 
             Debug.Assert(log10_frac >= 1d && log10_frac < 10d, "invalid frac");
 
-            mantissa = UInt128.MulShift(mantissa, Consts.Dec.Decimal(digits + presicion), FloatSplitter.MantissaBits * 2);
+            mantissa = UInt128.MulShift(mantissa, Consts.Dec.Decimals[digits + presicion], FloatSplitter.MantissaBits * 2);
             mantissa = UInt128.MulShift(mantissa, mantissa_frac, FloatSplitter.MantissaBits * 2 - exponent_frac);
 
             int mantissa_length = mantissa.ToString().Length;
@@ -124,14 +125,14 @@ namespace DoubleDouble {
             if (mantissa_length > (digits + 1)) {
                 int trunc_digits = mantissa_length - (digits + 1);
                 exponent_dec = checked(exponent_dec + trunc_digits - presicion);
-                mantissa = UInt128.RoundDiv(mantissa, Consts.Dec.Decimal(trunc_digits));
+                mantissa = UInt128.RoundDiv(mantissa, Consts.Dec.Decimals[trunc_digits]);
             }
-            if (mantissa == Consts.Dec.Decimal(digits + 1)) {
+            if (mantissa == Consts.Dec.Decimals[digits + 1]) {
                 exponent_dec = checked(exponent_dec + 1);
-                mantissa = Consts.Dec.Decimal(digits);
+                mantissa = Consts.Dec.Decimals[digits];
             }
 
-            Debug.Assert(mantissa < Consts.Dec.Decimal(digits + 1), "overflow");
+            Debug.Assert(mantissa < Consts.Dec.Decimals[digits + 1], "overflow");
             Debug.Assert(mantissa.ToString().Length == (digits + 1), "mismatch length");
 
             return (sign, exponent_dec, mantissa);
@@ -142,30 +143,56 @@ namespace DoubleDouble {
             public static class Dec {
 
                 static readonly Dictionary<int, UInt128> decimals = new();
-                static readonly Dictionary<int, ddouble> pow5s = new();
+                public static readonly ReadOnlyCollection<ddouble> pow5s, invpow5s;
 
-                public static UInt128 Decimal(int n) {
-                    if (!decimals.TryGetValue(n, out UInt128 value)) {
-                        UInt128 num = 1u;
-                        for (int i = 0; i < n; i++) {
-                            num *= 10u;
-                        }
+                public static readonly ReadOnlyCollection<UInt128> Decimals;
 
-                        value = num;
-                        decimals.Add(n, value);
-                    }
-
-                    return value;
+                static Dec() {
+                    Decimals = GenerateDecimals();
+                    (pow5s, invpow5s) = GeneratePow5NTable();
                 }
 
                 public static ddouble Pow5(int n) {
-                    if (!pow5s.TryGetValue(n, out ddouble value)) {
-                        ddouble pow5 = Pow(5d, n);
-                        value = pow5;
-                        pow5s.Add(n, value);
+                    return n >= 0 ? 
+                        pow5s[int.Min(n, pow5s.Count - 1)] : 
+                        invpow5s[int.Min(-n, invpow5s.Count - 1)];
+                }
+
+                static ReadOnlyCollection<UInt128> GenerateDecimals() { 
+                    List<UInt128> decimals = [];
+                    UInt128 num = 1u;
+                    for (int i = 0; i < 38; i++) { 
+                        decimals.Add(num);
+                        num *= 10u;
+                    }
+                    decimals.Add(num);
+
+                    return decimals.AsReadOnly();
+                }
+
+                public static (ReadOnlyCollection<ddouble>, ReadOnlyCollection<ddouble>) GeneratePow5NTable() {
+                    ddouble[] pow5s = new ddouble[9];
+                    pow5s[0] = 5d;
+                    for (int i = 1; i < pow5s.Length; i++) {
+                        pow5s[i] = pow5s[i - 1] * pow5s[i - 1];
                     }
 
-                    return value;
+                    ddouble[] table = new ddouble[443], table_inv = new ddouble[443];
+                    for (int i = 0; i < table.Length; i++) {
+                        int n = i;
+                        ddouble y = 1d;
+
+                        for (int j = 0; j < pow5s.Length && n > 0; j++, n >>= 1) {
+                            if ((n & 1) == 1) {
+                                y *= pow5s[j];
+                            }
+                        }
+
+                        table[i] = y;
+                        table_inv[i] = 1d / y;
+                    }
+
+                    return (Array.AsReadOnly(table), Array.AsReadOnly(table_inv));
                 }
             }
         }
