@@ -61,6 +61,30 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual($"{v1:E30}", v1.ToString("E30"));
             Assert.AreEqual($"{v1:e20}", v1.ToString("e20"));
             Assert.AreEqual($"{v1:E20}", v1.ToString("E20"));
+
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => { 
+                Console.WriteLine($"{v1:e31}");
+            });
+
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => { 
+                Console.WriteLine($"{v1:E31}");
+            });
+
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => { 
+                Console.WriteLine(v1.ToString("e31"));
+            });
+
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => { 
+                Console.WriteLine(v1.ToString("E31"));
+            });
+
+            Assert.ThrowsException<FormatException>(() => { 
+                Console.WriteLine($"{v1:f30}");
+            });
+
+            Assert.ThrowsException<FormatException>(() => { 
+                Console.WriteLine($"{v1:f30}");
+            });
         }
 
         [TestMethod]
