@@ -142,7 +142,6 @@ namespace DoubleDouble {
 
             public static class Dec {
 
-                static readonly Dictionary<int, UInt128> decimals = new();
                 public static readonly ReadOnlyCollection<ddouble> pow5s, invpow5s;
 
                 public static readonly ReadOnlyCollection<UInt128> Decimals;
