@@ -3178,6 +3178,58 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void LowerIncompleteGammaLargeValTest() {
+            foreach (double nu in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 128 }) {
+                for (double x = nu; ddouble.IsFinite(x); x *= 2) {
+                    ddouble x1 = ddouble.LowerIncompleteGamma(nu, x);
+                    ddouble x2 = ddouble.LowerIncompleteGamma(nu, x * 2);
+
+                    Assert.IsTrue(x1 <= x2, $"{nu},{x}");
+                    Assert.IsTrue(x1 <= ddouble.Gamma(nu), $"{nu},{x}");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UpperIncompleteGammaLargeValTest() {
+            foreach (double nu in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 128 }) {
+                for (double x = nu; ddouble.IsFinite(x); x *= 2) {
+                    ddouble x1 = ddouble.UpperIncompleteGamma(nu, x);
+                    ddouble x2 = ddouble.UpperIncompleteGamma(nu, x * 2);
+
+                    Assert.IsTrue(x1 >= x2, $"{nu},{x}");
+                    Assert.IsTrue(x1 >= 0d, $"{nu},{x}");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void LowerIncompleteGammaRegularizedLargeValTest() {
+            foreach (double nu in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096 }) {
+                for (double x = nu; ddouble.IsFinite(x); x *= 2) {
+                    ddouble x1 = ddouble.LowerIncompleteGammaRegularized(nu, x);
+                    ddouble x2 = ddouble.LowerIncompleteGammaRegularized(nu, x * 2);
+
+                    Assert.IsTrue(x1 <= x2, $"{nu},{x}");
+                    Assert.IsTrue(x1 <= 1d, $"{nu},{x}");
+                }
+            }
+        }
+
+        [TestMethod]
+        public void UpperIncompleteGammaRegularizedLargeValTest() {
+            foreach (double nu in new[] { 1d / 64, 1d / 16, 1d / 4, 1, 2, 4, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096 }) {
+                for (double x = nu; ddouble.IsFinite(x); x *= 2) {
+                    ddouble x1 = ddouble.UpperIncompleteGammaRegularized(nu, x);
+                    ddouble x2 = ddouble.UpperIncompleteGammaRegularized(nu, x * 2);
+
+                    Assert.IsTrue(x1 >= x2, $"{nu},{x}");
+                    Assert.IsTrue(x1 >= 0d, $"{nu},{x}");
+                }
+            }
+        }
+
+        [TestMethod]
         public void InverseLowerIncompleteGammaTest() {
             List<ddouble> xs = new();
 

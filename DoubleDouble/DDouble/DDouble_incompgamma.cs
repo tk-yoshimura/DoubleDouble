@@ -16,6 +16,10 @@ namespace DoubleDouble {
                 return NaN;
             }
 
+            if (x > (double)nu * SaturationSlope + SaturationBias) {
+                return Gamma(nu);
+            }
+
             if (x < (double)nu + ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Pow2(nu * Log2(x) - x * LbE) / f;
@@ -46,6 +50,10 @@ namespace DoubleDouble {
                 return -Ei(-x);
             }
 
+            if (x > (double)nu * SaturationSlope + SaturationBias) {
+                return 0d;
+            }
+
             if (x < (double)nu + ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = Gamma(nu) - Pow2(nu * Log2(x) - x * LbE) / f;
@@ -74,6 +82,10 @@ namespace DoubleDouble {
 
             if (nu < MinNu) {
                 return IsZero(x) ? 0d : 1d;
+            }
+
+            if (x > (double)nu * SaturationSlope + SaturationBias) {
+                return 1d;
             }
 
             if (x < (double)nu + ULBias) {
@@ -108,6 +120,10 @@ namespace DoubleDouble {
                 return IsZero(x) ? 1d : 0d;
             }
 
+            if (x > (double)nu * SaturationSlope + SaturationBias) {
+                return 0d;
+            }
+
             if (x < (double)nu + ULBias) {
                 ddouble f = LowerIncompleteGammaCFrac.Value(nu, x);
                 ddouble y = 1d - Pow2(nu * Log2(x) - (x + LogGamma(nu)) * LbE) / f;
@@ -132,6 +148,9 @@ namespace DoubleDouble {
                 public const double MaxNuRegularized = 8192d;
                 public const double ULBias = 0.125d;
                 public const int CFracMaxIter = 8192;
+
+                public const double SaturationBias = 2048d;
+                public const double SaturationSlope = 1.25d;
             }
         }
 
