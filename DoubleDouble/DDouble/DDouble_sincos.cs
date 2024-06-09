@@ -14,7 +14,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble CosPI(ddouble x) {
-            return SinPIHalf(Ldexp(x, 1) + 1d);
+            return SinPIHalf(Ldexp(Abs(x), 1) + 1d);
         }
 
         public static ddouble Cos(ddouble x) {
@@ -71,6 +71,9 @@ namespace DoubleDouble {
             }
             if (x == 1d) {
                 return sign;
+            }
+            if (IsZero(x)) {
+                return PlusZero;
             }
 
             Debug.Assert((x >= 0d && x <= 1d), nameof(x));
