@@ -53,7 +53,7 @@ namespace DoubleDouble {
             const int RootFindMaxIter = 32;
 
             public static ddouble Kernel(ddouble nu, ddouble p, ddouble lnp_lower, ddouble lnp_upper) {
-                double p5 = IncompleteGammaP5(nu.hi);
+                double p5 = InverseIncompleteGammaP5RoughApprox(nu.hi);
 
                 ddouble lngamma = LogGamma(nu), num1 = nu - 1d;
                 ddouble prev_dx = 0d;
@@ -100,24 +100,69 @@ namespace DoubleDouble {
                 return x;
             }
 
-            public static double IncompleteGammaP5(double nu) {
-                double nu_ln2 = double.Log2(nu);
+            public static double InverseIncompleteGammaP5RoughApprox(double nu) {
+                if (nu < 1) {
+                    if (double.ILogB(nu) < -10) {
+                        return 0d;
+                    }
+                    double lnnu = double.Log2(nu);
 
-                if (nu <= 1) {
-                    double b = nu * (1.184797 + nu * (-1.64793 + nu * (-1.87704 + nu * (3.354884 + nu * (-1.93304)))));
-                    double c = b - nu_ln2;
-                    double x = double.Exp2(-double.Exp2(c));
+                    if (lnnu < -5d) {
+                        double x = lnnu + 10d;
 
-                    return x;
+                        double y = double.Exp2(
+                            (-1.0248306602097177e3 + x *
+                            (2.6143104084235887e2 + x *
+                            (-2.4843362513105458e1 + x *
+                            (8.6210811743975114e-1)))) /
+                            (1.0000000000000000e0 + x *
+                            (4.3747475653644826e-1 + x *
+                            (8.7255090723854334e-2 + x *
+                            (9.9424760331912608e-3 + x *
+                            (6.9090681630088890e-4))))));
+
+                        return y;
+                    }
+                    else {
+                        double x = lnnu + 5d;
+
+                        double y = double.Exp2(
+                            (-3.2796218087516107e1 + x *
+                            (1.6421847712959973e1 + x *
+                            (-5.0385514986506849e0 + x *
+                            (3.6317787662606308e-1 + x *
+                            (4.5317428534706485e-2 + x *
+                            (-1.8282066421184825e-2 + x *
+                            (1.7302366594107276e-3 + x *
+                            (2.7329974939713755e-4)))))))) /
+                            (1.0000000000000000e0 + x *
+                            (1.7635490513821452e-1 + x *
+                            (3.8910540764790875e-2 + x *
+                            (2.8141637896196611e-2 + x *
+                            (8.8767301085413771e-3 + x *
+                            (1.5365519043210276e-3 + x *
+                            (3.4291020734304705e-4))))))));
+
+                        return y;
+                    }
                 }
                 else {
-                    double b =
-                        (-0.92055 + nu_ln2 * (-1.34724 + nu_ln2 * (-0.41283 + nu_ln2 * (-0.11429))))
-                        / (1 + nu_ln2 * (0.295360 + nu_ln2 * (0.114197)));
+                    double x = nu - 1d;
 
-                    double x = nu * double.Exp2(-double.Exp2(b));
+                    double y =
+                        (6.9314716453657309e-1 + x *
+                        (3.2001874529617926e0 + x *
+                        (5.9592048056324707e0 + x *
+                        (5.6693633060543100e0 + x *
+                        (2.8183920385221197e0 + x *
+                        (6.0713065842872752e-1)))))) /
+                        (1.0000000000000000e0 + x *
+                        (3.2202901330430764e0 + x *
+                        (4.0482784241994182e0 + x *
+                        (2.4136382662363014e0 + x *
+                        (6.0713065842872752e-1)))));
 
-                    return x;
+                    return y;
                 }
             }
         }
