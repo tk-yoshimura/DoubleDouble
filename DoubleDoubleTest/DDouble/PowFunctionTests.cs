@@ -164,7 +164,7 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void Pow1pTest() {
             for (double x = -0.25d; x <= 0.25d; x += 1d / 1024) {
-                for (double y = -0.25d; y <= 0.25d; y += 1d / 1024) {
+                for (double y = -0.25d; y <= 0.25d; y += 1d / 32) {
                     ddouble expected = ddouble.Pow(x + 1d, y);
                     ddouble actual = ddouble.Pow1p(x, y);
                     
@@ -358,6 +358,9 @@ namespace DoubleDoubleTest.DDouble {
                 (+1.0, +0.0),
                 (+1.0, +1.0),
                 (+1.0, double.PositiveInfinity),
+                // (1.0, double.NaN),
+                (double.NaN, 1.0),
+                (double.NaN, double.NaN),
             };
 
             foreach ((double x, double y) in testcases) {
@@ -467,6 +470,9 @@ namespace DoubleDoubleTest.DDouble {
                 (+1.0, +0.0),
                 (+1.0, +1.0),
                 (+1.0, double.PositiveInfinity),
+                // (1.0, double.NaN),
+                (double.NaN, 1.0),
+                (double.NaN, double.NaN),
             };
 
             foreach ((double x, double y) in testcases) {

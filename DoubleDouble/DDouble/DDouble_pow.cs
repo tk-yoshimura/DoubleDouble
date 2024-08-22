@@ -87,6 +87,10 @@ namespace DoubleDouble {
 
         public static ddouble Pow(ddouble x, ddouble y) {
             if (!IsFinite(x) || IsZero(x) || !IsFinite(y) || IsZero(y)) {
+                if (IsNaN(x) || IsNaN(y)) {
+                    return NaN;
+                }
+
                 return double.Pow(x.Hi, y.Hi);
             }
 
@@ -149,21 +153,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow1p(ddouble x, ddouble y) {
-            if (!IsFinite(x) || x == -1d || !IsFinite(y) || IsZero(y)) {
-                return double.Pow(1d + x.Hi, y.Hi);
+            if (x >= -0.125d && x <= 0.125d && IsFinite(y)) {
+                ddouble z = Exp(y * Log1p(x));
+
+                return z;
             }
-
-            if (x < -1d) {
-                if (x == -2d && IsInfinity(y)) {
-                    return 1d;
-                }
-
-                return IsInteger(y) && Abs(y) < long.MaxValue ? Pow(1d + x, (long)y) : double.Pow(1d + x.Hi, y.Hi);
+            else {
+                return Pow(1d + x, y);
             }
-
-            ddouble z = Exp(y * Log1p(x));
-
-            return z; 
         }
 
         public static ddouble Exp(ddouble x) {
