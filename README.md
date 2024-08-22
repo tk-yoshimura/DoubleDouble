@@ -38,6 +38,7 @@
 |ddouble.Pow2(x)|&#40;-inf,+inf&#41;|1||
 |ddouble.Pow2m1(x)|&#40;-inf,+inf&#41;|2|pow2(x)-1|
 |ddouble.Pow(x, y)|&#40;-inf,+inf&#41;|2||
+|ddouble.Pow1p(x, y)|&#40;-inf,+inf&#41;|2|pow(1+x, y)|
 |ddouble.Pow10(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Exp(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Expm1(x)|&#40;-inf,+inf&#41;|2|exp(x)-1|

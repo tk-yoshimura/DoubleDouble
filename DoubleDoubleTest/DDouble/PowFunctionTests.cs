@@ -162,6 +162,18 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void Pow1pTest() {
+            for (double x = -0.25d; x <= 0.25d; x += 1d / 1024) {
+                for (double y = -0.25d; y <= 0.25d; y += 1d / 1024) {
+                    ddouble expected = ddouble.Pow(x + 1d, y);
+                    ddouble actual = ddouble.Pow1p(x, y);
+                    
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"{x},{y}");
+                }
+            }
+        }
+
+        [TestMethod]
         public void ExpTest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
                 if (d == 0) {
@@ -301,6 +313,178 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsPositiveInfinity(exp_pinf), nameof(exp_pinf));
             Assert.IsTrue(exp_ninf == -1, nameof(exp_ninf));
             Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
+        }
+
+        [TestMethod]
+        public void Pow_IEEE754_921_Test() {
+            (double x, double y)[] testcases = {
+                (-2.0, double.NegativeInfinity),
+                (-2.0, -1.0),
+                (-2.0, -0.5),
+                (-2.0, -0.0),
+                (-2.0, +0.0),
+                (-2.0, +0.5),
+                (-2.0, +1.0),
+                (-2.0, double.PositiveInfinity),
+                (-1.0, double.NegativeInfinity),
+                (-1.0, -1.0),
+                (-1.0, -0.0),
+                (-1.0, +0.0),
+                (-1.0, +1.0),
+                (-1.0, double.PositiveInfinity),
+                (-0.0, double.NegativeInfinity),
+                (-0.0, -3.0),
+                (-0.0, -2.0), 
+                (-0.0, -1.0),
+                (-0.0, -0.0),
+                (-0.0, +0.0),
+                (-0.0, +1.0),
+                (-0.0, +2.0),
+                (-0.0, +3.0),
+                (-0.0, double.PositiveInfinity),
+                (+0.0, double.NegativeInfinity),
+                (+0.0, -3.0), 
+                (+0.0, -2.0),
+                (+0.0, -1.0),
+                (+0.0, -0.0),
+                (+0.0, +0.0),
+                (+0.0, +1.0),
+                (+0.0, +2.0),
+                (+0.0, +3.0),
+                (+0.0, double.PositiveInfinity),
+                (+1.0, double.NegativeInfinity),
+                (+1.0, -1.0),
+                (+1.0, -0.0),
+                (+1.0, +0.0),
+                (+1.0, +1.0),
+                (+1.0, double.PositiveInfinity),
+            };
+
+            foreach ((double x, double y) in testcases) {
+                double expected = double.Pow(x, y);
+                ddouble actual = ddouble.Pow(x, y);
+
+                Console.WriteLine($"pow({x}, {y})");
+                Console.WriteLine($"expected: {expected}");
+                Console.WriteLine($"actual:   {actual}");
+
+                if (double.IsNaN(expected)) {
+                    Assert.IsTrue(ddouble.IsNaN(actual));
+                    continue;
+                }
+
+                Assert.AreEqual(double.Sign(expected), ddouble.Sign(actual));
+                Assert.AreEqual(double.IsFinite(expected), ddouble.IsFinite(actual));
+            }
+        }
+
+        [TestMethod]
+        public void PowN_IEEE754_921_Test() {
+            (double x, int y)[] testcases = {
+                (-2.0, -1),
+                (-2.0, +0),
+                (-2.0, +1),
+                (-1.0, -1),
+                (-1.0, +0),
+                (-1.0, +1),
+                (-0.0, -3),
+                (-0.0, -2), 
+                (-0.0, -1),
+                (-0.0, +0),
+                (-0.0, +1),
+                (-0.0, +2),
+                (-0.0, +3),
+                (+0.0, -3), 
+                (+0.0, -2),
+                (+0.0, -1),
+                (+0.0, +0),
+                (+0.0, +1),
+                (+0.0, +2),
+                (+0.0, +3),
+                (+1.0, -1),
+                (+1.0, +0),
+                (+1.0, +1),
+            };
+
+            foreach ((double x, int y) in testcases) {
+                double expected = double.Pow(x, y);
+                ddouble actual = ddouble.Pow(x, y);
+
+                Console.WriteLine($"pow({x}, {y})");
+                Console.WriteLine($"expected: {expected}");
+                Console.WriteLine($"actual:   {actual}");
+
+                if (double.IsNaN(expected)) {
+                    Assert.IsTrue(ddouble.IsNaN(actual));
+                    continue;
+                }
+
+                Assert.AreEqual(double.Sign(expected), ddouble.Sign(actual));
+                Assert.AreEqual(double.IsFinite(expected), ddouble.IsFinite(actual));
+            }
+        }
+
+        [TestMethod]
+        public void Pow1p_IEEE754_921_Test() {
+            (double x, double y)[] testcases = {
+                (-2.0, double.NegativeInfinity),
+                (-2.0, -1.0),
+                (-2.0, -0.5),
+                (-2.0, -0.0),
+                (-2.0, +0.0),
+                (-2.0, +0.5),
+                (-2.0, +1.0),
+                (-2.0, double.PositiveInfinity),
+                (-1.0, double.NegativeInfinity),
+                (-1.0, -1.0),
+                (-1.0, -0.0),
+                (-1.0, +0.0),
+                (-1.0, +1.0),
+                (-1.0, double.PositiveInfinity),
+                (-0.0, double.NegativeInfinity),
+                (-0.0, -3.0),
+                (-0.0, -2.0), 
+                (-0.0, -1.0),
+                (-0.0, -0.0),
+                (-0.0, +0.0),
+                (-0.0, +1.0),
+                (-0.0, +2.0),
+                (-0.0, +3.0),
+                (-0.0, double.PositiveInfinity),
+                (+0.0, double.NegativeInfinity),
+                (+0.0, -3.0), 
+                (+0.0, -2.0),
+                (+0.0, -1.0),
+                (+0.0, -0.0),
+                (+0.0, +0.0),
+                (+0.0, +1.0),
+                (+0.0, +2.0),
+                (+0.0, +3.0),
+                (+0.0, double.PositiveInfinity),
+                (+1.0, double.NegativeInfinity),
+                (+1.0, -1.0),
+                (+1.0, -0.0),
+                (+1.0, +0.0),
+                (+1.0, +1.0),
+                (+1.0, double.PositiveInfinity),
+            };
+
+            foreach ((double x, double y) in testcases) {
+                double expected = double.Pow(x + 1d, y);
+                ddouble actual = ddouble.Pow1p(x, y);
+
+                Console.WriteLine($"pow({x}, {y})");
+                Console.WriteLine($"expected: {expected}");
+                Console.WriteLine($"actual:   {actual}");
+
+                if (double.IsNaN(expected)) {
+                    Assert.IsTrue(ddouble.IsNaN(actual));
+                    continue;
+                }
+
+                Assert.AreEqual(double.Sign(expected), ddouble.Sign(actual));
+                Assert.AreEqual(double.IsFinite(expected), ddouble.IsFinite(actual));
+            }
         }
     }
 }

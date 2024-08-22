@@ -86,14 +86,16 @@ namespace DoubleDouble {
         }
 
         public static ddouble Pow(ddouble x, ddouble y) {
+            if (!IsFinite(x) || IsZero(x) || !IsFinite(y) || IsZero(y)) {
+                return double.Pow(x.Hi, y.Hi);
+            }
+
             if (IsNegative(x)) {
-                return NaN;
-            }
-            if (IsZero(y)) {
-                return IsNaN(x) ? NaN : 1d;
-            }
-            if (IsZero(x)) {
-                return 0d;
+                if (x == -1d && IsInfinity(y)) {
+                    return 1d;
+                }
+
+                return IsInteger(y) && Abs(y) < long.MaxValue ? Pow(x, (long)y) : double.Pow(x.Hi, y.Hi);
             }
 
             if (y <= long.MinValue) {
@@ -105,7 +107,7 @@ namespace DoubleDouble {
             }
             if (y >= long.MaxValue) {
                 if (x == 1d) {
-                    return 1;
+                    return 1d;
                 }
 
                 return x < 1d ? 0d : PositiveInfinity;
@@ -144,6 +146,24 @@ namespace DoubleDouble {
             ddouble z = pow10n * Pow2(f * Lb10);
 
             return z;
+        }
+
+        public static ddouble Pow1p(ddouble x, ddouble y) {
+            if (!IsFinite(x) || x == -1d || !IsFinite(y) || IsZero(y)) {
+                return double.Pow(1d + x.Hi, y.Hi);
+            }
+
+            if (x < -1d) {
+                if (x == -2d && IsInfinity(y)) {
+                    return 1d;
+                }
+
+                return IsInteger(y) && Abs(y) < long.MaxValue ? Pow(1d + x, (long)y) : double.Pow(1d + x.Hi, y.Hi);
+            }
+
+            ddouble z = Exp(y * Log1p(x));
+
+            return z; 
         }
 
         public static ddouble Exp(ddouble x) {
