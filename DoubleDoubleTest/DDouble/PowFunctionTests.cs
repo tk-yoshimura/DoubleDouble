@@ -167,7 +167,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (double y = -0.25d; y <= 0.25d; y += 1d / 32) {
                     ddouble expected = ddouble.Pow(x + 1d, y);
                     ddouble actual = ddouble.Pow1p(x, y);
-                    
+
                     HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"{x},{y}");
                 }
             }
@@ -334,7 +334,7 @@ namespace DoubleDoubleTest.DDouble {
                 (-1.0, double.PositiveInfinity),
                 (-0.0, double.NegativeInfinity),
                 (-0.0, -3.0),
-                (-0.0, -2.0), 
+                (-0.0, -2.0),
                 (-0.0, -1.0),
                 (-0.0, -0.0),
                 (-0.0, +0.0),
@@ -343,7 +343,7 @@ namespace DoubleDoubleTest.DDouble {
                 (-0.0, +3.0),
                 (-0.0, double.PositiveInfinity),
                 (+0.0, double.NegativeInfinity),
-                (+0.0, -3.0), 
+                (+0.0, -3.0),
                 (+0.0, -2.0),
                 (+0.0, -1.0),
                 (+0.0, -0.0),
@@ -391,13 +391,13 @@ namespace DoubleDoubleTest.DDouble {
                 (-1.0, +0),
                 (-1.0, +1),
                 (-0.0, -3),
-                (-0.0, -2), 
+                (-0.0, -2),
                 (-0.0, -1),
                 (-0.0, +0),
                 (-0.0, +1),
                 (-0.0, +2),
                 (-0.0, +3),
-                (+0.0, -3), 
+                (+0.0, -3),
                 (+0.0, -2),
                 (+0.0, -1),
                 (+0.0, +0),
@@ -446,7 +446,7 @@ namespace DoubleDoubleTest.DDouble {
                 (-1.0, double.PositiveInfinity),
                 (-0.0, double.NegativeInfinity),
                 (-0.0, -3.0),
-                (-0.0, -2.0), 
+                (-0.0, -2.0),
                 (-0.0, -1.0),
                 (-0.0, -0.0),
                 (-0.0, +0.0),
@@ -455,7 +455,7 @@ namespace DoubleDoubleTest.DDouble {
                 (-0.0, +3.0),
                 (-0.0, double.PositiveInfinity),
                 (+0.0, double.NegativeInfinity),
-                (+0.0, -3.0), 
+                (+0.0, -3.0),
                 (+0.0, -2.0),
                 (+0.0, -1.0),
                 (+0.0, -0.0),

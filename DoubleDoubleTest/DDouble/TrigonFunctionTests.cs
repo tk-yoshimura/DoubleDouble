@@ -92,7 +92,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
             Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
 
-            for (int n = 1; n <= 32; n++) { 
+            for (int n = 1; n <= 32; n++) {
                 Assert.IsTrue(ddouble.IsPlusZero(ddouble.SinPI(n)), "sin intn");
                 Assert.IsTrue(ddouble.IsMinusZero(ddouble.SinPI(-n)), "sin intn");
             }
@@ -120,7 +120,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(cos_ninf), nameof(cos_ninf));
             Assert.IsTrue(ddouble.IsNaN(cos_nan), nameof(cos_nan));
 
-            for (int n = 0; n <= 32; n++) { 
+            for (int n = 0; n <= 32; n++) {
                 Assert.IsTrue(ddouble.IsPlusZero(ddouble.CosPI(n + 0.5)), "cos intn");
                 Assert.IsTrue(ddouble.IsPlusZero(ddouble.CosPI(-n - 0.5)), "cos intn");
             }

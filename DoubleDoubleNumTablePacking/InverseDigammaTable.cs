@@ -14,11 +14,11 @@ namespace DoubleDoubleNumTablePacking {
                 { nameof(PadeX8to16Table),          PadeX8to16Table },
                 { nameof(PadeX16to32Table),         PadeX16to32Table },
                 { nameof(PadeX32to64Table),         PadeX32to64Table },
-                
+
                 { nameof(PadeXm0to1Table),          PadeXm0to1Table },
                 { nameof(PadeXm1to2Table),          PadeXm1to2Table },
                 { nameof(PadeXm2to4Table),          PadeXm2to4Table },
-                
+
                 { nameof(PadeXmExp2toExp4Table),    PadeXmExp2toExp4Table },
                 { nameof(PadeXmExp4toExp8Table),    PadeXmExp4toExp8Table },
                 { nameof(PadeXmExp8toExp16Table),   PadeXmExp8toExp16Table },

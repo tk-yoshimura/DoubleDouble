@@ -1,7 +1,5 @@
 ﻿using DoubleDouble;
 using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace DoubleDoubleSandbox {
     public static class Program {

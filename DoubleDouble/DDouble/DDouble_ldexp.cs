@@ -11,6 +11,6 @@ namespace DoubleDouble {
             return new ddouble(double.ScaleB(x.hi, n), double.ScaleB(x.lo, n));
         }
 
-        public static int ILogB(ddouble x) => double.ILogB(x.hi); 
+        public static int ILogB(ddouble x) => double.ILogB(x.hi);
     }
 }
