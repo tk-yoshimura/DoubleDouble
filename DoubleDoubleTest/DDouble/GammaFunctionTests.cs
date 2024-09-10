@@ -271,6 +271,47 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void InverseDigammaTest() {
+            for (double h = 1d / 1024; h <= 256; h *= 2) {
+                for (ddouble x = h; x < h * 2; x += h / 64) {
+                    ddouble y = ddouble.InverseDigamma(x);
+                    ddouble z = ddouble.Digamma(y);
+
+                    Console.WriteLine(x);
+                    Console.WriteLine(y);
+                    Console.WriteLine(z);
+
+                    HPAssert.AreEqual(x, z, x * 4e-29d);
+                }
+            }
+
+            for (double h = 1d / 1024; h <= Math.ScaleB(1, 400); h *= 2) {
+                for (ddouble x = -h; x > -h * 2; x -= h / 64) {
+                    ddouble y = ddouble.InverseDigamma(x);
+                    ddouble z = ddouble.Digamma(y);
+
+                    Console.WriteLine(x);
+                    Console.WriteLine(y);
+                    Console.WriteLine(z);
+
+                    HPAssert.AreEqual(x, z, -x * 4e-28d);
+                }
+            }
+
+            ddouble invdigamma_pzero = ddouble.InverseDigamma(ddouble.PlusZero);
+            ddouble invdigamma_pinf = ddouble.InverseDigamma(double.PositiveInfinity);
+            ddouble invdigamma_pmax = ddouble.InverseDigamma(double.MaxValue);
+            ddouble invdigamma_ninf = ddouble.InverseDigamma(double.NegativeInfinity);
+            ddouble invdigamma_nan = ddouble.InverseDigamma(double.NaN);
+
+            Assert.AreEqual(ddouble.DigammaZero, invdigamma_pzero);
+            Assert.IsTrue(ddouble.IsPositiveInfinity(invdigamma_pinf), nameof(invdigamma_pinf));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(invdigamma_pmax), nameof(invdigamma_pmax));
+            Assert.IsTrue(ddouble.IsZero(invdigamma_ninf), nameof(invdigamma_ninf));
+            Assert.IsTrue(ddouble.IsNaN(invdigamma_nan), nameof(invdigamma_nan));
+        }
+
+        [TestMethod]
         public void RcpGammaTest() {
             ddouble[] expecteds = {
                 0,
