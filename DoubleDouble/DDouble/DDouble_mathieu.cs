@@ -698,7 +698,7 @@ namespace DoubleDouble {
             }
 
             public static (ddouble[] cs, ddouble r, ddouble d) SolveCoef(ddouble a, ddouble q, int m, int k, int s, ddouble r0, ddouble cn) {
-                ArgumentOutOfRangeException.ThrowIfLessThan(m, 2, nameof(m));
+                Debug.Assert(m >= 2);
 
                 ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
                 ddouble sq_q = q * q;
@@ -721,7 +721,7 @@ namespace DoubleDouble {
             }
 
             public static (ddouble[] cs, ddouble r, ddouble d) SolveCoefZeroShifted(ReadOnlyCollection<ddouble> arms, ddouble q, int m, int k, ddouble cn) {
-                ArgumentOutOfRangeException.ThrowIfLessThan(m, 2, nameof(m));
+                Debug.Assert(m >= 2);
 
                 ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
                 ddouble sq_q = q * q;
@@ -780,9 +780,7 @@ namespace DoubleDouble {
             }
 
             internal static (ddouble zerosft, ReadOnlyCollection<ddouble> arms) AZeroShift(int n, ddouble q) {
-                if (n < 0 || n > MathieuUtil.MaxN) {
-                    throw new ArgumentOutOfRangeException(nameof(n));
-                }
+                Debug.Assert(n >= 0 && n <= MathieuUtil.MaxN);
 
                 Debug.Assert(q <= MathieuUtil.NZThreshold, nameof(q));
 
@@ -830,9 +828,7 @@ namespace DoubleDouble {
             }
 
             internal static (ddouble zerosft, ReadOnlyCollection<ddouble> brms) BZeroShift(int n, ddouble q) {
-                if (n < 1 || n > MathieuUtil.MaxN) {
-                    throw new ArgumentOutOfRangeException(nameof(n));
-                }
+                Debug.Assert(n >= 1 && n <= MathieuUtil.MaxN);
 
                 Debug.Assert(q <= MathieuUtil.NZThreshold, nameof(q));
 

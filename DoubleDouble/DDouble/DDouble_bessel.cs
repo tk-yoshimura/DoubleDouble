@@ -698,7 +698,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -728,7 +728,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -758,7 +758,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -788,7 +788,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -818,7 +818,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -846,7 +846,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -872,7 +872,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -898,7 +898,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -926,7 +926,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -954,7 +954,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -982,7 +982,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1083,9 +1083,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselJKernel(int n, ddouble x, int m) {
-                if (m < 2 || (m & 1) != 0 || n >= m) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
 
                 if (n < 0) {
                     return ((n & 1) == 0) ? BesselJKernel(-n, x, m) : -BesselJKernel(-n, x, m);
@@ -1127,9 +1125,7 @@ namespace DoubleDouble {
                     return BesselJKernel(n, x, m);
                 }
 
-                if (m < 2 || (m & 1) != 0 || n >= m) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
 
                 if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi_table)) {
                     phi_table = new BesselJPhiTable(alpha);
@@ -1186,9 +1182,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselJ0Kernel(ddouble x, int m) {
-                if (m < 2 || (m & 1) != 0) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0);
 
                 ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
@@ -1209,9 +1203,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselJ1Kernel(ddouble x, int m) {
-                if (m < 2 || (m & 1) != 0) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0);
 
                 ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
@@ -1232,9 +1224,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselYKernel(int n, ddouble x, int m) {
-                if (m < 2 || (m & 1) != 0 || n >= m) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
 
                 if (n < 0) {
                     return ((n & 1) == 0) ? BesselYKernel(-n, x, m) : -BesselYKernel(-n, x, m);
@@ -1299,9 +1289,7 @@ namespace DoubleDouble {
                     return BesselYKernel(n, x, m);
                 }
 
-                if (m < 2 || (m & 1) != 0 || n >= m) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
 
                 if (!eta_coef_table.TryGetValue(alpha, out BesselYEtaTable eta_table)) {
                     eta_table = new BesselYEtaTable(alpha);
@@ -1464,9 +1452,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselY0Kernel(ddouble x, int m) {
-                if (m < 2 || (m & 1) != 0) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0);
 
                 if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta_table)) {
                     eta_table = new BesselYEtaTable(0);
@@ -1497,9 +1483,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselY1Kernel(ddouble x, int m) {
-                if (m < 2 || (m & 1) != 0) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0);
 
                 if (!xi_coef_table.ContainsKey(0)) {
                     if (!eta_coef_table.ContainsKey(0)) {
@@ -1534,9 +1518,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselIKernel(int n, ddouble x, int m, bool scale = false) {
-                if (m < 2 || (m & 1) != 0 || n >= m) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
 
                 n = int.Abs(n);
 
@@ -1579,9 +1561,7 @@ namespace DoubleDouble {
                     return BesselIKernel(n, x, m, scale);
                 }
 
-                if (m < 2 || (m & 1) != 0 || n >= m) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
 
                 if (!psi_coef_table.TryGetValue(alpha, out BesselIPsiTable psi_table)) {
                     psi_table = new BesselIPsiTable(alpha);
@@ -1642,9 +1622,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselI0Kernel(ddouble x, int m, bool scale = false) {
-                if (m < 2 || (m & 1) != 0) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0);
 
                 ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
@@ -1667,9 +1645,7 @@ namespace DoubleDouble {
             }
 
             private static ddouble BesselI1Kernel(ddouble x, int m, bool scale = false) {
-                if (m < 2 || (m & 1) != 0) {
-                    throw new ArgumentOutOfRangeException(nameof(m));
-                }
+                Debug.Assert(m >= 2 && (m & 1) == 0);
 
                 ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
                 ddouble v = 1d / x;
@@ -1714,7 +1690,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1755,7 +1731,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1799,7 +1775,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -1842,7 +1818,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 private ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -2161,7 +2137,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -2188,7 +2164,7 @@ namespace DoubleDouble {
                 public (ddouble p0, ddouble p1) this[int n] => Value(n);
 
                 public (ddouble p0, ddouble p1) Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
@@ -2218,7 +2194,7 @@ namespace DoubleDouble {
                 public ddouble this[int n] => Value(n);
 
                 public ddouble Value(int n) {
-                    ArgumentOutOfRangeException.ThrowIfNegative(n, nameof(n));
+                    Debug.Assert(n >= 0);
 
                     if (n < table.Count) {
                         return table[n];
