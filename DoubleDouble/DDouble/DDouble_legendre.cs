@@ -89,27 +89,27 @@ namespace DoubleDouble {
                 };
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
-                    if (!table.ContainsKey((n, 0))) {
-                        ReadOnlyCollection<ddouble> coefs = GenerateTable(n);
-                        table.Add((n, 0), coefs);
+                    if (!table.TryGetValue((n, 0), out ReadOnlyCollection<ddouble> coef)) {
+                        coef = GenerateTable(n);
+                        table.Add((n, 0), coef);
                     }
 
-                    return table[(n, 0)];
+                    return coef;
                 }
 
                 public static ReadOnlyCollection<ddouble> Table(int n, int m) {
-                    if (!table.ContainsKey((n, m))) {
+                    if (!table.TryGetValue((n, m), out ReadOnlyCollection<ddouble> coef)) {
                         if (m != 0) {
-                            ReadOnlyCollection<ddouble> coefs = GenerateTable(n, m);
-                            table.Add((n, m), coefs);
+                            coef = GenerateTable(n, m);
+                            table.Add((n, m), coef);
                         }
                         else {
-                            ReadOnlyCollection<ddouble> coefs = GenerateTable(n);
-                            table.Add((n, 0), coefs);
+                            coef = GenerateTable(n);
+                            table.Add((n, 0), coef);
                         }
                     }
 
-                    return table[(n, m)];
+                    return coef;
                 }
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n) {

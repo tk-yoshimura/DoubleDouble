@@ -304,9 +304,7 @@ namespace DoubleDouble {
             }
 
             public static ReadOnlyCollection<ddouble> CCoef(int n, ddouble q) {
-                if (!c_coef_cache.ContainsKey((n, q))) {
-                    ReadOnlyCollection<ddouble> coef;
-
+                if (!c_coef_cache.TryGetValue((n, q), out ReadOnlyCollection<ddouble> coef)) {
                     if (IsPositive(q)) {
                         ddouble a = MathieuA(n, q);
                         coef = GenerateCCoef(n, q, a);
@@ -325,13 +323,11 @@ namespace DoubleDouble {
                     c_coef_cache.Add((n, q), coef);
                 }
 
-                return c_coef_cache[(n, q)];
+                return coef;
             }
 
             public static ReadOnlyCollection<ddouble> SCoef(int n, ddouble q) {
-                if (!s_coef_cache.ContainsKey((n, q))) {
-                    ReadOnlyCollection<ddouble> coef;
-
+                if (!s_coef_cache.TryGetValue((n, q), out ReadOnlyCollection<ddouble> coef)) {
                     if (IsPositive(q)) {
                         ddouble b = MathieuB(n, q);
                         coef = GenerateSCoef(n, q, b);
@@ -350,7 +346,7 @@ namespace DoubleDouble {
                     s_coef_cache.Add((n, q), coef);
                 }
 
-                return s_coef_cache[(n, q)];
+                return coef;
             }
 
             private static ReadOnlyCollection<ddouble> SwapSign(ReadOnlyCollection<ddouble> coef, int even_odd) {

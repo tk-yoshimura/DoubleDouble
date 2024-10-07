@@ -108,12 +108,12 @@ namespace DoubleDouble {
                 private static readonly Dictionary<(int n, ddouble alpha), ReadOnlyCollection<ddouble>> table = new();
 
                 public static ReadOnlyCollection<ddouble> Table(int n, ddouble alpha) {
-                    if (!table.ContainsKey((n, alpha))) {
-                        ReadOnlyCollection<ddouble> coefs = GenerateTable(n, alpha);
-                        table.Add((n, alpha), coefs);
+                    if (!table.TryGetValue((n, alpha), out ReadOnlyCollection<ddouble> coef)) {
+                        coef = GenerateTable(n, alpha);
+                        table.Add((n, alpha), coef);
                     }
 
-                    return table[(n, alpha)];
+                    return coef;
                 }
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n, ddouble alpha) {
