@@ -124,6 +124,10 @@
                 BesselKTable.Pack(sw);
             }
 
+            using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(BesselYTable) + ".bin", FileMode.Create))) {
+                BesselYTable.Pack(sw);
+            }
+
             using (BinaryWriter sw = new(File.Open(dirpath_root + nameof(ScorerTable) + ".bin", FileMode.Create))) {
                 ScorerTable.Pack(sw);
             }

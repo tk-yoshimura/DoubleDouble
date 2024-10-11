@@ -56,6 +56,13 @@
             }
         }
 
+        internal static byte[] BesselYTable {
+            get {
+                object obj = ResourceManager.GetObject("BesselYTable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+
         internal static byte[] CiSiTable {
             get {
                 object obj = ResourceManager.GetObject("CiSiTable", resourceCulture);

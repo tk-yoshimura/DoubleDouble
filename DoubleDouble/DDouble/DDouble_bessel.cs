@@ -1,2259 +1,2052 @@
 ﻿using DoubleDouble.Utils;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Bessel;
 
 namespace DoubleDouble {
 
     public partial struct ddouble {
 
         public static ddouble BesselJ(ddouble nu, ddouble x) {
-            BesselUtil.CheckNu(nu);
+            CheckNu(nu);
 
-            if (IsNaN(x) || IsNegative(x)) {
-                return NaN;
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
             }
 
-            if (x <= 2d) {
-                ddouble y = BesselNearZero.BesselJ(nu, x);
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                if (nu == 0d) {
-                    return 1d;
-                }
-                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0d) {
-                    return 0d;
-                }
-                return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+            if (x >= HankelThreshold) {
+                return Limit.BesselJ(nu, x);
             }
-            if (x <= 40.5d) {
-                return BesselMillerBackward.BesselJ(nu, x);
+            else if (x <= PowerSeriesThreshold(nu)) {
+                return PowerSeries.BesselJ(nu, x);
             }
-
-            return BesselLimit.BesselJ(nu, x);
-        }
-
-        public static ddouble BesselJ(int n, ddouble x) {
-            BesselUtil.CheckN(n);
-
-            if (IsNaN(x)) {
-                return NaN;
+            else {
+                return MillerBackward.BesselJ(nu, x);
             }
-
-            if (IsNegative(x)) {
-                return ((n & 1) == 0) ? BesselJ(n, -x) : -BesselJ(n, -x);
-            }
-            if (x <= 2d) {
-                ddouble y = BesselNearZero.BesselJ(n, x);
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                return (n == 0) ? 1d : 0d;
-            }
-            if (x <= 40.5d) {
-                return BesselMillerBackward.BesselJ(n, x);
-            }
-
-            return BesselLimit.BesselJ(n, x);
         }
 
         public static ddouble BesselY(ddouble nu, ddouble x) {
-            BesselUtil.CheckNu(nu);
+            CheckNu(nu);
 
-            if (IsNaN(x) || IsNegative(x)) {
-                return NaN;
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
             }
 
-            if (nu < 0d && Abs((nu - Floor(nu)) - 0.5d) < 0.0625d) {
-                if (x <= 4d - nu) {
-                    ddouble y = BesselNearZero.BesselY(nu, x);
-
-                    if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                        return y;
-                    }
-
-                    if (nu - Floor(nu) == 0.5d) {
-                        return 0d;
-                    }
-                    int n = (int)(Floor(nu + 0.5d));
-                    return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
-                }
+            if (x >= HankelThreshold) {
+                return Limit.BesselY(nu, x);
             }
+            else if ((x <= PowerSeriesThreshold(nu) - BesselJYPowerseriesBias) &&
+                (NearlyInteger(nu, out int n) || ddouble.Abs(n - nu) >= BesselYForcedMillerBackwardThreshold)) {
 
-            if (x <= 2d) {
-                ddouble y;
-
-                if (BesselUtil.NearlyInteger(nu, out _) || Abs(Round(nu) - nu) >= BesselUtil.InterpolationThreshold) {
-                    y = BesselNearZero.BesselY(nu, x);
-                }
-                else {
-                    y = BesselInterpolate.BesselYCubicInterpolate(nu, x);
-                }
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                if (nu > 0d) {
-                    return NegativeInfinity;
-                }
-                if (nu - Floor(nu) == 0.5d) {
-                    return 0d;
-                }
-                int n = (int)(Floor(nu + 0.5d));
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                return PowerSeries.BesselY(nu, x);
             }
-
-            if (x <= 40.5d) {
-                if (!BesselUtil.NearlyInteger(nu, out _) && (Ceiling(nu) - nu) < BesselUtil.InterpolationThreshold) {
-                    return BesselInterpolate.BesselYCubicInterpolate(nu, x);
-                }
-
-                return BesselMillerBackward.BesselY(nu, x);
+            else {
+                return MillerBackward.BesselY(nu, x);
             }
-
-            return BesselLimit.BesselY(nu, x);
-        }
-
-        public static ddouble BesselY(int n, ddouble x) {
-            BesselUtil.CheckN(n);
-
-            if (IsNaN(x) || IsNegative(x)) {
-                return NaN;
-            }
-
-            if (x <= 2d) {
-                ddouble y = BesselNearZero.BesselY(n, x);
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                if (n > 0) {
-                    return NegativeInfinity;
-                }
-                return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
-            }
-            if (x <= 40.5d) {
-                return BesselMillerBackward.BesselY(n, x);
-            }
-
-            return BesselLimit.BesselY(n, x);
         }
 
         public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-            BesselUtil.CheckNu(nu);
+            CheckNu(nu);
 
-            if (IsNaN(x) || IsNegative(x)) {
-                return NaN;
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
             }
 
-            if (x <= 2d) {
-                ddouble y = BesselNearZero.BesselI(nu, x, scale);
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                if (nu == 0d) {
-                    return 1d;
-                }
-                if (BesselUtil.NearlyInteger(nu, out _) || nu > 0d) {
-                    return 0d;
-                }
-                return (((int)double.Floor(nu.Hi) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+            if (x >= HankelThreshold) {
+                return Limit.BesselI(nu, x, scale);
             }
-            if (x <= 40d) {
-                return BesselMillerBackward.BesselI(nu, x, scale);
+            else {
+                return PowerSeries.BesselI(nu, x, scale);
             }
-
-            return BesselLimit.BesselI(nu, x, scale);
-        }
-
-        public static ddouble BesselI(int n, ddouble x, bool scale = false) {
-            BesselUtil.CheckN(n);
-
-            if (IsNaN(x) || IsNegative(x)) {
-                return NaN;
-            }
-
-            if (x <= 2d) {
-                ddouble y = BesselNearZero.BesselI(n, x, scale);
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                return (n == 0) ? 1d : 0d;
-            }
-            if (x <= 40d) {
-                return BesselMillerBackward.BesselI(n, x, scale);
-            }
-
-            return BesselLimit.BesselI(n, x, scale);
         }
 
         public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-            BesselUtil.CheckNu(nu);
+            CheckNu(nu);
 
-            if (IsNaN(x) || IsNegative(x)) {
-                return NaN;
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
             }
 
-            nu = Abs(nu);
+            nu = ddouble.Abs(nu);
 
-            if (x <= 2d) {
-                ddouble y;
-
-                if (BesselUtil.NearlyInteger(nu, out _) || Abs(Round(nu) - nu) >= BesselUtil.InterpolationThreshold) {
-                    y = BesselNearZero.BesselK(nu, x, scale);
+            if (x >= HankelThreshold) {
+                return Limit.BesselK(nu, x, scale);
+            }
+            else if (x <= BesselKNearZeroThreshold) {
+                if (NearlyInteger(nu, out int n) || ddouble.Abs(n - nu) >= BesselKInterpolationDelta) {
+                    return PowerSeries.BesselK(nu, x, scale);
                 }
                 else {
-                    y = BesselInterpolate.BesselKCubicInterpolate(nu, x, scale);
-                }
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                return PositiveInfinity;
-            }
-
-            if (x <= 35d) {
-                return BesselYoshidaPade.BesselK(nu, x, scale);
-            }
-
-            return BesselLimit.BesselK(nu, x, scale);
-        }
-
-        public static ddouble BesselK(int n, ddouble x, bool scale = false) {
-            BesselUtil.CheckN(n);
-
-            if (IsNaN(x) || IsNegative(x)) {
-                return NaN;
-            }
-
-            n = int.Abs(n);
-
-            if (x <= 2d) {
-                ddouble y = BesselNearZero.BesselK(n, x, scale);
-
-                if (IsFinite(y) && !(IsZero(y) && x < BesselUtil.ExtremelyNearZero)) {
-                    return y;
-                }
-
-                return PositiveInfinity;
-            }
-            if (x <= 35d) {
-                return BesselYoshidaPade.BesselK(n, x, scale);
-            }
-
-            return BesselLimit.BesselK(n, x, scale);
-        }
-
-        private static class BesselUtil {
-            public static readonly double Eps = double.ScaleB(1, -1000);
-            public static readonly double ExtremelyNearZero = double.ScaleB(1, -28);
-            public static readonly double InterpolationThreshold = double.ScaleB(1, -25);
-            public static readonly double MillerBwdBesselYEps = double.ScaleB(1, -30);
-
-            public const int MaxN = 16;
-
-            public static void CheckNu(ddouble nu) {
-                if (!(Abs(nu) <= (double)MaxN)) {
-                    throw new ArgumentOutOfRangeException(
-                        nameof(nu),
-                        $"In the calculation of the Bessel function, nu with an absolute value greater than {MaxN} is not supported."
-                    );
+                    return Interpolation.BesselKPowerSeries(nu, x, scale);
                 }
             }
-
-            public static void CheckN(int n) {
-                if (n < -MaxN || n > MaxN) {
-                    throw new ArgumentOutOfRangeException(
-                        nameof(n),
-                        $"In the calculation of the Bessel function, n with an absolute value greater than {MaxN} is not supported."
-                    );
-                }
-            }
-
-            public static bool NearlyInteger(ddouble nu, out int n) {
-                n = (int)Round(nu);
-
-                return Abs(nu - n) < Eps;
+            else {
+                return YoshidaPade.BesselK(nu, x, scale);
             }
         }
 
-        private static class BesselNearZero {
-            private static readonly Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = new();
-            private static readonly Dictionary<ddouble, X2DenomTable> x2denom_coef_table = new();
-            private static readonly Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = new();
-            private static readonly Dictionary<ddouble, GammaTable> gamma_coef_table = new();
-            private static readonly Dictionary<ddouble, GammaPNTable> gammapn_coef_table = new();
-            private static readonly YCoefTable y_coef_table = new();
-            private static readonly Y0CoefTable y0_coef_table = new();
-            private static readonly Y1CoefTable y1_coef_table = new();
-            private static readonly KCoefTable k_coef_table = new();
-            private static readonly K0CoefTable k0_coef_table = new();
-            private static readonly K1CoefTable k1_coef_table = new();
+        internal static partial class Consts {
+            public static class Bessel {
+                public const int MaxN = 16;
+                public static readonly double Eps = double.ScaleB(1, -105);
+                public static readonly double BesselYNearZero = 0.125d;
+                public static readonly double BesselYForcedMillerBackwardThreshold = double.ScaleB(1, -8);
+                public static readonly double BesselKInterpolationDelta = double.ScaleB(1, -8);
+                public const double HankelThreshold = 38.875, MillerBackwardThreshold = 6;
+                public const double BesselKPadeThreshold = 1, BesselKNearZeroThreshold = 2, BesselJYPowerseriesBias = 2;
 
-            public static ddouble BesselJ(ddouble nu, ddouble x) {
-                if (IsNegative(nu) && BesselUtil.NearlyInteger(nu, out int n)) {
-                    ddouble y = BesselJ(-nu, x);
+                public static ddouble PowerSeriesThreshold(ddouble nu) {
+                    ddouble nu_abs = ddouble.Abs(nu);
 
-                    return ((n & 1) == 0) ? y : -y;
-                }
-                else {
-                    ddouble y = BesselJIKernel(nu, x, sign_switch: true, terms: 9);
-
-                    return y;
-                }
-            }
-
-            public static ddouble BesselY(ddouble nu, ddouble x) {
-                if (BesselUtil.NearlyInteger(nu, out int n)) {
-                    ddouble y = BesselYKernel(n, x, terms: 9);
-
-                    return y;
-                }
-                else if (nu < 0d && Abs((nu - Floor(nu)) - 0.5d) < 0.0625d) {
-                    ddouble y = BesselYKernel(nu, x, terms: 32);
-
-                    return y;
-                }
-                else {
-                    ddouble y = BesselYKernel(nu, x, terms: 10);
-
-                    return y;
-                }
-            }
-
-            public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-                if (IsNegative(nu) && BesselUtil.NearlyInteger(nu, out _)) {
-                    ddouble y = BesselI(-nu, x);
-
-                    if (scale) {
-                        y *= Exp(-x);
-                    }
-
-                    return y;
-                }
-                else {
-                    ddouble y = BesselJIKernel(nu, x, sign_switch: false, terms: 10);
-
-                    if (scale) {
-                        y *= Exp(-x);
-                    }
-
-                    return y;
-                }
-            }
-
-            public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-                if (BesselUtil.NearlyInteger(nu, out int n)) {
-                    ddouble y = BesselKKernel(n, x, terms: 20);
-
-                    if (scale) {
-                        y *= Exp(x);
-                    }
-
-                    return y;
-                }
-                else {
-                    ddouble y = BesselKKernel(nu, x, terms: 20);
-
-                    if (scale) {
-                        y *= Exp(x);
-                    }
-
-                    return y;
-                }
-            }
-
-            private static ddouble BesselJIKernel(ddouble nu, ddouble x, bool sign_switch, int terms) {
-                if (!dfactdenom_coef_table.TryGetValue(nu, out DoubleFactDenomTable dfactdenom_table)) {
-                    dfactdenom_table = new DoubleFactDenomTable(nu);
-                    dfactdenom_coef_table.Add(nu, dfactdenom_table);
-                }
-                if (!x2denom_coef_table.TryGetValue(nu, out X2DenomTable x2denom_table)) {
-                    x2denom_table = new X2DenomTable(nu);
-                    x2denom_coef_table.Add(nu, x2denom_table);
+                    return 7.5 + nu_abs * (3.57e-1 + nu_abs * 5.23e-3);
                 }
 
-                DoubleFactDenomTable r = dfactdenom_table;
-                X2DenomTable d = x2denom_table;
-
-                ddouble x2 = x * x, x4 = x2 * x2;
-
-                ddouble c = 0d, u = Pow(Ldexp(x, -1), nu);
-
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble w = x2 * d[k];
-                    ddouble dc = u * r[k] * (sign_switch ? (1d - w) : (1d + w));
-
-                    ddouble c_next = c + dc;
-
-                    if (c == c_next || !IsFinite(c_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
-                    }
-
-                    c = c_next;
-                    u *= x4;
-
-                    if (!IsFinite(c)) {
-                        break;
+                public static void CheckNu(ddouble nu) {
+                    if (!(ddouble.Abs(nu) <= MaxN)) {
+                        throw new ArgumentOutOfRangeException(
+                            nameof(nu),
+                            $"In the calculation of the Bessel function, nu with an absolute value greater than {MaxN} is not supported."
+                        );
                     }
                 }
 
-                return c;
-            }
-
-            private static ddouble BesselYKernel(ddouble nu, ddouble x, int terms) {
-                if (!gamma_coef_table.TryGetValue(nu, out GammaTable gamma_table)) {
-                    gamma_table = new GammaTable(nu);
-                    gamma_coef_table.Add(nu, gamma_table);
-                }
-                if (!gammapn_coef_table.TryGetValue(nu, out GammaPNTable gammapn_table)) {
-                    gammapn_table = new GammaPNTable(nu);
-                    gammapn_coef_table.Add(nu, gammapn_table);
-                }
-
-                YCoefTable r = y_coef_table;
-                GammaTable g = gamma_table;
-                GammaPNTable gpn = gammapn_table;
-
-                ddouble cos = CosPI(nu), sin = SinPI(nu);
-                ddouble p = IsZero(cos) ? 0d : Pow(x, Ldexp(nu, 1)) * cos, s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
-
-                ddouble x2 = x * x, x4 = x2 * x2;
-
-                ddouble c = 0d, u = 1d / sin;
-
-                for (int k = 0, t = 1, conv_times = 0; k <= terms && conv_times < 2; k++, t += 2) {
-                    ddouble a = t * s * g[t], q = gpn[t];
-                    ddouble pa = p / a, qa = q / a;
-
-                    ddouble dc = u * r[k] * ((4 * t * nu) * (pa + qa) - (x2 - (4 * t * t)) * (pa - qa));
-
-                    ddouble c_next = c + dc;
-
-                    if (c == c_next || !IsFinite(c_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
-                    }
-
-                    c = c_next;
-                    u *= x4;
-
-                    if (!IsFinite(c)) {
-                        break;
+                public static void CheckN(int n) {
+                    if (n < -MaxN || n > MaxN) {
+                        throw new ArgumentOutOfRangeException(
+                            nameof(n),
+                            $"In the calculation of the Bessel function, n with an absolute value greater than {MaxN} is not supported."
+                        );
                     }
                 }
 
-                return c;
-            }
+                public static bool NearlyInteger(ddouble nu, out int n) {
+                    n = (int)ddouble.Round(nu);
 
-            private static ddouble BesselYKernel(int n, ddouble x, int terms) {
-                if (n < 0) {
-                    ddouble y = BesselYKernel(-n, x, terms);
-
-                    return ((n & 1) == 0) ? y : -y;
-                }
-                else {
-                    if (n == 0) {
-                        return BesselY0Kernel(x, terms);
-                    }
-                    if (n == 1) {
-                        return BesselY1Kernel(x, terms);
-                    }
+                    return ddouble.Abs(nu - n) < Eps;
                 }
 
-                ddouble v = 1d / x;
-                ddouble y0 = BesselY0Kernel(x, terms);
-                ddouble y1 = BesselY1Kernel(x, terms);
-
-                int exp_sum = 0;
-
-                for (int k = 1; k < n; k++) {
-                    (int exp, (y0, y1)) = AdjustScale(0, (y0, y1));
-                    (y1, y0) = ((2 * k) * v * y1 - y0, y1);
-
-                    exp_sum += exp;
-                }
-
-                y1 = Ldexp(y1, -exp_sum);
-
-                return y1;
-            }
-
-            private static ddouble BesselY0Kernel(ddouble x, int terms) {
-                if (!dfactdenom_coef_table.ContainsKey(0)) {
-                    dfactdenom_coef_table.Add(0, new DoubleFactDenomTable(0));
-                }
-                if (!x2denom_coef_table.ContainsKey(0)) {
-                    x2denom_coef_table.Add(0, new X2DenomTable(0));
-                }
-
-                DoubleFactDenomTable r = dfactdenom_coef_table[0];
-                X2DenomTable d = x2denom_coef_table[0];
-                Y0CoefTable q = y0_coef_table;
-
-                ddouble h = Log(Ldexp(x, -1)) + EulerGamma;
-
-                ddouble x2 = x * x, x4 = x2 * x2;
-
-                ddouble c = 0d, u = Ldexp(RcpPI, 1);
-
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k)) * (1d - x2 * d[k]) + x2 * q[k]);
-
-                    ddouble c_next = c + dc;
-
-                    if (c == c_next || !IsFinite(c_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
-                    }
-
-                    c = c_next;
-                    u *= x4;
-                }
-
-                return c;
-            }
-
-            private static ddouble BesselY1Kernel(ddouble x, int terms) {
-                if (!dfactdenom_coef_table.ContainsKey(1)) {
-                    dfactdenom_coef_table.Add(1, new DoubleFactDenomTable(1));
-                }
-                if (!x2denom_coef_table.ContainsKey(1)) {
-                    x2denom_coef_table.Add(1, new X2DenomTable(1));
-                }
-
-                DoubleFactDenomTable r = dfactdenom_coef_table[1];
-                X2DenomTable d = x2denom_coef_table[1];
-                Y1CoefTable q = y1_coef_table;
-
-                ddouble h = Ldexp(Log(Ldexp(x, -1)) + EulerGamma, 1);
-
-                ddouble x2 = x * x, x4 = x2 * x2;
-
-                ddouble c = -2d / (x * PI), u = x / Ldexp(PI, 1);
-
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
-
-                    ddouble c_next = c + dc;
-
-                    if (c == c_next || !IsFinite(c_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
-                    }
-
-                    c = c_next;
-                    u *= x4;
-                }
-
-                return c;
-            }
-
-            private static ddouble BesselKKernel(ddouble nu, ddouble x, int terms) {
-                if (!gammadenom_coef_table.TryGetValue(nu, out GammaDenomTable gammadenomp_table)) {
-                    gammadenomp_table = new GammaDenomTable(nu);
-                    gammadenom_coef_table.Add(nu, gammadenomp_table);
-                }
-                if (!gammadenom_coef_table.TryGetValue(-nu, out GammaDenomTable gammadenomn_table)) {
-                    gammadenomn_table = new GammaDenomTable(-nu);
-                    gammadenom_coef_table.Add(-nu, gammadenomn_table);
-                }
-
-                KCoefTable r = k_coef_table;
-                GammaDenomTable gp = gammadenomp_table, gn = gammadenomn_table;
-
-                ddouble tp = Pow(Ldexp(x, -1), nu), tn = 1d / tp;
-
-                ddouble x2 = x * x;
-
-                ddouble c = 0d, u = PI / Ldexp(SinPI(nu), 1);
-
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * (tn * gn[k] - tp * gp[k]);
-
-                    ddouble c_next = c + dc;
-
-                    if (c == c_next || !IsFinite(c_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
-                    }
-
-                    c = c_next;
-                    u *= x2;
-
-                    if (!IsFinite(c)) {
-                        break;
-                    }
-                }
-
-                return c;
-            }
-
-            private static ddouble BesselKKernel(int n, ddouble x, int terms) {
-                if (n == 0) {
-                    return BesselK0Kernel(x, terms);
-                }
-                if (n == 1) {
-                    return BesselK1Kernel(x, terms);
-                }
-
-                ddouble v = 1d / x;
-                ddouble y0 = BesselK0Kernel(x, terms);
-                ddouble y1 = BesselK1Kernel(x, terms);
-
-                for (int k = 1; k < n; k++) {
-                    (y1, y0) = ((2 * k) * v * y1 + y0, y1);
-                }
-
-                return y1;
-            }
-
-            private static ddouble BesselK0Kernel(ddouble x, int terms) {
-                K0CoefTable r = k0_coef_table;
-                ddouble h = -Log(Ldexp(x, -1)) - EulerGamma;
-
-                ddouble x2 = x * x;
-
-                ddouble c = 0d, u = 1d;
-
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * (h + HarmonicNumber(k));
-
-                    ddouble c_next = c + dc;
-
-                    if (c == c_next || !IsFinite(c_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
-                    }
-
-                    c = c_next;
-                    u *= x2;
-                }
-
-                return c;
-            }
-
-            private static ddouble BesselK1Kernel(ddouble x, int terms) {
-                K1CoefTable r = k1_coef_table;
-                ddouble h = Log(Ldexp(x, -1)) + EulerGamma;
-
-                ddouble x2 = x * x;
-
-                ddouble c = 1d / x, u = Ldexp(x, -1);
-
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble dc = u * r[k] * (h - Ldexp(HarmonicNumber(k) + HarmonicNumber(k + 1), -1));
-
-                    ddouble c_next = c + dc;
-
-                    if (c == c_next || !IsFinite(c_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
-                    }
-
-                    c = c_next;
-                    u *= x2;
-                }
-
-                return c;
-            }
-
-            private class DoubleFactDenomTable {
-                private ddouble c;
-                private readonly ddouble nu;
-                private readonly List<ddouble> table = new();
-
-                public DoubleFactDenomTable(ddouble nu) {
-                    this.c = Gamma(nu + 1d);
-                    this.nu = nu;
-                    this.table.Add(Rcp(c));
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        c *= (nu + (2 * k)) * (nu + (2 * k - 1)) * (32 * k * (2 * k - 1));
-
-                        table.Add(Rcp(c));
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class X2DenomTable {
-                private readonly ddouble nu;
-                private readonly List<ddouble> table = new();
-
-                public X2DenomTable(ddouble nu) {
-                    ddouble a = Rcp(4d * (nu + 1d));
-
-                    this.nu = nu;
-                    this.table.Add(a);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble a = Rcp(4d * (2 * k + 1) * (2 * k + 1 + nu));
-
-                        table.Add(a);
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class GammaDenomTable {
-                private ddouble c;
-                private readonly ddouble nu;
-                private readonly List<ddouble> table = new();
-
-                public GammaDenomTable(ddouble nu) {
-                    this.c = Gamma(nu + 1d);
-                    this.nu = nu;
-                    this.table.Add(Rcp(c));
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        c *= nu + k;
-
-                        table.Add(Rcp(c));
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class GammaTable {
-                private ddouble c;
-                private readonly ddouble nu;
-                private readonly List<ddouble> table = new();
-
-                public GammaTable(ddouble nu) {
-                    this.c = Gamma(nu + 1d);
-                    this.nu = nu;
-                    this.table.Add(c);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        c *= nu + k;
-
-                        table.Add(c);
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class GammaPNTable {
-                private readonly ddouble r;
-                private readonly GammaTable positive_table, negative_table;
-                private readonly List<ddouble> table = new();
-
-                public GammaPNTable(ddouble nu) {
-                    this.r = Pow(4, nu);
-                    this.positive_table = new(nu);
-                    this.negative_table = new(-nu);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble c = r * positive_table[k] / negative_table[k];
-
-                        table.Add(c);
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class YCoefTable {
-                private ddouble c;
-                private readonly List<ddouble> table = new();
-
-                public YCoefTable() {
-                    this.c = 1d;
-                    this.table.Add(1d);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        c *= (32 * k * (2 * k - 1));
-
-                        table.Add(Rcp(c));
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class Y0CoefTable {
-                private readonly List<ddouble> table = new();
-
-                public Y0CoefTable() {
-                    this.table.Add(Rcp(4));
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble c = Rcp((4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 1)));
-
-                        table.Add(c);
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class Y1CoefTable {
-                private readonly List<ddouble> table = new();
-
-                public Y1CoefTable() {
-                    this.table.Add(Ldexp(3, -4));
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble c = (ddouble)(4 * k + 3) / (ddouble)(4 * (2 * k + 1) * (2 * k + 1) * (2 * k + 2) * (2 * k + 2));
-
-                        table.Add(c);
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class KCoefTable {
-                private ddouble c;
-                private readonly List<ddouble> table = new();
-
-                public KCoefTable() {
-                    this.c = 1d;
-                    this.table.Add(1d);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        c *= (4 * k);
-
-                        table.Add(Rcp(c));
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class K0CoefTable {
-                private ddouble c;
-                private readonly List<ddouble> table = new();
-
-                public K0CoefTable() {
-                    this.c = 1d;
-                    this.table.Add(1d);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        c *= (4 * k * k);
-
-                        table.Add(Rcp(c));
-                    }
-
-                    return table[n];
-                }
-            }
-
-            private class K1CoefTable {
-                private ddouble c;
-                private readonly List<ddouble> table = new();
-
-                public K1CoefTable() {
-                    this.c = 1d;
-                    this.table.Add(1d);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int k = table.Count; k <= n; k++) {
-                        c *= (4 * k * (k + 1));
-
-                        table.Add(Rcp(c));
-                    }
-
-                    return table[n];
-                }
-            }
-        }
-
-        private static class BesselMillerBackward {
-            private static readonly Dictionary<ddouble, BesselJPhiTable> phi_coef_table = new();
-            private static readonly Dictionary<ddouble, BesselIPsiTable> psi_coef_table = new();
-            private static readonly Dictionary<ddouble, BesselYEtaTable> eta_coef_table = new();
-            private static readonly Dictionary<ddouble, BesselYXiTable> xi_coef_table = new();
-
-            public static ddouble BesselJ(int n, ddouble x) {
-                int m = BesselJYIterM(x.Hi);
-
-                ddouble y = BesselJKernel(n, x, m);
-
-                return y;
-            }
-
-            public static ddouble BesselJ(ddouble nu, ddouble x) {
-                int m = BesselJYIterM(x.Hi);
-
-                if (BesselUtil.NearlyInteger(nu, out int n)) {
-                    ddouble y = BesselJKernel(n, x, m);
-
-                    return y;
-                }
-                else {
-                    ddouble y = BesselJKernel(nu, x, m);
-
-                    return y;
-                }
-            }
-
-            public static ddouble BesselY(int n, ddouble x) {
-                int m = BesselJYIterM(x.Hi);
-
-                ddouble y = BesselYKernel(n, x, m);
-
-                return y;
-            }
-
-            public static ddouble BesselY(ddouble nu, ddouble x) {
-                int m = BesselJYIterM(x.Hi);
-
-                if (BesselUtil.NearlyInteger(nu, out int n)) {
-                    ddouble y = BesselYKernel(n, x, m);
-
-                    return y;
-                }
-                else {
-                    ddouble y = BesselYKernel(nu, x, m);
-
-                    return y;
-                }
-            }
-
-            private static int BesselJYIterM(double x) {
-                return (int)double.Ceiling(74 + 1.36 * x - 54.25 / double.Sqrt(double.Sqrt(x))) & ~1;
-            }
-
-            public static ddouble BesselI(int n, ddouble x, bool scale = false) {
-                int m = BesselIIterM(x.Hi);
-
-                ddouble y = BesselIKernel(n, x, m, scale);
-
-                return y;
-            }
-
-            public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-                int m = BesselIIterM(x.Hi);
-
-                if (BesselUtil.NearlyInteger(nu, out int n)) {
-                    ddouble y = BesselIKernel(n, x, m, scale);
-
-                    return y;
-                }
-                else {
-                    ddouble y = BesselIKernel(nu, x, m, scale);
-
-                    return y;
-                }
-            }
-
-            private static int BesselIIterM(double x) {
-                return (int)double.Ceiling(86 + 0.75 * x - 67.25 / double.Sqrt(double.Sqrt(x))) & ~1;
-            }
-
-            private static ddouble BesselJKernel(int n, ddouble x, int m) {
-                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
-
-                if (n < 0) {
-                    return ((n & 1) == 0) ? BesselJKernel(-n, x, m) : -BesselJKernel(-n, x, m);
-                }
-                if (n == 0) {
-                    return BesselJ0Kernel(x, m);
-                }
-                if (n == 1) {
-                    return BesselJ1Kernel(x, m);
-                }
-
-                ddouble f0 = 1e-256, f1 = 0d, fn = 0d, lambda = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    if ((k & 1) == 0) {
-                        lambda += f0;
-                    }
-
-                    (f0, f1) = ((2 * k) * v * f0 - f1, f0);
-
-                    if (k - 1 == n) {
-                        fn = f0;
-                    }
-                }
-
-                lambda = Ldexp(lambda, 1) + f0;
-
-                ddouble yn = fn / lambda;
-
-                return yn;
-            }
-
-            private static ddouble BesselJKernel(ddouble nu, ddouble x, int m) {
-                int n = (int)Floor(nu);
-                ddouble alpha = nu - n;
-
-                if (alpha == 0d) {
-                    return BesselJKernel(n, x, m);
-                }
-
-                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
-
-                if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi_table)) {
-                    phi_table = new BesselJPhiTable(alpha);
-                    phi_coef_table.Add(alpha, phi_table);
-                }
-
-                BesselJPhiTable phi = phi_table;
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
-                ddouble v = 1d / x;
-
-                if (n >= 0) {
-                    ddouble fn = 0d;
-
-                    for (int k = m; k >= 1; k--) {
-                        if ((k & 1) == 0) {
-                            lambda += f0 * phi[k / 2];
+                public static class SinCosPICache {
+                    private static readonly Dictionary<ddouble, ddouble> cospi_table = [];
+                    private static readonly Dictionary<ddouble, ddouble> sinpi_table = [];
+
+                    public static ddouble CosPI(ddouble theta) {
+                        if (!cospi_table.TryGetValue(theta, out ddouble cospi)) {
+                            cospi = ddouble.CosPI(theta);
+                            cospi_table[theta] = cospi;
                         }
 
-                        (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
-
-                        if (k - 1 == n) {
-                            fn = f0;
-                        }
+                        return cospi;
                     }
 
-                    lambda += f0 * phi[0];
-                    lambda *= Pow(Ldexp(v, 1), alpha);
-
-                    ddouble yn = fn / lambda;
-
-                    return yn;
-                }
-                else {
-                    for (int k = m; k >= 1; k--) {
-                        if ((k & 1) == 0) {
-                            lambda += f0 * phi[k / 2];
+                    public static ddouble SinPI(ddouble theta) {
+                        if (!sinpi_table.TryGetValue(theta, out ddouble sinpi)) {
+                            sinpi = ddouble.SinPI(theta);
+                            sinpi_table[theta] = sinpi;
                         }
 
-                        (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
-                    }
-
-                    lambda += f0 * phi[0];
-                    lambda *= Pow(Ldexp(v, 1), alpha);
-
-                    for (int k = 0; k > n; k--) {
-                        (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
-                    }
-
-                    ddouble yn = f0 / lambda;
-
-                    return yn;
-                }
-            }
-
-            private static ddouble BesselJ0Kernel(ddouble x, int m) {
-                Debug.Assert(m >= 2 && (m & 1) == 0);
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    if ((k & 1) == 0) {
-                        lambda += f0;
-                    }
-
-                    (f0, f1) = ((2 * k) * v * f0 - f1, f0);
-                }
-
-                lambda = Ldexp(lambda, 1) + f0;
-
-                ddouble y0 = f0 / lambda;
-
-                return y0;
-            }
-
-            private static ddouble BesselJ1Kernel(ddouble x, int m) {
-                Debug.Assert(m >= 2 && (m & 1) == 0);
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    if ((k & 1) == 0) {
-                        lambda += f0;
-                    }
-
-                    (f0, f1) = ((2 * k) * v * f0 - f1, f0);
-                }
-
-                lambda = Ldexp(lambda, 1) + f0;
-
-                ddouble y1 = f1 / lambda;
-
-                return y1;
-            }
-
-            private static ddouble BesselYKernel(int n, ddouble x, int m) {
-                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
-
-                if (n < 0) {
-                    return ((n & 1) == 0) ? BesselYKernel(-n, x, m) : -BesselYKernel(-n, x, m);
-                }
-                if (n == 0) {
-                    return BesselY0Kernel(x, m);
-                }
-                if (n == 1) {
-                    return BesselY1Kernel(x, m);
-                }
-
-                if (!eta_coef_table.ContainsKey(0)) {
-                    eta_coef_table.Add(0, new BesselYEtaTable(0));
-                }
-
-                BesselYEtaTable eta = eta_coef_table[0];
-
-                if (!xi_coef_table.ContainsKey(0)) {
-                    xi_coef_table.Add(0, new BesselYXiTable(0, eta));
-                }
-
-                BesselYXiTable xi = xi_coef_table[0];
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
-                ddouble se = 0d, sx = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    if ((k & 1) == 0) {
-                        lambda += f0;
-
-                        se += f0 * eta[k / 2];
-                    }
-                    else if (k >= 3) {
-                        sx += f0 * xi[k];
-                    }
-
-                    (f0, f1) = ((2 * k) * v * f0 - f1, f0);
-                }
-
-                lambda = Ldexp(lambda, 1) + f0;
-
-                ddouble c = Log(Ldexp(x, -1)) + EulerGamma;
-
-                ddouble y0 = se + f0 * c;
-                ddouble y1 = sx - v * f0 + (c - 1d) * f1;
-
-                for (int k = 1; k < n; k++) {
-                    (y1, y0) = ((2 * k) * v * y1 - y0, y1);
-                }
-
-                ddouble yn = Ldexp(y1 / (lambda * PI), 1);
-
-                return yn;
-            }
-
-            private static ddouble BesselYKernel(ddouble nu, ddouble x, int m) {
-                int n = (int)Floor(nu);
-                ddouble alpha = nu - n;
-
-                if (alpha == 0d) {
-                    return BesselYKernel(n, x, m);
-                }
-
-                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
-
-                if (!eta_coef_table.TryGetValue(alpha, out BesselYEtaTable eta_table)) {
-                    eta_table = new BesselYEtaTable(alpha);
-                    eta_coef_table.Add(alpha, eta_table);
-                }
-
-                BesselYEtaTable eta = eta_table;
-
-                if (!xi_coef_table.TryGetValue(alpha, out BesselYXiTable xi_table)) {
-                    xi_table = new BesselYXiTable(alpha, eta);
-                    xi_coef_table.Add(alpha, xi_table);
-                }
-
-                BesselYXiTable xi = xi_table;
-
-                if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi_table)) {
-                    phi_table = new BesselJPhiTable(alpha);
-                    phi_coef_table.Add(alpha, phi_table);
-                }
-
-                BesselJPhiTable phi = phi_table;
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
-                ddouble se = 0d, sxo = 0d, sxe = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    if ((k & 1) == 0) {
-                        lambda += f0 * phi[k / 2];
-
-                        se += f0 * eta[k / 2];
-                        sxe += f0 * xi[k];
-                    }
-                    else if (k >= 3) {
-                        sxo += f0 * xi[k];
-                    }
-
-                    (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
-                }
-
-                ddouble s = Pow(Ldexp(v, 1), alpha), sqs = s * s;
-
-                lambda += f0 * phi[0];
-                lambda *= s;
-
-                ddouble rcot = 1d / TanPI(alpha), rgamma = Gamma(1d + alpha), rsqgamma = rgamma * rgamma;
-                ddouble r = Ldexp(RcpPI * sqs, 1);
-                ddouble p = sqs * rsqgamma * RcpPI;
-
-                ddouble eta0 = (double.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
-                    ? (rcot - p / alpha)
-                    : BesselYEta0Eps(alpha, x);
-
-                ddouble xi0 = -Ldexp(v, 1) * p;
-                ddouble xi1 = (double.Abs(alpha.Hi) > BesselUtil.MillerBwdBesselYEps)
-                    ? rcot + p * (alpha * (alpha + 1d) + 1d) / (alpha * (alpha - 1d))
-                    : BesselYXi1Eps(alpha, x);
-
-                ddouble y0 = r * se + eta0 * f0;
-                ddouble y1 = r * (3d * alpha * v * sxe + sxo) + xi0 * f0 + xi1 * f1;
-
-                if (n == 0) {
-                    ddouble yn = y0 / lambda;
-
-                    return yn;
-                }
-                if (n == 1) {
-                    ddouble yn = y1 / lambda;
-
-                    return yn;
-                }
-                if (n >= 0) {
-                    for (int k = 1; k < n; k++) {
-                        (y1, y0) = (Ldexp(k + alpha, 1) * v * y1 - y0, y1);
-                    }
-
-                    ddouble yn = y1 / lambda;
-
-                    return yn;
-                }
-                else {
-                    for (int k = 0; k > n; k--) {
-                        (y0, y1) = (Ldexp(k + alpha, 1) * v * y0 - y1, y0);
-                    }
-
-                    ddouble yn = y0 / lambda;
-
-                    return yn;
-                }
-            }
-
-            private static ddouble BesselYEta0Eps(ddouble alpha, ddouble x) {
-                ddouble lnx = Log(x), lnhalfx = Log(Ldexp(x, -1));
-                ddouble pi = PI, sqpi = pi * pi;
-                ddouble ln2 = Ln2, sqln2 = ln2 * ln2, cbln2 = sqln2 * ln2, qdln2 = sqln2 * sqln2;
-                ddouble g = EulerGamma;
-
-                ddouble r0 = lnhalfx + g;
-                ddouble r1 =
-                    (-sqln2 + lnx * (ln2 * 2d - lnx)) * 4d
-                    - sqpi
-                    - g * (lnhalfx * 2d + g) * 4d;
-                ddouble r2 =
-                    (-cbln2 + lnx * (sqln2 * 3d + lnx * (ln2 * -3d + lnx))) * 4d
-                    + Zeta3 * 2d
-                    + sqpi * (lnhalfx + g)
-                    + g * ((sqln2 + lnx * (ln2 * -2d + lnx)) * 3d + g * (lnhalfx * 3d + g)) * 4d;
-                ddouble r3 =
-                    (-qdln2 + lnx * (cbln2 * 4d + lnx * (sqln2 * -6d + lnx * (ln2 * 4d - lnx)))) * 16d
-                    - Zeta3 * (lnhalfx + g) * 32d
-                    - sqpi * (((sqln2 + lnx * (-ln2 * 2d + lnx) + g * (lnhalfx * 2d + g)) * 8d) + sqpi)
-                    + g * ((cbln2 + lnx * (sqln2 * -3d + lnx * (ln2 * 3d - lnx))) * 4d
-                    + g * ((sqln2 + lnx * (ln2 * -2d + lnx)) * -6d
-                    + g * (lnhalfx * -4d
-                    - g))) * 16d;
-
-                ddouble eta0 = (r0 * 48d + alpha * (r1 * 12d + alpha * (r2 * 8d + alpha * r3))) / (24d * PI);
-
-                return eta0;
-            }
-
-            static ddouble BesselYXi1Eps(ddouble alpha, ddouble x) {
-                ddouble lnx = Log(x), lnhalfx = Log(Ldexp(x, -1)), lnxm1 = lnx - 1, lnhalfxm1 = lnhalfx - 1;
-                ddouble pi = PI, sqpi = pi * pi;
-                ddouble ln2 = Ln2, sqln2 = ln2 * ln2, cbln2 = sqln2 * ln2, qdln2 = sqln2 * sqln2;
-                ddouble g = EulerGamma;
-
-                ddouble r0 = lnhalfxm1 + g;
-                ddouble r1 =
-                    (-sqln2 + ln2 * lnxm1 * 2d + lnx * (2 - lnx)) * 4d
-                    - sqpi
-                    - g * (lnhalfxm1 * 2d + g) * 4d
-                    - 6d;
-                ddouble r2 =
-                    (-cbln2 * 4d + sqln2 * lnxm1 * 12d + lnx * (18d + lnx * (-12d + lnx * 4d)))
-                    + ln2 * (lnx * (2d - lnx) * 12d - 18d)
-                    + Zeta3 * 2d
-                    + sqpi * (lnhalfxm1 + g)
-                    + g * ((((sqln2 - ln2 * lnxm1 * 2d) + lnx * (-2d + lnx)) * 12d + 18d)
-                    + g * (lnhalfxm1 * 12d
-                    + g * 4d))
-                    - 9d;
-                ddouble r3 =
-                    -qdln2 * 16d
-                    + cbln2 * lnxm1 * 64d
-                    + sqln2 * (lnx * (2d - lnx) * 96d - 144d)
-                    + ln2 * (lnx * (9d + lnx * (-6d + lnx * 2d)) * 32d - 144d)
-                    + lnx * (9d + lnx * (-9d + lnx * (4d - lnx))) * 16d
-                    + Zeta3 * (lnhalfxm1 + g) * -32d
-                    + sqpi * (((-sqln2 + ln2 * lnxm1 * 2d + lnx * (2d - lnx) - g * (lnhalfxm1 * 2d + g)) * 8d - 12d) - sqpi)
-                    + g * (((cbln2 - sqln2 * lnxm1 * 3d) * 64d + ln2 * (lnx * (-2d + lnx) * 192d + 288d) + lnx * (-9d + lnx * (6d - lnx * 2d)) * 32d + 144d)
-                    + g * (((-sqln2 + ln2 * lnxm1 * 2d + lnx * (2d - lnx)) * 96d - 144d)
-                    + g * (lnhalfxm1 * -64d
-                    - g * 16d)))
-                    - 72d;
-
-                ddouble xi1 = (r0 * 48d + alpha * (r1 * 12d + alpha * (r2 * 8d + alpha * r3))) / (24d * PI);
-
-                return xi1;
-            }
-
-            private static ddouble BesselY0Kernel(ddouble x, int m) {
-                Debug.Assert(m >= 2 && (m & 1) == 0);
-
-                if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta_table)) {
-                    eta_table = new BesselYEtaTable(0);
-                    eta_coef_table.Add(0, eta_table);
-                }
-
-                BesselYEtaTable eta = eta_table;
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
-                ddouble se = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    if ((k & 1) == 0) {
-                        lambda += f0;
-
-                        se += f0 * eta[k / 2];
-                    }
-
-                    (f0, f1) = ((2 * k) * v * f0 - f1, f0);
-                }
-
-                lambda = Ldexp(lambda, 1) + f0;
-
-                ddouble y0 = Ldexp((se + f0 * (Log(Ldexp(x, -1)) + EulerGamma)) / (PI * lambda), 1);
-
-                return y0;
-            }
-
-            private static ddouble BesselY1Kernel(ddouble x, int m) {
-                Debug.Assert(m >= 2 && (m & 1) == 0);
-
-                if (!xi_coef_table.ContainsKey(0)) {
-                    if (!eta_coef_table.ContainsKey(0)) {
-                        eta_coef_table.Add(0, new BesselYEtaTable(0));
-                    }
-
-                    xi_coef_table.Add(0, new BesselYXiTable(0, eta_coef_table[0]));
-                }
-
-                BesselYXiTable xi = xi_coef_table[0];
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
-                ddouble sx = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    if ((k & 1) == 0) {
-                        lambda += f0;
-                    }
-                    else if (k >= 3) {
-                        sx += f0 * xi[k];
-                    }
-
-                    (f0, f1) = ((2 * k) * v * f0 - f1, f0);
-                }
-
-                lambda = Ldexp(lambda, 1) + f0;
-
-                ddouble y1 = Ldexp((sx - v * f0 + (Log(Ldexp(x, -1)) + EulerGamma - 1d) * f1) / (lambda * PI), 1);
-
-                return y1;
-            }
-
-            private static ddouble BesselIKernel(int n, ddouble x, int m, bool scale = false) {
-                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
-
-                n = int.Abs(n);
-
-                if (n == 0) {
-                    return BesselI0Kernel(x, m, scale);
-                }
-                if (n == 1) {
-                    return BesselI1Kernel(x, m, scale);
-                }
-
-                ddouble f0 = 1e-256, f1 = 0d, lambda = 0d, fn = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    lambda += f0;
-
-                    (f0, f1) = ((2 * k) * v * f0 + f1, f0);
-
-                    if (k - 1 == n) {
-                        fn = f0;
+                        return sinpi;
                     }
                 }
 
-                lambda = Ldexp(lambda, 1) + f0;
-
-                ddouble yn = fn / lambda;
-
-                if (!scale) {
-                    yn *= Exp(x);
-                }
-
-                return yn;
-            }
-
-            private static ddouble BesselIKernel(ddouble nu, ddouble x, int m, bool scale = false) {
-                int n = (int)Floor(nu);
-                ddouble alpha = nu - n;
-
-                if (alpha == 0d) {
-                    return BesselIKernel(n, x, m, scale);
-                }
-
-                Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
-
-                if (!psi_coef_table.TryGetValue(alpha, out BesselIPsiTable psi_table)) {
-                    psi_table = new BesselIPsiTable(alpha);
-                    psi_coef_table.Add(alpha, psi_table);
-                }
-
-                BesselIPsiTable psi = psi_table;
-
-                ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
-                ddouble v = 1d / x;
-
-                if (n >= 0) {
-                    ddouble gn = 0d;
-
-                    for (int k = m; k >= 1; k--) {
-                        lambda += g0 * psi[k];
-
-                        (g0, g1) = (Ldexp(k + alpha, 1) * v * g0 + g1, g0);
-
-                        if (k - 1 == n) {
-                            gn = g0;
-                        }
-                    }
-
-                    lambda += g0 * psi[0];
-                    lambda *= Pow(Ldexp(v, 1), alpha);
-
-                    ddouble yn = gn / lambda;
-
-                    if (!scale) {
-                        yn *= Exp(x);
-                    }
-
-                    return yn;
-                }
-                else {
-                    for (int k = m; k >= 1; k--) {
-                        lambda += g0 * psi[k];
-
-                        (g0, g1) = (Ldexp(k + alpha, 1) * v * g0 + g1, g0);
-                    }
-
-                    lambda += g0 * psi[0];
-                    lambda *= Pow(Ldexp(v, 1), alpha);
-
-                    for (int k = 0; k > n; k--) {
-                        (g0, g1) = (Ldexp(k + alpha, 1) * v * g0 + g1, g0);
-                    }
-
-                    ddouble yn = g0 / lambda;
-
-                    if (!scale) {
-                        yn *= Exp(x);
-                    }
-
-                    return yn;
-                }
-            }
-
-            private static ddouble BesselI0Kernel(ddouble x, int m, bool scale = false) {
-                Debug.Assert(m >= 2 && (m & 1) == 0);
-
-                ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    lambda += g0;
-
-                    (g0, g1) = ((2 * k) * v * g0 + g1, g0);
-                }
-
-                lambda = Ldexp(lambda, 1) + g0;
-
-                ddouble y0 = g0 / lambda;
-
-                if (!scale) {
-                    y0 *= Exp(x);
-                }
-
-                return y0;
-            }
-
-            private static ddouble BesselI1Kernel(ddouble x, int m, bool scale = false) {
-                Debug.Assert(m >= 2 && (m & 1) == 0);
-
-                ddouble g0 = 1e-256, g1 = 0d, lambda = 0d;
-                ddouble v = 1d / x;
-
-                for (int k = m; k >= 1; k--) {
-                    lambda += g0;
-
-                    (g0, g1) = ((2 * k) * v * g0 + g1, g0);
-                }
-
-                lambda = Ldexp(lambda, 1) + g0;
-
-                ddouble y1 = g1 / lambda;
-
-                if (!scale) {
-                    y1 *= Exp(x);
-                }
-
-                return y1;
-            }
-
-            private class BesselJPhiTable {
-                private readonly ddouble alpha;
-                private readonly List<ddouble> table = new();
-
-                private ddouble g;
-
-                public BesselJPhiTable(ddouble alpha) {
-                    Debug.Assert((alpha > 0d && alpha < 1d), nameof(alpha));
-
-                    this.alpha = alpha;
-
-                    ddouble phi0 = Gamma(1 + alpha);
-                    ddouble phi1 = phi0 * (alpha + 2d);
-
-                    this.g = phi0;
-
-                    this.table.Add(phi0);
-                    this.table.Add(phi1);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                private ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int m = table.Count; m <= n; m++) {
-                        g = g * (alpha + m - 1d) / m;
-
-                        ddouble phi = g * (alpha + 2 * m);
-
-                        table.Add(phi);
-                    }
-
-                    return table[n];
-                }
-            };
-
-            private class BesselIPsiTable {
-                private readonly ddouble alpha;
-                private readonly List<ddouble> table = new();
-
-                private ddouble g;
-
-                public BesselIPsiTable(ddouble alpha) {
-                    Debug.Assert((alpha > 0d && alpha < 1d), nameof(alpha));
-
-                    this.alpha = alpha;
-
-                    ddouble psi0 = Gamma(1d + alpha);
-                    ddouble psi1 = Ldexp(psi0, 1) * (1d + alpha);
-
-                    this.g = Ldexp(psi0, 1);
-
-                    this.table.Add(psi0);
-                    this.table.Add(psi1);
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                private ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int m = table.Count; m <= n; m++) {
-                        g = g * (Ldexp(alpha, 1) + m - 1d) / m;
-
-                        ddouble phi = g * (alpha + m);
-
-                        table.Add(phi);
-                    }
-
-                    return table[n];
-                }
-            };
-
-            private class BesselYEtaTable {
-                private readonly ddouble alpha;
-                private readonly List<ddouble> table = new();
-
-                private ddouble g;
-
-                public BesselYEtaTable(ddouble alpha) {
-                    Debug.Assert((alpha >= 0d && alpha < 1d), nameof(alpha));
-
-                    this.alpha = alpha;
-                    this.table.Add(NaN);
-
-                    if (alpha > 0d) {
-                        ddouble c = Gamma(1d + alpha);
-                        c *= c;
-                        this.g = 1d / (1d - alpha) * c;
-
-                        ddouble eta1 = (alpha + 2d) * g;
-
-                        this.table.Add(eta1);
-                    }
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                private ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int m = table.Count; m <= n; m++) {
-                        if (alpha > 0d) {
-                            g = -g * (alpha + m - 1) * (Ldexp(alpha, 1) + m - 1d) / (m * (m - alpha));
-
-                            ddouble eta = g * (alpha + 2 * m);
-
-                            table.Add(eta);
+                public class PowerSeries {
+                    public static readonly int NearZeroExponent = -950;
+                    private static readonly Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = [];
+                    private static readonly Dictionary<ddouble, X2DenomTable> x2denom_coef_table = [];
+                    private static readonly Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = [];
+                    private static readonly Dictionary<ddouble, GammaTable> gamma_coef_table = [];
+                    private static readonly Dictionary<ddouble, GammaPNTable> gammapn_coef_table = [];
+                    private static readonly YCoefTable y_coef_table = new();
+                    private static readonly Y0CoefTable y0_coef_table = new();
+                    private static readonly Dictionary<int, YNCoefTable> yn_coef_table = [];
+                    private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> yn_finitecoef_table = [];
+                    private static readonly KCoefTable k_coef_table = new();
+                    private static readonly K0CoefTable k0_coef_table = new();
+                    private static readonly K1CoefTable k1_coef_table = new();
+
+                    public static ddouble BesselJ(ddouble nu, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
+
+                        if (ddouble.IsNegative(nu) && NearlyInteger(nu, out int n)) {
+                            ddouble y = BesselJ(-nu, x);
+
+                            return (n & 1) == 0 ? y : -y;
                         }
                         else {
-                            ddouble eta = (ddouble)2d / m;
+                            ddouble y = BesselJKernel(nu, x, terms: 27);
 
-                            table.Add(((m & 1) == 1) ? eta : -eta);
+                            return y;
                         }
                     }
 
-                    return table[n];
-                }
-            };
+                    public static ddouble BesselY(ddouble nu, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-            private class BesselYXiTable {
-                private readonly ddouble alpha;
-                private readonly List<ddouble> table = new();
-                private readonly BesselYEtaTable eta;
+                        if (NearlyInteger(nu, out int n)) {
+                            ddouble y = BesselYKernel(n, x, terms: 18);
 
-                public BesselYXiTable(ddouble alpha, BesselYEtaTable eta) {
-                    Debug.Assert((alpha >= 0d && alpha < 1d), nameof(alpha));
-
-                    this.alpha = alpha;
-                    this.table.Add(NaN);
-                    this.table.Add(NaN);
-
-                    this.eta = eta;
-                }
-
-                public ddouble this[int n] => Value(n);
-
-                private ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
-                    }
-
-                    for (int m = table.Count; m <= n; m++) {
-                        if (alpha > 0d) {
-                            if ((m & 1) == 0) {
-                                table.Add(eta[m / 2]);
-                            }
-                            else {
-                                table.Add((eta[m / 2] - eta[m / 2 + 1]) / 2);
-                            }
+                            return y;
                         }
                         else {
-                            if ((m & 1) == 1) {
-                                ddouble xi = (ddouble)(2 * (m / 2) + 1) / ((m / 2) * ((m / 2) + 1));
-                                table.Add(((m & 2) > 0) ? xi : -xi);
-                            }
-                            else {
-                                table.Add(NaN);
-                            }
+                            ddouble y = BesselYKernel(nu, x, terms: 25);
+
+                            return y;
                         }
                     }
 
-                    return table[n];
-                }
-            };
-        }
+                    public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-        private static class BesselYoshidaPade {
-            private static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> ess_coef_table;
-            private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> cds_coef_table = new();
+                        if (ddouble.IsNegative(nu) && NearlyInteger(nu, out _)) {
+                            ddouble y = BesselI(-nu, x);
 
-            static BesselYoshidaPade() {
-                Dictionary<string, ReadOnlyCollection<ddouble>> tables =
-                    ResourceUnpack.NumTable(Resource.BesselKTable);
+                            if (scale) {
+                                y *= ddouble.Exp(-x);
+                            }
 
-                ReadOnlyCollection<ddouble> cs0 = tables["CS0Table"], cs1 = tables["CS1Table"];
-                ReadOnlyCollection<ddouble> ds0 = tables["DS0Table"], ds1 = tables["DS1Table"];
+                            return y;
+                        }
+                        else {
+                            ddouble y = BesselIKernel(nu, x, terms: 40);
 
-                if (cs0.Count != ds0.Count || cs1.Count != ds1.Count) {
-                    throw new IOException("The format of resource file is invalid.");
-                }
+                            if (scale) {
+                                y *= ddouble.Exp(-x);
+                            }
 
-                List<(ddouble c, ddouble s)> cd0 = new(), cd1 = new();
-
-                for (int i = 0; i < cs0.Count; i++) {
-                    cd0.Add((cs0[i], ds0[i]));
-                }
-                for (int i = 0; i < cs1.Count; i++) {
-                    cd1.Add((cs1[i], ds1[i]));
-                }
-
-                cd0.Reverse();
-                cd1.Reverse();
-
-                cds_coef_table.Add(0, Array.AsReadOnly(cd0.ToArray()));
-                cds_coef_table.Add(1, Array.AsReadOnly(cd1.ToArray()));
-
-                List<ReadOnlyCollection<ddouble>> es = new();
-
-                for (int i = 0; i < 32; i++) {
-                    es.Add(tables[$"ES{i}Table"]);
-                }
-
-                ess_coef_table = Array.AsReadOnly(es.ToArray());
-            }
-
-            public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-                if (nu < 2d) {
-                    if (!cds_coef_table.TryGetValue(nu, out ReadOnlyCollection<(ddouble c, ddouble s)> cds_table)) {
-                        cds_table = Table(nu);
-                        cds_coef_table.Add(nu, cds_table);
+                            return y;
+                        }
                     }
 
-                    ReadOnlyCollection<(ddouble, ddouble)> cds = cds_table;
+                    public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-                    ddouble y = Value(x, cds, scale);
+                        if (NearlyInteger(nu, out int n)) {
+                            ddouble y = BesselKKernel(n, x, terms: 27);
 
-                    return y;
-                }
-                else {
-                    int n = (int)Floor(nu);
-                    ddouble alpha = nu - n;
+                            if (scale) {
+                                y *= ddouble.Exp(x);
+                            }
 
-                    ddouble y0 = BesselK(alpha, x, scale);
-                    ddouble y1 = BesselK(alpha + 1d, x, scale);
+                            return y;
+                        }
+                        else {
+                            ddouble y = BesselKKernel(nu, x, terms: 30);
 
-                    ddouble v = 1d / x;
+                            if (scale) {
+                                y *= ddouble.Exp(x);
+                            }
 
-                    for (int k = 1; k < n; k++) {
-                        (y1, y0) = (Ldexp(k + alpha, 1) * v * y1 + y0, y1);
+                            return y;
+                        }
                     }
 
-                    return y1;
-                }
-            }
+                    private static ddouble BesselJKernel(ddouble nu, ddouble x, int terms) {
+                        if (!dfactdenom_coef_table.TryGetValue(nu, out DoubleFactDenomTable r)) {
+                            r = new DoubleFactDenomTable(nu);
+                            dfactdenom_coef_table.Add(nu, r);
+                        }
+                        if (!x2denom_coef_table.TryGetValue(nu, out X2DenomTable d)) {
+                            d = new X2DenomTable(nu);
+                            x2denom_coef_table.Add(nu, d);
+                        }
 
-            private static ddouble Value(ddouble x, ReadOnlyCollection<(ddouble c, ddouble d)> cds, bool scale = false) {
-                ddouble t = 1d / x;
-                (ddouble sc, ddouble sd) = cds[0];
+                        ddouble x2 = x * x, x4 = x2 * x2;
 
-                for (int i = 1; i < cds.Count; i++) {
-                    (ddouble c, ddouble d) = cds[i];
+                        ddouble c = 0d, u = ddouble.Pow(ddouble.Ldexp(x, -1), nu);
 
-                    sc = sc * t + c;
-                    sd = sd * t + d;
-                }
+                        if (!ddouble.IsFinite(u) || ddouble.IsZero(x2)) {
+                            if (ddouble.IsZero(nu)) {
+                                return 1d;
+                            }
+                            if (NearlyInteger(nu, out _) || ddouble.IsPositive(nu)) {
+                                return 0d;
+                            }
+                            return (((int)ddouble.Floor(nu) & 1) == 0) ? ddouble.NegativeInfinity : ddouble.PositiveInfinity;
+                        }
 
-                Debug.Assert(sd > 0.0625d, $"[BesselK x={x}] Too small pade denom!!");
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble w = x2 * d[k];
+                            ddouble dc = u * r[k] * (1d - w);
 
-                ddouble y = Sqrt(Ldexp(t * PI, -1)) * sc / sd;
+                            ddouble c_next = c + dc;
 
-                if (!scale) {
-                    y *= Exp(-x);
-                }
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
 
-                return y;
-            }
+                            c = c_next;
+                            u *= x4;
 
-            private static ReadOnlyCollection<(ddouble c, ddouble d)> Table(ddouble nu) {
-                int m = ess_coef_table.Count - 1;
+                            if (!ddouble.IsFinite(c)) {
+                                break;
+                            }
+                        }
 
-                ddouble squa_nu = nu * nu;
-                List<(ddouble c, ddouble d)> cds = new();
-                ddouble[] us = new ddouble[m + 1], vs = new ddouble[m];
-
-                ddouble u = 1d;
-                for (int i = 0; i <= m; i++) {
-                    us[i] = u;
-                    u *= squa_nu;
-                }
-                for (int i = 0; i < m; i++) {
-                    ddouble r = m - i + 0.5d;
-                    vs[i] = r * r - squa_nu;
-                }
-
-                for (int i = 0; i <= m; i++) {
-                    ReadOnlyCollection<ddouble> es = ess_coef_table[i];
-                    ddouble d = es[i], c = 0d;
-
-                    for (int l = 0; l < i; l++) {
-                        d *= vs[l];
-                    }
-                    for (int j = 0; j <= i; j++) {
-                        c += es[j] * us[j];
+                        return c;
                     }
 
-                    cds.Add((c, d));
-                }
+                    private static ddouble BesselYKernel(ddouble nu, ddouble x, int terms) {
+                        if (!gamma_coef_table.TryGetValue(nu, out GammaTable g)) {
+                            g = new GammaTable(nu);
+                            gamma_coef_table.Add(nu, g);
+                        }
+                        if (!gammapn_coef_table.TryGetValue(nu, out GammaPNTable gpn)) {
+                            gpn = new GammaPNTable(nu);
+                            gammapn_coef_table.Add(nu, gpn);
+                        }
 
-                cds.Reverse();
+                        YCoefTable r = y_coef_table;
 
-                return Array.AsReadOnly(cds.ToArray());
-            }
-        }
+                        ddouble cos = SinCosPICache.CosPI(nu), sin = SinCosPICache.SinPI(nu);
+                        ddouble p = ddouble.IsZero(cos) ? 0d : ddouble.Pow(x, ddouble.Ldexp(nu, 1)) * cos;
+                        ddouble s = ddouble.Ldexp(ddouble.Pow(ddouble.Ldexp(x, 1), nu), 2);
+                        ddouble x2 = x * x, x4 = x2 * x2;
 
-        private static class BesselLimit {
-            private static readonly Dictionary<ddouble, ACoefTable> a_coef_table = new();
-            private static readonly Dictionary<ddouble, JYCoefTable> jy_coef_table = new();
-            private static readonly Dictionary<ddouble, IKCoefTable> ik_coef_table = new();
+                        if (!ddouble.IsFinite(p) || !ddouble.IsFinite(s) || ddouble.ILogB(s) < NearZeroExponent || ddouble.IsZero(x2)) {
+                            if (ddouble.IsPositive(nu)) {
+                                return ddouble.NegativeInfinity;
+                            }
 
-            public static ddouble BesselJ(ddouble nu, ddouble x) {
-                if (IsInfinity(x)) {
-                    return Zero;
-                }
+                            int n = (int)(ddouble.Floor(nu + 0.5d));
+                            ddouble alpha = nu - n;
 
-                (ddouble c, ddouble s) = BesselJYKernel(nu, x, terms: 32);
+                            if (ddouble.Abs(ddouble.Abs(alpha) - 0.5d) < Eps) {
+                                return ddouble.Zero;
+                            }
 
-                ddouble omega = x - Ldexp((Ldexp(nu, 1) + 1d) * PI, -2);
-                ddouble m = c * Cos(omega) - s * Sin(omega);
-                ddouble t = m * Sqrt(2d / (PI * x));
+                            return ((n & 1) == 0) ? ddouble.NegativeInfinity : ddouble.PositiveInfinity;
+                        }
 
-                return t;
-            }
+                        ddouble c = 0d, u = 1d / sin;
 
-            public static ddouble BesselY(ddouble nu, ddouble x) {
-                if (IsInfinity(x)) {
-                    return Zero;
-                }
+                        for (int k = 0, t = 1, conv_times = 0; k <= terms && conv_times < 2; k++, t += 2) {
+                            ddouble a = t * s * g[t], q = gpn[t];
+                            ddouble pa = p / a, qa = q / a;
 
-                (ddouble s, ddouble c) = BesselJYKernel(nu, x, terms: 32);
+                            ddouble dc = u * r[k] * (4 * t * nu * (pa + qa) - (x2 - 4 * t * t) * (pa - qa));
 
-                ddouble omega = x - Ldexp((Ldexp(nu, 1) + 1d) * PI, -2);
-                ddouble m = s * Sin(omega) + c * Cos(omega);
-                ddouble t = m * Sqrt(2d / (PI * x));
+                            ddouble c_next = c + dc;
 
-                return t;
-            }
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
 
-            public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-                if (IsInfinity(x)) {
-                    return scale ? PlusZero : PositiveInfinity;
-                }
+                            c = c_next;
+                            u *= x4;
 
-                ddouble c = BesselIKKernel(nu, x, sign_switch: true, terms: 36);
+                            if (!ddouble.IsFinite(c)) {
+                                break;
+                            }
+                        }
 
-                ddouble t = c / Sqrt(Ldexp(PI, 1) * x);
+                        return c;
+                    }
 
-                if (!scale) {
-                    t *= Exp(x);
+                    private static ddouble BesselYKernel(int n, ddouble x, int terms) {
+                        if (n < 0) {
+                            ddouble y = BesselYKernel(-n, x, terms);
 
-                    if (IsNaN(t)) {
-                        return PositiveInfinity;
+                            return (n & 1) == 0 ? y : -y;
+                        }
+                        else if (n == 0) {
+                            return BesselY0Kernel(x, terms);
+                        }
+                        else if (n == 1) {
+                            return BesselY1Kernel(x, terms);
+                        }
+                        else {
+                            return BesselYNKernel(n, x, terms);
+                        }
+                    }
+
+                    private static ddouble BesselY0Kernel(ddouble x, int terms) {
+                        if (!dfactdenom_coef_table.TryGetValue(0, out DoubleFactDenomTable r)) {
+                            r = new DoubleFactDenomTable(0);
+                            dfactdenom_coef_table.Add(0, r);
+                        }
+                        if (!x2denom_coef_table.TryGetValue(0, out X2DenomTable d)) {
+                            d = new X2DenomTable(0);
+                            x2denom_coef_table.Add(0, d);
+                        }
+
+                        Y0CoefTable q = y0_coef_table;
+
+                        ddouble h = ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma;
+                        ddouble x2 = x * x, x4 = x2 * x2;
+
+                        if (ddouble.IsNegativeInfinity(h) || ddouble.IsZero(x2)) {
+                            return ddouble.NegativeInfinity;
+                        }
+
+                        ddouble c = 0d, u = ddouble.Ldexp(ddouble.RcpPI, 1);
+
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k)) * (1d - x2 * d[k]) + x2 * q[k]);
+
+                            ddouble c_next = c + dc;
+
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
+
+                            c = c_next;
+                            u *= x4;
+                        }
+
+                        return c;
+                    }
+
+                    private static ddouble BesselY1Kernel(ddouble x, int terms) {
+                        if (!dfactdenom_coef_table.TryGetValue(1, out DoubleFactDenomTable r)) {
+                            r = new DoubleFactDenomTable(1);
+                            dfactdenom_coef_table.Add(1, r);
+                        }
+                        if (!x2denom_coef_table.TryGetValue(1, out X2DenomTable d)) {
+                            d = new X2DenomTable(1);
+                            x2denom_coef_table.Add(1, d);
+                        }
+                        if (!yn_coef_table.TryGetValue(1, out YNCoefTable q)) {
+                            q = new YNCoefTable(1);
+                            yn_coef_table.Add(1, q);
+                        }
+
+                        ddouble h = ddouble.Ldexp(ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma, 1);
+                        ddouble x2 = x * x, x4 = x2 * x2;
+
+                        if (ddouble.IsNegativeInfinity(h) || ddouble.IsZero(x2)) {
+                            return ddouble.NegativeInfinity;
+                        }
+
+                        ddouble c = -2d / (x * ddouble.PI), u = x / ddouble.Ldexp(ddouble.PI, 1);
+
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k) - ddouble.HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
+
+                            ddouble c_next = c + dc;
+
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
+
+                            c = c_next;
+                            u *= x4;
+                        }
+
+                        return c;
+                    }
+
+                    private static ddouble BesselYNKernel(int n, ddouble x, int terms) {
+                        if (!dfactdenom_coef_table.TryGetValue(n, out DoubleFactDenomTable r)) {
+                            r = new DoubleFactDenomTable(n);
+                            dfactdenom_coef_table.Add(n, r);
+                        }
+                        if (!x2denom_coef_table.TryGetValue(n, out X2DenomTable d)) {
+                            d = new X2DenomTable(n);
+                            x2denom_coef_table.Add(n, d);
+                        }
+                        if (!yn_coef_table.TryGetValue(n, out YNCoefTable q)) {
+                            q = new YNCoefTable(n);
+                            yn_coef_table.Add(n, q);
+                        }
+                        if (!yn_finitecoef_table.TryGetValue(n, out ReadOnlyCollection<ddouble> f)) {
+                            f = YNFiniteCoefTable.Value(n);
+                            yn_finitecoef_table.Add(n, f);
+                        }
+
+                        ddouble h = ddouble.Ldexp(ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma, 1);
+
+                        if (ddouble.IsNegativeInfinity(h)) {
+                            return ddouble.NegativeInfinity;
+                        }
+
+                        ddouble c = 0d;
+                        ddouble x2 = x * x, x4 = x2 * x2;
+                        ddouble u = 1d, v = 1d, w = ddouble.Ldexp(x2, -2);
+
+                        for (int k = 0; k < n; k++) {
+                            c += v * f[k];
+                            v *= w;
+                        }
+                        c /= -v;
+
+                        if (!ddouble.IsFinite(c) || ddouble.IsZero(x2)) {
+                            return ddouble.NegativeInfinity;
+                        }
+
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k) - ddouble.HarmonicNumber(2 * k + n)) * (1d - x2 * d[k]) + x2 * q[k]);
+
+                            ddouble c_next = c + dc;
+
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
+
+                            c = c_next;
+                            u *= x4;
+                        }
+
+                        ddouble y = c * ddouble.RcpPI * ddouble.Pow(ddouble.Ldexp(x, -1), n);
+
+                        return y;
+                    }
+
+                    private static ddouble BesselIKernel(ddouble nu, ddouble x, int terms) {
+                        if (!dfactdenom_coef_table.TryGetValue(nu, out DoubleFactDenomTable r)) {
+                            r = new DoubleFactDenomTable(nu);
+                            dfactdenom_coef_table.Add(nu, r);
+                        }
+                        if (!x2denom_coef_table.TryGetValue(nu, out X2DenomTable d)) {
+                            d = new X2DenomTable(nu);
+                            x2denom_coef_table.Add(nu, d);
+                        }
+
+                        ddouble x2 = x * x, x4 = x2 * x2;
+
+                        ddouble c = 0d, u = ddouble.Pow(ddouble.Ldexp(x, -1), nu);
+
+                        if (!ddouble.IsFinite(u) || ddouble.IsZero(x2)) {
+                            if (ddouble.IsZero(nu)) {
+                                return 1d;
+                            }
+                            if (NearlyInteger(nu, out _) || ddouble.IsPositive(nu)) {
+                                return 0d;
+                            }
+                            return (((int)ddouble.Floor(nu) & 1) == 0) ? ddouble.NegativeInfinity : ddouble.PositiveInfinity;
+                        }
+
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble w = x2 * d[k];
+                            ddouble dc = u * r[k] * (1d + w);
+
+                            ddouble c_next = c + dc;
+
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
+
+                            c = c_next;
+                            u *= x4;
+
+                            if (!ddouble.IsFinite(c)) {
+                                break;
+                            }
+                        }
+
+                        return c;
+                    }
+
+                    private static ddouble BesselKKernel(ddouble nu, ddouble x, int terms) {
+                        if (!gammadenom_coef_table.TryGetValue(nu, out GammaDenomTable gp)) {
+                            gp = new GammaDenomTable(nu);
+                            gammadenom_coef_table.Add(nu, gp);
+                        }
+                        if (!gammadenom_coef_table.TryGetValue(-nu, out GammaDenomTable gn)) {
+                            gn = new GammaDenomTable(-nu);
+                            gammadenom_coef_table.Add(-nu, gn);
+                        }
+
+                        KCoefTable r = k_coef_table;
+
+                        ddouble tp = ddouble.Pow(ddouble.Ldexp(x, -1), nu), tn = 1d / tp;
+
+                        ddouble x2 = x * x;
+
+                        if (ddouble.ILogB(tp) < NearZeroExponent || ddouble.IsZero(x2)) {
+                            return ddouble.PositiveInfinity;
+                        }
+
+                        ddouble c = 0d, u = ddouble.PI / ddouble.Ldexp(ddouble.SinPI(nu), 1);
+
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble dc = u * r[k] * (tn * gn[k] - tp * gp[k]);
+
+                            ddouble c_next = c + dc;
+
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
+
+                            c = c_next;
+                            u *= x2;
+
+                            if (!ddouble.IsFinite(c)) {
+                                break;
+                            }
+                        }
+
+                        return c;
+                    }
+
+                    private static ddouble BesselKKernel(int n, ddouble x, int terms) {
+                        if (n == 0) {
+                            return BesselK0Kernel(x, terms);
+                        }
+                        else if (n == 1) {
+                            return BesselK1Kernel(x, terms);
+                        }
+                        else {
+                            return BesselKNKernel(n, x, terms);
+                        }
+                    }
+
+                    private static ddouble BesselK0Kernel(ddouble x, int terms) {
+                        K0CoefTable r = k0_coef_table;
+                        ddouble h = -ddouble.Log(ddouble.Ldexp(x, -1)) - ddouble.EulerGamma;
+
+                        if (ddouble.IsPositiveInfinity(h)) {
+                            return ddouble.PositiveInfinity;
+                        }
+
+                        ddouble x2 = x * x;
+
+                        if (ddouble.IsZero(x2)) {
+                            return ddouble.PositiveInfinity;
+                        }
+
+                        ddouble c = 0d, u = 1d;
+
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble dc = u * r[k] * (h + ddouble.HarmonicNumber(k));
+
+                            ddouble c_next = c + dc;
+
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
+
+                            c = c_next;
+                            u *= x2;
+                        }
+
+                        return c;
+                    }
+
+                    private static ddouble BesselK1Kernel(ddouble x, int terms) {
+                        K1CoefTable r = k1_coef_table;
+                        ddouble h = ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma;
+
+                        if (ddouble.IsNegativeInfinity(h)) {
+                            return ddouble.PositiveInfinity;
+                        }
+
+                        ddouble x2 = x * x;
+
+                        if (ddouble.IsZero(x2)) {
+                            return ddouble.PositiveInfinity;
+                        }
+
+                        ddouble c = 1d / x, u = ddouble.Ldexp(x, -1);
+
+                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                            ddouble dc = u * r[k] * (h - ddouble.Ldexp(ddouble.HarmonicNumber(k) + ddouble.HarmonicNumber(k + 1), -1));
+
+                            ddouble c_next = c + dc;
+
+                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                                conv_times++;
+                            }
+                            else {
+                                conv_times = 0;
+                            }
+
+                            c = c_next;
+                            u *= x2;
+                        }
+
+                        return c;
+                    }
+
+                    private static ddouble BesselKNKernel(int n, ddouble x, int terms) {
+                        ddouble v = 1d / x;
+                        ddouble y0 = BesselK0Kernel(x, terms);
+                        ddouble y1 = BesselK1Kernel(x, terms);
+
+                        for (int k = 1; k < n; k++) {
+                            (y1, y0) = (2 * k * v * y1 + y0, y1);
+                        }
+
+                        return y1;
+                    }
+
+                    private class DoubleFactDenomTable {
+                        private ddouble c;
+                        private readonly ddouble nu;
+                        private readonly List<ddouble> table = [];
+
+                        public DoubleFactDenomTable(ddouble nu) {
+                            this.c = ddouble.Gamma(nu + 1d);
+                            this.nu = nu;
+                            this.table.Add(ddouble.Rcp(c));
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (long i = table.Count; i <= k; i++) {
+                                c *= checked((nu + 2 * i) * (nu + (2 * i - 1)) * (32 * i * (2 * i - 1)));
+
+                                table.Add(ddouble.Rcp(c));
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class X2DenomTable {
+                        private readonly ddouble nu;
+                        private readonly List<ddouble> table = [];
+
+                        public X2DenomTable(ddouble nu) {
+                            ddouble a = ddouble.Rcp(4d * (nu + 1d));
+
+                            this.nu = nu;
+                            this.table.Add(a);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (long i = table.Count; i <= k; i++) {
+                                ddouble a = ddouble.Rcp(checked(4d * (2 * i + 1) * (2 * i + 1 + nu)));
+
+                                table.Add(a);
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class GammaDenomTable {
+                        private ddouble c;
+                        private readonly ddouble nu;
+                        private readonly List<ddouble> table = [];
+
+                        public GammaDenomTable(ddouble nu) {
+                            this.c = ddouble.Gamma(nu + 1d);
+                            this.nu = nu;
+                            this.table.Add(ddouble.Rcp(c));
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                c *= nu + i;
+
+                                table.Add(ddouble.Rcp(c));
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class GammaTable {
+                        private ddouble c;
+                        private readonly ddouble nu;
+                        private readonly List<ddouble> table = [];
+
+                        public GammaTable(ddouble nu) {
+                            this.c = ddouble.Gamma(nu + 1d);
+                            this.nu = nu;
+                            this.table.Add(c);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                c *= nu + i;
+
+                                table.Add(c);
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class GammaPNTable {
+                        private readonly ddouble r;
+                        private readonly GammaTable positive_table, negative_table;
+                        private readonly List<ddouble> table = [];
+
+                        public GammaPNTable(ddouble nu) {
+                            this.r = ddouble.Pow(4d, nu);
+                            this.positive_table = new(nu);
+                            this.negative_table = new(-nu);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                ddouble c = r * positive_table[i] / negative_table[i];
+
+                                table.Add(c);
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class YCoefTable {
+                        private ddouble c;
+                        private readonly List<ddouble> table = [];
+
+                        public YCoefTable() {
+                            this.c = 1d;
+                            this.table.Add(1d);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (long i = table.Count; i <= k; i++) {
+                                c *= checked(32 * i * (2 * i - 1));
+
+                                table.Add(ddouble.Rcp(c));
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class Y0CoefTable {
+                        private readonly List<ddouble> table = [];
+
+                        public Y0CoefTable() {
+                            this.table.Add(ddouble.Rcp(4));
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (long i = table.Count; i <= k; i++) {
+                                ddouble c = ddouble.Rcp(checked(4 * (2 * i + 1) * (2 * i + 1) * (2 * i + 1)));
+
+                                table.Add(c);
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class YNCoefTable {
+                        private readonly int n;
+                        private readonly List<ddouble> table = [];
+
+                        public YNCoefTable(int n) {
+                            this.n = n;
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (long i = table.Count; i <= k; i++) {
+                                ddouble c = (ddouble)(n + 4 * i + 2) /
+                                    (ddouble)checked(4 * (2 * i + 1) * (2 * i + 1) * (n + 2 * i + 1) * (n + 2 * i + 1));
+
+                                table.Add(c);
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private static class YNFiniteCoefTable {
+                        public static ReadOnlyCollection<ddouble> Value(int n) {
+                            Debug.Assert(n >= 0);
+
+                            List<ddouble> frac = [1], coef = [];
+
+                            for (int i = 1; i < n; i++) {
+                                frac.Add(i * frac[^1]);
+                            }
+
+                            for (int i = 0; i < n; i++) {
+                                coef.Add(frac[^(i + 1)] / frac[i]);
+                            }
+
+                            return new(coef);
+                        }
+                    }
+
+                    private class KCoefTable {
+                        private ddouble c;
+                        private readonly List<ddouble> table = [];
+
+                        public KCoefTable() {
+                            this.c = 1d;
+                            this.table.Add(1d);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (long i = table.Count; i <= k; i++) {
+                                c *= 4 * i;
+
+                                table.Add(ddouble.Rcp(c));
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class K0CoefTable {
+                        private ddouble c;
+                        private readonly List<ddouble> table = [];
+
+                        public K0CoefTable() {
+                            this.c = 1d;
+                            this.table.Add(1d);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (long i = table.Count; i <= k; i++) {
+                                c *= checked(4 * i * i);
+
+                                table.Add(ddouble.Rcp(c));
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class K1CoefTable {
+                        private ddouble c;
+                        private readonly List<ddouble> table = [];
+
+                        public K1CoefTable() {
+                            this.c = 1d;
+                            this.table.Add(1d);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        public ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                c *= checked(4 * i * (i + 1));
+
+                                table.Add(ddouble.Rcp(c));
+                            }
+
+                            return table[k];
+                        }
                     }
                 }
 
-                return t;
-            }
+                public static class Limit {
+                    static readonly Dictionary<ddouble, HankelExpansion> table = [];
 
-            public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-                if (IsInfinity(x)) {
-                    return Zero;
-                }
+                    public static ddouble BesselJ(ddouble nu, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-                ddouble c = BesselIKKernel(nu, x, sign_switch: false, terms: 34);
+                        if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
+                            hankel = new HankelExpansion(nu);
+                            table.Add(nu, hankel);
+                        }
 
-                ddouble t = c * Sqrt(PI / Ldexp(x, 1));
+                        if (ddouble.IsPositiveInfinity(x)) {
+                            return ddouble.Zero;
+                        }
 
-                if (!scale) {
-                    t *= Exp(-x);
-                }
+                        (ddouble c_even, ddouble c_odd) = hankel.BesselJYCoef(x);
 
-                return t;
-            }
+                        ddouble omega = hankel.Omega(x);
 
-            private static (ddouble s, ddouble t) BesselJYKernel(ddouble nu, ddouble x, int terms = 64) {
-                if (!a_coef_table.TryGetValue(nu, out ACoefTable a_table)) {
-                    a_table = new ACoefTable(nu);
-                    a_coef_table.Add(nu, a_table);
-                }
-                if (!jy_coef_table.TryGetValue(nu, out JYCoefTable jy_table)) {
-                    jy_table = new JYCoefTable(nu);
-                    jy_coef_table.Add(nu, jy_table);
-                }
+                        ddouble cos = ddouble.Cos(omega), sin = ddouble.Sin(omega);
 
-                ACoefTable a = a_table;
-                JYCoefTable c = jy_table;
+                        ddouble y = ddouble.Sqrt(2d / (ddouble.PI * x)) * (cos * c_even - sin * c_odd);
 
-                ddouble v = 1d / x, v2 = v * v, v4 = v2 * v2;
-                ddouble s = 0d, t = 0d, p = 1d, q = v;
-
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble ds = p * a[k * 4] * (1d - v2 * c[k].p0);
-                    ddouble dt = q * a[k * 4 + 1] * (1d - v2 * c[k].p1);
-
-                    ddouble s_next = s + ds;
-                    ddouble t_next = t + dt;
-
-                    if (s == s_next && t == t_next) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
+                        return y;
                     }
 
-                    p *= v4;
-                    q *= v4;
-                    s = s_next;
-                    t = t_next;
-                }
+                    public static ddouble BesselY(ddouble nu, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-                return (s, t);
-            }
+                        if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
+                            hankel = new HankelExpansion(nu);
+                            table.Add(nu, hankel);
+                        }
 
-            private static ddouble BesselIKKernel(ddouble nu, ddouble x, bool sign_switch, int terms) {
-                if (!a_coef_table.TryGetValue(nu, out ACoefTable a_table)) {
-                    a_table = new ACoefTable(nu);
-                    a_coef_table.Add(nu, a_table);
-                }
-                if (!ik_coef_table.TryGetValue(nu, out IKCoefTable ik_table)) {
-                    ik_table = new IKCoefTable(nu);
-                    ik_coef_table.Add(nu, ik_table);
-                }
+                        if (ddouble.IsPositiveInfinity(x)) {
+                            return ddouble.Zero;
+                        }
 
-                ACoefTable a = a_table;
-                IKCoefTable c = ik_table;
+                        (ddouble c_even, ddouble c_odd) = hankel.BesselJYCoef(x);
 
-                ddouble v = 1d / x, v2 = v * v;
-                ddouble r = 0d, u = 1d;
+                        ddouble omega = hankel.Omega(x);
 
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                    ddouble w = v * c[k];
-                    ddouble dr = u * a[k * 2] * (sign_switch ? (1d - w) : (1d + w));
+                        ddouble cos = ddouble.Cos(omega), sin = ddouble.Sin(omega);
 
-                    ddouble r_next = r + dr;
+                        ddouble y = ddouble.Sqrt(2d / (ddouble.PI * x)) * (sin * c_even + cos * c_odd);
 
-                    if (r == r_next) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
+                        return y;
                     }
 
-                    r = r_next;
-                    u *= v2;
-                }
+                    public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-                return r;
-            }
+                        if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
+                            hankel = new HankelExpansion(nu);
+                            table.Add(nu, hankel);
+                        }
 
-            private class ACoefTable {
-                private readonly ddouble squa_nu4;
-                private readonly List<ddouble> table = new();
+                        ddouble c = hankel.BesselICoef(x);
 
-                public ACoefTable(ddouble nu) {
-                    this.squa_nu4 = Ldexp(nu * nu, 2);
+                        ddouble y = ddouble.Sqrt(1d / (2d * ddouble.PI * x)) * c;
 
-                    ddouble a1 = Ldexp(squa_nu4 - 1d, -3);
+                        if (ddouble.IsPositiveInfinity(x) || ddouble.IsZero(y)) {
+                            return scale ? ddouble.PlusZero : ddouble.PositiveInfinity;
+                        }
 
-                    this.table.Add(1d);
-                    this.table.Add(a1);
-                }
+                        if (!scale) {
+                            y *= ddouble.Exp(x);
+                        }
 
-                public ddouble this[int n] => Value(n);
-
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
+                        return y;
                     }
 
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble a = table.Last() * (squa_nu4 - ((2 * k - 1) * (2 * k - 1))) / (k * 8);
+                    public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
+                        Debug.Assert(ddouble.IsPositive(nu));
+                        Debug.Assert(ddouble.IsPositive(x));
 
-                        table.Add(a);
+                        if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
+                            hankel = new HankelExpansion(nu);
+                            table.Add(nu, hankel);
+                        }
+
+                        ddouble c = hankel.BesselKCoef(x);
+
+                        ddouble y = ddouble.Sqrt(ddouble.PI / (2d * x)) * c;
+
+                        if (ddouble.IsPositiveInfinity(x) || ddouble.IsZero(y)) {
+                            return ddouble.PlusZero;
+                        }
+
+                        if (!scale) {
+                            y *= ddouble.Exp(-x);
+                        }
+
+                        return y;
                     }
 
-                    return table[n];
+                    private class HankelExpansion {
+                        public ddouble Nu { get; }
+
+                        private readonly List<ddouble> a_coef;
+
+                        public HankelExpansion(ddouble nu) {
+                            Nu = nu;
+                            a_coef = [1];
+                        }
+
+                        private ddouble ACoef(int n) {
+                            for (int k = a_coef.Count; k <= n; k++) {
+                                ddouble a = a_coef.Last() * (4d * Nu * Nu - checked((2 * k - 1) * (2 * k - 1))) / (k * 8);
+                                a_coef.Add(a);
+                            }
+
+                            return a_coef[n];
+                        }
+
+                        public ddouble Omega(ddouble x) {
+                            ddouble omega = x - ddouble.Ldexp(2 * Nu + 1, -2) * ddouble.PI;
+
+                            return omega;
+                        }
+
+                        public (ddouble c_even, ddouble c_odd) BesselJYCoef(ddouble x, int terms = 35) {
+                            ddouble v = 1 / (x * x), w = -v;
+
+                            ddouble c_even = ACoef(0), c_odd = ACoef(1);
+
+                            for (int k = 1; k <= terms; k++) {
+                                ddouble dc_even = w * ACoef(2 * k);
+                                ddouble dc_odd = w * ACoef(2 * k + 1);
+
+                                c_even += dc_even;
+                                c_odd += dc_odd;
+
+                                if (((long)ddouble.ILogB(c_even) - ddouble.ILogB(dc_even) >= 106L || ddouble.IsZero(dc_even)) &&
+                                    ((long)ddouble.ILogB(c_odd) - ddouble.ILogB(dc_odd) >= 106L || ddouble.IsZero(dc_odd))) {
+
+                                    break;
+                                }
+
+                                w *= -v;
+                            }
+
+                            return (c_even, c_odd / x);
+                        }
+
+                        public ddouble BesselICoef(ddouble x, int terms = 72) {
+                            ddouble v = 1d / x, w = -v;
+
+                            ddouble c = ACoef(0);
+
+                            for (int k = 1; k <= terms; k++) {
+                                ddouble dc = w * ACoef(k);
+
+                                c += dc;
+
+                                if ((long)ddouble.ILogB(c) - ddouble.ILogB(dc) >= 106L || ddouble.IsZero(dc)) {
+                                    break;
+                                }
+
+                                w *= -v;
+                            }
+
+                            return c;
+                        }
+
+                        public ddouble BesselKCoef(ddouble x, int terms = 52) {
+                            ddouble v = 1d / x, w = v;
+
+                            ddouble c = ACoef(0);
+
+                            for (int k = 1; k <= terms; k++) {
+                                ddouble dc = w * ACoef(k);
+
+                                c += dc;
+
+                                if ((long)ddouble.ILogB(c) - ddouble.ILogB(dc) >= 106L || ddouble.IsZero(dc)) {
+                                    break;
+                                }
+
+                                w *= v;
+                            }
+
+                            return c;
+                        }
+                    }
                 }
-            }
 
-            private class JYCoefTable {
-                private readonly ddouble squa_nu4;
-                private readonly List<(ddouble p0, ddouble p1)> table = new();
+                public class MillerBackward {
+                    public static readonly int BesselYEpsExponent = -12;
 
-                public JYCoefTable(ddouble nu) {
-                    this.squa_nu4 = Ldexp(nu * nu, 2);
-                }
+                    private static readonly Dictionary<ddouble, BesselJPhiTable> phi_coef_table = [];
+                    private static readonly Dictionary<ddouble, BesselYEtaTable> eta_coef_table = [];
+                    private static readonly Dictionary<ddouble, BesselYXiTable> xi_coef_table = [];
+                    private static readonly ReadOnlyCollection<ddouble> eta0_coef, xi1_coef;
 
-                public (ddouble p0, ddouble p1) this[int n] => Value(n);
+                    static MillerBackward() {
+                        Dictionary<string, ReadOnlyCollection<ddouble>> tables =
+                            ResourceUnpack.NumTable(Resource.BesselYTable, reverse: true);
 
-                public (ddouble p0, ddouble p1) Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
+                        eta0_coef = tables["Eta0Table"];
+                        xi1_coef = tables["Xi1Table"];
                     }
 
-                    static int square(int n) => (n * n);
+                    public static ddouble BesselJ(int n, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble p0 = (squa_nu4 - square(8 * k + 1)) * (squa_nu4 - square(8 * k + 3)) / (64 * (4 * k + 1) * (4 * k + 2));
-                        ddouble p1 = (squa_nu4 - square(8 * k + 3)) * (squa_nu4 - square(8 * k + 5)) / (64 * (4 * k + 2) * (4 * k + 3));
+                        int m = BesselJYIterM((double)x);
 
-                        table.Add((p0, p1));
+                        ddouble y = BesselJKernel(n, x, m);
+
+                        return y;
                     }
 
-                    return table[n];
-                }
-            }
+                    public static ddouble BesselJ(ddouble nu, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-            private class IKCoefTable {
-                private readonly ddouble squa_nu4;
-                private readonly List<ddouble> table = new();
+                        int m = BesselJYIterM((double)x);
 
-                public IKCoefTable(ddouble nu) {
-                    this.squa_nu4 = Ldexp(nu * nu, 2);
-                }
+                        if (NearlyInteger(nu, out int n)) {
+                            ddouble y = BesselJKernel(n, x, m);
 
-                public ddouble this[int n] => Value(n);
+                            return y;
+                        }
+                        else {
+                            ddouble y = BesselJKernel(nu, x, m);
 
-                public ddouble Value(int n) {
-                    Debug.Assert(n >= 0);
-
-                    if (n < table.Count) {
-                        return table[n];
+                            return y;
+                        }
                     }
 
-                    static int square(int n) => (n * n);
+                    public static ddouble BesselY(int n, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
 
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble p = (squa_nu4 - square(4 * k + 1)) / (8 * (2 * k + 1));
+                        int m = BesselJYIterM((double)x);
 
-                        table.Add(p);
+                        ddouble y = BesselYKernel(n, x, m);
+
+                        return y;
                     }
 
-                    return table[n];
+                    public static ddouble BesselY(ddouble nu, ddouble x) {
+                        Debug.Assert(ddouble.IsPositive(x));
+
+                        int m = BesselJYIterM((double)x);
+
+                        if (NearlyInteger(nu, out int n)) {
+                            ddouble y = BesselYKernel(n, x, m);
+
+                            return y;
+                        }
+                        else {
+                            ddouble y = BesselYKernel(nu, x, m);
+
+                            if (!ddouble.IsFinite(y)) {
+                                if (n >= 0) {
+                                    y = ddouble.NegativeInfinity;
+                                }
+                                else {
+                                    y = ((-n) & 1) == 1 ? ddouble.PositiveInfinity : ddouble.NegativeInfinity;
+                                }
+                            }
+
+                            return y;
+                        }
+                    }
+
+                    private static int BesselJYIterM(double r) {
+                        int m = (int)double.Ceiling(3.8029e1 + r * 1.6342e0);
+
+                        return (m + 1) / 2 * 2;
+                    }
+
+                    private static ddouble BesselJKernel(int n, ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
+
+                        if (n < 0) {
+                            return (n & 1) == 0 ? BesselJKernel(-n, x, m) : -BesselJKernel(-n, x, m);
+                        }
+                        else if (n == 0) {
+                            return BesselJ0Kernel(x, m);
+                        }
+                        else if (n == 1) {
+                            return BesselJ1Kernel(x, m);
+                        }
+                        else {
+                            return BesselJNKernel(n, x, m);
+                        }
+                    }
+
+                    private static ddouble BesselJKernel(ddouble nu, ddouble x, int m) {
+                        int n = (int)ddouble.Floor(nu);
+                        ddouble alpha = nu - n;
+
+                        Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
+
+                        if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi)) {
+                            phi = new BesselJPhiTable(alpha);
+                            phi_coef_table.Add(alpha, phi);
+                        }
+
+                        ddouble f0 = 1e-256d, f1 = 0d, lambda = 0d;
+                        ddouble v = 1d / x;
+
+                        if (n >= 0) {
+                            ddouble fn = 0d;
+
+                            for (int k = m; k >= 1; k--) {
+                                if ((k & 1) == 0) {
+                                    lambda += f0 * phi[k / 2];
+                                }
+
+                                (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+
+                                if (k - 1 == n) {
+                                    fn = f0;
+                                }
+                            }
+
+                            lambda += f0 * phi[0];
+                            lambda *= ddouble.Pow(ddouble.Ldexp(v, 1), alpha);
+
+                            ddouble yn = fn / lambda;
+
+                            return yn;
+                        }
+                        else {
+                            for (int k = m; k >= 1; k--) {
+                                if ((k & 1) == 0) {
+                                    lambda += f0 * phi[k / 2];
+                                }
+
+                                (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+                            }
+
+                            lambda += f0 * phi[0];
+                            lambda *= ddouble.Pow(ddouble.Ldexp(v, 1), alpha);
+
+                            for (int k = 0; k > n; k--) {
+                                (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+                            }
+
+                            ddouble yn = f0 / lambda;
+
+                            return yn;
+                        }
+                    }
+
+                    private static ddouble BesselJ0Kernel(ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0);
+
+                        ddouble f0 = 1e-256d, f1 = 0d, lambda = 0d;
+                        ddouble v = 1d / x;
+
+                        for (int k = m; k >= 1; k--) {
+                            if ((k & 1) == 0) {
+                                lambda += f0;
+                            }
+
+                            (f0, f1) = (2 * k * v * f0 - f1, f0);
+                        }
+
+                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+
+                        ddouble y0 = f0 / lambda;
+
+                        return y0;
+                    }
+
+                    private static ddouble BesselJ1Kernel(ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0);
+
+                        ddouble f0 = 1e-256d, f1 = 0d, lambda = 0d;
+                        ddouble v = 1d / x;
+
+                        for (int k = m; k >= 1; k--) {
+                            if ((k & 1) == 0) {
+                                lambda += f0;
+                            }
+
+                            (f0, f1) = (2 * k * v * f0 - f1, f0);
+                        }
+
+                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+
+                        ddouble y1 = f1 / lambda;
+
+                        return y1;
+                    }
+
+                    private static ddouble BesselJNKernel(int n, ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0);
+
+                        ddouble f0 = 1e-256d, f1 = 0d, fn = 0d, lambda = 0d;
+                        ddouble v = 1d / x;
+
+                        for (int k = m; k >= 1; k--) {
+                            if ((k & 1) == 0) {
+                                lambda += f0;
+                            }
+
+                            (f0, f1) = (2 * k * v * f0 - f1, f0);
+
+                            if (k - 1 == n) {
+                                fn = f0;
+                            }
+                        }
+
+                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+
+                        ddouble yn = fn / lambda;
+
+                        return yn;
+                    }
+
+                    private static ddouble BesselYKernel(int n, ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
+
+                        if (n < 0) {
+                            return (n & 1) == 0 ? BesselYKernel(-n, x, m) : -BesselYKernel(-n, x, m);
+                        }
+                        else if (n == 0) {
+                            return BesselY0Kernel(x, m);
+                        }
+                        else if (n == 1) {
+                            return BesselY1Kernel(x, m);
+                        }
+                        else {
+                            return BesselYNKernel(n, x, m);
+                        }
+                    }
+
+                    private static ddouble BesselYKernel(ddouble nu, ddouble x, int m) {
+                        int n = (int)ddouble.Round(nu);
+                        ddouble alpha = nu - n;
+
+                        Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
+
+                        if (!eta_coef_table.TryGetValue(alpha, out BesselYEtaTable eta)) {
+                            eta = new BesselYEtaTable(alpha);
+                            eta_coef_table.Add(alpha, eta);
+                        }
+                        if (!xi_coef_table.TryGetValue(alpha, out BesselYXiTable xi)) {
+                            xi = new BesselYXiTable(alpha, eta);
+                            xi_coef_table.Add(alpha, xi);
+                        }
+                        if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi)) {
+                            phi = new BesselJPhiTable(alpha);
+                            phi_coef_table.Add(alpha, phi);
+                        }
+
+                        ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                        ddouble se = 0d, sxo = 0d, sxe = 0d;
+                        ddouble v = 1d / x;
+
+                        for (int k = m; k >= 1; k--) {
+                            if ((k & 1) == 0) {
+                                lambda += f0 * phi[k / 2];
+
+                                se += f0 * eta[k / 2];
+                                sxe += f0 * xi[k];
+                            }
+                            else if (k >= 3) {
+                                sxo += f0 * xi[k];
+                            }
+
+                            (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+                        }
+
+                        ddouble s = ddouble.Pow(ddouble.Ldexp(v, 1), alpha), sqs = s * s;
+
+                        lambda += f0 * phi[0];
+                        lambda *= s;
+
+                        ddouble rcot = 1d / ddouble.TanPI(alpha), rgamma = ddouble.Gamma(1d + alpha), rsqgamma = rgamma * rgamma;
+                        ddouble r = ddouble.Ldexp(ddouble.RcpPI * sqs, 1);
+                        ddouble p = sqs * rsqgamma * ddouble.RcpPI;
+
+                        ddouble xi0 = -ddouble.Ldexp(v, 1) * p;
+
+                        (ddouble eta0, ddouble xi1) = ddouble.ILogB(alpha) >= BesselYEpsExponent
+                            ? (rcot - p / alpha, rcot + p * (alpha * (alpha + 1d) + 1d) / (alpha * (alpha - 1d)))
+                            : BesselYEta0Xi1Eps(alpha, x);
+
+                        ddouble y0 = r * se + eta0 * f0;
+                        ddouble y1 = r * (3d * alpha * v * sxe + sxo) + xi0 * f0 + xi1 * f1;
+
+                        if (n == 0) {
+                            ddouble yn = y0 / lambda;
+
+                            return yn;
+                        }
+                        if (n == 1) {
+                            ddouble yn = y1 / lambda;
+
+                            return yn;
+                        }
+                        if (n >= 0) {
+                            for (int k = 1; k < n; k++) {
+                                (y1, y0) = (ddouble.Ldexp(k + alpha, 1) * v * y1 - y0, y1);
+                            }
+
+                            ddouble yn = y1 / lambda;
+
+                            return yn;
+                        }
+                        else {
+                            for (int k = 0; k > n; k--) {
+                                (y0, y1) = (ddouble.Ldexp(k + alpha, 1) * v * y0 - y1, y0);
+                            }
+
+                            ddouble yn = y0 / lambda;
+
+                            return yn;
+                        }
+                    }
+
+                    private static (ddouble eta0, ddouble xi1) BesselYEta0Xi1Eps(ddouble alpha, ddouble x) {
+                        const int N = 7;
+
+                        ddouble lnx = ddouble.Log(x);
+
+                        ddouble eta0 = 0d, xi1 = 0d;
+                        for (int i = N, k = 0; i >= 0; i--) {
+                            ddouble s = eta0_coef[k], t = xi1_coef[k];
+                            k++;
+
+                            for (int j = i; j >= 0; j--, k++) {
+                                s = eta0_coef[k] + lnx * s;
+                                t = xi1_coef[k] + lnx * t;
+                            }
+
+                            eta0 = s + alpha * eta0;
+                            xi1 = t + alpha * xi1;
+                        }
+
+                        return (eta0, xi1);
+                    }
+
+                    private static ddouble BesselY0Kernel(ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0);
+
+                        if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta)) {
+                            eta = new BesselYEtaTable(0);
+                            eta_coef_table.Add(0, eta);
+                        }
+
+                        ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                        ddouble se = 0d;
+                        ddouble v = 1d / x;
+
+                        for (int k = m; k >= 1; k--) {
+                            if ((k & 1) == 0) {
+                                lambda += f0;
+
+                                se += f0 * eta[k / 2];
+                            }
+
+                            (f0, f1) = (2 * k * v * f0 - f1, f0);
+                        }
+
+                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+
+                        ddouble y0 = ddouble.Ldexp((se + f0 * (ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma)) / (ddouble.PI * lambda), 1);
+
+                        return y0;
+                    }
+
+                    private static ddouble BesselY1Kernel(ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0);
+
+                        if (!xi_coef_table.TryGetValue(0, out BesselYXiTable xi)) {
+                            if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta)) {
+                                eta = new BesselYEtaTable(0);
+                                eta_coef_table.Add(0, eta);
+                            }
+
+                            xi = new BesselYXiTable(0, eta);
+                            xi_coef_table.Add(0, xi);
+                        }
+
+                        ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                        ddouble sx = 0d;
+                        ddouble v = 1d / x;
+
+                        for (int k = m; k >= 1; k--) {
+                            if ((k & 1) == 0) {
+                                lambda += f0;
+                            }
+                            else if (k >= 3) {
+                                sx += f0 * xi[k];
+                            }
+
+                            (f0, f1) = (2 * k * v * f0 - f1, f0);
+                        }
+
+                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+
+                        ddouble y1 = ddouble.Ldexp((sx - v * f0 + (ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma - 1d) * f1) / (lambda * ddouble.PI), 1);
+
+                        return y1;
+                    }
+
+                    private static ddouble BesselYNKernel(int n, ddouble x, int m) {
+                        Debug.Assert(m >= 2 && (m & 1) == 0);
+
+                        if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta)) {
+                            eta = new BesselYEtaTable(0);
+                            eta_coef_table.Add(0, eta);
+                        }
+                        if (!xi_coef_table.TryGetValue(0, out BesselYXiTable xi)) {
+                            xi = new BesselYXiTable(0, eta);
+                            xi_coef_table.Add(0, xi);
+                        }
+
+                        ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
+                        ddouble se = 0d, sx = 0d;
+                        ddouble v = 1d / x;
+
+                        for (int k = m; k >= 1; k--) {
+                            if ((k & 1) == 0) {
+                                lambda += f0;
+
+                                se += f0 * eta[k / 2];
+                            }
+                            else if (k >= 3) {
+                                sx += f0 * xi[k];
+                            }
+
+                            (f0, f1) = (2 * k * v * f0 - f1, f0);
+                        }
+
+                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+
+                        ddouble c = ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma;
+
+                        ddouble y0 = se + f0 * c;
+                        ddouble y1 = sx - v * f0 + (c - 1d) * f1;
+
+                        for (int k = 1; k < n; k++) {
+                            (y1, y0) = (2 * k * v * y1 - y0, y1);
+                        }
+
+                        ddouble yn = ddouble.Ldexp(y1 / (lambda * ddouble.PI), 1);
+
+                        return yn;
+                    }
+
+                    private class BesselJPhiTable {
+                        private readonly ddouble alpha;
+                        private readonly List<ddouble> table = [];
+
+                        private ddouble g;
+
+                        public BesselJPhiTable(ddouble alpha) {
+                            Debug.Assert(alpha > -1d && alpha < 1d, nameof(alpha));
+
+                            this.alpha = alpha;
+
+                            ddouble phi0 = ddouble.Gamma(1d + alpha);
+                            ddouble phi1 = phi0 * (alpha + 2d);
+
+                            this.g = phi0;
+
+                            this.table.Add(phi0);
+                            this.table.Add(phi1);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        private ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                g = g * (alpha + i - 1d) / i;
+
+                                ddouble phi = g * (alpha + 2 * i);
+
+                                table.Add(phi);
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class BesselIPsiTable {
+                        private readonly ddouble alpha;
+                        private readonly List<ddouble> table = [];
+
+                        private ddouble g;
+
+                        public BesselIPsiTable(ddouble alpha) {
+                            Debug.Assert(alpha > -1d && alpha < 1d, nameof(alpha));
+
+                            this.alpha = alpha;
+
+                            ddouble psi0 = ddouble.Gamma(1d + alpha);
+                            ddouble psi1 = ddouble.Ldexp(psi0, 1) * (1d + alpha);
+
+                            this.g = ddouble.Ldexp(psi0, 1);
+
+                            this.table.Add(psi0);
+                            this.table.Add(psi1);
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        private ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                g = g * (ddouble.Ldexp(alpha, 1) + i - 1d) / i;
+
+                                ddouble phi = g * (alpha + i);
+
+                                table.Add(phi);
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class BesselYEtaTable {
+                        private readonly ddouble alpha;
+                        private readonly List<ddouble> table = [];
+
+                        private ddouble g;
+
+                        public BesselYEtaTable(ddouble alpha) {
+                            Debug.Assert(alpha > -1d && alpha < 1d, nameof(alpha));
+
+                            this.alpha = alpha;
+                            this.table.Add(ddouble.NaN);
+
+                            if (alpha != 0d) {
+                                ddouble c = ddouble.Gamma(1d + alpha);
+                                c *= c;
+                                this.g = 1d / (1d - alpha) * c;
+
+                                ddouble eta1 = (alpha + 2d) * g;
+
+                                this.table.Add(eta1);
+                            }
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        private ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                if (alpha != 0d) {
+                                    g = -g * (alpha + i - 1) * (ddouble.Ldexp(alpha, 1) + i - 1d) / (i * (i - alpha));
+
+                                    ddouble eta = g * (alpha + 2 * i);
+
+                                    table.Add(eta);
+                                }
+                                else {
+                                    ddouble eta = (ddouble)2d / i;
+
+                                    table.Add((i & 1) == 1 ? eta : -eta);
+                                }
+                            }
+
+                            return table[k];
+                        }
+                    }
+
+                    private class BesselYXiTable {
+                        private readonly ddouble alpha;
+                        private readonly List<ddouble> table = [];
+                        private readonly BesselYEtaTable eta;
+
+                        public BesselYXiTable(ddouble alpha, BesselYEtaTable eta) {
+                            Debug.Assert(alpha >= -1d && alpha < 1d, nameof(alpha));
+
+                            this.alpha = alpha;
+                            this.table.Add(ddouble.NaN);
+                            this.table.Add(ddouble.NaN);
+
+                            this.eta = eta;
+                        }
+
+                        public ddouble this[int k] => Value(k);
+
+                        private ddouble Value(int k) {
+                            Debug.Assert(k >= 0);
+
+                            if (k < table.Count) {
+                                return table[k];
+                            }
+
+                            for (int i = table.Count; i <= k; i++) {
+                                if (alpha != 0d) {
+                                    if ((i & 1) == 0) {
+                                        table.Add(eta[i / 2]);
+                                    }
+                                    else {
+                                        table.Add((eta[i / 2] - eta[i / 2 + 1]) / 2);
+                                    }
+                                }
+                                else {
+                                    if ((i & 1) == 1) {
+                                        ddouble xi = (ddouble)(2 * (i / 2) + 1) / (i / 2 * (i / 2 + 1));
+                                        table.Add((i & 2) > 0 ? xi : -xi);
+                                    }
+                                    else {
+                                        table.Add(ddouble.NaN);
+                                    }
+                                }
+                            }
+
+                            return table[k];
+                        }
+                    }
                 }
-            }
-        }
 
-        private static class BesselInterpolate {
-            public static ddouble BesselYCubicInterpolate(ddouble nu, ddouble x) {
-                int n = (int)Round(nu);
-                ddouble alpha = nu - n;
+                public static class YoshidaPade {
+                    private static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> ess_coef_table;
+                    private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> cds_coef_table = [];
 
-                ddouble y0 = BesselY(n, x);
-                ddouble y1 = BesselY(n + Sign(alpha) * BesselUtil.InterpolationThreshold, x);
-                ddouble y2 = BesselY(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 1.5, x);
-                ddouble y3 = BesselY(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 2, x);
+                    static YoshidaPade() {
+                        Dictionary<string, ReadOnlyCollection<ddouble>> tables =
+                        ResourceUnpack.NumTable(Resource.BesselKTable);
 
-                ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
-                ddouble y = CubicInterpolate(t, y0, y1, y2, y3);
+                        ReadOnlyCollection<ddouble> cs0 = tables["CS0Table"], cs1 = tables["CS1Table"];
+                        ReadOnlyCollection<ddouble> ds0 = tables["DS0Table"], ds1 = tables["DS1Table"];
 
-                return y;
-            }
+                        if (cs0.Count != ds0.Count || cs1.Count != ds1.Count) {
+                            throw new IOException("The format of resource file is invalid.");
+                        }
 
-            public static ddouble BesselKCubicInterpolate(ddouble nu, ddouble x, bool scale) {
-                int n = (int)Round(nu);
-                ddouble alpha = nu - n;
+                        List<(ddouble c, ddouble s)> cd0 = new(), cd1 = new();
 
-                ddouble y0 = BesselK(n, x, scale: true);
-                ddouble y1 = BesselK(n + Sign(alpha) * BesselUtil.InterpolationThreshold, x, scale: true);
-                ddouble y2 = BesselK(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 1.5, x, scale: true);
-                ddouble y3 = BesselK(n + Sign(alpha) * BesselUtil.InterpolationThreshold * 2, x, scale: true);
+                        for (int i = 0; i < cs0.Count; i++) {
+                            cd0.Add((cs0[i], ds0[i]));
+                        }
+                        for (int i = 0; i < cs1.Count; i++) {
+                            cd1.Add((cs1[i], ds1[i]));
+                        }
 
-                ddouble t = Abs(alpha) / BesselUtil.InterpolationThreshold;
-                ddouble y = CubicInterpolate(t, y0, y1, y2, y3);
+                        cd0.Reverse();
+                        cd1.Reverse();
 
-                if (!scale) {
-                    y *= Exp(-x);
+                        cds_coef_table.Add(0, Array.AsReadOnly(cd0.ToArray()));
+                        cds_coef_table.Add(1, Array.AsReadOnly(cd1.ToArray()));
+
+
+                        List<ReadOnlyCollection<ddouble>> es = new();
+
+                        for (int i = 0; i < 32; i++) {
+                            es.Add(tables[$"ES{i}Table"]);
+                        }
+
+                        ess_coef_table = Array.AsReadOnly(es.ToArray());
+                    }
+
+                    public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
+                        if (nu < 2d) {
+                            if (!cds_coef_table.TryGetValue(nu, out ReadOnlyCollection<(ddouble c, ddouble s)> cds_table)) {
+                                cds_table = Table(nu);
+                                cds_coef_table.Add(nu, cds_table);
+                            }
+
+                            ReadOnlyCollection<(ddouble, ddouble)> cds = cds_table;
+
+                            ddouble y = Value(x, cds, scale);
+
+                            return y;
+                        }
+                        else {
+                            int n = (int)ddouble.Floor(nu);
+                            ddouble alpha = nu - n;
+
+                            ddouble y0 = BesselK(alpha, x, scale);
+                            ddouble y1 = BesselK(alpha + 1d, x, scale);
+
+                            ddouble v = 1d / x;
+
+                            for (int k = 1; k < n; k++) {
+                                (y1, y0) = (ddouble.Ldexp(k + alpha, 1) * v * y1 + y0, y1);
+                            }
+
+                            return y1;
+                        }
+                    }
+
+                    private static ddouble Value(ddouble x, ReadOnlyCollection<(ddouble c, ddouble d)> cds, bool scale = false) {
+                        ddouble t = 1d / x;
+                        (ddouble sc, ddouble sd) = cds[0];
+
+                        for (int i = 1; i < cds.Count; i++) {
+                            (ddouble c, ddouble d) = cds[i];
+
+                            sc = sc * t + c;
+                            sd = sd * t + d;
+                        }
+
+                        ddouble y = ddouble.Sqrt(ddouble.Ldexp(t * ddouble.PI, -1)) * sc / sd;
+
+                        if (!scale) {
+                            y *= ddouble.Exp(-x);
+                        }
+
+                        return y;
+                    }
+
+                    private static ReadOnlyCollection<(ddouble c, ddouble d)> Table(ddouble nu) {
+                        int m = ess_coef_table.Count - 1;
+
+                        ddouble squa_nu = nu * nu;
+                        List<(ddouble c, ddouble d)> cds = [];
+                        ddouble[] us = new ddouble[m + 1], vs = new ddouble[m];
+
+                        ddouble u = 1d;
+                        for (int i = 0; i <= m; i++) {
+                            us[i] = u;
+                            u *= squa_nu;
+                        }
+                        for (int i = 0; i < m; i++) {
+                            ddouble r = m - i + 0.5d;
+                            vs[i] = r * r - squa_nu;
+                        }
+
+                        for (int i = 0; i <= m; i++) {
+                            ReadOnlyCollection<ddouble> es = ess_coef_table[i];
+                            ddouble d = es[i], c = 0d;
+
+                            for (int l = 0; l < i; l++) {
+                                d *= vs[l];
+                            }
+                            for (int j = 0; j <= i; j++) {
+                                c += es[j] * us[j];
+                            }
+
+                            cds.Add((c, d));
+                        }
+
+                        cds.Reverse();
+
+                        return Array.AsReadOnly(cds.ToArray());
+                    }
                 }
 
-                return y;
-            }
+                public static class Interpolation {
+                    public static ddouble BesselKPowerSeries(ddouble nu, ddouble x, bool scale = false) {
+                        int n = (int)ddouble.Round(nu);
+                        ddouble alpha = nu - n;
 
-            private static ddouble CubicInterpolate(ddouble t, ddouble y0, ddouble y1, ddouble y2, ddouble y3) {
-                return y0 + (
-                    -(13d + t * (-9d + t * 2d)) / 6d * y0
-                    + (6d + t * (-7d + t * 2d)) * y1
-                    - (16d + t * (-24d + t * 8d)) / 3d * y2
-                    + (3d + t * (-5d + t * 2d)) / 2d * y3) * t;
+                        Debug.Assert(n >= 0);
+                        Debug.Assert(ddouble.Abs(alpha) <= BesselKInterpolationDelta);
+
+                        ddouble y0 = PowerSeries.BesselK(0, x, scale);
+
+                        if (!ddouble.IsFinite(y0)) {
+                            return y0;
+                        }
+
+                        ddouble dnu = BesselKInterpolationDelta;
+
+                        ddouble y1 = PowerSeries.BesselK(dnu, x, scale);
+                        ddouble y2 = PowerSeries.BesselK(dnu * 1.25d, x, scale);
+                        ddouble y3 = PowerSeries.BesselK(dnu * 1.5d, x, scale);
+                        ddouble y4 = PowerSeries.BesselK(dnu * 1.75d, x, scale);
+                        ddouble y5 = PowerSeries.BesselK(dnu * 2d, x, scale);
+
+                        if (!ddouble.IsFinite(y1) || !ddouble.IsFinite(y2) || !ddouble.IsFinite(y3) || !ddouble.IsFinite(y4) || !ddouble.IsFinite(y5)) {
+                            return y1;
+                        }
+
+                        ddouble t = ddouble.Abs(alpha) / BesselKInterpolationDelta;
+                        ddouble k0 = InterpolateEvenConvex(t, y0, y1, y2, y3, y4, y5);
+
+                        if (n == 0) {
+                            return k0;
+                        }
+
+                        ddouble i0 = PowerSeries.BesselI(alpha, x), i1 = PowerSeries.BesselI(alpha + 1d, x);
+
+                        ddouble k1 = ((scale ? ddouble.Exp(x) : 1d) - i1 * k0 * x) / (i0 * x);
+
+                        if (n == 1) {
+                            return k1;
+                        }
+
+                        ddouble v = 1d / x;
+
+                        for (int k = 1; k < n; k++) {
+                            (k1, k0) = (ddouble.Ldexp(k + alpha, 1) * v * k1 + k0, k1);
+                        }
+
+                        return k1;
+                    }
+
+                    private static ddouble InterpolateEvenConvex(ddouble t, ddouble y0, ddouble y1, ddouble y2, ddouble y3, ddouble y4, ddouble y5) {
+                        ddouble t2 = t * t;
+
+                        ddouble y = y0
+                            + t2 * (-151028163d * y0 + 561834000d * y1 - 708083712d * y2 + 395136000d * y3 - 110592000d * y4 + 12733875d * y5
+                            + t2 * (150533955d * y0 - 933192260d * y1 + 1431019520d * y2 - 875831040d * y3 + 258170880d * y4 - 30701055d * y5
+                            + t2 * (-70594524d * y0 + 556941840d * y1 - 962174976d * y2 + 658748160d * y3 - 209018880d * y4 + 26098380d * y5
+                            + t2 * (15649920d * y0 - 141872640d * y1 + 264929280d * y2 - 198696960d * y3 + 69304320d * y4 - 9313920d * y5
+                            + t2 * (-1317888d * y0 + 13045760d * y1 - 25690112d * y2 + 20643840d * y3 - 7864320d * y4 + 1182720d * y5))))) / 56756700d;
+
+                        return y;
+                    }
+                }
             }
         }
     }
