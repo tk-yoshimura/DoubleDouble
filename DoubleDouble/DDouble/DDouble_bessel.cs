@@ -1,5 +1,4 @@
 ﻿using DoubleDouble.Utils;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.Bessel;
