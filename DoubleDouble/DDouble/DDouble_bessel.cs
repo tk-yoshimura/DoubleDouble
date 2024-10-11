@@ -8,6 +8,24 @@ namespace DoubleDouble {
 
     public partial struct ddouble {
 
+        public static ddouble BesselJ(int n, ddouble x) {
+            CheckN(n);
+
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
+            }
+
+            if (x >= HankelThreshold) {
+                return Limit.BesselJ(n, x);
+            }
+            else if (x <= PowerSeriesThreshold(n)) {
+                return PowerSeries.BesselJ(n, x);
+            }
+            else {
+                return MillerBackward.BesselJ(n, x);
+            }
+        }
+
         public static ddouble BesselJ(ddouble nu, ddouble x) {
             CheckNu(nu);
 
@@ -23,6 +41,24 @@ namespace DoubleDouble {
             }
             else {
                 return MillerBackward.BesselJ(nu, x);
+            }
+        }
+
+        public static ddouble BesselY(int n, ddouble x) {
+            CheckN(n);
+
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
+            }
+
+            if (x >= HankelThreshold) {
+                return Limit.BesselY(n, x);
+            }
+            else if (x <= PowerSeriesThreshold(n) - BesselJYPowerseriesBias) {
+                return PowerSeries.BesselY(n, x);
+            }
+            else {
+                return MillerBackward.BesselY(n, x);
             }
         }
 
@@ -46,6 +82,21 @@ namespace DoubleDouble {
             }
         }
 
+        public static ddouble BesselI(int n, ddouble x, bool scale = false) {
+            CheckN(n);
+
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
+            }
+
+            if (x >= HankelThreshold) {
+                return Limit.BesselI(n, x, scale);
+            }
+            else {
+                return PowerSeries.BesselI(n, x, scale);
+            }
+        }
+
         public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
             CheckNu(nu);
 
@@ -58,6 +109,26 @@ namespace DoubleDouble {
             }
             else {
                 return PowerSeries.BesselI(nu, x, scale);
+            }
+        }
+
+        public static ddouble BesselK(int n, ddouble x, bool scale = false) {
+            CheckN(n);
+
+            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
+                return ddouble.NaN;
+            }
+
+            n = int.Abs(n);
+
+            if (x >= HankelThreshold) {
+                return Limit.BesselK(n, x, scale);
+            }
+            else if (x <= BesselKNearZeroThreshold) {
+                return PowerSeries.BesselK(n, x, scale);
+            }
+            else {
+                return YoshidaPade.BesselK(n, x, scale);
             }
         }
 

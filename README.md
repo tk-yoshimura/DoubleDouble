@@ -85,10 +85,10 @@
 |ddouble.Erfcx(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.Erfi(x)|&#40;-inf,+inf&#41;|4||
 |ddouble.DawsonF(x)|&#40;-inf,+inf&#41;|4||
-|ddouble.BesselJ(nu, x)|&#91;0,+inf&#41;|8|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |
-|ddouble.BesselY(nu, x)|&#91;0,+inf&#41;|8|Accuracy deteriorates near the root and <br/>at non-interger nu very close (&lt; 2^-25) to the integer.<br/>abs(nu) &leq; 16 |
-|ddouble.BesselI(nu, x)|&#91;0,+inf&#41;|6|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |
-|ddouble.BesselK(nu, x)|&#91;0,+inf&#41;|6|Accuracy deteriorates with non-interger nu very close <br/> (&lt; 2^-25) to an integer.<br/>abs(nu) &leq; 16 |
+|ddouble.BesselJ(nu, x)|&#91;0,+inf&#41;|6|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |
+|ddouble.BesselY(nu, x)|&#91;0,+inf&#41;|6|Accuracy deteriorates near root.<br/>abs(nu) &leq; 16 |
+|ddouble.BesselI(nu, x)|&#91;0,+inf&#41;|6|abs(nu) &leq; 16 |
+|ddouble.BesselK(nu, x)|&#91;0,+inf&#41;|6|abs(nu) &leq; 16 |
 |ddouble.StruveH(n, x)|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|
 |ddouble.StruveK(n, x)|&#91;0,+inf&#41;|4|0 &leq; n &leq; 8|
 |ddouble.StruveL(n, x)|&#40;-inf,+inf&#41;|4|0 &leq; n &leq; 8|
