@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble y = Recurrence.BesselJ(27.5, 2.5);
+            ddouble y = Recurrence.BesselY(-27.75, 2.5);
 
             Console.WriteLine("END");
             Console.Read();
@@ -25,6 +25,7 @@ namespace DoubleDoubleSandbox {
                 ddouble v = 1d / x;
 
                 if (ddouble.IsPositive(nu)) {
+                    // TODO fix
                     ddouble j0 = ddouble.BesselJ(alpha + (MaxN - 2), x);
                     ddouble j1 = ddouble.BesselJ(alpha + (MaxN - 1), x);
 
@@ -43,6 +44,41 @@ namespace DoubleDoubleSandbox {
                     }
 
                     return j1;
+                }
+            }
+
+            public static ddouble BesselY(ddouble nu, ddouble x) {
+                Debug.Assert(nu > MaxN || nu < -MaxN);
+
+                ddouble nu_abs = ddouble.Abs(nu);
+                int n = (int)ddouble.Floor(nu_abs);
+                ddouble alpha = nu_abs - n;
+
+                ddouble v = 1d / x;
+
+                if (ddouble.IsPositive(nu)) {
+                    ddouble y0 = ddouble.BesselY(alpha + (MaxN - 2), x);
+                    ddouble y1 = ddouble.BesselY(alpha + (MaxN - 1), x);
+
+                    for (int k = MaxN - 1; k < n; k++) {
+                        (y1, y0) = (ddouble.Ldexp(k + alpha, 1) * v * y1 - y0, y1);
+                    }
+
+                    return y1;
+                }
+                else {
+                    if (ddouble.ILogB(alpha - 0.5d) < -106) {
+                        return ((n & 1) == 0 ? BesselJ(-nu, x) : -BesselJ(-nu, x));
+                    }
+
+                    ddouble y0 = ddouble.BesselY(-(alpha + (MaxN - 2)), x);
+                    ddouble y1 = ddouble.BesselY(-(alpha + (MaxN - 1)), x);
+
+                    for (int k = MaxN - 1; k < n; k++) {
+                        (y1, y0) = (-ddouble.Ldexp(k + alpha, 1) * v * y1 - y0, y1);
+                    }
+
+                    return y1;
                 }
             }
 
