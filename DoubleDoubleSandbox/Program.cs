@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble y = Recurrence.BesselI(20.25, 2.5, scale: false);
+            ddouble y = Recurrence.BesselI(-20.75, 2.5, scale: false);
 
             Console.WriteLine("END");
             Console.Read();
@@ -61,6 +61,10 @@ namespace DoubleDoubleSandbox {
                 }
 
                 ddouble y = ddouble.BesselI(alpha + (MaxN - 1), x, scale: true) / i1;
+
+                if (!is_plus) {
+                    y += 2d * ddouble.RcpPI * ddouble.SinPI(nu) * BesselK(nu, x, scale: true) * ddouble.Exp(-2d * x);
+                }
 
                 if (!scale) {
                     y *= ddouble.Exp(x);
