@@ -50,17 +50,23 @@ namespace DoubleDoubleSandbox {
                     return 0d;
                 }
 
-                (ddouble i0, ddouble i1) = (1d, 1d / s);
+                long exp_sum = 0;
+                ddouble i0 = 1d, i1 = 1d / s;
 
-                for (int k = n; k > MaxN; k--) {
-                    (i1, i0) = (ddouble.Ldexp((k - 1) + alpha, 1) * v * i1 + i0, i1);
+                for (int k = n - 1; k >= MaxN; k--) {
+                    (i1, i0) = (ddouble.Ldexp(k + alpha, 1) * v * i1 + i0, i1);
 
-                    if (ddouble.IsPositiveInfinity(i1)) {
-                        return 0d;
+                    if (ddouble.ILogB(i1) > 0) {
+                        int exp = ddouble.ILogB(i1);
+                        exp_sum += exp;
+                        (i0, i1) = (ddouble.Ldexp(i0, -exp), ddouble.Ldexp(i1, -exp));
                     }
                 }
 
-                ddouble y = ddouble.BesselI(alpha + (MaxN - 1), x, scale: true) / i1;
+                ddouble y = ddouble.Ldexp(
+                    ddouble.BesselI(alpha + (MaxN - 1), x, scale: true) / i1,
+                    -(int)long.Min(int.MaxValue, exp_sum)
+                );
 
                 if (!is_plus) {
                     y += 2d * ddouble.RcpPI * ddouble.SinPI(nu) * BesselK(nu, x, scale: true) * ddouble.Exp(-2d * x);
