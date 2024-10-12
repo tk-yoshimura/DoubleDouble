@@ -54,11 +54,17 @@ namespace DoubleDoubleSandbox {
 
                     for (int k = n - 1; k >= MaxN; k--) {
                         (j1, j0) = (ddouble.Ldexp(k + alpha, 1) * v * j1 - j0, j1);
+
+                        if (int.Sign(ddouble.ILogB(j0)) == int.Sign(ddouble.ILogB(j1))) {
+                            int exp = ddouble.ILogB(j1);
+                            exp_sum += exp;
+                            (j0, j1) = (ddouble.Ldexp(j0, -exp), ddouble.Ldexp(j1, -exp));
+                        }
                     }
 
                     ddouble y = ddouble.Ldexp(
                         ddouble.BesselJ(alpha + (MaxN - 1), x) / j1,
-                        -(int)long.Min(int.MaxValue, exp_sum)
+                        (int)long.Clamp(-exp_sum, int.MinValue, int.MaxValue)
                     ) * ((ddouble.Abs(s) > 1d) ? 1d : s);
 
                     return y;
@@ -158,7 +164,7 @@ namespace DoubleDoubleSandbox {
 
                 ddouble y = ddouble.Ldexp(
                     ddouble.BesselI(alpha + (MaxN - 1), x, scale: true) / i1,
-                    -(int)long.Min(int.MaxValue, exp_sum)
+                    (int)long.Max(-exp_sum, int.MinValue)
                 );
 
                 if (ddouble.IsPositive(nu)) {
