@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble y = Recurrence.BesselY(-27.75, 2.5);
+            ddouble y = Recurrence.BesselJ(27.75, 2.5);
 
             Console.WriteLine("END");
             Console.Read();
@@ -25,15 +25,43 @@ namespace DoubleDoubleSandbox {
                 ddouble v = 1d / x;
 
                 if (ddouble.IsPositive(nu)) {
-                    // TODO fix
-                    ddouble j0 = ddouble.BesselJ(alpha + (MaxN - 2), x);
-                    ddouble j1 = ddouble.BesselJ(alpha + (MaxN - 1), x);
+                    (ddouble a0, ddouble b0, ddouble a1, ddouble b1) = (1d, 0d, 0d, 1d);
 
-                    for (int k = MaxN - 1; k < n; k++) {
+                    ddouble r = ddouble.Ldexp(nu_abs * v, 1);
+                    (a0, b0, a1, b1) = (a1, b1, r * a1 + a0, r * b1 + b0);
+
+                    ddouble s = 1d;
+
+                    for (int i = 1; i <= 1024; i++) {
+                        r = ddouble.Ldexp((nu_abs + i) * v, 1);
+
+                        (a0, b0, a1, b1) = (a1, b1, r * a1 - a0, r * b1 - b0);
+                        s = a1 / b1;
+
+                        (int exp, (a1, b1)) = ddouble.AdjustScale(0, (a1, b1));
+                        (a0, b0) = (ddouble.Ldexp(a0, exp), ddouble.Ldexp(b0, exp));
+
+                        if (i > 0 && (i & 3) == 0) {
+                            ddouble r0 = a0 * b1, r1 = a1 * b0;
+                            if (!(ddouble.Abs(r0 - r1) > ddouble.Min(ddouble.Abs(r0), ddouble.Abs(r1)) * 1e-30)) {
+                                break;
+                            }
+                        }
+                    }
+
+                    long exp_sum = 0;
+                    (ddouble j0, ddouble j1) = (ddouble.Abs(s) > 1d) ? ((ddouble)1d, 1d / s) : (s, 1d);
+
+                    for (int k = n - 1; k >= MaxN; k--) {
                         (j1, j0) = (ddouble.Ldexp(k + alpha, 1) * v * j1 - j0, j1);
                     }
 
-                    return j1;
+                    ddouble y = ddouble.Ldexp(
+                        ddouble.BesselJ(alpha + (MaxN - 1), x) / j1,
+                        -(int)long.Min(int.MaxValue, exp_sum)
+                    ) * ((ddouble.Abs(s) > 1d) ? 1d : s);
+
+                    return y;
                 }
                 else { 
                     ddouble j0 = ddouble.BesselJ(-(alpha + (MaxN - 2)), x);
