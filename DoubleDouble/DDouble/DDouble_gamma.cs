@@ -221,14 +221,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble RcpGamma(ddouble x) {
-            if (ddouble.IsNaN(x) || ddouble.IsNegativeInfinity(x)) {
+            if (IsNaN(x) || IsNegativeInfinity(x)) {
                 return NaN;
             }
             if (x > 178.5d) {
                 return 0d;
             }
 
-            if (ddouble.IsFinite(x) && double.ILogB(x.hi) < -64) {
+            if (IsFinite(x) && double.ILogB(x.hi) < -64) {
                 ddouble y = x * (1d + x * EulerGamma);
                 return y;
             }
