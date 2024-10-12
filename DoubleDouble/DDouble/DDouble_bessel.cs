@@ -10,8 +10,8 @@ namespace DoubleDouble {
         public static ddouble BesselJ(int n, ddouble x) {
             CheckN(n);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
             if (x >= HankelThreshold) {
@@ -28,8 +28,8 @@ namespace DoubleDouble {
         public static ddouble BesselJ(ddouble nu, ddouble x) {
             CheckNu(nu);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
             if (x >= HankelThreshold) {
@@ -46,8 +46,8 @@ namespace DoubleDouble {
         public static ddouble BesselY(int n, ddouble x) {
             CheckN(n);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
             if (x >= HankelThreshold) {
@@ -64,15 +64,15 @@ namespace DoubleDouble {
         public static ddouble BesselY(ddouble nu, ddouble x) {
             CheckNu(nu);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
             if (x >= HankelThreshold) {
                 return Limit.BesselY(nu, x);
             }
             else if ((x <= PowerSeriesThreshold(nu) - BesselJYPowerseriesBias) &&
-                (NearlyInteger(nu, out int n) || ddouble.Abs(n - nu) >= BesselYForcedMillerBackwardThreshold)) {
+                (NearlyInteger(nu, out int n) || Abs(n - nu) >= BesselYForcedMillerBackwardThreshold)) {
 
                 return PowerSeries.BesselY(nu, x);
             }
@@ -84,8 +84,8 @@ namespace DoubleDouble {
         public static ddouble BesselI(int n, ddouble x, bool scale = false) {
             CheckN(n);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
             if (x >= HankelThreshold) {
@@ -99,8 +99,8 @@ namespace DoubleDouble {
         public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
             CheckNu(nu);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
             if (x >= HankelThreshold) {
@@ -114,8 +114,8 @@ namespace DoubleDouble {
         public static ddouble BesselK(int n, ddouble x, bool scale = false) {
             CheckN(n);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
             n = int.Abs(n);
@@ -134,17 +134,17 @@ namespace DoubleDouble {
         public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
             CheckNu(nu);
 
-            if (ddouble.IsNegative(x) || ddouble.IsNaN(x)) {
-                return ddouble.NaN;
+            if (IsNegative(x) || IsNaN(x)) {
+                return NaN;
             }
 
-            nu = ddouble.Abs(nu);
+            nu = Abs(nu);
 
             if (x >= HankelThreshold) {
                 return Limit.BesselK(nu, x, scale);
             }
             else if (x <= BesselKNearZeroThreshold) {
-                if (NearlyInteger(nu, out int n) || ddouble.Abs(n - nu) >= BesselKInterpolationDelta) {
+                if (NearlyInteger(nu, out int n) || Abs(n - nu) >= BesselKInterpolationDelta) {
                     return PowerSeries.BesselK(nu, x, scale);
                 }
                 else {
@@ -167,13 +167,13 @@ namespace DoubleDouble {
                 public const double BesselKPadeThreshold = 1, BesselKNearZeroThreshold = 2, BesselJYPowerseriesBias = 2;
 
                 public static ddouble PowerSeriesThreshold(ddouble nu) {
-                    ddouble nu_abs = ddouble.Abs(nu);
+                    ddouble nu_abs = Abs(nu);
 
                     return 7.5 + nu_abs * (3.57e-1 + nu_abs * 5.23e-3);
                 }
 
                 public static void CheckNu(ddouble nu) {
-                    if (!(ddouble.Abs(nu) <= MaxN)) {
+                    if (!(Abs(nu) <= MaxN)) {
                         throw new ArgumentOutOfRangeException(
                             nameof(nu),
                             $"In the calculation of the Bessel function, nu with an absolute value greater than {MaxN} is not supported."
@@ -191,9 +191,9 @@ namespace DoubleDouble {
                 }
 
                 public static bool NearlyInteger(ddouble nu, out int n) {
-                    n = (int)ddouble.Round(nu);
+                    n = (int)Round(nu);
 
-                    return ddouble.Abs(nu - n) < Eps;
+                    return Abs(nu - n) < Eps;
                 }
 
                 public static class SinCosPICache {
@@ -235,9 +235,9 @@ namespace DoubleDouble {
                     private static readonly K1CoefTable k1_coef_table = new();
 
                     public static ddouble BesselJ(ddouble nu, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
-                        if (ddouble.IsNegative(nu) && NearlyInteger(nu, out int n)) {
+                        if (IsNegative(nu) && NearlyInteger(nu, out int n)) {
                             ddouble y = BesselJ(-nu, x);
 
                             return (n & 1) == 0 ? y : -y;
@@ -250,7 +250,7 @@ namespace DoubleDouble {
                     }
 
                     public static ddouble BesselY(ddouble nu, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         if (NearlyInteger(nu, out int n)) {
                             ddouble y = BesselYKernel(n, x, terms: 18);
@@ -265,13 +265,13 @@ namespace DoubleDouble {
                     }
 
                     public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
-                        if (ddouble.IsNegative(nu) && NearlyInteger(nu, out _)) {
+                        if (IsNegative(nu) && NearlyInteger(nu, out _)) {
                             ddouble y = BesselI(-nu, x);
 
                             if (scale) {
-                                y *= ddouble.Exp(-x);
+                                y *= Exp(-x);
                             }
 
                             return y;
@@ -280,7 +280,7 @@ namespace DoubleDouble {
                             ddouble y = BesselIKernel(nu, x, terms: 40);
 
                             if (scale) {
-                                y *= ddouble.Exp(-x);
+                                y *= Exp(-x);
                             }
 
                             return y;
@@ -288,13 +288,13 @@ namespace DoubleDouble {
                     }
 
                     public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         if (NearlyInteger(nu, out int n)) {
                             ddouble y = BesselKKernel(n, x, terms: 27);
 
                             if (scale) {
-                                y *= ddouble.Exp(x);
+                                y *= Exp(x);
                             }
 
                             return y;
@@ -303,7 +303,7 @@ namespace DoubleDouble {
                             ddouble y = BesselKKernel(nu, x, terms: 30);
 
                             if (scale) {
-                                y *= ddouble.Exp(x);
+                                y *= Exp(x);
                             }
 
                             return y;
@@ -322,16 +322,16 @@ namespace DoubleDouble {
 
                         ddouble x2 = x * x, x4 = x2 * x2;
 
-                        ddouble c = 0d, u = ddouble.Pow(ddouble.Ldexp(x, -1), nu);
+                        ddouble c = 0d, u = Pow(Ldexp(x, -1), nu);
 
-                        if (!ddouble.IsFinite(u) || ddouble.IsZero(x2)) {
-                            if (ddouble.IsZero(nu)) {
+                        if (!IsFinite(u) || IsZero(x2)) {
+                            if (IsZero(nu)) {
                                 return 1d;
                             }
-                            if (NearlyInteger(nu, out _) || ddouble.IsPositive(nu)) {
+                            if (NearlyInteger(nu, out _) || IsPositive(nu)) {
                                 return 0d;
                             }
-                            return (((int)ddouble.Floor(nu) & 1) == 0) ? ddouble.NegativeInfinity : ddouble.PositiveInfinity;
+                            return (((int)Floor(nu) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
                         }
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
@@ -340,7 +340,7 @@ namespace DoubleDouble {
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -350,7 +350,7 @@ namespace DoubleDouble {
                             c = c_next;
                             u *= x4;
 
-                            if (!ddouble.IsFinite(c)) {
+                            if (!IsFinite(c)) {
                                 break;
                             }
                         }
@@ -371,23 +371,23 @@ namespace DoubleDouble {
                         YCoefTable r = y_coef_table;
 
                         ddouble cos = SinCosPICache.CosPI(nu), sin = SinCosPICache.SinPI(nu);
-                        ddouble p = ddouble.IsZero(cos) ? 0d : ddouble.Pow(x, ddouble.Ldexp(nu, 1)) * cos;
-                        ddouble s = ddouble.Ldexp(ddouble.Pow(ddouble.Ldexp(x, 1), nu), 2);
+                        ddouble p = IsZero(cos) ? 0d : Pow(x, Ldexp(nu, 1)) * cos;
+                        ddouble s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
                         ddouble x2 = x * x, x4 = x2 * x2;
 
-                        if (!ddouble.IsFinite(p) || !ddouble.IsFinite(s) || ddouble.ILogB(s) < NearZeroExponent || ddouble.IsZero(x2)) {
-                            if (ddouble.IsPositive(nu)) {
-                                return ddouble.NegativeInfinity;
+                        if (!IsFinite(p) || !IsFinite(s) || ILogB(s) < NearZeroExponent || IsZero(x2)) {
+                            if (IsPositive(nu)) {
+                                return NegativeInfinity;
                             }
 
-                            int n = (int)(ddouble.Floor(nu + 0.5d));
+                            int n = (int)(Floor(nu + 0.5d));
                             ddouble alpha = nu - n;
 
-                            if (ddouble.Abs(ddouble.Abs(alpha) - 0.5d) < Eps) {
-                                return ddouble.Zero;
+                            if (Abs(Abs(alpha) - 0.5d) < Eps) {
+                                return Zero;
                             }
 
-                            return ((n & 1) == 0) ? ddouble.NegativeInfinity : ddouble.PositiveInfinity;
+                            return ((n & 1) == 0) ? NegativeInfinity : PositiveInfinity;
                         }
 
                         ddouble c = 0d, u = 1d / sin;
@@ -400,7 +400,7 @@ namespace DoubleDouble {
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -410,7 +410,7 @@ namespace DoubleDouble {
                             c = c_next;
                             u *= x4;
 
-                            if (!ddouble.IsFinite(c)) {
+                            if (!IsFinite(c)) {
                                 break;
                             }
                         }
@@ -447,21 +447,21 @@ namespace DoubleDouble {
 
                         Y0CoefTable q = y0_coef_table;
 
-                        ddouble h = ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma;
+                        ddouble h = Log(Ldexp(x, -1)) + EulerGamma;
                         ddouble x2 = x * x, x4 = x2 * x2;
 
-                        if (ddouble.IsNegativeInfinity(h) || ddouble.IsZero(x2)) {
-                            return ddouble.NegativeInfinity;
+                        if (IsNegativeInfinity(h) || IsZero(x2)) {
+                            return NegativeInfinity;
                         }
 
-                        ddouble c = 0d, u = ddouble.Ldexp(ddouble.RcpPI, 1);
+                        ddouble c = 0d, u = Ldexp(RcpPI, 1);
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k)) * (1d - x2 * d[k]) + x2 * q[k]);
+                            ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k)) * (1d - x2 * d[k]) + x2 * q[k]);
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -489,21 +489,21 @@ namespace DoubleDouble {
                             yn_coef_table.Add(1, q);
                         }
 
-                        ddouble h = ddouble.Ldexp(ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma, 1);
+                        ddouble h = Ldexp(Log(Ldexp(x, -1)) + EulerGamma, 1);
                         ddouble x2 = x * x, x4 = x2 * x2;
 
-                        if (ddouble.IsNegativeInfinity(h) || ddouble.IsZero(x2)) {
-                            return ddouble.NegativeInfinity;
+                        if (IsNegativeInfinity(h) || IsZero(x2)) {
+                            return NegativeInfinity;
                         }
 
-                        ddouble c = -2d / (x * ddouble.PI), u = x / ddouble.Ldexp(ddouble.PI, 1);
+                        ddouble c = -2d / (x * PI), u = x / Ldexp(PI, 1);
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k) - ddouble.HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
+                            ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -535,15 +535,15 @@ namespace DoubleDouble {
                             yn_finitecoef_table.Add(n, f);
                         }
 
-                        ddouble h = ddouble.Ldexp(ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma, 1);
+                        ddouble h = Ldexp(Log(Ldexp(x, -1)) + EulerGamma, 1);
 
-                        if (ddouble.IsNegativeInfinity(h)) {
-                            return ddouble.NegativeInfinity;
+                        if (IsNegativeInfinity(h)) {
+                            return NegativeInfinity;
                         }
 
                         ddouble c = 0d;
                         ddouble x2 = x * x, x4 = x2 * x2;
-                        ddouble u = 1d, v = 1d, w = ddouble.Ldexp(x2, -2);
+                        ddouble u = 1d, v = 1d, w = Ldexp(x2, -2);
 
                         for (int k = 0; k < n; k++) {
                             c += v * f[k];
@@ -551,16 +551,16 @@ namespace DoubleDouble {
                         }
                         c /= -v;
 
-                        if (!ddouble.IsFinite(c) || ddouble.IsZero(x2)) {
-                            return ddouble.NegativeInfinity;
+                        if (!IsFinite(c) || IsZero(x2)) {
+                            return NegativeInfinity;
                         }
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * ((h - ddouble.HarmonicNumber(2 * k) - ddouble.HarmonicNumber(2 * k + n)) * (1d - x2 * d[k]) + x2 * q[k]);
+                            ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + n)) * (1d - x2 * d[k]) + x2 * q[k]);
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -571,7 +571,7 @@ namespace DoubleDouble {
                             u *= x4;
                         }
 
-                        ddouble y = c * ddouble.RcpPI * ddouble.Pow(ddouble.Ldexp(x, -1), n);
+                        ddouble y = c * RcpPI * Pow(Ldexp(x, -1), n);
 
                         return y;
                     }
@@ -588,16 +588,16 @@ namespace DoubleDouble {
 
                         ddouble x2 = x * x, x4 = x2 * x2;
 
-                        ddouble c = 0d, u = ddouble.Pow(ddouble.Ldexp(x, -1), nu);
+                        ddouble c = 0d, u = Pow(Ldexp(x, -1), nu);
 
-                        if (!ddouble.IsFinite(u) || ddouble.IsZero(x2)) {
-                            if (ddouble.IsZero(nu)) {
+                        if (!IsFinite(u) || IsZero(x2)) {
+                            if (IsZero(nu)) {
                                 return 1d;
                             }
-                            if (NearlyInteger(nu, out _) || ddouble.IsPositive(nu)) {
+                            if (NearlyInteger(nu, out _) || IsPositive(nu)) {
                                 return 0d;
                             }
-                            return (((int)ddouble.Floor(nu) & 1) == 0) ? ddouble.NegativeInfinity : ddouble.PositiveInfinity;
+                            return (((int)Floor(nu) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
                         }
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
@@ -606,7 +606,7 @@ namespace DoubleDouble {
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -616,7 +616,7 @@ namespace DoubleDouble {
                             c = c_next;
                             u *= x4;
 
-                            if (!ddouble.IsFinite(c)) {
+                            if (!IsFinite(c)) {
                                 break;
                             }
                         }
@@ -636,22 +636,22 @@ namespace DoubleDouble {
 
                         KCoefTable r = k_coef_table;
 
-                        ddouble tp = ddouble.Pow(ddouble.Ldexp(x, -1), nu), tn = 1d / tp;
+                        ddouble tp = Pow(Ldexp(x, -1), nu), tn = 1d / tp;
 
                         ddouble x2 = x * x;
 
-                        if (ddouble.ILogB(tp) < NearZeroExponent || ddouble.IsZero(x2)) {
-                            return ddouble.PositiveInfinity;
+                        if (ILogB(tp) < NearZeroExponent || IsZero(x2)) {
+                            return PositiveInfinity;
                         }
 
-                        ddouble c = 0d, u = ddouble.PI / ddouble.Ldexp(ddouble.SinPI(nu), 1);
+                        ddouble c = 0d, u = PI / Ldexp(SinPI(nu), 1);
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
                             ddouble dc = u * r[k] * (tn * gn[k] - tp * gp[k]);
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -661,7 +661,7 @@ namespace DoubleDouble {
                             c = c_next;
                             u *= x2;
 
-                            if (!ddouble.IsFinite(c)) {
+                            if (!IsFinite(c)) {
                                 break;
                             }
                         }
@@ -683,26 +683,26 @@ namespace DoubleDouble {
 
                     private static ddouble BesselK0Kernel(ddouble x, int terms) {
                         K0CoefTable r = k0_coef_table;
-                        ddouble h = -ddouble.Log(ddouble.Ldexp(x, -1)) - ddouble.EulerGamma;
+                        ddouble h = -Log(Ldexp(x, -1)) - EulerGamma;
 
-                        if (ddouble.IsPositiveInfinity(h)) {
-                            return ddouble.PositiveInfinity;
+                        if (IsPositiveInfinity(h)) {
+                            return PositiveInfinity;
                         }
 
                         ddouble x2 = x * x;
 
-                        if (ddouble.IsZero(x2)) {
-                            return ddouble.PositiveInfinity;
+                        if (IsZero(x2)) {
+                            return PositiveInfinity;
                         }
 
                         ddouble c = 0d, u = 1d;
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * (h + ddouble.HarmonicNumber(k));
+                            ddouble dc = u * r[k] * (h + HarmonicNumber(k));
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -718,26 +718,26 @@ namespace DoubleDouble {
 
                     private static ddouble BesselK1Kernel(ddouble x, int terms) {
                         K1CoefTable r = k1_coef_table;
-                        ddouble h = ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma;
+                        ddouble h = Log(Ldexp(x, -1)) + EulerGamma;
 
-                        if (ddouble.IsNegativeInfinity(h)) {
-                            return ddouble.PositiveInfinity;
+                        if (IsNegativeInfinity(h)) {
+                            return PositiveInfinity;
                         }
 
                         ddouble x2 = x * x;
 
-                        if (ddouble.IsZero(x2)) {
-                            return ddouble.PositiveInfinity;
+                        if (IsZero(x2)) {
+                            return PositiveInfinity;
                         }
 
-                        ddouble c = 1d / x, u = ddouble.Ldexp(x, -1);
+                        ddouble c = 1d / x, u = Ldexp(x, -1);
 
                         for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * (h - ddouble.Ldexp(ddouble.HarmonicNumber(k) + ddouble.HarmonicNumber(k + 1), -1));
+                            ddouble dc = u * r[k] * (h - Ldexp(HarmonicNumber(k) + HarmonicNumber(k + 1), -1));
 
                             ddouble c_next = c + dc;
 
-                            if (c == c_next || !ddouble.IsFinite(c_next)) {
+                            if (c == c_next || !IsFinite(c_next)) {
                                 conv_times++;
                             }
                             else {
@@ -769,9 +769,9 @@ namespace DoubleDouble {
                         private readonly List<ddouble> table = [];
 
                         public DoubleFactDenomTable(ddouble nu) {
-                            this.c = ddouble.Gamma(nu + 1d);
+                            this.c = Gamma(nu + 1d);
                             this.nu = nu;
-                            this.table.Add(ddouble.Rcp(c));
+                            this.table.Add(Rcp(c));
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -786,7 +786,7 @@ namespace DoubleDouble {
                             for (long i = table.Count; i <= k; i++) {
                                 c *= checked((nu + 2 * i) * (nu + (2 * i - 1)) * (32 * i * (2 * i - 1)));
 
-                                table.Add(ddouble.Rcp(c));
+                                table.Add(Rcp(c));
                             }
 
                             return table[k];
@@ -798,7 +798,7 @@ namespace DoubleDouble {
                         private readonly List<ddouble> table = [];
 
                         public X2DenomTable(ddouble nu) {
-                            ddouble a = ddouble.Rcp(4d * (nu + 1d));
+                            ddouble a = Rcp(4d * (nu + 1d));
 
                             this.nu = nu;
                             this.table.Add(a);
@@ -814,7 +814,7 @@ namespace DoubleDouble {
                             }
 
                             for (long i = table.Count; i <= k; i++) {
-                                ddouble a = ddouble.Rcp(checked(4d * (2 * i + 1) * (2 * i + 1 + nu)));
+                                ddouble a = Rcp(checked(4d * (2 * i + 1) * (2 * i + 1 + nu)));
 
                                 table.Add(a);
                             }
@@ -829,9 +829,9 @@ namespace DoubleDouble {
                         private readonly List<ddouble> table = [];
 
                         public GammaDenomTable(ddouble nu) {
-                            this.c = ddouble.Gamma(nu + 1d);
+                            this.c = Gamma(nu + 1d);
                             this.nu = nu;
-                            this.table.Add(ddouble.Rcp(c));
+                            this.table.Add(Rcp(c));
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -846,7 +846,7 @@ namespace DoubleDouble {
                             for (int i = table.Count; i <= k; i++) {
                                 c *= nu + i;
 
-                                table.Add(ddouble.Rcp(c));
+                                table.Add(Rcp(c));
                             }
 
                             return table[k];
@@ -859,7 +859,7 @@ namespace DoubleDouble {
                         private readonly List<ddouble> table = [];
 
                         public GammaTable(ddouble nu) {
-                            this.c = ddouble.Gamma(nu + 1d);
+                            this.c = Gamma(nu + 1d);
                             this.nu = nu;
                             this.table.Add(c);
                         }
@@ -889,7 +889,7 @@ namespace DoubleDouble {
                         private readonly List<ddouble> table = [];
 
                         public GammaPNTable(ddouble nu) {
-                            this.r = ddouble.Pow(4d, nu);
+                            this.r = Pow(4d, nu);
                             this.positive_table = new(nu);
                             this.negative_table = new(-nu);
                         }
@@ -934,7 +934,7 @@ namespace DoubleDouble {
                             for (long i = table.Count; i <= k; i++) {
                                 c *= checked(32 * i * (2 * i - 1));
 
-                                table.Add(ddouble.Rcp(c));
+                                table.Add(Rcp(c));
                             }
 
                             return table[k];
@@ -945,7 +945,7 @@ namespace DoubleDouble {
                         private readonly List<ddouble> table = [];
 
                         public Y0CoefTable() {
-                            this.table.Add(ddouble.Rcp(4));
+                            this.table.Add(Rcp(4));
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -958,7 +958,7 @@ namespace DoubleDouble {
                             }
 
                             for (long i = table.Count; i <= k; i++) {
-                                ddouble c = ddouble.Rcp(checked(4 * (2 * i + 1) * (2 * i + 1) * (2 * i + 1)));
+                                ddouble c = Rcp(checked(4 * (2 * i + 1) * (2 * i + 1) * (2 * i + 1)));
 
                                 table.Add(c);
                             }
@@ -1034,7 +1034,7 @@ namespace DoubleDouble {
                             for (long i = table.Count; i <= k; i++) {
                                 c *= 4 * i;
 
-                                table.Add(ddouble.Rcp(c));
+                                table.Add(Rcp(c));
                             }
 
                             return table[k];
@@ -1062,7 +1062,7 @@ namespace DoubleDouble {
                             for (long i = table.Count; i <= k; i++) {
                                 c *= checked(4 * i * i);
 
-                                table.Add(ddouble.Rcp(c));
+                                table.Add(Rcp(c));
                             }
 
                             return table[k];
@@ -1090,7 +1090,7 @@ namespace DoubleDouble {
                             for (int i = table.Count; i <= k; i++) {
                                 c *= checked(4 * i * (i + 1));
 
-                                table.Add(ddouble.Rcp(c));
+                                table.Add(Rcp(c));
                             }
 
                             return table[k];
@@ -1102,53 +1102,53 @@ namespace DoubleDouble {
                     static readonly Dictionary<ddouble, HankelExpansion> table = [];
 
                     public static ddouble BesselJ(ddouble nu, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
                             table.Add(nu, hankel);
                         }
 
-                        if (ddouble.IsPositiveInfinity(x)) {
-                            return ddouble.Zero;
+                        if (IsPositiveInfinity(x)) {
+                            return Zero;
                         }
 
                         (ddouble c_even, ddouble c_odd) = hankel.BesselJYCoef(x);
 
                         ddouble omega = hankel.Omega(x);
 
-                        ddouble cos = ddouble.Cos(omega), sin = ddouble.Sin(omega);
+                        ddouble cos = Cos(omega), sin = Sin(omega);
 
-                        ddouble y = ddouble.Sqrt(2d / (ddouble.PI * x)) * (cos * c_even - sin * c_odd);
+                        ddouble y = Sqrt(2d / (PI * x)) * (cos * c_even - sin * c_odd);
 
                         return y;
                     }
 
                     public static ddouble BesselY(ddouble nu, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
                             table.Add(nu, hankel);
                         }
 
-                        if (ddouble.IsPositiveInfinity(x)) {
-                            return ddouble.Zero;
+                        if (IsPositiveInfinity(x)) {
+                            return Zero;
                         }
 
                         (ddouble c_even, ddouble c_odd) = hankel.BesselJYCoef(x);
 
                         ddouble omega = hankel.Omega(x);
 
-                        ddouble cos = ddouble.Cos(omega), sin = ddouble.Sin(omega);
+                        ddouble cos = Cos(omega), sin = Sin(omega);
 
-                        ddouble y = ddouble.Sqrt(2d / (ddouble.PI * x)) * (sin * c_even + cos * c_odd);
+                        ddouble y = Sqrt(2d / (PI * x)) * (sin * c_even + cos * c_odd);
 
                         return y;
                     }
 
                     public static ddouble BesselI(ddouble nu, ddouble x, bool scale = false) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
@@ -1157,22 +1157,22 @@ namespace DoubleDouble {
 
                         ddouble c = hankel.BesselICoef(x);
 
-                        ddouble y = ddouble.Sqrt(1d / (2d * ddouble.PI * x)) * c;
+                        ddouble y = Sqrt(1d / (2d * PI * x)) * c;
 
-                        if (ddouble.IsPositiveInfinity(x) || ddouble.IsZero(y)) {
-                            return scale ? ddouble.PlusZero : ddouble.PositiveInfinity;
+                        if (IsPositiveInfinity(x) || IsZero(y)) {
+                            return scale ? PlusZero : PositiveInfinity;
                         }
 
                         if (!scale) {
-                            y *= ddouble.Exp(x);
+                            y *= Exp(x);
                         }
 
                         return y;
                     }
 
                     public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
-                        Debug.Assert(ddouble.IsPositive(nu));
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(nu));
+                        Debug.Assert(IsPositive(x));
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
@@ -1181,14 +1181,14 @@ namespace DoubleDouble {
 
                         ddouble c = hankel.BesselKCoef(x);
 
-                        ddouble y = ddouble.Sqrt(ddouble.PI / (2d * x)) * c;
+                        ddouble y = Sqrt(PI / (2d * x)) * c;
 
-                        if (ddouble.IsPositiveInfinity(x) || ddouble.IsZero(y)) {
-                            return ddouble.PlusZero;
+                        if (IsPositiveInfinity(x) || IsZero(y)) {
+                            return PlusZero;
                         }
 
                         if (!scale) {
-                            y *= ddouble.Exp(-x);
+                            y *= Exp(-x);
                         }
 
                         return y;
@@ -1214,7 +1214,7 @@ namespace DoubleDouble {
                         }
 
                         public ddouble Omega(ddouble x) {
-                            ddouble omega = x - ddouble.Ldexp(2 * Nu + 1, -2) * ddouble.PI;
+                            ddouble omega = x - Ldexp(2d * Nu + 1d, -2) * PI;
 
                             return omega;
                         }
@@ -1231,8 +1231,8 @@ namespace DoubleDouble {
                                 c_even += dc_even;
                                 c_odd += dc_odd;
 
-                                if (((long)ddouble.ILogB(c_even) - ddouble.ILogB(dc_even) >= 106L || ddouble.IsZero(dc_even)) &&
-                                    ((long)ddouble.ILogB(c_odd) - ddouble.ILogB(dc_odd) >= 106L || ddouble.IsZero(dc_odd))) {
+                                if (((long)ILogB(c_even) - ILogB(dc_even) >= 106L || IsZero(dc_even)) &&
+                                    ((long)ILogB(c_odd) - ILogB(dc_odd) >= 106L || IsZero(dc_odd))) {
 
                                     break;
                                 }
@@ -1253,7 +1253,7 @@ namespace DoubleDouble {
 
                                 c += dc;
 
-                                if ((long)ddouble.ILogB(c) - ddouble.ILogB(dc) >= 106L || ddouble.IsZero(dc)) {
+                                if ((long)ILogB(c) - ILogB(dc) >= 106L || IsZero(dc)) {
                                     break;
                                 }
 
@@ -1273,7 +1273,7 @@ namespace DoubleDouble {
 
                                 c += dc;
 
-                                if ((long)ddouble.ILogB(c) - ddouble.ILogB(dc) >= 106L || ddouble.IsZero(dc)) {
+                                if ((long)ILogB(c) - ILogB(dc) >= 106L || IsZero(dc)) {
                                     break;
                                 }
 
@@ -1302,7 +1302,7 @@ namespace DoubleDouble {
                     }
 
                     public static ddouble BesselJ(int n, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         int m = BesselJYIterM((double)x);
 
@@ -1312,7 +1312,7 @@ namespace DoubleDouble {
                     }
 
                     public static ddouble BesselJ(ddouble nu, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         int m = BesselJYIterM((double)x);
 
@@ -1329,7 +1329,7 @@ namespace DoubleDouble {
                     }
 
                     public static ddouble BesselY(int n, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         int m = BesselJYIterM((double)x);
 
@@ -1339,7 +1339,7 @@ namespace DoubleDouble {
                     }
 
                     public static ddouble BesselY(ddouble nu, ddouble x) {
-                        Debug.Assert(ddouble.IsPositive(x));
+                        Debug.Assert(IsPositive(x));
 
                         int m = BesselJYIterM((double)x);
 
@@ -1351,12 +1351,12 @@ namespace DoubleDouble {
                         else {
                             ddouble y = BesselYKernel(nu, x, m);
 
-                            if (!ddouble.IsFinite(y)) {
+                            if (!IsFinite(y)) {
                                 if (n >= 0) {
-                                    y = ddouble.NegativeInfinity;
+                                    y = NegativeInfinity;
                                 }
                                 else {
-                                    y = ((-n) & 1) == 1 ? ddouble.PositiveInfinity : ddouble.NegativeInfinity;
+                                    y = ((-n) & 1) == 1 ? PositiveInfinity : NegativeInfinity;
                                 }
                             }
 
@@ -1388,7 +1388,7 @@ namespace DoubleDouble {
                     }
 
                     private static ddouble BesselJKernel(ddouble nu, ddouble x, int m) {
-                        int n = (int)ddouble.Floor(nu);
+                        int n = (int)Floor(nu);
                         ddouble alpha = nu - n;
 
                         Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
@@ -1409,7 +1409,7 @@ namespace DoubleDouble {
                                     lambda += f0 * phi[k / 2];
                                 }
 
-                                (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+                                (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
 
                                 if (k - 1 == n) {
                                     fn = f0;
@@ -1417,7 +1417,7 @@ namespace DoubleDouble {
                             }
 
                             lambda += f0 * phi[0];
-                            lambda *= ddouble.Pow(ddouble.Ldexp(v, 1), alpha);
+                            lambda *= Pow(Ldexp(v, 1), alpha);
 
                             ddouble yn = fn / lambda;
 
@@ -1429,14 +1429,14 @@ namespace DoubleDouble {
                                     lambda += f0 * phi[k / 2];
                                 }
 
-                                (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+                                (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
                             }
 
                             lambda += f0 * phi[0];
-                            lambda *= ddouble.Pow(ddouble.Ldexp(v, 1), alpha);
+                            lambda *= Pow(Ldexp(v, 1), alpha);
 
                             for (int k = 0; k > n; k--) {
-                                (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+                                (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
                             }
 
                             ddouble yn = f0 / lambda;
@@ -1459,7 +1459,7 @@ namespace DoubleDouble {
                             (f0, f1) = (2 * k * v * f0 - f1, f0);
                         }
 
-                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+                        lambda = Ldexp(lambda, 1) + f0;
 
                         ddouble y0 = f0 / lambda;
 
@@ -1480,7 +1480,7 @@ namespace DoubleDouble {
                             (f0, f1) = (2 * k * v * f0 - f1, f0);
                         }
 
-                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+                        lambda = Ldexp(lambda, 1) + f0;
 
                         ddouble y1 = f1 / lambda;
 
@@ -1505,7 +1505,7 @@ namespace DoubleDouble {
                             }
                         }
 
-                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+                        lambda = Ldexp(lambda, 1) + f0;
 
                         ddouble yn = fn / lambda;
 
@@ -1530,7 +1530,7 @@ namespace DoubleDouble {
                     }
 
                     private static ddouble BesselYKernel(ddouble nu, ddouble x, int m) {
-                        int n = (int)ddouble.Round(nu);
+                        int n = (int)Round(nu);
                         ddouble alpha = nu - n;
 
                         Debug.Assert(m >= 2 && (m & 1) == 0 && n < m);
@@ -1563,21 +1563,21 @@ namespace DoubleDouble {
                                 sxo += f0 * xi[k];
                             }
 
-                            (f0, f1) = (ddouble.Ldexp(k + alpha, 1) * v * f0 - f1, f0);
+                            (f0, f1) = (Ldexp(k + alpha, 1) * v * f0 - f1, f0);
                         }
 
-                        ddouble s = ddouble.Pow(ddouble.Ldexp(v, 1), alpha), sqs = s * s;
+                        ddouble s = Pow(Ldexp(v, 1), alpha), sqs = s * s;
 
                         lambda += f0 * phi[0];
                         lambda *= s;
 
-                        ddouble rcot = 1d / ddouble.TanPI(alpha), rgamma = ddouble.Gamma(1d + alpha), rsqgamma = rgamma * rgamma;
-                        ddouble r = ddouble.Ldexp(ddouble.RcpPI * sqs, 1);
-                        ddouble p = sqs * rsqgamma * ddouble.RcpPI;
+                        ddouble rcot = 1d / TanPI(alpha), rgamma = Gamma(1d + alpha), rsqgamma = rgamma * rgamma;
+                        ddouble r = Ldexp(RcpPI * sqs, 1);
+                        ddouble p = sqs * rsqgamma * RcpPI;
 
-                        ddouble xi0 = -ddouble.Ldexp(v, 1) * p;
+                        ddouble xi0 = -Ldexp(v, 1) * p;
 
-                        (ddouble eta0, ddouble xi1) = ddouble.ILogB(alpha) >= BesselYEpsExponent
+                        (ddouble eta0, ddouble xi1) = ILogB(alpha) >= BesselYEpsExponent
                             ? (rcot - p / alpha, rcot + p * (alpha * (alpha + 1d) + 1d) / (alpha * (alpha - 1d)))
                             : BesselYEta0Xi1Eps(alpha, x);
 
@@ -1596,7 +1596,7 @@ namespace DoubleDouble {
                         }
                         if (n >= 0) {
                             for (int k = 1; k < n; k++) {
-                                (y1, y0) = (ddouble.Ldexp(k + alpha, 1) * v * y1 - y0, y1);
+                                (y1, y0) = (Ldexp(k + alpha, 1) * v * y1 - y0, y1);
                             }
 
                             ddouble yn = y1 / lambda;
@@ -1605,7 +1605,7 @@ namespace DoubleDouble {
                         }
                         else {
                             for (int k = 0; k > n; k--) {
-                                (y0, y1) = (ddouble.Ldexp(k + alpha, 1) * v * y0 - y1, y0);
+                                (y0, y1) = (Ldexp(k + alpha, 1) * v * y0 - y1, y0);
                             }
 
                             ddouble yn = y0 / lambda;
@@ -1617,7 +1617,7 @@ namespace DoubleDouble {
                     private static (ddouble eta0, ddouble xi1) BesselYEta0Xi1Eps(ddouble alpha, ddouble x) {
                         const int N = 7;
 
-                        ddouble lnx = ddouble.Log(x);
+                        ddouble lnx = Log(x);
 
                         ddouble eta0 = 0d, xi1 = 0d;
                         for (int i = N, k = 0; i >= 0; i--) {
@@ -1658,9 +1658,9 @@ namespace DoubleDouble {
                             (f0, f1) = (2 * k * v * f0 - f1, f0);
                         }
 
-                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+                        lambda = Ldexp(lambda, 1) + f0;
 
-                        ddouble y0 = ddouble.Ldexp((se + f0 * (ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma)) / (ddouble.PI * lambda), 1);
+                        ddouble y0 = Ldexp((se + f0 * (Log(Ldexp(x, -1)) + EulerGamma)) / (PI * lambda), 1);
 
                         return y0;
                     }
@@ -1693,9 +1693,9 @@ namespace DoubleDouble {
                             (f0, f1) = (2 * k * v * f0 - f1, f0);
                         }
 
-                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+                        lambda = Ldexp(lambda, 1) + f0;
 
-                        ddouble y1 = ddouble.Ldexp((sx - v * f0 + (ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma - 1d) * f1) / (lambda * ddouble.PI), 1);
+                        ddouble y1 = Ldexp((sx - v * f0 + (Log(Ldexp(x, -1)) + EulerGamma - 1d) * f1) / (lambda * PI), 1);
 
                         return y1;
                     }
@@ -1729,9 +1729,9 @@ namespace DoubleDouble {
                             (f0, f1) = (2 * k * v * f0 - f1, f0);
                         }
 
-                        lambda = ddouble.Ldexp(lambda, 1) + f0;
+                        lambda = Ldexp(lambda, 1) + f0;
 
-                        ddouble c = ddouble.Log(ddouble.Ldexp(x, -1)) + ddouble.EulerGamma;
+                        ddouble c = Log(Ldexp(x, -1)) + EulerGamma;
 
                         ddouble y0 = se + f0 * c;
                         ddouble y1 = sx - v * f0 + (c - 1d) * f1;
@@ -1740,7 +1740,7 @@ namespace DoubleDouble {
                             (y1, y0) = (2 * k * v * y1 - y0, y1);
                         }
 
-                        ddouble yn = ddouble.Ldexp(y1 / (lambda * ddouble.PI), 1);
+                        ddouble yn = Ldexp(y1 / (lambda * PI), 1);
 
                         return yn;
                     }
@@ -1756,7 +1756,7 @@ namespace DoubleDouble {
 
                             this.alpha = alpha;
 
-                            ddouble phi0 = ddouble.Gamma(1d + alpha);
+                            ddouble phi0 = Gamma(1d + alpha);
                             ddouble phi1 = phi0 * (alpha + 2d);
 
                             this.g = phi0;
@@ -1797,10 +1797,10 @@ namespace DoubleDouble {
 
                             this.alpha = alpha;
 
-                            ddouble psi0 = ddouble.Gamma(1d + alpha);
-                            ddouble psi1 = ddouble.Ldexp(psi0, 1) * (1d + alpha);
+                            ddouble psi0 = Gamma(1d + alpha);
+                            ddouble psi1 = Ldexp(psi0, 1) * (1d + alpha);
 
-                            this.g = ddouble.Ldexp(psi0, 1);
+                            this.g = Ldexp(psi0, 1);
 
                             this.table.Add(psi0);
                             this.table.Add(psi1);
@@ -1816,7 +1816,7 @@ namespace DoubleDouble {
                             }
 
                             for (int i = table.Count; i <= k; i++) {
-                                g = g * (ddouble.Ldexp(alpha, 1) + i - 1d) / i;
+                                g = g * (Ldexp(alpha, 1) + i - 1d) / i;
 
                                 ddouble phi = g * (alpha + i);
 
@@ -1837,10 +1837,10 @@ namespace DoubleDouble {
                             Debug.Assert(alpha > -1d && alpha < 1d, nameof(alpha));
 
                             this.alpha = alpha;
-                            this.table.Add(ddouble.NaN);
+                            this.table.Add(NaN);
 
                             if (alpha != 0d) {
-                                ddouble c = ddouble.Gamma(1d + alpha);
+                                ddouble c = Gamma(1d + alpha);
                                 c *= c;
                                 this.g = 1d / (1d - alpha) * c;
 
@@ -1861,7 +1861,7 @@ namespace DoubleDouble {
 
                             for (int i = table.Count; i <= k; i++) {
                                 if (alpha != 0d) {
-                                    g = -g * (alpha + i - 1) * (ddouble.Ldexp(alpha, 1) + i - 1d) / (i * (i - alpha));
+                                    g = -g * (alpha + i - 1) * (Ldexp(alpha, 1) + i - 1d) / (i * (i - alpha));
 
                                     ddouble eta = g * (alpha + 2 * i);
 
@@ -1887,8 +1887,8 @@ namespace DoubleDouble {
                             Debug.Assert(alpha >= -1d && alpha < 1d, nameof(alpha));
 
                             this.alpha = alpha;
-                            this.table.Add(ddouble.NaN);
-                            this.table.Add(ddouble.NaN);
+                            this.table.Add(NaN);
+                            this.table.Add(NaN);
 
                             this.eta = eta;
                         }
@@ -1917,7 +1917,7 @@ namespace DoubleDouble {
                                         table.Add((i & 2) > 0 ? xi : -xi);
                                     }
                                     else {
-                                        table.Add(ddouble.NaN);
+                                        table.Add(NaN);
                                     }
                                 }
                             }
@@ -1981,7 +1981,7 @@ namespace DoubleDouble {
                             return y;
                         }
                         else {
-                            int n = (int)ddouble.Floor(nu);
+                            int n = (int)Floor(nu);
                             ddouble alpha = nu - n;
 
                             ddouble y0 = BesselK(alpha, x, scale);
@@ -1990,7 +1990,7 @@ namespace DoubleDouble {
                             ddouble v = 1d / x;
 
                             for (int k = 1; k < n; k++) {
-                                (y1, y0) = (ddouble.Ldexp(k + alpha, 1) * v * y1 + y0, y1);
+                                (y1, y0) = (Ldexp(k + alpha, 1) * v * y1 + y0, y1);
                             }
 
                             return y1;
@@ -2008,10 +2008,10 @@ namespace DoubleDouble {
                             sd = sd * t + d;
                         }
 
-                        ddouble y = ddouble.Sqrt(ddouble.Ldexp(t * ddouble.PI, -1)) * sc / sd;
+                        ddouble y = Sqrt(Ldexp(t * PI, -1)) * sc / sd;
 
                         if (!scale) {
-                            y *= ddouble.Exp(-x);
+                            y *= Exp(-x);
                         }
 
                         return y;
@@ -2056,15 +2056,15 @@ namespace DoubleDouble {
 
                 public static class Interpolation {
                     public static ddouble BesselKPowerSeries(ddouble nu, ddouble x, bool scale = false) {
-                        int n = (int)ddouble.Round(nu);
+                        int n = (int)Round(nu);
                         ddouble alpha = nu - n;
 
                         Debug.Assert(n >= 0);
-                        Debug.Assert(ddouble.Abs(alpha) <= BesselKInterpolationDelta);
+                        Debug.Assert(Abs(alpha) <= BesselKInterpolationDelta);
 
                         ddouble y0 = PowerSeries.BesselK(0, x, scale);
 
-                        if (!ddouble.IsFinite(y0)) {
+                        if (!IsFinite(y0)) {
                             return y0;
                         }
 
@@ -2076,11 +2076,11 @@ namespace DoubleDouble {
                         ddouble y4 = PowerSeries.BesselK(dnu * 1.75d, x, scale);
                         ddouble y5 = PowerSeries.BesselK(dnu * 2d, x, scale);
 
-                        if (!ddouble.IsFinite(y1) || !ddouble.IsFinite(y2) || !ddouble.IsFinite(y3) || !ddouble.IsFinite(y4) || !ddouble.IsFinite(y5)) {
+                        if (!IsFinite(y1) || !IsFinite(y2) || !IsFinite(y3) || !IsFinite(y4) || !IsFinite(y5)) {
                             return y1;
                         }
 
-                        ddouble t = ddouble.Abs(alpha) / BesselKInterpolationDelta;
+                        ddouble t = Abs(alpha) / BesselKInterpolationDelta;
                         ddouble k0 = InterpolateEvenConvex(t, y0, y1, y2, y3, y4, y5);
 
                         if (n == 0) {
@@ -2089,7 +2089,7 @@ namespace DoubleDouble {
 
                         ddouble i0 = PowerSeries.BesselI(alpha, x), i1 = PowerSeries.BesselI(alpha + 1d, x);
 
-                        ddouble k1 = ((scale ? ddouble.Exp(x) : 1d) - i1 * k0 * x) / (i0 * x);
+                        ddouble k1 = ((scale ? Exp(x) : 1d) - i1 * k0 * x) / (i0 * x);
 
                         if (n == 1) {
                             return k1;
@@ -2098,7 +2098,7 @@ namespace DoubleDouble {
                         ddouble v = 1d / x;
 
                         for (int k = 1; k < n; k++) {
-                            (k1, k0) = (ddouble.Ldexp(k + alpha, 1) * v * k1 + k0, k1);
+                            (k1, k0) = (Ldexp(k + alpha, 1) * v * k1 + k0, k1);
                         }
 
                         return k1;
