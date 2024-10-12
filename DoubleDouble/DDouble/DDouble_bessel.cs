@@ -1220,7 +1220,7 @@ namespace DoubleDouble {
                         }
 
                         public (ddouble c_even, ddouble c_odd) BesselJYCoef(ddouble x, int terms = 35) {
-                            ddouble v = 1 / (x * x), w = -v;
+                            ddouble v = 1d / (x * x), w = -v;
 
                             ddouble c_even = ACoef(0), c_odd = ACoef(1);
 
