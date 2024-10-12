@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace DoubleDoubleSandbox {
     public static class Program {
         static void Main() {
-            ddouble y = Recurrence.BesselI(-20.75, 2.5, scale: true);
+            ddouble y = Recurrence.BesselJ(27.5, 2.5);
 
             Console.WriteLine("END");
             Console.Read();
@@ -15,14 +15,43 @@ namespace DoubleDoubleSandbox {
 
         public static class Recurrence {
 
+            public static ddouble BesselJ(ddouble nu, ddouble x) {
+                Debug.Assert(nu > MaxN || nu < -MaxN);
+
+                ddouble nu_abs = ddouble.Abs(nu);
+                int n = (int)ddouble.Floor(nu_abs);
+                ddouble alpha = nu_abs - n;
+
+                ddouble v = 1d / x;
+
+                if (ddouble.IsPositive(nu)) {
+                    ddouble j0 = ddouble.BesselJ(alpha + (MaxN - 2), x);
+                    ddouble j1 = ddouble.BesselJ(alpha + (MaxN - 1), x);
+
+                    for (int k = MaxN - 1; k < n; k++) {
+                        (j1, j0) = (ddouble.Ldexp(k + alpha, 1) * v * j1 - j0, j1);
+                    }
+
+                    return j1;
+                }
+                else { 
+                    ddouble j0 = ddouble.BesselJ(-(alpha + (MaxN - 2)), x);
+                    ddouble j1 = ddouble.BesselJ(-(alpha + (MaxN - 1)), x);
+
+                    for (int k = MaxN - 1; k < n; k++) {
+                        (j1, j0) = (-ddouble.Ldexp(k + alpha, 1) * v * j1 - j0, j1);
+                    }
+
+                    return j1;
+                }
+            }
+
             public static ddouble BesselI(ddouble nu, ddouble x, bool scale) {
-                bool is_plus = ddouble.IsPositive(nu);
-                nu = ddouble.Abs(nu);
+                Debug.Assert(nu > MaxN || nu < -MaxN);
 
-                Debug.Assert(nu > MaxN);
-
-                int n = (int)ddouble.Floor(nu);
-                ddouble alpha = nu - n;
+                ddouble nu_abs = ddouble.Abs(nu);
+                int n = (int)ddouble.Floor(nu_abs);
+                ddouble alpha = nu_abs - n;
 
                 ddouble v = 1d / x;
 
@@ -30,7 +59,7 @@ namespace DoubleDoubleSandbox {
                 ddouble s = 1d;
 
                 for (int i = 0; i <= 1024; i++) {
-                    ddouble r = ddouble.Ldexp((nu + i) * v, 1);
+                    ddouble r = ddouble.Ldexp((nu_abs + i) * v, 1);
 
                     (a0, b0, a1, b1) = (a1, b1, r * a1 + a0, r * b1 + b0);
                     s = a1 / b1;
@@ -68,13 +97,13 @@ namespace DoubleDoubleSandbox {
                     -(int)long.Min(int.MaxValue, exp_sum)
                 );
 
-                if (is_plus) {
+                if (ddouble.IsPositive(nu)) {
                     if (!scale) {
                         y *= ddouble.Exp(x);
                     }
                 }
-                else if (!ddouble.IsInteger(nu)) {
-                    ddouble bk = 2d * ddouble.RcpPI * ddouble.SinPI(nu) * BesselK(nu, x, scale: true);
+                else if (!ddouble.IsInteger(nu_abs)) {
+                    ddouble bk = 2d * ddouble.RcpPI * ddouble.SinPI(nu_abs) * BesselK(nu_abs, x, scale: true);
 
                     y += bk * (scale ? ddouble.Exp(-2d * x) : ddouble.Exp(-x));
                 }
