@@ -14,6 +14,10 @@ namespace DoubleDouble {
                 return NaN;
             }
 
+            if (UseRecurrence(n)) {
+                return Recurrence.BesselJ(n, x);
+            }
+
             if (x >= HankelThreshold) {
                 return Limit.BesselJ(n, x);
             }
@@ -30,6 +34,10 @@ namespace DoubleDouble {
 
             if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
+            }
+
+            if (UseRecurrence(nu)) {
+                return Recurrence.BesselJ(nu, x);
             }
 
             if (x >= HankelThreshold) {
@@ -50,6 +58,10 @@ namespace DoubleDouble {
                 return NaN;
             }
 
+            if (UseRecurrence(n)) {
+                return Recurrence.BesselY(n, x);
+            }
+
             if (x >= HankelThreshold) {
                 return Limit.BesselY(n, x);
             }
@@ -66,6 +78,10 @@ namespace DoubleDouble {
 
             if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
+            }
+
+            if (UseRecurrence(nu)) {
+                return Recurrence.BesselY(nu, x);
             }
 
             if (x >= HankelThreshold) {
@@ -88,6 +104,10 @@ namespace DoubleDouble {
                 return NaN;
             }
 
+            if (UseRecurrence(n)) {
+                return Recurrence.BesselI(n, x, scale);
+            }
+
             if (x >= HankelThreshold) {
                 return Limit.BesselI(n, x, scale);
             }
@@ -103,6 +123,10 @@ namespace DoubleDouble {
                 return NaN;
             }
 
+            if (UseRecurrence(nu)) {
+                return Recurrence.BesselI(nu, x, scale);
+            }
+
             if (x >= HankelThreshold) {
                 return Limit.BesselI(nu, x, scale);
             }
@@ -116,6 +140,10 @@ namespace DoubleDouble {
 
             if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
+            }
+
+            if (UseRecurrence(n)) {
+                return Recurrence.BesselK(n, x, scale);
             }
 
             n = int.Abs(n);
@@ -138,6 +166,10 @@ namespace DoubleDouble {
                 return NaN;
             }
 
+            if (UseRecurrence(nu)) {
+                return Recurrence.BesselK(nu, x, scale);
+            }
+
             nu = Abs(nu);
 
             if (x >= HankelThreshold) {
@@ -158,7 +190,8 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Bessel {
-                public const int MaxN = 16;
+                public const int RecurrenceMaxN = 256;
+                public const int DirectMaxN = 16;
                 public static readonly double Eps = double.ScaleB(1, -105);
                 public static readonly double BesselYNearZero = 0.125d;
                 public static readonly double BesselYForcedMillerBackwardThreshold = double.ScaleB(1, -8);
@@ -173,21 +206,29 @@ namespace DoubleDouble {
                 }
 
                 public static void CheckNu(ddouble nu) {
-                    if (!(Abs(nu) <= MaxN)) {
+                    if (!(Abs(nu) <= RecurrenceMaxN)) {
                         throw new ArgumentOutOfRangeException(
                             nameof(nu),
-                            $"In the calculation of the Bessel function, nu with an absolute value greater than {MaxN} is not supported."
+                            $"In the calculation of the Bessel function, nu with an absolute value greater than {RecurrenceMaxN} is not supported."
                         );
                     }
                 }
 
                 public static void CheckN(int n) {
-                    if (n < -MaxN || n > MaxN) {
+                    if (n < -RecurrenceMaxN || n > RecurrenceMaxN) {
                         throw new ArgumentOutOfRangeException(
                             nameof(n),
-                            $"In the calculation of the Bessel function, n with an absolute value greater than {MaxN} is not supported."
+                            $"In the calculation of the Bessel function, n with an absolute value greater than {RecurrenceMaxN} is not supported."
                         );
                     }
+                }
+
+                public static bool UseRecurrence(int n) {
+                    return n < -DirectMaxN || n > DirectMaxN;
+                }
+
+                public static bool UseRecurrence(ddouble nu) {
+                    return ddouble.Abs(nu) > DirectMaxN;
                 }
 
                 public static bool NearlyInteger(ddouble nu, out int n) {
@@ -2115,6 +2156,247 @@ namespace DoubleDouble {
                             + t2 * (-1317888d * y0 + 13045760d * y1 - 25690112d * y2 + 20643840d * y3 - 7864320d * y4 + 1182720d * y5))))) / 56756700d;
 
                         return y;
+                    }
+                }
+
+                public static class Recurrence {
+
+                    public static ddouble BesselJ(ddouble nu, ddouble x) {
+                        Debug.Assert(nu >= DirectMaxN || nu <= -DirectMaxN);
+
+                        if (IsPositiveInfinity(x)) {
+                            return 0d;
+                        }
+
+                        ddouble nu_abs = Abs(nu);
+                        int n = (int)Floor(nu_abs);
+                        ddouble alpha = nu_abs - n;
+
+                        ddouble v = 1d / x;
+
+                        if (IsPositive(nu)) {
+                            (ddouble a0, ddouble b0, ddouble a1, ddouble b1) = (1d, 0d, 0d, 1d);
+
+                            ddouble r = Ldexp(nu_abs * v, 1);
+                            (a0, b0, a1, b1) = (a1, b1, r * a1 + a0, r * b1 + b0);
+
+                            ddouble s = 1d;
+
+                            for (int i = 1; i <= 1024; i++) {
+                                r = Ldexp((nu_abs + i) * v, 1);
+
+                                (a0, b0, a1, b1) = (a1, b1, r * a1 - a0, r * b1 - b0);
+                                s = a1 / b1;
+
+                                (int exp, (a1, b1)) = AdjustScale(0, (a1, b1));
+                                (a0, b0) = (Ldexp(a0, exp), Ldexp(b0, exp));
+
+                                if (i > 0 && (i & 3) == 0) {
+                                    ddouble r0 = a0 * b1, r1 = a1 * b0;
+                                    if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-30)) {
+                                        break;
+                                    }
+                                }
+                            }
+
+                            long exp_sum = 0;
+                            (ddouble j0, ddouble j1) = (Abs(s) > 1d) ? ((ddouble)1d, 1d / s) : (s, 1d);
+
+                            for (int k = n - 1; k >= DirectMaxN; k--) {
+                                (j1, j0) = (Ldexp(k + alpha, 1) * v * j1 - j0, j1);
+
+                                if (int.Sign(ILogB(j0)) == int.Sign(ILogB(j1))) {
+                                    int exp = ILogB(j1);
+                                    exp_sum += exp;
+                                    (j0, j1) = (Ldexp(j0, -exp), Ldexp(j1, -exp));
+                                }
+                            }
+
+                            ddouble y = Ldexp(
+                                ddouble.BesselJ(alpha + (DirectMaxN - 1), x) / j1,
+                                (int)long.Clamp(-exp_sum, int.MinValue, int.MaxValue)
+                            ) * ((Abs(s) > 1d) ? 1d : s);
+
+                            return y;
+                        }
+                        else {
+                            if (NearlyInteger(nu, out int near_n)) {
+                                return (near_n & 1) == 0 ? Recurrence.BesselJ(-near_n, x) : -Recurrence.BesselJ(-near_n, x);
+                            }
+
+                            ddouble j0 = ddouble.BesselJ(-(alpha + (DirectMaxN - 2)), x);
+                            ddouble j1 = ddouble.BesselJ(-(alpha + (DirectMaxN - 1)), x);
+
+                            for (int k = DirectMaxN - 1; k < n; k++) {
+                                (j1, j0) = (-Ldexp(k + alpha, 1) * v * j1 - j0, j1);
+                            }
+
+                            if (IsNaN(j1)) {
+                                return (((int)Floor(nu) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                            }
+
+                            return j1;
+                        }
+                    }
+
+                    public static ddouble BesselY(ddouble nu, ddouble x) {
+                        Debug.Assert(nu >= DirectMaxN || nu <= -DirectMaxN);
+
+                        if (IsPositiveInfinity(x)) {
+                            return 0d;
+                        }
+
+                        ddouble nu_abs = Abs(nu);
+                        int n = (int)Floor(nu_abs);
+                        ddouble alpha = nu_abs - n;
+
+                        ddouble v = 1d / x;
+
+                        if (IsPositive(nu)) {
+                            ddouble y0 = ddouble.BesselY(alpha + (DirectMaxN - 2), x);
+                            ddouble y1 = ddouble.BesselY(alpha + (DirectMaxN - 1), x);
+
+                            for (int k = DirectMaxN - 1; k < n; k++) {
+                                (y1, y0) = (Ldexp(k + alpha, 1) * v * y1 - y0, y1);
+                            }
+
+                            if (IsNaN(y1)) {
+                                return NegativeInfinity;
+                            }
+
+                            return y1;
+                        }
+                        else {
+                            if (NearlyInteger(nu + 0.5d, out int near_n)) {
+                                return (near_n & 1) == 0 ? Recurrence.BesselJ(-nu, x) : -Recurrence.BesselJ(-nu, x);
+                            }
+
+                            ddouble y0 = ddouble.BesselY(-(alpha + (DirectMaxN - 2)), x);
+                            ddouble y1 = ddouble.BesselY(-(alpha + (DirectMaxN - 1)), x);
+
+                            for (int k = DirectMaxN - 1; k < n; k++) {
+                                (y1, y0) = (-Ldexp(k + alpha, 1) * v * y1 - y0, y1);
+                            }
+
+                            if (IsNaN(y1)) {
+                                return (((int)(Floor(nu + 0.5d)) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                            }
+
+                            return y1;
+                        }
+                    }
+
+                    public static ddouble BesselI(ddouble nu, ddouble x, bool scale) {
+                        Debug.Assert(nu >= DirectMaxN || nu <= -DirectMaxN);
+
+                        if (IsPositiveInfinity(x)) {
+                            return scale ? 0d : PositiveInfinity;
+                        }
+
+                        ddouble nu_abs = Abs(nu);
+                        int n = (int)Floor(nu_abs);
+                        ddouble alpha = nu_abs - n;
+
+                        ddouble v = 1d / x;
+
+                        (ddouble a0, ddouble b0, ddouble a1, ddouble b1) = (1d, 0d, 0d, 1d);
+                        ddouble s = 1d;
+
+                        for (int i = 0; i <= 1024; i++) {
+                            ddouble r = Ldexp((nu_abs + i) * v, 1);
+
+                            (a0, b0, a1, b1) = (a1, b1, r * a1 + a0, r * b1 + b0);
+                            s = a1 / b1;
+
+                            (int exp, (a1, b1)) = AdjustScale(0, (a1, b1));
+                            (a0, b0) = (Ldexp(a0, exp), Ldexp(b0, exp));
+
+                            if (i > 0 && (i & 3) == 0) {
+                                ddouble r0 = a0 * b1, r1 = a1 * b0;
+                                if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-30)) {
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!IsFinite(s)) {
+                            return 0d;
+                        }
+
+                        long exp_sum = 0;
+                        ddouble i0 = 1d, i1 = 1d / s;
+
+                        for (int k = n - 1; k >= DirectMaxN; k--) {
+                            (i1, i0) = (Ldexp(k + alpha, 1) * v * i1 + i0, i1);
+
+                            if (ILogB(i1) > 0) {
+                                int exp = ILogB(i1);
+                                exp_sum += exp;
+                                (i0, i1) = (Ldexp(i0, -exp), Ldexp(i1, -exp));
+                            }
+                        }
+
+                        ddouble y = ddouble.BesselI(alpha + (DirectMaxN - 1), x, scale: true) / i1;
+
+                        if (!scale) {
+                            y *= Exp(x);
+                        }
+
+                        if (IsNaN(y)) {
+                            return scale ? 0d : PositiveInfinity;
+                        }
+
+                        y = Ldexp(y, (int)long.Max(-exp_sum, int.MinValue));
+
+                        if (IsNegative(nu) && !IsInteger(nu_abs)) {
+                            ddouble bk = 2d * RcpPI * SinCosPICache.SinPI(nu_abs) * Recurrence.BesselK(nu_abs, x, scale: false);
+
+                            y += scale ? (bk * Exp(-x)) : bk;
+                        }
+
+                        return y;
+                    }
+
+                    public static ddouble BesselK(ddouble nu, ddouble x, bool scale) {
+                        nu = Abs(nu);
+
+                        Debug.Assert(nu >= DirectMaxN);
+
+                        int n = (int)Floor(nu);
+                        ddouble alpha = nu - n;
+
+                        ddouble k0 = ddouble.BesselK(alpha + (DirectMaxN - 2), x, scale: true);
+                        ddouble k1 = ddouble.BesselK(alpha + (DirectMaxN - 1), x, scale: true);
+
+                        if (IsPositiveInfinity(k0) || IsPositiveInfinity(k1)) {
+                            return PositiveInfinity;
+                        }
+                        if (IsZero(k0) && IsZero(k1)) {
+                            return 0d;
+                        }
+
+                        long exp_sum = 0;
+                        (int exp_bias, (k0, k1)) = AdjustScale(0, (k0, k1));
+
+                        ddouble v = 1d / x;
+
+                        for (int k = DirectMaxN - 1; k < n; k++) {
+                            (k1, k0) = (Ldexp(k + alpha, 1) * v * k1 + k0, k1);
+
+                            if (ILogB(k1) > 0) {
+                                int exp = ILogB(k1);
+                                exp_sum += exp;
+                                (k0, k1) = (Ldexp(k0, -exp), Ldexp(k1, -exp));
+                            }
+                        }
+
+                        if (!scale) {
+                            k1 *= Exp(-x);
+                        }
+
+                        k1 = Ldexp(k1, (int)long.Max(exp_sum - exp_bias, int.MinValue));
+
+                        return k1;
                     }
                 }
             }
