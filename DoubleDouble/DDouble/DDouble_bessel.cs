@@ -2168,6 +2168,13 @@ namespace DoubleDouble {
                             return 0d;
                         }
 
+                        if (ddouble.ILogB(x) < -500) {
+                            if (NearlyInteger(nu, out _) || IsPositive(nu)) {
+                                return 0d;
+                            }
+                            return (((int)Floor(nu) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
+                        }
+
                         ddouble nu_abs = Abs(nu);
                         int n = (int)Floor(nu_abs);
                         ddouble alpha = nu_abs - n;

@@ -12732,6 +12732,24 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsFalse(ddouble.IsNaN(y_zero), $"{nu},0");
             }
 
+            for (ddouble nu = -256; nu <= 256; nu += 1d / 4) {
+                for (ddouble x = ddouble.Ldexp(1, -400); x > 0; x = ddouble.Ldexp(x, -32)) {
+                    ddouble y = ddouble.BesselJ(nu, x);
+
+                    Assert.IsFalse(ddouble.IsNaN(y), $"{nu},{x}");
+                }
+
+                for (ddouble x = ddouble.Ldexp(1, -950); x > 0; x /= 2) {
+                    ddouble y = ddouble.BesselJ(nu, x);
+
+                    Assert.IsFalse(ddouble.IsNaN(y), $"{nu},{x}");
+                }
+
+                ddouble y_zero = ddouble.BesselJ(nu, 0);
+
+                Assert.IsFalse(ddouble.IsNaN(y_zero), $"{nu},0");
+            }
+
             for (int n = -15; n <= 15; n++) {
                 foreach (ddouble alpha in new[] {
                     -double.ScaleB(1, -12), -double.ScaleB(1, -24), -double.ScaleB(1, -48), -double.ScaleB(1, -96),
@@ -12799,6 +12817,24 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             for (ddouble nu = -16; nu <= 16; nu += 1d / 256) {
+                for (ddouble x = ddouble.Ldexp(1, -950); x > 0; x /= 2) {
+                    ddouble y = ddouble.BesselY(nu, x);
+
+                    Assert.IsFalse(ddouble.IsNaN(y), $"{nu},{x}");
+                }
+
+                ddouble y_zero = ddouble.BesselY(nu, 0);
+
+                Assert.IsFalse(ddouble.IsNaN(y_zero), $"{nu},0");
+            }
+
+            for (ddouble nu = -256; nu <= 256; nu += 1d / 4) {
+                for (ddouble x = ddouble.Ldexp(1, -400); x > 0; x = ddouble.Ldexp(x, -32)) {
+                    ddouble y = ddouble.BesselY(nu, x);
+
+                    Assert.IsFalse(ddouble.IsNaN(y), $"{nu},{x}");
+                }
+
                 for (ddouble x = ddouble.Ldexp(1, -950); x > 0; x /= 2) {
                     ddouble y = ddouble.BesselY(nu, x);
 
@@ -12886,6 +12922,18 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsFalse(ddouble.IsNaN(y_zero), $"{nu},0");
             }
 
+            for (ddouble nu = -256; nu <= 256; nu += 1d / 4) {
+                for (ddouble x = ddouble.Ldexp(1, -950); x > 0; x /= 2) {
+                    ddouble y = ddouble.BesselI(nu, x);
+
+                    Assert.IsFalse(ddouble.IsNaN(y), $"{nu},{x}");
+                }
+
+                ddouble y_zero = ddouble.BesselI(nu, 0);
+
+                Assert.IsFalse(ddouble.IsNaN(y_zero), $"{nu},0");
+            }
+
             for (int n = -15; n <= 15; n++) {
                 foreach (ddouble alpha in new[] {
                     -double.ScaleB(1, -12), -double.ScaleB(1, -24), -double.ScaleB(1, -48), -double.ScaleB(1, -96),
@@ -12956,6 +13004,18 @@ namespace DoubleDoubleTest.DDouble {
 
                     Assert.IsFalse(ddouble.IsNaN(y), $"{nu},{x}");
                     Assert.IsTrue(ddouble.IsPositive(y), $"{nu},{x}");
+                }
+
+                ddouble y_zero = ddouble.BesselK(nu, 0);
+
+                Assert.IsFalse(ddouble.IsNaN(y_zero), $"{nu},0");
+            }
+
+            for (ddouble nu = -256; nu <= 256; nu += 1d / 4) {
+                for (ddouble x = ddouble.Ldexp(1, -950); x > 0; x /= 2) {
+                    ddouble y = ddouble.BesselK(nu, x);
+
+                    Assert.IsFalse(ddouble.IsNaN(y), $"{nu},{x}");
                 }
 
                 ddouble y_zero = ddouble.BesselK(nu, 0);
