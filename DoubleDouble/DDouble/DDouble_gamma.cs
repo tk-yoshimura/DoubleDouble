@@ -249,15 +249,13 @@ namespace DoubleDouble {
 
             ddouble y = 0d;
             foreach ((ddouble s, ddouble r) in Consts.Gamma.SterlingTable) {
-                ddouble dy = u * s * (1d - v2 * r);
-                ddouble y_next = y + dy;
+                y = SeriesUtil.Add(y, u * s, 1d, -v2 * r, out bool convergence);
 
-                if (y == y_next) {
+                if (convergence) {
                     break;
                 }
 
                 u *= v4;
-                y = y_next;
             }
 
             return y;
@@ -268,15 +266,13 @@ namespace DoubleDouble {
 
             ddouble y = 0d;
             foreach ((ddouble s, ddouble r) in Consts.Digamma.SterlingTable) {
-                ddouble dy = u * s * (1d - v2 * r);
-                ddouble y_next = y + dy;
+                y = SeriesUtil.Add(y, u * s, 1d, -v2 * r, out bool convergence);
 
-                if (y == y_next) {
+                if (convergence) {
                     break;
                 }
 
                 u *= v4;
-                y = y_next;
             }
 
             return y;

@@ -72,20 +72,17 @@ namespace DoubleDouble {
                 ddouble s = (offset) ? (EulerGamma + Log(x)) : 0d;
                 ddouble u = x * Exp(Ldexp(x, -1));
 
-                for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
-                    ddouble f = TaylorSequence[2 * k + 1] * (1d - x * K4Series.Value(k));
-                    ddouble ds = Ldexp(u * f, -2 * k) * FSeries.Value(k);
-                    ddouble s_next = s + ds;
+                for (int k = 0; k < max_terms; k++) {
+                    s = SeriesUtil.Add(s,
+                        Ldexp(u * TaylorSequence[2 * k + 1], -2 * k) * FSeries.Value(k),
+                        1d, -x * K4Series.Value(k), out bool convergence
+                    );
 
-                    if (s == s_next || IsInfinity(s_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
+                    if (convergence) {
+                        break;
                     }
 
                     u *= x2;
-                    s = s_next;
                 }
 
                 return s;
@@ -99,22 +96,16 @@ namespace DoubleDouble {
                 ddouble s = (offset) ? (EulerGamma + Log(-x)) : 0d;
                 ddouble u = x;
 
-                for (int k = 0, conv_times = 0; k < max_terms && conv_times < 2; k++) {
+                for (int k = 0; k < max_terms; k++) {
                     (ddouble r1, ddouble r2) = NRcpSeries.Value(k);
 
-                    ddouble f = TaylorSequence[2 * k + 1] * (r1 + x * r2);
-                    ddouble ds = u * f;
-                    ddouble s_next = s + ds;
+                    s = SeriesUtil.Add(s, u * TaylorSequence[2 * k + 1], r1, x * r2, out bool convergence);
 
-                    if (s == s_next || IsInfinity(s_next)) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
+                    if (convergence) {
+                        break;
                     }
 
                     u *= x2;
-                    s = s_next;
                 }
 
                 return s;

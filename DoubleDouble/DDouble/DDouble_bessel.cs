@@ -375,20 +375,13 @@ namespace DoubleDouble {
                             return (((int)Floor(nu) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
                         }
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble w = x2 * d[k];
-                            ddouble dc = u * r[k] * (1d - w);
+                        for (int k = 0; k <= terms; k++) {
+                            c = SeriesUtil.Add(c, u * r[k], 1d, -x2 * d[k], out bool convergence);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
-                            }
-                            else {
-                                conv_times = 0;
+                            if (convergence) {
+                                break;
                             }
 
-                            c = c_next;
                             u *= x4;
 
                             if (!IsFinite(c)) {
@@ -433,22 +426,16 @@ namespace DoubleDouble {
 
                         ddouble c = 0d, u = 1d / sin;
 
-                        for (int k = 0, t = 1, conv_times = 0; k <= terms && conv_times < 2; k++, t += 2) {
+                        for (int k = 0, t = 1; k <= terms; k++, t += 2) {
                             ddouble a = t * s * g[t], q = gpn[t];
                             ddouble pa = p / a, qa = q / a;
 
-                            ddouble dc = u * r[k] * (4 * t * nu * (pa + qa) - (x2 - 4 * t * t) * (pa - qa));
+                            c = SeriesUtil.Add(c, u * r[k], 4 * t * nu * (pa + qa), (4 * t * t - x2) * (pa - qa), out bool convergence);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
-                            }
-                            else {
-                                conv_times = 0;
+                            if (convergence) {
+                                break;
                             }
 
-                            c = c_next;
                             u *= x4;
 
                             if (!IsFinite(c)) {
@@ -497,19 +484,20 @@ namespace DoubleDouble {
 
                         ddouble c = 0d, u = Ldexp(RcpPI, 1);
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k)) * (1d - x2 * d[k]) + x2 * q[k]);
+                        for (int k = 0; k <= terms; k++) {
+                            ddouble s = u * r[k];
+                            c = SeriesUtil.Add(c,
+                                s * (h - HarmonicNumber(2 * k)),
+                                1d,
+                                -x2 * d[k],
+                                out bool convergence1
+                            );
+                            c = SeriesUtil.Add(c, s, x2 * q[k], out bool convergence2);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
+                            if (convergence1 && convergence2) {
+                                break;
                             }
-                            else {
-                                conv_times = 0;
-                            }
 
-                            c = c_next;
                             u *= x4;
                         }
 
@@ -539,19 +527,19 @@ namespace DoubleDouble {
 
                         ddouble c = -2d / (x * PI), u = x / Ldexp(PI, 1);
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)) * (1d - x2 * d[k]) + x2 * q[k]);
+                        for (int k = 0; k <= terms; k++) {
+                            ddouble s = u * r[k];
+                            c = SeriesUtil.Add(c,
+                                s * (h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)),
+                                1d, -x2 * d[k],
+                                out bool convergence1
+                            );
+                            c = SeriesUtil.Add(c, s, x2 * q[k], out bool convergence2);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
+                            if (convergence1 && convergence2) {
+                                break;
                             }
-                            else {
-                                conv_times = 0;
-                            }
 
-                            c = c_next;
                             u *= x4;
                         }
 
@@ -596,19 +584,19 @@ namespace DoubleDouble {
                             return NegativeInfinity;
                         }
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * ((h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + n)) * (1d - x2 * d[k]) + x2 * q[k]);
+                        for (int k = 0; k <= terms; k++) {
+                            ddouble s = u * r[k];
+                            c = SeriesUtil.Add(c,
+                                s * (h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + n)),
+                                1d, -x2 * d[k],
+                                out bool convergence1
+                            );
+                            c = SeriesUtil.Add(c, s, x2 * q[k], out bool convergence2);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
+                            if (convergence1 && convergence2) {
+                                break;
                             }
-                            else {
-                                conv_times = 0;
-                            }
 
-                            c = c_next;
                             u *= x4;
                         }
 
@@ -641,20 +629,13 @@ namespace DoubleDouble {
                             return (((int)Floor(nu) & 1) == 0) ? NegativeInfinity : PositiveInfinity;
                         }
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble w = x2 * d[k];
-                            ddouble dc = u * r[k] * (1d + w);
+                        for (int k = 0; k <= terms; k++) {
+                            c = SeriesUtil.Add(c, u * r[k], 1d, x2 * d[k], out bool convergence);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
-                            }
-                            else {
-                                conv_times = 0;
+                            if (convergence) {
+                                break;
                             }
 
-                            c = c_next;
                             u *= x4;
 
                             if (!IsFinite(c)) {
@@ -687,19 +668,13 @@ namespace DoubleDouble {
 
                         ddouble c = 0d, u = PI / Ldexp(SinPI(nu), 1);
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * (tn * gn[k] - tp * gp[k]);
+                        for (int k = 0; k <= terms; k++) {
+                            c = SeriesUtil.Add(c, u * r[k], tn * gn[k], -tp * gp[k], out bool convergence);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
-                            }
-                            else {
-                                conv_times = 0;
+                            if (convergence) {
+                                break;
                             }
 
-                            c = c_next;
                             u *= x2;
 
                             if (!IsFinite(c)) {
@@ -738,19 +713,13 @@ namespace DoubleDouble {
 
                         ddouble c = 0d, u = 1d;
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * (h + HarmonicNumber(k));
+                        for (int k = 0; k <= terms; k++) {
+                            c = SeriesUtil.Add(c, u * r[k], h + HarmonicNumber(k), out bool convergence);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
-                            }
-                            else {
-                                conv_times = 0;
+                            if (convergence) {
+                                break;
                             }
 
-                            c = c_next;
                             u *= x2;
                         }
 
@@ -773,19 +742,13 @@ namespace DoubleDouble {
 
                         ddouble c = 1d / x, u = Ldexp(x, -1);
 
-                        for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
-                            ddouble dc = u * r[k] * (h - Ldexp(HarmonicNumber(k) + HarmonicNumber(k + 1), -1));
+                        for (int k = 0; k <= terms; k++) {
+                            c = SeriesUtil.Add(c, u * r[k], h, -Ldexp(HarmonicNumber(k) + HarmonicNumber(k + 1), -1), out bool convergence);
 
-                            ddouble c_next = c + dc;
-
-                            if (c == c_next || !IsFinite(c_next)) {
-                                conv_times++;
-                            }
-                            else {
-                                conv_times = 0;
+                            if (convergence) {
+                                break;
                             }
 
-                            c = c_next;
                             u *= x2;
                         }
 

@@ -226,21 +226,20 @@ namespace DoubleDouble {
 
                 ddouble s = 0d, u = Pow(Ldexp(x, -1), n + 1) * RcpPI;
 
-                for (int k = 0, conv_times = 0; k <= terms && conv_times < 2; k++) {
+                for (int k = 0; k <= terms; k++) {
                     ddouble w = x2 * FTable.Value(2 * k) * FTable.Value(2 * k + n);
-                    ddouble ds = Ldexp(u * StruveGTable.Value(2 * k + 1) * StruveGTable.Value(2 * k + n + 1), -4 * k)
-                                  * (sign_switch ? (1d - w) : (1d + w));
 
-                    ddouble s_next = s + ds;
+                    s = SeriesUtil.Add(s,
+                        Ldexp(u * StruveGTable.Value(2 * k + 1) * StruveGTable.Value(2 * k + n + 1), -4 * k),
+                        1d,
+                        sign_switch ? -w : w,
+                        out bool convergence
+                    );
 
-                    if (s == s_next || !IsFinite(s_next)) {
-                        conv_times++;
+                    if (convergence) {
+                        break;
                     }
-                    else {
-                        conv_times = 0;
-                    }
 
-                    s = s_next;
                     u *= x4;
                 }
 

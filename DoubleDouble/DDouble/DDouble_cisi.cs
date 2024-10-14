@@ -106,18 +106,15 @@ namespace DoubleDouble {
                 ddouble s = EulerGamma + Log(x), u = -x2;
 
                 for (int k = 0; k < max_terms; k++) {
-                    ddouble f = u * TaylorSequence[4 * k + 2];
                     (ddouble p, ddouble q) = CRcpTable.Value(k);
-                    ddouble ds = f * (p - x2 * q);
 
-                    ddouble s_next = s + ds;
+                    s = SeriesUtil.Add(s, u * TaylorSequence[4 * k + 2], p, -x2 * q, out bool convergence);
 
-                    if (s == s_next) {
+                    if (convergence) {
                         break;
                     }
 
                     u *= x4;
-                    s = s_next;
                 }
 
                 return s;
@@ -133,18 +130,15 @@ namespace DoubleDouble {
                 ddouble s = limit_zero ? -PIHalf : 0d, u = x;
 
                 for (int k = 0; k < max_terms; k++) {
-                    ddouble f = u * TaylorSequence[4 * k + 1];
                     (ddouble p, ddouble q) = SRcpTable.Value(k);
-                    ddouble ds = f * (p - x2 * q);
 
-                    ddouble s_next = s + ds;
+                    s = SeriesUtil.Add(s, u * TaylorSequence[4 * k + 1], p, -x2 * q, out bool convergence);
 
-                    if (s == s_next) {
+                    if (convergence) {
                         break;
                     }
 
                     u *= x4;
-                    s = s_next;
                 }
 
                 return s;
@@ -205,19 +199,15 @@ namespace DoubleDouble {
                 ddouble t = 1d;
 
                 for (int k = 0; k < max_terms; k++) {
-                    ddouble dp = t * c * (1d - v2 * ((4 * k + 1) * (4 * k + 2)));
-                    ddouble dq = t * d * (1d - v2 * ((4 * k + 2) * (4 * k + 3))) * (4 * k + 1);
+                    p = SeriesUtil.Add(p, t * c, 1d, -v2 * ((4 * k + 1) * (4 * k + 2)), out bool convergence_p);
+                    q = SeriesUtil.Add(q, t * d * (4 * k + 1), 1d, -v2 * ((4 * k + 2) * (4 * k + 3)), out bool convergence_q);
 
-                    ddouble p_next = dp + p, q_next = dq + q;
-
-                    if (p == p_next && q == q_next) {
+                    if (convergence_p && convergence_q) {
                         break;
                     }
 
                     c *= v4;
                     d *= v4;
-                    p = p_next;
-                    q = q_next;
                     t *= ((4 * k + 1) * (4 * k + 2) * (4 * k + 3) * (4 * k + 4));
                 }
 

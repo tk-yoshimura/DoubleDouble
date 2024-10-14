@@ -59,20 +59,17 @@ namespace DoubleDouble {
                 ddouble t = 0d;
                 ddouble u = x_half, w = v * v;
 
-                for (int k = 0, conv_times = 0; k <= 256 && conv_times < 2; k += 2) {
-                    ddouble dt = u * (NzGammaDenom(2 * k + n + 3) * NzGammaDenom(2 * k - n + 3)
-                                - v * NzGammaDenom(2 * k + n + 5) * NzGammaDenom(2 * k - n + 5));
+                for (int k = 0; k <= 256; k += 2) {
+                    t = SeriesUtil.Add(t, u,
+                        NzGammaDenom(2 * k + n + 3) * NzGammaDenom(2 * k - n + 3),
+                        -v * NzGammaDenom(2 * k + n + 5) * NzGammaDenom(2 * k - n + 5),
+                        out bool convergence
+                    );
 
-                    ddouble t_next = t + dt;
-
-                    if (2 * k > n && t == t_next) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
+                    if (2 * k > n && convergence) {
+                        break;
                     }
 
-                    t = t_next;
                     u *= w;
                 }
 
@@ -89,20 +86,17 @@ namespace DoubleDouble {
                 ddouble s = 0d;
                 ddouble u = 1d, w = v * v;
 
-                for (int k = 0, conv_times = 0; k <= 256 && conv_times < 2; k += 2) {
-                    ddouble ds = u * (NzGammaDenom(2 * k + n + 2) * NzGammaDenom(2 * k - n + 2)
-                                - v * NzGammaDenom(2 * k + n + 4) * NzGammaDenom(2 * k - n + 4));
+                for (int k = 0; k <= 256; k += 2) {
+                    s = SeriesUtil.Add(s, u,
+                        NzGammaDenom(2 * k + n + 2) * NzGammaDenom(2 * k - n + 2),
+                        -v * NzGammaDenom(2 * k + n + 4) * NzGammaDenom(2 * k - n + 4),
+                        out bool convergence
+                    );
 
-                    ddouble s_next = s + ds;
-
-                    if (2 * k > n && s == s_next) {
-                        conv_times++;
-                    }
-                    else {
-                        conv_times = 0;
+                    if (2 * k > n && convergence) {
+                        break;
                     }
 
-                    s = s_next;
                     u *= w;
                 }
 

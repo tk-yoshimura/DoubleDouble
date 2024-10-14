@@ -134,16 +134,13 @@ namespace DoubleDouble {
                 for (int k = 0; k < max_terms; k++) {
                     ddouble f = Ldexp(u * TaylorSequence[4 * k], -4 * k);
                     (ddouble p, ddouble q) = CRcpTable.Value(k);
-                    ddouble ds = f * (p - v2 * q);
+                    s = SeriesUtil.Add(s, f, p, -v2 * q, out bool convergence);
 
-                    ddouble s_next = s + ds;
-
-                    if (s == s_next) {
+                    if (convergence) {
                         break;
                     }
 
                     u *= v4;
-                    s = s_next;
                 }
 
                 return s;
@@ -162,16 +159,13 @@ namespace DoubleDouble {
                 for (int k = 0; k < max_terms; k++) {
                     ddouble f = Ldexp(u * TaylorSequence[4 * k + 1], -4 * k);
                     (ddouble p, ddouble q) = SRcpTable.Value(k);
-                    ddouble ds = f * (p - v2 * q);
+                    s = SeriesUtil.Add(s, f, p, -v2 * q, out bool convergence);
 
-                    ddouble s_next = s + ds;
-
-                    if (s == s_next) {
+                    if (convergence) {
                         break;
                     }
 
                     u *= v4;
-                    s = s_next;
                 }
 
                 return s;
@@ -238,18 +232,15 @@ namespace DoubleDouble {
                         return (NaN, NaN);
                     }
 
-                    ddouble dp = a * (1d - s) * RSeries.Value(4 * k);
-                    ddouble dq = b * (1d - t) * RSeries.Value(4 * k + 1);
-                    ddouble p_next = dp + p, q_next = dq + q;
+                    p = SeriesUtil.Add(p, a * RSeries.Value(4 * k), 1d, -s, out bool convergence_p);
+                    q = SeriesUtil.Add(q, b * RSeries.Value(4 * k + 1), 1d, -t, out bool convergence_q);
 
-                    if (p == p_next && q == q_next) {
+                    if (convergence_p && convergence_q) {
                         break;
                     }
 
                     a *= v4;
                     b *= v4;
-                    p = p_next;
-                    q = q_next;
                 }
 
                 return (p, q);
@@ -269,15 +260,13 @@ namespace DoubleDouble {
                         return NaN;
                     }
 
-                    ddouble dp = a * (1d - s) * RSeries.Value(4 * k);
-                    ddouble p_next = dp + p;
+                    p = SeriesUtil.Add(p, a * RSeries.Value(4 * k), 1d, -s, out bool convergence);
 
-                    if (p == p_next) {
+                    if (convergence) {
                         break;
                     }
 
                     a *= v4;
-                    p = p_next;
                 }
 
                 return p;
@@ -297,15 +286,13 @@ namespace DoubleDouble {
                         return NaN;
                     }
 
-                    ddouble dq = b * (1d - t) * RSeries.Value(4 * k + 1);
-                    ddouble q_next = dq + q;
+                    q = SeriesUtil.Add(q, b * RSeries.Value(4 * k + 1), 1d, -t, out bool convergence);
 
-                    if (q == q_next) {
+                    if (convergence) {
                         break;
                     }
 
                     b *= v4;
-                    q = q_next;
                 }
 
                 return q;

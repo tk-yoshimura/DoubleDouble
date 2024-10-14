@@ -127,14 +127,12 @@ namespace DoubleDouble {
                 ddouble u = x * x, x2 = u;
 
                 for (int i = 1; i < coef.Count - 1; i += 2) {
-                    ddouble dy = u * (coef[i] + x * coef[i + 1]);
-                    ddouble y_next = y + dy;
+                    y = SeriesUtil.Add(y, u, coef[i], x * coef[i + 1], out bool convergence);
 
-                    if (y == y_next) {
+                    if (convergence) {
                         break;
                     }
 
-                    y = y_next;
                     u *= x2;
                 }
 
@@ -152,14 +150,12 @@ namespace DoubleDouble {
                 ddouble u = 1d / x, v = u, v2 = v * v;
 
                 for (int i = 0; i < coef.Count - 1; i += 2) {
-                    ddouble dy = u * (coef[i] - v * coef[i + 1]);
-                    ddouble y_next = ((n & 1) == 0) ? (y - dy) : (y + dy);
+                    y = SeriesUtil.Add(y, ((n & 1) == 0) ? -u : u, coef[i], -v * coef[i + 1], out bool convergence);
 
-                    if (y == y_next) {
+                    if (convergence) {
                         break;
                     }
 
-                    y = y_next;
                     u *= v2;
                 }
 

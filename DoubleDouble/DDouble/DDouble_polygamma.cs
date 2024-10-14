@@ -108,26 +108,21 @@ namespace DoubleDouble {
             }
 
             public static ddouble PolygammaLimit(int n, ddouble x) {
-                ddouble inv_x2 = 1d / (x * x), c = Pow(x, -n);
+                ddouble u = 1d / (x * x), c = Pow(x, -n);
                 ddouble v = c * Factorial[n - 1] * (1d + n / Ldexp(x, 1));
-                ddouble u = c * Factorial[n + 1] / 2 * inv_x2;
-                ddouble dv = BernoulliSequence[1] * u;
+                ddouble w = c * Factorial[n + 1] / 2 * u;
+                ddouble dv = BernoulliSequence[1] * w;
 
                 v += dv;
 
                 for (int k = 2; k <= 20; k++) {
-                    u *= inv_x2 * ((n + 2 * k - 2) * (n + 2 * k - 1)) / ((2 * k) * (2 * k - 1));
-                    dv = BernoulliSequence[k] * u;
-                    ddouble next_v = v + dv;
+                    w *= u * ((n + 2 * k - 2) * (n + 2 * k - 1)) / ((2 * k) * (2 * k - 1));
 
-                    if (v == next_v) {
+                    v = SeriesUtil.Add(v, w, BernoulliSequence[k], out bool convergence);
+
+                    if (convergence) {
                         break;
                     }
-                    if (IsNaN(next_v)) {
-                        return 0d;
-                    }
-
-                    v = next_v;
                 }
 
                 return v;
