@@ -430,9 +430,10 @@ namespace DoubleDouble {
                             ddouble a = t * s * g[t], q = gpn[t];
                             ddouble pa = p / a, qa = q / a;
 
-                            c = SeriesUtil.Add(c, u * r[k], 4 * t * nu * (pa + qa), (4 * t * t - x2) * (pa - qa), out bool convergence);
+                            ddouble v = 4 * t * t - x2;
+                            c = SeriesUtil.Add(c, u * r[k], 4 * t * nu * (pa + qa), v * (pa - qa), out bool convergence);
 
-                            if (convergence) {
+                            if (convergence && Abs(v) > 1d) {
                                 break;
                             }
 
