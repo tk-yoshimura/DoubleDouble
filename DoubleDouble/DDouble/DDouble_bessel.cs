@@ -2172,7 +2172,7 @@ namespace DoubleDouble {
                             }
 
                             ddouble y = Ldexp(
-                                Abs(j0) >= Abs(j1) 
+                                Abs(j0) >= Abs(j1)
                                 ? ddouble.BesselJ(alpha + (DirectMaxN - 1), x) / j0
                                 : ddouble.BesselJ(alpha + (DirectMaxN - 2), x) / j1,
                                 (int)long.Clamp(-exp_sum, int.MinValue, int.MaxValue)
