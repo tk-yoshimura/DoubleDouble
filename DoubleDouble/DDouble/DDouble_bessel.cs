@@ -433,7 +433,7 @@ namespace DoubleDouble {
                             ddouble v = 4 * t * t - x2;
                             c = SeriesUtil.Add(c, u * r[k], 4 * t * nu * (pa + qa), v * (pa - qa), out bool convergence);
 
-                            if (convergence && Abs(v) > 1d) {
+                            if (convergence && Abs(v) >= 1d) {
                                 break;
                             }
 
