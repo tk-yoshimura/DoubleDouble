@@ -433,7 +433,7 @@ namespace DoubleDouble {
                             ddouble v = 4 * t * t - x2;
                             c = SeriesUtil.Add(c, u * r[k], 4 * t * nu * (pa + qa), v * (pa - qa), out bool convergence);
 
-                            if (convergence && Abs(v) >= 1d) {
+                            if (convergence && ILogB(v) >= -4) {
                                 break;
                             }
 
@@ -486,16 +486,11 @@ namespace DoubleDouble {
                         ddouble c = 0d, u = Ldexp(RcpPI, 1);
 
                         for (int k = 0; k <= terms; k++) {
-                            ddouble s = u * r[k];
-                            c = SeriesUtil.Add(c,
-                                s * (h - HarmonicNumber(2 * k)),
-                                1d,
-                                -x2 * d[k],
-                                out bool convergence1
-                            );
+                            ddouble s = u * r[k], t = h - HarmonicNumber(2 * k);
+                            c = SeriesUtil.Add(c, s * t, 1d, -x2 * d[k], out bool convergence1);
                             c = SeriesUtil.Add(c, s, x2 * q[k], out bool convergence2);
 
-                            if (convergence1 && convergence2) {
+                            if (convergence1 && convergence2 && ILogB(t) >= -4) {
                                 break;
                             }
 
@@ -529,15 +524,11 @@ namespace DoubleDouble {
                         ddouble c = -2d / (x * PI), u = x / Ldexp(PI, 1);
 
                         for (int k = 0; k <= terms; k++) {
-                            ddouble s = u * r[k];
-                            c = SeriesUtil.Add(c,
-                                s * (h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1)),
-                                1d, -x2 * d[k],
-                                out bool convergence1
-                            );
+                            ddouble s = u * r[k], t = h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1);
+                            c = SeriesUtil.Add(c, s * t, 1d, -x2 * d[k], out bool convergence1);
                             c = SeriesUtil.Add(c, s, x2 * q[k], out bool convergence2);
 
-                            if (convergence1 && convergence2) {
+                            if (convergence1 && convergence2 && ILogB(t) >= -4) {
                                 break;
                             }
 
@@ -586,15 +577,11 @@ namespace DoubleDouble {
                         }
 
                         for (int k = 0; k <= terms; k++) {
-                            ddouble s = u * r[k];
-                            c = SeriesUtil.Add(c,
-                                s * (h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + n)),
-                                1d, -x2 * d[k],
-                                out bool convergence1
-                            );
+                            ddouble s = u * r[k], t = (h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + n));
+                            c = SeriesUtil.Add(c, s * t, 1d, -x2 * d[k], out bool convergence1);
                             c = SeriesUtil.Add(c, s, x2 * q[k], out bool convergence2);
 
-                            if (convergence1 && convergence2) {
+                            if (convergence1 && convergence2 && ILogB(t) >= -4) {
                                 break;
                             }
 
@@ -2173,18 +2160,21 @@ namespace DoubleDouble {
                             long exp_sum = 0;
                             (ddouble j0, ddouble j1) = (Abs(s) > 1d) ? ((ddouble)1d, 1d / s) : (s, 1d);
 
-                            for (int k = n - 1; k >= DirectMaxN; k--) {
+                            for (int k = n - 1; k >= DirectMaxN - 1; k--) {
                                 (j1, j0) = (Ldexp(k + alpha, 1) * v * j1 - j0, j1);
 
-                                if (int.Sign(ILogB(j0)) == int.Sign(ILogB(j1))) {
-                                    int exp = ILogB(j1);
+                                int j0_exp = ILogB(j0), j1_exp = ILogB(j1);
+                                if (int.Sign(j0_exp) * int.Sign(j1_exp) > 0) {
+                                    int exp = j0_exp > 0 ? int.Max(j0_exp, j1_exp) : int.Min(j0_exp, j1_exp);
                                     exp_sum += exp;
                                     (j0, j1) = (Ldexp(j0, -exp), Ldexp(j1, -exp));
                                 }
                             }
 
                             ddouble y = Ldexp(
-                                ddouble.BesselJ(alpha + (DirectMaxN - 1), x) / j1,
+                                Abs(j0) >= Abs(j1) 
+                                ? ddouble.BesselJ(alpha + (DirectMaxN - 1), x) / j0
+                                : ddouble.BesselJ(alpha + (DirectMaxN - 2), x) / j1,
                                 (int)long.Clamp(-exp_sum, int.MinValue, int.MaxValue)
                             ) * ((Abs(s) > 1d) ? 1d : s);
 
