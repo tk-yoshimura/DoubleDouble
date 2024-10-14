@@ -714,7 +714,7 @@ namespace DoubleDouble {
                         ddouble c = 0d, u = 1d;
 
                         for (int k = 0; k <= terms; k++) {
-                            c = SeriesUtil.Add(c, u * r[k], h + HarmonicNumber(k), out bool convergence);
+                            c = SeriesUtil.Add(c, u * r[k], h, HarmonicNumber(k), out bool convergence);
 
                             if (convergence) {
                                 break;
