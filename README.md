@@ -32,7 +32,8 @@
 |ddouble.Cbrt(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.RootN(x, n)|&#40;-inf,+inf&#41;|3||
 |ddouble.Log2(x)|&#40;0,+inf&#41;|2||
-|ddouble.Log(x), ddouble.Log(x, b)|&#40;0,+inf&#41;|3||
+|ddouble.Log(x)|&#40;0,+inf&#41;|3||
+|ddouble.Log(x, b)|&#40;0,+inf&#41;|3||
 |ddouble.Log10(x)|&#40;0,+inf&#41;|3||
 |ddouble.Log1p(x)|&#40;-1,+inf&#41;|3|log(1+x)|
 |ddouble.Pow2(x)|&#40;-inf,+inf&#41;|1||
