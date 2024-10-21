@@ -88,7 +88,7 @@ namespace DoubleDouble {
                 return Limit.BesselY(nu, x);
             }
             else if ((x <= PowerSeriesThreshold(nu) - BesselJYPowerseriesBias) &&
-                (NearlyInteger(nu, out int n) || Abs(n - nu) >= BesselYForcedMillerBackwardThreshold)) {
+                (NearlyInteger(nu, out int n) || ILogB(n - nu) >= BesselYKNearIntegerExponent)) {
 
                 return PowerSeries.BesselY(nu, x);
             }
@@ -176,11 +176,11 @@ namespace DoubleDouble {
                 return Limit.BesselK(nu, x, scale);
             }
             else if (x <= BesselKNearZeroThreshold) {
-                if (NearlyInteger(nu, out int n) || Abs(n - nu) >= BesselKInterpolationDelta) {
+                if (NearlyInteger(nu, out int n) || ILogB(n - nu) >= BesselYKNearIntegerExponent) {
                     return PowerSeries.BesselK(nu, x, scale);
                 }
                 else {
-                    return Interpolation.BesselKPowerSeries(nu, x, scale);
+                    return AmosPowerSeries.BesselK(nu, x, scale);
                 }
             }
             else {
@@ -192,12 +192,11 @@ namespace DoubleDouble {
             public static class Bessel {
                 public const int RecurrenceMaxN = 256;
                 public const int DirectMaxN = 16;
-                public static readonly double Eps = double.ScaleB(1, -105);
-                public static readonly double BesselYNearZero = 0.125d;
-                public static readonly double BesselYForcedMillerBackwardThreshold = double.ScaleB(1, -8);
-                public static readonly double BesselKInterpolationDelta = double.ScaleB(1, -8);
+                public const int EpsExponent = -105;
+                public const int NearZeroExponent = -950;
+                public const int BesselYKNearIntegerExponent = -3;
                 public const double HankelThreshold = 38.875, MillerBackwardThreshold = 6;
-                public const double BesselKPadeThreshold = 1, BesselKNearZeroThreshold = 2, BesselJYPowerseriesBias = 2;
+                public const double BesselKPadeThreshold = 2, BesselKNearZeroThreshold = 2, BesselJYPowerseriesBias = 2;
 
                 public static ddouble PowerSeriesThreshold(ddouble nu) {
                     ddouble nu_abs = Abs(nu);
@@ -234,7 +233,7 @@ namespace DoubleDouble {
                 public static bool NearlyInteger(ddouble nu, out int n) {
                     n = (int)Round(nu);
 
-                    return Abs(nu - n) < Eps;
+                    return ILogB(nu - n) < EpsExponent;
                 }
 
                 public static class SinCosPICache {
@@ -417,7 +416,7 @@ namespace DoubleDouble {
                             int n = (int)(Floor(nu + 0.5d));
                             ddouble alpha = nu - n;
 
-                            if (Abs(Abs(alpha) - 0.5d) < Eps) {
+                            if (ILogB(Abs(alpha) - 0.5d) < EpsExponent) {
                                 return Zero;
                             }
 
@@ -2046,67 +2045,183 @@ namespace DoubleDouble {
                     }
                 }
 
-                public static class Interpolation {
-                    public static ddouble BesselKPowerSeries(ddouble nu, ddouble x, bool scale = false) {
+                public static class AmosPowerSeries {
+                    private static readonly ReadOnlyCollection<ddouble> g1_coef;
+
+                    private static readonly Dictionary<ddouble, (ddouble, ddouble)> gammapm_table = [];
+                    private static readonly Dictionary<ddouble, (ddouble, ddouble)> gamma12_table = [];
+
+                    static AmosPowerSeries() {
+                        Dictionary<string, ReadOnlyCollection<ddouble>> tables =
+                        ResourceUnpack.NumTable(Resource.BesselKTable, reverse: true);
+
+                        g1_coef = tables["G1Table"];
+                    }
+
+                    public static ddouble BesselK(ddouble nu, ddouble x, bool scale) {
+                        ddouble y = BesselKKernel(nu, x);
+
+                        if (scale) {
+                            y *= Exp(x);
+                        }
+
+                        if (IsNaN(y) && !IsNaN(x)) {
+                            y = PositiveInfinity;
+                        }
+
+                        return y;
+                    }
+
+                    private static ddouble BesselKKernel(ddouble nu, ddouble x) {
+                        Debug.Assert(nu >= 0d);
+
                         int n = (int)Round(nu);
                         ddouble alpha = nu - n;
 
-                        Debug.Assert(n >= 0);
-                        Debug.Assert(Abs(alpha) <= BesselKInterpolationDelta);
-
-                        ddouble y0 = PowerSeries.BesselK(0, x, scale);
-
-                        if (!IsFinite(y0)) {
-                            return y0;
-                        }
-
-                        ddouble dnu = BesselKInterpolationDelta;
-
-                        ddouble y1 = PowerSeries.BesselK(dnu, x, scale);
-                        ddouble y2 = PowerSeries.BesselK(dnu * 1.25d, x, scale);
-                        ddouble y3 = PowerSeries.BesselK(dnu * 1.5d, x, scale);
-                        ddouble y4 = PowerSeries.BesselK(dnu * 1.75d, x, scale);
-                        ddouble y5 = PowerSeries.BesselK(dnu * 2d, x, scale);
-
-                        if (!IsFinite(y1) || !IsFinite(y2) || !IsFinite(y3) || !IsFinite(y4) || !IsFinite(y5)) {
-                            return y1;
-                        }
-
-                        ddouble t = Abs(alpha) / BesselKInterpolationDelta;
-                        ddouble k0 = InterpolateEvenConvex(t, y0, y1, y2, y3, y4, y5);
-
                         if (n == 0) {
+                            ddouble k0 = BesselKNearZeroNu(alpha, x, terms: 20);
+
                             return k0;
                         }
+                        else if (n == 1) {
+                            ddouble k1 = BesselKNearOneNu(alpha, x, terms: 21);
 
-                        ddouble i0 = PowerSeries.BesselI(alpha, x), i1 = PowerSeries.BesselI(alpha + 1d, x);
-
-                        ddouble k1 = ((scale ? Exp(x) : 1d) - i1 * k0 * x) / (i0 * x);
-
-                        if (n == 1) {
                             return k1;
                         }
+                        else {
+                            ddouble kn = BesselKNearIntNu(n, alpha, x, terms: 21);
 
-                        ddouble v = 1d / x;
-
-                        for (int k = 1; k < n; k++) {
-                            (k1, k0) = (Ldexp(k + alpha, 1) * v * k1 + k0, k1);
+                            return kn;
                         }
-
-                        return k1;
                     }
 
-                    private static ddouble InterpolateEvenConvex(ddouble t, ddouble y0, ddouble y1, ddouble y2, ddouble y3, ddouble y4, ddouble y5) {
-                        ddouble t2 = t * t;
+                    private static ddouble BesselKNearZeroNu(ddouble alpha, ddouble x, int terms) {
+                        ddouble alpha2 = alpha * alpha;
+                        ddouble s = 1d / x, t = Log(2d * s), mu = alpha * t;
+                        (ddouble g1, ddouble g2) = Gamma12(alpha);
+                        (ddouble gp, ddouble gm) = GammaPM(alpha);
 
-                        ddouble y = y0
-                            + t2 * (-151028163d * y0 + 561834000d * y1 - 708083712d * y2 + 395136000d * y3 - 110592000d * y4 + 12733875d * y5
-                            + t2 * (150533955d * y0 - 933192260d * y1 + 1431019520d * y2 - 875831040d * y3 + 258170880d * y4 - 30701055d * y5
-                            + t2 * (-70594524d * y0 + 556941840d * y1 - 962174976d * y2 + 658748160d * y3 - 209018880d * y4 + 26098380d * y5
-                            + t2 * (15649920d * y0 - 141872640d * y1 + 264929280d * y2 - 198696960d * y3 + 69304320d * y4 - 9313920d * y5
-                            + t2 * (-1317888d * y0 + 13045760d * y1 - 25690112d * y2 + 20643840d * y3 - 7864320d * y4 + 1182720d * y5))))) / 56756700d;
+                        ddouble f = (g1 * Cosh(mu) + g2 * t * Sinhc(mu)) / Sinc(alpha);
+                        ddouble r = Pow(x / 2d, alpha);
+                        ddouble p = gp / (r * 2d), q = gm * r * 0.5d;
 
-                        return y;
+                        ddouble c = f, v = Ldexp(x * x, -2), u = v;
+
+                        for (int k = 1; k <= terms; k++) {
+                            f = (k * f + p + q) / (k * k - alpha2);
+                            c = SeriesUtil.Add(c, u, f, out bool convergence);
+
+                            if (convergence && ILogB(f) >= -4) {
+                                break;
+                            }
+
+                            p /= k - alpha;
+                            q /= k + alpha;
+                            u *= v / (k + 1);
+                        }
+
+                        return c;
+                    }
+
+                    private static ddouble BesselKNearOneNu(ddouble alpha, ddouble x, int terms) {
+                        ddouble alpha2 = alpha * alpha;
+                        ddouble s = 1d / x, t = Log(2d * s), mu = alpha * t;
+                        (ddouble g1, ddouble g2) = Gamma12(alpha);
+                        (ddouble gp, ddouble gm) = GammaPM(alpha);
+
+                        ddouble f = (g1 * Cosh(mu) + g2 * t * Sinhc(mu)) / Sinc(alpha);
+                        ddouble r = Pow(x / 2d, alpha);
+                        ddouble p = gp / (r * 2d), q = gm * r * 0.5d;
+
+                        ddouble c = p, v = Ldexp(x * x, -2), u = v;
+
+                        for (int k = 1; k <= terms; k++) {
+                            f = (k * f + p + q) / (k * k - alpha2);
+                            p /= k - alpha;
+                            c = SeriesUtil.Add(c, u, p, -k * f, out bool convergence);
+
+                            if (convergence && ILogB(f) >= -4) {
+                                break;
+                            }
+
+                            q /= k + alpha;
+                            u *= v / (k + 1);
+                        }
+
+                        c *= 2d * s;
+
+                        return c;
+                    }
+
+                    private static ddouble BesselKNearIntNu(int n, ddouble alpha, ddouble x, int terms) {
+                        ddouble alpha2 = alpha * alpha;
+                        ddouble s = 1d / x, t = Log(2d * s), mu = alpha * t;
+                        (ddouble g1, ddouble g2) = Gamma12(alpha);
+                        (ddouble gp, ddouble gm) = GammaPM(alpha);
+
+                        ddouble f = (g1 * Cosh(mu) + g2 * t * Sinhc(mu)) / Sinc(alpha);
+                        ddouble r = Pow(x / 2d, alpha);
+                        ddouble p = gp / (r * 2d), q = gm * r * 0.5d;
+
+                        ddouble c0 = f, c1 = p, v = Ldexp(x * x, -2), u = v;
+
+                        for (int k = 1; k <= terms; k++) {
+                            f = (k * f + p + q) / (k * k - alpha2);
+                            p /= k - alpha;
+                            c0 = SeriesUtil.Add(c0, u, f, out bool convergence0);
+                            c1 = SeriesUtil.Add(c1, u, p, -k * f, out bool convergence1);
+
+                            if (convergence0 && convergence1 && ILogB(f) >= -4) {
+                                break;
+                            }
+
+                            q /= k + alpha;
+                            u *= v / (k + 1);
+                        }
+
+                        c1 *= 2d * s;
+
+                        for (int k = 1; k < n; k++) {
+                            (c1, c0) = (Ldexp(k + alpha, 1) * s * c1 + c0, c1);
+                        }
+
+                        return c1;
+                    }
+
+                    public static (ddouble g1, ddouble g2) Gamma12(ddouble nu) {
+                        Debug.Assert(Abs(nu) <= 0.5);
+
+                        if (!gamma12_table.TryGetValue(nu, out (ddouble g1, ddouble g2) g)) {
+                            (ddouble gp, ddouble gm) = GammaPM(nu);
+
+                            ddouble nu2 = nu * nu;
+
+                            ddouble g1 = g1_coef[0];
+
+                            for (int i = 1; i < g1_coef.Count; i++) {
+                                g1 = g1 * nu2 + g1_coef[i];
+                            }
+
+                            ddouble g2 = (1d / gm + 1d / gp) / 2d;
+
+                            g = (g1, g2);
+
+                            gamma12_table.Add(nu, g);
+                        }
+
+                        return g;
+                    }
+
+                    public static (ddouble gp, ddouble gm) GammaPM(ddouble nu) {
+                        Debug.Assert(Abs(nu) <= 0.5);
+
+                        if (!gammapm_table.TryGetValue(nu, out (ddouble gp, ddouble gm) g)) {
+                            g = (Gamma(1d + nu), Gamma(1d - nu));
+
+                            gammapm_table.Add(nu, g);
+                        }
+
+                        return g;
                     }
                 }
 
