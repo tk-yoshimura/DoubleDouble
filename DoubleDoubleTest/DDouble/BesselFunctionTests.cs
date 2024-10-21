@@ -5575,7 +5575,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble u = -0.125; u < 0.125; u += 1d / 32) {
                     ddouble nu = n + u + 0.5;
 
-                    for (ddouble x = 1; x <= 36; x += 1d / 32) {
+                    for (ddouble x = 1d / 32; x <= 36; x += 1d / 32) {
                         ddouble y = ddouble.BesselY(nu, x);
                         ddouble y_dec = ddouble.BesselY(nu, ddouble.BitDecrement(x));
                         ddouble y_inc = ddouble.BesselY(nu, ddouble.BitIncrement(x));
