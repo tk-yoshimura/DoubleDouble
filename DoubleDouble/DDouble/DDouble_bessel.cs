@@ -2287,7 +2287,8 @@ namespace DoubleDouble {
                             }
 
                             long exp_sum = 0;
-                            (ddouble j0, ddouble j1) = (Abs(s) > 1d) ? ((ddouble)1d, 1d / s) : (s, 1d);
+                            bool s_overone = Abs(s) > 1d;
+                            (ddouble j0, ddouble j1) = s_overone ? ((ddouble)1d, 1d / s) : (s, 1d);
 
                             for (int k = n - 1; k >= DirectMaxN - 1; k--) {
                                 (j1, j0) = (Ldexp(k + alpha, 1) * v * j1 - j0, j1);
@@ -2305,7 +2306,7 @@ namespace DoubleDouble {
                                 ? ddouble.BesselJ(alpha + (DirectMaxN - 1), x) / j0
                                 : ddouble.BesselJ(alpha + (DirectMaxN - 2), x) / j1,
                                 (int)long.Clamp(-exp_sum, int.MinValue, int.MaxValue)
-                            ) * ((Abs(s) > 1d) ? 1d : s);
+                            ) * (s_overone ? 1d : s);
 
                             return y;
                         }

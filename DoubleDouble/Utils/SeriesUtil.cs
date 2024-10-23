@@ -13,9 +13,16 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble Add(ddouble c, ddouble s, ddouble a, ddouble b, out bool convergence) {
-            ddouble c_next_x = c + s * (a + b), c_next_y = c + s * (a - b);
+            ddouble c_next_x = c + s * (a + b);
 
-            convergence = (c == c_next_x) && (c == c_next_y);
+            if (c != c_next_x) {
+                convergence = false;
+                return c_next_x;
+            }
+
+            ddouble c_next_y = c + s * (a - b);
+
+            convergence = c == c_next_y;
 
             return c_next_x;
         }
