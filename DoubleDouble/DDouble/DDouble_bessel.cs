@@ -1933,6 +1933,8 @@ namespace DoubleDouble {
                 }
 
                 public static class YoshidaPade {
+                    const int m = 32;
+
                     private static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> ess_coef_table;
                     private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> cds_coef_table = [];
 
@@ -1965,7 +1967,7 @@ namespace DoubleDouble {
 
                         List<ReadOnlyCollection<ddouble>> es = new();
 
-                        for (int i = 0; i < 32; i++) {
+                        for (int i = 0; i <= m; i++) {
                             es.Add(tables[$"ES{i}Table"]);
                         }
 
@@ -2023,8 +2025,6 @@ namespace DoubleDouble {
                     }
 
                     private static ReadOnlyCollection<(ddouble c, ddouble d)> Table(ddouble nu) {
-                        int m = ess_coef_table.Count - 1;
-
                         ddouble squa_nu = nu * nu;
                         List<(ddouble c, ddouble d)> cds = [];
                         ddouble[] us = new ddouble[m + 1], vs = new ddouble[m];

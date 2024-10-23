@@ -10599,7 +10599,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.BesselI(nu, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-28d, $"{nu},{x}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}");
 
                     if (nu == ddouble.Round(nu)) {
                         Assert.AreEqual(actual, ddouble.BesselI((int)ddouble.Round(nu), x));
@@ -10607,10 +10607,10 @@ namespace DoubleDoubleTest.DDouble {
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselI(nu, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-28d, $"{nu},{x}-eps");
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}-eps");
 
                         ddouble actual_inc = ddouble.BesselI(nu, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-28d, $"{nu},{x}+eps");
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}+eps");
                     }
                 }
 
@@ -10619,14 +10619,14 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble actual = ddouble.BesselI(nu, x, scale: true);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-28d, $"{nu},{x} scaled");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-30d, $"{nu},{x} scaled");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselI(nu, ddouble.BitDecrement(x), scale: true);
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-28d, $"{nu},{x}-eps scaled");
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}-eps scaled");
 
                         ddouble actual_inc = ddouble.BesselI(nu, ddouble.BitIncrement(x), scale: true);
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-28d, $"{nu},{x}+eps scaled");
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}+eps scaled");
                     }
                 }
             }
@@ -13333,7 +13333,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.BesselK(nu, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 8e-30d, $"{nu},{x}");
 
                     if (nu == ddouble.Round(nu)) {
                         Assert.AreEqual(actual, ddouble.BesselK((int)ddouble.Round(nu), x));
@@ -13341,10 +13341,10 @@ namespace DoubleDoubleTest.DDouble {
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselK(nu, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}-eps");
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 8e-30d, $"{nu},{x}-eps");
 
                         ddouble actual_inc = ddouble.BesselK(nu, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}+eps");
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 8e-30d, $"{nu},{x}+eps");
                     }
                 }
 
@@ -13352,14 +13352,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i] * ddouble.Exp(x);
 
                     ddouble actual = ddouble.BesselK(nu, x, scale: true);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29d, $"{nu},{x} scaled");
+                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 8e-30d, $"{nu},{x} scaled");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.BesselK(nu, ddouble.BitDecrement(x), scale: true);
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}-eps scaled");
+                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 8e-30d, $"{nu},{x}-eps scaled");
 
                         ddouble actual_inc = ddouble.BesselK(nu, ddouble.BitIncrement(x), scale: true);
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}+eps scaled");
+                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 8e-30d, $"{nu},{x}+eps scaled");
                     }
                 }
             }
@@ -15104,7 +15104,7 @@ namespace DoubleDoubleTest.DDouble {
                         i++;
 
                         ddouble actual = ddouble.BesselK(nu, x);
-                        HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}");
+                        HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}");
 
                         if (nu == ddouble.Round(nu)) {
                             Assert.AreEqual(actual, ddouble.BesselK((int)ddouble.Round(nu), x));
@@ -15112,10 +15112,10 @@ namespace DoubleDoubleTest.DDouble {
 
                         if (x > 0) {
                             ddouble actual_dec = ddouble.BesselK(nu, ddouble.BitDecrement(x));
-                            HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}-eps");
+                            HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}-eps");
 
                             ddouble actual_inc = ddouble.BesselK(nu, ddouble.BitIncrement(x));
-                            HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-29d, $"{nu},{x}+eps");
+                            HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-30d, $"{nu},{x}+eps");
                         }
                     }
                 }
@@ -15568,7 +15568,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(y);
                         Console.WriteLine(y_scaled);
 
-                        Assert.IsTrue(ddouble.Abs((y_scaled - y) / y) < 8e-26);
+                        Assert.IsTrue(ddouble.Abs((y_scaled - y) / y) < 1e-30);
                     }
                 }
             }
@@ -15594,7 +15594,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(y);
                         Console.WriteLine(y_scaled);
 
-                        Assert.IsTrue(ddouble.Abs((y_scaled - y) / y) < 8e-26);
+                        Assert.IsTrue(ddouble.Abs((y_scaled - y) / y) < 1e-30);
                     }
                 }
             }
@@ -18432,8 +18432,8 @@ namespace DoubleDoubleTest.DDouble {
                         continue;
                     }
 
-                    Assert.IsTrue(err < 4e-27, $"\n{nu}, {x}\n{expected}\n{actual}\n{err}");
-                    Assert.IsTrue(ddouble.Abs((actual_scaled - actual) / actual) < 8e-26);
+                    Assert.IsTrue(err < 1e-30, $"\n{nu}, {x}\n{expected}\n{actual}\n{err}");
+                    Assert.IsTrue(ddouble.Abs((actual_scaled - actual) / actual) < 1e-30);
                 }
             }
         }
@@ -18924,10 +18924,10 @@ namespace DoubleDoubleTest.DDouble {
                         continue;
                     }
 
-                    Assert.IsTrue(err < 4e-27, $"\n{nu}, {x}\n{expected}\n{actual}\n{err}");
+                    Assert.IsTrue(err < 1e-30, $"\n{nu}, {x}\n{expected}\n{actual}\n{err}");
 
                     if (ddouble.IsFinite(actual_scaled)) {
-                        Assert.IsTrue(ddouble.Abs((actual_scaled - actual) / actual) < 8e-26);
+                        Assert.IsTrue(ddouble.Abs((actual_scaled - actual) / actual) < 1e-30);
                     }
                 }
             }
