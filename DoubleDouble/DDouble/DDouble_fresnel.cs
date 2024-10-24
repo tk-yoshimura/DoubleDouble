@@ -325,7 +325,8 @@ namespace DoubleDouble {
         };
 
         private static class FresnelPade {
-            public static readonly ddouble PadeApproxMin = 0.85d, PadeApproxMax = 16d;
+            const int max_exponent = 4;
+            public static readonly ddouble PadeApproxMin = 0.85d, PadeApproxMax = 32d;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeFTables, PadeGTables;
 
@@ -334,47 +335,36 @@ namespace DoubleDouble {
                     ResourceUnpack.NumTableX4(Resource.FresnelTable, reverse: true);
 
                 PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>[] {
-                    tables["PadeX0p0Table"],
                     tables["PadeX0p5Table"],
-                    tables["PadeX1p0Table"],
-                    tables["PadeX1p5Table"],
-                    tables["PadeX2p0Table"],
-                    tables["PadeX2p5Table"],
-                    tables["PadeX3p0Table"],
-                    tables["PadeX3p5Table"],
-                    tables["PadeX4p0Table"]
+                    tables["PadeX1Table"  ],
+                    tables["PadeX2Table"  ],
+                    tables["PadeX4Table"  ],
+                    tables["PadeX8Table"  ],
+                    tables["PadeX16Table" ],
                 });
 
                 PadeFTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
                     new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p0Table"].Select(v => (v.fc, v.fd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p5Table"].Select(v => (v.fc, v.fd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX4p0Table"].Select(v => (v.fc, v.fd)).ToArray())
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1Table"  ].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2Table"  ].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX4Table"  ].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX8Table"  ].Select(v => (v.fc, v.fd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX16Table" ].Select(v => (v.fc, v.fd)).ToArray()),
                 });
 
                 PadeGTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
                     new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX0p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p0Table"].Select(v => (v.gc, v.gd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX3p5Table"].Select(v => (v.gc, v.gd)).ToArray()),
-                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX4p0Table"].Select(v => (v.gc, v.gd)).ToArray())
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX1Table"  ].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX2Table"  ].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX4Table"  ].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX8Table"  ].Select(v => (v.gc, v.gd)).ToArray()),
+                    new ReadOnlyCollection<(ddouble c, ddouble d)>(tables["PadeX16Table" ].Select(v => (v.gc, v.gd)).ToArray()),
                 });
             }
 
             public static (ddouble f, ddouble g) Coef(ddouble x) {
-                ddouble v = Log2(x);
-
-                int table_index = (int)Round(Ldexp(v, 1));
-                ddouble w = v - table_index * 0.5d;
+                int exponent = int.Clamp(ILogB(x), -1, max_exponent), table_index = exponent + 1;
+                ddouble w = x - double.ScaleB(1d, exponent);
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 
                 (ddouble sfc, ddouble sfd, ddouble sgc, ddouble sgd) = table[0];
@@ -387,21 +377,17 @@ namespace DoubleDouble {
                     sgd = sgd * w + gd;
                 }
 
-                Debug.Assert(sfd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
-                Debug.Assert(sgd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+                Debug.Assert(sfd > 0.5d, $"[Fresnel x={x}] Too small pade denom!!");
+                Debug.Assert(sgd > 0.5d, $"[Fresnel x={x}] Too small pade denom!!");
 
-                ddouble f = sfc / sfd, g = sgc / sgd;
-
-                (f, g) = (Pow2(f), Pow2(g));
+                ddouble f = sfc / (sfd * x), g = sgc / (sgd * x * x * x);
 
                 return (f, g);
             }
 
             public static ddouble FCoef(ddouble x) {
-                ddouble v = Log2(x);
-
-                int table_index = (int)Round(Ldexp(v, 1));
-                ddouble w = v - table_index * 0.5d;
+                int exponent = int.Clamp(ILogB(x), -1, max_exponent), table_index = exponent + 1;
+                ddouble w = x - double.ScaleB(1d, exponent);
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeFTables[table_index];
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -412,20 +398,16 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Fresnel x={x}] Too small pade denom!!");
 
-                ddouble f = sc / sd;
-
-                f = Pow2(f);
+                ddouble f = sc / (sd * x);
 
                 return f;
             }
 
             public static ddouble GCoef(ddouble x) {
-                ddouble v = Log2(x);
-
-                int table_index = (int)Round(Ldexp(v, 1));
-                ddouble w = v - table_index * 0.5d;
+                int exponent = int.Clamp(ILogB(x), -1, max_exponent), table_index = exponent + 1;
+                ddouble w = x - double.ScaleB(1d, exponent);
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeGTables[table_index];
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -436,13 +418,11 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Fresnel x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Fresnel x={x}] Too small pade denom!!");
 
-                ddouble f = sc / sd;
+                ddouble g = sc / (sd * x * x * x);
 
-                f = Pow2(f);
-
-                return f;
+                return g;
             }
         }
     }
