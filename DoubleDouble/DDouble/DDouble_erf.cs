@@ -109,7 +109,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erf x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erf x={x}] Too small pade denom!!");
 
                 ddouble y = x * (sc / sd);
 
@@ -131,7 +131,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -153,7 +153,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -175,7 +175,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -197,7 +197,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -219,7 +219,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / (sd * Exp(x * x));
 
@@ -241,7 +241,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfc x={x}] Too small pade denom!!");
 
                 if (x <= 25.75d) {
                     ddouble y = sc / (sd * Exp(x * x));
@@ -270,7 +270,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -292,7 +292,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -314,7 +314,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -336,7 +336,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -358,7 +358,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Erfcx x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Erfcx x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 

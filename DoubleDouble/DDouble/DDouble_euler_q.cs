@@ -49,7 +49,7 @@ namespace DoubleDouble {
                     sd = sd * u + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[EulerQ q={q}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[EulerQ q={q}] Too small pade denom!!");
 
                 ddouble v = sc / sd;
                 ddouble y = q * (v * q - 1d) / (1d - q * q);

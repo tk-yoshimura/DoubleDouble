@@ -40,7 +40,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Ti x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Ti x={x}] Too small pade denom!!");
 
                 ddouble y = x * sc / sd;
 

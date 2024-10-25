@@ -93,7 +93,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -115,7 +115,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -137,7 +137,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -159,7 +159,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -181,7 +181,7 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[InverseErfc x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[InverseErfc x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 

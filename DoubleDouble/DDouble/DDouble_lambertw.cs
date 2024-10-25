@@ -76,7 +76,7 @@ namespace DoubleDouble {
                         sd = sd * v + d;
                     }
 
-                    Debug.Assert(sd > 0.0625d, $"[LambertW x={x}] Too small pade denom!!");
+                    Debug.Assert(sd > 0.5d, $"[LambertW x={x}] Too small pade denom!!");
 
                     y = sc / sd;
                 }
