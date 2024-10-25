@@ -86,14 +86,9 @@ namespace DoubleDouble {
             public static ddouble PadeApprox(ddouble x, ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> tables) {
                 Debug.Assert((x >= 0d && x <= PadeMax), nameof(x));
 
-                (int n, double x0) =
-                    (x < 1d) ? (0, 0d) :
-                    (x < 2d) ? (1, 1d) :
-                    (x < 4d) ? (2, 2d) :
-                    (x < 8d) ? (3, 4d) :
-                    (x < 16d) ? (4, 8d) :
-                    (x < 32d) ? (5, 16d) :
-                    (6, 32d);
+                int exponent = int.Min(ILogB(x), tables.Count - 2);
+
+                (int n, double x0) = exponent < 0 ? (0, 0d) : (exponent + 1, double.ScaleB(1d, exponent));
 
                 ddouble v = x - x0;
 
@@ -107,9 +102,9 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Scorer x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Scorer x={x}] Too small pade denom!!");
 
-                ddouble y = Pow2(sc / sd);
+                ddouble y = n < 2 ? (sc / sd) : (sc / (sd * x));
 
                 return y;
             }
