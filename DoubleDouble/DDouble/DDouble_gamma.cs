@@ -31,6 +31,8 @@ namespace DoubleDouble {
                 int n = int.Clamp((int)Floor(Ldexp(x - 0.5d, 1)), 0, Consts.Gamma.PadeNearZeroTables.Count - 1);
                 ddouble v = x - (n + 1) * 0.5d;
 
+                Debug.Assert(v >= 0d && v < 0.5d, $"[Gamma x={x}] Invalid pade v!!");
+
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Gamma.PadeNearZeroTables[n];
 
                 (ddouble sc, ddouble sd) = table[0];

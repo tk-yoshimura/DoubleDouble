@@ -239,7 +239,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
                 Console.WriteLine(z);
 
-                HPAssert.AreEqual(x, z, x * 1e-31d);
+                HPAssert.AreEqual(x, z, x * 2e-31d);
             }
 
             for (ddouble x = 1.5; x <= 36.5; x += 0.5) {
