@@ -3279,7 +3279,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 6e-31, $"{x}");
+                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
             }
         }
     }

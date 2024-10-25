@@ -27,11 +27,11 @@ namespace DoubleDouble {
 
             x = TruncateMantissa(x, 105);
 
-            if (x <= Consts.Gamma.Log2PadeWise2X0) {
-                int n = int.Max(0, (int)Round(x - 1d));
-                ddouble v = x - n - 1d;
+            if (x < Consts.Gamma.PadeWise4X0) {
+                int n = int.Clamp((int)Floor(Ldexp(x - 0.5d, 1)), 0, Consts.Gamma.PadeNearZeroTables.Count - 1);
+                ddouble v = x - (n + 1) * 0.5d;
 
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Gamma.PadeTables[n];
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Gamma.PadeNearZeroTables[n];
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -41,7 +41,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Gamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -52,24 +52,40 @@ namespace DoubleDouble {
                     return Factorial[((int)x) - 1];
                 }
 
-                int exp;
-                ddouble v;
+                int exp, inc;
+                ddouble v, bias;
                 ReadOnlyCollection<(ddouble c, ddouble d)> table;
 
-                if (x < Consts.Gamma.Log2PadeWise4X0) {
-                    int n = int.Max(0, (int)Floor(Ldexp(x - Consts.Gamma.Log2PadeWise2X0, -1)));
-                    v = x - Consts.Gamma.Log2PadeWise2X0 - n * 2;
-                    (exp, table) = Consts.Gamma.Log2PadeWise2Tables[n];
+                if (x < Consts.Gamma.PadeWise8X0) {
+                    int n = int.Clamp((int)Floor(Ldexp(x - Consts.Gamma.PadeWise4X0, -2)), 0, Consts.Gamma.PadeWise4Tables.Count - 1);
+                    v = x - Consts.Gamma.PadeWise4X0 - n * 4;
+                    (exp, inc, table) = Consts.Gamma.PadeWise4Tables[n];
 
-                    Debug.Assert(v >= 0d && v < 2d, $"[Gamma x={x}] Invalid pade v!!");
-                }
-                else {
-                    int n = int.Max(0, (int)Floor(Ldexp(x - Consts.Gamma.Log2PadeWise4X0, -2)));
-                    v = x - Consts.Gamma.Log2PadeWise4X0 - n * 4;
-                    (exp, table) = Consts.Gamma.Log2PadeWise4Tables[n];
+                    bias = inc * Ldexp(v, -2);
 
                     Debug.Assert(v >= 0d && v < 4d, $"[Gamma x={x}] Invalid pade v!!");
                 }
+                else if (x < Consts.Gamma.PadeWise16X0) {
+                    int n = int.Clamp((int)Floor(Ldexp(x - Consts.Gamma.PadeWise8X0, -3)), 0, Consts.Gamma.PadeWise8Tables.Count - 1);
+                    v = x - Consts.Gamma.PadeWise8X0 - n * 8;
+                    (exp, inc, table) = Consts.Gamma.PadeWise8Tables[n];
+
+                    bias = inc * Ldexp(v, -3);
+
+                    Debug.Assert(v >= 0d && v < 8d, $"[Gamma x={x}] Invalid pade v!!");
+                }
+                else {
+                    int n = int.Clamp((int)Floor(Ldexp(x - Consts.Gamma.PadeWise16X0, -4)), 0, Consts.Gamma.PadeWise16Tables.Count - 1);
+                    v = x - Consts.Gamma.PadeWise16X0 - n * 16;
+                    (exp, inc, table) = Consts.Gamma.PadeWise16Tables[n];
+
+                    bias = inc * Ldexp(v, -4);
+
+                    Debug.Assert(v >= 0d && v < 16d, $"[Gamma x={x}] Invalid pade v!!");
+                }
+
+                int exp_bias = (int)Floor(bias);
+                ddouble b = bias - exp_bias;
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -79,9 +95,9 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Gamma x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Gamma x={x}] Too small pade denom!!");
 
-                ddouble y = Ldexp(Pow2(sc / sd), exp);
+                ddouble y = Ldexp(Pow2(sc / sd + b), exp + exp_bias);
 
                 return y;
             }
@@ -112,7 +128,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[LogGamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd - Log1p(v);
 
@@ -133,7 +149,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[LogGamma x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[LogGamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -182,7 +198,7 @@ namespace DoubleDouble {
                     sd = sd * x_zsft + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Digamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -203,7 +219,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Digamma x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.25d, $"[Digamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -280,12 +296,12 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Gamma {
-                public const double Log2PadeWise2X0 = 4d, Log2PadeWise4X0 = 16d;
+                public const double PadeWise4X0 = 4d, PadeWise8X0 = 28d, PadeWise16X0 = 76d;
                 public const double FiniteLarge = 171.6240234375d, ExtremeLarge = 171.625d;
 
                 public static readonly ReadOnlyCollection<(ddouble s, ddouble r)> SterlingTable;
-                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
-                public static readonly ReadOnlyCollection<(int exp, ReadOnlyCollection<(ddouble c, ddouble d)>)> Log2PadeWise2Tables, Log2PadeWise4Tables;
+                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeNearZeroTables;
+                public static readonly ReadOnlyCollection<(int exp, int inc, ReadOnlyCollection<(ddouble c, ddouble d)>)> PadeWise4Tables, PadeWise8Tables, PadeWise16Tables;
 
                 static Gamma() {
                     Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
@@ -293,62 +309,41 @@ namespace DoubleDouble {
 
                     SterlingTable = Array.AsReadOnly(tables[nameof(SterlingTable)].Reverse().ToArray());
 
-                    PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
-                        tables["PadeX1Table"],
-                        tables["PadeX2Table"],
-                        tables["PadeX3Table"],
-                        tables["PadeX4Table"],
+                    PadeNearZeroTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                        tables["PadeX0p5Table"],
+                        tables["PadeX1p0Table"],
+                        tables["PadeX1p5Table"],
+                        tables["PadeX2p0Table"],
+                        tables["PadeX2p5Table"],
+                        tables["PadeX3p0Table"],
+                        tables["PadeX3p5Table"],
                     });
 
-                    Log2PadeWise2Tables = Array.AsReadOnly(new (int, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
-                        (2, tables["PadeX4to6Table"]),
-                        (6, tables["PadeX6to8Table"]),
-                        (12, tables["PadeX8to10Table"]),
-                        (18, tables["PadeX10to12Table"]),
-                        (25, tables["PadeX12to14Table"]),
-                        (32, tables["PadeX14to16Table"]),
+                    PadeWise4Tables = Array.AsReadOnly(new (int, int, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
+                        (2,  10, tables["PadeX4to8Table"]),
+                        (12, 13, tables["PadeX8to12Table"]),
+                        (25, 15, tables["PadeX12to16Table"]),
+                        (40, 16, tables["PadeX16to20Table"]),
+                        (56, 18, tables["PadeX20to24Table"]),
+                        (74, 19, tables["PadeX24to28Table"]),
                     });
 
-                    Log2PadeWise4Tables = Array.AsReadOnly(new (int, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
-                        (40, tables["PadeX16to20Table"]),
-                        (56, tables["PadeX20to24Table"]),
-                        (74, tables["PadeX24to28Table"]),
-                        (93, tables["PadeX28to32Table"]),
-                        (112, tables["PadeX32to36Table"]),
-                        (132, tables["PadeX36to40Table"]),
-                        (153, tables["PadeX40to44Table"]),
-                        (175, tables["PadeX44to48Table"]),
-                        (197, tables["PadeX48to52Table"]),
-                        (219, tables["PadeX52to56Table"]),
-                        (242, tables["PadeX56to60Table"]),
-                        (266, tables["PadeX60to64Table"]),
-                        (289, tables["PadeX64to68Table"]),
-                        (314, tables["PadeX68to72Table"]),
-                        (338, tables["PadeX72to76Table"]),
-                        (363, tables["PadeX76to80Table"]),
-                        (388, tables["PadeX80to84Table"]),
-                        (413, tables["PadeX84to88Table"]),
-                        (439, tables["PadeX88to92Table"]),
-                        (465, tables["PadeX92to96Table"]),
-                        (491, tables["PadeX96to100Table"]),
-                        (518, tables["PadeX100to104Table"]),
-                        (544, tables["PadeX104to108Table"]),
-                        (571, tables["PadeX108to112Table"]),
-                        (598, tables["PadeX112to116Table"]),
-                        (626, tables["PadeX116to120Table"]),
-                        (653, tables["PadeX120to124Table"]),
-                        (681, tables["PadeX124to128Table"]),
-                        (709, tables["PadeX128to132Table"]),
-                        (737, tables["PadeX132to136Table"]),
-                        (765, tables["PadeX136to140Table"]),
-                        (793, tables["PadeX140to144Table"]),
-                        (822, tables["PadeX144to148Table"]),
-                        (851, tables["PadeX148to152Table"]),
-                        (880, tables["PadeX152to156Table"]),
-                        (909, tables["PadeX156to160Table"]),
-                        (938, tables["PadeX160to164Table"]),
-                        (967, tables["PadeX164to168Table"]),
-                        (997, tables["PadeX168to172Table"]),
+                    PadeWise8Tables = Array.AsReadOnly(new (int, int, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
+                        (93,  39, tables["PadeX28to36Table"]),
+                        (132, 43, tables["PadeX36to44Table"]),
+                        (175, 44, tables["PadeX44to52Table"]),
+                        (219, 47, tables["PadeX52to60Table"]),
+                        (266, 48, tables["PadeX60to68Table"]),
+                        (314, 49, tables["PadeX68to76Table"]),
+                    });
+
+                    PadeWise16Tables = Array.AsReadOnly(new (int, int, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
+                        (363, 102, tables["PadeX76to92Table"]),
+                        (465, 106, tables["PadeX92to108Table"]),
+                        (571, 110, tables["PadeX108to124Table"]),
+                        (681, 112, tables["PadeX124to140Table"]),
+                        (793, 116, tables["PadeX140to156Table"]),
+                        (909, 117, tables["PadeX156to172Table"]),
                     });
                 }
             }
