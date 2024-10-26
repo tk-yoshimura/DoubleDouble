@@ -521,12 +521,12 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 4e-31d);
-                HPAssert.AreEqual(-expected, y_neg, expected * 4e-31d);
+                HPAssert.AreEqual(expected, y, expected * 1e-31d);
+                HPAssert.AreEqual(-expected, y_neg, expected * 1e-31d);
 
                 if (x > 0) {
-                    HPAssert.AreEqual(expected, y_dec, expected * 4e-31d);
-                    HPAssert.AreEqual(expected, y_inc, expected * 4e-31d);
+                    HPAssert.AreEqual(expected, y_dec, expected * 1e-31d);
+                    HPAssert.AreEqual(expected, y_inc, expected * 1e-31d);
                 }
             }
 
