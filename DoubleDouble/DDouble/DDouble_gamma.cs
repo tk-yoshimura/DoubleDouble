@@ -86,7 +86,7 @@ namespace DoubleDouble {
                     Debug.Assert(v >= 0d && v < 16d, $"[Gamma x={x}] Invalid pade v!!");
                 }
 
-                int exp_bias = (int)Floor(bias);
+                int exp_bias = (int)Ceiling(bias);
                 ddouble b = bias - exp_bias;
 
                 (ddouble sc, ddouble sd) = table[0];
@@ -117,6 +117,23 @@ namespace DoubleDouble {
                 return Log(Gamma(x));
             }
 
+            if (x < 1d) {
+                ddouble v = 1d - x;
+
+                ReadOnlyCollection<ddouble> table = Consts.LogGamma.Near2BackwardCoefTable;
+
+                ddouble s = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    s = s * v + table[i];
+                }
+
+                s *= v;
+
+                ddouble y = s - Log1p(-v);
+
+                return y;
+            }
+
             if (x < 1.5d) {
                 ddouble v = x - 1d;
 
@@ -132,14 +149,29 @@ namespace DoubleDouble {
 
                 Debug.Assert(sd > 0.5d, $"[LogGamma x={x}] Too small pade denom!!");
 
-                ddouble y = sc / sd - Log1p(v);
+                ddouble y = sc * v / sd;
+
+                return y;
+            }
+
+            if (x < 2d) {
+                ddouble v = 2d - x;
+
+                ReadOnlyCollection<ddouble> table = Consts.LogGamma.Near2BackwardCoefTable;
+
+                ddouble s = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    s = s * v + table[i];
+                }
+
+                ddouble y = s * v;
 
                 return y;
             }
 
             if (x < Consts.LogGamma.Threshold) {
-                int n = int.Max(0, (int)Round(x - 2d));
-                ddouble v = x - n - 2d;
+                int n = int.Clamp((int)Floor(x - 1d), 0, Consts.LogGamma.PadeTables.Count - 1);
+                ddouble v = x - n - 1d;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.LogGamma.PadeTables[n];
 
@@ -154,6 +186,10 @@ namespace DoubleDouble {
                 Debug.Assert(sd > 0.5d, $"[LogGamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
+
+                if (n == 1) {
+                    y *= v;
+                }
 
                 return y;
             }
@@ -355,12 +391,14 @@ namespace DoubleDouble {
                 public const double Threshold = 16d;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
+                public static readonly ReadOnlyCollection<ddouble> Near2BackwardCoefTable;
 
                 static LogGamma() {
                     Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                         ResourceUnpack.NumTableX2(Resource.LogGammaTable, reverse: true);
 
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                        tables["PadeX1Table"],
                         tables["PadeX2Table"],
                         tables["PadeX3Table"],
                         tables["PadeX4Table"],
@@ -375,8 +413,23 @@ namespace DoubleDouble {
                         tables["PadeX13Table"],
                         tables["PadeX14Table"],
                         tables["PadeX15Table"],
-                        tables["PadeX16Table"],
                     });
+
+                    List<ddouble> near2_coef = [EulerGamma - 1d];
+
+                    for (int i = 2; i < TaylorSequence.Count; i++) {
+                        ddouble c = HurwitzZeta(i, 2d) / i;
+
+                        if (ILogB(Ldexp(c, -i)) < -105) {
+                            break;
+                        }
+
+                        near2_coef.Add(c);
+                    }
+
+                    near2_coef.Reverse();
+
+                    Near2BackwardCoefTable = new(near2_coef.ToArray());
                 }
             }
 

@@ -76,7 +76,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.LogGamma(i);
                 ddouble v = ddouble.Log(y);
 
-                HPAssert.NeighborBits(v, x, 16);
+                HPAssert.NeighborBits(v, x, 4);
             }
 
             ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
@@ -85,13 +85,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.LogGamma((2 * (int)i - 1) * 0.5d);
                 ddouble v = ddouble.Log(sqrtpi * z / y);
 
-                HPAssert.NeighborBits(v, x, 32);
+                HPAssert.NeighborBits(v, x, 4);
             }
 
-            HPAssert.NeighborBits("1.288022524698077457370610440219717295925", ddouble.LogGamma(0.25), 32);
-            HPAssert.NeighborBits("2.032809514312953714814329718624296997597e-1", ddouble.LogGamma(0.75), 32);
-            HPAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 32);
-            HPAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 32);
+            HPAssert.NeighborBits("1.288022524698077457370610440219717295925", ddouble.LogGamma(0.25), 4);
+            HPAssert.NeighborBits("2.032809514312953714814329718624296997597e-1", ddouble.LogGamma(0.75), 4);
+            HPAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 4);
+            HPAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 4);
 
             foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
                 (1 - Math.ScaleB(1, -3), "8.5858707225334323502365583769487702270e-2"),
@@ -112,9 +112,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.LogGamma(x_inc3));
                 Console.WriteLine("");
 
-                HPAssert.AreEqual(expected, ddouble.LogGamma(x_dec), 1e-30);
-                HPAssert.AreEqual(expected, ddouble.LogGamma(x), 1e-30);
-                HPAssert.AreEqual(expected, ddouble.LogGamma(x_inc), 1e-30);
+                HPAssert.AreEqual(expected, ddouble.LogGamma(x_dec), 1e-31);
+                HPAssert.AreEqual(expected, ddouble.LogGamma(x), 1e-31);
+                HPAssert.AreEqual(expected, ddouble.LogGamma(x_inc), 1e-31);
             }
 
             ddouble loggamma_pzero = ddouble.LogGamma(0d);
