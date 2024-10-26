@@ -12,7 +12,7 @@ namespace DoubleDouble {
                 return (0, IsPositive(x) ? 0d : -0d);
             }
 
-            int n = double.ILogB(x.hi);
+            int n = ILogB(x);
             ddouble f = new ddouble(double.ScaleB(x.hi, -n), double.ScaleB(x.lo, -n));
 
             if (f.hi == 1 && f.lo < 0) {
@@ -31,7 +31,7 @@ namespace DoubleDouble {
                 return (0, IsPositive(x) ? 0d : -0d);
             }
 
-            int n = (exp - double.ILogB(x.hi));
+            int n = (exp - ILogB(x));
             ddouble v = Ldexp(x, n);
 
             return (n, v);
@@ -50,7 +50,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = (exp - double.ILogB(x.hi));
+            int n = (exp - ILogB(x));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n)));
         }
@@ -69,7 +69,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = (exp - double.ILogB(x.hi));
+            int n = (exp - ILogB(x));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n)));
         }
@@ -89,7 +89,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = (exp - double.ILogB(x.hi));
+            int n = (exp - ILogB(x));
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n), Ldexp(v.d, n)));
         }

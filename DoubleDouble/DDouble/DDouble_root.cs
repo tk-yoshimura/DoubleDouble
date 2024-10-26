@@ -64,7 +64,7 @@ namespace DoubleDouble {
                     return PositiveInfinity;
                 }
 
-                int exp = double.ILogB(x.Hi);
+                int exp = ILogB(x);
                 int exp_n = (exp >= 0) ? (exp % n) : ((n - (-exp) % n) % n);
                 int exp_scale = exp - exp_n;
 

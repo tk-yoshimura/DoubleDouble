@@ -2248,7 +2248,7 @@ namespace DoubleDouble {
                             return 0d;
                         }
 
-                        if (ddouble.ILogB(x) < -500) {
+                        if (ILogB(x) < -500) {
                             if (NearlyInteger(nu, out _) || IsPositive(nu)) {
                                 return 0d;
                             }

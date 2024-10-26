@@ -442,7 +442,7 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator checked ++(ddouble v) {
-            if (double.ILogB(v.hi) > 102) {
+            if (ILogB(v) > 102) {
                 throw new ArithmeticException();
             }
 
@@ -451,7 +451,7 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator checked --(ddouble v) {
-            if (double.ILogB(v.hi) > 102) {
+            if (ILogB(v) > 102) {
                 throw new ArithmeticException();
             }
 

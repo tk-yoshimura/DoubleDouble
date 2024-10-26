@@ -18,7 +18,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (double.ILogB(m.Hi) < -1000) {
+            if (ILogB(m) < -1000) {
                 return KeplerE(double.ScaleB(1, -1000), e, centered) * Ldexp(m, 1000);
             }
 
@@ -69,7 +69,7 @@ namespace DoubleDouble {
 
                     ddouble m_pi = m * PI;
 
-                    if (double.ILogB(m.Hi) > -32 || double.ILogB((e - 1d).Hi) > -16) {
+                    if (ILogB(m) > -32 || ILogB(e - 1d) > -16) {
                         double ed = Math.Min(1, e.Hi);
                         double xd = InitValue(m.Hi, ed);
 
@@ -126,8 +126,8 @@ namespace DoubleDouble {
                 }
 
                 public static ddouble NearZero(ddouble m, ddouble e) {
-                    Debug.Assert(double.ILogB(m.Hi) <= -32, nameof(m));
-                    Debug.Assert(double.ILogB((e - 1d).Hi) <= -16, nameof(e));
+                    Debug.Assert(ILogB(m) <= -32, nameof(m));
+                    Debug.Assert(ILogB(e - 1d) <= -16, nameof(e));
 
                     return NearOneE.Value(m * PI, e);
                 }
@@ -231,7 +231,7 @@ namespace DoubleDouble {
                     Debug.Assert(m >= 0d, nameof(m));
                     Debug.Assert(e >= 1d, nameof(e));
 
-                    if (double.ILogB(m.Hi) > -32 || double.ILogB((1d - e).Hi) > -16) {
+                    if (ILogB(m) > -32 || ILogB(1d - e) > -16) {
                         double md = m.Hi, ed = Math.Max(1, e.Hi);
                         double xd = InitValue(md, ed);
 
@@ -280,8 +280,8 @@ namespace DoubleDouble {
                 }
 
                 public static ddouble InitValue(ddouble m, ddouble e) {
-                    Debug.Assert(double.ILogB(m.Hi) <= -32, nameof(m));
-                    Debug.Assert(double.ILogB((1d - e).Hi) <= -16, nameof(e));
+                    Debug.Assert(ILogB(m) <= -32, nameof(m));
+                    Debug.Assert(ILogB(1d - e) <= -16, nameof(e));
 
                     return NearOneE.Value(m, e);
                 }

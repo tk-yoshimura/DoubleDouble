@@ -302,7 +302,7 @@ namespace DoubleDouble {
                 return 0d;
             }
 
-            if (IsFinite(x) && double.ILogB(x.hi) < -64) {
+            if (IsFinite(x) && ILogB(x) < -64) {
                 ddouble y = x * (1d + x * EulerGamma);
                 return y;
             }

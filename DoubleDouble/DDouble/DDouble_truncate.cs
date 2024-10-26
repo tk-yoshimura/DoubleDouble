@@ -26,7 +26,7 @@
                 return x;
             }
 
-            int shifts = double.ILogB(x.hi) - keep_bits;
+            int shifts = ILogB(x) - keep_bits;
             double hi = double.ScaleB(double.Round(double.ScaleB(x.hi, -shifts)), shifts);
             double lo = double.ScaleB(double.Round(double.ScaleB(x.lo, -shifts)), shifts);
 
