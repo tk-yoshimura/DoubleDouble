@@ -47,9 +47,13 @@
                 ddouble dy1 = BernoulliSequence[k] * u;
                 k++;
 
+                if (!(dy0 <= -dy1)) {
+                    break;
+                }
+
                 y = SeriesUtil.UnScaledAdd(y, dy0, dy1, out bool convergence);
 
-                if (convergence || !(dy0 <= -dy1)) {
+                if (convergence) {
                     break;
                 }
             }
