@@ -205,7 +205,46 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void InverseGammaTest() {
-            for (double h = 1; h <= Math.ScaleB(1, 400); h *= 2) {
+            for (double h = 1; h <= Math.ScaleB(1, 100); h *= 2) {
+                for (double x = h; x < h * 2; x += h / 64) {
+                    ddouble y = ddouble.InverseGamma(x);
+                    ddouble z = ddouble.Gamma(y);
+
+                    Console.WriteLine(x);
+                    Console.WriteLine(y);
+                    Console.WriteLine(z);
+
+                    HPAssert.AreEqual(x, z, x * 2e-30d);
+                }
+            }
+
+            for (double h = Math.ScaleB(1, 101); h <= Math.ScaleB(1, 200); h *= 2) {
+                for (double x = h; x < h * 2; x += h / 64) {
+                    ddouble y = ddouble.InverseGamma(x);
+                    ddouble z = ddouble.Gamma(y);
+
+                    Console.WriteLine(x);
+                    Console.WriteLine(y);
+                    Console.WriteLine(z);
+
+                    HPAssert.AreEqual(x, z, x * 5e-30d);
+                }
+            }
+
+            for (double h = Math.ScaleB(1, 201); h <= Math.ScaleB(1, 600); h *= 2) {
+                for (double x = h; x < h * 2; x += h / 64) {
+                    ddouble y = ddouble.InverseGamma(x);
+                    ddouble z = ddouble.Gamma(y);
+
+                    Console.WriteLine(x);
+                    Console.WriteLine(y);
+                    Console.WriteLine(z);
+
+                    HPAssert.AreEqual(x, z, x * 1e-29d);
+                }
+            }
+
+            for (double h = Math.ScaleB(1, 601); h <= Math.ScaleB(1, 1020); h *= 2) {
                 for (double x = h; x < h * 2; x += h / 64) {
                     ddouble y = ddouble.InverseGamma(x);
                     ddouble z = ddouble.Gamma(y);
@@ -215,19 +254,6 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(z);
 
                     HPAssert.AreEqual(x, z, x * 4e-29d);
-                }
-            }
-
-            for (double h = Math.ScaleB(1, 401); h <= Math.ScaleB(1, 1020); h *= 2) {
-                for (double x = h; x < h * 2; x += h / 64) {
-                    ddouble y = ddouble.InverseGamma(x);
-                    ddouble z = ddouble.Gamma(y);
-
-                    Console.WriteLine(x);
-                    Console.WriteLine(y);
-                    Console.WriteLine(z);
-
-                    HPAssert.AreEqual(x, z, x * 8e-29d);
                 }
             }
 
