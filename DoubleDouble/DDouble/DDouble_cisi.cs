@@ -216,7 +216,7 @@ namespace DoubleDouble {
         };
 
         private static class CiSiPade {
-            public static readonly ddouble PadeApproxMin = 1d, PadeApproxMax = 511d;
+            public const double PadeApproxMin = 1d, PadeApproxMax = 511d;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
 
             static CiSiPade() {

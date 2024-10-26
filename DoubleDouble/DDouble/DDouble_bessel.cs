@@ -260,7 +260,7 @@ namespace DoubleDouble {
                 }
 
                 public class PowerSeries {
-                    public static readonly int NearZeroExponent = -950;
+                    public const int NearZeroExponent = -950;
                     private static readonly Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = [];
                     private static readonly Dictionary<ddouble, X2DenomTable> x2denom_coef_table = [];
                     private static readonly Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = [];
@@ -1284,7 +1284,7 @@ namespace DoubleDouble {
                 }
 
                 public class MillerBackward {
-                    public static readonly int BesselYEpsExponent = -12;
+                    public const int BesselYEpsExponent = -12;
 
                     private static readonly Dictionary<ddouble, BesselJPhiTable> phi_coef_table = [];
                     private static readonly Dictionary<ddouble, BesselYEtaTable> eta_coef_table = [];

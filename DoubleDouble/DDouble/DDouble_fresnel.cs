@@ -326,7 +326,7 @@ namespace DoubleDouble {
 
         private static class FresnelPade {
             const int max_exponent = 4;
-            public static readonly ddouble PadeApproxMin = 0.85d, PadeApproxMax = 32d;
+            public const double PadeApproxMin = 0.85d, PadeApproxMax = 32d;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeFTables, PadeGTables;
 

@@ -46,7 +46,7 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            if (nu < Eps) {
+            if (ILogB(nu) < EpsExponent) {
                 return -Ei(-x);
             }
 
@@ -142,7 +142,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             internal static class IncompleteGamma {
-                public static readonly double Eps = double.ScaleB(1, -105);
+                public const int EpsExponent = -105;
                 public const double MinNu = 1d / 1024;
                 public const double MaxNu = Consts.Gamma.ExtremeLarge;
                 public const double MaxNuRegularized = 8192d;
@@ -155,8 +155,6 @@ namespace DoubleDouble {
         }
 
         internal static class UpperIncompleteGammaCFrac {
-            public static double Eps = double.ScaleB(1, -105);
-
             public static ddouble Value(ddouble nu, ddouble x) {
                 ddouble xmnu = x - nu;
                 ddouble p0 = 0d, p1 = 0d, p2 = nu - 1d, p3 = 0d;
