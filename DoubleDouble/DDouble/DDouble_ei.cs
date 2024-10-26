@@ -174,9 +174,35 @@ namespace DoubleDouble {
             public static ddouble Coef(ddouble x) {
                 ddouble v = 1d / x;
 
-                int table_index = SegmentIndex(v);
-                ddouble w = v - PadeCenterTable[table_index];
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[table_index];
+                ddouble w;
+                ReadOnlyCollection<(ddouble c, ddouble d)> table;
+
+                if (v < PadeDirectionThreshold) {
+                    int table_index = PadeBackwardTables.Count - 1;
+                    for (int i = 0; i < PadeBackwardThresholdTable.Count; i++) {
+                        if (v <= PadeBackwardThresholdTable[i]) {
+                            table_index = i;
+                            break;
+                        }
+                    }
+
+                    w = PadeBackwardThresholdTable[table_index] - v;
+                    table = PadeBackwardTables[table_index];
+                }
+                else {
+                    int table_index = PadeForwardTables.Count - 1;
+                    for (int i = PadeForwardThresholdTable.Count - 1; i >= 0; i--) {
+                        if (v >= PadeForwardThresholdTable[i]) {
+                            table_index = i;
+                            break;
+                        }
+                    }
+
+                    w = v - PadeForwardThresholdTable[table_index];
+                    table = PadeForwardTables[table_index];
+                }
+
+                Debug.Assert(w >= 0d);
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -186,176 +212,63 @@ namespace DoubleDouble {
                     sd = sd * w + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Ei x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Ei x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
                 return y;
             }
-
-            private static int SegmentIndex(ddouble x) {
-                if (PadeThresholdTable[0] >= x) {
-                    return 0;
-                }
-                if (PadeThresholdTable[^1] <= x) {
-                    return PadeThresholdTable.Count - 1;
-                }
-
-                int index = 0;
-
-                for (int h = int.Max(1, PadeThresholdTable.Count / 2); h >= 1; h /= 2) {
-                    for (int i = index; i < PadeThresholdTable.Count - h; i += h) {
-                        if (PadeThresholdTable[i + h] > x) {
-                            index = i;
-                            break;
-                        }
-                    }
-                }
-
-                return index;
-            }
         }
 
         internal static partial class Consts {
             public static class Ei {
-                public static readonly ddouble PadeApproxMin = -1 / 2d, PadeApproxMax = 1 / 2d;
-                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
-                public static readonly ReadOnlyCollection<double> PadeCenterTable, PadeThresholdTable;
+                public const double PadeApproxMin = -0.5d, PadeApproxMax = 0.5d, PadeDirectionThreshold = 0.03125d;
+                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeBackwardTables, PadeForwardTables;
+                public static readonly ReadOnlyCollection<double> PadeBackwardThresholdTable, PadeForwardThresholdTable;
 
                 static Ei() {
                     Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                         ResourceUnpack.NumTableX2(Resource.EiTable, reverse: true);
 
-                    PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
-                        tables["PadeXM2Table"],
-                        tables["PadeXM1p75Table"],
-                        tables["PadeXM1p5Table"],
-                        tables["PadeXM1p25Table"],
-                        tables["PadeXM1Table"],
-                        tables["PadeXM0p75Table"],
-                        tables["PadeXM0p5Table"],
-                        tables["PadeXM0p375Table"],
-                        tables["PadeXM0p25Table"],
-                        tables["PadeXM0p1875Table"],
-                        tables["PadeXM0p125Table"],
-                        tables["PadeXM0p0625Table"],
-                        tables["PadeXM0p03125Table"],
-                        tables["PadeXM0p015625Table"],
-                        tables["PadeXZeroTable"],
-                        tables["PadeXP0p0078125Table"],
-                        tables["PadeXP0p01171875Table"],
-                        tables["PadeXP0p015625Table"],
-                        tables["PadeXP0p01953125Table"],
-                        tables["PadeXP0p0234375Table"],
-                        tables["PadeXP0p02734375Table"],
-                        tables["PadeXP0p03125Table"],
-                        tables["PadeXP0p03515625Table"],
-                        tables["PadeXP0p0390625Table"],
-                        tables["PadeXP0p04296875Table"],
-                        tables["PadeXP0p046875Table"],
-                        tables["PadeXP0p0546875Table"],
-                        tables["PadeXP0p0625Table"],
-                        tables["PadeXP0p0703125Table"],
-                        tables["PadeXP0p078125Table"],
-                        tables["PadeXP0p0859375Table"],
-                        tables["PadeXP0p09375Table"],
-                        tables["PadeXP0p109375Table"],
-                        tables["PadeXP0p125Table"],
-                        tables["PadeXP0p140625Table"],
-                        tables["PadeXP0p15625Table"],
-                        tables["PadeXP0p171875Table"],
-                        tables["PadeXP0p1875Table"],
-                        tables["PadeXP0p203125Table"],
-                        tables["PadeXP0p21875Table"],
-                        tables["PadeXP0p234375Table"],
-                        tables["PadeXP0p25Table"],
-                        tables["PadeXP0p28125Table"],
-                        tables["PadeXP0p3125Table"],
-                        tables["PadeXP0p375Table"],
-                        tables["PadeXP0p4375Table"],
-                        tables["PadeXP0p5Table"],
-                        tables["PadeXP0p5625Table"],
-                        tables["PadeXP0p625Table"],
-                        tables["PadeXP0p6875Table"],
-                        tables["PadeXP0p75Table"],
-                        tables["PadeXP0p875Table"],
-                        tables["PadeXP1Table"],
-                        tables["PadeXP1p125Table"],
-                        tables["PadeXP1p25Table"],
-                        tables["PadeXP1p5Table"],
-                        tables["PadeXP1p75Table"],
-                        tables["PadeXP2Table"],
+                    PadeBackwardTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                        tables["PadeXM1to2Table"],
+                        tables["PadeXM0p5to1Table"],
+                        tables["PadeXM0p25to0p5Table"],
+                        tables["PadeXM0to0p25Table"],
+                        tables["PadeXP0p015625to0Table"],
+                        tables["PadeXP0p0234375to0p015625Table"],
+                        tables["PadeXP0p03125to0p0234375Table"],
                     });
 
-                    PadeCenterTable = new ReadOnlyCollection<double>(new double[]{
-                        -2d,
-                        -1.75d,
-                        -1.5d,
-                        -1.25d,
-                        -1d,
-                        -0.75d,
-                        -0.5d,
-                        -0.375d,
-                        -0.25d,
-                        -0.1875d,
-                        -0.125d,
-                        -0.0625d,
-                        -0.03125d,
-                        -0.015625d,
-                        0d,
-                        0.0078125d,
-                        0.01171875d,
-                        0.015625d,
-                        0.01953125d,
-                        0.0234375d,
-                        0.02734375d,
-                        0.03125d,
-                        0.03515625d,
-                        0.0390625d,
-                        0.04296875d,
-                        0.046875d,
-                        0.0546875d,
-                        0.0625d,
-                        0.0703125d,
-                        0.078125d,
-                        0.0859375d,
-                        0.09375d,
-                        0.109375d,
-                        0.125d,
-                        0.140625d,
-                        0.15625d,
-                        0.171875d,
-                        0.1875d,
-                        0.203125d,
-                        0.21875d,
-                        0.234375d,
-                        0.25d,
-                        0.28125d,
-                        0.3125d,
-                        0.375d,
-                        0.4375d,
-                        0.5d,
-                        0.5625d,
-                        0.625d,
-                        0.6875d,
-                        0.75d,
-                        0.875d,
-                        1d,
-                        1.125d,
-                        1.25d,
-                        1.5d,
-                        1.75d,
-                        2d,
+                    PadeForwardTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                        tables["PadeXP0p03125to0p0625Table"],
+                        tables["PadeXP0p0625to0p125Table"],
+                        tables["PadeXP0p125to0p25Table"],
+                        tables["PadeXP0p25to0p5Table"],
+                        tables["PadeXP0p5to1Table"],
+                        tables["PadeXP1to1p5Table"],
+                        tables["PadeXP1p5to2Table"],
                     });
 
-                    double[] threshold = new double[PadeCenterTable.Count];
+                    PadeBackwardThresholdTable = new ReadOnlyCollection<double>(new double[]{
+                        -1,
+                        -0.5,
+                        -0.25,
+                        -0,
+                        0.015625,
+                        0.0234375,
+                        0.03125,
+                    });
 
-                    threshold[0] = PadeCenterTable[0];
-                    for (int i = 1; i < threshold.Length; i++) {
-                        threshold[i] = (PadeCenterTable[i] + PadeCenterTable[i - 1]) / 2;
-                    }
-
-                    PadeThresholdTable = Array.AsReadOnly(threshold);
+                    PadeForwardThresholdTable = new ReadOnlyCollection<double>(new double[]{
+                        0.03125,
+                        0.0625,
+                        0.125,
+                        0.25,
+                        0.5,
+                        1,
+                        1.5,
+                    });
                 }
             }
         }
