@@ -243,9 +243,29 @@ namespace DoubleDouble {
                 return y;
             }
 
+            if (x < 1d) {
+                ddouble v = x - 0.5d;
+
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeTables[0];
+
+                (ddouble sc, ddouble sd) = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    (ddouble c, ddouble d) = table[i];
+
+                    sc = sc * v + c;
+                    sd = sd * v + d;
+                }
+
+                Debug.Assert(sd > 0.5d, $"[Digamma x={x}] Too small pade denom!!");
+
+                ddouble y = sc / sd;
+
+                return y;
+            }
+
             if (x < Consts.Digamma.Threshold) {
-                int n = int.Max(0, (int)Round(x - 1d));
-                ddouble v = x - n - 1d;
+                int n = int.Clamp((int)Floor(x), 1, Consts.Digamma.PadeTables.Count - 1);
+                ddouble v = x - n;
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeTables[n];
 
@@ -257,7 +277,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.25d, $"[Digamma x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Digamma x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -447,6 +467,7 @@ namespace DoubleDouble {
                     PadeZeroPointTable = tables[nameof(PadeZeroPointTable)];
 
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                        tables["PadeX0p5Table"],
                         tables["PadeX1Table"],
                         tables["PadeX2Table"],
                         tables["PadeX3Table"],
@@ -462,7 +483,6 @@ namespace DoubleDouble {
                         tables["PadeX13Table"],
                         tables["PadeX14Table"],
                         tables["PadeX15Table"],
-                        tables["PadeX16Table"],
                     });
                 }
             }

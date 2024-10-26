@@ -36,7 +36,7 @@ namespace DoubleDouble {
                             sd = sd * v + d;
                         }
 
-                        Debug.Assert(sd > 0.0625d, $"[InverseDigamma x={x}] Too small pade denom!!");
+                        Debug.Assert(sd > 0.5d, $"[InverseDigamma x={x}] Too small pade denom!!");
 
                         ddouble y = sc / sd;
 
@@ -61,7 +61,7 @@ namespace DoubleDouble {
                             sd = sd * v + d;
                         }
 
-                        Debug.Assert(sd > 0.0625d, $"[InverseDigamma x={x}] Too small pade denom!!");
+                        Debug.Assert(sd > 0.5d, $"[InverseDigamma x={x}] Too small pade denom!!");
 
                         ddouble y = Exp(sc / sd);
 
@@ -95,7 +95,7 @@ namespace DoubleDouble {
                             sd = sd * v + d;
                         }
 
-                        Debug.Assert(sd > 0.0625d, $"[InverseDigamma x={x}] Too small pade denom!!");
+                        Debug.Assert(sd > 0.5d, $"[InverseDigamma x={x}] Too small pade denom!!");
 
                         ddouble y = sc / sd;
 
@@ -122,7 +122,7 @@ namespace DoubleDouble {
                             sd = sd * v + d;
                         }
 
-                        Debug.Assert(sd > 0.0625d, $"[InverseDigamma x={x}] Too small pade denom!!");
+                        Debug.Assert(sd > 0.5d, $"[InverseDigamma x={x}] Too small pade denom!!");
 
                         ddouble y = (sc / sd) / x;
 
