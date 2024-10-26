@@ -15,21 +15,21 @@ namespace DoubleDouble {
 
             x = TruncateMantissa(x, 105);
 
-            if (x <= 0 && IsInteger(x)) {
+            if (x <= 0d && IsInteger(x)) {
                 return Zero;
             }
             if (x < ExtremeMinusLarge) {
                 return NaN;
             }
 
-            if (x >= PadeXMin && x < PadeXMax) {
+            if (x >= PolyXMin && x < PadeXMax) {
                 return BarnesGUtil.PadeValue(x);
             }
 
-            ddouble x_p5 = x + 0.5d;
+            ddouble x_p25 = x + 0.25d;
 
-            if (x < PadeXMin) {
-                int m = int.Min(-1, (int)Floor(x_p5));
+            if (x < PolyXMin) {
+                int m = int.Min(-1, (int)Floor(x_p25));
 
                 ddouble f = x - m;
 
@@ -44,7 +44,7 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                int m = (int)Floor(x_p5);
+                int m = (int)Floor(x_p25);
 
                 ddouble f = x - m;
 
@@ -99,27 +99,49 @@ namespace DoubleDouble {
 
         internal static class BarnesGUtil {
             public static ddouble PadeValue(ddouble x) {
-                Debug.Assert(x >= PadeXMin && x <= PadeXMax, nameof(x));
+                Debug.Assert(x >= PolyXMin && x <= PadeXMax, nameof(x));
 
-                int n = int.Min((int)Floor(x - PadeXMin), PadeTables.Count - 1);
+                if (IsPositive(x)) {
+                    int n = int.Min((int)Floor(x), PadeTables.Count - 1);
 
-                ddouble v = x - n;
+                    ddouble v = x - n;
 
-                ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[n];
+                    ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeTables[n];
 
-                (ddouble sc, ddouble sd) = table[0];
-                for (int i = 1; i < table.Count; i++) {
-                    (ddouble c, ddouble d) = table[i];
+                    (ddouble sc, ddouble sd) = table[0];
+                    for (int i = 1; i < table.Count; i++) {
+                        (ddouble c, ddouble d) = table[i];
 
-                    sc = sc * v + c;
-                    sd = sd * v + d;
+                        sc = sc * v + c;
+                        sd = sd * v + d;
+                    }
+
+                    Debug.Assert(sd > 0.5d, $"[BarnesG x={x}] Too small pade denom!!");
+
+                    ddouble y = sc / sd;
+
+                    if (n == 0) {
+                        y *= v;
+                    }
+
+                    return y;
                 }
+                else {
+                    ddouble v = -x;
 
-                Debug.Assert(sd > 0.0625d, $"[BarnesG x={x}] Too small pade denom!!");
+                    ReadOnlyCollection<(ddouble c, ddouble d)> table = PolyXNegativeTable;
 
-                ddouble y = sc / sd;
+                    ddouble s = table[0].c + v * table[0].d;
+                    for (int i = 1; i < table.Count; i++) {
+                        (ddouble c, ddouble d) = table[i];
 
-                return y;
+                        s = c + v * (d + v * s);
+                    }
+
+                    ddouble y = s * v;
+
+                    return y;
+                }
             }
 
             public static ddouble LogPadeValue(ddouble x) {
@@ -138,7 +160,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[LogBarnesG x={x}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[LogBarnesG x={x}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -173,10 +195,10 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class BarnesG {
                 public const double ExtremeLarge = 28.5d, ExtremeMinusLarge = -64d;
-                public const double PadeXMin = -0.5d, PadeXMax = 3.5d;
+                public const double PolyXMin = -0.25d, PadeXMax = 4d;
                 public const double LogPadeXMin = 0.25d, LogPadeXMax = 3.25d, LogSterlingXMin = 12d;
 
-                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> SterlingTable;
+                public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> SterlingTable, PolyXNegativeTable;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
                 public static readonly ReadOnlyCollection<(double x0, ReadOnlyCollection<(ddouble c, ddouble d)>)> LogPadeTables;
                 public static readonly ddouble Rcp12 = 1.0 / (ddouble)12;
@@ -187,6 +209,7 @@ namespace DoubleDouble {
                         ResourceUnpack.NumTableX2(Resource.BarnesGTable, reverse: true);
 
                     SterlingTable = Array.AsReadOnly(tables[nameof(SterlingTable)].Reverse().ToArray());
+                    PolyXNegativeTable = Array.AsReadOnly(tables[nameof(PolyXNegativeTable)].ToArray());
 
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
                         tables["PadeX0Table"],
