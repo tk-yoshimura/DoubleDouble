@@ -237,10 +237,11 @@ namespace DoubleDouble {
             }
 
             public static (ddouble f, ddouble g) Coef(ddouble x) {
-                ddouble v = Log2(x);
+                Debug.Assert(x >= PadeApproxMin && x <= PadeApproxMax);
 
-                int table_index = int.Max(0, (int)Floor(v));
-                ddouble w = v - table_index - 0.5d;
+                int table_index = int.Clamp(ILogB(x), 0, PadeTables.Count - 1);
+                
+                ddouble w = x - double.ScaleB(1d, table_index);
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 
                 (ddouble sfc, ddouble sfd, ddouble sgc, ddouble sgd) = table[0];
@@ -253,12 +254,10 @@ namespace DoubleDouble {
                     sgd = sgd * w + gd;
                 }
 
-                Debug.Assert(sfd > 0.0625d, $"[CiSi x={x}] Too small pade denom!!");
-                Debug.Assert(sgd > 0.0625d, $"[CiSi x={x}] Too small pade denom!!");
+                Debug.Assert(sfd > 0.5d, $"[CiSi x={x}] Too small pade denom!!");
+                Debug.Assert(sgd > 0.5d, $"[CiSi x={x}] Too small pade denom!!");
 
-                ddouble f = sfc / sfd, g = sgc / sgd;
-
-                (f, g) = (Pow2(f), Pow2(g));
+                ddouble f = sfc / (sfd * x), g = sgc / (sgd * x * x);
 
                 return (f, g);
             }
