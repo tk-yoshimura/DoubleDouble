@@ -3623,11 +3623,19 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31, $"{x}");
+                if (x < 2.25) {
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31, $"{x}");
 
-                if (x != 1 && x != 2) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31, $"{x} dec");
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31, $"{x} inc");
+                    if (x != 1 && x != 2) {
+                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31, $"{x} dec");
+                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31, $"{x} inc");
+                    }
+                }
+                else { 
+                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
+
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31, $"{x} dec");
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31, $"{x} inc");
                 }
             }
         }
