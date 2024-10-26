@@ -1,4 +1,5 @@
 ﻿using DoubleDouble.Utils;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.BarnesG;
@@ -23,7 +24,7 @@ namespace DoubleDouble {
             }
 
             if (x >= PolyXMin && x < PadeXMax) {
-                return BarnesGUtil.PadeValue(x);
+                return BarnesGUtil.SeriesValue(x);
             }
 
             ddouble x_p25 = x - PolyXMin;
@@ -33,7 +34,7 @@ namespace DoubleDouble {
 
                 ddouble f = x - m;
 
-                ddouble y = BarnesGUtil.PadeValue(f);
+                ddouble y = BarnesGUtil.SeriesValue(f);
                 ddouble g = Gamma(f);
 
                 for (int k = -1; k >= m; k--) {
@@ -48,7 +49,7 @@ namespace DoubleDouble {
 
                 ddouble f = x - m;
 
-                ddouble y = BarnesGUtil.PadeValue(f + (PadeXMax - 1d));
+                ddouble y = BarnesGUtil.SeriesValue(f + (PadeXMax - 1d));
                 ddouble g = Gamma(f + (PadeXMax - 2d));
 
                 for (int k = 2; k < m - 1; k++) {
@@ -68,19 +69,30 @@ namespace DoubleDouble {
                 return PositiveInfinity;
             }
 
-            if (x < LogPadeXMin) {
-                return Log(BarnesG(x));
+
+            if (x >= LogPolyXMin && x <= LogPolyXMax) {
+                return BarnesGUtil.LogSeriesValue(x);
             }
 
-            if (x < LogPadeXMax) {
-                return BarnesGUtil.LogPadeValue(x);
+            if (x < LogPolyXMin) {
+                int m = (int)Floor(x);
+
+                ddouble f = x - m;
+
+                ddouble y = BarnesGUtil.LogSeriesValue(f + 2d);
+                
+                for (int k = 1; k >= m; k--) {
+                    y -= LogGamma(k + f);
+                }
+
+                return y;
             }
             else if (x < LogSterlingXMin) {
                 int m = (int)Floor(x);
 
                 ddouble f = x - m;
 
-                ddouble y = BarnesGUtil.LogPadeValue(f + 2d);
+                ddouble y = BarnesGUtil.LogSeriesValue(f + 2d);
                 ddouble d = 1d, g = Gamma(f + 1d);
 
                 for (int k = 1; k < m - 1; k++) {
@@ -98,7 +110,7 @@ namespace DoubleDouble {
         }
 
         internal static class BarnesGUtil {
-            public static ddouble PadeValue(ddouble x) {
+            public static ddouble SeriesValue(ddouble x) {
                 Debug.Assert(x >= PolyXMin && x <= PadeXMax, nameof(x));
 
                 if (IsPositive(x)) {
@@ -144,27 +156,63 @@ namespace DoubleDouble {
                 }
             }
 
-            public static ddouble LogPadeValue(ddouble x) {
-                Debug.Assert(x >= LogPadeXMin && x <= LogPadeXMax, nameof(x));
+            public static ddouble LogSeriesValue(ddouble x) {
+                Debug.Assert(x >= LogPolyXMin && x <= LogPolyXMax, nameof(x));
 
-                int n = int.Min((int)Floor(Ldexp(x - LogPadeXMin, 1)), LogPadeTables.Count - 1);
+                int table_index;
+                bool is_poly;
+                ddouble v;
 
-                (double x0, ReadOnlyCollection<(ddouble c, ddouble d)> table) = LogPadeTables[n];
-                ddouble v = x - x0;
-
-                (ddouble sc, ddouble sd) = table[0];
-                for (int i = 1; i < table.Count; i++) {
-                    (ddouble c, ddouble d) = table[i];
-
-                    sc = sc * v + c;
-                    sd = sd * v + d;
+                if (x < 2.25d) {
+                    table_index = 0;
+                    is_poly = true;
+                    v = x - 2d;
+                }
+                else if (x < 2.50d) {
+                    table_index = 1;
+                    is_poly = false;
+                    v = x - 2.25d;
+                }
+                else if (x < 2.75d) {
+                    table_index = 2;
+                    is_poly = false;
+                    v = x - 2.50d;
+                }
+                else {
+                    table_index = 3;
+                    is_poly = true;
+                    v = x - 3d;
                 }
 
-                Debug.Assert(sd > 0.5d, $"[LogBarnesG x={x}] Too small pade denom!!");
+                ReadOnlyCollection<(ddouble c, ddouble d)> table = LogTables[table_index];
 
-                ddouble y = sc / sd;
+                if (is_poly) {
+                    ddouble s = table[0].c + v * table[0].d;
+                    for (int i = 1; i < table.Count; i++) {
+                        (ddouble c, ddouble d) = table[i];
 
-                return y;
+                        s = c + v * (d + v * s);
+                    }
+
+                    ddouble y = s * v;
+
+                    return y;
+                }
+                else {
+                    (ddouble sc, ddouble sd) = table[0];
+                    for (int i = 1; i < table.Count; i++) {
+                        (ddouble c, ddouble d) = table[i];
+
+                        sc = sc * v + c;
+                        sd = sd * v + d;
+                    }
+
+                    Debug.Assert(sd > 0.5d, $"[LogBarnesG x={x}] Too small pade denom!!");
+
+                    ddouble y = sc / sd;
+
+                    return y;
+                }
             }
 
             public static ddouble LogSterlingValue(ddouble x) {
@@ -196,11 +244,11 @@ namespace DoubleDouble {
             public static class BarnesG {
                 public const double ExtremeLarge = 28.5d, ExtremeMinusLarge = -64d;
                 public const double PolyXMin = -0.25d, PadeXMax = 4d;
-                public const double LogPadeXMin = 0.25d, LogPadeXMax = 3.25d, LogSterlingXMin = 12d;
+                public const double LogPolyXMin = 1.75d, LogPolyXMax = 3.25d, LogSterlingXMin = 12d, LogPolyRange = 0.5d;
 
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> SterlingTable, PolyXNegativeTable;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
-                public static readonly ReadOnlyCollection<(double x0, ReadOnlyCollection<(ddouble c, ddouble d)>)> LogPadeTables;
+                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> LogTables;
                 public static readonly ddouble Rcp12 = 1.0 / (ddouble)12;
                 public static readonly ddouble LogBias = (-1, -3, 0xA96429090A9A04E6uL, 0xF323011BFAF4EC40uL);
 
@@ -218,13 +266,11 @@ namespace DoubleDouble {
                         tables["PadeX3Table"],
                     });
 
-                    LogPadeTables = Array.AsReadOnly(new (double x0, ReadOnlyCollection<(ddouble c, ddouble d)>)[] {
-                        (0.25d, tables["LogPadeX0p25Table"]),
-                        (1d, tables["LogPadeX0p75Table"]),
-                        (1.25d, tables["LogPadeX1p25Table"]),
-                        (2d, tables["LogPadeX1p75Table"]),
-                        (2.25d, tables["LogPadeX2p25Table"]),
-                        (3d, tables["LogPadeX2p75Table"]),
+                    LogTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
+                        tables["LogPolyX2Table"],
+                        tables["LogPadeX2p25Table"],
+                        tables["LogPadeX2p50Table"],
+                        tables["LogPolyX3Table"],
                     });
                 }
             }
