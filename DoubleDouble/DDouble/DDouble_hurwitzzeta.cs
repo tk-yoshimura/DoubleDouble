@@ -23,13 +23,13 @@
             ddouble y = 0d;
             while (a < a_convergence) {
                 ddouble dy = Pow(a, -x);
-                ddouble y_next = y + dy;
 
-                if (y == y_next) {
+                y = SeriesUtil.UnScaledAdd(y, dy, out bool convergence);
+
+                if (convergence) {
                     return y;
                 }
 
-                y = y_next;
                 a += 1d;
             }
 
@@ -47,14 +47,11 @@
                 ddouble dy1 = BernoulliSequence[k] * u;
                 k++;
 
-                ddouble dy = dy0 + dy1;
-                ddouble y_next = y + dy;
+                y = SeriesUtil.UnScaledAdd(y, dy0, dy1, out bool convergence);
 
-                if (y == y_next || !(dy <= 0d)) {
+                if (convergence || !(dy0 <= -dy1)) {
                     break;
                 }
-
-                y = y_next;
             }
 
             return y;

@@ -63,27 +63,23 @@ namespace DoubleDouble {
                         continue;
                     }
 
-                    ddouble dy = coef[k] * u;
-                    ddouble y_next = y + dy;
+                    y = SeriesUtil.Add(y, u, coef[k], out bool convergence);
 
-                    if (y == y_next) {
+                    if (convergence) {
                         return y;
                     }
 
                     u *= v;
-                    y = y_next;
                 }
 
                 for (int k = n + 1; k < coef.Count - 1; k += 2) {
-                    ddouble dy = coef[k] * u;
-                    ddouble y_next = y + dy;
+                    y = SeriesUtil.Add(y, u, coef[k], out bool convergence);
 
-                    if (y == y_next) {
+                    if (convergence) {
                         break;
                     }
 
                     u *= v2;
-                    y = y_next;
                 }
 
                 return y;

@@ -123,15 +123,13 @@ namespace DoubleDouble {
                     ddouble x = 1d, w = m;
 
                     for (int i = 1; i < int.MaxValue; i++) {
-                        ddouble dx = Consts.Elliptic.KTable(i) * w;
-                        ddouble x_next = x + dx;
+                        x = SeriesUtil.Add(x, w, Consts.Elliptic.KTable(i), out bool convergence);
 
-                        if (x == x_next) {
+                        if (convergence) {
                             break;
                         }
 
                         w *= m;
-                        x = x_next;
                     }
 
                     y = x * PIHalf;

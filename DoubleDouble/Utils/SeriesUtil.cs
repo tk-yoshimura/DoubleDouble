@@ -4,27 +4,57 @@ namespace DoubleDouble {
     internal static class SeriesUtil {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble Add(ddouble c, ddouble s, ddouble a, out bool convergence) {
-            ddouble c_next = c + s * a;
+            ddouble c_add = c + s * a;
 
-            convergence = c == c_next;
+            convergence = c == c_add;
 
-            return c_next;
+            return c_add;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble Add(ddouble c, ddouble s, ddouble a, ddouble b, out bool convergence) {
-            ddouble c_next_x = c + s * (a + b);
+            ddouble c_add = c + s * (a + b);
 
-            if (c != c_next_x) {
+            if (c != c_add) {
                 convergence = false;
-                return c_next_x;
+                return c_add;
             }
 
-            ddouble c_next_y = c + s * (a - b);
+            ddouble c_sub = c + s * (a - b);
 
-            convergence = c == c_next_y;
+            convergence = c == c_sub;
 
-            return c_next_x;
+            return c_add;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble UnScaledAdd(ddouble c, ddouble a, out bool convergence) {
+            ddouble c_add = c + a;
+
+            if (c != c_add) {
+                convergence = false;
+                return c_add;
+            }
+
+            convergence = c == c_add;
+
+            return c_add;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ddouble UnScaledAdd(ddouble c, ddouble a, ddouble b, out bool convergence) {
+            ddouble c_add = c + (a + b);
+
+            if (c != c_add) {
+                convergence = false;
+                return c_add;
+            }
+
+            ddouble c_sub = c + (a - b);
+
+            convergence = c == c_sub;
+
+            return c_add;
         }
     }
 }
