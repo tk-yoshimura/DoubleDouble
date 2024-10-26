@@ -26,7 +26,7 @@ namespace DoubleDouble {
                 return BarnesGUtil.PadeValue(x);
             }
 
-            ddouble x_p25 = x + 0.25d;
+            ddouble x_p25 = x - PolyXMin;
 
             if (x < PolyXMin) {
                 int m = int.Min(-1, (int)Floor(x_p25));
@@ -48,8 +48,8 @@ namespace DoubleDouble {
 
                 ddouble f = x - m;
 
-                ddouble y = BarnesGUtil.PadeValue(f + 3d);
-                ddouble g = Gamma(f + 2d);
+                ddouble y = BarnesGUtil.PadeValue(f + (PadeXMax - 1d));
+                ddouble g = Gamma(f + (PadeXMax - 2d));
 
                 for (int k = 2; k < m - 1; k++) {
                     g *= f + k;
