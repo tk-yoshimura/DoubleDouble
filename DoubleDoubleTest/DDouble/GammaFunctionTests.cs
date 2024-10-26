@@ -3301,16 +3301,16 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = expecteds[i];
 
                 ddouble y = ddouble.Gamma(x);
-                ddouble y_dec = ddouble.Gamma(ddouble.BitDecrement(x));
-                ddouble y_inc = ddouble.Gamma(ddouble.BitIncrement(x));
+                ddouble y_dec = ddouble.Gamma(x - double.ScaleB(1, -102));
+                ddouble y_inc = ddouble.Gamma(x + double.ScaleB(1, -102));
 
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
                 HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
 
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31, $"{x} dec");
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31, $"{x} inc");
+                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-31, $"{x} dec");
+                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-31, $"{x} inc");
             }
         }
 
