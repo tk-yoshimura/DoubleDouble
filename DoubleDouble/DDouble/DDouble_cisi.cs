@@ -240,7 +240,7 @@ namespace DoubleDouble {
                 Debug.Assert(x >= PadeApproxMin && x <= PadeApproxMax);
 
                 int table_index = int.Clamp(ILogB(x), 0, PadeTables.Count - 1);
-                
+
                 ddouble w = x - double.ScaleB(1d, table_index);
                 ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)> table = PadeTables[table_index];
 

@@ -3657,7 +3657,7 @@ namespace DoubleDoubleTest.DDouble {
                         HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31, $"{x} inc");
                     }
                 }
-                else { 
+                else {
                     HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
 
                     HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31, $"{x} dec");
@@ -4007,7 +4007,7 @@ namespace DoubleDoubleTest.DDouble {
                     HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31, $"{x} dec");
                     HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31, $"{x} inc");
                 }
-                else { 
+                else {
                     HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-31, $"{x}");
 
                     HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-31, $"{x} dec");

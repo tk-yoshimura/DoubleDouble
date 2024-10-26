@@ -19,7 +19,7 @@ namespace DoubleDoubleNumTablePacking {
             foreach (var key in tables.Keys) {
                 stream.Write(key);
                 stream.Write((UInt32)tables[key].Count);
-                foreach((Hexcode fc, Hexcode fd, Hexcode gc, Hexcode gd) in tables[key]) {
+                foreach ((Hexcode fc, Hexcode fd, Hexcode gc, Hexcode gd) in tables[key]) {
                     stream.Write((UInt64)fc.Hi);
                     stream.Write((UInt64)fc.Lo);
                     stream.Write((UInt64)fd.Hi);

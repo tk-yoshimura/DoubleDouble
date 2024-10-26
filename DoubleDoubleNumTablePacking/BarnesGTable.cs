@@ -9,15 +9,15 @@ namespace DoubleDoubleNumTablePacking {
                 { nameof(PadeX1Table), PadeX1Table },
                 { nameof(PadeX2Table), PadeX2Table },
                 { nameof(PadeX3Table), PadeX3Table },
-                
+
                 { nameof(PolyXNegativeTable), PolyXNegativeTable },
-                
+
                 { nameof(LogPolyX2Table), LogPolyX2Table },
                 { nameof(LogPolyX3Table), LogPolyX3Table },
-                
+
                 { nameof(LogPadeX2p25Table), LogPadeX2p25Table },
                 { nameof(LogPadeX2p50Table), LogPadeX2p50Table },
-                
+
                 { nameof(SterlingTable), SterlingTable },
             };
 

@@ -1,5 +1,4 @@
 ﻿using DoubleDouble.Utils;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.BarnesG;
@@ -80,7 +79,7 @@ namespace DoubleDouble {
                 ddouble f = x - m;
 
                 ddouble y = BarnesGUtil.LogSeriesValue(f + 2d);
-                
+
                 for (int k = 1; k >= m; k--) {
                     y -= LogGamma(k + f);
                 }
