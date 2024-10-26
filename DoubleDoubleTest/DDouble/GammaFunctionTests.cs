@@ -3275,11 +3275,16 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = expecteds[i];
 
                 ddouble y = ddouble.Gamma(x);
+                ddouble y_dec = ddouble.Gamma(ddouble.BitDecrement(x));
+                ddouble y_inc = ddouble.Gamma(ddouble.BitIncrement(x));
 
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
                 HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
+
+                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31, $"{x} dec");
+                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31, $"{x} inc");
             }
         }
 
@@ -3612,11 +3617,18 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = expecteds[i];
 
                 ddouble y = ddouble.LogGamma(x);
+                ddouble y_dec = ddouble.LogGamma(ddouble.BitDecrement(x));
+                ddouble y_inc = ddouble.LogGamma(ddouble.BitIncrement(x));
 
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
                 HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31, $"{x}");
+
+                if (x != 1 && x != 2) {
+                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31, $"{x} dec");
+                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31, $"{x} inc");
+                }
             }
         }
     }
