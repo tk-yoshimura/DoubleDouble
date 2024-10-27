@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -126,7 +127,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LegendrePolynomials[n](x);
                     ddouble actual = ddouble.LegendreP(n, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},{x}");
                 }
             }
         }
@@ -148,7 +149,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LegendreTables[(n, m)](x);
                     ddouble actual = ddouble.LegendreP(n, m, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-31, $"{n},{m},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-31, $"{n},{m},{x}");
                 }
             }
         }

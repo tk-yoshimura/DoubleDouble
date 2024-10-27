@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -192,7 +193,7 @@ namespace DoubleDoubleTest.DDouble {
                         Assert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
                     }
                     else {
-                        HPAssert.AreEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AlmostEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
                     }
                 }
             }
@@ -207,7 +208,7 @@ namespace DoubleDoubleTest.DDouble {
                         Assert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
                     }
                     else {
-                        HPAssert.AreEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AlmostEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
                     }
                 }
             }
@@ -227,8 +228,8 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            HPAssert.AreEqual(0, ddouble.Log1p(ddouble.BitDecrement(0)), 1e-300);
-            HPAssert.AreEqual(0, ddouble.Log1p(ddouble.BitIncrement(0)), 1e-300);
+            PrecisionAssert.AreEqual(0, ddouble.Log1p(ddouble.BitDecrement(0)), 1e-300);
+            PrecisionAssert.AreEqual(0, ddouble.Log1p(ddouble.BitIncrement(0)), 1e-300);
 
             Console.WriteLine(ddouble.Log1p(ddouble.BitDecrement(0)));
             Console.WriteLine(ddouble.Log1p(0));
@@ -307,7 +308,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
             }
 
             ddouble log_pzero = ddouble.Logit(0d);
@@ -373,7 +374,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
             }
 
             ddouble exp_pinf = ddouble.Expit(double.PositiveInfinity);

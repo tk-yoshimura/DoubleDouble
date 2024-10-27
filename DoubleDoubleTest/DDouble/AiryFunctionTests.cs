@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -537,9 +538,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-29d);
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-29d);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-29d);
+                PrecisionAssert.AlmostEqual(expected, y, 8e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 8e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 8e-29d);
             }
 
             for ((int i, ddouble x) = (0, -1); i < nz_expecteds.Length; i++, x += 1d / 128) {
@@ -552,9 +553,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-29d);
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-29d);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-29d);
+                PrecisionAssert.AlmostEqual(expected, y, 8e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 8e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 8e-29d);
             }
 
             Assert.IsTrue(ddouble.IsNaN(ddouble.AiryAi(ddouble.NaN)));
@@ -1098,9 +1099,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-29d);
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-29d);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-29d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 1e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 1e-29d);
             }
 
             for ((int i, ddouble x) = (0, -1); i < nz_expecteds.Length; i++, x += 1d / 128) {
@@ -1113,9 +1114,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-29d);
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-29d);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-29d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 1e-29d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 1e-29d);
             }
 
             Assert.IsTrue(ddouble.IsNaN(ddouble.AiryBi(ddouble.NaN)));

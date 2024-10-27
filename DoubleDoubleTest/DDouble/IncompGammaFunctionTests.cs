@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.Generic;
 
@@ -1525,18 +1526,18 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nu},{x}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
 
                     if (nu != 0 && nu != 1) {
-                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                        PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
+                        PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
                     }
                 }
             }
 
-            HPAssert.AreEqual("3.833210049595407891778125864029205719578e201", ddouble.LowerIncompleteGamma(128, 64), 1e172);
-            HPAssert.AreEqual("1.541742173506604322781460596927986833764e213", ddouble.LowerIncompleteGamma(128, 128), 1e185);
-            HPAssert.AreEqual("3.012660018457659543894743089302033651578e213", ddouble.LowerIncompleteGamma(128, 256), 1e185);
+            PrecisionAssert.AlmostEqual("3.833210049595407891778125864029205719578e201", ddouble.LowerIncompleteGamma(128, 64), 1e-30);
+            PrecisionAssert.AlmostEqual("1.541742173506604322781460596927986833764e213", ddouble.LowerIncompleteGamma(128, 128), 5e-30);
+            PrecisionAssert.AlmostEqual("3.012660018457659543894743089302033651578e213", ddouble.LowerIncompleteGamma(128, 256), 5e-30);
         }
 
         [TestMethod]
@@ -3139,18 +3140,18 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nu},{x}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-30d);
 
                     if (nu != 0 && nu != 1) {
-                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-30d);
-                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-30d);
+                        PrecisionAssert.AlmostEqual(expected, y_dec, 8e-30d);
+                        PrecisionAssert.AlmostEqual(expected, y_inc, 8e-30d);
                     }
                 }
             }
 
-            HPAssert.AreEqual("3.012660018453826334760381669635281566460e213", ddouble.UpperIncompleteGamma(128, 64), 1e185);
-            HPAssert.AreEqual("1.470917844951055222028516480599072858560e213", ddouble.UpperIncompleteGamma(128, 128), 1e185);
-            HPAssert.AreEqual("9.152339882250260407460087855828786316007e194", ddouble.UpperIncompleteGamma(128, 256), 1e166);
+            PrecisionAssert.AlmostEqual("3.012660018453826334760381669635281566460e213", ddouble.UpperIncompleteGamma(128, 64), 1e-30);
+            PrecisionAssert.AlmostEqual("1.470917844951055222028516480599072858560e213", ddouble.UpperIncompleteGamma(128, 128), 5e-30);
+            PrecisionAssert.AlmostEqual("9.152339882250260407460087855828786316007e194", ddouble.UpperIncompleteGamma(128, 256), 5e-30);
         }
 
         [TestMethod]
@@ -3160,7 +3161,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.LowerIncompleteGamma(nu, x) / ddouble.Gamma(nu);
                     ddouble actual = ddouble.LowerIncompleteGammaRegularized(nu, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{nu},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-29, $"{nu},{x}");
                 }
             }
         }
@@ -3172,7 +3173,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.UpperIncompleteGamma(nu, x) / ddouble.Gamma(nu);
                     ddouble actual = ddouble.UpperIncompleteGammaRegularized(nu, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{nu},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-29, $"{nu},{x}");
                 }
             }
         }
@@ -3253,7 +3254,7 @@ namespace DoubleDoubleTest.DDouble {
                         continue;
                     }
 
-                    HPAssert.AreEqual(x, z, ddouble.Abs(x) * 4e-27, $"{nu},{x}");
+                    PrecisionAssert.AlmostEqual(x, z, 4e-27, $"{nu},{x}");
                 }
             }
         }
@@ -3282,7 +3283,7 @@ namespace DoubleDoubleTest.DDouble {
                         continue;
                     }
 
-                    HPAssert.AreEqual(x, z, ddouble.Abs(x) * 4e-27, $"{nu},{x}");
+                    PrecisionAssert.AlmostEqual(x, z, 4e-27, $"{nu},{x}");
                 }
             }
         }

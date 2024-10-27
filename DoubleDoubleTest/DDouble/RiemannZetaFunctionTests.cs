@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -1081,11 +1082,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
 
                 if (expected != 0 && x != 1) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
                 }
             }
 
@@ -1099,35 +1100,35 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
 
                 if (expected != 0 && x != 1) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
                 }
             }
 
             Assert.AreEqual(-0.5d, ddouble.RiemannZeta(0));
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.RiemannZeta(-ddouble.Consts.RiemannZeta.Eps),
                 ddouble.RiemannZeta(ddouble.BitDecrement(-ddouble.Consts.RiemannZeta.Eps)),
                 1e-31
             );
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.RiemannZeta(-ddouble.Consts.RiemannZeta.Eps),
                 ddouble.RiemannZeta(ddouble.BitIncrement(-ddouble.Consts.RiemannZeta.Eps)),
                 1e-31
             );
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.RiemannZeta(+ddouble.Consts.RiemannZeta.Eps),
                 ddouble.RiemannZeta(ddouble.BitDecrement(+ddouble.Consts.RiemannZeta.Eps)),
                 1e-31
             );
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.RiemannZeta(+ddouble.Consts.RiemannZeta.Eps),
                 ddouble.RiemannZeta(ddouble.BitIncrement(+ddouble.Consts.RiemannZeta.Eps)),
                 1e-31
@@ -1292,11 +1293,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 4e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 4e-31d);
 
                 if (expected != 0 && x != 1) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 4e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-31d);
                 }
             }
 
@@ -1310,35 +1311,35 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 4e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 4e-31d);
 
                 if (expected != 0 && x != 1) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 4e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-31d);
                 }
             }
 
             Assert.AreEqual(ddouble.Ln2, ddouble.DirichletEta(1));
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.DirichletEta(1 - ddouble.Consts.RiemannZeta.Eps),
                 ddouble.DirichletEta(ddouble.BitDecrement(1 - ddouble.Consts.RiemannZeta.Eps)),
                 1e-31
             );
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.DirichletEta(1 - ddouble.Consts.RiemannZeta.Eps),
                 ddouble.DirichletEta(ddouble.BitIncrement(1 - ddouble.Consts.RiemannZeta.Eps)),
                 1e-31
             );
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.DirichletEta(1 + ddouble.Consts.RiemannZeta.Eps),
                 ddouble.DirichletEta(ddouble.BitDecrement(1 + ddouble.Consts.RiemannZeta.Eps)),
                 1e-31
             );
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 ddouble.DirichletEta(1 + ddouble.Consts.RiemannZeta.Eps),
                 ddouble.DirichletEta(ddouble.BitIncrement(1 + ddouble.Consts.RiemannZeta.Eps)),
                 1e-31

@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -21,7 +22,7 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(error);
 
             Assert.IsTrue(ddouble.Abs(error) < 1e-31);
-            HPAssert.NeighborBits(expected, actual, 1);
+            BitAssert.NeighborBits(expected, actual, 1);
 
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);
             Console.WriteLine(ddouble.BitIncrement(expected) - actual);
@@ -40,7 +41,7 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(error);
 
             Assert.IsTrue(ddouble.Abs(error) < 1e-31);
-            HPAssert.NeighborBits(expected, actual, 1);
+            BitAssert.NeighborBits(expected, actual, 1);
 
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);
             Console.WriteLine(ddouble.BitIncrement(expected) - actual);
@@ -51,12 +52,12 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void Sqrt2Test() {
-            HPAssert.AreEqual(2, ddouble.Sqrt2 * ddouble.Sqrt2, 1e-31);
+            PrecisionAssert.AlmostEqual(2, ddouble.Sqrt2 * ddouble.Sqrt2, 1e-31);
         }
 
         [TestMethod]
         public void ErdosBorweinTest() {
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 "1.6066951524152917637833015231909245804805796715057564357780795536",
                 ddouble.ErdosBorwein,
                 1e-31
@@ -65,7 +66,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void FeigenbaumDeltaTest() {
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 "4.6692016091029906718532038204662016172581855774757686327456513430",
                 ddouble.FeigenbaumDelta,
                 1e-31
@@ -74,7 +75,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void LemniscatePITest() {
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 "2.6220575542921198104648395898911194136827549514316231628168217038",
                 ddouble.LemniscatePI,
                 1e-31

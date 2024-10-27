@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -89,9 +90,9 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x) - 1) < 2e-30);
                 Assert.IsTrue(ddouble.Abs(-expected / ddouble.Erf(-x_inc) - 1) < 2e-30);
 
-                HPAssert.NeighborBits(expected, ddouble.Erf(x_dec), 32);
-                HPAssert.NeighborBits(expected, ddouble.Erf(x), 32);
-                HPAssert.NeighborBits(expected, ddouble.Erf(x_inc), 32);
+                BitAssert.NeighborBits(expected, ddouble.Erf(x_dec), 32);
+                BitAssert.NeighborBits(expected, ddouble.Erf(x), 32);
+                BitAssert.NeighborBits(expected, ddouble.Erf(x_inc), 32);
             }
 
             ddouble erf_pzero = ddouble.Erf(0d);
@@ -253,9 +254,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erfc(x));
                 Console.WriteLine(ddouble.Erfc(x_inc));
 
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_dec), expected * 2e-31d);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 2e-31d);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfc(x_dec), 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfc(x), 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfc(x_inc), 2e-31d);
 
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 2e-30);
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 2e-30);
@@ -275,9 +276,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erfc(x));
                 Console.WriteLine(ddouble.Erfc(x_inc));
 
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_dec), expected * 2e-20d);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x), expected * 2e-20d);
-                HPAssert.AreEqual(expected, ddouble.Erfc(x_inc), expected * 2e-20d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfc(x_dec), 2e-20d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfc(x), 2e-20d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfc(x_inc), 2e-20d);
 
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x_dec) - 1) < 2e-20);
                 Assert.IsTrue(ddouble.Abs((2 - expected) / ddouble.Erfc(-x) - 1) < 2e-20);
@@ -458,9 +459,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Erfcx(x));
                 Console.WriteLine(ddouble.Erfcx(x_inc));
 
-                HPAssert.AreEqual(expected, ddouble.Erfcx(x_dec), expected * 2e-31d);
-                HPAssert.AreEqual(expected, ddouble.Erfcx(x), expected * 2e-31d);
-                HPAssert.AreEqual(expected, ddouble.Erfcx(x_inc), expected * 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfcx(x_dec), 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfcx(x), 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Erfcx(x_inc), 2e-31d);
             }
 
             ddouble erfcx_pzero = ddouble.Erfcx(0d);
@@ -484,14 +485,14 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble y = ddouble.InverseErf(v);
                 ddouble z = ddouble.Erf(y);
 
-                HPAssert.AreEqual(v, z, ddouble.Abs(v) * 1e-30d);
+                PrecisionAssert.AlmostEqual(v, z, 1e-30d);
             }
 
             for (ddouble v = Math.ScaleB(1, -8); v > Math.ScaleB(1, -968); v /= 2) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
 
-                HPAssert.AreEqual(v, z, ddouble.Abs(v) * 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
+                PrecisionAssert.AlmostEqual(v, z, 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
 
                 ddouble y_dec = ddouble.BitDecrement(y);
                 ddouble z_dec = ddouble.InverseErf(y_dec);
@@ -502,8 +503,8 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreNotEqual(y, y_dec);
                 Assert.AreNotEqual(y, y_inc);
 
-                HPAssert.AreEqual(v, z_dec, ddouble.Abs(v) * 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
-                HPAssert.AreEqual(v, z_inc, ddouble.Abs(v) * 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
+                PrecisionAssert.AlmostEqual(v, z_dec, 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
+                PrecisionAssert.AlmostEqual(v, z_inc, 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
             }
 
             for (ddouble y = Math.ScaleB(1, -8); y > Math.ScaleB(1, -20); y /= 2) {
@@ -518,8 +519,8 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreNotEqual(y, y_dec);
                 Assert.AreNotEqual(y, y_inc);
 
-                HPAssert.AreEqual(z, z_dec, ddouble.Abs(z) * 1e-29, $"exponent: {ddouble.Frexp(y).exp}");
-                HPAssert.AreEqual(z, z_inc, ddouble.Abs(z) * 1e-29, $"exponent: {ddouble.Frexp(y).exp}");
+                PrecisionAssert.AlmostEqual(z, z_dec, 1e-29, $"exponent: {ddouble.Frexp(y).exp}");
+                PrecisionAssert.AlmostEqual(z, z_inc, 1e-29, $"exponent: {ddouble.Frexp(y).exp}");
             }
 
             Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.InverseErf(-1)), "x = -1");
@@ -545,17 +546,17 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble y = ddouble.InverseErfc(v);
                 ddouble z = ddouble.Erfc(y);
 
-                HPAssert.AreEqual(v, z, v * 8e-29d);
+                PrecisionAssert.AlmostEqual(v, z, 8e-29d);
             }
 
             for (ddouble v = 1; v < 2; v += 1d / 256) {
                 ddouble y = ddouble.InverseErfc(v);
                 ddouble z = ddouble.Erfc(y);
 
-                HPAssert.AreEqual(v, z, v * 2e-31d);
+                PrecisionAssert.AlmostEqual(v, z, 2e-31d);
             }
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 "2.57667901354624266004355913677911282e1",
                 ddouble.InverseErfc("1e-290"), 1e-30
             );

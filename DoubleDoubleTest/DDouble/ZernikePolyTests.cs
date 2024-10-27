@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.Generic;
 
@@ -59,7 +60,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ZernikeTables[(n, m)](x);
                     ddouble actual = ddouble.ZernikeR(n, m, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{m},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},{m},{x}");
                 }
             }
         }

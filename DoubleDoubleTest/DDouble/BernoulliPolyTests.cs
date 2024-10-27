@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.ObjectModel;
 
@@ -89,7 +90,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = BernoulliPolynomials[n](x);
                     ddouble actual = ddouble.Bernoulli(n, x, centered: false);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30d, $"normal {n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-30d, $"normal {n},{x}");
                 }
             }
 
@@ -98,7 +99,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = BernoulliCenteredPolynomials[n](x);
                     ddouble actual = ddouble.Bernoulli(n, x, centered: true);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30d, $"centered {n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-30d, $"centered {n},{x}");
                 }
             }
 
@@ -115,8 +116,8 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble y_dec = ddouble.Bernoulli(n, x_dec, centered: false);
                     ddouble y_inc = ddouble.Bernoulli(n, x_inc, centered: false);
 
-                    HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
-                    HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
+                    PrecisionAssert.AlmostEqual(y, y_dec, 3e-30d, $"normal border {n},{x}");
+                    PrecisionAssert.AlmostEqual(y, y_inc, 3e-30d, $"normal border {n},{x}");
                 }
 
                 for (ddouble x = -0.375; x <= 0.375; x += 0.125) {
@@ -131,8 +132,8 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble y_dec = ddouble.Bernoulli(n, x_dec, centered: true);
                     ddouble y_inc = ddouble.Bernoulli(n, x_inc, centered: true);
 
-                    HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
-                    HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 3e-30d, $"normal border {n},{x}");
+                    PrecisionAssert.AlmostEqual(y, y_dec, 3e-30d, $"normal border {n},{x}");
+                    PrecisionAssert.AlmostEqual(y, y_inc, 3e-30d, $"normal border {n},{x}");
                 }
             }
         }

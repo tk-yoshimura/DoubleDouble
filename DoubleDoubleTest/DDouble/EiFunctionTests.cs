@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -1049,11 +1050,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 2e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 2e-30d);
                 }
             }
 
@@ -1067,11 +1068,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 2e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 2e-30d);
                 }
             }
 
@@ -1099,8 +1100,8 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 1e-30d);
-                HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 1e-30d);
+                PrecisionAssert.AlmostEqual(y, y_dec, 1e-30d);
+                PrecisionAssert.AlmostEqual(y, y_inc, 1e-30d);
             }
 
             for (ddouble x = -1; x <= 1; x += 1d / 32) {
@@ -1115,8 +1116,8 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(y, y_dec, ddouble.Abs(y) * 1e-30d);
-                HPAssert.AreEqual(y, y_inc, ddouble.Abs(y) * 1e-30d);
+                PrecisionAssert.AlmostEqual(y, y_dec, 1e-30d);
+                PrecisionAssert.AlmostEqual(y, y_inc, 1e-30d);
             }
 
             Assert.IsTrue(ddouble.IsZero(ddouble.Ein(0)));
@@ -2431,11 +2432,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
 
                 if (x != 0 && x != 1) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
                 }
             }
 
@@ -2449,11 +2450,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
 
                 if (x != 0 && x != 1) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
                 }
             }
 

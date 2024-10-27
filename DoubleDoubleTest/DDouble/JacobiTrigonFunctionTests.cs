@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -1470,7 +1471,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{k},{x}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-28 + 1e-28, $"{k},{x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-28, 1e-28, $"{k},{x}");
                 }
             }
         }
@@ -2940,7 +2941,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{k},{x}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-28 + 1e-28, $"{k},{x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-28, 1e-28, $"{k},{x}");
                 }
             }
         }
@@ -4410,7 +4411,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{k},{x}");
                     Console.WriteLine(y);
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-28, $"{k},{x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-28, $"{k},{x}");
                 }
             }
         }
@@ -4424,7 +4425,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine($"{x},{y},{m}");
 
-                    HPAssert.AreEqual(x, z, 1e-28);
+                    PrecisionAssert.AlmostEqual(x, z, 1e-28);
                 }
             }
 
@@ -4435,7 +4436,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine($"{x},{y},{m}");
 
-                    HPAssert.AreEqual(ddouble.Abs(x), ddouble.Abs(z), 1e-28);
+                    PrecisionAssert.AlmostEqual(ddouble.Abs(x), ddouble.Abs(z), 1e-28);
                 }
             }
         }
@@ -4449,7 +4450,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine($"{x},{y},{m}");
 
-                    HPAssert.AreEqual(x, z, 1e-28);
+                    PrecisionAssert.AlmostEqual(x, z, 1e-28);
                 }
             }
 
@@ -4460,7 +4461,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine($"{x},{y},{m}");
 
-                    HPAssert.AreEqual(ddouble.Abs(x), ddouble.Abs(z), 1e-28);
+                    PrecisionAssert.AlmostEqual(ddouble.Abs(x), ddouble.Abs(z), 1e-28);
                 }
             }
         }
@@ -4474,7 +4475,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine($"{x},{y},{m}");
 
-                    HPAssert.AreEqual(x, z, 1e-28);
+                    PrecisionAssert.AlmostEqual(x, z, 1e-28);
                 }
             }
         }

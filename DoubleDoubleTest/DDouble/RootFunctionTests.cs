@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -12,7 +13,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble w = ddouble.Sqrt(v);
                 ddouble u = w * w - (ddouble)d;
 
-                HPAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-32, $"{d}");
+                PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-32, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -22,7 +23,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble w = ddouble.Sqrt(v);
                 ddouble u = w * w - (ddouble)d;
 
-                HPAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-32, $"{d}");
+                PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-32, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -47,7 +48,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble w = ddouble.Cbrt(v);
                 ddouble u = w * w * w - (ddouble)d;
 
-                HPAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-31, $"{d}");
+                PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-31, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -57,7 +58,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble w = ddouble.Cbrt(v);
                 ddouble u = w * w * w - (ddouble)d;
 
-                HPAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-31, $"{d}");
+                PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 8e-31, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -83,7 +84,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble w = ddouble.RootN(v, n);
                     ddouble u = ddouble.Pow(w, n) - (ddouble)d;
 
-                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
                     Assert.IsTrue(ddouble.IsRegulared(v));
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
@@ -93,7 +94,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble w = ddouble.RootN(v, n);
                     ddouble u = ddouble.Pow(w, n) - (ddouble)d;
 
-                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
                     Assert.IsTrue(ddouble.IsRegulared(v));
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
@@ -117,7 +118,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble w = ddouble.RootN(v, n);
                     ddouble u = ddouble.Pow(w, n) - (ddouble)v;
 
-                    HPAssert.AreEqual(0, u, v * 8e-30, $"{v},{n}");
+                    PrecisionAssert.AreEqual(0, u, v * 8e-30, $"{v},{n}");
                     Assert.IsTrue(ddouble.IsRegulared(v));
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
@@ -132,7 +133,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble w = ddouble.RootN(v, n);
                     ddouble u = ddouble.Pow(w, n) - (ddouble)d;
 
-                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
                     Assert.IsTrue(ddouble.IsRegulared(v));
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
@@ -142,7 +143,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble w = ddouble.RootN(v, n);
                     ddouble u = ddouble.Pow(w, n) - (ddouble)d;
 
-                    HPAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
+                    PrecisionAssert.AreEqual(0, u, Math.Abs((double)d) * 2e-30, $"{d},{n}");
                     Assert.IsTrue(ddouble.IsRegulared(v));
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
@@ -166,7 +167,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble w = ddouble.RootN(v, n);
                     ddouble u = ddouble.Pow(w, n) - (ddouble)v;
 
-                    HPAssert.AreEqual(0, u, v * 8e-30, $"{v},{n}");
+                    PrecisionAssert.AreEqual(0, u, v * 8e-30, $"{v},{n}");
                     Assert.IsTrue(ddouble.IsRegulared(v));
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
@@ -200,14 +201,14 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(7, ddouble.Hypot(0, -7, 0));
             Assert.AreEqual(11, ddouble.Hypot(0, 0, -11));
 
-            HPAssert.AreEqual("5e-250", ddouble.Hypot("3e-250", "4e-250"), "1e-280");
-            HPAssert.AreEqual(ddouble.Sqrt(195) * "1e-250", ddouble.Hypot("5e-250", "7e-250", "11e-250"), "1e-280");
+            PrecisionAssert.AlmostEqual("5e-250", ddouble.Hypot("3e-250", "4e-250"), 1e-30);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(195) * "1e-250", ddouble.Hypot("5e-250", "7e-250", "11e-250"), 1e-30);
 
-            HPAssert.AreEqual("5e+250", ddouble.Hypot("3e+250", "4e+250"), "1e+220");
-            HPAssert.AreEqual(ddouble.Sqrt(195) * "1e+250", ddouble.Hypot("5e+250", "7e+250", "11e+250"), "1e+220");
+            PrecisionAssert.AlmostEqual("5e+250", ddouble.Hypot("3e+250", "4e+250"), 1e-30);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(195) * "1e+250", ddouble.Hypot("5e+250", "7e+250", "11e+250"), 1e-30);
 
-            HPAssert.AreEqual("3e+250", ddouble.Hypot("3e+250", "4e-250"), "1e-280");
-            HPAssert.AreEqual("5e+250", ddouble.Hypot("5e+250", "7e-250", "11e-250"), "1e+220");
+            PrecisionAssert.AlmostEqual("3e+250", ddouble.Hypot("3e+250", "4e-250"), 1e-30);
+            PrecisionAssert.AlmostEqual("5e+250", ddouble.Hypot("5e+250", "7e-250", "11e-250"), 1e-30);
 
             Assert.IsTrue(ddouble.IsNaN(ddouble.Hypot(0, ddouble.NaN)));
             Assert.IsTrue(ddouble.IsNaN(ddouble.Hypot(0, 0, ddouble.NaN)));

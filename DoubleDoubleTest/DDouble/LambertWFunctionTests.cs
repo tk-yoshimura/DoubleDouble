@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -375,11 +376,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 4e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 4e-31d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 4e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-31d);
                 }
             }
 
@@ -393,11 +394,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 4e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 4e-31d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 4e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-31d);
                 }
             }
 
@@ -409,7 +410,7 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.IsTrue(ddouble.IsFinite(ddouble.LambertW(ddouble.MaxValue)));
 
-            HPAssert.AreEqual("7.0045838920868939868016508375916341696918104269217e2",
+            PrecisionAssert.AlmostEqual("7.0045838920868939868016508375916341696918104269217e2",
                               ddouble.LambertW(Math.ScaleB(1, 1020)),
                               1e-28d);
 
@@ -431,7 +432,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(w);
                 Console.WriteLine("");
 
-                HPAssert.AreEqual(y, w, ddouble.Abs(x) * 2e-31d);
+                PrecisionAssert.AreEqual(y, w, ddouble.Abs(x) * 2e-31d);
             }
 
             for (ddouble x = -31 / 32d; x > (ddouble)(-1) + Math.ScaleB(1, -104); x = (x + 1) / 2 - 1) {
@@ -444,7 +445,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(w);
                 Console.WriteLine("");
 
-                HPAssert.AreEqual(y, w, ddouble.Abs(x) * 2e-31d);
+                PrecisionAssert.AreEqual(y, w, ddouble.Abs(x) * 2e-31d);
             }
         }
     }

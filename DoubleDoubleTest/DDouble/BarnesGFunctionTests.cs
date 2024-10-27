@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -1181,13 +1182,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = expecteds[i];
 
                 ddouble actual = ddouble.BarnesG(x);
-                HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 8e-31d + 1e-50, $"x = {x}");
+                PrecisionAssert.AlmostEqual(expected, actual, 8e-31d, 1e-50, $"x = {x}");
 
                 ddouble actual_dec = ddouble.BarnesG(x - ddouble.Ldexp(1, -95));
-                HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-25d + 1e-25, $"{x}-eps");
+                PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-25d, 1e-25, $"{x}-eps");
 
                 ddouble actual_inc = ddouble.BarnesG(x + ddouble.Ldexp(1, -95));
-                HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-25d + 1e-25, $"{x}+eps");
+                PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-25d, 1e-25, $"{x}+eps");
             }
         }
 
@@ -2224,13 +2225,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = expecteds[i];
 
                 ddouble actual = ddouble.LogBarnesG(x);
-                HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-31d + 1e-50, $"x = {x}");
+                PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, 1e-50, $"x = {x}");
 
                 ddouble actual_dec = ddouble.LogBarnesG(x - ddouble.Ldexp(1, -95));
-                HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-25d + 1e-25, $"{x}-eps");
+                PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-25d, 1e-25, $"{x}-eps");
 
                 ddouble actual_inc = ddouble.LogBarnesG(x + ddouble.Ldexp(1, -95));
-                HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-25d + 1e-25, $"{x}+eps");
+                PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-25d, 1e-25, $"{x}+eps");
             }
         }
 

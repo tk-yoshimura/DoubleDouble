@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -723,13 +724,13 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.HurwitzZeta(x, a);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"x = {x},a = {a}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, $"x = {x},a = {a}");
 
                     ddouble actual_dec = ddouble.HurwitzZeta(ddouble.BitDecrement(x), a);
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d, $"{x}-eps,{a}");
+                    PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, $"{x}-eps,{a}");
 
                     ddouble actual_inc = ddouble.HurwitzZeta(ddouble.BitIncrement(x), a);
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d, $"{x}+eps,{a}");
+                    PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, $"{x}+eps,{a}");
                 }
             }
         }

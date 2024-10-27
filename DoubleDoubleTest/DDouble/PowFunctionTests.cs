@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -38,22 +39,22 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            HPAssert.AreEqual("1.99932321299248736788439373752563131122422617961", ddouble.Pow2(2047d / 2048), 1e-31);
-            HPAssert.AreEqual("1.99999867792710979052356105801249019590553355921", ddouble.Pow2(1048575d / 1048576), 1e-31);
-            HPAssert.AreEqual("1.99999933896344565293023476737641150234462232042", ddouble.Pow2(2097151d / 2097152), 1e-31);
-            HPAssert.AreEqual("1.99999999870891276684363011175144199364866798456", ddouble.Pow2(1073741823d / 1073741824), 1e-31);
-            HPAssert.AreEqual("1.25992104989487316476721060727822835057025146470", ddouble.Pow2(ddouble.Rcp(3)), 1e-31);
+            PrecisionAssert.AlmostEqual("1.99932321299248736788439373752563131122422617961", ddouble.Pow2(2047d / 2048), 1e-31);
+            PrecisionAssert.AlmostEqual("1.99999867792710979052356105801249019590553355921", ddouble.Pow2(1048575d / 1048576), 1e-31);
+            PrecisionAssert.AlmostEqual("1.99999933896344565293023476737641150234462232042", ddouble.Pow2(2097151d / 2097152), 1e-31);
+            PrecisionAssert.AlmostEqual("1.99999999870891276684363011175144199364866798456", ddouble.Pow2(1073741823d / 1073741824), 1e-31);
+            PrecisionAssert.AlmostEqual("1.25992104989487316476721060727822835057025146470", ddouble.Pow2(ddouble.Rcp(3)), 1e-31);
 
             Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(0.5d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitIncrement(0.5d))).mantissa);
             Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(0.5d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitDecrement(0.5d))).mantissa);
             Assert.AreEqual(FloatSplitter.Split(ddouble.Pow2(1d)).mantissa, FloatSplitter.Split(ddouble.Pow2(ddouble.BitDecrement(1d))).mantissa);
 
-            HPAssert.AreEqual(ddouble.Sqrt(2), ddouble.Pow2(ddouble.BitIncrement(0.5d)), 1e-31, "0.5+eps");
-            HPAssert.AreEqual(ddouble.Sqrt(2), ddouble.Pow2(0.5d), 1e-31);
-            HPAssert.AreEqual(ddouble.Sqrt(2), ddouble.Pow2(ddouble.BitDecrement(0.5d)), 1e-31, "0.5-eps");
-            HPAssert.AreEqual("1.18920711500272106671749997056047591529297209246e0", ddouble.Pow2(1d / 4), 1e-31);
-            HPAssert.AreEqual("1.09050773266525765920701065576070797899270271854e0", ddouble.Pow2(1d / 8), 1e-31);
-            HPAssert.AreEqual("1.00033850805268231295330548185621640403555852068e0", ddouble.Pow2(1d / 2048), 1e-31);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2), ddouble.Pow2(ddouble.BitIncrement(0.5d)), 1e-31, "0.5+eps");
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2), ddouble.Pow2(0.5d), 1e-31);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2), ddouble.Pow2(ddouble.BitDecrement(0.5d)), 1e-31, "0.5-eps");
+            PrecisionAssert.AlmostEqual("1.18920711500272106671749997056047591529297209246e0", ddouble.Pow2(1d / 4), 1e-31);
+            PrecisionAssert.AlmostEqual("1.09050773266525765920701065576070797899270271854e0", ddouble.Pow2(1d / 8), 1e-31);
+            PrecisionAssert.AlmostEqual("1.00033850805268231295330548185621640403555852068e0", ddouble.Pow2(1d / 2048), 1e-31);
 
             for (long i = 0; i < 19; i++) {
                 Console.WriteLine($"0x{FloatSplitter.Split(ddouble.Pow2(i)).mantissa:X14}");
@@ -168,7 +169,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.Pow(x + 1d, y);
                     ddouble actual = ddouble.Pow1p(x, y);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"{x},{y}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, $"{x},{y}");
                 }
             }
         }
@@ -229,8 +230,8 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            HPAssert.AreEqual(0, ddouble.Pow2m1(ddouble.BitDecrement(0)), 1e-300);
-            HPAssert.AreEqual(0, ddouble.Pow2m1(ddouble.BitIncrement(0)), 1e-300);
+            PrecisionAssert.AreEqual(0, ddouble.Pow2m1(ddouble.BitDecrement(0)), 1e-300);
+            PrecisionAssert.AreEqual(0, ddouble.Pow2m1(ddouble.BitIncrement(0)), 1e-300);
 
             Console.WriteLine(ddouble.Pow2m1(ddouble.BitDecrement(0)));
             Console.WriteLine(ddouble.Pow2m1(0));
@@ -279,8 +280,8 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            HPAssert.AreEqual(0, ddouble.Expm1(ddouble.BitDecrement(0)), 1e-300);
-            HPAssert.AreEqual(0, ddouble.Expm1(ddouble.BitIncrement(0)), 1e-300);
+            PrecisionAssert.AreEqual(0, ddouble.Expm1(ddouble.BitDecrement(0)), 1e-300);
+            PrecisionAssert.AreEqual(0, ddouble.Expm1(ddouble.BitIncrement(0)), 1e-300);
 
             Console.WriteLine(ddouble.Expm1(ddouble.BitDecrement(0)));
             Console.WriteLine(ddouble.Expm1(0));

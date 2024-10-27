@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -357,14 +358,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.StruveH(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 8e-30d + 16e-60d, $"{x},{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 8e-30d, 16e-60d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.StruveH(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 8e-30d + 16e-60d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 8e-30d, 16e-60d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.StruveH(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 8e-30d + 16e-60d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 8e-30d, 16e-60d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -723,14 +724,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.StruveL(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-58d, $"{x},{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, 1e-58d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.StruveL(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-58d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, 1e-58d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.StruveL(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-58d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, 1e-58d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -1089,14 +1090,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.StruveK(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29d, $"{x},{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-29d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.StruveK(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-29d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 2e-29d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.StruveK(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-29d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 2e-29d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -2426,14 +2427,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.StruveM(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"{x},{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.StruveM(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.StruveM(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -2444,14 +2445,14 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = n0largex_expecteds[i];
 
                 ddouble actual = ddouble.StruveM(n, x);
-                HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"{x},{n}");
+                PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, $"{x},{n}");
 
                 if (x > 0) {
                     ddouble actual_dec = ddouble.StruveM(n, ddouble.BitDecrement(x));
-                    HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d, $"{x}-eps,{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, $"{x}-eps,{n}");
 
                     ddouble actual_inc = ddouble.StruveM(n, ddouble.BitIncrement(x));
-                    HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d, $"{x}+eps,{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, $"{x}+eps,{n}");
                 }
             }
         }

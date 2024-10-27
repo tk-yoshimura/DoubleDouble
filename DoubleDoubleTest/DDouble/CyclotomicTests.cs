@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -27,7 +28,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{expected}");
                     Console.WriteLine($"{y}");
 
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{n}, {x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 1e-31, $"{n}, {x}");
                 }
             }
         }

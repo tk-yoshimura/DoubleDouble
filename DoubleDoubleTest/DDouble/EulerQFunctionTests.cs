@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -2067,8 +2068,8 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-31d + 5e-32d);
-                HPAssert.AreEqual(expected, y, expected * 4e-29d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d, 5e-32d);
+                PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
             }
 
             Assert.AreEqual(1, ddouble.EulerQ(0));
@@ -4154,11 +4155,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
 
                 if (ddouble.Abs(x) < 0.125) {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
                 }
                 else {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31d + 1e-31d);
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-29d);
+                    PrecisionAssert.AlmostEqual(expected, y, 2e-31d, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y, 2e-29d);
                 }
             }
 

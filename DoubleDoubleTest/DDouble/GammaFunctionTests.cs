@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Numerics;
 
@@ -26,17 +27,17 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(v);
                 Console.WriteLine(x);
 
-                HPAssert.AreEqual(v, x, v * 4e-31);
+                PrecisionAssert.AlmostEqual(v, x, 4e-31);
             }
 
-            HPAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 8);
-            HPAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 8);
+            BitAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 8);
+            BitAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 8);
 
-            HPAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 4);
-            HPAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 4);
-            HPAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 4);
+            BitAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 4);
+            BitAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 4);
+            BitAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 4);
 
-            HPAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 4);
+            BitAssert.NeighborBits("1.7944280199058900478135381683324e308", ddouble.Gamma(175743.0 / 1024), 4);
 
             ddouble gamma_pzero = ddouble.Gamma(0d);
             ddouble gamma_mzero = ddouble.Gamma(-0d);
@@ -76,7 +77,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.LogGamma(i);
                 ddouble v = ddouble.Log(y);
 
-                HPAssert.NeighborBits(v, x, 4);
+                BitAssert.NeighborBits(v, x, 4);
             }
 
             ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
@@ -85,13 +86,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.LogGamma((2 * (int)i - 1) * 0.5d);
                 ddouble v = ddouble.Log(sqrtpi * z / y);
 
-                HPAssert.NeighborBits(v, x, 4);
+                BitAssert.NeighborBits(v, x, 4);
             }
 
-            HPAssert.NeighborBits("1.288022524698077457370610440219717295925", ddouble.LogGamma(0.25), 4);
-            HPAssert.NeighborBits("2.032809514312953714814329718624296997597e-1", ddouble.LogGamma(0.75), 4);
-            HPAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 4);
-            HPAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 4);
+            BitAssert.NeighborBits("1.288022524698077457370610440219717295925", ddouble.LogGamma(0.25), 4);
+            BitAssert.NeighborBits("2.032809514312953714814329718624296997597e-1", ddouble.LogGamma(0.75), 4);
+            BitAssert.NeighborBits("3.591342053695753987760440104602869096126e2", ddouble.LogGamma(100), 4);
+            BitAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 4);
 
             foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
                 (1 - Math.ScaleB(1, -3), "8.5858707225334323502365583769487702270e-2"),
@@ -112,9 +113,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.LogGamma(x_inc3));
                 Console.WriteLine("");
 
-                HPAssert.AreEqual(expected, ddouble.LogGamma(x_dec), 1e-31);
-                HPAssert.AreEqual(expected, ddouble.LogGamma(x), 1e-31);
-                HPAssert.AreEqual(expected, ddouble.LogGamma(x_inc), 1e-31);
+                PrecisionAssert.AlmostEqual(expected, ddouble.LogGamma(x_dec), 2e-31);
+                PrecisionAssert.AlmostEqual(expected, ddouble.LogGamma(x), 2e-31);
+                PrecisionAssert.AlmostEqual(expected, ddouble.LogGamma(x_inc), 2e-31);
             }
 
             ddouble loggamma_pzero = ddouble.LogGamma(0d);
@@ -138,27 +139,27 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = ddouble.Digamma(i);
                 ddouble y = ddouble.HarmonicNumber(i - 1) - ddouble.EulerGamma;
 
-                HPAssert.NeighborBits(y, x, 4);
+                BitAssert.NeighborBits(y, x, 4);
             }
 
-            HPAssert.NeighborBits(-2 * ddouble.Log(2) - ddouble.EulerGamma, ddouble.Digamma(0.5d), 4);
-            HPAssert.NeighborBits(2 * (ddouble)340028535787 / 145568097675
+            BitAssert.NeighborBits(-2 * ddouble.Log(2) - ddouble.EulerGamma, ddouble.Digamma(0.5d), 4);
+            BitAssert.NeighborBits(2 * (ddouble)340028535787 / 145568097675
                 - 2 * ddouble.Log(2) - ddouble.EulerGamma, ddouble.Digamma(15.5d), 4);
 
-            HPAssert.NeighborBits(2 * (ddouble)10686452707072 / 4512611027925
+            BitAssert.NeighborBits(2 * (ddouble)10686452707072 / 4512611027925
                 - 2 * ddouble.Log(2) - ddouble.EulerGamma, ddouble.Digamma(16.5d), 4);
 
-            HPAssert.NeighborBits("-2.8941202000429320747561968127633502440339e0", ddouble.Digamma(-0.75), 8);
-            HPAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(-0.5), 16);
-            HPAssert.NeighborBits("2.9141391202135278303731132371828193068299e0", ddouble.Digamma(-0.25), 8);
-            HPAssert.NeighborBits("-4.2274535333762654080895301460966835773672e0", ddouble.Digamma(0.25), 4);
-            HPAssert.NeighborBits("-1.9635100260214234794409763329987555671932e0", ddouble.Digamma(0.5), 4);
-            HPAssert.NeighborBits("-1.0858608797864721696268867628171806931701e0", ddouble.Digamma(0.75), 4);
-            HPAssert.NeighborBits("-2.2745353337626540808953014609668357736724e-1", ddouble.Digamma(1.25), 4);
-            HPAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(1.5), 16);
-            HPAssert.NeighborBits("2.4747245354686116370644657051615264016326e-1", ddouble.Digamma(1.75), 4);
-            HPAssert.NeighborBits("4.6001618527380874001986055855758507268668e0", ddouble.Digamma(100), 4);
-            HPAssert.NeighborBits("5.2958152832199116154508743070484592057952e0", ddouble.Digamma(200), 4);
+            BitAssert.NeighborBits("-2.8941202000429320747561968127633502440339e0", ddouble.Digamma(-0.75), 8);
+            BitAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(-0.5), 16);
+            BitAssert.NeighborBits("2.9141391202135278303731132371828193068299e0", ddouble.Digamma(-0.25), 8);
+            BitAssert.NeighborBits("-4.2274535333762654080895301460966835773672e0", ddouble.Digamma(0.25), 4);
+            BitAssert.NeighborBits("-1.9635100260214234794409763329987555671932e0", ddouble.Digamma(0.5), 4);
+            BitAssert.NeighborBits("-1.0858608797864721696268867628171806931701e0", ddouble.Digamma(0.75), 4);
+            BitAssert.NeighborBits("-2.2745353337626540808953014609668357736724e-1", ddouble.Digamma(1.25), 4);
+            BitAssert.NeighborBits("3.6489973978576520559023667001244432806840e-2", ddouble.Digamma(1.5), 16);
+            BitAssert.NeighborBits("2.4747245354686116370644657051615264016326e-1", ddouble.Digamma(1.75), 4);
+            BitAssert.NeighborBits("4.6001618527380874001986055855758507268668e0", ddouble.Digamma(100), 4);
+            BitAssert.NeighborBits("5.2958152832199116154508743070484592057952e0", ddouble.Digamma(200), 4);
 
             ddouble zeropoint = "1.461632144968362341262659542325721328468196204006446351295988408598";
 
@@ -181,9 +182,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(ddouble.Digamma(x_inc3));
                 Console.WriteLine("");
 
-                HPAssert.AreEqual(expected, ddouble.Digamma(x_dec), 1e-31);
-                HPAssert.AreEqual(expected, ddouble.Digamma(x), 1e-31);
-                HPAssert.AreEqual(expected, ddouble.Digamma(x_inc), 1e-31);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Digamma(x_dec), 4e-31);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Digamma(x), 4e-31);
+                PrecisionAssert.AlmostEqual(expected, ddouble.Digamma(x_inc), 4e-31);
             }
 
             ddouble digamma_pzero = ddouble.Digamma(0d);
@@ -214,7 +215,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 2e-30d);
+                    PrecisionAssert.AlmostEqual(x, z, 2e-30d);
                 }
             }
 
@@ -227,7 +228,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 5e-30d);
+                    PrecisionAssert.AlmostEqual(x, z, 5e-30d);
                 }
             }
 
@@ -240,7 +241,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 1e-29d);
+                    PrecisionAssert.AlmostEqual(x, z, 1e-29d);
                 }
             }
 
@@ -253,7 +254,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 4e-29d);
+                    PrecisionAssert.AlmostEqual(x, z, 4e-29d);
                 }
             }
 
@@ -265,7 +266,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
                 Console.WriteLine(z);
 
-                HPAssert.AreEqual(x, z, x * 2e-31d);
+                PrecisionAssert.AlmostEqual(x, z, 2e-31d);
             }
 
             for (ddouble x = 1.5; x <= 36.5; x += 0.5) {
@@ -307,7 +308,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, x * 4e-29d);
+                    PrecisionAssert.AlmostEqual(x, z, 4e-29d);
                 }
             }
 
@@ -320,7 +321,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y);
                     Console.WriteLine(z);
 
-                    HPAssert.AreEqual(x, z, -x * 4e-28d);
+                    PrecisionAssert.AlmostEqual(x, z, 4e-28d);
                 }
             }
 
@@ -513,7 +514,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 6e-31, $"{x}");
+                PrecisionAssert.AlmostEqual(expected, y, 6e-31, $"{x}");
             }
 
             for ((int i, int exponent) = (0, -950); i < expecteds_nz.Length; i++, exponent += 50) {
@@ -527,8 +528,8 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 6e-31, $"{x}");
-                HPAssert.AreEqual(-expected, y_neg, ddouble.Abs(expected) * 6e-31, $"{x}");
+                PrecisionAssert.AlmostEqual(expected, y, 6e-31, $"{x}");
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 6e-31, $"{x}");
             }
 
             for ((int i, ddouble x) = (0, 175740 / 1024d); i < expecteds_largex.Length; i++, x += 1 / 1024d) {
@@ -3307,10 +3308,10 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31, $"{x}");
 
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-31, $"{x} dec");
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-31, $"{x} inc");
+                PrecisionAssert.AlmostEqual(expected, y_dec, 8e-31, $"{x} dec");
+                PrecisionAssert.AlmostEqual(expected, y_inc, 8e-31, $"{x} inc");
             }
         }
 
@@ -3650,18 +3651,18 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
 
                 if (x < 2.25) {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31, $"{x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 2e-31, $"{x}");
 
                     if (x != 1 && x != 2) {
-                        HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31, $"{x} dec");
-                        HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31, $"{x} inc");
+                        PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31, $"{x} dec");
+                        PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31, $"{x} inc");
                     }
                 }
                 else {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 1e-31, $"{x}");
 
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31, $"{x} dec");
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31, $"{x} inc");
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31, $"{x} dec");
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31, $"{x} inc");
                 }
             }
         }
@@ -4002,16 +4003,16 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
 
                 if (x < 1.25 || x > 1.75) {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31, $"{x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 1e-31, $"{x}");
 
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31, $"{x} dec");
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31, $"{x} inc");
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31, $"{x} dec");
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31, $"{x} inc");
                 }
                 else {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-31, $"{x}");
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-31, $"{x}");
 
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-31, $"{x} dec");
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-31, $"{x} inc");
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 8e-31, $"{x} dec");
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 8e-31, $"{x} inc");
                 }
             }
         }

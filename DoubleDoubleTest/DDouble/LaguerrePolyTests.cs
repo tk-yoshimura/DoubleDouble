@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -74,7 +75,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LaguerrePolynomials[n](x);
                     ddouble actual = ddouble.LaguerreL(n, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},{x}");
                 }
             }
         }
@@ -96,7 +97,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.LaguerreL(n, x);
                     ddouble actual = ddouble.LaguerreL(n, 0, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-31, $"{n},0,{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-31, $"{n},0,{x}");
                 }
             }
 
@@ -105,7 +106,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LaguerreTables[(n, alpha)](x);
                     ddouble actual = ddouble.LaguerreL(n, alpha, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-31, $"{n},{alpha},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-31, $"{n},{alpha},{x}");
                 }
             }
         }

@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -7,12 +8,12 @@ namespace DoubleDoubleTest.DDouble {
     public class OwenTFunctionTests {
         [TestMethod]
         public void OwenTPointsTest() {
-            HPAssert.AreEqual("3.89119302347013668966224771378e-2", ddouble.OwenT(0.0625, 0.25), 1e-30);
-            HPAssert.AreEqual("2.00057730485083154100907167685e-11", ddouble.OwenT(6.5, 0.4375), 1e-39);
-            HPAssert.AreEqual("6.39906271938986853083219914429e-13", ddouble.OwenT(7, 0.96875), 1e-42);
-            HPAssert.AreEqual("1.06329748046874638058307112826e-7", ddouble.OwenT(4.78125, 0.0625), 1e-35);
-            HPAssert.AreEqual("8.62507798552150713113488319155e-3", ddouble.OwenT(2, 0.5), 1e-31);
-            HPAssert.AreEqual("6.67418089782285927715589822405e-2", ddouble.OwenT(1, 0.9999975m), 1e-30);
+            PrecisionAssert.AlmostEqual("3.89119302347013668966224771378e-2", ddouble.OwenT(0.0625, 0.25), 2e-30);
+            PrecisionAssert.AlmostEqual("2.00057730485083154100907167685e-11", ddouble.OwenT(6.5, 0.4375), 2e-30);
+            PrecisionAssert.AlmostEqual("6.39906271938986853083219914429e-13", ddouble.OwenT(7, 0.96875), 2e-30);
+            PrecisionAssert.AlmostEqual("1.06329748046874638058307112826e-7", ddouble.OwenT(4.78125, 0.0625), 2e-30);
+            PrecisionAssert.AlmostEqual("8.62507798552150713113488319155e-3", ddouble.OwenT(2, 0.5), 2e-30);
+            PrecisionAssert.AlmostEqual("6.67418089782285927715589822405e-2", ddouble.OwenT(1, 0.9999975m), 2e-30);
         }
 
         [TestMethod]
@@ -969,14 +970,14 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y3);
                     Console.WriteLine(y4);
 
-                    HPAssert.AreEqual(expected, y, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(expected, y_negh, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(-expected, y_nega, expected * 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(expected, y_negh, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(-expected, y_nega, 8e-29d, $"{h},{a}");
 
-                    HPAssert.AreEqual(y, y1, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(y, y2, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(y, y3, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(y, y4, expected * 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y1, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y2, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y3, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y4, 8e-29d, $"{h},{a}");
                 }
             }
         }
@@ -1480,14 +1481,14 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(y3);
                     Console.WriteLine(y4);
 
-                    HPAssert.AreEqual(expected, y, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(expected, y_negh, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(-expected, y_nega, expected * 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(expected, y_negh, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(-expected, y_nega, 8e-29d, $"{h},{a}");
 
-                    HPAssert.AreEqual(y, y1, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(y, y2, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(y, y3, expected * 8e-29d, $"{h},{a}");
-                    HPAssert.AreEqual(y, y4, expected * 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y1, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y2, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y3, 8e-29d, $"{h},{a}");
+                    PrecisionAssert.AlmostEqual(y, y4, 8e-29d, $"{h},{a}");
                 }
             }
         }
