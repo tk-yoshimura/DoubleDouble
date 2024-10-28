@@ -27,7 +27,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(v);
                 Console.WriteLine(x);
 
-                PrecisionAssert.AlmostEqual(v, x, 4e-31);
+                PrecisionAssert.AlmostEqual(v, x, 6e-32);
             }
 
             BitAssert.NeighborBits(sqrtpi * 4 / 3, ddouble.Gamma(-1.5), 8);
@@ -3308,10 +3308,10 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-31, $"{x}");
+                PrecisionAssert.AlmostEqual(expected, y, 8e-32, $"{x}");
 
-                PrecisionAssert.AlmostEqual(expected, y_dec, 8e-31, $"{x} dec");
-                PrecisionAssert.AlmostEqual(expected, y_inc, 8e-31, $"{x} inc");
+                PrecisionAssert.AlmostEqual(expected, y_dec, 6e-31, $"{x} dec");
+                PrecisionAssert.AlmostEqual(expected, y_inc, 6e-31, $"{x} inc");
             }
         }
 
