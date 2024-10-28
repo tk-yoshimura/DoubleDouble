@@ -216,7 +216,7 @@ namespace DoubleDouble {
                 List<ddouble> d_list = new();
 
                 for (int n = 1; n < 32; n++) {
-                    (a, b, c) = (Ldexp(a + b, -1), Sqrt(a * b), Ldexp(a - b, -1));
+                    (a, b, c) = (Ldexp(a + b, -1), GeometricMean(a, b), Ldexp(a - b, -1));
 
                     a_list.Add(a);
                     c_list.Add(c);

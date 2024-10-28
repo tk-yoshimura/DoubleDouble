@@ -149,7 +149,7 @@ namespace DoubleDouble {
                     ddouble dq = Ldexp(squa_c, n - 1);
                     q -= dq;
 
-                    (a, b) = (Ldexp(a + b, -1), Sqrt(a * b));
+                    (a, b) = (Ldexp(a + b, -1), GeometricMean(a, b));
 
                     c = squa_c / Ldexp(a, 2);
                 }
