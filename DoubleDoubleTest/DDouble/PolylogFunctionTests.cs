@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -660,14 +661,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.Polylog(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30d, $"x = {x},n = {n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-30d, $"x = {x},n = {n}");
 
                     if (x < 1 && x != 0) {
                         ddouble actual_dec = ddouble.Polylog(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-30d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-30d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.Polylog(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 4e-30d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-30d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -681,14 +682,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[n - 2];
 
                     ddouble actual = ddouble.Polylog(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d, $"x = {x},n = {n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, $"x = {x},n = {n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.Polylog(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.Polylog(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -732,11 +733,11 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble pg_ninf = ddouble.Polylog(n, double.NegativeInfinity);
                 ddouble pg_nan = ddouble.Polylog(n, double.NaN);
 
-                Assert.IsTrue(ddouble.IsPlusZero(pg_pzero), nameof(pg_pzero));
-                Assert.IsTrue(ddouble.IsMinusZero(pg_mzero), nameof(pg_mzero));
-                Assert.IsTrue(ddouble.IsNaN(pg_pinf), nameof(pg_pinf));
-                Assert.IsTrue(ddouble.IsNegativeInfinity(pg_ninf), nameof(pg_ninf));
-                Assert.IsTrue(ddouble.IsNaN(pg_nan), nameof(pg_nan));
+                PrecisionAssert.IsPlusZero(pg_pzero, nameof(pg_pzero));
+                PrecisionAssert.IsMinusZero(pg_mzero, nameof(pg_mzero));
+                PrecisionAssert.IsNaN(pg_pinf, nameof(pg_pinf));
+                PrecisionAssert.IsNegativeInfinity(pg_ninf, nameof(pg_ninf));
+                PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
             }
         }
     }

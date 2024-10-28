@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -14,7 +15,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Rcp(v) * v - 1;
 
-                HPAssert.AreEqual(0, u, ddouble.Abs((double)d) * 1e-30, $"{d}");
+                PrecisionAssert.AreEqual(0, u, ddouble.Abs((double)d) * 1e-30, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -27,7 +28,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Rcp(v) * (ddouble)d - 1;
 
-                HPAssert.AreEqual(0, u, ddouble.Abs((double)d) * 1e-32, $"{d}");
+                PrecisionAssert.AreEqual(0, u, ddouble.Abs((double)d) * 1e-32, $"{d}");
                 Assert.IsTrue(ddouble.IsRegulared(v));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -42,15 +43,15 @@ namespace DoubleDoubleTest.DDouble {
             ddouble rcp_peps = ddouble.Rcp(double.Epsilon);
             ddouble rcp_meps = ddouble.Rcp(-double.Epsilon);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(rcp_pzero), nameof(rcp_pzero));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(rcp_mzero), nameof(rcp_mzero));
-            Assert.IsTrue(ddouble.IsPlusZero(rcp_pinf), nameof(rcp_pinf));
-            Assert.IsTrue(ddouble.IsMinusZero(rcp_ninf), nameof(rcp_ninf));
-            Assert.IsTrue(ddouble.IsNaN(rcp_nan), nameof(rcp_nan));
-            Assert.AreEqual(1 / double.MaxValue, (double)rcp_pval, double.Epsilon, nameof(rcp_pval));
-            Assert.AreEqual(1 / double.MinValue, (double)rcp_mval, double.Epsilon, nameof(rcp_mval));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(rcp_peps), nameof(rcp_peps));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(rcp_meps), nameof(rcp_meps));
+            PrecisionAssert.IsPositiveInfinity(rcp_pzero, nameof(rcp_pzero));
+            PrecisionAssert.IsNegativeInfinity(rcp_mzero, nameof(rcp_mzero));
+            PrecisionAssert.IsPlusZero(rcp_pinf, nameof(rcp_pinf));
+            PrecisionAssert.IsMinusZero(rcp_ninf, nameof(rcp_ninf));
+            PrecisionAssert.IsNaN(rcp_nan, nameof(rcp_nan));
+            PrecisionAssert.AreEqual(1 / double.MaxValue, (double)rcp_pval, double.Epsilon, nameof(rcp_pval));
+            PrecisionAssert.AreEqual(1 / double.MinValue, (double)rcp_mval, double.Epsilon, nameof(rcp_mval));
+            PrecisionAssert.IsPositiveInfinity(rcp_peps, nameof(rcp_peps));
+            PrecisionAssert.IsNegativeInfinity(rcp_meps, nameof(rcp_meps));
         }
 
         [TestMethod]
@@ -108,14 +109,14 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void SquareTest() {
-            Assert.AreEqual(4, ddouble.Square(2));
-            Assert.AreEqual(9, ddouble.Square(3));
+            PrecisionAssert.AreEqual(4, ddouble.Square(2));
+            PrecisionAssert.AreEqual(9, ddouble.Square(3));
         }
 
         [TestMethod]
         public void CubeTest() {
-            Assert.AreEqual(8, ddouble.Cube(2));
-            Assert.AreEqual(27, ddouble.Cube(3));
+            PrecisionAssert.AreEqual(8, ddouble.Cube(2));
+            PrecisionAssert.AreEqual(27, ddouble.Cube(3));
         }
 
         [TestMethod]
@@ -232,12 +233,12 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void AgmTest() {
-            HPAssert.AreEqual(3 * ddouble.PI / (4 * ddouble.EllipticK(ddouble.Rcp(9))), ddouble.Agm(1, 2), 1e-30);
-            HPAssert.AreEqual(5 * ddouble.PI / (2 * ddouble.EllipticK(4 * ddouble.Rcp(25))), ddouble.Agm(3, 7), 1e-30);
-            HPAssert.AreEqual(7 * ddouble.PI / (40 * ddouble.EllipticK(9 * ddouble.Rcp(49))), ddouble.Agm(0.5m, 0.2m), 1e-30);
-            HPAssert.AreEqual(65 * ddouble.PI / (4 * ddouble.EllipticK(3969 * ddouble.Rcp(4225))), ddouble.Agm(64, 1), 1e-29);
+            PrecisionAssert.AlmostEqual(3 * ddouble.PI / (4 * ddouble.EllipticK(ddouble.Rcp(9))), ddouble.Agm(1, 2), 1e-30);
+            PrecisionAssert.AlmostEqual(5 * ddouble.PI / (2 * ddouble.EllipticK(4 * ddouble.Rcp(25))), ddouble.Agm(3, 7), 1e-30);
+            PrecisionAssert.AlmostEqual(7 * ddouble.PI / (40 * ddouble.EllipticK(9 * ddouble.Rcp(49))), ddouble.Agm(0.5m, 0.2m), 1e-30);
+            PrecisionAssert.AlmostEqual(65 * ddouble.PI / (4 * ddouble.EllipticK(3969 * ddouble.Rcp(4225))), ddouble.Agm(64, 1), 1e-30);
             Assert.IsTrue(ddouble.Agm(1, double.Epsilon) > 0);
-            Assert.IsTrue(ddouble.IsZero(ddouble.Agm(1, 0)));
+            PrecisionAssert.AreEqual(0d, ddouble.Agm(1, 0));
         }
     }
 }

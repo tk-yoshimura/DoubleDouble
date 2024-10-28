@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -271,13 +272,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = expecteds[i];
 
                 ddouble actual = ddouble.Bump(x);
-                HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-30d + 1e-50, $"x = {x}");
+                PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, 1e-50, $"x = {x}");
 
                 ddouble actual_dec = ddouble.Bump(ddouble.BitDecrement(x));
-                HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 1e-30d + 1e-50, $"{x}-eps");
+                PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, 1e-50, $"{x}-eps");
 
                 ddouble actual_inc = ddouble.Bump(ddouble.BitIncrement(x));
-                HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 1e-30d + 1e-50, $"{x}+eps");
+                PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, 1e-50, $"{x}+eps");
             }
         }
 
@@ -300,9 +301,9 @@ namespace DoubleDoubleTest.DDouble {
             ddouble pg_ninf = ddouble.Bump(double.NegativeInfinity);
             ddouble pg_nan = ddouble.Bump(double.NaN);
 
-            Assert.AreEqual(1, pg_pinf, nameof(pg_pinf));
-            Assert.IsTrue(ddouble.IsPlusZero(pg_ninf), nameof(pg_ninf));
-            Assert.IsTrue(ddouble.IsNaN(pg_nan), nameof(pg_nan));
+            PrecisionAssert.AreEqual(1, pg_pinf, nameof(pg_pinf));
+            PrecisionAssert.IsPlusZero(pg_ninf, nameof(pg_ninf));
+            PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -46,8 +47,8 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, 8e-30d);
-                HPAssert.AreEqual(-expected, y_neg, 8e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 8e-30d, 8e-30d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 8e-30d, 8e-30d);
             }
         }
 
@@ -1092,22 +1093,22 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-31d);
-                HPAssert.AreEqual(-expected, y_neg, expected * 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 1e-31d);
 
                 if (x != 0d && x != 1d) {
-                    HPAssert.AreEqual(expected, y_dec, expected * 1e-31d);
-                    HPAssert.AreEqual(expected, y_inc, expected * 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d);
                 }
             }
 
-            Assert.AreEqual(0, ddouble.Clausen(0));
+            PrecisionAssert.AreEqual(0, ddouble.Clausen(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Clausen(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Clausen(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Clausen(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Clausen(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Clausen(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.Clausen(ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.Clausen(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.Clausen(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -1122,11 +1123,11 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble y_x2 = ddouble.Clausen(x * 2, normalized: true);
                 ddouble y_1m = ddouble.Clausen(1 - x, normalized: true);
 
-                Assert.AreEqual(y, y_m4);
-                Assert.AreEqual(y, y_m2);
-                Assert.AreEqual(y, y_m2);
-                Assert.AreEqual(y, y_m4);
-                HPAssert.AreEqual(y_x2, 2 * (y - y_1m), 1e-31d);
+                PrecisionAssert.AreEqual(y, y_m4);
+                PrecisionAssert.AreEqual(y, y_m2);
+                PrecisionAssert.AreEqual(y, y_m2);
+                PrecisionAssert.AreEqual(y, y_m4);
+                PrecisionAssert.AlmostEqual(y_x2, 2 * (y - y_1m), 2e-31d);
             }
         }
 
@@ -1138,8 +1139,8 @@ namespace DoubleDoubleTest.DDouble {
 
                 Console.WriteLine($"{x},{y}");
 
-                Assert.IsTrue(ddouble.IsFinite(y));
-                Assert.IsTrue(ddouble.IsPositive(y));
+                PrecisionAssert.IsFinite(y);
+                PrecisionAssert.IsPositive(y);
                 Assert.IsTrue(y <= y2);
             }
         }

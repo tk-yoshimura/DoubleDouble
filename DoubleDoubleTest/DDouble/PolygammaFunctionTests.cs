@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -380,14 +381,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[n];
 
                     ddouble actual = ddouble.Polygamma(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29d, $"{x},{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-29d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.Polygamma(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 2e-29d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 2e-29d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.Polygamma(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 2e-29d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 2e-29d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -577,14 +578,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[n];
 
                     ddouble actual = ddouble.Polygamma(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-30d, $"{x},{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-30d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.Polygamma(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-30d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-30d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.Polygamma(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 4e-30d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-30d, $"{x}+eps,{n}");
                     }
                 }
             }
@@ -623,13 +624,21 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble pg_ninf = ddouble.Polygamma(n, double.NegativeInfinity);
                 ddouble pg_nan = ddouble.Polygamma(n, double.NaN);
 
-                Assert.IsTrue(((n & 1) == 1) ? ddouble.IsPositiveInfinity(pg_pzero) : ddouble.IsNaN(pg_pzero), nameof(pg_pzero));
-                Assert.IsTrue(((n & 1) == 1) ? ddouble.IsPositiveInfinity(pg_mzero) : ddouble.IsNaN(pg_mzero), nameof(pg_mzero));
-                Assert.IsTrue(((n & 1) == 1) ? ddouble.IsPositiveInfinity(pg_mone) : ddouble.IsNaN(pg_mone), nameof(pg_mone));
-                Assert.IsTrue(((n & 1) == 1) ? ddouble.IsPositiveInfinity(pg_mtwo) : ddouble.IsNaN(pg_mtwo), nameof(pg_mtwo));
-                Assert.IsTrue(ddouble.IsZero(pg_pinf), nameof(pg_pinf));
-                Assert.IsTrue(ddouble.IsNaN(pg_ninf), nameof(pg_ninf));
-                Assert.IsTrue(ddouble.IsNaN(pg_nan), nameof(pg_nan));
+                if ((n & 1) == 1) {
+                    PrecisionAssert.IsPositiveInfinity(pg_pzero, nameof(pg_pzero));
+                    PrecisionAssert.IsPositiveInfinity(pg_mzero, nameof(pg_mzero));
+                    PrecisionAssert.IsPositiveInfinity(pg_mone, nameof(pg_mone));
+                    PrecisionAssert.IsPositiveInfinity(pg_mtwo, nameof(pg_mtwo));
+                }
+                else {
+                    PrecisionAssert.IsNaN(pg_pzero, nameof(pg_pzero));
+                    PrecisionAssert.IsNaN(pg_mzero, nameof(pg_mzero));
+                    PrecisionAssert.IsNaN(pg_mone, nameof(pg_mone));
+                    PrecisionAssert.IsNaN(pg_mtwo, nameof(pg_mtwo));
+                }
+                PrecisionAssert.AreEqual(0d, pg_pinf, nameof(pg_pinf));
+                PrecisionAssert.IsNaN(pg_ninf, nameof(pg_ninf));
+                PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -1497,14 +1498,14 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = expecteds[i];
 
                     ddouble actual = ddouble.WeberE(n, x);
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 4e-29d + 1e-30d, $"{x},{n}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-29d, 1e-30d, $"{x},{n}");
 
                     if (x > 0) {
                         ddouble actual_dec = ddouble.WeberE(n, ddouble.BitDecrement(x));
-                        HPAssert.AreEqual(expected, actual_dec, ddouble.Abs(expected) * 4e-29d + 1e-30d, $"{x}-eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-29d, 1e-30d, $"{x}-eps,{n}");
 
                         ddouble actual_inc = ddouble.WeberE(n, ddouble.BitIncrement(x));
-                        HPAssert.AreEqual(expected, actual_inc, ddouble.Abs(expected) * 4e-29d + 1e-30d, $"{x}+eps,{n}");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-29d, 1e-30d, $"{x}+eps,{n}");
                     }
                 }
             }

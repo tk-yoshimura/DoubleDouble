@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.ObjectModel;
 
@@ -72,7 +73,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.ChebyshevT(n, x);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"{n},{x}");
                 }
             }
 
@@ -81,7 +82,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ChebyshevTPolynomials[n](x);
                     ddouble actual = ddouble.ChebyshevT(n, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},{x}");
                 }
             }
         }
@@ -92,7 +93,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.ChebyshevU(n, x);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"{n},{x}");
                 }
             }
 
@@ -101,7 +102,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ChebyshevUPolynomials[n](x);
                     ddouble actual = ddouble.ChebyshevU(n, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},{x}");
                 }
             }
         }

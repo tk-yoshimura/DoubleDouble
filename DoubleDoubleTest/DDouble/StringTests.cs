@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Numerics;
 
@@ -280,19 +281,19 @@ namespace DoubleDoubleTest.DDouble {
             ddouble ninf2 = "-inf";
             ddouble ninf3 = "-INF";
 
-            Assert.IsTrue(ddouble.IsNaN(nan1));
-            Assert.IsTrue(ddouble.IsNaN(nan2));
-            Assert.IsTrue(ddouble.IsNaN(nan3));
+            PrecisionAssert.IsNaN(nan1);
+            PrecisionAssert.IsNaN(nan2);
+            PrecisionAssert.IsNaN(nan3);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf1));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf2));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf3));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf4));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf5));
+            PrecisionAssert.IsPositiveInfinity(pinf1);
+            PrecisionAssert.IsPositiveInfinity(pinf2);
+            PrecisionAssert.IsPositiveInfinity(pinf3);
+            PrecisionAssert.IsPositiveInfinity(pinf4);
+            PrecisionAssert.IsPositiveInfinity(pinf5);
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf1));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf2));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf3));
+            PrecisionAssert.IsNegativeInfinity(ninf1);
+            PrecisionAssert.IsNegativeInfinity(ninf2);
+            PrecisionAssert.IsNegativeInfinity(ninf3);
         }
 
         [TestMethod]
@@ -303,7 +304,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
@@ -313,7 +314,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
             for ((ddouble x, int exp) = (double.BitIncrement(double.ScaleB(1, -950)), -950); x > 0; x /= 2, exp--) {
@@ -322,7 +323,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
             for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) + ddouble.Ldexp(1, -964), -868); x > 0; x /= 2, exp--) {
@@ -331,7 +332,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
@@ -341,7 +342,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
@@ -351,7 +352,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
@@ -361,7 +362,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
@@ -371,7 +372,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
@@ -381,7 +382,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
@@ -391,7 +392,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
             for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -932) * ddouble.Rcp(31), -868); x > 0; x /= 2, exp--) {
@@ -400,7 +401,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
             for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -900) * ddouble.Rcp(63), -868); x > 0; x /= 2, exp--) {
@@ -409,7 +410,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
             for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -964) * ddouble.Rcp(127), -868); x > 0; x /= 10, exp--) {
@@ -418,7 +419,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
             for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -932) * ddouble.Rcp(255), -868); x > 0; x /= 10, exp--) {
@@ -427,7 +428,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
             for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -900) * ddouble.Rcp(512), -868); x > 0; x /= 10, exp--) {
@@ -436,7 +437,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(x, y, x * 1e-30);
+                PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
         }
     }

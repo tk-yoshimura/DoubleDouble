@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.ObjectModel;
 
@@ -43,7 +44,7 @@ namespace DoubleDoubleTest.DDouble {
                     for (ddouble x = -1; x <= 1; x += 0.125) {
                         ddouble actual = ddouble.GegenbauerC(n, alpha, x);
 
-                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{alpha},{x}");
+                        PrecisionAssert.IsFinite(actual, $"{n},{alpha},{x}");
                     }
                 }
             }
@@ -53,7 +54,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = GegenbauerAlpha2Polynomials[n](x);
                     ddouble actual = ddouble.GegenbauerC(n, 2, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},2,{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},2,{x}");
                 }
             }
 
@@ -62,7 +63,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.ChebyshevU(n, x);
                     ddouble actual = ddouble.GegenbauerC(n, 1, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},1,{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},1,{x}");
                 }
             }
 
@@ -71,7 +72,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.LegendreP(n, x);
                     ddouble actual = ddouble.GegenbauerC(n, 0.5, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},0.5,{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},0.5,{x}");
                 }
             }
         }

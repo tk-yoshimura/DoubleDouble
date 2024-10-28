@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -117,7 +118,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.LegendreP(n, x);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"{n},{x}");
                 }
             }
 
@@ -126,7 +127,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LegendrePolynomials[n](x);
                     ddouble actual = ddouble.LegendreP(n, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},{x}");
                 }
             }
         }
@@ -138,7 +139,7 @@ namespace DoubleDoubleTest.DDouble {
                     for (ddouble x = -1; x <= 1; x += 0.0625) {
                         ddouble actual = ddouble.LegendreP(n, m, x);
 
-                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{m},{x}");
+                        PrecisionAssert.IsFinite(actual, $"{n},{m},{x}");
                     }
                 }
             }
@@ -148,7 +149,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LegendreTables[(n, m)](x);
                     ddouble actual = ddouble.LegendreP(n, m, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-31, $"{n},{m},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-31, $"{n},{m},{x}");
                 }
             }
         }

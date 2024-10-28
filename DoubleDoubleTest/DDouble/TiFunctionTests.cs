@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -278,22 +279,22 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-31d);
-                HPAssert.AreEqual(-expected, y_neg, expected * 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 1e-31d);
 
                 if (x > 0d) {
-                    HPAssert.AreEqual(expected, y_dec, expected * 1e-31d);
-                    HPAssert.AreEqual(expected, y_inc, expected * 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d);
                 }
             }
 
-            Assert.AreEqual(0, ddouble.Ti(0));
+            PrecisionAssert.AreEqual(0, ddouble.Ti(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ti(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Ti(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Ti(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Ti(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Ti(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.Ti(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ti(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ti(ddouble.NegativeInfinity));
         }
     }
 }

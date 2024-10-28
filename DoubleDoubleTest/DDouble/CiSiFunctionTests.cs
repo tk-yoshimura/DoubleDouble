@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -2073,11 +2074,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d, 1e-31d);
 
                 if (x > 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31d + 1e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d, 1e-31d);
                 }
             }
 
@@ -2091,20 +2092,20 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d, 1e-31d);
 
                 if (x > 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31d + 1e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d, 1e-31d);
                 }
             }
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Ci(0)));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ci(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ci(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Ci(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Ci(ddouble.NaN)));
-            Assert.AreEqual(0, ddouble.Ci(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.Ci(ddouble.NaN));
+            PrecisionAssert.AreEqual(0, ddouble.Ci(ddouble.PositiveInfinity));
         }
 
         [TestMethod]
@@ -4176,12 +4177,12 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-30d);
-                HPAssert.AreEqual(-expected, y_neg, expected * 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, expected * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, expected * 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
                 }
             }
 
@@ -4196,22 +4197,22 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 1e-30d);
-                HPAssert.AreEqual(-expected, y_neg, expected * 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 1e-30d);
 
                 if (x != 0) {
-                    HPAssert.AreEqual(expected, y_dec, expected * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, expected * 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
                 }
             }
 
-            Assert.AreEqual(0, ddouble.Si(0));
+            PrecisionAssert.AreEqual(0, ddouble.Si(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Si(ddouble.Epsilon, limit_zero: false)));
+            PrecisionAssert.IsFinite(ddouble.Si(ddouble.Epsilon, limit_zero: false));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Si(ddouble.NaN, limit_zero: false)));
-            Assert.AreEqual(ddouble.PI / 2, ddouble.Si(ddouble.PositiveInfinity, limit_zero: false));
-            Assert.AreEqual(-ddouble.PI / 2, ddouble.Si(ddouble.NegativeInfinity, limit_zero: false));
+            PrecisionAssert.IsNaN(ddouble.Si(ddouble.NaN, limit_zero: false));
+            PrecisionAssert.AreEqual(ddouble.PI / 2, ddouble.Si(ddouble.PositiveInfinity, limit_zero: false));
+            PrecisionAssert.AreEqual(-ddouble.PI / 2, ddouble.Si(ddouble.NegativeInfinity, limit_zero: false));
         }
 
         [TestMethod]
@@ -7562,9 +7563,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d + 1e-31d);
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31d + 1e-31d);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d, 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d, 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d, 1e-31d);
             }
 
             for ((int i, ddouble x) = (0, -1); i < nz_expecteds.Length; i++, x += 1d / 256) {
@@ -7577,18 +7578,18 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d + 1e-31d);
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31d + 1e-31d);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d, 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d, 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d, 1e-31d);
             }
 
-            Assert.AreEqual(-ddouble.PI / 2, ddouble.Si(0, limit_zero: true));
+            PrecisionAssert.AreEqual(-ddouble.PI / 2, ddouble.Si(0, limit_zero: true));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Si(ddouble.Epsilon, limit_zero: true)));
+            PrecisionAssert.IsFinite(ddouble.Si(ddouble.Epsilon, limit_zero: true));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Si(ddouble.NaN, limit_zero: true)));
-            Assert.AreEqual(0, ddouble.Si(ddouble.PositiveInfinity, limit_zero: true));
-            Assert.AreEqual(-ddouble.PI, ddouble.Si(ddouble.NegativeInfinity, limit_zero: true));
+            PrecisionAssert.IsNaN(ddouble.Si(ddouble.NaN, limit_zero: true));
+            PrecisionAssert.AreEqual(0, ddouble.Si(ddouble.PositiveInfinity, limit_zero: true));
+            PrecisionAssert.AreEqual(-ddouble.PI, ddouble.Si(ddouble.NegativeInfinity, limit_zero: true));
         }
 
         [TestMethod]
@@ -7735,21 +7736,21 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d, 1e-31d);
 
                 if (x > 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-31d + 1e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-31d + 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d, 1e-31d);
                 }
             }
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Chi(0)));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Chi(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Chi(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Chi(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Chi(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Chi(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Chi(ddouble.BitDecrement(720))));
+            PrecisionAssert.IsNaN(ddouble.Chi(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Chi(ddouble.PositiveInfinity));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Chi(ddouble.BitDecrement(720)));
         }
 
         [TestMethod]
@@ -7897,22 +7898,22 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 1e-30d);
-                HPAssert.AreEqual(-expected, y_neg, ddouble.Abs(expected) * 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 1e-30d);
 
                 if (x > 0) {
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 1e-30d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
                 }
             }
 
-            Assert.IsTrue(ddouble.IsZero(ddouble.Shi(0)));
+            PrecisionAssert.AreEqual(0d, ddouble.Shi(0));
 
-            Assert.IsTrue(ddouble.Shi(ddouble.Epsilon) > 0);
+            PrecisionAssert.IsPositive(ddouble.Shi(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Shi(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Shi(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Shi(ddouble.BitDecrement(720))));
+            PrecisionAssert.IsNaN(ddouble.Shi(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Shi(ddouble.PositiveInfinity));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Shi(ddouble.BitDecrement(720)));
         }
     }
 }

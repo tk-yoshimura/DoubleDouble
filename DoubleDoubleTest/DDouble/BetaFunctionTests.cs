@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.Generic;
 
@@ -23,12 +24,12 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble g = ddouble.Beta(a + 1, b);
                     ddouble h = ddouble.Beta(a, b + 1);
 
-                    HPAssert.AreEqual(a * h, b * g, a * h * 4e-28);
-                    HPAssert.AreEqual(f, g + h, f * 4e-28);
+                    PrecisionAssert.AlmostEqual(a * h, b * g, 4e-28);
+                    PrecisionAssert.AlmostEqual(f, g + h, 4e-28);
                 }
 
-                HPAssert.AreEqual(1d / b, ddouble.Beta(b, 1), 4e-28 / b);
-                HPAssert.AreEqual(1d / b, ddouble.Beta(1, b), 4e-28 / b);
+                PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(b, 1), 4e-28);
+                PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(1, b), 4e-28);
             }
         }
 
@@ -46,8 +47,8 @@ namespace DoubleDoubleTest.DDouble {
 
                         ddouble p = ddouble.Pow(x, a) * ddouble.Pow(1d - x, b);
 
-                        HPAssert.AreEqual(g, (a * f - p) / (a + b), g * 4e-28, $"beta({x},{a},{b})");
-                        HPAssert.AreEqual(h, (b * f + p) / (a + b), h * 4e-28, $"beta({x},{a},{b})");
+                        PrecisionAssert.AlmostEqual(g, (a * f - p) / (a + b), 4e-28, $"beta({x},{a},{b})");
+                        PrecisionAssert.AlmostEqual(h, (b * f + p) / (a + b), 4e-28, $"beta({x},{a},{b})");
                     }
                 }
             }
@@ -63,7 +64,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine(err);
 
-                    HPAssert.AreEqual(v, y, v * 1e-28, $"beta({x},{a},1)");
+                    PrecisionAssert.AlmostEqual(v, y, 1e-28, $"beta({x},{a},1)");
                 }
             }
 
@@ -77,11 +78,11 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble err = ddouble.Abs(v / y - 1);
                     Console.WriteLine(err);
 
-                    HPAssert.AreEqual(v, y, v * 1e-28, $"beta({x},1,{b})");
+                    PrecisionAssert.AlmostEqual(v, y, 1e-28, $"beta({x},1,{b})");
                 }
             }
 
-            HPAssert.AreEqual(
+            PrecisionAssert.AlmostEqual(
                 "0.0107206939812333955315378535295139067594857737069262075239118707",
                 ddouble.IncompleteBeta(1 / 8d, 15 / 8d, 35 / 32d), 1e-30);
 
@@ -89,7 +90,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = ddouble.IncompleteBeta(0.5, ab, ab);
 
                 Console.WriteLine(v);
-                Assert.IsTrue(ddouble.IsFinite(v));
+                PrecisionAssert.IsFinite(v);
             }
         }
 
@@ -100,7 +101,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.Log(ddouble.Beta(a, b));
                     ddouble actual = ddouble.LogBeta(a, b);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{a}, {b}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-29, $"{a}, {b}");
                 }
             }
         }
@@ -113,7 +114,7 @@ namespace DoubleDoubleTest.DDouble {
                         ddouble expected = ddouble.IncompleteBeta(x, a, b) / ddouble.Beta(a, b);
                         ddouble actual = ddouble.IncompleteBetaRegularized(x, a, b);
 
-                        HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-29, $"{x},{a},{b}");
+                        PrecisionAssert.AlmostEqual(expected, actual, 2e-29, $"{x},{a},{b}");
                     }
                 }
             }
@@ -122,7 +123,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = ddouble.IncompleteBetaRegularized(0.5, ab, ab);
 
                 Console.WriteLine(v);
-                Assert.IsTrue(ddouble.IsFinite(v));
+                PrecisionAssert.IsFinite(v);
             }
         }
 
@@ -152,7 +153,7 @@ namespace DoubleDoubleTest.DDouble {
                             continue;
                         }
 
-                        HPAssert.AreEqual(x, z, ddouble.Abs(x) * 4e-24, $"{a},{b},{x}");
+                        PrecisionAssert.AlmostEqual(x, z, 4e-24, $"{a},{b},{x}");
                     }
                 }
             }

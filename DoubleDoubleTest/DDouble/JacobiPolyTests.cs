@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.ObjectModel;
 
@@ -36,7 +37,7 @@ namespace DoubleDoubleTest.DDouble {
                         for (ddouble x = -1; x <= 1; x += 0.125) {
                             ddouble actual = ddouble.JacobiP(n, alpha, beta, x);
 
-                            Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{alpha},{beta},{x}");
+                            PrecisionAssert.IsFinite(actual, $"{n},{alpha},{beta},{x}");
                         }
                     }
                 }
@@ -47,7 +48,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = JacobiPAlpha1Beta2Polynomials[n](x);
                     ddouble actual = ddouble.JacobiP(n, 1, 2, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},1,2,{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},1,2,{x}");
                 }
             }
 
@@ -56,7 +57,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = JacobiPAlpha2Beta1Polynomials[n](x);
                     ddouble actual = ddouble.JacobiP(n, 2, 1, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},2,1,{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},2,1,{x}");
                 }
             }
         }

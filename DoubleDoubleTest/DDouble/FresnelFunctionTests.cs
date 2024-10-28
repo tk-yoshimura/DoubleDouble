@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -341,19 +342,19 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 2e-31d);
-                HPAssert.AreEqual(-expected, y_neg, expected * 2e-31d);
-                HPAssert.AreEqual(expected, y_dec, expected * 2e-31d);
-                HPAssert.AreEqual(expected, y_inc, expected * 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
             }
 
-            Assert.AreEqual(0, ddouble.FresnelC(0));
+            PrecisionAssert.AreEqual(0, ddouble.FresnelC(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.FresnelC(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.FresnelC(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelC(ddouble.NaN)));
-            Assert.AreEqual(0.5d, ddouble.FresnelC(ddouble.PositiveInfinity));
-            Assert.AreEqual(-0.5d, ddouble.FresnelC(ddouble.NegativeInfinity));
+            PrecisionAssert.IsNaN(ddouble.FresnelC(ddouble.NaN));
+            PrecisionAssert.AreEqual(0.5d, ddouble.FresnelC(ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(-0.5d, ddouble.FresnelC(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -692,10 +693,10 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, expected * 2e-31d);
-                HPAssert.AreEqual(-expected, y_neg, expected * 2e-31d);
-                HPAssert.AreEqual(expected, y_dec, expected * 2e-31d);
-                HPAssert.AreEqual(expected, y_inc, expected * 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
+                PrecisionAssert.AlmostEqual(-expected, y_neg, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
             }
 
             Assert.AreEqual(0, ddouble.FresnelS(0));
@@ -900,25 +901,25 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
 
                 if (x > 0) {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31d);
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
                 }
                 else {
-                    HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 8e-31d);
-                    HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 8e-31d);
-                    HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 8e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 8e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 8e-31d);
                 }
             }
 
-            Assert.AreEqual(0.5d, ddouble.FresnelF(0));
+            PrecisionAssert.AreEqual(0.5d, ddouble.FresnelF(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.FresnelF(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.FresnelF(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelF(ddouble.NaN)));
-            Assert.AreEqual(0d, ddouble.FresnelF(ddouble.PositiveInfinity));
-            Assert.AreEqual(0d, ddouble.FresnelF(ddouble.MaxValue));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelF(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.FresnelF(ddouble.NaN));
+            PrecisionAssert.AreEqual(0d, ddouble.FresnelF(ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(0d, ddouble.FresnelF(ddouble.MaxValue));
+            PrecisionAssert.IsNaN(ddouble.FresnelF(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -1113,19 +1114,19 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                HPAssert.AreEqual(expected, y, ddouble.Abs(expected) * 2e-31d);
-                HPAssert.AreEqual(expected, y_dec, ddouble.Abs(expected) * 2e-31d);
-                HPAssert.AreEqual(expected, y_inc, ddouble.Abs(expected) * 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
             }
 
-            Assert.AreEqual(0.5d, ddouble.FresnelG(0));
+            PrecisionAssert.AreEqual(0.5d, ddouble.FresnelG(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.FresnelG(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.FresnelG(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelG(ddouble.NaN)));
-            Assert.AreEqual(0d, ddouble.FresnelG(ddouble.PositiveInfinity));
-            Assert.AreEqual(0d, ddouble.FresnelG(ddouble.MaxValue));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.FresnelG(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.FresnelG(ddouble.NaN));
+            PrecisionAssert.AreEqual(0d, ddouble.FresnelG(ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(0d, ddouble.FresnelG(ddouble.MaxValue));
+            PrecisionAssert.IsNaN(ddouble.FresnelG(ddouble.NegativeInfinity));
         }
     }
 }

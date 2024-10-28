@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 
 namespace DoubleDoubleTest.DDouble {
@@ -12,25 +13,25 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"checked {n},{k}");
 
                     if (k == 0 || k == n) {
-                        Assert.AreEqual(1, ddouble.Binomial(n, k), $"{n},{k}");
+                        PrecisionAssert.AreEqual(1, ddouble.Binomial(n, k), $"{n},{k}");
                     }
                     else {
                         ddouble expected = ddouble.Binomial(n - 1, k - 1) + ddouble.Binomial(n - 1, k);
                         ddouble actual = ddouble.Binomial(n, k);
 
                         if (expected < 1e+29) {
-                            Assert.AreEqual(expected, actual, $"{n},{k}");
+                            PrecisionAssert.AreEqual(expected, actual, $"{n},{k}");
                         }
                         else {
-                            HPAssert.AreEqual(expected, actual, expected * 8e-31, $"{n},{k}");
+                            PrecisionAssert.AlmostEqual(expected, actual, 8e-31, $"{n},{k}");
                         }
                     }
                 }
             }
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Binomial(999, 499)));
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Binomial(999, 500)));
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Binomial(1000, 500)));
+            PrecisionAssert.IsFinite(ddouble.Binomial(999, 499));
+            PrecisionAssert.IsFinite(ddouble.Binomial(999, 500));
+            PrecisionAssert.IsFinite(ddouble.Binomial(1000, 500));
         }
     }
 }

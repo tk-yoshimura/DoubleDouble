@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -65,7 +66,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.LaguerreL(n, x);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"{n},{x}");
                 }
             }
 
@@ -74,7 +75,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LaguerrePolynomials[n](x);
                     ddouble actual = ddouble.LaguerreL(n, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 1e-31, $"{n},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 1e-31, $"{n},{x}");
                 }
             }
         }
@@ -86,7 +87,7 @@ namespace DoubleDoubleTest.DDouble {
                     for (ddouble x = 0; x <= 1; x += 0.0625) {
                         ddouble actual = ddouble.LaguerreL(n, alpha, x);
 
-                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{alpha},{x}");
+                        PrecisionAssert.IsFinite(actual, $"{n},{alpha},{x}");
                     }
                 }
             }
@@ -96,7 +97,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = ddouble.LaguerreL(n, x);
                     ddouble actual = ddouble.LaguerreL(n, 0, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-31, $"{n},0,{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-31, $"{n},0,{x}");
                 }
             }
 
@@ -105,7 +106,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble expected = LaguerreTables[(n, alpha)](x);
                     ddouble actual = ddouble.LaguerreL(n, alpha, x);
 
-                    HPAssert.AreEqual(expected, actual, ddouble.Abs(expected) * 2e-31, $"{n},{alpha},{x}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 2e-31, $"{n},{alpha},{x}");
                 }
             }
         }
