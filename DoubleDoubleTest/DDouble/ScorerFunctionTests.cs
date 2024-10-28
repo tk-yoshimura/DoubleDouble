@@ -3162,9 +3162,31 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
-                PrecisionAssert.AlmostEqual(expected, y_dec, 4e-29d);
-                PrecisionAssert.AlmostEqual(expected, y_inc, 4e-29d);
+                if (x < 2) {
+                    PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
+                }
+                else if (x < 4) {
+                    PrecisionAssert.AlmostEqual(expected, y, 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-31d);
+                }
+                else if (x < 8) {
+                    PrecisionAssert.AlmostEqual(expected, y, 8e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 8e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 8e-31d);
+                }
+                else if (x < 16) {
+                    PrecisionAssert.AlmostEqual(expected, y, 2e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 2e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 2e-30d);
+                }
+                else {
+                    PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-29d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-29d);
+                }
             }
 
             for ((int i, ddouble x) = (0, -1); i < nz_expecteds.Length; i++, x += 1d / 128) {
@@ -3177,9 +3199,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
-                PrecisionAssert.AlmostEqual(expected, y_dec, 4e-29d);
-                PrecisionAssert.AlmostEqual(expected, y_inc, 4e-29d);
+                PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d);
             }
 
             PrecisionAssert.IsNaN(ddouble.ScorerHi(ddouble.NaN));
@@ -5770,9 +5792,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
 
                 if (x > 0) {
-                    PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
-                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-29d);
-                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-29d);
+                    PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d);
                 }
                 else {
                     PrecisionAssert.AlmostEqual(expected, y, 2e-28d);
@@ -5792,9 +5814,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(y);
 
                 if (x > 0) {
-                    PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
-                    PrecisionAssert.AlmostEqual(expected, y_dec, 4e-29d);
-                    PrecisionAssert.AlmostEqual(expected, y_inc, 4e-29d);
+                    PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d);
                 }
                 else {
                     PrecisionAssert.AlmostEqual(expected, y, 2e-28d);
