@@ -24,12 +24,12 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble g = ddouble.Beta(a + 1, b);
                     ddouble h = ddouble.Beta(a, b + 1);
 
-                    PrecisionAssert.AlmostEqual(a * h, b * g, 4e-28);
-                    PrecisionAssert.AlmostEqual(f, g + h, 4e-28);
+                    PrecisionAssert.AlmostEqual(a * h, b * g, 8e-29);
+                    PrecisionAssert.AlmostEqual(f, g + h, 8e-29);
                 }
 
-                PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(b, 1), 4e-28);
-                PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(1, b), 4e-28);
+                PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(b, 1), 8e-29);
+                PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(1, b), 8e-29);
             }
         }
 
@@ -47,8 +47,8 @@ namespace DoubleDoubleTest.DDouble {
 
                         ddouble p = ddouble.Pow(x, a) * ddouble.Pow(1d - x, b);
 
-                        PrecisionAssert.AlmostEqual(g, (a * f - p) / (a + b), 4e-28, $"beta({x},{a},{b})");
-                        PrecisionAssert.AlmostEqual(h, (b * f + p) / (a + b), 4e-28, $"beta({x},{a},{b})");
+                        PrecisionAssert.AlmostEqual(g, (a * f - p) / (a + b), 8e-29, $"beta({x},{a},{b})");
+                        PrecisionAssert.AlmostEqual(h, (b * f + p) / (a + b), 8e-29, $"beta({x},{a},{b})");
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     Console.WriteLine(err);
 
-                    PrecisionAssert.AlmostEqual(v, y, 1e-28, $"beta({x},{a},1)");
+                    PrecisionAssert.AlmostEqual(v, y, 8e-29, $"beta({x},{a},1)");
                 }
             }
 
@@ -78,7 +78,7 @@ namespace DoubleDoubleTest.DDouble {
                     ddouble err = ddouble.Abs(v / y - 1);
                     Console.WriteLine(err);
 
-                    PrecisionAssert.AlmostEqual(v, y, 1e-28, $"beta({x},1,{b})");
+                    PrecisionAssert.AlmostEqual(v, y, 8e-29, $"beta({x},1,{b})");
                 }
             }
 
@@ -153,7 +153,7 @@ namespace DoubleDoubleTest.DDouble {
                             continue;
                         }
 
-                        PrecisionAssert.AlmostEqual(x, z, 4e-24, $"{a},{b},{x}");
+                        PrecisionAssert.AlmostEqual(x, z, 2e-25, $"{a},{b},{x}");
                     }
                 }
             }
