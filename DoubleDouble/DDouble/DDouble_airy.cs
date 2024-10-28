@@ -104,7 +104,7 @@ namespace DoubleDouble {
                 }
 
                 private static ReadOnlyCollection<ddouble> GenerateNearZeroCoefs() {
-                    ddouble[] coefs = new ddouble[17];
+                    ddouble[] coefs = new ddouble[20];
 
                     coefs[0] = Ldexp(Gamma1d3 * Sqrt(3), -1);
                     coefs[1] = Ldexp(Gamma2d3 * Cbrt3 * Sqrt(3), -1);
