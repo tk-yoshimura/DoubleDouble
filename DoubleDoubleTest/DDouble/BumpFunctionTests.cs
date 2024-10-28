@@ -272,13 +272,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble expected = expecteds[i];
 
                 ddouble actual = ddouble.Bump(x);
-                PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, 1e-50, $"x = {x}");
+                PrecisionAssert.AlmostEqual(expected, actual, 1e-31d, 1e-50, $"x = {x}");
 
                 ddouble actual_dec = ddouble.Bump(ddouble.BitDecrement(x));
-                PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, 1e-50, $"{x}-eps");
+                PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-31d, 1e-50, $"{x}-eps");
 
                 ddouble actual_inc = ddouble.Bump(ddouble.BitIncrement(x));
-                PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, 1e-50, $"{x}+eps");
+                PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-31d, 1e-50, $"{x}+eps");
             }
         }
 
