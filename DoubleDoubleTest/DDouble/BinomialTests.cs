@@ -23,7 +23,7 @@ namespace DoubleDoubleTest.DDouble {
                             PrecisionAssert.AreEqual(expected, actual, $"{n},{k}");
                         }
                         else {
-                            PrecisionAssert.AlmostEqual(expected, actual, 8e-31, $"{n},{k}");
+                            PrecisionAssert.AlmostEqual(expected, actual, 4e-31, $"{n},{k}");
                         }
                     }
                 }
