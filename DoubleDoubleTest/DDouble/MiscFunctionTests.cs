@@ -249,6 +249,9 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
+            PrecisionAssert.AreEqual(double.ScaleB(1, 950), ddouble.GeometricMean(double.ScaleB(1, 950), double.ScaleB(1, 950)));
+            PrecisionAssert.AreEqual(double.ScaleB(1, -950), ddouble.GeometricMean(double.ScaleB(1, -950), double.ScaleB(1, -950)));
+
             for (ddouble a = 0.125; a < 20; a *= 1.5) {
                 for (ddouble b = 0.125; b < 20; b *= 1.5) {
                     for (ddouble c = 0.125; c < 20; c *= 1.5) {
@@ -256,6 +259,9 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
             }
+
+            PrecisionAssert.AreEqual(double.ScaleB(1, 950), ddouble.GeometricMean(double.ScaleB(1, 950), double.ScaleB(1, 950), double.ScaleB(1, 950)));
+            PrecisionAssert.AreEqual(double.ScaleB(1, -950), ddouble.GeometricMean(double.ScaleB(1, -950), double.ScaleB(1, -950), double.ScaleB(1, -950)));
         }
     }
 }
