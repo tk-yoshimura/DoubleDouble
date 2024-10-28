@@ -240,5 +240,22 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.Agm(1, double.Epsilon) > 0);
             PrecisionAssert.AreEqual(0d, ddouble.Agm(1, 0));
         }
+
+        [TestMethod]
+        public void GeometricMeanTest() {
+            for (ddouble a = 0.125; a < 20; a *= 1.5) {
+                for (ddouble b = 0.125; b < 20; b *= 1.5) {
+                    PrecisionAssert.AreEqual(ddouble.Sqrt(a * b), ddouble.GeometricMean(a, b), 4e-32);
+                }
+            }
+
+            for (ddouble a = 0.125; a < 20; a *= 1.5) {
+                for (ddouble b = 0.125; b < 20; b *= 1.5) {
+                    for (ddouble c = 0.125; c < 20; c *= 1.5) {
+                        PrecisionAssert.AreEqual(ddouble.Cbrt(a * b * c), ddouble.GeometricMean(a, b, c), 4e-32);
+                    }
+                }
+            }
+        }
     }
 }

@@ -165,6 +165,7 @@
 |ddouble.Ldexp(x, y)|&#40;-inf,+inf&#41;|N/A||
 |ddouble.Binomial(n, k)|N/A|1|n &leq; 1000|
 |ddouble.Hypot(x, y)|N/A|2||
+|ddouble.GeometricMean(x, y)|N/A|2||
 |ddouble.Logit(x)|&#40;0,1&#41;|2||
 |ddouble.Expit(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Min(x, y)|N/A|N/A||

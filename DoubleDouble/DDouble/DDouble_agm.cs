@@ -33,21 +33,49 @@
             return y;
         }
 
-        private static ddouble GeometricMean(ddouble a, ddouble b) {
-            (long exp_a, a) = AdjustScale(0, a); 
-            (long exp_b, b) = AdjustScale(0, b);
+        public static ddouble GeometricMean(ddouble a, ddouble b) {
+            if (IsNaN(a) || IsNaN(b)) {
+                return NaN;
+            }
 
-            long exp = exp_a + exp_b;
+            if (IsZero(a) || IsZero(b)) {
+                return 0d;
+            }
 
-            if ((exp & 1) == 0) {
-                return Ldexp(Sqrt(a * b), (int)long.Clamp(-exp / 2, int.MinValue, int.MaxValue));
+            (int exp_a, a) = AdjustScale(0, a);
+            (int exp_b, b) = AdjustScale(0, b);
+
+            int exp = exp_a + exp_b;
+            int exp_c = exp / 2;
+
+            b = Ldexp(b, exp_c * 2 - exp);
+
+            ddouble c = Ldexp(Sqrt(a * b), -exp_c);
+
+            return c;
+        }
+
+        public static ddouble GeometricMean(ddouble a, ddouble b, ddouble c) {
+            if (IsNaN(a) || IsNaN(b) || IsNaN(c)) {
+                return NaN;
             }
-            else if(exp > 0){
-                return Ldexp(Sqrt(a * b * 0.5d), (int)long.Clamp(-exp / 2, int.MinValue, int.MaxValue));
+
+            if (IsZero(a) || IsZero(b) || IsZero(c)) {
+                return 0d;
             }
-            else {
-                return Ldexp(Sqrt(a * b * 2d), (int)long.Clamp(-exp / 2, int.MinValue, int.MaxValue));
-            }
+
+            (int exp_a, a) = AdjustScale(0, a);
+            (int exp_b, b) = AdjustScale(0, b);
+            (int exp_c, c) = AdjustScale(0, c);
+
+            int exp = exp_a + exp_b + exp_c;
+            int exp_d = exp / 3;
+
+            c = Ldexp(c, exp_d * 3 - exp);
+
+            ddouble d = Ldexp(Cbrt(a * b * c), -exp_d);
+
+            return d;
         }
     }
 }
