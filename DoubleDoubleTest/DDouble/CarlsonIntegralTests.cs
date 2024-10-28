@@ -23,7 +23,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -43,7 +43,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -63,7 +63,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -107,7 +107,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y}");
+                    PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y}");
                 }
             }
 
@@ -126,7 +126,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y}");
+                    PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y}");
                 }
             }
 
@@ -146,7 +146,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y}");
+                    PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y}");
                 }
             }
 
@@ -166,7 +166,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y}");
+                    PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y}");
                 }
             }
 
@@ -186,7 +186,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine(f);
                     Console.WriteLine(e);
 
-                    PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y}");
+                    PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y}");
                 }
             }
 
@@ -230,7 +230,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 2e-31d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -255,7 +255,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 2e-31d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -277,7 +277,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -299,7 +299,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y},{z}");
                     }
                 }
             }
@@ -357,7 +357,7 @@ namespace DoubleDoubleTest.DDouble {
                                 );
                             }
                             else {
-                                PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z},{rho}");
+                                PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y},{z},{rho}");
                             }
                         }
                     }
@@ -388,7 +388,7 @@ namespace DoubleDoubleTest.DDouble {
                             Console.WriteLine(f);
                             Console.WriteLine(e);
 
-                            PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z},{rho}");
+                            PrecisionAssert.AlmostEqual(e, f, 1e-31d, $"{x},{y},{z},{rho}");
                         }
                     }
                 }
@@ -450,7 +450,7 @@ namespace DoubleDoubleTest.DDouble {
                         Console.WriteLine(f);
                         Console.WriteLine(e);
 
-                        PrecisionAssert.AlmostEqual(e, f, 1e-30d, $"{x},{y},{z}");
+                        PrecisionAssert.AlmostEqual(e, f, 6e-31d, $"{x},{y},{z}");
                     }
                 }
             }
