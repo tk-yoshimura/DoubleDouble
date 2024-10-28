@@ -147,7 +147,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
@@ -293,7 +293,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
@@ -440,7 +440,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
@@ -587,7 +587,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
@@ -734,7 +734,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
@@ -881,7 +881,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(m);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
@@ -1173,7 +1173,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(n);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
@@ -1465,40 +1465,40 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(n);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
             }
         }
 
         [TestMethod]
         public void IncompEllipticFTest() {
-            PrecisionAssert.AlmostEqual("0.2506474362662866035530540133777640230902", ddouble.EllipticF(0.25, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.2513040086544925794134591303987751449373", ddouble.EllipticF(0.25, 0.5), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5050887275786480788831082896236055222278", ddouble.EllipticF(0.5, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5104671356280047563361040911115799362540", ddouble.EllipticF(0.5, 0.5), 1e-30);
+            PrecisionAssert.AlmostEqual("0.2506474362662866035530540133777640230902", ddouble.EllipticF(0.25, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.2513040086544925794134591303987751449373", ddouble.EllipticF(0.25, 0.5), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5050887275786480788831082896236055222278", ddouble.EllipticF(0.5, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5104671356280047563361040911115799362540", ddouble.EllipticF(0.5, 0.5), 2e-31);
         }
 
         [TestMethod]
         public void IncompEllipticETest() {
-            PrecisionAssert.AlmostEqual("0.2493555587876163503851462800891098248369", ddouble.EllipticE(0.25, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.2487081058046058223763081867139695534492", ddouble.EllipticE(0.25, 0.5), 1e-30);
-            PrecisionAssert.AlmostEqual("0.4950017030164151928870375499599796260010", ddouble.EllipticE(0.5, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.4899109597925171552108607317418823427392", ddouble.EllipticE(0.5, 0.5), 1e-30);
+            PrecisionAssert.AlmostEqual("0.2493555587876163503851462800891098248369", ddouble.EllipticE(0.25, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.2487081058046058223763081867139695534492", ddouble.EllipticE(0.25, 0.5), 2e-31);
+            PrecisionAssert.AlmostEqual("0.4950017030164151928870375499599796260010", ddouble.EllipticE(0.5, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.4899109597925171552108607317418823427392", ddouble.EllipticE(0.5, 0.5), 2e-31);
         }
 
         [TestMethod]
         public void IncompEllipticPiTest() {
-            PrecisionAssert.AlmostEqual("0.2512963700347440990856202815164922658139", ddouble.EllipticPi(0.125, 0.25, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.2519559961634921785098113692037503925298", ddouble.EllipticPi(0.125, 0.25, 0.5), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5102226593583425038841480467872258270987", ddouble.EllipticPi(0.125, 0.5, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5156986389890165328218962101195858179987", ddouble.EllipticPi(0.125, 0.5, 0.5), 1e-30);
-            PrecisionAssert.AlmostEqual("0.2519513603223101654980384692723856596327", ddouble.EllipticPi(0.25, 0.25, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.2526140741318178608951800063127917558966", ddouble.EllipticPi(0.25, 0.25, 0.5), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5155452979192924731104300897370205260060", ddouble.EllipticPi(0.25, 0.5, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5211231226642416591338219890234919559207", ddouble.EllipticPi(0.25, 0.5, 0.5), 1e-30);
-            PrecisionAssert.AlmostEqual("0.2532799189809456359052213341202224845743", ddouble.EllipticPi(0.5, 0.25, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.2539489124677518319918153736199858971238", ddouble.EllipticPi(0.5, 0.25, 0.5), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5268086118981364167278162005049954648917", ddouble.EllipticPi(0.5, 0.5, 0.25), 1e-30);
-            PrecisionAssert.AlmostEqual("0.5326042322277693780755771455389210311823", ddouble.EllipticPi(0.5, 0.5, 0.5), 1e-30);
+            PrecisionAssert.AlmostEqual("0.2512963700347440990856202815164922658139", ddouble.EllipticPi(0.125, 0.25, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.2519559961634921785098113692037503925298", ddouble.EllipticPi(0.125, 0.25, 0.5), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5102226593583425038841480467872258270987", ddouble.EllipticPi(0.125, 0.5, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5156986389890165328218962101195858179987", ddouble.EllipticPi(0.125, 0.5, 0.5), 2e-31);
+            PrecisionAssert.AlmostEqual("0.2519513603223101654980384692723856596327", ddouble.EllipticPi(0.25, 0.25, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.2526140741318178608951800063127917558966", ddouble.EllipticPi(0.25, 0.25, 0.5), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5155452979192924731104300897370205260060", ddouble.EllipticPi(0.25, 0.5, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5211231226642416591338219890234919559207", ddouble.EllipticPi(0.25, 0.5, 0.5), 2e-31);
+            PrecisionAssert.AlmostEqual("0.2532799189809456359052213341202224845743", ddouble.EllipticPi(0.5, 0.25, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.2539489124677518319918153736199858971238", ddouble.EllipticPi(0.5, 0.25, 0.5), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5268086118981364167278162005049954648917", ddouble.EllipticPi(0.5, 0.5, 0.25), 2e-31);
+            PrecisionAssert.AlmostEqual("0.5326042322277693780755771455389210311823", ddouble.EllipticPi(0.5, 0.5, 0.5), 2e-31);
         }
 
         [TestMethod]
