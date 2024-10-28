@@ -44,7 +44,7 @@ namespace DoubleDoubleTest.DDouble {
                     for (ddouble x = -1; x <= 1; x += 0.125) {
                         ddouble actual = ddouble.GegenbauerC(n, alpha, x);
 
-                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{alpha},{x}");
+                        PrecisionAssert.IsFinite(actual, $"{n},{alpha},{x}");
                     }
                 }
             }

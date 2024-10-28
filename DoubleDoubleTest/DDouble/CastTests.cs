@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Numerics;
 
@@ -241,7 +242,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble x = (ddouble)d;
                 ddouble zero = x - v;
 
-                Assert.IsTrue(ddouble.IsZero(zero), $"{d}, {v}, {zero}");
+                PrecisionAssert.AreEqual(0d, zero, $"{d}, {v}, {zero}");
 
                 v /= 2;
                 d /= 2;

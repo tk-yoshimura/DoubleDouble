@@ -139,7 +139,7 @@ namespace DoubleDoubleTest.DDouble {
                         PrecisionAssert.AlmostEqual(m, y, 1e-20, $"{m},{e}"); // e sinh(x) - x digits loss
                     }
                     else {
-                        Assert.IsFalse(ddouble.IsNaN(x), $"{m},{e}");
+                        PrecisionAssert.IsNotNaN(x, $"{m},{e}");
                     }
                 }
 
@@ -169,7 +169,7 @@ namespace DoubleDoubleTest.DDouble {
                         PrecisionAssert.AlmostEqual(m, y, 1e-10, $"{m},{e}"); // e sinh(x) - x digits loss
                     }
                     else {
-                        Assert.IsFalse(ddouble.IsNaN(x), $"{m},{e}");
+                        PrecisionAssert.IsNotNaN(x, $"{m},{e}");
                     }
                 }
 
@@ -199,7 +199,7 @@ namespace DoubleDoubleTest.DDouble {
                         PrecisionAssert.AlmostEqual(m, y, 1e-20, $"{m},{e}"); // e sinh(x) - x digits loss
                     }
                     else {
-                        Assert.IsFalse(ddouble.IsNaN(x), $"{m},{e}");
+                        PrecisionAssert.IsNotNaN(x, $"{m},{e}");
                     }
                 }
 

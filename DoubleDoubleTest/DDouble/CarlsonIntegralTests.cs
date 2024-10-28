@@ -84,9 +84,9 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y < 1, "largeval");
             }
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.CarlsonRD(ddouble.NaN, ddouble.NaN, ddouble.NaN)), "nan");
-            Assert.IsFalse(ddouble.IsNaN(ddouble.CarlsonRD(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon)), "eps");
-            Assert.IsTrue(ddouble.IsFinite(ddouble.CarlsonRD(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue)), "largeval");
+            PrecisionAssert.IsNaN(ddouble.CarlsonRD(ddouble.NaN, ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsNotNaN(ddouble.CarlsonRD(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon), "eps");
+            PrecisionAssert.IsFinite(ddouble.CarlsonRD(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
 
         [TestMethod]
@@ -206,9 +206,9 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y < 1, "largeval");
             }
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.CarlsonRC(ddouble.NaN, ddouble.NaN)), "nan");
-            Assert.IsFalse(ddouble.IsNaN(ddouble.CarlsonRC(ddouble.Epsilon, ddouble.Epsilon)), "eps");
-            Assert.IsTrue(ddouble.IsFinite(ddouble.CarlsonRC(ddouble.MaxValue, ddouble.MaxValue)), "largeval");
+            PrecisionAssert.IsNaN(ddouble.CarlsonRC(ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsNotNaN(ddouble.CarlsonRC(ddouble.Epsilon, ddouble.Epsilon), "eps");
+            PrecisionAssert.IsFinite(ddouble.CarlsonRC(ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
 
         [TestMethod]
@@ -320,9 +320,9 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y < 1, "largeval");
             }
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.CarlsonRF(ddouble.NaN, ddouble.NaN, ddouble.NaN)), "nan");
-            Assert.IsFalse(ddouble.IsNaN(ddouble.CarlsonRF(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon)), "eps");
-            Assert.IsTrue(ddouble.IsFinite(ddouble.CarlsonRF(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue)), "largeval");
+            PrecisionAssert.IsNaN(ddouble.CarlsonRF(ddouble.NaN, ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsNotNaN(ddouble.CarlsonRF(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon), "eps");
+            PrecisionAssert.IsFinite(ddouble.CarlsonRF(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
 
         [TestMethod]
@@ -410,20 +410,20 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y < 1, "largeval");
             }
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.CarlsonRJ(ddouble.NaN, ddouble.NaN, ddouble.NaN, ddouble.NaN)), "nan");
-            Assert.IsFalse(ddouble.IsNaN(ddouble.CarlsonRJ(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon)), "eps");
-            Assert.IsTrue(ddouble.IsFinite(ddouble.CarlsonRJ(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue)), "largeval");
+            PrecisionAssert.IsNaN(ddouble.CarlsonRJ(ddouble.NaN, ddouble.NaN, ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsNotNaN(ddouble.CarlsonRJ(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon), "eps");
+            PrecisionAssert.IsFinite(ddouble.CarlsonRJ(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
 
         [TestMethod]
         public void CarlsonRGTest() {
-            Assert.AreEqual(0, ddouble.CarlsonRG(0, 0, 0));
+            PrecisionAssert.AreEqual(0, ddouble.CarlsonRG(0, 0, 0));
             PrecisionAssert.AlmostEqual(0.5, ddouble.CarlsonRG(0, 0, 1), 1e-30);
             PrecisionAssert.AlmostEqual(ddouble.PI / 4, ddouble.CarlsonRG(0, 1, 1), 1e-30);
             PrecisionAssert.AlmostEqual(1, ddouble.CarlsonRG(1, 1, 1), 1e-30);
             PrecisionAssert.AlmostEqual(1 / ddouble.Sqrt(2) + ddouble.Log(1 + ddouble.Sqrt(2)) / 2, ddouble.CarlsonRG(1, 1, 2), 1e-30);
             PrecisionAssert.AlmostEqual(ddouble.PI / 4 + 0.5, ddouble.CarlsonRG(1, 2, 2), 1e-30);
-            Assert.IsTrue(ddouble.IsNaN(ddouble.CarlsonRG(ddouble.NaN, ddouble.NaN, ddouble.NaN)));
+            PrecisionAssert.IsNaN(ddouble.CarlsonRG(ddouble.NaN, ddouble.NaN, ddouble.NaN));
 
             for (ddouble z = 0; z <= 4; z += 0.25) {
                 for (ddouble y = 0; y <= 4; y += 0.25) {

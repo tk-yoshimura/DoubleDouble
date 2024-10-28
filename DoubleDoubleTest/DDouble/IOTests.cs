@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System.Collections.Generic;
 using System.IO;
 
@@ -61,7 +62,8 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.AreEqual(vs[i], us[i]);
                 }
                 else {
-                    Assert.IsTrue(ddouble.IsNaN(vs[i]) && ddouble.IsNaN(us[i]));
+                    PrecisionAssert.IsNaN(vs[i]);
+                    PrecisionAssert.IsNaN(us[i]);
                 }
             }
 

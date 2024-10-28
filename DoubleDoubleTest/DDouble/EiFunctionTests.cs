@@ -1076,14 +1076,14 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Ei(0)));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ei(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ei(ddouble.Epsilon)));
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ei(-ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Ei(ddouble.Epsilon));
+            PrecisionAssert.IsFinite(ddouble.Ei(-ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Ei(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Ei(ddouble.PositiveInfinity)));
-            Assert.AreEqual(0, ddouble.Ei(ddouble.NegativeInfinity));
+            PrecisionAssert.IsNaN(ddouble.Ei(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ei(ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(0, ddouble.Ei(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -1120,17 +1120,17 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(y, y_inc, 1e-30d);
             }
 
-            Assert.IsTrue(ddouble.IsZero(ddouble.Ein(0)));
+            PrecisionAssert.AreEqual(0d, ddouble.Ein(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(ddouble.Epsilon)));
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(-ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Ein(ddouble.Epsilon));
+            PrecisionAssert.IsFinite(ddouble.Ein(-ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(Math.ScaleB(1, -256))));
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ein(-Math.ScaleB(1, -256))));
+            PrecisionAssert.IsFinite(ddouble.Ein(Math.ScaleB(1, -256)));
+            PrecisionAssert.IsFinite(ddouble.Ein(-Math.ScaleB(1, -256)));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Ein(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Ein(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Ein(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.Ein(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ein(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ein(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -2458,11 +2458,11 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(0, ddouble.Li(0));
+            PrecisionAssert.AreEqual(0, ddouble.Li(0));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Li(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Li(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Li(-ddouble.Epsilon)));
+            PrecisionAssert.IsNaN(ddouble.Li(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Li(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.Li(-ddouble.Epsilon));
         }
     }
 }

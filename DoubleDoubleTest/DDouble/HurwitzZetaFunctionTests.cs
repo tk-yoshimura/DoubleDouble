@@ -774,17 +774,17 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble hz_xnan = ddouble.HurwitzZeta(double.NaN, a);
                 ddouble hz_pinf = ddouble.HurwitzZeta(double.PositiveInfinity, a);
 
-                Assert.IsTrue(ddouble.IsPositiveInfinity(hz_pone), nameof(hz_pone));
-                Assert.IsTrue(ddouble.IsNaN(hz_xnan), nameof(hz_xnan));
+                PrecisionAssert.IsPositiveInfinity(hz_pone, nameof(hz_pone));
+                PrecisionAssert.IsNaN(hz_xnan, nameof(hz_xnan));
 
                 if (a < 1) {
-                    Assert.IsTrue(ddouble.IsPositiveInfinity(hz_pinf), nameof(hz_pinf));
+                    PrecisionAssert.IsPositiveInfinity(hz_pinf, nameof(hz_pinf));
                 }
                 else if (a == 1) {
-                    Assert.AreEqual(1d, hz_pinf, nameof(hz_pinf));
+                    PrecisionAssert.AreEqual(1d, hz_pinf, nameof(hz_pinf));
                 }
                 else {
-                    Assert.IsTrue(ddouble.IsZero(hz_pinf), nameof(hz_pinf));
+                    PrecisionAssert.AreEqual(0d, hz_pinf, nameof(hz_pinf));
                 }
             }
         }

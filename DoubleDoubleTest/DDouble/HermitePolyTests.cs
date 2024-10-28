@@ -79,7 +79,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.HermiteH(n, x);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"{n},{x}");
                 }
             }
 

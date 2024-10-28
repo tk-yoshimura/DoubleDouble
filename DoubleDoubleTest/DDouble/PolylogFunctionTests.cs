@@ -733,11 +733,11 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble pg_ninf = ddouble.Polylog(n, double.NegativeInfinity);
                 ddouble pg_nan = ddouble.Polylog(n, double.NaN);
 
-                Assert.IsTrue(ddouble.IsPlusZero(pg_pzero), nameof(pg_pzero));
-                Assert.IsTrue(ddouble.IsMinusZero(pg_mzero), nameof(pg_mzero));
-                Assert.IsTrue(ddouble.IsNaN(pg_pinf), nameof(pg_pinf));
-                Assert.IsTrue(ddouble.IsNegativeInfinity(pg_ninf), nameof(pg_ninf));
-                Assert.IsTrue(ddouble.IsNaN(pg_nan), nameof(pg_nan));
+                PrecisionAssert.IsPlusZero(pg_pzero, nameof(pg_pzero));
+                PrecisionAssert.IsMinusZero(pg_mzero, nameof(pg_mzero));
+                PrecisionAssert.IsNaN(pg_pinf, nameof(pg_pinf));
+                PrecisionAssert.IsNegativeInfinity(pg_ninf, nameof(pg_ninf));
+                PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
             }
         }
     }

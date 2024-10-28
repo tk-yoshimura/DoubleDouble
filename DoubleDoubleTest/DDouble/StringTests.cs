@@ -281,19 +281,19 @@ namespace DoubleDoubleTest.DDouble {
             ddouble ninf2 = "-inf";
             ddouble ninf3 = "-INF";
 
-            Assert.IsTrue(ddouble.IsNaN(nan1));
-            Assert.IsTrue(ddouble.IsNaN(nan2));
-            Assert.IsTrue(ddouble.IsNaN(nan3));
+            PrecisionAssert.IsNaN(nan1);
+            PrecisionAssert.IsNaN(nan2);
+            PrecisionAssert.IsNaN(nan3);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf1));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf2));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf3));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf4));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pinf5));
+            PrecisionAssert.IsPositiveInfinity(pinf1);
+            PrecisionAssert.IsPositiveInfinity(pinf2);
+            PrecisionAssert.IsPositiveInfinity(pinf3);
+            PrecisionAssert.IsPositiveInfinity(pinf4);
+            PrecisionAssert.IsPositiveInfinity(pinf5);
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf1));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf2));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ninf3));
+            PrecisionAssert.IsNegativeInfinity(ninf1);
+            PrecisionAssert.IsNegativeInfinity(ninf2);
+            PrecisionAssert.IsNegativeInfinity(ninf3);
         }
 
         [TestMethod]

@@ -16,12 +16,10 @@ namespace DoubleDoubleTest.DDouble {
         public void ETest() {
             ddouble expected = (ddouble)"2.71828182845904523536028747135266250";
             ddouble actual = ddouble.E;
-            ddouble error = expected - actual;
 
             Console.WriteLine(actual);
-            Console.WriteLine(error);
 
-            Assert.IsTrue(ddouble.Abs(error) < 1e-31);
+            PrecisionAssert.AlmostEqual(expected, actual, 2e-32);
             BitAssert.NeighborBits(expected, actual, 1);
 
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);
@@ -35,12 +33,9 @@ namespace DoubleDoubleTest.DDouble {
         public void PITest() {
             ddouble expected = (ddouble)"3.14159265358979323846264338327950288";
             ddouble actual = ddouble.PI;
-            ddouble error = expected - actual;
-
             Console.WriteLine(actual);
-            Console.WriteLine(error);
 
-            Assert.IsTrue(ddouble.Abs(error) < 1e-31);
+            PrecisionAssert.AlmostEqual(expected, actual, 2e-32);
             BitAssert.NeighborBits(expected, actual, 1);
 
             Console.WriteLine(ddouble.BitDecrement(expected) - actual);

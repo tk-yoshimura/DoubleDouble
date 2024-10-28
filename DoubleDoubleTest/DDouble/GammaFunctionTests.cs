@@ -46,12 +46,12 @@ namespace DoubleDoubleTest.DDouble {
             ddouble gamma_ninf = ddouble.Gamma(double.NegativeInfinity);
             ddouble gamma_nan = ddouble.Gamma(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_pzero), nameof(gamma_pzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_mzero), nameof(gamma_mzero));
-            Assert.IsTrue(ddouble.IsNaN(gamma_mone), nameof(gamma_mone));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(gamma_pinf), nameof(gamma_pinf));
-            Assert.IsTrue(ddouble.IsNaN(gamma_ninf), nameof(gamma_ninf));
-            Assert.IsTrue(ddouble.IsNaN(gamma_nan), nameof(gamma_nan));
+            PrecisionAssert.IsPositiveInfinity(gamma_pzero, nameof(gamma_pzero));
+            PrecisionAssert.IsPositiveInfinity(gamma_mzero, nameof(gamma_mzero));
+            PrecisionAssert.IsNaN(gamma_mone, nameof(gamma_mone));
+            PrecisionAssert.IsPositiveInfinity(gamma_pinf, nameof(gamma_pinf));
+            PrecisionAssert.IsNaN(gamma_ninf, nameof(gamma_ninf));
+            PrecisionAssert.IsNaN(gamma_nan, nameof(gamma_nan));
         }
 
         [TestMethod]
@@ -125,12 +125,12 @@ namespace DoubleDoubleTest.DDouble {
             ddouble loggamma_ninf = ddouble.LogGamma(double.NegativeInfinity);
             ddouble loggamma_nan = ddouble.LogGamma(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(loggamma_pzero), nameof(loggamma_pzero));
-            Assert.IsTrue(ddouble.IsNaN(loggamma_mzero), nameof(loggamma_mzero));
-            Assert.IsTrue(ddouble.IsNaN(loggamma_mone), nameof(loggamma_mone));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(loggamma_pinf), nameof(loggamma_pinf));
-            Assert.IsTrue(ddouble.IsNaN(loggamma_ninf), nameof(loggamma_ninf));
-            Assert.IsTrue(ddouble.IsNaN(loggamma_nan), nameof(loggamma_nan));
+            PrecisionAssert.IsPositiveInfinity(loggamma_pzero, nameof(loggamma_pzero));
+            PrecisionAssert.IsNaN(loggamma_mzero, nameof(loggamma_mzero));
+            PrecisionAssert.IsNaN(loggamma_mone, nameof(loggamma_mone));
+            PrecisionAssert.IsPositiveInfinity(loggamma_pinf, nameof(loggamma_pinf));
+            PrecisionAssert.IsNaN(loggamma_ninf, nameof(loggamma_ninf));
+            PrecisionAssert.IsNaN(loggamma_nan, nameof(loggamma_nan));
         }
 
         [TestMethod]
@@ -195,13 +195,13 @@ namespace DoubleDoubleTest.DDouble {
             ddouble digamma_ninf = ddouble.Digamma(double.NegativeInfinity);
             ddouble digamma_nan = ddouble.Digamma(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_pzero), nameof(digamma_pzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_mzero), nameof(digamma_mzero));
-            Assert.IsTrue(ddouble.IsNaN(digamma_mone), nameof(digamma_mone));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(digamma_pinf), nameof(digamma_pinf));
-            Assert.IsTrue(ddouble.IsFinite(digamma_pmax), nameof(digamma_pmax));
-            Assert.IsTrue(ddouble.IsNaN(digamma_ninf), nameof(digamma_ninf));
-            Assert.IsTrue(ddouble.IsNaN(digamma_nan), nameof(digamma_nan));
+            PrecisionAssert.IsPositiveInfinity(digamma_pzero, nameof(digamma_pzero));
+            PrecisionAssert.IsPositiveInfinity(digamma_mzero, nameof(digamma_mzero));
+            PrecisionAssert.IsNaN(digamma_mone, nameof(digamma_mone));
+            PrecisionAssert.IsPositiveInfinity(digamma_pinf, nameof(digamma_pinf));
+            PrecisionAssert.IsFinite(digamma_pmax, nameof(digamma_pmax));
+            PrecisionAssert.IsNaN(digamma_ninf, nameof(digamma_ninf));
+            PrecisionAssert.IsNaN(digamma_nan, nameof(digamma_nan));
         }
 
         [TestMethod]
@@ -289,12 +289,12 @@ namespace DoubleDoubleTest.DDouble {
             ddouble invgamma_polar = ddouble.InverseGamma(ddouble.Sqrt(ddouble.PI) / 2);
 
             Assert.IsTrue(invgamma_p0p999 < 2d, nameof(invgamma_p0p999));
-            Assert.IsTrue(ddouble.IsNaN(invgamma_p0p886), nameof(invgamma_p0p886));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(invgamma_pinf), nameof(invgamma_pinf));
-            Assert.IsTrue(ddouble.IsFinite(invgamma_pmax), nameof(invgamma_pmax));
-            Assert.IsTrue(ddouble.IsNaN(invgamma_ninf), nameof(invgamma_ninf));
-            Assert.IsTrue(ddouble.IsNaN(invgamma_nan), nameof(invgamma_nan));
-            Assert.IsTrue(1.5d == invgamma_polar, nameof(invgamma_polar));
+            PrecisionAssert.IsNaN(invgamma_p0p886, nameof(invgamma_p0p886));
+            PrecisionAssert.IsPositiveInfinity(invgamma_pinf, nameof(invgamma_pinf));
+            PrecisionAssert.IsFinite(invgamma_pmax, nameof(invgamma_pmax));
+            PrecisionAssert.IsNaN(invgamma_ninf, nameof(invgamma_ninf));
+            PrecisionAssert.IsNaN(invgamma_nan, nameof(invgamma_nan));
+            PrecisionAssert.AreEqual(1.5d, invgamma_polar, nameof(invgamma_polar));
         }
 
         [TestMethod]
@@ -331,11 +331,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble invdigamma_ninf = ddouble.InverseDigamma(double.NegativeInfinity);
             ddouble invdigamma_nan = ddouble.InverseDigamma(double.NaN);
 
-            Assert.AreEqual(ddouble.DigammaZero, invdigamma_pzero);
-            Assert.IsTrue(ddouble.IsPositiveInfinity(invdigamma_pinf), nameof(invdigamma_pinf));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(invdigamma_pmax), nameof(invdigamma_pmax));
-            Assert.IsTrue(ddouble.IsZero(invdigamma_ninf), nameof(invdigamma_ninf));
-            Assert.IsTrue(ddouble.IsNaN(invdigamma_nan), nameof(invdigamma_nan));
+            PrecisionAssert.AreEqual(ddouble.DigammaZero, invdigamma_pzero);
+            PrecisionAssert.IsPositiveInfinity(invdigamma_pinf, nameof(invdigamma_pinf));
+            PrecisionAssert.IsPositiveInfinity(invdigamma_pmax, nameof(invdigamma_pmax));
+            PrecisionAssert.AreEqual(0d, invdigamma_ninf, nameof(invdigamma_ninf));
+            PrecisionAssert.IsNaN(invdigamma_nan, nameof(invdigamma_nan));
         }
 
         [TestMethod]
@@ -548,10 +548,10 @@ namespace DoubleDoubleTest.DDouble {
             ddouble rcpgamma_pinf = ddouble.RcpGamma(double.PositiveInfinity);
             ddouble rcpgamma_pmax = ddouble.RcpGamma(double.MaxValue);
 
-            Assert.IsTrue(ddouble.IsPlusZero(rcpgamma_pzero), nameof(rcpgamma_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(rcpgamma_mzero), nameof(rcpgamma_mzero));
-            Assert.IsTrue(ddouble.IsPlusZero(rcpgamma_pinf), nameof(rcpgamma_pinf));
-            Assert.IsTrue(ddouble.IsFinite(rcpgamma_pmax), nameof(rcpgamma_pmax));
+            PrecisionAssert.IsPlusZero(rcpgamma_pzero, nameof(rcpgamma_pzero));
+            PrecisionAssert.IsMinusZero(rcpgamma_mzero, nameof(rcpgamma_mzero));
+            PrecisionAssert.IsPlusZero(rcpgamma_pinf, nameof(rcpgamma_pinf));
+            PrecisionAssert.IsFinite(rcpgamma_pmax, nameof(rcpgamma_pmax));
         }
 
         [TestMethod]

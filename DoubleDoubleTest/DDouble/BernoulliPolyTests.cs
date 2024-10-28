@@ -73,7 +73,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = 0; x <= 1; x += 1d / 32) {
                     ddouble actual = ddouble.Bernoulli(n, x, centered: false);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"normal {n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"normal {n},{x}");
                 }
             }
 
@@ -81,7 +81,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = -0.5; x <= 0.5; x += 1d / 32) {
                     ddouble actual = ddouble.Bernoulli(n, x, centered: true);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"centered {n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"centered {n},{x}");
                 }
             }
 

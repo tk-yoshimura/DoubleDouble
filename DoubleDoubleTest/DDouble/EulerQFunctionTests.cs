@@ -2072,20 +2072,20 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
             }
 
-            Assert.AreEqual(1, ddouble.EulerQ(0));
+            PrecisionAssert.AreEqual(1, ddouble.EulerQ(0));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.EulerQ(ddouble.BitDecrement(-1))));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.EulerQ(ddouble.BitIncrement(+1))));
+            PrecisionAssert.IsNaN(ddouble.EulerQ(ddouble.BitDecrement(-1)));
+            PrecisionAssert.IsNaN(ddouble.EulerQ(ddouble.BitIncrement(+1)));
 
-            Assert.IsTrue(ddouble.IsZero(ddouble.EulerQ(-1)));
-            Assert.IsTrue(ddouble.IsZero(ddouble.EulerQ(+1)));
+            PrecisionAssert.AreEqual(0d, ddouble.EulerQ(-1));
+            PrecisionAssert.AreEqual(0d, ddouble.EulerQ(+1));
 
-            Assert.IsTrue(ddouble.IsZero(ddouble.EulerQ(ddouble.BitIncrement(-1))));
-            Assert.IsTrue(ddouble.IsZero(ddouble.EulerQ(ddouble.BitDecrement(+1))));
+            PrecisionAssert.AreEqual(0d, ddouble.EulerQ(ddouble.BitIncrement(-1)));
+            PrecisionAssert.AreEqual(0d, ddouble.EulerQ(ddouble.BitDecrement(+1)));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.EulerQ(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.EulerQ(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.EulerQ(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.EulerQ(ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.EulerQ(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.EulerQ(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -4163,26 +4163,26 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(0, ddouble.LogEulerQ(0));
+            PrecisionAssert.AreEqual(0, ddouble.LogEulerQ(0));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.BitDecrement(-1))));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.BitIncrement(+1))));
+            PrecisionAssert.IsNaN(ddouble.LogEulerQ(ddouble.BitDecrement(-1)));
+            PrecisionAssert.IsNaN(ddouble.LogEulerQ(ddouble.BitIncrement(+1)));
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(-1)));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(+1)));
+            PrecisionAssert.IsNegativeInfinity(ddouble.LogEulerQ(-1));
+            PrecisionAssert.IsNegativeInfinity(ddouble.LogEulerQ(+1));
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(ddouble.BitIncrement(-1))));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(ddouble.BitDecrement(+1))));
+            PrecisionAssert.IsNegativeInfinity(ddouble.LogEulerQ(ddouble.BitIncrement(-1)));
+            PrecisionAssert.IsNegativeInfinity(ddouble.LogEulerQ(ddouble.BitDecrement(+1)));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.LogEulerQ(-1 + ddouble.Ldexp(1, -1023))));
-            Assert.IsTrue(ddouble.IsFinite(ddouble.LogEulerQ(+1 - ddouble.Ldexp(1, -1023))));
+            PrecisionAssert.IsFinite(ddouble.LogEulerQ(-1 + ddouble.Ldexp(1, -1023)));
+            PrecisionAssert.IsFinite(ddouble.LogEulerQ(+1 - ddouble.Ldexp(1, -1023)));
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(-1 + ddouble.Ldexp(1, -1024))));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.LogEulerQ(+1 - ddouble.Ldexp(1, -1024))));
+            PrecisionAssert.IsNegativeInfinity(ddouble.LogEulerQ(-1 + ddouble.Ldexp(1, -1024)));
+            PrecisionAssert.IsNegativeInfinity(ddouble.LogEulerQ(+1 - ddouble.Ldexp(1, -1024)));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LogEulerQ(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.LogEulerQ(ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.LogEulerQ(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.LogEulerQ(ddouble.NegativeInfinity));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log2(v);
 
-                Assert.AreEqual(Math.Log2((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log2((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -28,7 +28,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log2(v);
 
-                Assert.AreEqual(Math.Log2((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log2((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -38,16 +38,16 @@ namespace DoubleDoubleTest.DDouble {
             ddouble log2_ninf = ddouble.Log2(double.NegativeInfinity);
             ddouble log2_nan = ddouble.Log2(double.NaN);
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(log2_pzero), nameof(log2_pzero));
-            Assert.IsTrue(ddouble.IsNaN(log2_mzero), nameof(log2_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(log2_pinf), nameof(log2_pinf));
-            Assert.IsTrue(ddouble.IsNaN(log2_ninf), nameof(log2_ninf));
-            Assert.IsTrue(ddouble.IsNaN(log2_nan), nameof(log2_nan));
+            PrecisionAssert.IsNegativeInfinity(log2_pzero, nameof(log2_pzero));
+            PrecisionAssert.IsNaN(log2_mzero, nameof(log2_mzero));
+            PrecisionAssert.IsPositiveInfinity(log2_pinf, nameof(log2_pinf));
+            PrecisionAssert.IsNaN(log2_ninf, nameof(log2_ninf));
+            PrecisionAssert.IsNaN(log2_nan, nameof(log2_nan));
 
             ddouble near2 = 2;
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near2);
-                Assert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log2(2), (double)u, 1e-12);
 
                 Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -56,7 +56,7 @@ namespace DoubleDoubleTest.DDouble {
             }
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near2);
-                Assert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log2(2), (double)u, 1e-12);
 
                 Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -65,7 +65,7 @@ namespace DoubleDoubleTest.DDouble {
             }
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near2);
-                Assert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log2(2), (double)u, 1e-12);
 
                 Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -76,7 +76,7 @@ namespace DoubleDoubleTest.DDouble {
             ddouble near1 = 1;
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near1);
-                Assert.AreEqual(0, (double)u, 1e-12);
+                PrecisionAssert.AreEqual(0, (double)u, 1e-12);
 
                 Console.WriteLine($"{near1} {near1.Hi} {near1.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -87,7 +87,7 @@ namespace DoubleDoubleTest.DDouble {
             near1 = 1;
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near1);
-                Assert.AreEqual(0, (double)u, 1e-12);
+                PrecisionAssert.AreEqual(0, (double)u, 1e-12);
 
                 Console.WriteLine($"{near1} {near1.Hi} {near1.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -98,7 +98,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void Log10Test() {
-            Assert.AreEqual(0, (double)(ddouble.Log10(10) - 1), 1e-32);
+            PrecisionAssert.AreEqual(0, (double)(ddouble.Log10(10) - 1), 1e-32);
 
             for (decimal d = 0.01m; d <= +10m; d += 0.01m) {
                 if (d == 0) {
@@ -108,7 +108,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log10(v);
 
-                Assert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -120,13 +120,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log10(v);
 
-                Assert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
             for (long i = 0, n = 1; i < 19; i++, n *= 10) {
-                Assert.AreEqual(i, ddouble.Log10(n));
-                Assert.AreEqual(-i, ddouble.Log10(ddouble.Rcp(n)));
+                PrecisionAssert.AreEqual(i, ddouble.Log10(n));
+                PrecisionAssert.AreEqual(-i, ddouble.Log10(ddouble.Rcp(n)));
             }
 
             ddouble log10_pzero = ddouble.Log10(0d);
@@ -135,11 +135,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble log10_ninf = ddouble.Log10(double.NegativeInfinity);
             ddouble log10_nan = ddouble.Log10(double.NaN);
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(log10_pzero), nameof(log10_pzero));
-            Assert.IsTrue(ddouble.IsNaN(log10_mzero), nameof(log10_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(log10_pinf), nameof(log10_pinf));
-            Assert.IsTrue(ddouble.IsNaN(log10_ninf), nameof(log10_ninf));
-            Assert.IsTrue(ddouble.IsNaN(log10_nan), nameof(log10_nan));
+            PrecisionAssert.IsNegativeInfinity(log10_pzero, nameof(log10_pzero));
+            PrecisionAssert.IsNaN(log10_mzero, nameof(log10_mzero));
+            PrecisionAssert.IsPositiveInfinity(log10_pinf, nameof(log10_pinf));
+            PrecisionAssert.IsNaN(log10_ninf, nameof(log10_ninf));
+            PrecisionAssert.IsNaN(log10_nan, nameof(log10_nan));
         }
 
         [TestMethod]
@@ -152,7 +152,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log(v);
 
-                Assert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -164,7 +164,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log(v);
 
-                Assert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -174,11 +174,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble log_ninf = ddouble.Log(double.NegativeInfinity);
             ddouble log_nan = ddouble.Log(double.NaN);
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(log_pzero), nameof(log_pzero));
-            Assert.IsTrue(ddouble.IsNaN(log_mzero), nameof(log_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(log_pinf), nameof(log_pinf));
-            Assert.IsTrue(ddouble.IsNaN(log_ninf), nameof(log_ninf));
-            Assert.IsTrue(ddouble.IsNaN(log_nan), nameof(log_nan));
+            PrecisionAssert.IsNegativeInfinity(log_pzero, nameof(log_pzero));
+            PrecisionAssert.IsNaN(log_mzero, nameof(log_mzero));
+            PrecisionAssert.IsPositiveInfinity(log_pinf, nameof(log_pinf));
+            PrecisionAssert.IsNaN(log_ninf, nameof(log_ninf));
+            PrecisionAssert.IsNaN(log_nan, nameof(log_nan));
         }
 
         [TestMethod]
@@ -190,7 +190,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble err = p - y;
                     if (ddouble.IsInteger(p)) {
-                        Assert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
                     }
                     else {
                         PrecisionAssert.AlmostEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
@@ -205,7 +205,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble err = p - y;
                     if (ddouble.IsInteger(p)) {
-                        Assert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
                     }
                     else {
                         PrecisionAssert.AlmostEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
@@ -224,7 +224,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log1p(v);
 
-                Assert.AreEqual(Math.Log(1 + (double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Log(1 + (double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -257,11 +257,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble log_ninf = ddouble.Log1p(double.NegativeInfinity);
             ddouble log_nan = ddouble.Log1p(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(log_pzero), nameof(log_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(log_mzero), nameof(log_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(log_pinf), nameof(log_pinf));
-            Assert.IsTrue(ddouble.IsNaN(log_ninf), nameof(log_ninf));
-            Assert.IsTrue(ddouble.IsNaN(log_nan), nameof(log_nan));
+            PrecisionAssert.IsPlusZero(log_pzero, nameof(log_pzero));
+            PrecisionAssert.IsMinusZero(log_mzero, nameof(log_mzero));
+            PrecisionAssert.IsPositiveInfinity(log_pinf, nameof(log_pinf));
+            PrecisionAssert.IsNaN(log_ninf, nameof(log_ninf));
+            PrecisionAssert.IsNaN(log_nan, nameof(log_nan));
         }
 
         [TestMethod]
@@ -319,13 +319,13 @@ namespace DoubleDoubleTest.DDouble {
             ddouble log_ninf = ddouble.Logit(double.NegativeInfinity);
             ddouble log_nan = ddouble.Logit(double.NaN);
 
-            Assert.IsTrue(ddouble.IsNegativeInfinity(log_pzero), nameof(log_pzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(log_pone), nameof(log_pone));
-            Assert.IsTrue(ddouble.IsNaN(log_ponepeps), nameof(log_ponepeps));
-            Assert.IsTrue(ddouble.IsNaN(log_mzero), nameof(log_mzero));
-            Assert.IsTrue(ddouble.IsNaN(log_pinf), nameof(log_pinf));
-            Assert.IsTrue(ddouble.IsNaN(log_ninf), nameof(log_ninf));
-            Assert.IsTrue(ddouble.IsNaN(log_nan), nameof(log_nan));
+            PrecisionAssert.IsNegativeInfinity(log_pzero, nameof(log_pzero));
+            PrecisionAssert.IsPositiveInfinity(log_pone, nameof(log_pone));
+            PrecisionAssert.IsNaN(log_ponepeps, nameof(log_ponepeps));
+            PrecisionAssert.IsNaN(log_mzero, nameof(log_mzero));
+            PrecisionAssert.IsNaN(log_pinf, nameof(log_pinf));
+            PrecisionAssert.IsNaN(log_ninf, nameof(log_ninf));
+            PrecisionAssert.IsNaN(log_nan, nameof(log_nan));
         }
 
         [TestMethod]
@@ -381,9 +381,9 @@ namespace DoubleDoubleTest.DDouble {
             ddouble exp_ninf = ddouble.Expit(double.NegativeInfinity);
             ddouble exp_nan = ddouble.Expit(double.NaN);
 
-            Assert.IsTrue(exp_pinf == 1d, nameof(exp_pinf));
-            Assert.IsTrue(ddouble.IsPlusZero(exp_ninf), nameof(exp_ninf));
-            Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
+            PrecisionAssert.AreEqual(1, exp_pinf, nameof(exp_pinf));
+            PrecisionAssert.IsPlusZero(exp_ninf, nameof(exp_ninf));
+            PrecisionAssert.IsNaN(exp_nan, nameof(exp_nan));
         }
     }
 }

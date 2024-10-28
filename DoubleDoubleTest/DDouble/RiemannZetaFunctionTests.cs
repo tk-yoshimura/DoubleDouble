@@ -1108,7 +1108,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(-0.5d, ddouble.RiemannZeta(0));
+            PrecisionAssert.AreEqual(-0.5d, ddouble.RiemannZeta(0));
 
             PrecisionAssert.AlmostEqual(
                 ddouble.RiemannZeta(-ddouble.Consts.RiemannZeta.Eps),
@@ -1134,15 +1134,15 @@ namespace DoubleDoubleTest.DDouble {
                 1e-31
             );
 
-            Assert.IsTrue(-0.5d == ddouble.RiemannZeta(-ddouble.Epsilon));
-            Assert.IsTrue(-0.5d == ddouble.RiemannZeta(+ddouble.Epsilon));
+            PrecisionAssert.AreEqual(-0.5d, ddouble.RiemannZeta(-ddouble.Epsilon));
+            PrecisionAssert.AreEqual(-0.5d, ddouble.RiemannZeta(+ddouble.Epsilon));
 
             Assert.IsTrue(-0.5d < ddouble.RiemannZeta(-ddouble.Consts.RiemannZeta.Eps));
             Assert.IsTrue(-0.5d > ddouble.RiemannZeta(+ddouble.Consts.RiemannZeta.Eps));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.RiemannZeta(ddouble.NaN)));
-            Assert.AreEqual(1, ddouble.RiemannZeta(ddouble.PositiveInfinity));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.RiemannZeta(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.RiemannZeta(ddouble.NaN));
+            PrecisionAssert.AreEqual(1, ddouble.RiemannZeta(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.RiemannZeta(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -1319,7 +1319,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(ddouble.Ln2, ddouble.DirichletEta(1));
+            PrecisionAssert.AreEqual(ddouble.Ln2, ddouble.DirichletEta(1));
 
             PrecisionAssert.AlmostEqual(
                 ddouble.DirichletEta(1 - ddouble.Consts.RiemannZeta.Eps),
@@ -1351,9 +1351,9 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.Ln2 > ddouble.DirichletEta(1 - Math.ScaleB(1, -32)));
             Assert.IsTrue(ddouble.Ln2 < ddouble.DirichletEta(1 + Math.ScaleB(1, -32)));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.DirichletEta(ddouble.NaN)));
-            Assert.AreEqual(1, ddouble.DirichletEta(ddouble.PositiveInfinity));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.DirichletEta(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.DirichletEta(ddouble.NaN));
+            PrecisionAssert.AreEqual(1, ddouble.DirichletEta(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.DirichletEta(ddouble.NegativeInfinity));
         }
     }
 }

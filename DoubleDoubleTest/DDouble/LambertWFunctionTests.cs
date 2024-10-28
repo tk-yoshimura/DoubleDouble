@@ -402,21 +402,21 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(-1, ddouble.LambertW(-ddouble.RcpE));
+            PrecisionAssert.AreEqual(-1, ddouble.LambertW(-ddouble.RcpE));
             Assert.IsTrue(ddouble.LambertW(ddouble.BitIncrement(-ddouble.RcpE)) > -1);
 
             Assert.IsTrue(ddouble.LambertW(ddouble.Epsilon) > 0);
             Assert.IsTrue(ddouble.LambertW(-ddouble.Epsilon) < 0);
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.LambertW(ddouble.MaxValue)));
+            PrecisionAssert.IsFinite(ddouble.LambertW(ddouble.MaxValue));
 
             PrecisionAssert.AlmostEqual("7.0045838920868939868016508375916341696918104269217e2",
                               ddouble.LambertW(Math.ScaleB(1, 1020)),
                               1e-28d);
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(-ddouble.RcpE - Math.ScaleB(1, -104))));
-            Assert.IsTrue(ddouble.IsNaN(ddouble.LambertW(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.LambertW(ddouble.PositiveInfinity)));
+            PrecisionAssert.IsNaN(ddouble.LambertW(-ddouble.RcpE - Math.ScaleB(1, -104)));
+            PrecisionAssert.IsNaN(ddouble.LambertW(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.LambertW(ddouble.PositiveInfinity));
         }
 
         [TestMethod]

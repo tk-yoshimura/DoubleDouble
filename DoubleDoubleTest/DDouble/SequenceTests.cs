@@ -12,13 +12,13 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine($"1/{n}! = {ddouble.TaylorSequence[n]}");
             }
 
-            Assert.AreEqual(1, ddouble.TaylorSequence[0]);
-            Assert.AreEqual(1, ddouble.TaylorSequence[1]);
-            Assert.AreEqual(ddouble.Rcp(2), ddouble.TaylorSequence[2]);
-            Assert.AreEqual(ddouble.Rcp(6), ddouble.TaylorSequence[3]);
-            Assert.AreEqual(ddouble.Rcp(24), ddouble.TaylorSequence[4]);
-            Assert.AreEqual(ddouble.Rcp(120), ddouble.TaylorSequence[5]);
-            Assert.AreEqual(ddouble.Rcp(720), ddouble.TaylorSequence[6]);
+            PrecisionAssert.AreEqual(1, ddouble.TaylorSequence[0]);
+            PrecisionAssert.AreEqual(1, ddouble.TaylorSequence[1]);
+            PrecisionAssert.AreEqual(ddouble.Rcp(2), ddouble.TaylorSequence[2]);
+            PrecisionAssert.AreEqual(ddouble.Rcp(6), ddouble.TaylorSequence[3]);
+            PrecisionAssert.AreEqual(ddouble.Rcp(24), ddouble.TaylorSequence[4]);
+            PrecisionAssert.AreEqual(ddouble.Rcp(120), ddouble.TaylorSequence[5]);
+            PrecisionAssert.AreEqual(ddouble.Rcp(720), ddouble.TaylorSequence[6]);
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine($"B({2 * n}) = {ddouble.BernoulliSequence[n]}");
             }
 
-            Assert.AreEqual(1, ddouble.BernoulliSequence[0]);
+            PrecisionAssert.AreEqual(1, ddouble.BernoulliSequence[0]);
             BitAssert.NeighborBits(ddouble.Rcp(6), ddouble.BernoulliSequence[1]);
             BitAssert.NeighborBits((ddouble)(-1) / 30, ddouble.BernoulliSequence[2]);
             BitAssert.NeighborBits((ddouble)(1) / 42, ddouble.BernoulliSequence[3]);
@@ -51,8 +51,8 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine($"H({n}) = {ddouble.HarmonicNumber(n)}");
             }
 
-            Assert.AreEqual(0, ddouble.HarmonicNumber(0));
-            Assert.AreEqual(1, ddouble.HarmonicNumber(1));
+            PrecisionAssert.AreEqual(0, ddouble.HarmonicNumber(0));
+            PrecisionAssert.AreEqual(1, ddouble.HarmonicNumber(1));
             BitAssert.NeighborBits((ddouble)(3) / 2, ddouble.HarmonicNumber(2));
             BitAssert.NeighborBits((ddouble)(11) / 6, ddouble.HarmonicNumber(3));
             BitAssert.NeighborBits((ddouble)(25) / 12, ddouble.HarmonicNumber(4));

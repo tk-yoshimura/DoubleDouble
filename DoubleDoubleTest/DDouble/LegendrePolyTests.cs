@@ -118,7 +118,7 @@ namespace DoubleDoubleTest.DDouble {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.LegendreP(n, x);
 
-                    Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{x}");
+                    PrecisionAssert.IsFinite(actual, $"{n},{x}");
                 }
             }
 
@@ -139,7 +139,7 @@ namespace DoubleDoubleTest.DDouble {
                     for (ddouble x = -1; x <= 1; x += 0.0625) {
                         ddouble actual = ddouble.LegendreP(n, m, x);
 
-                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{m},{x}");
+                        PrecisionAssert.IsFinite(actual, $"{n},{m},{x}");
                     }
                 }
             }

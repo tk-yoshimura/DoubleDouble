@@ -37,7 +37,7 @@ namespace DoubleDoubleTest.DDouble {
                         for (ddouble x = -1; x <= 1; x += 0.125) {
                             ddouble actual = ddouble.JacobiP(n, alpha, beta, x);
 
-                            Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{alpha},{beta},{x}");
+                            PrecisionAssert.IsFinite(actual, $"{n},{alpha},{beta},{x}");
                         }
                     }
                 }

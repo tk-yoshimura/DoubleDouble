@@ -240,13 +240,13 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(0, ddouble.Erfi(0));
+            PrecisionAssert.AreEqual(0, ddouble.Erfi(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Erfi(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Erfi(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Erfi(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Erfi(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Erfi(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.Erfi(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Erfi(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Erfi(ddouble.NegativeInfinity));
         }
 
         [TestMethod]
@@ -531,13 +531,13 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(0, ddouble.DawsonF(0));
+            PrecisionAssert.AreEqual(0, ddouble.DawsonF(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.DawsonF(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.DawsonF(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.DawsonF(ddouble.NaN)));
-            Assert.AreEqual(0, ddouble.DawsonF(ddouble.PositiveInfinity));
-            Assert.AreEqual(0, ddouble.DawsonF(ddouble.NegativeInfinity));
+            PrecisionAssert.IsNaN(ddouble.DawsonF(ddouble.NaN));
+            PrecisionAssert.AreEqual(0, ddouble.DawsonF(ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(0, ddouble.DawsonF(ddouble.NegativeInfinity));
         }
     }
 }

@@ -10,7 +10,7 @@ namespace DoubleDoubleTest.DDouble {
         public void PowNTest() {
             ddouble v = ddouble.Pow(5, 308);
 
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.917614634881924434803035919916513923037e215" - v) < "1e185");
+            PrecisionAssert.AlmostEqual((ddouble)"1.917614634881924434803035919916513923037e215", v, 1e-31);
         }
 
         [TestMethod]
@@ -23,7 +23,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Pow2(v);
 
-                Assert.AreEqual(Math.Pow(2, (double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Pow(2, (double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -35,7 +35,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Pow2(v);
 
-                Assert.AreEqual(Math.Pow(2, (double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(Math.Pow(2, (double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -72,11 +72,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble pow2_ninf = ddouble.Pow2(double.NegativeInfinity);
             ddouble pow2_nan = ddouble.Pow2(double.NaN);
 
-            Assert.IsTrue(pow2_pzero == 1, nameof(pow2_pzero));
-            Assert.IsTrue(pow2_mzero == 1, nameof(pow2_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pow2_pinf), nameof(pow2_pinf));
-            Assert.IsTrue(ddouble.IsPlusZero(pow2_ninf), nameof(pow2_ninf));
-            Assert.IsTrue(ddouble.IsNaN(pow2_nan), nameof(pow2_nan));
+            PrecisionAssert.AreEqual(1, pow2_pzero, nameof(pow2_pzero));
+            PrecisionAssert.AreEqual(1, pow2_mzero, nameof(pow2_mzero));
+            PrecisionAssert.IsPositiveInfinity(pow2_pinf, nameof(pow2_pinf));
+            PrecisionAssert.IsPlusZero(pow2_ninf, nameof(pow2_ninf));
+            PrecisionAssert.IsNaN(pow2_nan, nameof(pow2_nan));
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble u = ddouble.Pow((ddouble)x, (ddouble)y);
 
-                    Assert.AreEqual(Math.Pow((double)x, (double)y), (double)u, (double)u * 1e-12);
+                    PrecisionAssert.AreEqual(Math.Pow((double)x, (double)y), (double)u, (double)u * 1e-12);
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
             }
@@ -102,7 +102,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble u = ddouble.Pow((ddouble)x, (ddouble)y);
 
-                    Assert.AreEqual(Math.Pow((double)x, (double)y), (double)u, (double)u * 1e-12);
+                    PrecisionAssert.AreEqual(Math.Pow((double)x, (double)y), (double)u, (double)u * 1e-12);
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
             }
@@ -118,7 +118,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Pow10(v);
 
-                Assert.AreEqual(Math.Pow(10, (double)d), (double)u, (double)u * 1e-12);
+                PrecisionAssert.AreEqual(Math.Pow(10, (double)d), (double)u, (double)u * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -130,13 +130,13 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Pow10(v);
 
-                Assert.AreEqual(Math.Pow(10, (double)d), (double)u, (double)u * 1e-12);
+                PrecisionAssert.AreEqual(Math.Pow(10, (double)d), (double)u, (double)u * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
             for (long i = 0, n = 1; i < 19; i++, n *= 10) {
-                Assert.AreEqual(n, ddouble.Pow10(i));
-                Assert.AreEqual(ddouble.Rcp(n), ddouble.Pow10(-i));
+                PrecisionAssert.AreEqual(n, ddouble.Pow10(i));
+                PrecisionAssert.AreEqual(ddouble.Rcp(n), ddouble.Pow10(-i));
             }
 
             for (long i = 0; i < 19; i++) {
@@ -155,11 +155,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble pow10_ninf = ddouble.Pow10(double.NegativeInfinity);
             ddouble pow10_nan = ddouble.Pow10(double.NaN);
 
-            Assert.IsTrue(pow10_pzero == 1, nameof(pow10_pzero));
-            Assert.IsTrue(pow10_mzero == 1, nameof(pow10_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pow10_pinf), nameof(pow10_pinf));
-            Assert.IsTrue(ddouble.IsPlusZero(pow10_ninf), nameof(pow10_ninf));
-            Assert.IsTrue(ddouble.IsNaN(pow10_nan), nameof(pow10_nan));
+            PrecisionAssert.AreEqual(1, pow10_pzero, nameof(pow10_pzero));
+            PrecisionAssert.AreEqual(1, pow10_mzero, nameof(pow10_mzero));
+            PrecisionAssert.IsPositiveInfinity(pow10_pinf, nameof(pow10_pinf));
+            PrecisionAssert.IsPlusZero(pow10_ninf, nameof(pow10_ninf));
+            PrecisionAssert.IsNaN(pow10_nan, nameof(pow10_nan));
         }
 
         [TestMethod]
@@ -184,7 +184,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Exp(v);
 
-                Assert.AreEqual(Math.Exp((double)d), (double)u, (double)u * 1e-12);
+                PrecisionAssert.AreEqual(Math.Exp((double)d), (double)u, (double)u * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -197,11 +197,11 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Exp(v);
 
-                Assert.AreEqual(Math.Exp((double)d), (double)u, (double)u * 1e-12);
+                PrecisionAssert.AreEqual(Math.Exp((double)d), (double)u, (double)u * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            Assert.IsTrue(ddouble.Abs(ddouble.E - ddouble.Exp(1)) < 1e-31);
+            PrecisionAssert.AreEqual(ddouble.E, ddouble.Exp(1));
 
             ddouble exp_pzero = ddouble.Exp(0d);
             ddouble exp_mzero = ddouble.Exp(-0d);
@@ -209,11 +209,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble exp_ninf = ddouble.Exp(double.NegativeInfinity);
             ddouble exp_nan = ddouble.Exp(double.NaN);
 
-            Assert.IsTrue(exp_pzero == 1, nameof(exp_pzero));
-            Assert.IsTrue(exp_mzero == 1, nameof(exp_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(exp_pinf), nameof(exp_pinf));
-            Assert.IsTrue(ddouble.IsPlusZero(exp_ninf), nameof(exp_ninf));
-            Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
+            PrecisionAssert.AreEqual(1, exp_pzero, nameof(exp_pzero));
+            PrecisionAssert.AreEqual(1, exp_mzero, nameof(exp_mzero));
+            PrecisionAssert.IsPositiveInfinity(exp_pinf, nameof(exp_pinf));
+            PrecisionAssert.IsPlusZero(exp_ninf, nameof(exp_ninf));
+            PrecisionAssert.IsNaN(exp_nan, nameof(exp_nan));
         }
 
         [TestMethod]
@@ -226,7 +226,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Pow2m1(v);
 
-                Assert.AreEqual(Math.Pow(2, (double)d) - 1, (double)u, Math.Abs((double)u) * 1e-12);
+                PrecisionAssert.AreEqual(Math.Pow(2, (double)d) - 1, (double)u, Math.Abs((double)u) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -259,11 +259,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble exp_ninf = ddouble.Pow2m1(double.NegativeInfinity);
             ddouble exp_nan = ddouble.Pow2m1(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(exp_pzero), nameof(exp_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(exp_mzero), nameof(exp_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(exp_pinf), nameof(exp_pinf));
-            Assert.IsTrue(exp_ninf == -1, nameof(exp_ninf));
-            Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
+            PrecisionAssert.IsPlusZero(exp_pzero, nameof(exp_pzero));
+            PrecisionAssert.IsMinusZero(exp_mzero, nameof(exp_mzero));
+            PrecisionAssert.IsPositiveInfinity(exp_pinf, nameof(exp_pinf));
+            PrecisionAssert.AreEqual(-1, exp_ninf, nameof(exp_ninf));
+            PrecisionAssert.IsNaN(exp_nan, nameof(exp_nan));
         }
 
         [TestMethod]
@@ -276,7 +276,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Expm1(v);
 
-                Assert.AreEqual(Math.Exp((double)d) - 1, (double)u, Math.Abs((double)u) * 1e-12);
+                PrecisionAssert.AreEqual(Math.Exp((double)d) - 1, (double)u, Math.Abs((double)u) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -309,11 +309,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble exp_ninf = ddouble.Expm1(double.NegativeInfinity);
             ddouble exp_nan = ddouble.Expm1(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(exp_pzero), nameof(exp_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(exp_mzero), nameof(exp_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(exp_pinf), nameof(exp_pinf));
-            Assert.IsTrue(exp_ninf == -1, nameof(exp_ninf));
-            Assert.IsTrue(ddouble.IsNaN(exp_nan), nameof(exp_nan));
+            PrecisionAssert.IsPlusZero(exp_pzero, nameof(exp_pzero));
+            PrecisionAssert.IsMinusZero(exp_mzero, nameof(exp_mzero));
+            PrecisionAssert.IsPositiveInfinity(exp_pinf, nameof(exp_pinf));
+            PrecisionAssert.AreEqual(-1, exp_ninf, nameof(exp_ninf));
+            PrecisionAssert.IsNaN(exp_nan, nameof(exp_nan));
         }
 
         [TestMethod]
@@ -373,7 +373,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine($"actual:   {actual}");
 
                 if (double.IsNaN(expected)) {
-                    Assert.IsTrue(ddouble.IsNaN(actual));
+                    PrecisionAssert.IsNaN(actual);
                     continue;
                 }
 
@@ -419,7 +419,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine($"actual:   {actual}");
 
                 if (double.IsNaN(expected)) {
-                    Assert.IsTrue(ddouble.IsNaN(actual));
+                    PrecisionAssert.IsNaN(actual);
                     continue;
                 }
 
@@ -485,7 +485,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine($"actual:   {actual}");
 
                 if (double.IsNaN(expected)) {
-                    Assert.IsTrue(ddouble.IsNaN(actual));
+                    PrecisionAssert.IsNaN(actual);
                     continue;
                 }
 

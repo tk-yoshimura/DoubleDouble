@@ -90,7 +90,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = ddouble.IncompleteBeta(0.5, ab, ab);
 
                 Console.WriteLine(v);
-                Assert.IsTrue(ddouble.IsFinite(v));
+                PrecisionAssert.IsFinite(v);
             }
         }
 
@@ -123,7 +123,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = ddouble.IncompleteBetaRegularized(0.5, ab, ab);
 
                 Console.WriteLine(v);
-                Assert.IsTrue(ddouble.IsFinite(v));
+                PrecisionAssert.IsFinite(v);
             }
         }
 

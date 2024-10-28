@@ -301,9 +301,9 @@ namespace DoubleDoubleTest.DDouble {
             ddouble pg_ninf = ddouble.Bump(double.NegativeInfinity);
             ddouble pg_nan = ddouble.Bump(double.NaN);
 
-            Assert.AreEqual(1, pg_pinf, nameof(pg_pinf));
-            Assert.IsTrue(ddouble.IsPlusZero(pg_ninf), nameof(pg_ninf));
-            Assert.IsTrue(ddouble.IsNaN(pg_nan), nameof(pg_nan));
+            PrecisionAssert.AreEqual(1, pg_pinf, nameof(pg_pinf));
+            PrecisionAssert.IsPlusZero(pg_ninf, nameof(pg_ninf));
+            PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
         }
     }
 }

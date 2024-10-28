@@ -288,13 +288,13 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.AreEqual(0, ddouble.Ti(0));
+            PrecisionAssert.AreEqual(0, ddouble.Ti(0));
 
-            Assert.IsTrue(ddouble.IsFinite(ddouble.Ti(ddouble.Epsilon)));
+            PrecisionAssert.IsFinite(ddouble.Ti(ddouble.Epsilon));
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.Ti(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.Ti(ddouble.PositiveInfinity)));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(ddouble.Ti(ddouble.NegativeInfinity)));
+            PrecisionAssert.IsNaN(ddouble.Ti(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ti(ddouble.PositiveInfinity));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ti(ddouble.NegativeInfinity));
         }
     }
 }

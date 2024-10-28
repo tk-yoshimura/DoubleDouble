@@ -3182,11 +3182,11 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(expected, y_inc, 4e-29d);
             }
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.ScorerHi(ddouble.NaN)));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.ScorerHi(ddouble.PositiveInfinity)));
-            Assert.AreEqual(0, ddouble.ScorerHi(ddouble.NegativeInfinity));
+            PrecisionAssert.IsNaN(ddouble.ScorerHi(ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.ScorerHi(ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(0, ddouble.ScorerHi(ddouble.NegativeInfinity));
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.ScorerHi(Math.ScaleB(1, 128))));
+            PrecisionAssert.IsPositiveInfinity(ddouble.ScorerHi(Math.ScaleB(1, 128)));
         }
 
         [TestMethod]
@@ -5803,9 +5803,9 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            Assert.IsTrue(ddouble.IsNaN(ddouble.ScorerGi(ddouble.NaN)));
-            Assert.AreEqual(0, ddouble.ScorerGi(ddouble.PositiveInfinity));
-            Assert.AreEqual(0, ddouble.ScorerGi(ddouble.NegativeInfinity));
+            PrecisionAssert.IsNaN(ddouble.ScorerGi(ddouble.NaN));
+            PrecisionAssert.AreEqual(0, ddouble.ScorerGi(ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(0, ddouble.ScorerGi(ddouble.NegativeInfinity));
         }
     }
 }

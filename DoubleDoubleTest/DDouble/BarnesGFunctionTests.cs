@@ -2241,9 +2241,9 @@ namespace DoubleDoubleTest.DDouble {
             ddouble pg_ninf = ddouble.BarnesG(double.NegativeInfinity);
             ddouble pg_nan = ddouble.BarnesG(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pg_pinf), nameof(pg_pinf));
-            Assert.IsTrue(ddouble.IsNaN(pg_ninf), nameof(pg_ninf));
-            Assert.IsTrue(ddouble.IsNaN(pg_nan), nameof(pg_nan));
+            PrecisionAssert.IsPositiveInfinity(pg_pinf, nameof(pg_pinf));
+            PrecisionAssert.IsNaN(pg_ninf, nameof(pg_ninf));
+            PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
         }
 
         [TestMethod]
@@ -2253,10 +2253,10 @@ namespace DoubleDoubleTest.DDouble {
             ddouble pg_ninf = ddouble.LogBarnesG(double.NegativeInfinity);
             ddouble pg_nan = ddouble.LogBarnesG(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pg_pinf), nameof(pg_pinf));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(pg_pmax), nameof(pg_pmax));
-            Assert.IsTrue(ddouble.IsNaN(pg_ninf), nameof(pg_ninf));
-            Assert.IsTrue(ddouble.IsNaN(pg_nan), nameof(pg_nan));
+            PrecisionAssert.IsPositiveInfinity(pg_pinf, nameof(pg_pinf));
+            PrecisionAssert.IsPositiveInfinity(pg_pmax, nameof(pg_pmax));
+            PrecisionAssert.IsNaN(pg_ninf, nameof(pg_ninf));
+            PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
         }
     }
 }

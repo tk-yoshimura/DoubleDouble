@@ -46,10 +46,10 @@ namespace DoubleDoubleTest.DDouble {
                     for (ddouble x = 0; x <= 1; x += 0.0625) {
                         ddouble actual = ddouble.ZernikeR(n, m, x);
 
-                        Assert.IsTrue(ddouble.IsFinite(actual), $"{n},{m},{x}");
+                        PrecisionAssert.IsFinite(actual, $"{n},{m},{x}");
 
                         if (((n + m) & 1) == 1) {
-                            Assert.AreEqual(0, actual, $"{n},{m},{x}");
+                            PrecisionAssert.AreEqual(0, actual, $"{n},{m},{x}");
                         }
                     }
                 }

@@ -17,7 +17,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.SinPIHalf(v);
 
-                Assert.AreEqual(Math.Sin((double)d * Math.PI / 2), (double)u, 1e-14, d.ToString());
+                PrecisionAssert.AreEqual(Math.Sin((double)d * Math.PI / 2), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -30,7 +30,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nearn} {nearn.Hi} {nearn.Lo}");
                     Console.WriteLine($"{u} {u.Hi} {u.Lo}");
 
-                    Assert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
+                    PrecisionAssert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
 
                     nearn = ddouble.BitDecrement(nearn);
                 }
@@ -43,20 +43,20 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nearn} {nearn.Hi} {nearn.Lo}");
                     Console.WriteLine($"{u} {u.Hi} {u.Lo}");
 
-                    Assert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
+                    PrecisionAssert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
 
                     nearn = ddouble.BitIncrement(nearn);
                 }
             }
 
-            Assert.IsTrue(ddouble.Abs((ddouble)"6.13588464915447535964023459037258092e-3" - ddouble.SinPIHalf(ddouble.Rcp(256))) < 1e-34);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.56434465040230869010105319467166892e-1" - ddouble.SinPIHalf(ddouble.Rcp(10))) < 1e-32);
-            Assert.IsTrue(ddouble.Abs((ddouble)"9.87688340595137726190040247693437261e-1" - ddouble.SinPIHalf(9 * ddouble.Rcp(10))) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(0.5d - ddouble.SinPIHalf(ddouble.Rcp(3))) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(3) / 2 - ddouble.SinPIHalf(2 * ddouble.Rcp(3))) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(0.5d)) < 1e-34);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(ddouble.BitDecrement(0.5d))) < 1e-32);
-            Assert.IsTrue(ddouble.Abs(ddouble.Sqrt(2) / 2 - ddouble.SinPIHalf(ddouble.BitIncrement(0.5d))) < 1e-32);
+            PrecisionAssert.AlmostEqual((ddouble)"6.13588464915447535964023459037258092e-3", ddouble.SinPIHalf(ddouble.Rcp(256)), 1e-31);
+            PrecisionAssert.AlmostEqual((ddouble)"1.56434465040230869010105319467166892e-1", ddouble.SinPIHalf(ddouble.Rcp(10)), 1e-31);
+            PrecisionAssert.AlmostEqual((ddouble)"9.87688340595137726190040247693437261e-1", ddouble.SinPIHalf(9 * ddouble.Rcp(10)), 1e-31);
+            PrecisionAssert.AlmostEqual(0.5d, ddouble.SinPIHalf(ddouble.Rcp(3)), 1e-31);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(3) / 2, ddouble.SinPIHalf(2 * ddouble.Rcp(3)), 1e-31);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2) / 2, ddouble.SinPIHalf(0.5d), 1e-34);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2) / 2, ddouble.SinPIHalf(ddouble.BitDecrement(0.5d)), 1e-31);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2) / 2, ddouble.SinPIHalf(ddouble.BitIncrement(0.5d)), 1e-31);
 
             ddouble sin_pzero = ddouble.SinPIHalf(0d);
             ddouble sin_mzero = ddouble.SinPIHalf(-0d);
@@ -64,11 +64,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble sin_ninf = ddouble.SinPIHalf(double.NegativeInfinity);
             ddouble sin_nan = ddouble.SinPIHalf(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(sin_pzero), nameof(sin_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(sin_mzero), nameof(sin_mzero));
-            Assert.IsTrue(ddouble.IsNaN(sin_pinf), nameof(sin_pinf));
-            Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
-            Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
+            PrecisionAssert.IsPlusZero(sin_pzero, nameof(sin_pzero));
+            PrecisionAssert.IsMinusZero(sin_mzero, nameof(sin_mzero));
+            PrecisionAssert.IsNaN(sin_pinf, nameof(sin_pinf));
+            PrecisionAssert.IsNaN(sin_ninf, nameof(sin_ninf));
+            PrecisionAssert.IsNaN(sin_nan, nameof(sin_nan));
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.SinPI(v);
 
-                Assert.AreEqual(Math.Sin((double)d * Math.PI), (double)u, 1e-14, d.ToString());
+                PrecisionAssert.AreEqual(Math.Sin((double)d * Math.PI), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -87,15 +87,15 @@ namespace DoubleDoubleTest.DDouble {
             ddouble sin_ninf = ddouble.SinPI(double.NegativeInfinity);
             ddouble sin_nan = ddouble.SinPI(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(sin_pzero), nameof(sin_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(sin_mzero), nameof(sin_mzero));
-            Assert.IsTrue(ddouble.IsNaN(sin_pinf), nameof(sin_pinf));
-            Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
-            Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
+            PrecisionAssert.IsPlusZero(sin_pzero, nameof(sin_pzero));
+            PrecisionAssert.IsMinusZero(sin_mzero, nameof(sin_mzero));
+            PrecisionAssert.IsNaN(sin_pinf, nameof(sin_pinf));
+            PrecisionAssert.IsNaN(sin_ninf, nameof(sin_ninf));
+            PrecisionAssert.IsNaN(sin_nan, nameof(sin_nan));
 
             for (int n = 1; n <= 32; n++) {
-                Assert.IsTrue(ddouble.IsPlusZero(ddouble.SinPI(n)), "sin intn");
-                Assert.IsTrue(ddouble.IsMinusZero(ddouble.SinPI(-n)), "sin intn");
+                PrecisionAssert.IsPlusZero(ddouble.SinPI(n), "sin intn");
+                PrecisionAssert.IsMinusZero(ddouble.SinPI(-n), "sin intn");
             }
         }
 
@@ -105,7 +105,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.CosPI(v);
 
-                Assert.AreEqual(Math.Cos((double)d * Math.PI), (double)u, 1e-14, d.ToString());
+                PrecisionAssert.AreEqual(Math.Cos((double)d * Math.PI), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -115,15 +115,15 @@ namespace DoubleDoubleTest.DDouble {
             ddouble cos_ninf = ddouble.CosPI(double.NegativeInfinity);
             ddouble cos_nan = ddouble.CosPI(double.NaN);
 
-            Assert.IsTrue(cos_pzero == 1, nameof(cos_pzero));
-            Assert.IsTrue(cos_mzero == 1, nameof(cos_mzero));
-            Assert.IsTrue(ddouble.IsNaN(cos_pinf), nameof(cos_pinf));
-            Assert.IsTrue(ddouble.IsNaN(cos_ninf), nameof(cos_ninf));
-            Assert.IsTrue(ddouble.IsNaN(cos_nan), nameof(cos_nan));
+            PrecisionAssert.AreEqual(1, cos_pzero, nameof(cos_pzero));
+            PrecisionAssert.AreEqual(1, cos_mzero, nameof(cos_mzero));
+            PrecisionAssert.IsNaN(cos_pinf, nameof(cos_pinf));
+            PrecisionAssert.IsNaN(cos_ninf, nameof(cos_ninf));
+            PrecisionAssert.IsNaN(cos_nan, nameof(cos_nan));
 
             for (int n = 0; n <= 32; n++) {
-                Assert.IsTrue(ddouble.IsPlusZero(ddouble.CosPI(n + 0.5)), "cos intn");
-                Assert.IsTrue(ddouble.IsPlusZero(ddouble.CosPI(-n - 0.5)), "cos intn");
+                PrecisionAssert.IsPlusZero(ddouble.CosPI(n + 0.5), "cos intn");
+                PrecisionAssert.IsPlusZero(ddouble.CosPI(-n - 0.5), "cos intn");
             }
         }
 
@@ -139,7 +139,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 double w = Math.Tan((double)d * Math.PI);
 
-                Assert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13), d.ToString());
+                PrecisionAssert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -149,11 +149,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble tan_ninf = ddouble.TanPI(double.NegativeInfinity);
             ddouble tan_nan = ddouble.TanPI(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(tan_pzero), nameof(tan_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(tan_mzero), nameof(tan_mzero));
-            Assert.IsTrue(ddouble.IsNaN(tan_pinf), nameof(tan_pinf));
-            Assert.IsTrue(ddouble.IsNaN(tan_ninf), nameof(tan_ninf));
-            Assert.IsTrue(ddouble.IsNaN(tan_nan), nameof(tan_nan));
+            PrecisionAssert.IsPlusZero(tan_pzero, nameof(tan_pzero));
+            PrecisionAssert.IsMinusZero(tan_mzero, nameof(tan_mzero));
+            PrecisionAssert.IsNaN(tan_pinf, nameof(tan_pinf));
+            PrecisionAssert.IsNaN(tan_ninf, nameof(tan_ninf));
+            PrecisionAssert.IsNaN(tan_nan, nameof(tan_nan));
         }
 
         [TestMethod]
@@ -162,7 +162,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Sin(v);
 
-                Assert.AreEqual(Math.Sin((double)d), (double)u, 1e-14, d.ToString());
+                PrecisionAssert.AreEqual(Math.Sin((double)d), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -172,11 +172,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble sin_ninf = ddouble.Sin(double.NegativeInfinity);
             ddouble sin_nan = ddouble.Sin(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(sin_pzero), nameof(sin_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(sin_mzero), nameof(sin_mzero));
-            Assert.IsTrue(ddouble.IsNaN(sin_pinf), nameof(sin_pinf));
-            Assert.IsTrue(ddouble.IsNaN(sin_ninf), nameof(sin_ninf));
-            Assert.IsTrue(ddouble.IsNaN(sin_nan), nameof(sin_nan));
+            PrecisionAssert.IsPlusZero(sin_pzero, nameof(sin_pzero));
+            PrecisionAssert.IsMinusZero(sin_mzero, nameof(sin_mzero));
+            PrecisionAssert.IsNaN(sin_pinf, nameof(sin_pinf));
+            PrecisionAssert.IsNaN(sin_ninf, nameof(sin_ninf));
+            PrecisionAssert.IsNaN(sin_nan, nameof(sin_nan));
         }
 
         [TestMethod]
@@ -185,7 +185,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Cos(v);
 
-                Assert.AreEqual(Math.Cos((double)d), (double)u, 1e-14, d.ToString());
+                PrecisionAssert.AreEqual(Math.Cos((double)d), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -195,11 +195,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble cos_ninf = ddouble.Cos(double.NegativeInfinity);
             ddouble cos_nan = ddouble.Cos(double.NaN);
 
-            Assert.IsTrue(cos_pzero == 1, nameof(cos_pzero));
-            Assert.IsTrue(cos_mzero == 1, nameof(cos_mzero));
-            Assert.IsTrue(ddouble.IsNaN(cos_pinf), nameof(cos_pinf));
-            Assert.IsTrue(ddouble.IsNaN(cos_ninf), nameof(cos_ninf));
-            Assert.IsTrue(ddouble.IsNaN(cos_nan), nameof(cos_nan));
+            PrecisionAssert.AreEqual(1, cos_pzero, nameof(cos_pzero));
+            PrecisionAssert.AreEqual(1, cos_mzero, nameof(cos_mzero));
+            PrecisionAssert.IsNaN(cos_pinf, nameof(cos_pinf));
+            PrecisionAssert.IsNaN(cos_ninf, nameof(cos_ninf));
+            PrecisionAssert.IsNaN(cos_nan, nameof(cos_nan));
         }
 
         [TestMethod]
@@ -210,7 +210,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 double w = Math.Tan((double)d);
 
-                Assert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13), d.ToString());
+                PrecisionAssert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -220,11 +220,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble tan_ninf = ddouble.Tan(double.NegativeInfinity);
             ddouble tan_nan = ddouble.Tan(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(tan_pzero), nameof(tan_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(tan_mzero), nameof(tan_mzero));
-            Assert.IsTrue(ddouble.IsNaN(tan_pinf), nameof(tan_pinf));
-            Assert.IsTrue(ddouble.IsNaN(tan_ninf), nameof(tan_ninf));
-            Assert.IsTrue(ddouble.IsNaN(tan_nan), nameof(tan_nan));
+            PrecisionAssert.IsPlusZero(tan_pzero, nameof(tan_pzero));
+            PrecisionAssert.IsMinusZero(tan_mzero, nameof(tan_mzero));
+            PrecisionAssert.IsNaN(tan_pinf, nameof(tan_pinf));
+            PrecisionAssert.IsNaN(tan_ninf, nameof(tan_ninf));
+            PrecisionAssert.IsNaN(tan_nan, nameof(tan_nan));
         }
 
         [TestMethod]
@@ -233,7 +233,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Asin(v);
 
-                Assert.AreEqual(Math.Asin((double)d), (double)u, 1e-15, d.ToString());
+                PrecisionAssert.AreEqual(Math.Asin((double)d), (double)u, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -270,13 +270,13 @@ namespace DoubleDoubleTest.DDouble {
             ddouble asin_nout = ddouble.Asin(ddouble.BitDecrement(-1));
             ddouble asin_nan = ddouble.Asin(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(asin_pzero), nameof(asin_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(asin_mzero), nameof(asin_mzero));
-            Assert.IsTrue(ddouble.IsNaN(asin_pinf), nameof(asin_pinf));
-            Assert.IsTrue(ddouble.IsNaN(asin_ninf), nameof(asin_ninf));
-            Assert.IsTrue(ddouble.IsNaN(asin_pout), nameof(asin_pout));
-            Assert.IsTrue(ddouble.IsNaN(asin_nout), nameof(asin_nout));
-            Assert.IsTrue(ddouble.IsNaN(asin_nan), nameof(asin_nan));
+            PrecisionAssert.IsPlusZero(asin_pzero, nameof(asin_pzero));
+            PrecisionAssert.IsMinusZero(asin_mzero, nameof(asin_mzero));
+            PrecisionAssert.IsNaN(asin_pinf, nameof(asin_pinf));
+            PrecisionAssert.IsNaN(asin_ninf, nameof(asin_ninf));
+            PrecisionAssert.IsNaN(asin_pout, nameof(asin_pout));
+            PrecisionAssert.IsNaN(asin_nout, nameof(asin_nout));
+            PrecisionAssert.IsNaN(asin_nan, nameof(asin_nan));
         }
 
         [TestMethod]
@@ -285,7 +285,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Acos(v);
 
-                Assert.AreEqual(Math.Acos((double)d), (double)u, 1e-15, d.ToString());
+                PrecisionAssert.AreEqual(Math.Acos((double)d), (double)u, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -295,11 +295,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble acos_nout = ddouble.Acos(ddouble.BitDecrement(-1));
             ddouble acos_nan = ddouble.Acos(double.NaN);
 
-            Assert.IsTrue(ddouble.IsNaN(acos_pinf), nameof(acos_pinf));
-            Assert.IsTrue(ddouble.IsNaN(acos_ninf), nameof(acos_ninf));
-            Assert.IsTrue(ddouble.IsNaN(acos_pout), nameof(acos_pout));
-            Assert.IsTrue(ddouble.IsNaN(acos_nout), nameof(acos_nout));
-            Assert.IsTrue(ddouble.IsNaN(acos_nan), nameof(acos_nan));
+            PrecisionAssert.IsNaN(acos_pinf, nameof(acos_pinf));
+            PrecisionAssert.IsNaN(acos_ninf, nameof(acos_ninf));
+            PrecisionAssert.IsNaN(acos_pout, nameof(acos_pout));
+            PrecisionAssert.IsNaN(acos_nout, nameof(acos_nout));
+            PrecisionAssert.IsNaN(acos_nan, nameof(acos_nan));
         }
 
         [TestMethod]
@@ -308,16 +308,16 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Atan(v);
 
-                Assert.AreEqual(Math.Atan((double)d), (double)u, 1e-15, d.ToString());
+                PrecisionAssert.AreEqual(Math.Atan((double)d), (double)u, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            Assert.IsTrue(ddouble.Abs(ddouble.PI / 4 - ddouble.Atan(1)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs(-ddouble.PI / 4 - ddouble.Atan(-1)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.10714871779409050301706546017853704" - ddouble.Atan(2)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"-1.10714871779409050301706546017853704" - ddouble.Atan(-2)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"1.24904577239825442582991707728109012" - ddouble.Atan(3)) < 1e-31);
-            Assert.IsTrue(ddouble.Abs((ddouble)"-1.24904577239825442582991707728109012" - ddouble.Atan(-3)) < 1e-31);
+            PrecisionAssert.AlmostEqual(ddouble.PI / 4, ddouble.Atan(1), 1e-31);
+            PrecisionAssert.AlmostEqual(-ddouble.PI / 4, ddouble.Atan(-1), 1e-31);
+            PrecisionAssert.AlmostEqual((ddouble)"1.10714871779409050301706546017853704", ddouble.Atan(2), 1e-31);
+            PrecisionAssert.AlmostEqual((ddouble)"-1.10714871779409050301706546017853704", ddouble.Atan(-2), 1e-31);
+            PrecisionAssert.AlmostEqual((ddouble)"1.24904577239825442582991707728109012", ddouble.Atan(3), 1e-31);
+            PrecisionAssert.AlmostEqual((ddouble)"-1.24904577239825442582991707728109012", ddouble.Atan(-3), 1e-31);
 
             ddouble atan_pzero = ddouble.Atan(0d);
             ddouble atan_mzero = ddouble.Atan(-0d);
@@ -325,11 +325,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble atan_ninf = ddouble.Atan(double.NegativeInfinity);
             ddouble atan_nan = ddouble.Atan(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(atan_pzero), nameof(atan_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(atan_mzero), nameof(atan_mzero));
-            Assert.IsTrue(atan_pinf == ddouble.PI / 2, nameof(atan_pinf));
-            Assert.IsTrue(atan_ninf == -ddouble.PI / 2, nameof(atan_ninf));
-            Assert.IsTrue(ddouble.IsNaN(atan_nan), nameof(atan_nan));
+            PrecisionAssert.IsPlusZero(atan_pzero, nameof(atan_pzero));
+            PrecisionAssert.IsMinusZero(atan_mzero, nameof(atan_mzero));
+            PrecisionAssert.AreEqual(ddouble.PI / 2, atan_pinf, nameof(atan_pinf));
+            PrecisionAssert.AreEqual(-ddouble.PI / 2, atan_ninf, nameof(atan_ninf));
+            PrecisionAssert.IsNaN(atan_nan, nameof(atan_nan));
         }
 
         [TestMethod]
@@ -344,19 +344,19 @@ namespace DoubleDoubleTest.DDouble {
                     double v = Math.Atan2((double)y, (double)x);
 
                     if (u == ddouble.PI) {
-                        Assert.IsTrue(Math.Abs(v) == Math.PI);
+                        PrecisionAssert.AreEqual(Math.PI, Math.Abs(v));
                     }
                     else {
-                        Assert.AreEqual(v, (double)u, 1e-15, $"{y}, {x}");
+                        PrecisionAssert.AreEqual(v, (double)u, 1e-15, $"{y}, {x}");
                     }
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
             }
 
-            Assert.IsTrue(ddouble.IsPlusZero(ddouble.Atan2(0d, 0d)));
-            Assert.AreEqual(ddouble.PI, ddouble.Atan2(0d, -0d));
-            Assert.IsTrue(ddouble.IsMinusZero(ddouble.Atan2(-0d, 0d)));
-            Assert.AreEqual(-ddouble.PI, ddouble.Atan2(-0d, -0d));
+            PrecisionAssert.IsPlusZero(ddouble.Atan2(0d, 0d));
+            PrecisionAssert.AreEqual(ddouble.PI, ddouble.Atan2(0d, -0d));
+            PrecisionAssert.IsMinusZero(ddouble.Atan2(-0d, 0d));
+            PrecisionAssert.AreEqual(-ddouble.PI, ddouble.Atan2(-0d, -0d));
         }
 
         [TestMethod]
@@ -365,7 +365,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Sinh(v);
 
-                Assert.AreEqual(Math.Sinh((double)d), (double)u, Math.Abs(Math.Sinh((double)d)) * 1e-15, d.ToString());
+                PrecisionAssert.AreEqual(Math.Sinh((double)d), (double)u, Math.Abs(Math.Sinh((double)d)) * 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -375,11 +375,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble sinh_ninf = ddouble.Sinh(double.NegativeInfinity);
             ddouble sinh_nan = ddouble.Sinh(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(sinh_pzero), nameof(sinh_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(sinh_mzero), nameof(sinh_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(sinh_pinf), nameof(sinh_pinf));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(sinh_ninf), nameof(sinh_ninf));
-            Assert.IsTrue(ddouble.IsNaN(sinh_nan), nameof(sinh_nan));
+            PrecisionAssert.IsPlusZero(sinh_pzero, nameof(sinh_pzero));
+            PrecisionAssert.IsMinusZero(sinh_mzero, nameof(sinh_mzero));
+            PrecisionAssert.IsPositiveInfinity(sinh_pinf, nameof(sinh_pinf));
+            PrecisionAssert.IsNegativeInfinity(sinh_ninf, nameof(sinh_ninf));
+            PrecisionAssert.IsNaN(sinh_nan, nameof(sinh_nan));
         }
 
         [TestMethod]
@@ -388,7 +388,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Cosh(v);
 
-                Assert.AreEqual(Math.Cosh((double)d), (double)u, Math.Abs(Math.Cosh((double)d)) * 1e-12, d.ToString());
+                PrecisionAssert.AreEqual(Math.Cosh((double)d), (double)u, Math.Abs(Math.Cosh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -398,11 +398,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble cosh_ninf = ddouble.Cosh(double.NegativeInfinity);
             ddouble cosh_nan = ddouble.Cosh(double.NaN);
 
-            Assert.IsTrue(cosh_pzero == 1, nameof(cosh_pzero));
-            Assert.IsTrue(cosh_mzero == 1, nameof(cosh_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(cosh_pinf), nameof(cosh_pinf));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(cosh_ninf), nameof(cosh_ninf));
-            Assert.IsTrue(ddouble.IsNaN(cosh_nan), nameof(cosh_nan));
+            PrecisionAssert.AreEqual(1, cosh_pzero, nameof(cosh_pzero));
+            PrecisionAssert.AreEqual(1, cosh_mzero, nameof(cosh_mzero));
+            PrecisionAssert.IsPositiveInfinity(cosh_pinf, nameof(cosh_pinf));
+            PrecisionAssert.IsPositiveInfinity(cosh_ninf, nameof(cosh_ninf));
+            PrecisionAssert.IsNaN(cosh_nan, nameof(cosh_nan));
         }
 
         [TestMethod]
@@ -411,7 +411,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Tanh(v);
 
-                Assert.AreEqual(Math.Tanh((double)d), (double)u, 1e-15, d.ToString());
+                PrecisionAssert.AreEqual(Math.Tanh((double)d), (double)u, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -421,11 +421,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble tanh_ninf = ddouble.Tanh(double.NegativeInfinity);
             ddouble tanh_nan = ddouble.Tanh(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(tanh_pzero), nameof(tanh_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(tanh_mzero), nameof(tanh_mzero));
-            Assert.IsTrue(tanh_pinf == 1d, nameof(tanh_pinf));
-            Assert.IsTrue(tanh_ninf == -1d, nameof(tanh_ninf));
-            Assert.IsTrue(ddouble.IsNaN(tanh_nan), nameof(tanh_nan));
+            PrecisionAssert.IsPlusZero(tanh_pzero, nameof(tanh_pzero));
+            PrecisionAssert.IsMinusZero(tanh_mzero, nameof(tanh_mzero));
+            PrecisionAssert.AreEqual(1d, tanh_pinf, nameof(tanh_pinf));
+            PrecisionAssert.AreEqual(-1d, tanh_ninf, nameof(tanh_ninf));
+            PrecisionAssert.IsNaN(tanh_nan, nameof(tanh_nan));
         }
 
         [TestMethod]
@@ -434,7 +434,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Arsinh(v);
 
-                Assert.AreEqual(Math.Asinh((double)d), (double)u, Math.Abs(Math.Asinh((double)d)) * 1e-12, d.ToString());
+                PrecisionAssert.AreEqual(Math.Asinh((double)d), (double)u, Math.Abs(Math.Asinh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -444,11 +444,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble arsinh_ninf = ddouble.Arsinh(double.NegativeInfinity);
             ddouble arsinh_nan = ddouble.Arsinh(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(arsinh_pzero), nameof(arsinh_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(arsinh_mzero), nameof(arsinh_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(arsinh_pinf), nameof(arsinh_pinf));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(arsinh_ninf), nameof(arsinh_ninf));
-            Assert.IsTrue(ddouble.IsNaN(arsinh_nan), nameof(arsinh_nan));
+            PrecisionAssert.IsPlusZero(arsinh_pzero, nameof(arsinh_pzero));
+            PrecisionAssert.IsMinusZero(arsinh_mzero, nameof(arsinh_mzero));
+            PrecisionAssert.IsPositiveInfinity(arsinh_pinf, nameof(arsinh_pinf));
+            PrecisionAssert.IsNegativeInfinity(arsinh_ninf, nameof(arsinh_ninf));
+            PrecisionAssert.IsNaN(arsinh_nan, nameof(arsinh_nan));
         }
 
         [TestMethod]
@@ -457,7 +457,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Arcosh(v);
 
-                Assert.AreEqual(Math.Acosh((double)d), (double)u, Math.Abs(Math.Acosh((double)d)) * 1e-12, d.ToString());
+                PrecisionAssert.AreEqual(Math.Acosh((double)d), (double)u, Math.Abs(Math.Acosh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -467,11 +467,11 @@ namespace DoubleDoubleTest.DDouble {
             ddouble arcosh_ninf = ddouble.Arcosh(double.NegativeInfinity);
             ddouble arcosh_nan = ddouble.Arcosh(double.NaN);
 
-            Assert.IsTrue(ddouble.IsNaN(arcosh_pzero), nameof(arcosh_pzero));
-            Assert.IsTrue(ddouble.IsNaN(arcosh_mzero), nameof(arcosh_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(arcosh_pinf), nameof(arcosh_pinf));
-            Assert.IsTrue(ddouble.IsNaN(arcosh_ninf), nameof(arcosh_ninf));
-            Assert.IsTrue(ddouble.IsNaN(arcosh_nan), nameof(arcosh_nan));
+            PrecisionAssert.IsNaN(arcosh_pzero, nameof(arcosh_pzero));
+            PrecisionAssert.IsNaN(arcosh_mzero, nameof(arcosh_mzero));
+            PrecisionAssert.IsPositiveInfinity(arcosh_pinf, nameof(arcosh_pinf));
+            PrecisionAssert.IsNaN(arcosh_ninf, nameof(arcosh_ninf));
+            PrecisionAssert.IsNaN(arcosh_nan, nameof(arcosh_nan));
         }
 
         [TestMethod]
@@ -480,7 +480,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Artanh(v);
 
-                Assert.AreEqual(Math.Atanh((double)d), (double)u, Math.Abs(Math.Atanh((double)d)) * 1e-12, d.ToString());
+                PrecisionAssert.AreEqual(Math.Atanh((double)d), (double)u, Math.Abs(Math.Atanh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -492,13 +492,13 @@ namespace DoubleDoubleTest.DDouble {
             ddouble artanh_ninf = ddouble.Artanh(double.NegativeInfinity);
             ddouble artanh_nan = ddouble.Artanh(double.NaN);
 
-            Assert.IsTrue(ddouble.IsPlusZero(artanh_pzero), nameof(artanh_pzero));
-            Assert.IsTrue(ddouble.IsMinusZero(artanh_mzero), nameof(artanh_mzero));
-            Assert.IsTrue(ddouble.IsPositiveInfinity(artanh_pone), nameof(artanh_pone));
-            Assert.IsTrue(ddouble.IsNegativeInfinity(artanh_mone), nameof(artanh_mone));
-            Assert.IsTrue(ddouble.IsNaN(artanh_pinf), nameof(artanh_pinf));
-            Assert.IsTrue(ddouble.IsNaN(artanh_ninf), nameof(artanh_ninf));
-            Assert.IsTrue(ddouble.IsNaN(artanh_nan), nameof(artanh_nan));
+            PrecisionAssert.IsPlusZero(artanh_pzero, nameof(artanh_pzero));
+            PrecisionAssert.IsMinusZero(artanh_mzero, nameof(artanh_mzero));
+            PrecisionAssert.IsPositiveInfinity(artanh_pone, nameof(artanh_pone));
+            PrecisionAssert.IsNegativeInfinity(artanh_mone, nameof(artanh_mone));
+            PrecisionAssert.IsNaN(artanh_pinf, nameof(artanh_pinf));
+            PrecisionAssert.IsNaN(artanh_ninf, nameof(artanh_ninf));
+            PrecisionAssert.IsNaN(artanh_nan, nameof(artanh_nan));
         }
 
         [TestMethod]

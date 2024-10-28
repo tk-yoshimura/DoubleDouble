@@ -1864,7 +1864,7 @@ namespace DoubleDoubleTest.DDouble {
                 (13, n13_expecteds), (14, n14_expecteds), (15, n15_expecteds), (16, n16_expecteds),
             }) {
 
-                Assert.AreEqual(n * n, ddouble.MathieuA(n, 0));
+                PrecisionAssert.AreEqual(n * n, ddouble.MathieuA(n, 0));
 
                 for ((int i, int p) = (0, -20); i < expecteds.Length; i++, p++) {
                     ddouble u = ((p & 1) == 0) ? ddouble.Ldexp(1, p / 2) : ddouble.Sqrt2 * ddouble.Ldexp(1, (p > 0) ? p / 2 : (p - 1) / 2);
@@ -3665,7 +3665,7 @@ namespace DoubleDoubleTest.DDouble {
                 (13, n13_expecteds), (14, n14_expecteds), (15, n15_expecteds), (16, n16_expecteds),
             }) {
 
-                Assert.AreEqual(n * n, ddouble.MathieuB(n, 0));
+                PrecisionAssert.AreEqual(n * n, ddouble.MathieuB(n, 0));
 
                 for ((int i, int p) = (0, -20); i < expecteds.Length; i++, p++) {
                     ddouble u = ((p & 1) == 0) ? ddouble.Ldexp(1, p / 2) : ddouble.Sqrt2 * ddouble.Ldexp(1, (p > 0) ? p / 2 : (p - 1) / 2);
@@ -4544,10 +4544,10 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v2 = ddouble.MathieuC(n, ddouble.BitIncrement(ddouble.MathieuUtil.Eps), 1);
                 ddouble v3 = ddouble.MathieuC(n, ddouble.MathieuUtil.Eps * 2, 1);
 
-                Assert.IsTrue(ddouble.IsFinite(v0));
-                Assert.IsTrue(ddouble.IsFinite(v1));
-                Assert.IsTrue(ddouble.IsFinite(v2));
-                Assert.IsTrue(ddouble.IsFinite(v3));
+                PrecisionAssert.IsFinite(v0);
+                PrecisionAssert.IsFinite(v1);
+                PrecisionAssert.IsFinite(v2);
+                PrecisionAssert.IsFinite(v3);
 
                 Console.WriteLine(n);
                 Console.WriteLine(v1);
@@ -5287,10 +5287,10 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v2 = ddouble.MathieuS(n, ddouble.BitIncrement(ddouble.MathieuUtil.Eps), 1);
                 ddouble v3 = ddouble.MathieuS(n, ddouble.MathieuUtil.Eps * 2, 1);
 
-                Assert.IsTrue(ddouble.IsFinite(v0));
-                Assert.IsTrue(ddouble.IsFinite(v1));
-                Assert.IsTrue(ddouble.IsFinite(v2));
-                Assert.IsTrue(ddouble.IsFinite(v3));
+                PrecisionAssert.IsFinite(v0);
+                PrecisionAssert.IsFinite(v1);
+                PrecisionAssert.IsFinite(v2);
+                PrecisionAssert.IsFinite(v3);
 
                 Console.WriteLine(n);
                 Console.WriteLine(v1);
