@@ -150,7 +150,7 @@ namespace DoubleDouble {
                 }
 
                 for (int i = table.Count; i <= k; i++) {
-                    ddouble g = table[^1] * 2 / (2 * i - 1);
+                    ddouble g = table[^1] * 2d / (2 * i - 1);
 
                     table.Add(g);
                 }

@@ -58,7 +58,7 @@ namespace DoubleDouble {
                 ddouble ig = Sqrt(Ldexp(PI, -1)) / h * Exp(n_half_h2) * Erf(h * a / Sqrt2);
 
                 ddouble x_peak = Sqrt(Ldexp(Sqrt(8d / h2 + 1d) - 1d, -1));
-                ddouble ap = Min(a, x_peak * 2), ad = a - ap;
+                ddouble ap = Min(a, x_peak * 2d), ad = a - ap;
 
                 ddouble sp = 0d, sd = 0d;
 
