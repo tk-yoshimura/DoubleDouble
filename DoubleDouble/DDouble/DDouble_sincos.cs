@@ -10,6 +10,10 @@ namespace DoubleDouble {
         }
 
         public static ddouble Sin(ddouble x) {
+            if (ILogB(x) < EpsExponent) {
+                return x;
+            }
+
             return SinPI(x * RcpPI);
         }
 
@@ -18,6 +22,10 @@ namespace DoubleDouble {
         }
 
         public static ddouble Cos(ddouble x) {
+            if (ILogB(x) < EpsExponent) {
+                return 1d - x * x * 0.5d;
+            }
+
             return CosPI(x * RcpPI);
         }
 
@@ -43,6 +51,10 @@ namespace DoubleDouble {
         }
 
         public static ddouble Tan(ddouble x) {
+            if (ILogB(x) < EpsExponent) {
+                return x;
+            }
+
             return TanPI(x * RcpPI);
         }
 
@@ -103,6 +115,8 @@ namespace DoubleDouble {
                 public static readonly ddouble PIHalf = Ldexp(PI, -1);
 
                 public const int SinPIHalfTableN = 1024;
+
+                public const int EpsExponent = -52;
 
                 public static readonly ReadOnlyCollection<ddouble> SinPIHalfTable = GenerateSinPITable();
 

@@ -177,6 +177,22 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsNaN(sin_pinf, nameof(sin_pinf));
             PrecisionAssert.IsNaN(sin_ninf, nameof(sin_ninf));
             PrecisionAssert.IsNaN(sin_nan, nameof(sin_nan));
+
+            PrecisionAssert.AlmostEqual("2.220446049250313080847263336181622378926e-16", ddouble.Sin(ddouble.Ldexp(1, -52)), 4e-32);
+            PrecisionAssert.AlmostEqual("1.110223024625156540423631668090818031741e-16", ddouble.Sin(ddouble.Ldexp(1, -53)), 4e-32);
+            PrecisionAssert.AlmostEqual("5.551115123125782702118158340454098711551e-17", ddouble.Sin(ddouble.Ldexp(1, -54)), 4e-32);
+
+            PrecisionAssert.AlmostEqual("-2.220446049250313080847263336181622378926e-16", ddouble.Sin(-ddouble.Ldexp(1, -52)), 4e-32);
+            PrecisionAssert.AlmostEqual("-1.110223024625156540423631668090818031741e-16", ddouble.Sin(-ddouble.Ldexp(1, -53)), 4e-32);
+            PrecisionAssert.AlmostEqual("-5.551115123125782702118158340454098711551e-17", ddouble.Sin(-ddouble.Ldexp(1, -54)), 4e-32);
+
+            PrecisionAssert.AlmostEqual("6.109872726999209364103958786427235399579e-151", ddouble.Sin(ddouble.Ldexp(1, -499)), 4e-32);
+            PrecisionAssert.AlmostEqual("3.054936363499604682051979393213617699789e-151", ddouble.Sin(ddouble.Ldexp(1, -500)), 4e-32);
+            PrecisionAssert.AlmostEqual("1.527468181749802341025989696606808849895e-151", ddouble.Sin(ddouble.Ldexp(1, -501)), 4e-32);
+
+            PrecisionAssert.AlmostEqual("-6.109872726999209364103958786427235399579e-151", ddouble.Sin(-ddouble.Ldexp(1, -499)), 4e-32);
+            PrecisionAssert.AlmostEqual("-3.054936363499604682051979393213617699789e-151", ddouble.Sin(-ddouble.Ldexp(1, -500)), 4e-32);
+            PrecisionAssert.AlmostEqual("-1.527468181749802341025989696606808849895e-151", ddouble.Sin(-ddouble.Ldexp(1, -501)), 4e-32);
         }
 
         [TestMethod]
@@ -200,6 +216,14 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsNaN(cos_pinf, nameof(cos_pinf));
             PrecisionAssert.IsNaN(cos_ninf, nameof(cos_ninf));
             PrecisionAssert.IsNaN(cos_nan, nameof(cos_nan));
+
+            PrecisionAssert.AlmostEqual("0.999999999999999999999999999999975348097", ddouble.Cos(ddouble.Ldexp(1, -52)), 4e-32);
+            PrecisionAssert.AlmostEqual("0.999999999999999999999999999999993837024", ddouble.Cos(ddouble.Ldexp(1, -53)), 4e-32);
+            PrecisionAssert.AlmostEqual("0.999999999999999999999999999999998459256", ddouble.Cos(ddouble.Ldexp(1, -54)), 4e-32);
+
+            PrecisionAssert.AlmostEqual("0.999999999999999999999999999999975348097", ddouble.Cos(-ddouble.Ldexp(1, -52)), 4e-32);
+            PrecisionAssert.AlmostEqual("0.999999999999999999999999999999993837024", ddouble.Cos(-ddouble.Ldexp(1, -53)), 4e-32);
+            PrecisionAssert.AlmostEqual("0.999999999999999999999999999999998459256", ddouble.Cos(-ddouble.Ldexp(1, -54)), 4e-32);
         }
 
         [TestMethod]
@@ -225,6 +249,22 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsNaN(tan_pinf, nameof(tan_pinf));
             PrecisionAssert.IsNaN(tan_ninf, nameof(tan_ninf));
             PrecisionAssert.IsNaN(tan_nan, nameof(tan_nan));
+
+            PrecisionAssert.AlmostEqual("2.220446049250313080847263336181677117148e-16", ddouble.Tan(ddouble.Ldexp(1, -52)), 4e-32);
+            PrecisionAssert.AlmostEqual("1.110223024625156540423631668090824874018e-16", ddouble.Tan(ddouble.Ldexp(1, -53)), 4e-32);
+            PrecisionAssert.AlmostEqual("5.551115123125782702118158340454107264398e-17", ddouble.Tan(ddouble.Ldexp(1, -54)), 4e-32);
+
+            PrecisionAssert.AlmostEqual("-2.220446049250313080847263336181677117148e-16", ddouble.Tan(-ddouble.Ldexp(1, -52)), 4e-32);
+            PrecisionAssert.AlmostEqual("-1.110223024625156540423631668090824874018e-16", ddouble.Tan(-ddouble.Ldexp(1, -53)), 4e-32);
+            PrecisionAssert.AlmostEqual("-5.551115123125782702118158340454107264398e-17", ddouble.Tan(-ddouble.Ldexp(1, -54)), 4e-32);
+
+            PrecisionAssert.AlmostEqual("6.109872726999209364103958786427235399579e-151", ddouble.Tan(ddouble.Ldexp(1, -499)), 4e-32);
+            PrecisionAssert.AlmostEqual("3.054936363499604682051979393213617699789e-151", ddouble.Tan(ddouble.Ldexp(1, -500)), 4e-32);
+            PrecisionAssert.AlmostEqual("1.527468181749802341025989696606808849895e-151", ddouble.Tan(ddouble.Ldexp(1, -501)), 4e-32);
+
+            PrecisionAssert.AlmostEqual("-6.109872726999209364103958786427235399579e-151", ddouble.Tan(-ddouble.Ldexp(1, -499)), 4e-32);
+            PrecisionAssert.AlmostEqual("-3.054936363499604682051979393213617699789e-151", ddouble.Tan(-ddouble.Ldexp(1, -500)), 4e-32);
+            PrecisionAssert.AlmostEqual("-1.527468181749802341025989696606808849895e-151", ddouble.Tan(-ddouble.Ldexp(1, -501)), 4e-32);
         }
 
         [TestMethod]
