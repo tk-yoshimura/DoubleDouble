@@ -13,7 +13,7 @@ namespace DoubleDouble {
 
             h = Abs(h);
 
-            if (ILogB(h) < OwenTIntegrate.EpsExponent) {
+            if (h <= OwenTIntegrate.Eps) {
                 return Atan(a) / Ldexp(PI, 1);
             }
             if (h > 36d) {
@@ -24,7 +24,7 @@ namespace DoubleDouble {
                 return Ldexp(Erfc(h / Sqrt2), -2);
             }
 
-            if (ILogB(a) < OwenTIntegrate.EpsExponent) {
+            if (a <= OwenTIntegrate.Eps) {
                 return OwenTIntegrate.NearZeroA(h, a);
             }
 
@@ -44,6 +44,7 @@ namespace DoubleDouble {
         internal static class OwenTIntegrate {
 
             public const int EpsExponent = -64;
+            public static readonly double Eps = double.ScaleB(1, EpsExponent);
 
             private static readonly ReadOnlyCollection<(ddouble x, ddouble w)> Legendre45Table;
 
