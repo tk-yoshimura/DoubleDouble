@@ -242,6 +242,17 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void LdexpTest() {
+            PrecisionAssert.AreEqual(4, ddouble.Ldexp(2, 1));
+            PrecisionAssert.AreEqual(4, ddouble.Ldexp(2, 1L));
+            PrecisionAssert.AreEqual(4, ddouble.ScaleB(2, 1));
+            PrecisionAssert.AreEqual(4, ddouble.ScaleB(2, 1L));
+
+            PrecisionAssert.AreEqual(0, ddouble.Ldexp(2, long.MinValue));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ldexp(2, long.MaxValue));
+        }
+
+        [TestMethod]
         public void GeometricMeanTest() {
             for (ddouble a = 0.125; a < 20; a *= 1.5) {
                 for (ddouble b = 0.125; b < 20; b *= 1.5) {
