@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using static DoubleDouble.ddouble.Consts.Atan;
 using static DoubleDouble.ddouble.Consts.Asin;
 using static DoubleDouble.ddouble.Consts.SinCos;
 
@@ -22,18 +24,25 @@ namespace DoubleDouble {
 
             ddouble x2 = x * x;
 
-            if (x > 0.25d) {
+            if (x > AtanThreshold) {
                 return Ldexp(Atan(x / (1d + Sqrt(1d + x2))), 1);
             }
 
-            ddouble f = 86d * x.hi + 13.5d;
-            int n = (int)double.Floor(33.5d * x.hi + 9d);
+            ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeXZeroCoefTable;
 
-            for (int i = n; i >= 1; i--) {
-                f = (2 * i - 1) + (i * i) * x2 / f;
+            (ddouble sc, ddouble sd) = table[0];
+            for (int i = 1; i < table.Count; i++) {
+                (ddouble c, ddouble d) = table[i];
+
+                sc = sc * x2 + c;
+                sd = sd * x2 + d;
             }
 
-            return x / f;
+            Debug.Assert(sd > 0.5d, $"[Atan x={x}] Too small pade denom!!");
+
+            ddouble y = sc * x / sd;
+
+            return y;
         }
 
         public static ddouble Asin(ddouble x) {
@@ -46,20 +55,24 @@ namespace DoubleDouble {
             if (x == 1d) {
                 return PIHalf;
             }
-            if (x > -0.03125d && x < 0.03125d) {
-                ddouble x2 = x * x;
+            
+            ddouble x2 = x * x;
 
-                ddouble s = TaylorXZeroCoefTable[0];
-                for (int i = 1; i < TaylorXZeroCoefTable.Count; i++) {
-                    s = s * x2 + TaylorXZeroCoefTable[i];
+            if (x > -AsinThreshold && x < AsinThreshold) {
+                ReadOnlyCollection<ddouble> table = TaylorXZeroCoefTable;
+
+                ddouble s = table[0];
+                for (int i = 1; i < table.Count; i++) {
+                    s = s * x2 + table[i];
                 }
+
                 s = s * x2 + 1d;
                 s *= x;
 
                 return s;
             }
 
-            ddouble y = Atan(Sqrt(Rcp(1d - x * x) - 1d));
+            ddouble y = Atan(Sqrt(Rcp(1d - x2) - 1d));
 
             return IsPositive(x) ? y : -y;
         }
@@ -88,7 +101,26 @@ namespace DoubleDouble {
         }
 
         internal static partial class Consts {
+            public static class Atan {
+                public const double AtanThreshold = 0.25;
+
+                public static readonly ReadOnlyCollection<(ddouble, ddouble)> PadeXZeroCoefTable = new(new (ddouble, ddouble)[] {
+                    (21427381364263875L, 21427381364263875L), 
+                    (91886788553059500L, 99029249007814125L), 
+                    (163675410390191700L, 192399683786610300L), 
+                    (156671838074852100L, 204060270682768500L), 
+                    (87054123957610810L, 128360492848838250L), 
+                    (28283323008669300L, 48688462804731750L), 
+                    (5134145876036100L, 10819658401051500L), 
+                    (463911017673180L, 1298359008126180L), 
+                    (16016872057515L, 70562989572075L), 
+                    (90194313216L, 1120047453525L), 
+                }.Reverse().ToArray());
+            }
+
             public static class Asin {
+                public const double AsinThreshold = 0.125;
+
                 public static readonly ReadOnlyCollection<ddouble> TaylorXZeroCoefTable = new(new ddouble[] {
                     (ddouble)1 / 6,
                     (ddouble)3 / 40,
@@ -99,7 +131,13 @@ namespace DoubleDouble {
                     (ddouble)143 / 10240,
                     (ddouble)6435 / 557056,
                     (ddouble)12155 / 1245184,
-                    (ddouble)46189 / 5505024
+                    (ddouble)46189 / 5505024, 
+                    (ddouble)88179 / 12058624,
+                    (ddouble)676039 / 104857600, 
+                    (ddouble)1300075 / 226492416, 
+                    (ddouble)5014575 / 973078528, 
+                    (ddouble)9694845 / 2080374784, 
+                    (ddouble)100180065 / 23622320128
                 }.Reverse().ToArray());
             }
         }
