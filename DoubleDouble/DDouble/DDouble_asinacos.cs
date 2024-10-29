@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using static DoubleDouble.ddouble.Consts.Atan;
 using static DoubleDouble.ddouble.Consts.Asin;
+using static DoubleDouble.ddouble.Consts.Atan;
 using static DoubleDouble.ddouble.Consts.SinCos;
 
 namespace DoubleDouble {
@@ -55,7 +55,7 @@ namespace DoubleDouble {
             if (x == 1d) {
                 return PIHalf;
             }
-            
+
             ddouble x2 = x * x;
 
             if (x > -AsinThreshold && x < AsinThreshold) {
@@ -105,16 +105,16 @@ namespace DoubleDouble {
                 public const double AtanThreshold = 0.25;
 
                 public static readonly ReadOnlyCollection<(ddouble, ddouble)> PadeXZeroCoefTable = new(new (ddouble, ddouble)[] {
-                    (21427381364263875L, 21427381364263875L), 
-                    (91886788553059500L, 99029249007814125L), 
-                    (163675410390191700L, 192399683786610300L), 
-                    (156671838074852100L, 204060270682768500L), 
-                    (87054123957610810L, 128360492848838250L), 
-                    (28283323008669300L, 48688462804731750L), 
-                    (5134145876036100L, 10819658401051500L), 
-                    (463911017673180L, 1298359008126180L), 
-                    (16016872057515L, 70562989572075L), 
-                    (90194313216L, 1120047453525L), 
+                    (21427381364263875L, 21427381364263875L),
+                    (91886788553059500L, 99029249007814125L),
+                    (163675410390191700L, 192399683786610300L),
+                    (156671838074852100L, 204060270682768500L),
+                    (87054123957610810L, 128360492848838250L),
+                    (28283323008669300L, 48688462804731750L),
+                    (5134145876036100L, 10819658401051500L),
+                    (463911017673180L, 1298359008126180L),
+                    (16016872057515L, 70562989572075L),
+                    (90194313216L, 1120047453525L),
                 }.Reverse().ToArray());
             }
 
@@ -131,12 +131,12 @@ namespace DoubleDouble {
                     (ddouble)143 / 10240,
                     (ddouble)6435 / 557056,
                     (ddouble)12155 / 1245184,
-                    (ddouble)46189 / 5505024, 
+                    (ddouble)46189 / 5505024,
                     (ddouble)88179 / 12058624,
-                    (ddouble)676039 / 104857600, 
-                    (ddouble)1300075 / 226492416, 
-                    (ddouble)5014575 / 973078528, 
-                    (ddouble)9694845 / 2080374784, 
+                    (ddouble)676039 / 104857600,
+                    (ddouble)1300075 / 226492416,
+                    (ddouble)5014575 / 973078528,
+                    (ddouble)9694845 / 2080374784,
                     (ddouble)100180065 / 23622320128
                 }.Reverse().ToArray());
             }
