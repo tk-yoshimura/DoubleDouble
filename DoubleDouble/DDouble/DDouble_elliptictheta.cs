@@ -24,7 +24,7 @@ namespace DoubleDouble {
 
             ddouble q0 = EllipticThetaUtil.Q0(q);
 
-            if (q0 < EllipticThetaUtil.Eps) {
+            if (ILogB(q0) <= EllipticThetaUtil.EpsExponent) {
                 return NaN;
             }
 
@@ -34,7 +34,7 @@ namespace DoubleDouble {
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = Ldexp(q2, 1) * cos2x, v = q4, s = 1d - u + v;
 
-            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
+            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && ILogB(p) > EllipticThetaUtil.EpsExponent) {
 
                 p *= s;
                 u *= q2;
@@ -55,7 +55,7 @@ namespace DoubleDouble {
 
             ddouble q0 = EllipticThetaUtil.Q0(q);
 
-            if (q0 < EllipticThetaUtil.Eps) {
+            if (ILogB(q0) <= EllipticThetaUtil.EpsExponent) {
                 return NaN;
             }
 
@@ -65,7 +65,7 @@ namespace DoubleDouble {
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = Ldexp(q2, 1) * cos2x, v = q4, s = 1d + u + v;
 
-            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
+            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && ILogB(p) > EllipticThetaUtil.EpsExponent) {
 
                 p *= s;
                 u *= q2;
@@ -86,7 +86,7 @@ namespace DoubleDouble {
 
             ddouble q0 = EllipticThetaUtil.Q0(q);
 
-            if (q0 < EllipticThetaUtil.Eps) {
+            if (ILogB(q0) <= EllipticThetaUtil.EpsExponent) {
                 return NaN;
             }
 
@@ -95,7 +95,7 @@ namespace DoubleDouble {
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = Ldexp(q, 1) * cos2x, v = q2, s = 1d + u + v;
 
-            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
+            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && ILogB(p) > EllipticThetaUtil.EpsExponent) {
 
                 p *= s;
                 u *= q2;
@@ -116,7 +116,7 @@ namespace DoubleDouble {
 
             ddouble q0 = EllipticThetaUtil.Q0(q);
 
-            if (q0 < EllipticThetaUtil.Eps) {
+            if (ILogB(q0) <= EllipticThetaUtil.EpsExponent) {
                 return NaN;
             }
 
@@ -125,7 +125,7 @@ namespace DoubleDouble {
             ddouble q2 = q * q, q4 = q2 * q2, p = 1d;
             ddouble u = Ldexp(q, 1) * cos2x, v = q2, s = 1d - u + v;
 
-            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && p > EllipticThetaUtil.Eps) {
+            while ((s <= EllipticThetaUtil.NearOne.lower || s >= EllipticThetaUtil.NearOne.upper) && ILogB(p) > EllipticThetaUtil.EpsExponent) {
 
                 p *= s;
                 u *= q2;
@@ -145,7 +145,7 @@ namespace DoubleDouble {
                 (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL)
             );
 
-            public static double Eps = double.ScaleB(1, -994);
+            public const int EpsExponent = -994;
 
             private static Dictionary<ddouble, ddouble> q0_table = new() {
                 { 0d, 1d }
