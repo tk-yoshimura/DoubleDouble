@@ -34,6 +34,7 @@ namespace DoubleDoubleTest.DDouble {
             BitAssert.NeighborBits(sqrtpi * -2, ddouble.Gamma(-0.5), 8);
 
             BitAssert.NeighborBits("1.2254167024651776451290983033628905268512", ddouble.Gamma(0.75), 4);
+            BitAssert.NeighborBits("0.8929795115692492112185643136582258813762", ddouble.Gamma((ddouble)4 / 3), 4);
             BitAssert.NeighborBits("9.3326215443944152681699238856266700490716e155", ddouble.Gamma(100), 4);
             BitAssert.NeighborBits("2.9467022724950383265043395073512148621950e282", ddouble.Gamma(160), 4);
 
