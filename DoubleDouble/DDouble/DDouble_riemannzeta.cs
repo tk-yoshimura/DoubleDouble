@@ -90,7 +90,7 @@ namespace DoubleDouble {
         public static ddouble DirichletEta(ddouble x) {
             ddouble v = x - 1d;
 
-            if (Abs(v) > Eps) {
+            if (ILogB(v) >= EpsExponent) {
                 ddouble y = (1d - Pow2(-v)) * RiemannZeta(x);
 
                 return y;
@@ -104,7 +104,8 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class RiemannZeta {
-                public static readonly double Eps = double.ScaleB(1, -64);
+                public const int EpsExponent = -64;
+                public static readonly double Eps = double.ScaleB(1, EpsExponent);
 
                 public static readonly (ReadOnlyCollection<ddouble> cs, ReadOnlyCollection<ddouble> ds) PadeX0Table;
                 public static readonly (ReadOnlyCollection<ddouble> cs, ReadOnlyCollection<ddouble> ds) PadeX1Table;

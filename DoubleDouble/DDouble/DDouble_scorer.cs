@@ -127,20 +127,18 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Scorer {
-                public static ddouble Rcp3 { get; } = Airy.Rcp3;
-                public static ddouble RcpSqrt3 { get; } = Airy.RcpSqrt3;
-                public static ddouble Cbrt3 { get; } = Airy.Cbrt3;
-                public static ddouble NearZero { get; } = Airy.NearZero;
-
-                public static double ScorerHiOverflow = 105d;
-
-                public static ddouble Gamma1d3 = Airy.Gamma1d3;
-                public static ddouble Gamma2d3 = Airy.Gamma2d3;
-                public static ddouble NearZeroC = Cbrt3 * Cbrt3 * PI;
-
+                public const double NearZero = Airy.NearZero;
+                public const double ScorerHiOverflow = 105d;
                 public const double PadeMax = 64;
-                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> HiPadeTables, GiPadeTables;
 
+                public static readonly ddouble Rcp3 = Airy.Rcp3;
+                public static readonly ddouble RcpSqrt3 = Airy.RcpSqrt3;
+                public static readonly ddouble Cbrt3 = Airy.Cbrt3;
+                public static readonly ddouble Gamma1d3 = Airy.Gamma1d3;
+                public static readonly ddouble Gamma2d3 = Airy.Gamma2d3;
+                public static readonly ddouble NearZeroC = Cbrt3 * Cbrt3 * PI;
+
+                public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> HiPadeTables, GiPadeTables;
                 public static readonly ReadOnlyCollection<ddouble> NearZeroCoefs, AsymptoticCoefs;
 
                 static Scorer() {

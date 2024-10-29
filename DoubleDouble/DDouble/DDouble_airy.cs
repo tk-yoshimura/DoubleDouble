@@ -85,18 +85,15 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Airy {
-                public static ddouble Rcp3 { get; } = Rcp(3);
-                public static ddouble RcpSqrt3 { get; } = Rcp(Sqrt(3));
-                public static ddouble Cbrt3 { get; } = Cbrt(3);
-                public static ddouble NearZero { get; } = double.ScaleB(1, -4);
+                public const double NearZero = 0.0625d;
+                public const double AiryAiUnderflow = 108d, AiryBiOverflow = 105d;
 
-                public static double AiryAiUnderflow = 108d, AiryBiOverflow = 105d;
-
-                public static ddouble AiNearZeroC = Cbrt3 * Cbrt3 * PI, BiNearZeroC = Sqrt(Cbrt3) * PI;
-
-                public static ddouble Gamma1d3 = (+1, 1, 0xAB73BA9CA4178B3BuL, 0xB234FA4B356011B6uL);
-                public static ddouble Gamma2d3 = (+1, 0, 0xAD53BC9461B3C655uL, 0x97A7F5B815934C85uL);
-
+                public static readonly ddouble Rcp3 = Rcp(3);
+                public static readonly ddouble RcpSqrt3 = Rcp(Sqrt(3));
+                public static readonly ddouble Cbrt3 = Cbrt(3);
+                public static readonly ddouble AiNearZeroC = Cbrt3 * Cbrt3 * PI, BiNearZeroC = Sqrt(Cbrt3) * PI;
+                public static readonly ddouble Gamma1d3 = (+1, 1, 0xAB73BA9CA4178B3BuL, 0xB234FA4B356011B6uL);
+                public static readonly ddouble Gamma2d3 = (+1, 0, 0xAD53BC9461B3C655uL, 0x97A7F5B815934C85uL);
                 public static readonly ReadOnlyCollection<ddouble> NearZeroCoefs;
 
                 static Airy() {

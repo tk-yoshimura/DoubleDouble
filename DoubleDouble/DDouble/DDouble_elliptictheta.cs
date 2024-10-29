@@ -140,14 +140,14 @@ namespace DoubleDouble {
         }
 
         internal static class EllipticThetaUtil {
-            public static (ddouble upper, ddouble lower) NearOne = (
+            public static readonly (ddouble upper, ddouble lower) NearOne = (
                 (+1, 0, 0x8000000000000000uL, 0x0000000001000000uL),
                 (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL)
             );
 
             public const int EpsExponent = -994;
 
-            private static Dictionary<ddouble, ddouble> q0_table = new() {
+            private static readonly Dictionary<ddouble, ddouble> q0_table = new() {
                 { 0d, 1d }
             };
 

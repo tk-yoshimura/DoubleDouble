@@ -304,27 +304,27 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             internal static class CarlsonIntegrals {
-                public static double Eps = double.ScaleB(1, -1000);
-                public static double RGLimitEps = double.ScaleB(1, -105);
+                public static readonly double Eps = double.ScaleB(1, -1000);
+                public static readonly double RGLimitEps = double.ScaleB(1, -105);
 
-                public static ddouble Rcp3 = Rcp(3d);
-                public static ddouble Rcp5 = Rcp(5d);
-                public static ddouble Rcp6 = Rcp(6d);
-                public static ddouble Rcp7 = Rcp(7d);
-                public static ddouble Rcp10 = Rcp(10d);
-                public static ddouble Rcp14 = Rcp(14d);
-                public static ddouble Rcp24 = Rcp(24d);
+                public static readonly ddouble Rcp3 = Rcp(3d);
+                public static readonly ddouble Rcp5 = Rcp(5d);
+                public static readonly ddouble Rcp6 = Rcp(6d);
+                public static readonly ddouble Rcp7 = Rcp(7d);
+                public static readonly ddouble Rcp10 = Rcp(10d);
+                public static readonly ddouble Rcp14 = Rcp(14d);
+                public static readonly ddouble Rcp24 = Rcp(24d);
 
-                public static ddouble C3d8 = (ddouble)3 / 8;
-                public static ddouble C3d10 = (ddouble)3 / 10;
-                public static ddouble C3d11 = (ddouble)3 / 11;
-                public static ddouble C3d14 = (ddouble)3 / 14;
-                public static ddouble C3d22 = (ddouble)3 / 22;
-                public static ddouble C3d26 = (ddouble)3 / 26;
-                public static ddouble C3d44 = (ddouble)3 / 44;
-                public static ddouble C9d22 = (ddouble)9 / 22;
-                public static ddouble C9d52 = (ddouble)9 / 52;
-                public static ddouble C9d88 = (ddouble)9 / 88;
+                public static readonly ddouble C3d8 = (ddouble)3 / 8;
+                public static readonly ddouble C3d10 = (ddouble)3 / 10;
+                public static readonly ddouble C3d11 = (ddouble)3 / 11;
+                public static readonly ddouble C3d14 = (ddouble)3 / 14;
+                public static readonly ddouble C3d22 = (ddouble)3 / 22;
+                public static readonly ddouble C3d26 = (ddouble)3 / 26;
+                public static readonly ddouble C3d44 = (ddouble)3 / 44;
+                public static readonly ddouble C9d22 = (ddouble)9 / 22;
+                public static readonly ddouble C9d52 = (ddouble)9 / 52;
+                public static readonly ddouble C9d88 = (ddouble)9 / 88;
             }
         }
     }
