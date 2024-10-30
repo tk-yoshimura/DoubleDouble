@@ -90,8 +90,8 @@ namespace DoubleDouble {
 
             Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
-            int index = (int)Round(x * SinPiHalfTableN);
-            ddouble v = x - SinPiHalfTableDx * index;
+            int index = (((int)Floor(Ldexp(x, SinPiHalfLevel + 1))) + 1) >> 1;
+            ddouble v = x - Ldexp(index, -SinPiHalfLevel);
             ddouble sna = SinPiHalfTable[index];
             ddouble cna = SinPiHalfTable[SinPiHalfTableN - index];
 
@@ -114,22 +114,19 @@ namespace DoubleDouble {
             public static class SinCos {
                 public static readonly ddouble PiHalf = Ldexp(Pi, -1);
 
-                public const int SinPiHalfTableN = 1024;
-
+                public const int SinPiHalfLevel = 10;
+                public const int SinPiHalfTableN = 1 << SinPiHalfLevel;
                 public const int EpsExponent = -52;
 
                 public static readonly ReadOnlyCollection<ddouble> SinPiHalfTable = GenerateSinPiTable();
 
-                public static readonly ddouble SinPiHalfTableDx = Rcp(SinPiHalfTableN);
-
                 public static ReadOnlyCollection<ddouble> GenerateSinPiTable() {
                     Debug.WriteLine($"SinCos initialize.");
 
-                    ddouble dx = Rcp(SinPiHalfTableN);
                     ddouble[] table = new ddouble[SinPiHalfTableN + 1];
 
                     for (int i = 0; i <= SinPiHalfTableN; i++) {
-                        ddouble x = dx * i;
+                        ddouble x = Ldexp(i, -SinPiHalfLevel);
                         table[i] = SinPiHalfPrime(x);
                     }
 
