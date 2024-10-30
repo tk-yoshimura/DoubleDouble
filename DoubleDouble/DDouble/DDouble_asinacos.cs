@@ -100,6 +100,31 @@ namespace DoubleDouble {
             }
         }
 
+        public static ddouble AsinPI(ddouble x) => TruncateMantissa(Asin(x) * RcpPI, 105);
+
+        public static ddouble AcosPI(ddouble x) => TruncateMantissa(Acos(x) * RcpPI, 105);
+
+        public static ddouble AtanPI(ddouble x) => TruncateMantissa(Atan(x) * RcpPI, 103);
+
+        public static ddouble Atan2PI(ddouble y, ddouble x) {
+            if (IsZero(x) && IsZero(y)) {
+                return IsPositive(y)
+                    ? (IsPositive(x) ? 0d : 1d)
+                    : (IsPositive(x) ? -0d : -1d);
+            }
+            if (!IsFinite(x) || !IsFinite(y)) {
+                return NaN;
+            }
+            if (Abs(x) >= Abs(y)) {
+                ddouble yx = y / x;
+                return IsPositive(x) ? AtanPI(yx) : (IsPositive(y) ? (AtanPI(yx) + 1d) : (AtanPI(yx) - 1d));
+            }
+            else {
+                ddouble xy = x / y;
+                return IsPositive(y) ? (0.5d - AtanPI(xy)) : (-0.5d - AtanPI(xy));
+            }
+        }
+
         internal static partial class Consts {
             public static class Atan {
                 public const double AtanThreshold = 0.25;

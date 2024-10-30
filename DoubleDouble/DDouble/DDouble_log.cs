@@ -33,7 +33,17 @@ namespace DoubleDouble {
         }
 
         public static ddouble Log10(ddouble x) {
-            return TruncateMantissa(Log2(x) * Lg2, keep_bits: 103);
+            ddouble y = Log2(x) * Lg2;
+
+            if (IsFinite(y)) {
+                int n = (int)Round(y);
+
+                if (ILogB(y - n) < LogBaseRoundingExponent) {
+                    y = TruncateMantissa(y, Log10TruncationBits);
+                }
+            }
+
+            return y;
         }
 
         public static ddouble Log(ddouble x) {
@@ -46,7 +56,17 @@ namespace DoubleDouble {
                 LogCache.RcpLbB = Rcp(Log2(b));
             }
 
-            return TruncateMantissa(Log2(x) * LogCache.RcpLbB, keep_bits: 103);
+            ddouble y = Log2(x) * LogCache.RcpLbB;
+
+            if (IsFinite(y) && ILogB(y) < 10) {
+                int n = (int)Round(y);
+
+                if (ILogB(y - n) < LogBaseRoundingExponent) {
+                    y = TruncateMantissa(y, LogBaseTruncationBits);
+                }
+            }
+
+            return y;
         }
 
         public static ddouble Log1p(ddouble x) {
@@ -73,6 +93,10 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class Log {
                 public const int Log2TableN = 2048;
+
+                public const int LogBaseRoundingExponent = -101;
+                public const int LogBaseTruncationBits = 103;
+                public const int Log10TruncationBits = 104;
 
                 public static readonly ReadOnlyCollection<ddouble> Log2Table = GenerateLog2Table();
 

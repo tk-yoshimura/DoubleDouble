@@ -17,6 +17,7 @@ namespace DoubleDouble {
 
         public static ddouble ScaleB(ddouble x, long n) => Ldexp(x, n);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ILogB(ddouble x) => double.ILogB(x.hi);
     }
 }

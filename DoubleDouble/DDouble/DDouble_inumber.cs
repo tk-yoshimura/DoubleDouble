@@ -27,7 +27,12 @@ namespace DoubleDouble {
 
         IMinMaxValue<ddouble>,
         IPowerFunctions<ddouble>,
-        IRootFunctions<ddouble> {
+        IRootFunctions<ddouble>,
+        IExponentialFunctions<ddouble>,
+        ITrigonometricFunctions<ddouble>,
+        IHyperbolicFunctions<ddouble>,
+        ILogarithmicFunctions<ddouble>,
+        IFloatingPointConstants<ddouble> {
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble AdditiveIdentity => ddouble.Zero;
@@ -45,7 +50,7 @@ namespace DoubleDouble {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         static ddouble IFloatingPointConstants<ddouble>.Pi => ddouble.PI;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        static ddouble IFloatingPointConstants<ddouble>.Tau => ddouble.PI * 2;
+        static ddouble IFloatingPointConstants<ddouble>.Tau => ddouble.Ldexp(ddouble.PI, 1);
 
         public static bool IsCanonical(ddouble value) => IsFinite(value);
 
@@ -64,6 +69,27 @@ namespace DoubleDouble {
         public static ddouble MaxMagnitudeNumber(ddouble x, ddouble y) => (Abs(x) > Abs(y) || IsNaN(y)) ? x : y;
         public static ddouble MinMagnitude(ddouble x, ddouble y) => (Abs(x) < Abs(y) || IsNaN(x)) ? x : y;
         public static ddouble MinMagnitudeNumber(ddouble x, ddouble y) => (Abs(x) < Abs(y) || IsNaN(y)) ? x : y;
+
+        public static ddouble Exp10(ddouble x) => Pow10(x);
+        public static ddouble Exp2(ddouble x) => Pow2(x);
+
+        public static ddouble SinPi(ddouble x) => SinPI(x);
+        public static ddouble CosPi(ddouble x) => CosPI(x);
+        public static ddouble TanPi(ddouble x) => TanPI(x);
+        public static ddouble AsinPi(ddouble x) => AsinPI(x);
+        public static ddouble AcosPi(ddouble x) => AcosPI(x);
+        public static ddouble AtanPi(ddouble x) => AtanPI(x);
+
+        public static (ddouble Sin, ddouble Cos) SinCos(ddouble x) => SinCosPi(x * RcpPI);
+        public static (ddouble SinPi, ddouble CosPi) SinCosPi(ddouble x) => (SinPI(x), CosPI(x));
+
+        public static ddouble Asinh(ddouble x) => Arsinh(x);
+        public static ddouble Acosh(ddouble x) => Arcosh(x);
+        public static ddouble Atanh(ddouble x) => Artanh(x);
+
+        public static ddouble LogP1(ddouble x) => Log1p(x);
+        public static ddouble Log2P1(ddouble x) => Log1p(x) * LbE;
+        public static ddouble Log10P1(ddouble x) => Log1p(x) * LbE * Lg2;
 
         public static ddouble Parse(string s, NumberStyles style, IFormatProvider provider) => Parse(s);
         public static bool TryParse(string s, NumberStyles style, IFormatProvider provider, out ddouble result) => TryParse(s, out result);

@@ -1,5 +1,6 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System;
 using System.Numerics;
 
@@ -261,6 +262,103 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual((ddouble)3, ddouble.MinMagnitudeNumber(3, ddouble.NaN));
             Assert.AreEqual((ddouble)4, ddouble.MinMagnitudeNumber(ddouble.NaN, 4));
             Assert.AreEqual(ddouble.NaN, ddouble.MinMagnitudeNumber(ddouble.NaN, ddouble.NaN));
+        }
+
+        [TestMethod]
+        public void MathFunctionTest() {
+            PrecisionAssert.AlmostEqual(double.Exp10(0.25), ddouble.Exp10(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp10(0.5), ddouble.Exp10(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp10(1), ddouble.Exp10(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp10(2), ddouble.Exp10(2), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.Exp2(0.25), ddouble.Exp2(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp2(0.5), ddouble.Exp2(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp2(1), ddouble.Exp2(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp2(2), ddouble.Exp2(2), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.SinPi(-0.25), ddouble.SinPi(-0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinPi(0.25), ddouble.SinPi(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinPi(0.5), ddouble.SinPi(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinPi(1), ddouble.SinPi(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinPi(2), ddouble.SinPi(2), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.CosPi(-0.25), ddouble.CosPi(-0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.CosPi(0.25), ddouble.CosPi(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.CosPi(0.5), ddouble.CosPi(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.CosPi(1), ddouble.CosPi(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.CosPi(2), ddouble.CosPi(2), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.TanPi(-0.25), ddouble.TanPi(-0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.TanPi(0.25), ddouble.TanPi(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.TanPi(0.5), ddouble.TanPi(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.TanPi(1), ddouble.TanPi(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.TanPi(2), ddouble.TanPi(2), 1e-15);
+
+            PrecisionAssert.AreEqual(double.AsinPi(-1), ddouble.AsinPi(-1));
+            PrecisionAssert.AreEqual(double.AsinPi(0), ddouble.AsinPi(0));
+            PrecisionAssert.AlmostEqual(double.AsinPi(0.25), ddouble.AsinPi(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.AsinPi(0.5), ddouble.AsinPi(0.5), 1e-15);
+            PrecisionAssert.AreEqual(double.AsinPi(1), ddouble.AsinPi(1));
+
+            PrecisionAssert.AreEqual(double.AcosPi(-1), ddouble.AcosPi(-1));
+            PrecisionAssert.AreEqual(double.AcosPi(0), ddouble.AcosPi(0));
+            PrecisionAssert.AlmostEqual(double.AcosPi(0.25), ddouble.AcosPi(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.AcosPi(0.5), ddouble.AcosPi(0.5), 1e-15);
+            PrecisionAssert.AreEqual(double.AcosPi(1), ddouble.AcosPi(1));
+
+            PrecisionAssert.AreEqual(double.AtanPi(-1), ddouble.AtanPi(-1));
+            PrecisionAssert.AreEqual(double.AtanPi(0), ddouble.AtanPi(0));
+            PrecisionAssert.AlmostEqual(double.AtanPi(0.25), ddouble.AtanPi(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.AtanPi(0.5), ddouble.AtanPi(0.5), 1e-15);
+            PrecisionAssert.AreEqual(double.AtanPi(1), ddouble.AtanPi(1));
+
+            PrecisionAssert.AlmostEqual(double.SinCos(-0.25).Sin, ddouble.SinCos(-0.25).Sin, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(0.25).Sin, ddouble.SinCos(0.25).Sin, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(0.5).Sin, ddouble.SinCos(0.5).Sin, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(1).Sin, ddouble.SinCos(1).Sin, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(2).Sin, ddouble.SinCos(2).Sin, 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.SinCos(-0.25).Cos, ddouble.SinCos(-0.25).Cos, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(0.25).Cos, ddouble.SinCos(0.25).Cos, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(0.5).Cos, ddouble.SinCos(0.5).Cos, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(1).Cos, ddouble.SinCos(1).Cos, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCos(2).Cos, ddouble.SinCos(2).Cos, 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.SinCosPi(-0.25).SinPi, ddouble.SinCosPi(-0.25).SinPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(0.25).SinPi, ddouble.SinCosPi(0.25).SinPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(0.5).SinPi, ddouble.SinCosPi(0.5).SinPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(1).SinPi, ddouble.SinCosPi(1).SinPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(2).SinPi, ddouble.SinCosPi(2).SinPi, 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.SinCosPi(-0.25).CosPi, ddouble.SinCosPi(-0.25).CosPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(0.25).CosPi, ddouble.SinCosPi(0.25).CosPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(0.5).CosPi, ddouble.SinCosPi(0.5).CosPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(1).CosPi, ddouble.SinCosPi(1).CosPi, 1e-15);
+            PrecisionAssert.AlmostEqual(double.SinCosPi(2).CosPi, ddouble.SinCosPi(2).CosPi, 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.Asinh(0.25), ddouble.Asinh(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Asinh(0.5), ddouble.Asinh(0.5), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.Acosh(0.25), ddouble.Acosh(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Acosh(0.5), ddouble.Acosh(0.5), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.Atanh(0.25), ddouble.Atanh(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Atanh(0.5), ddouble.Atanh(0.5), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.LogP1(0.25), ddouble.LogP1(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.LogP1(0.5), ddouble.LogP1(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.LogP1(1), ddouble.LogP1(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.LogP1(2), ddouble.LogP1(2), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.Log2P1(0.25), ddouble.Log2P1(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Log2P1(0.5), ddouble.Log2P1(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Log2P1(1), ddouble.Log2P1(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Log2P1(2), ddouble.Log2P1(2), 1e-15);
+
+            PrecisionAssert.AlmostEqual(double.Log10P1(0.25), ddouble.Log10P1(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Log10P1(0.5), ddouble.Log10P1(0.5), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Log10P1(1), ddouble.Log10P1(1), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Log10P1(2), ddouble.Log10P1(2), 1e-15);
         }
 
         [TestMethod]
