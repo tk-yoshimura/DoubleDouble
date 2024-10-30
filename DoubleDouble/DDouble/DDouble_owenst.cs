@@ -14,7 +14,7 @@ namespace DoubleDouble {
             h = Abs(h);
 
             if (h <= OwenTIntegrate.Eps) {
-                return Atan(a) / Ldexp(PI, 1);
+                return Atan(a) / Ldexp(Pi, 1);
             }
             if (h > 36d) {
                 return 0d;
@@ -56,7 +56,7 @@ namespace DoubleDouble {
             public static ddouble GaussQuadrature(ddouble h, ddouble a) {
                 ddouble h2 = h * h, n_half_h2 = -Ldexp(h2, -1);
 
-                ddouble ig = Sqrt(Ldexp(PI, -1)) / h * Exp(n_half_h2) * Erf(h * a / Sqrt2);
+                ddouble ig = Sqrt(Ldexp(Pi, -1)) / h * Exp(n_half_h2) * Erf(h * a / Sqrt2);
 
                 ddouble x_peak = Sqrt(Ldexp(Sqrt(8d / h2 + 1d) - 1d, -1));
                 ddouble ap = Min(a, x_peak * 2d), ad = a - ap;
@@ -89,10 +89,10 @@ namespace DoubleDouble {
                     }
                 }
 
-                ddouble y = (ig - sp * ap - sd * ad) / Ldexp(PI, 1);
+                ddouble y = (ig - sp * ap - sd * ad) / Ldexp(Pi, 1);
 
                 if (y < Epsilon) {
-                    return a * Exp(n_half_h2) / Ldexp(PI, 1);
+                    return a * Exp(n_half_h2) / Ldexp(Pi, 1);
                 }
 
                 return y;
@@ -107,7 +107,7 @@ namespace DoubleDouble {
                 ddouble p3 = h6 + 6d * p2;
 
                 ddouble s = a * (1680d + (a2 * (-280d * p1 + (a2 * (42d * p2 - a2 * (5d * p3)))))) / 1680d;
-                ddouble c = Exp(-Ldexp(h2, -1)) / Ldexp(PI, 1);
+                ddouble c = Exp(-Ldexp(h2, -1)) / Ldexp(Pi, 1);
 
                 ddouble y = s * c;
 

@@ -31,7 +31,7 @@ namespace DoubleDouble {
                 }
 
                 ddouble theta = Ldexp(x * x, -1);
-                ddouble cos = CosPI(theta), sin = SinPI(theta);
+                ddouble cos = CosPi(theta), sin = SinPi(theta);
 
                 ddouble c = 0.5d + sin * f - cos * g;
 
@@ -64,7 +64,7 @@ namespace DoubleDouble {
                 }
 
                 ddouble theta = Ldexp(x * x, -1);
-                ddouble cos = CosPI(theta), sin = SinPI(theta);
+                ddouble cos = CosPi(theta), sin = SinPi(theta);
 
                 ddouble s = 0.5d - cos * f - sin * g;
 
@@ -78,7 +78,7 @@ namespace DoubleDouble {
             }
             if (x <= FresnelPade.PadeApproxMin) {
                 ddouble theta = Ldexp(x * x, -1);
-                ddouble cos = CosPI(theta), sin = SinPI(theta);
+                ddouble cos = CosPi(theta), sin = SinPi(theta);
 
                 ddouble c = FresnelC(x);
                 ddouble s = FresnelS(x);
@@ -102,7 +102,7 @@ namespace DoubleDouble {
             }
             if (x <= FresnelPade.PadeApproxMin) {
                 ddouble theta = Ldexp(x * x, -1);
-                ddouble cos = CosPI(theta), sin = SinPI(theta);
+                ddouble cos = CosPi(theta), sin = SinPi(theta);
 
                 ddouble c = FresnelC(x);
                 ddouble s = FresnelS(x);
@@ -126,7 +126,7 @@ namespace DoubleDouble {
                     return 0;
                 }
 
-                ddouble v = x * x * PI;
+                ddouble v = x * x * Pi;
                 ddouble v2 = v * v, v4 = v2 * v2;
 
                 ddouble s = 0d, u = x;
@@ -151,7 +151,7 @@ namespace DoubleDouble {
                     return 0;
                 }
 
-                ddouble v = x * x * PI;
+                ddouble v = x * x * Pi;
                 ddouble v2 = v * v, v4 = v2 * v2;
 
                 ddouble s = 0d, u = Ldexp(v * x, -1);
@@ -217,12 +217,12 @@ namespace DoubleDouble {
         private static class FresnelLimit {
 
             public static (ddouble p, ddouble q) Coef(ddouble x, int max_terms = 10) {
-                ddouble v = Rcp(x * x * PI);
+                ddouble v = Rcp(x * x * Pi);
                 ddouble v2 = v * v, v4 = v2 * v2;
 
                 ddouble p = 0d, q = 0d;
-                ddouble a = Rcp(x * PI);
-                ddouble b = Rcp(x * x * x * PI * PI);
+                ddouble a = Rcp(x * Pi);
+                ddouble b = Rcp(x * x * x * Pi * Pi);
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble s = ((8 * k + 1) * (8 * k + 3)) * v2;
@@ -247,11 +247,11 @@ namespace DoubleDouble {
             }
 
             public static ddouble FCoef(ddouble x, int max_terms = 10) {
-                ddouble v = Rcp(x * x * PI);
+                ddouble v = Rcp(x * x * Pi);
                 ddouble v2 = v * v, v4 = v2 * v2;
 
                 ddouble p = 0d;
-                ddouble a = Rcp(x * PI);
+                ddouble a = Rcp(x * Pi);
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble s = ((8 * k + 1) * (8 * k + 3)) * v2;
@@ -273,11 +273,11 @@ namespace DoubleDouble {
             }
 
             public static ddouble GCoef(ddouble x, int max_terms = 10) {
-                ddouble v = Rcp(x * x * PI);
+                ddouble v = Rcp(x * x * Pi);
                 ddouble v2 = v * v, v4 = v2 * v2;
 
                 ddouble q = 0d;
-                ddouble b = Rcp(x * x * x * PI * PI);
+                ddouble b = Rcp(x * x * x * Pi * Pi);
 
                 for (int k = 0; k < max_terms; k++) {
                     ddouble t = ((8 * k + 3) * (8 * k + 5)) * v2;

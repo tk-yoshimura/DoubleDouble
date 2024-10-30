@@ -15,9 +15,9 @@ namespace DoubleDouble {
             int n = ILogB(x);
             ddouble f = new ddouble(double.ScaleB(x.hi, -n), double.ScaleB(x.lo, -n));
 
-            if (f.hi == 1 && f.lo < 0) {
+            if (f.hi == 1d && f.lo < 0d) {
                 n -= 1;
-                f = new ddouble(2d, f.lo * 2);
+                f = new ddouble(2d, f.lo * 2d);
             }
 
             return (n, f);

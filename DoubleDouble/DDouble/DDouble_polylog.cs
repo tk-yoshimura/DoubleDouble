@@ -158,10 +158,10 @@ namespace DoubleDouble {
                 return -y;
             }
 
-            static ddouble pi2 = Square(PI);
-            static ddouble pi4 = Pow(PI, 4);
-            static ddouble pi6 = Pow(PI, 6);
-            static ddouble pi8 = Pow(PI, 8);
+            static ddouble pi2 = Square(Pi);
+            static ddouble pi4 = Pow(Pi, 4);
+            static ddouble pi6 = Pow(Pi, 6);
+            static ddouble pi8 = Pow(Pi, 8);
 
             static ReadOnlyCollection<Func<ddouble, ddouble>> mlimit_bias = new(new Func<ddouble, ddouble>[] {
                (logx) => throw new NotImplementedException(),

@@ -1,8 +1,8 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
-        public static ddouble Arsinh(ddouble x) {
+        public static ddouble Asinh(ddouble x) {
             if (IsNegative(x)) {
-                return -Arsinh(Abs(x));
+                return -Asinh(Abs(x));
             }
 
             ddouble y = Log1p(x + (Sqrt(x * x + 1d) - 1d));
@@ -10,7 +10,7 @@
             return y;
         }
 
-        public static ddouble Arcosh(ddouble x) {
+        public static ddouble Acosh(ddouble x) {
             if (x == 1d) {
                 return 0d;
             }
@@ -20,7 +20,7 @@
             return y;
         }
 
-        public static ddouble Artanh(ddouble x) {
+        public static ddouble Atanh(ddouble x) {
             if (IsNaN(x) || x > 1d || x < -1d) {
                 return NaN;
             }

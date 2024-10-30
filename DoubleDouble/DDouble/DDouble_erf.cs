@@ -380,7 +380,7 @@ namespace DoubleDouble {
                     f = w + k * (c0 + c1) / (d0 + d1);
                 }
 
-                ddouble y = x * RcpSqrtPI / f;
+                ddouble y = x * RcpSqrtPi / f;
 
                 return IsNaN(y) ? PlusZero : y;
             }
@@ -389,7 +389,7 @@ namespace DoubleDouble {
         internal static partial class Consts {
             public static class Erf {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeTable;
-                public static readonly ddouble RcpSqrtPI = 1d / Sqrt(PI);
+                public static readonly ddouble RcpSqrtPi = 1d / Sqrt(Pi);
 
                 static Erf() {
                     Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =

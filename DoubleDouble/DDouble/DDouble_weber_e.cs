@@ -22,7 +22,7 @@ namespace DoubleDouble {
                 return -StruveH(0, x);
             }
             if (n == 1) {
-                return AngerWeberUtil.RcpPI2 - StruveH(1, x);
+                return AngerWeberUtil.RcpPi2 - StruveH(1, x);
             }
 
             if (x < AngerWeberUtil.NZThreshold) {
@@ -38,10 +38,10 @@ namespace DoubleDouble {
 
         internal static class AngerWeberUtil {
             public const double NZThreshold = 4d;
-            public static readonly ddouble RcpPI2 = Ldexp(RcpPI, 1);
+            public static readonly ddouble RcpPi2 = Ldexp(RcpPi, 1);
 
-            static readonly List<ddouble> nz_gamma_neg = new() { 0d, -1d / Ldexp(Sqrt(PI), 1), 0d };
-            static readonly List<ddouble> nz_gamma_pos = new() { 0d, 1d / Sqrt(PI), 1d };
+            static readonly List<ddouble> nz_gamma_neg = new() { 0d, -1d / Ldexp(Sqrt(Pi), 1), 0d };
+            static readonly List<ddouble> nz_gamma_pos = new() { 0d, 1d / Sqrt(Pi), 1d };
 
             public static ddouble WeberENearZero(int n, ddouble x) {
                 Debug.Assert(n >= 2, nameof(n));
@@ -109,13 +109,13 @@ namespace DoubleDouble {
                 Debug.Assert(n >= 1, nameof(n));
                 Debug.Assert(x >= NZThreshold, nameof(x));
 
-                (ddouble y0, ddouble y1) = (-StruveH(0, x), RcpPI2 - StruveH(1, x));
+                (ddouble y0, ddouble y1) = (-StruveH(0, x), RcpPi2 - StruveH(1, x));
                 ddouble v = 2d / x;
 
                 for (int k = 1; k < n; k++) {
                     ddouble v2 = ((k & 1) == 0)
                         ? (k * y1 * v - y0)
-                        : ((k * y1 - RcpPI2) * v - y0);
+                        : ((k * y1 - RcpPi2) * v - y0);
 
                     (y0, y1) = (y1, v2);
                 }

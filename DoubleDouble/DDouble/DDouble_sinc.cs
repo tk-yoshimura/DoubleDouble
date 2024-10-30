@@ -3,16 +3,16 @@
         public static ddouble Sinc(ddouble x, bool normalized = true) {
             if (normalized) {
                 if (Abs(x) < double.ScaleB(1, -64)) {
-                    return 1d - Square(x * PI) / 6d;
+                    return 1d - Square(x * Pi) / 6d;
                 }
 
-                ddouble c = PI * x;
+                ddouble c = Pi * x;
 
                 if (IsInfinity(c)) {
                     return 0d;
                 }
 
-                return SinPI(x) / c;
+                return SinPi(x) / c;
             }
             else {
                 if (Abs(x) < double.ScaleB(1, -64)) {

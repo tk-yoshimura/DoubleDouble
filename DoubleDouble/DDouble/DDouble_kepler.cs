@@ -27,14 +27,14 @@ namespace DoubleDouble {
                     return centered ? NaN : Sign(m) * PositiveInfinity;
                 }
 
-                ddouble m_cycle = (m * RcpPI) % 2d;
+                ddouble m_cycle = (m * RcpPi) % 2d;
 
                 if (centered) {
                     ddouble y = (m_cycle <= 1d)
                         ? KeplerEUtil.Elliptic.Value(m_cycle, e) - m_cycle
                         : (2d - m_cycle) - KeplerEUtil.Elliptic.Value(2d - m_cycle, e);
 
-                    y *= PI;
+                    y *= Pi;
 
                     return y;
                 }
@@ -43,8 +43,8 @@ namespace DoubleDouble {
                         ? KeplerEUtil.Elliptic.Value(m_cycle, e)
                         : 2d - KeplerEUtil.Elliptic.Value(2d - m_cycle, e);
 
-                    y *= PI;
-                    y += m - m_cycle * PI;
+                    y *= Pi;
+                    y += m - m_cycle * Pi;
                     y = Max(0d, y);
 
                     return y;
@@ -67,7 +67,7 @@ namespace DoubleDouble {
                     Debug.Assert((m >= 0d && m <= 1d), nameof(m));
                     Debug.Assert((e >= 0d && e <= 1d), nameof(e));
 
-                    ddouble m_pi = m * PI;
+                    ddouble m_pi = m * Pi;
 
                     if (ILogB(m) > -32 || ILogB(e - 1d) > -16) {
                         double ed = double.Min(1d, e.Hi);
@@ -129,7 +129,7 @@ namespace DoubleDouble {
                     Debug.Assert(ILogB(m) <= -32, nameof(m));
                     Debug.Assert(ILogB(e - 1d) <= -16, nameof(e));
 
-                    return NearOneE.Value(m * PI, e);
+                    return NearOneE.Value(m * Pi, e);
                 }
 
                 public static (double x, bool convergenced) TrigonIter(double x, double m, double e) {
@@ -158,8 +158,8 @@ namespace DoubleDouble {
                 }
 
                 public static (ddouble x, bool convergenced) TrigonIter(ddouble x, ddouble m, ddouble e) {
-                    ddouble x_pi = x * PI;
-                    ddouble sin = SinPI(x), cos = CosPI(x);
+                    ddouble x_pi = x * Pi;
+                    ddouble sin = SinPi(x), cos = CosPi(x);
                     ddouble esin = e * sin, ecos = e * cos;
 
                     ddouble delta = x_pi - esin - m;
@@ -170,7 +170,7 @@ namespace DoubleDouble {
                     ddouble g1 = -ecos + 1d;
                     ddouble g2 = esin;
                     ddouble g3 = ecos;
-                    ddouble dx = RootFind.Iter(delta, g1, g2, g3) * RcpPI;
+                    ddouble dx = RootFind.Iter(delta, g1, g2, g3) * RcpPi;
 
                     if (!IsFinite(dx)) {
                         return (x, convergenced: true);
@@ -201,7 +201,7 @@ namespace DoubleDouble {
                     bool convergenced = false;
 
                     for (int i = 0; i < max_iters && !convergenced; i++) {
-                        ddouble x_pi = x * PI;
+                        ddouble x_pi = x * Pi;
                         (ddouble f, ddouble g) = pade(x_pi, e);
 
                         ddouble delta = f - m;
@@ -211,7 +211,7 @@ namespace DoubleDouble {
 
                         const double eps = 1e-100;
 
-                        ddouble dx = delta / (g * PI + eps);
+                        ddouble dx = delta / (g * Pi + eps);
 
                         if (!IsFinite(dx)) {
                             return (x, convergenced: true);

@@ -20,12 +20,12 @@ namespace DoubleDouble {
             }
 
             if (x < PadeApproxMin) {
-                return ErfiNearZero.Value(x, scale: false) * RcpSqrtPI2;
+                return ErfiNearZero.Value(x, scale: false) * RcpSqrtPi2;
             }
             if (x < PadeApproxMax) {
-                return ErfiPade.Value(x, scale: false) * RcpSqrtPI2;
+                return ErfiPade.Value(x, scale: false) * RcpSqrtPi2;
             }
-            return ErfiLimit.Value(x, scale: false) * RcpSqrtPI2;
+            return ErfiLimit.Value(x, scale: false) * RcpSqrtPi2;
         }
 
         public static ddouble DawsonF(ddouble x) {
@@ -152,7 +152,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Erfi {
-                public static readonly ddouble RcpSqrtPI2 = 2d / Sqrt(PI);
+                public static readonly ddouble RcpSqrtPi2 = 2d / Sqrt(Pi);
 
                 public const double PadeApproxMin = 0.25d, PadeApproxMax = 16d;
                 public const double PadeWise0p5X0 = 0.5d, PadeWise1X0 = 2d, PadeWise2X0 = 4d, PadeWise4X0 = 8d;

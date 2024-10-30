@@ -56,9 +56,9 @@
 |ddouble.Acos(x)|&#91;-1,1&#93;|2|Accuracy deteriorates near x=-1,1.|
 |ddouble.Atan(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Atan2(y, x)|&#40;-inf,+inf&#41;|2||
-|ddouble.Arsinh(x)|&#40;-inf,+inf&#41;|2||
-|ddouble.Arcosh(x)|&#91;1,+inf&#41;|2||
-|ddouble.Artanh(x)|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|
+|ddouble.Asinh(x)|&#40;-inf,+inf&#41;|2||
+|ddouble.Acosh(x)|&#91;1,+inf&#41;|2||
+|ddouble.Atanh(x)|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|
 |ddouble.Sinc(x, normalized)|&#40;-inf,+inf&#41;|2|normalized: x -> &pi;x|
 |ddouble.Sinhc(x)|&#40;-inf,+inf&#41;|3||
 |ddouble.Gamma(x)|&#40;-inf,+inf&#41;|2|Accuracy deteriorates near non-positive intergers. <br/> If x is Natual number lass than 35, an exact integer value is returned. |
@@ -185,7 +185,7 @@
 
 |constant|value|note|
 |----|----|----|
-|ddouble.PI|3.141592653589793238462...|Pi|
+|ddouble.Pi|3.141592653589793238462...|Pi|
 |ddouble.E|2.718281828459045235360...|Napier's E|
 |ddouble.Sqrt2|1.414213562373095048801...|Sqrt(2)|
 |ddouble.Lg2|0.301029995663981195213...|log10(2)|
@@ -200,7 +200,7 @@
 |ddouble.DigammaZero|1.461632144968362341263...|Positive root of digamma|
 |ddouble.ErdosBorwein|1.606695152415291763783...|Erdös Borwein constant|
 |ddouble.FeigenbaumDelta|4.669201609102990671853...|Feigenbaum constant|
-|ddouble.LemniscatePI|2.622057554292119810465...|Lemniscate constant|
+|ddouble.LemniscatePi|2.622057554292119810465...|Lemniscate constant|
 |ddouble.GlaisherA|1.282427129100622636875...|Glaisher–Kinkelin constant|
 |ddouble.CatalanG|0.915965594177219015055...|Catalan's constant|
 |ddouble.FransenRobinson|2.807770242028519365222...|Fransén–Robinson constant|

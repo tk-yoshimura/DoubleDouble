@@ -12,14 +12,14 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (!IsFinite(x)) {
-                return IsPositive(x) ? PIHalf : -PIHalf;
+                return IsPositive(x) ? PiHalf : -PiHalf;
             }
             if (IsNegative(x)) {
                 return -Atan(-x);
             }
 
             if (x > 1d) {
-                return PIHalf - Atan(Rcp(x));
+                return PiHalf - Atan(Rcp(x));
             }
 
             ddouble x2 = x * x;
@@ -50,10 +50,10 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (x == -1d) {
-                return -PIHalf;
+                return -PiHalf;
             }
             if (x == 1d) {
-                return PIHalf;
+                return PiHalf;
             }
 
             ddouble x2 = x * x;
@@ -78,35 +78,35 @@ namespace DoubleDouble {
         }
 
         public static ddouble Acos(ddouble x) {
-            return PIHalf - Asin(x);
+            return PiHalf - Asin(x);
         }
 
         public static ddouble Atan2(ddouble y, ddouble x) {
             if (IsZero(x) && IsZero(y)) {
                 return IsPositive(y)
-                    ? (IsPositive(x) ? 0d : PI)
-                    : (IsPositive(x) ? -0d : -PI);
+                    ? (IsPositive(x) ? 0d : Pi)
+                    : (IsPositive(x) ? -0d : -Pi);
             }
             if (!IsFinite(x) || !IsFinite(y)) {
                 return NaN;
             }
             if (Abs(x) >= Abs(y)) {
                 ddouble yx = y / x;
-                return IsPositive(x) ? Atan(yx) : (IsPositive(y) ? (Atan(yx) + PI) : (Atan(yx) - PI));
+                return IsPositive(x) ? Atan(yx) : (IsPositive(y) ? (Atan(yx) + Pi) : (Atan(yx) - Pi));
             }
             else {
                 ddouble xy = x / y;
-                return IsPositive(y) ? (PIHalf - Atan(xy)) : (-PIHalf - Atan(xy));
+                return IsPositive(y) ? (PiHalf - Atan(xy)) : (-PiHalf - Atan(xy));
             }
         }
 
-        public static ddouble AsinPI(ddouble x) => TruncateMantissa(Asin(x) * RcpPI, 105);
+        public static ddouble AsinPi(ddouble x) => TruncateMantissa(Asin(x) * RcpPi, 105);
 
-        public static ddouble AcosPI(ddouble x) => TruncateMantissa(Acos(x) * RcpPI, 105);
+        public static ddouble AcosPi(ddouble x) => TruncateMantissa(Acos(x) * RcpPi, 105);
 
-        public static ddouble AtanPI(ddouble x) => TruncateMantissa(Atan(x) * RcpPI, 103);
+        public static ddouble AtanPi(ddouble x) => TruncateMantissa(Atan(x) * RcpPi, 103);
 
-        public static ddouble Atan2PI(ddouble y, ddouble x) {
+        public static ddouble Atan2Pi(ddouble y, ddouble x) {
             if (IsZero(x) && IsZero(y)) {
                 return IsPositive(y)
                     ? (IsPositive(x) ? 0d : 1d)
@@ -117,11 +117,11 @@ namespace DoubleDouble {
             }
             if (Abs(x) >= Abs(y)) {
                 ddouble yx = y / x;
-                return IsPositive(x) ? AtanPI(yx) : (IsPositive(y) ? (AtanPI(yx) + 1d) : (AtanPI(yx) - 1d));
+                return IsPositive(x) ? AtanPi(yx) : (IsPositive(y) ? (AtanPi(yx) + 1d) : (AtanPi(yx) - 1d));
             }
             else {
                 ddouble xy = x / y;
-                return IsPositive(y) ? (0.5d - AtanPI(xy)) : (-0.5d - AtanPI(xy));
+                return IsPositive(y) ? (0.5d - AtanPi(xy)) : (-0.5d - AtanPi(xy));
             }
         }
 

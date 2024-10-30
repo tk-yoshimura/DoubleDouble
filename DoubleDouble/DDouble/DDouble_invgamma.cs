@@ -53,7 +53,7 @@ namespace DoubleDouble {
                 }
             }
             else if (x >= XMin) {
-                ddouble u = Max(0d, x - HalfSqrtPI);
+                ddouble u = Max(0d, x - HalfSqrtPi);
 
                 foreach ((double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)> table) in SingularPadeTables) {
                     if (u >= umax) {
@@ -87,8 +87,8 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class InverseGamma {
-                public static readonly ddouble HalfSqrtPI = Ldexp(Sqrt(PI), -1);
-                public static readonly ddouble XMin = Min(Gamma(1.5d), HalfSqrtPI);
+                public static readonly ddouble HalfSqrtPi = Ldexp(Sqrt(Pi), -1);
+                public static readonly ddouble XMin = Min(Gamma(1.5d), HalfSqrtPi);
 
                 public static readonly ReadOnlyCollection<(double umin, double umax, ReadOnlyCollection<(ddouble c, ddouble d)>)> PadeTables, SingularPadeTables;
 

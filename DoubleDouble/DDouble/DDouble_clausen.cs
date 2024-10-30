@@ -14,7 +14,7 @@ namespace DoubleDouble {
             }
 
             if (!normalized) {
-                x *= RcpPI;
+                x *= RcpPi;
             }
 
             if (x >= 2d) {
@@ -47,7 +47,7 @@ namespace DoubleDouble {
                 Debug.Assert(x >= 0d && x <= 0.25d, nameof(x));
 
                 ddouble x2 = x * x;
-                ddouble c = -Log(x * PIDivE * (1d - Ldexp(x2, -2)));
+                ddouble c = -Log(x * PiDivE * (1d - Ldexp(x2, -2)));
 
                 if (!IsFinite(c)) {
                     return 0d;
@@ -59,7 +59,7 @@ namespace DoubleDouble {
                 }
                 s *= x2;
 
-                ddouble y = (s + c) * x * PI;
+                ddouble y = (s + c) * x * Pi;
 
                 return y;
             }
@@ -96,7 +96,7 @@ namespace DoubleDouble {
             public static class Clausen {
                 public static readonly ReadOnlyCollection<ddouble> NearZeroTable;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
-                public static readonly ddouble PIDivE = (+1, 0, 0x93EEDFB138EDEF7EuL, 0xE1DC499E64F8915AuL);
+                public static readonly ddouble PiDivE = (+1, 0, 0x93EEDFB138EDEF7EuL, 0xE1DC499E64F8915AuL);
 
                 static Clausen() {
                     Dictionary<string, ReadOnlyCollection<ddouble>> nearzero_tables =

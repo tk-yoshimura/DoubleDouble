@@ -86,35 +86,35 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsZero(double.MinValue + ddouble.MaxValue));
             Assert.IsTrue(ddouble.IsZero(double.MaxValue + ddouble.MinValue));
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x + (ddouble)y, x + y);
                     Assert.AreEqual((ddouble)y + x, y + x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (uint y in new uint[] { 0u, 1u, 32u, 65535u, uint.MaxValue - 1, uint.MaxValue }) {
                     Assert.AreEqual(x + (ddouble)y, x + y);
                     Assert.AreEqual((ddouble)y + x, y + x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (long y in new long[] { long.MinValue, long.MinValue + 1, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue, long.MaxValue - 1, long.MaxValue }) {
                     Assert.AreEqual(x + (ddouble)y, x + y);
                     Assert.AreEqual((ddouble)y + x, y + x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (ulong y in new ulong[] { 0uL, 1uL, 32uL, 65535uL, uint.MaxValue - 1, uint.MaxValue, ulong.MaxValue - 1, ulong.MaxValue }) {
                     Assert.AreEqual(x + (ddouble)y, x + y);
                     Assert.AreEqual((ddouble)y + x, y + x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (double y in new double[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x + (ddouble)y, x + y);
                     Assert.AreEqual((ddouble)y + x, y + x);
@@ -187,35 +187,35 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNegativeInfinity(double.MinValue - ddouble.MaxValue));
             Assert.IsTrue(ddouble.IsPositiveInfinity(double.MaxValue - ddouble.MinValue));
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x - (ddouble)y, x - y);
                     Assert.AreEqual((ddouble)y - x, y - x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (uint y in new uint[] { 0u, 1u, 32u, 65535u, uint.MaxValue - 1, uint.MaxValue }) {
                     Assert.AreEqual(x - (ddouble)y, x - y);
                     Assert.AreEqual((ddouble)y - x, y - x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (long y in new long[] { long.MinValue, long.MinValue + 1, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue, long.MaxValue - 1, long.MaxValue }) {
                     Assert.AreEqual(x - (ddouble)y, x - y);
                     Assert.AreEqual((ddouble)y - x, y - x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (ulong y in new ulong[] { 0uL, 1uL, 32uL, 65535uL, uint.MaxValue - 1, uint.MaxValue, ulong.MaxValue - 1, ulong.MaxValue }) {
                     Assert.AreEqual(x - (ddouble)y, x - y);
                     Assert.AreEqual((ddouble)y - x, y - x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (double y in new double[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x - (ddouble)y, x - y);
                     Assert.AreEqual((ddouble)y - x, y - x);
@@ -255,11 +255,11 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsPlusZero(1d * ddouble.PlusZero));
             Assert.IsTrue(ddouble.IsMinusZero(1d * ddouble.MinusZero));
 
-            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PlusZero * ddouble.PI));
-            Assert.IsTrue(ddouble.IsMinusZero(ddouble.MinusZero * ddouble.PI));
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PlusZero * ddouble.Pi));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.MinusZero * ddouble.Pi));
 
-            Assert.IsTrue(ddouble.IsPlusZero(ddouble.PI * ddouble.PlusZero));
-            Assert.IsTrue(ddouble.IsMinusZero(ddouble.PI * ddouble.MinusZero));
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.Pi * ddouble.PlusZero));
+            Assert.IsTrue(ddouble.IsMinusZero(ddouble.Pi * ddouble.MinusZero));
 
             foreach (int n in new int[] { -7, -13, -17, -257, 7, 13, 17, 257 }) {
                 ddouble u = (ddouble.Rcp(n)) * (double)n;
@@ -333,35 +333,35 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x * (ddouble)y, x * y);
                     Assert.AreEqual((ddouble)y * x, y * x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (uint y in new uint[] { 0u, 1u, 32u, 65535u, uint.MaxValue - 1, uint.MaxValue }) {
                     Assert.AreEqual(x * (ddouble)y, x * y);
                     Assert.AreEqual((ddouble)y * x, y * x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (long y in new long[] { long.MinValue, long.MinValue + 1, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue, long.MaxValue - 1, long.MaxValue }) {
                     Assert.AreEqual(x * (ddouble)y, x * y);
                     Assert.AreEqual((ddouble)y * x, y * x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (ulong y in new ulong[] { 0uL, 1uL, 32uL, 65535uL, uint.MaxValue - 1, uint.MaxValue, ulong.MaxValue - 1, ulong.MaxValue }) {
                     Assert.AreEqual(x * (ddouble)y, x * y);
                     Assert.AreEqual((ddouble)y * x, y * x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (double y in new double[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x * (ddouble)y, x * y);
                     Assert.AreEqual((ddouble)y * x, y * x);
@@ -481,42 +481,42 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
-            foreach (ddouble x in new[] { ddouble.PI, ddouble.E, ddouble.EulerGamma, ddouble.One + ddouble.Ldexp(1, -900) }) {
+            foreach (ddouble x in new[] { ddouble.Pi, ddouble.E, ddouble.EulerGamma, ddouble.One + ddouble.Ldexp(1, -900) }) {
                 Assert.AreEqual(ddouble.One, x / x);
                 Assert.AreEqual(ddouble.One, -x / -x);
                 Assert.AreEqual(ddouble.MinusOne, -x / x);
                 Assert.AreEqual(ddouble.MinusOne, x / -x);
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x / (ddouble)y, x / y);
                     Assert.AreEqual((ddouble)y / x, y / x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (uint y in new uint[] { 0u, 1u, 32u, 65535u, uint.MaxValue - 1, uint.MaxValue }) {
                     Assert.AreEqual(x / (ddouble)y, x / y);
                     Assert.AreEqual((ddouble)y / x, y / x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (long y in new long[] { long.MinValue, long.MinValue + 1, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue, long.MaxValue - 1, long.MaxValue }) {
                     Assert.AreEqual(x / (ddouble)y, x / y);
                     Assert.AreEqual((ddouble)y / x, y / x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (ulong y in new ulong[] { 0uL, 1uL, 32uL, 65535uL, uint.MaxValue - 1, uint.MaxValue, ulong.MaxValue - 1, ulong.MaxValue }) {
                     Assert.AreEqual(x / (ddouble)y, x / y);
                     Assert.AreEqual((ddouble)y / x, y / x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (double y in new double[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x / (ddouble)y, x / y);
                     Assert.AreEqual((ddouble)y / x, y / x);
@@ -574,35 +574,35 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN % ddouble.NegativeInfinity));
             Assert.IsTrue(ddouble.IsNaN(ddouble.NaN % ddouble.NaN));
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x % (ddouble)y, x % y);
                     Assert.AreEqual((ddouble)y % x, y % x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (uint y in new uint[] { 0u, 1u, 32u, 65535u, uint.MaxValue - 1, uint.MaxValue }) {
                     Assert.AreEqual(x % (ddouble)y, x % y);
                     Assert.AreEqual((ddouble)y % x, y % x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (long y in new long[] { long.MinValue, long.MinValue + 1, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue, long.MaxValue - 1, long.MaxValue }) {
                     Assert.AreEqual(x % (ddouble)y, x % y);
                     Assert.AreEqual((ddouble)y % x, y % x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (ulong y in new ulong[] { 0uL, 1uL, 32uL, 65535uL, uint.MaxValue - 1, uint.MaxValue, ulong.MaxValue - 1, ulong.MaxValue }) {
                     Assert.AreEqual(x % (ddouble)y, x % y);
                     Assert.AreEqual((ddouble)y % x, y % x);
                 }
             }
 
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (double y in new double[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x % (ddouble)y, x % y);
                     Assert.AreEqual((ddouble)y % x, y % x);
@@ -612,7 +612,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void IncrementTest() {
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 ddouble y = x;
                 y++;
 
@@ -651,7 +651,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void DecrementTest() {
-            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.PI, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
+            foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 ddouble y = x;
                 y--;
 

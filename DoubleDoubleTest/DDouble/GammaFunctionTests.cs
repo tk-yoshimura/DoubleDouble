@@ -16,7 +16,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreEqual(y, x);
             }
 
-            ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
+            ddouble sqrtpi = ddouble.Sqrt(ddouble.Pi);
 
             for (BigInteger i = 1, y = 1, z = 1; i <= 150; i++, y *= 2, z *= 2 * i - 3) {
                 double u = (2 * (int)i - 1) * 0.5d;
@@ -81,7 +81,7 @@ namespace DoubleDoubleTest.DDouble {
                 BitAssert.NeighborBits(v, x, 4);
             }
 
-            ddouble sqrtpi = ddouble.Sqrt(ddouble.PI);
+            ddouble sqrtpi = ddouble.Sqrt(ddouble.Pi);
 
             for (BigInteger i = 1, y = 1, z = 1; i <= 30; i++, y *= 2, z *= 2 * i - 3) {
                 ddouble x = ddouble.LogGamma((2 * (int)i - 1) * 0.5d);
@@ -287,7 +287,7 @@ namespace DoubleDoubleTest.DDouble {
             ddouble invgamma_pmax = ddouble.InverseGamma(double.MaxValue);
             ddouble invgamma_ninf = ddouble.InverseGamma(double.NegativeInfinity);
             ddouble invgamma_nan = ddouble.InverseGamma(double.NaN);
-            ddouble invgamma_polar = ddouble.InverseGamma(ddouble.Sqrt(ddouble.PI) / 2);
+            ddouble invgamma_polar = ddouble.InverseGamma(ddouble.Sqrt(ddouble.Pi) / 2);
 
             Assert.IsTrue(invgamma_p0p999 < 2d, nameof(invgamma_p0p999));
             PrecisionAssert.IsNaN(invgamma_p0p886, nameof(invgamma_p0p886));

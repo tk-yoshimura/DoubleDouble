@@ -276,7 +276,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble y_dec = ddouble.Sinc(ddouble.BitDecrement(x), normalized: false);
                 ddouble y_inc = ddouble.Sinc(ddouble.BitIncrement(x), normalized: false);
 
-                ddouble y_normed = ddouble.Sinc(x * ddouble.RcpPI, normalized: true);
+                ddouble y_normed = ddouble.Sinc(x * ddouble.RcpPi, normalized: true);
 
                 Console.WriteLine(x);
                 Console.WriteLine(y);

@@ -219,7 +219,7 @@ namespace DoubleDouble {
 
                 ddouble lnx = Log(x);
 
-                ddouble c = LogBias - lnx * Rcp12 + x * (Consts.LogGamma.LogPI2Half + x * Ldexp((Ldexp(lnx, 1) - 3d), -2));
+                ddouble c = LogBias - lnx * Rcp12 + x * (Consts.LogGamma.LogPi2Half + x * Ldexp((Ldexp(lnx, 1) - 3d), -2));
 
                 ddouble v = Rcp(x), v2 = v * v, v4 = v2 * v2, u = v2;
 

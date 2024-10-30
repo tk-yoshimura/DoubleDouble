@@ -20,7 +20,7 @@ namespace DoubleDouble {
                 return TiUtil.Kernel(x);
             }
             else {
-                return TiUtil.Kernel(1d / x) + Ldexp(PI, -1) * Log(x);
+                return TiUtil.Kernel(1d / x) + Ldexp(Pi, -1) * Log(x);
             }
         }
 

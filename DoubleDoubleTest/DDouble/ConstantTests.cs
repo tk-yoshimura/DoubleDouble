@@ -30,9 +30,9 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
-        public void PITest() {
+        public void PiTest() {
             ddouble expected = (ddouble)"3.14159265358979323846264338327950288";
-            ddouble actual = ddouble.PI;
+            ddouble actual = ddouble.Pi;
             Console.WriteLine(actual);
 
             PrecisionAssert.AlmostEqual(expected, actual, 2e-32);
@@ -44,7 +44,7 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine($"0x{FloatSplitter.Split(expected).mantissa:X14}");
             Console.WriteLine($"0x{FloatSplitter.Split(actual).mantissa:X14}");
 
-            PrecisionAssert.AreEqual(ddouble.Pi, ddouble.PI);
+            PrecisionAssert.AreEqual(ddouble.Pi, ddouble.Pi);
         }
 
         [TestMethod]
@@ -71,10 +71,10 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
-        public void LemniscatePITest() {
+        public void LemniscatePiTest() {
             PrecisionAssert.AlmostEqual(
                 "2.6220575542921198104648395898911194136827549514316231628168217038",
-                ddouble.LemniscatePI,
+                ddouble.LemniscatePi,
                 1e-31
             );
         }

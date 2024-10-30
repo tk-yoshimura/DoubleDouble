@@ -35,7 +35,7 @@ namespace DoubleDouble {
                     return y;
                 }
                 else {
-                    ddouble y = v * RcpPI * RcpSqrt3 * BesselK(Rcp3, w);
+                    ddouble y = v * RcpPi * RcpSqrt3 * BesselK(Rcp3, w);
                     return y;
                 }
             }
@@ -91,7 +91,7 @@ namespace DoubleDouble {
                 public static readonly ddouble Rcp3 = Rcp(3);
                 public static readonly ddouble RcpSqrt3 = Rcp(Sqrt(3));
                 public static readonly ddouble Cbrt3 = Cbrt(3);
-                public static readonly ddouble AiNearZeroC = Cbrt3 * Cbrt3 * PI, BiNearZeroC = Sqrt(Cbrt3) * PI;
+                public static readonly ddouble AiNearZeroC = Cbrt3 * Cbrt3 * Pi, BiNearZeroC = Sqrt(Cbrt3) * Pi;
                 public static readonly ddouble Gamma1d3 = (+1, 1, 0xAB73BA9CA4178B3BuL, 0xB234FA4B356011B6uL);
                 public static readonly ddouble Gamma2d3 = (+1, 0, 0xAD53BC9461B3C655uL, 0x97A7F5B815934C85uL);
                 public static readonly ReadOnlyCollection<ddouble> NearZeroCoefs;

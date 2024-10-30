@@ -119,7 +119,7 @@ namespace DoubleDouble {
                     s = s * v3 + AsymptoticCoefs[i + 1];
                 }
 
-                s /= PI * x;
+                s /= Pi * x;
 
                 return s;
             }
@@ -136,7 +136,7 @@ namespace DoubleDouble {
                 public static readonly ddouble Cbrt3 = Airy.Cbrt3;
                 public static readonly ddouble Gamma1d3 = Airy.Gamma1d3;
                 public static readonly ddouble Gamma2d3 = Airy.Gamma2d3;
-                public static readonly ddouble NearZeroC = Cbrt3 * Cbrt3 * PI;
+                public static readonly ddouble NearZeroC = Cbrt3 * Cbrt3 * Pi;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> HiPadeTables, GiPadeTables;
                 public static readonly ReadOnlyCollection<ddouble> NearZeroCoefs, AsymptoticCoefs;

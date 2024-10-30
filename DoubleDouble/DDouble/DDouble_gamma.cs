@@ -14,13 +14,13 @@ namespace DoubleDouble {
             }
 
             if (x < 0.5d) {
-                ddouble sinpi = SinPI(x);
+                ddouble sinpi = SinPi(x);
 
                 if (IsZero(sinpi)) {
                     return NaN;
                 }
 
-                ddouble y = PI / (sinpi * Gamma(1d - x));
+                ddouble y = Pi / (sinpi * Gamma(1d - x));
 
                 return y;
             }
@@ -198,7 +198,7 @@ namespace DoubleDouble {
                 ddouble p = x * (lnx - 1d) - Ldexp(lnx, -1);
                 ddouble s = SterlingTerm(x);
 
-                ddouble y = Consts.LogGamma.LogPI2Half + p + s;
+                ddouble y = Consts.LogGamma.LogPi2Half + p + s;
 
                 return y;
             }
@@ -213,13 +213,13 @@ namespace DoubleDouble {
             }
 
             if (x < 0.5d) {
-                ddouble tanpi = TanPI(x);
+                ddouble tanpi = TanPi(x);
 
                 if (IsZero(tanpi)) {
                     return NaN;
                 }
 
-                ddouble y = Digamma(1d - x) - PI / tanpi;
+                ddouble y = Digamma(1d - x) - Pi / tanpi;
 
                 return y;
             }
@@ -312,7 +312,7 @@ namespace DoubleDouble {
                 return y;
             }
             else {
-                ddouble c = (139d + 180d * x * (1d + 24d * x * (-1d + 12d * x))) / (51840d * Sqrt(Ldexp(PI, 1)) * Pow(Sqrt(x), 5));
+                ddouble c = (139d + 180d * x * (1d + 24d * x * (-1d + 12d * x))) / (51840d * Sqrt(Ldexp(Pi, 1)) * Pow(Sqrt(x), 5));
                 ddouble y = Pow2(x * (LbE - Log2(x))) * c;
                 return y;
             }
@@ -407,7 +407,7 @@ namespace DoubleDouble {
             }
 
             public static class LogGamma {
-                public static readonly ddouble LogPI2Half = (+1, -1, 0xEB3F8E4325F5A534uL, 0x94BC900144192023uL);
+                public static readonly ddouble LogPi2Half = (+1, -1, 0xEB3F8E4325F5A534uL, 0x94BC900144192023uL);
                 public const double Threshold = 16d;
 
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;

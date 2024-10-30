@@ -7,7 +7,7 @@ namespace DoubleDoubleTest.DDouble {
     public partial class JsonTests {
         [TestMethod]
         public void JsonTest() {
-            ddouble pi = ddouble.PI;
+            ddouble pi = ddouble.Pi;
 
             string str = JsonSerializer.Serialize<ddouble>(pi);
 

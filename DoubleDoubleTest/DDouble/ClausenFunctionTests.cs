@@ -37,7 +37,7 @@ namespace DoubleDoubleTest.DDouble {
             };
 
             for (int i = 0; i < expecteds.Length; i++) {
-                ddouble x = i * ddouble.PI / 6;
+                ddouble x = i * ddouble.Pi / 6;
 
                 ddouble expected = expecteds[i];
 

@@ -5,8 +5,8 @@ using static DoubleDouble.ddouble.Consts.SinCos;
 namespace DoubleDouble {
     public partial struct ddouble {
 
-        public static ddouble SinPI(ddouble x) {
-            return SinPIHalf(Ldexp(x, 1));
+        public static ddouble SinPi(ddouble x) {
+            return SinPiHalf(Ldexp(x, 1));
         }
 
         public static ddouble Sin(ddouble x) {
@@ -14,11 +14,11 @@ namespace DoubleDouble {
                 return x;
             }
 
-            return SinPI(x * RcpPI);
+            return SinPi(x * RcpPi);
         }
 
-        public static ddouble CosPI(ddouble x) {
-            return SinPIHalf(Ldexp(Abs(x), 1) + 1d);
+        public static ddouble CosPi(ddouble x) {
+            return SinPiHalf(Ldexp(Abs(x), 1) + 1d);
         }
 
         public static ddouble Cos(ddouble x) {
@@ -26,26 +26,26 @@ namespace DoubleDouble {
                 return 1d - x * x * 0.5d;
             }
 
-            return CosPI(x * RcpPI);
+            return CosPi(x * RcpPi);
         }
 
-        public static ddouble TanPI(ddouble x) {
+        public static ddouble TanPi(ddouble x) {
             if (IsNegative(x)) {
-                return -TanPI(-x);
+                return -TanPi(-x);
             }
 
             ddouble s = x - Floor(x);
 
             if (s <= 0.25d) {
-                ddouble sn = SinPI(s), cn = Sqrt(1d - sn * sn);
+                ddouble sn = SinPi(s), cn = Sqrt(1d - sn * sn);
                 return sn / cn;
             }
             else if (s <= 0.75d) {
-                ddouble cn = CosPI(s), sn = Sqrt(1d - cn * cn);
+                ddouble cn = CosPi(s), sn = Sqrt(1d - cn * cn);
                 return sn / cn;
             }
             else {
-                ddouble sn = SinPI(s), cn = -Sqrt(1d - sn * sn);
+                ddouble sn = SinPi(s), cn = -Sqrt(1d - sn * sn);
                 return sn / cn;
             }
         }
@@ -55,15 +55,15 @@ namespace DoubleDouble {
                 return x;
             }
 
-            return TanPI(x * RcpPI);
+            return TanPi(x * RcpPi);
         }
 
-        internal static ddouble SinPIHalf(ddouble x) {
+        internal static ddouble SinPiHalf(ddouble x) {
             if (!IsFinite(x)) {
                 return NaN;
             }
             if (IsNegative(x)) {
-                return -SinPIHalf(-x);
+                return -SinPiHalf(-x);
             }
 
             if (x >= 4d) {
@@ -90,12 +90,12 @@ namespace DoubleDouble {
 
             Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
-            int index = (int)Round(x * SinPIHalfTableN);
-            ddouble v = x - SinPIHalfTableDx * index;
-            ddouble sna = SinPIHalfTable[index];
-            ddouble cna = SinPIHalfTable[SinPIHalfTableN - index];
+            int index = (int)Round(x * SinPiHalfTableN);
+            ddouble v = x - SinPiHalfTableDx * index;
+            ddouble sna = SinPiHalfTable[index];
+            ddouble cna = SinPiHalfTable[SinPiHalfTableN - index];
 
-            ddouble u = v * PIHalf, u2 = u * u;
+            ddouble u = v * PiHalf, u2 = u * u;
 
             ddouble ssc = 166320d + u2 * (-22260d + u2 * 551d);
             ddouble ssd = 166320d + u2 * (5460d + u2 * 75d);
@@ -112,31 +112,31 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class SinCos {
-                public static readonly ddouble PIHalf = Ldexp(PI, -1);
+                public static readonly ddouble PiHalf = Ldexp(Pi, -1);
 
-                public const int SinPIHalfTableN = 1024;
+                public const int SinPiHalfTableN = 1024;
 
                 public const int EpsExponent = -52;
 
-                public static readonly ReadOnlyCollection<ddouble> SinPIHalfTable = GenerateSinPITable();
+                public static readonly ReadOnlyCollection<ddouble> SinPiHalfTable = GenerateSinPiTable();
 
-                public static readonly ddouble SinPIHalfTableDx = Rcp(SinPIHalfTableN);
+                public static readonly ddouble SinPiHalfTableDx = Rcp(SinPiHalfTableN);
 
-                public static ReadOnlyCollection<ddouble> GenerateSinPITable() {
+                public static ReadOnlyCollection<ddouble> GenerateSinPiTable() {
                     Debug.WriteLine($"SinCos initialize.");
 
-                    ddouble dx = Rcp(SinPIHalfTableN);
-                    ddouble[] table = new ddouble[SinPIHalfTableN + 1];
+                    ddouble dx = Rcp(SinPiHalfTableN);
+                    ddouble[] table = new ddouble[SinPiHalfTableN + 1];
 
-                    for (int i = 0; i <= SinPIHalfTableN; i++) {
+                    for (int i = 0; i <= SinPiHalfTableN; i++) {
                         ddouble x = dx * i;
-                        table[i] = SinPIHalfPrime(x);
+                        table[i] = SinPiHalfPrime(x);
                     }
 
                     return Array.AsReadOnly(table);
                 }
 
-                private static ddouble SinPIHalfPrime(ddouble x) {
+                private static ddouble SinPiHalfPrime(ddouble x) {
                     Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
                     if (x == 0.5d) {
@@ -144,7 +144,7 @@ namespace DoubleDouble {
                     }
 
                     if (x < 0.5d) {
-                        ddouble w = x * PIHalf, w2 = w * w, w4 = w2 * w2, u = 1;
+                        ddouble w = x * PiHalf, w2 = w * w, w4 = w2 * w2, u = 1;
                         ddouble y = 0d, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 3; i < n; i += 4) {
@@ -165,7 +165,7 @@ namespace DoubleDouble {
                         return w * y;
                     }
                     else {
-                        ddouble w = (x - 1d) * PIHalf, w2 = w * w, w4 = w2 * w2, u = w2;
+                        ddouble w = (x - 1d) * PiHalf, w2 = w * w, w4 = w2 * w2, u = w2;
                         ddouble y = 1d, c = 0d;
 
                         for (int i = 0, n = TaylorSequence.Count - 4; i < n; i += 4) {

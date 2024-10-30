@@ -29,7 +29,7 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 if (n == 1) {
-                    return Ldexp(RcpPI, 1);
+                    return Ldexp(RcpPi, 1);
                 }
 
                 return PositiveInfinity;
@@ -59,7 +59,7 @@ namespace DoubleDouble {
                     return 0d;
                 }
                 if (n == 1) {
-                    return Ldexp(RcpPI, 1);
+                    return Ldexp(RcpPi, 1);
                 }
 
                 return PositiveInfinity;
@@ -124,7 +124,7 @@ namespace DoubleDouble {
                     return -0d;
                 }
                 if (n == 1) {
-                    return -Ldexp(RcpPI, 1);
+                    return -Ldexp(RcpPi, 1);
                 }
 
                 return PositiveInfinity;
@@ -176,7 +176,7 @@ namespace DoubleDouble {
                     s += w * v;
                 }
 
-                ddouble y = s * Pow(Ldexp(x, -1), n - 1) * RcpPI * StruveGTable.Value(n);
+                ddouble y = s * Pow(Ldexp(x, -1), n - 1) * RcpPi * StruveGTable.Value(n);
 
                 return y;
             }
@@ -203,7 +203,7 @@ namespace DoubleDouble {
                     foreach ((ddouble u, ddouble w) in PointTable) {
                         ddouble u_sft = Ldexp((i + u) * q, -1);
 
-                        ddouble v = Exp(-x * SinPI(u_sft)) * Pow(Square(CosPI(u_sft)), n);
+                        ddouble v = Exp(-x * SinPi(u_sft)) * Pow(Square(CosPi(u_sft)), n);
 
                         if (v.hi < s.hi * 1e-31) {
                             convergenced = true;
@@ -224,7 +224,7 @@ namespace DoubleDouble {
             public static ddouble Value(int n, ddouble x, bool sign_switch, int terms) {
                 ddouble x2 = x * x, x4 = x2 * x2;
 
-                ddouble s = 0d, u = Pow(Ldexp(x, -1), n + 1) * RcpPI;
+                ddouble s = 0d, u = Pow(Ldexp(x, -1), n + 1) * RcpPi;
 
                 for (int k = 0; k <= terms; k++) {
                     ddouble w = x2 * FTable.Value(2 * k) * FTable.Value(2 * k + n);

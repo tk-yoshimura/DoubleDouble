@@ -11,7 +11,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return PIHalf;
+                return PiHalf;
             }
 
             if (m == 1d) {
@@ -36,7 +36,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return PIHalf;
+                return PiHalf;
             }
 
             if (m == 1d) {
@@ -69,7 +69,7 @@ namespace DoubleDouble {
             }
 
             if (IsZero(m)) {
-                return PI / Ldexp(Sqrt(1d - n), 1);
+                return Pi / Ldexp(Sqrt(1d - n), 1);
             }
 
             if (m == 1d) {
@@ -132,7 +132,7 @@ namespace DoubleDouble {
                         w *= m;
                     }
 
-                    y = x * PIHalf;
+                    y = x * PiHalf;
                 }
 
                 return y;
@@ -154,7 +154,7 @@ namespace DoubleDouble {
                     c = squa_c / Ldexp(a, 2);
                 }
 
-                ddouble y = q * PI / Ldexp(a, 1);
+                ddouble y = q * Pi / Ldexp(a, 1);
 
                 return y;
             }

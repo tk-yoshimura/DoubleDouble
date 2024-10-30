@@ -386,7 +386,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreEqual(exp, double.ILogB(y.Hi));
             }
 
-            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -964) * ddouble.Rcp(15), -868); x > 0; x /= 2, exp--) {
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.Pi + ddouble.Ldexp(1, -964) * ddouble.Rcp(15), -868); x > 0; x /= 2, exp--) {
                 ddouble y = x.ToString();
 
                 Console.WriteLine(x);
@@ -395,7 +395,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
-            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -932) * ddouble.Rcp(31), -868); x > 0; x /= 2, exp--) {
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.Pi + ddouble.Ldexp(1, -932) * ddouble.Rcp(31), -868); x > 0; x /= 2, exp--) {
                 ddouble y = x.ToString();
 
                 Console.WriteLine(x);
@@ -404,7 +404,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
-            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -900) * ddouble.Rcp(63), -868); x > 0; x /= 2, exp--) {
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.Pi + ddouble.Ldexp(1, -900) * ddouble.Rcp(63), -868); x > 0; x /= 2, exp--) {
                 ddouble y = x.ToString();
 
                 Console.WriteLine(x);
@@ -413,7 +413,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
-            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -964) * ddouble.Rcp(127), -868); x > 0; x /= 10, exp--) {
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.Pi + ddouble.Ldexp(1, -964) * ddouble.Rcp(127), -868); x > 0; x /= 10, exp--) {
                 ddouble y = x.ToString();
 
                 Console.WriteLine(x);
@@ -422,7 +422,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
-            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -932) * ddouble.Rcp(255), -868); x > 0; x /= 10, exp--) {
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.Pi + ddouble.Ldexp(1, -932) * ddouble.Rcp(255), -868); x > 0; x /= 10, exp--) {
                 ddouble y = x.ToString();
 
                 Console.WriteLine(x);
@@ -431,7 +431,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(x, y, 1e-30);
             }
 
-            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.PI + ddouble.Ldexp(1, -900) * ddouble.Rcp(512), -868); x > 0; x /= 10, exp--) {
+            for ((ddouble x, int exp) = (ddouble.Ldexp(1, -868) * ddouble.Pi + ddouble.Ldexp(1, -900) * ddouble.Rcp(512), -868); x > 0; x /= 10, exp--) {
                 ddouble y = x.ToString();
 
                 Console.WriteLine(x);

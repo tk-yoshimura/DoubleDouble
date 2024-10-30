@@ -4211,8 +4211,8 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsFinite(ddouble.Si(ddouble.Epsilon, limit_zero: false));
 
             PrecisionAssert.IsNaN(ddouble.Si(ddouble.NaN, limit_zero: false));
-            PrecisionAssert.AreEqual(ddouble.PI / 2, ddouble.Si(ddouble.PositiveInfinity, limit_zero: false));
-            PrecisionAssert.AreEqual(-ddouble.PI / 2, ddouble.Si(ddouble.NegativeInfinity, limit_zero: false));
+            PrecisionAssert.AreEqual(ddouble.Pi / 2, ddouble.Si(ddouble.PositiveInfinity, limit_zero: false));
+            PrecisionAssert.AreEqual(-ddouble.Pi / 2, ddouble.Si(ddouble.NegativeInfinity, limit_zero: false));
         }
 
         [TestMethod]
@@ -7583,13 +7583,13 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d, 1e-31d);
             }
 
-            PrecisionAssert.AreEqual(-ddouble.PI / 2, ddouble.Si(0, limit_zero: true));
+            PrecisionAssert.AreEqual(-ddouble.Pi / 2, ddouble.Si(0, limit_zero: true));
 
             PrecisionAssert.IsFinite(ddouble.Si(ddouble.Epsilon, limit_zero: true));
 
             PrecisionAssert.IsNaN(ddouble.Si(ddouble.NaN, limit_zero: true));
             PrecisionAssert.AreEqual(0, ddouble.Si(ddouble.PositiveInfinity, limit_zero: true));
-            PrecisionAssert.AreEqual(-ddouble.PI, ddouble.Si(ddouble.NegativeInfinity, limit_zero: true));
+            PrecisionAssert.AreEqual(-ddouble.Pi, ddouble.Si(ddouble.NegativeInfinity, limit_zero: true));
         }
 
         [TestMethod]

@@ -236,22 +236,22 @@ namespace DoubleDouble {
                     return ILogB(nu - n) < EpsExponent;
                 }
 
-                public static class SinCosPICache {
+                public static class SinCosPiCache {
                     private static readonly Dictionary<ddouble, ddouble> cospi_table = [];
                     private static readonly Dictionary<ddouble, ddouble> sinpi_table = [];
 
-                    public static ddouble CosPI(ddouble theta) {
+                    public static ddouble CosPi(ddouble theta) {
                         if (!cospi_table.TryGetValue(theta, out ddouble cospi)) {
-                            cospi = ddouble.CosPI(theta);
+                            cospi = ddouble.CosPi(theta);
                             cospi_table[theta] = cospi;
                         }
 
                         return cospi;
                     }
 
-                    public static ddouble SinPI(ddouble theta) {
+                    public static ddouble SinPi(ddouble theta) {
                         if (!sinpi_table.TryGetValue(theta, out ddouble sinpi)) {
-                            sinpi = ddouble.SinPI(theta);
+                            sinpi = ddouble.SinPi(theta);
                             sinpi_table[theta] = sinpi;
                         }
 
@@ -410,7 +410,7 @@ namespace DoubleDouble {
 
                         YCoefTable r = y_coef_table;
 
-                        ddouble cos = SinCosPICache.CosPI(nu), sin = SinCosPICache.SinPI(nu);
+                        ddouble cos = SinCosPiCache.CosPi(nu), sin = SinCosPiCache.SinPi(nu);
                         ddouble p = IsZero(cos) ? 0d : Pow(x, Ldexp(nu, 1)) * cos;
                         ddouble s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
                         ddouble x2 = x * x, x4 = x2 * x2;
@@ -489,7 +489,7 @@ namespace DoubleDouble {
                             return NegativeInfinity;
                         }
 
-                        ddouble c = 0d, u = Ldexp(RcpPI, 1);
+                        ddouble c = 0d, u = Ldexp(RcpPi, 1);
 
                         for (int k = 0; k <= terms; k++) {
                             ddouble s = u * r[k], t = h - HarmonicNumber(2 * k);
@@ -527,7 +527,7 @@ namespace DoubleDouble {
                             return NegativeInfinity;
                         }
 
-                        ddouble c = -2d / (x * PI), u = x / Ldexp(PI, 1);
+                        ddouble c = -2d / (x * Pi), u = x / Ldexp(Pi, 1);
 
                         for (int k = 0; k <= terms; k++) {
                             ddouble s = u * r[k], t = h - HarmonicNumber(2 * k) - HarmonicNumber(2 * k + 1);
@@ -594,7 +594,7 @@ namespace DoubleDouble {
                             u *= x4;
                         }
 
-                        ddouble y = c * RcpPI * Pow(Ldexp(x, -1), n);
+                        ddouble y = c * RcpPi * Pow(Ldexp(x, -1), n);
 
                         return y;
                     }
@@ -660,7 +660,7 @@ namespace DoubleDouble {
                             return PositiveInfinity;
                         }
 
-                        ddouble c = 0d, u = PI / Ldexp(SinPI(nu), 1);
+                        ddouble c = 0d, u = Pi / Ldexp(SinPi(nu), 1);
 
                         for (int k = 0; k <= terms; k++) {
                             c = SeriesUtil.Add(c, u * r[k], tn * gn[k], -tp * gp[k], out bool convergence);
@@ -1117,7 +1117,7 @@ namespace DoubleDouble {
 
                         ddouble cos = Cos(omega), sin = Sin(omega);
 
-                        ddouble y = Sqrt(2d / (PI * x)) * (cos * c_even - sin * c_odd);
+                        ddouble y = Sqrt(2d / (Pi * x)) * (cos * c_even - sin * c_odd);
 
                         return y;
                     }
@@ -1140,7 +1140,7 @@ namespace DoubleDouble {
 
                         ddouble cos = Cos(omega), sin = Sin(omega);
 
-                        ddouble y = Sqrt(2d / (PI * x)) * (sin * c_even + cos * c_odd);
+                        ddouble y = Sqrt(2d / (Pi * x)) * (sin * c_even + cos * c_odd);
 
                         return y;
                     }
@@ -1155,7 +1155,7 @@ namespace DoubleDouble {
 
                         ddouble c = hankel.BesselICoef(x);
 
-                        ddouble y = Sqrt(1d / (2d * PI * x)) * c;
+                        ddouble y = Sqrt(1d / (2d * Pi * x)) * c;
 
                         if (IsPositiveInfinity(x) || IsZero(y)) {
                             return scale ? PlusZero : PositiveInfinity;
@@ -1179,7 +1179,7 @@ namespace DoubleDouble {
 
                         ddouble c = hankel.BesselKCoef(x);
 
-                        ddouble y = Sqrt(PI / (2d * x)) * c;
+                        ddouble y = Sqrt(Pi / (2d * x)) * c;
 
                         if (IsPositiveInfinity(x) || IsZero(y)) {
                             return PlusZero;
@@ -1212,7 +1212,7 @@ namespace DoubleDouble {
                         }
 
                         public ddouble Omega(ddouble x) {
-                            ddouble omega = x - Ldexp(2d * Nu + 1d, -2) * PI;
+                            ddouble omega = x - Ldexp(2d * Nu + 1d, -2) * Pi;
 
                             return omega;
                         }
@@ -1576,9 +1576,9 @@ namespace DoubleDouble {
                         lambda += f0 * phi[0];
                         lambda *= s;
 
-                        ddouble rcot = 1d / TanPI(alpha), rgamma = Gamma(1d + alpha), rsqgamma = rgamma * rgamma;
-                        ddouble r = Ldexp(RcpPI * sqs, 1);
-                        ddouble p = sqs * rsqgamma * RcpPI;
+                        ddouble rcot = 1d / TanPi(alpha), rgamma = Gamma(1d + alpha), rsqgamma = rgamma * rgamma;
+                        ddouble r = Ldexp(RcpPi * sqs, 1);
+                        ddouble p = sqs * rsqgamma * RcpPi;
 
                         ddouble xi0 = -Ldexp(v, 1) * p;
 
@@ -1665,7 +1665,7 @@ namespace DoubleDouble {
 
                         lambda = Ldexp(lambda, 1) + f0;
 
-                        ddouble y0 = Ldexp((se + f0 * (Log(Ldexp(x, -1)) + EulerGamma)) / (PI * lambda), 1);
+                        ddouble y0 = Ldexp((se + f0 * (Log(Ldexp(x, -1)) + EulerGamma)) / (Pi * lambda), 1);
 
                         return y0;
                     }
@@ -1700,7 +1700,7 @@ namespace DoubleDouble {
 
                         lambda = Ldexp(lambda, 1) + f0;
 
-                        ddouble y1 = Ldexp((sx - v * f0 + (Log(Ldexp(x, -1)) + EulerGamma - 1d) * f1) / (lambda * PI), 1);
+                        ddouble y1 = Ldexp((sx - v * f0 + (Log(Ldexp(x, -1)) + EulerGamma - 1d) * f1) / (lambda * Pi), 1);
 
                         return y1;
                     }
@@ -1745,7 +1745,7 @@ namespace DoubleDouble {
                             (y1, y0) = (2 * k * v * y1 - y0, y1);
                         }
 
-                        ddouble yn = Ldexp(y1 / (lambda * PI), 1);
+                        ddouble yn = Ldexp(y1 / (lambda * Pi), 1);
 
                         return yn;
                     }
@@ -2015,7 +2015,7 @@ namespace DoubleDouble {
                             sd = sd * t + d;
                         }
 
-                        ddouble y = Sqrt(Ldexp(t * PI, -1)) * sc / sd;
+                        ddouble y = Sqrt(Ldexp(t * Pi, -1)) * sc / sd;
 
                         if (!scale) {
                             y *= Exp(-x);
@@ -2442,7 +2442,7 @@ namespace DoubleDouble {
                         y = Ldexp(y, (int)long.Max(-exp_sum, int.MinValue));
 
                         if (IsNegative(nu) && !IsInteger(nu_abs)) {
-                            ddouble bk = 2d * RcpPI * SinCosPICache.SinPI(nu_abs) * Recurrence.BesselK(nu_abs, x, scale: false);
+                            ddouble bk = 2d * RcpPi * SinCosPiCache.SinPi(nu_abs) * Recurrence.BesselK(nu_abs, x, scale: false);
 
                             y += scale ? (bk * Exp(-x)) : bk;
                         }
