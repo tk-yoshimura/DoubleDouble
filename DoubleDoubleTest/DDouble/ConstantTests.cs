@@ -43,6 +43,8 @@ namespace DoubleDoubleTest.DDouble {
 
             Console.WriteLine($"0x{FloatSplitter.Split(expected).mantissa:X14}");
             Console.WriteLine($"0x{FloatSplitter.Split(actual).mantissa:X14}");
+
+            PrecisionAssert.AreEqual(ddouble.Pi, ddouble.PI);
         }
 
         [TestMethod]

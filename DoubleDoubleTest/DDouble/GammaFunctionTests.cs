@@ -96,10 +96,10 @@ namespace DoubleDoubleTest.DDouble {
             BitAssert.NeighborBits("8.579336698258574368182534016573082801626e2", ddouble.LogGamma(200), 4);
 
             foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
-                (1 - Math.ScaleB(1, -3), "8.5858707225334323502365583769487702270e-2"),
-                (1 + Math.ScaleB(1, -3), "-6.0023184126039582931405843207430114278e-2"),
-                (2 - Math.ScaleB(1, -3), "-4.7672685399188299643978037161862272345e-2"),
-                (2 + Math.ScaleB(1, -3), "5.7759851530343871607388266263091590793e-2"),
+                (1 - double.ScaleB(1, -3), "8.5858707225334323502365583769487702270e-2"),
+                (1 + double.ScaleB(1, -3), "-6.0023184126039582931405843207430114278e-2"),
+                (2 - double.ScaleB(1, -3), "-4.7672685399188299643978037161862272345e-2"),
+                (2 + double.ScaleB(1, -3), "5.7759851530343871607388266263091590793e-2"),
             }) {
                 ddouble x_dec = ddouble.BitDecrement(x), x_dec2 = ddouble.BitDecrement(x_dec), x_dec3 = ddouble.BitDecrement(x_dec2);
                 ddouble x_inc = ddouble.BitIncrement(x), x_inc2 = ddouble.BitIncrement(x_inc), x_inc3 = ddouble.BitIncrement(x_inc2);
@@ -167,8 +167,8 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(ddouble.Digamma(zeropoint));
 
             foreach ((ddouble x, ddouble expected) in new (ddouble, ddouble)[] {
-                (zeropoint - Math.ScaleB(1, -3), "-0.128425703997196096307000073904848726435618594702456926759961027"),
-                (zeropoint + Math.ScaleB(1, -3), "+0.114508749996322817880325006697673040445328929804493417473187312"),
+                (zeropoint - double.ScaleB(1, -3), "-0.128425703997196096307000073904848726435618594702456926759961027"),
+                (zeropoint + double.ScaleB(1, -3), "+0.114508749996322817880325006697673040445328929804493417473187312"),
             }) {
                 ddouble x_dec = ddouble.BitDecrement(x), x_dec2 = ddouble.BitDecrement(x_dec), x_dec3 = ddouble.BitDecrement(x_dec2);
                 ddouble x_inc = ddouble.BitIncrement(x), x_inc2 = ddouble.BitIncrement(x_inc), x_inc3 = ddouble.BitIncrement(x_inc2);
@@ -207,7 +207,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void InverseGammaTest() {
-            for (double h = 1; h <= Math.ScaleB(1, 100); h *= 2) {
+            for (double h = 1; h <= double.ScaleB(1, 100); h *= 2) {
                 for (double x = h; x < h * 2; x += h / 64) {
                     ddouble y = ddouble.InverseGamma(x);
                     ddouble z = ddouble.Gamma(y);
@@ -220,7 +220,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (double h = Math.ScaleB(1, 101); h <= Math.ScaleB(1, 200); h *= 2) {
+            for (double h = double.ScaleB(1, 101); h <= double.ScaleB(1, 200); h *= 2) {
                 for (double x = h; x < h * 2; x += h / 64) {
                     ddouble y = ddouble.InverseGamma(x);
                     ddouble z = ddouble.Gamma(y);
@@ -233,7 +233,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (double h = Math.ScaleB(1, 201); h <= Math.ScaleB(1, 600); h *= 2) {
+            for (double h = double.ScaleB(1, 201); h <= double.ScaleB(1, 600); h *= 2) {
                 for (double x = h; x < h * 2; x += h / 64) {
                     ddouble y = ddouble.InverseGamma(x);
                     ddouble z = ddouble.Gamma(y);
@@ -246,7 +246,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (double h = Math.ScaleB(1, 601); h <= Math.ScaleB(1, 1020); h *= 2) {
+            for (double h = double.ScaleB(1, 601); h <= double.ScaleB(1, 1020); h *= 2) {
                 for (double x = h; x < h * 2; x += h / 64) {
                     ddouble y = ddouble.InverseGamma(x);
                     ddouble z = ddouble.Gamma(y);
@@ -313,7 +313,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (double h = 1d / 1024; h <= Math.ScaleB(1, 400); h *= 2) {
+            for (double h = 1d / 1024; h <= double.ScaleB(1, 400); h *= 2) {
                 for (ddouble x = -h; x > -h * 2; x -= h / 64) {
                     ddouble y = ddouble.InverseDigamma(x);
                     ddouble z = ddouble.Digamma(y);

@@ -294,32 +294,32 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AreEqual(1, ddouble.Sinc(0, normalized));
 
                 PrecisionAssert.AlmostEqual(
-                    ddouble.Sinc(-Math.ScaleB(1, -64), normalized),
-                    ddouble.Sinc(ddouble.BitDecrement(-Math.ScaleB(1, -64)), normalized),
+                    ddouble.Sinc(-double.ScaleB(1, -64), normalized),
+                    ddouble.Sinc(ddouble.BitDecrement(-double.ScaleB(1, -64)), normalized),
                     1e-31
                 );
 
                 PrecisionAssert.AlmostEqual(
-                    ddouble.Sinc(-Math.ScaleB(1, -64), normalized),
-                    ddouble.Sinc(ddouble.BitIncrement(-Math.ScaleB(1, -64)), normalized),
+                    ddouble.Sinc(-double.ScaleB(1, -64), normalized),
+                    ddouble.Sinc(ddouble.BitIncrement(-double.ScaleB(1, -64)), normalized),
                     1e-31
                 );
 
                 PrecisionAssert.AlmostEqual(
-                    ddouble.Sinc(+Math.ScaleB(1, -64), normalized),
-                    ddouble.Sinc(ddouble.BitDecrement(+Math.ScaleB(1, -64)), normalized),
+                    ddouble.Sinc(+double.ScaleB(1, -64), normalized),
+                    ddouble.Sinc(ddouble.BitDecrement(+double.ScaleB(1, -64)), normalized),
                     1e-31
                 );
 
                 PrecisionAssert.AlmostEqual(
-                    ddouble.Sinc(+Math.ScaleB(1, -64), normalized),
-                    ddouble.Sinc(ddouble.BitIncrement(+Math.ScaleB(1, -64)), normalized),
+                    ddouble.Sinc(+double.ScaleB(1, -64), normalized),
+                    ddouble.Sinc(ddouble.BitIncrement(+double.ScaleB(1, -64)), normalized),
                     1e-31
                 );
 
-                for (double x = Math.ScaleB(1, 256); x < double.PositiveInfinity; x *= 16) {
-                    PrecisionAssert.IsFinite(ddouble.Sinc(+x, normalized), $"+2^{Math.ILogB(x)}");
-                    PrecisionAssert.IsFinite(ddouble.Sinc(-x, normalized), $"-2^{Math.ILogB(x)}");
+                for (double x = double.ScaleB(1, 256); x < double.PositiveInfinity; x *= 16) {
+                    PrecisionAssert.IsFinite(ddouble.Sinc(+x, normalized), $"+2^{double.ILogB(x)}");
+                    PrecisionAssert.IsFinite(ddouble.Sinc(-x, normalized), $"-2^{double.ILogB(x)}");
                 }
 
                 PrecisionAssert.AreEqual(1, ddouble.Sinc(-ddouble.Epsilon, normalized));
@@ -616,26 +616,26 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AreEqual(1, ddouble.Sinhc(0));
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Sinhc(-Math.ScaleB(1, -64)),
-                ddouble.Sinhc(ddouble.BitDecrement(-Math.ScaleB(1, -64))),
+                ddouble.Sinhc(-double.ScaleB(1, -64)),
+                ddouble.Sinhc(ddouble.BitDecrement(-double.ScaleB(1, -64))),
                 1e-31
             );
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Sinhc(-Math.ScaleB(1, -64)),
-                ddouble.Sinhc(ddouble.BitIncrement(-Math.ScaleB(1, -64))),
+                ddouble.Sinhc(-double.ScaleB(1, -64)),
+                ddouble.Sinhc(ddouble.BitIncrement(-double.ScaleB(1, -64))),
                 1e-31
             );
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Sinhc(+Math.ScaleB(1, -64)),
-                ddouble.Sinhc(ddouble.BitDecrement(+Math.ScaleB(1, -64))),
+                ddouble.Sinhc(+double.ScaleB(1, -64)),
+                ddouble.Sinhc(ddouble.BitDecrement(+double.ScaleB(1, -64))),
                 1e-31
             );
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Sinhc(+Math.ScaleB(1, -64)),
-                ddouble.Sinhc(ddouble.BitIncrement(+Math.ScaleB(1, -64))),
+                ddouble.Sinhc(+double.ScaleB(1, -64)),
+                ddouble.Sinhc(ddouble.BitIncrement(+double.ScaleB(1, -64))),
                 1e-31
             );
 
@@ -930,26 +930,26 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AreEqual(0.5, ddouble.Jinc(0));
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Jinc(-Math.ScaleB(1, -64)),
-                ddouble.Jinc(ddouble.BitDecrement(-Math.ScaleB(1, -64))),
+                ddouble.Jinc(-double.ScaleB(1, -64)),
+                ddouble.Jinc(ddouble.BitDecrement(-double.ScaleB(1, -64))),
                 1e-31
             );
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Jinc(-Math.ScaleB(1, -64)),
-                ddouble.Jinc(ddouble.BitIncrement(-Math.ScaleB(1, -64))),
+                ddouble.Jinc(-double.ScaleB(1, -64)),
+                ddouble.Jinc(ddouble.BitIncrement(-double.ScaleB(1, -64))),
                 1e-31
             );
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Jinc(+Math.ScaleB(1, -64)),
-                ddouble.Jinc(ddouble.BitDecrement(+Math.ScaleB(1, -64))),
+                ddouble.Jinc(+double.ScaleB(1, -64)),
+                ddouble.Jinc(ddouble.BitDecrement(+double.ScaleB(1, -64))),
                 1e-31
             );
 
             PrecisionAssert.AlmostEqual(
-                ddouble.Jinc(+Math.ScaleB(1, -64)),
-                ddouble.Jinc(ddouble.BitIncrement(+Math.ScaleB(1, -64))),
+                ddouble.Jinc(+double.ScaleB(1, -64)),
+                ddouble.Jinc(ddouble.BitIncrement(+double.ScaleB(1, -64))),
                 1e-31
             );
 

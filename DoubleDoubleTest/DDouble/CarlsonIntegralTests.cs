@@ -28,9 +28,9 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble z = Math.ScaleB(1, -256); z <= 1; z *= Math.ScaleB(1, 32)) {
-                for (ddouble y = Math.ScaleB(1, -256); y <= 1; y *= Math.ScaleB(1, 32)) {
-                    for (ddouble x = Math.ScaleB(1, -256); x <= 1; x *= Math.ScaleB(1, 32)) {
+            for (ddouble z = double.ScaleB(1, -256); z <= 1; z *= double.ScaleB(1, 32)) {
+                for (ddouble y = double.ScaleB(1, -256); y <= 1; y *= double.ScaleB(1, 32)) {
+                    for (ddouble x = double.ScaleB(1, -256); x <= 1; x *= double.ScaleB(1, 32)) {
                         Console.WriteLine($"{x},{y},{z}");
 
                         ddouble v1 = ddouble.CarlsonRD(x, y, z);
@@ -48,9 +48,9 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble z = 1; z <= Math.ScaleB(1, 256); z *= Math.ScaleB(1, 32)) {
-                for (ddouble y = 1; y <= Math.ScaleB(1, 256); y *= Math.ScaleB(1, 32)) {
-                    for (ddouble x = 1; x <= Math.ScaleB(1, 256); x *= Math.ScaleB(1, 32)) {
+            for (ddouble z = 1; z <= double.ScaleB(1, 256); z *= double.ScaleB(1, 32)) {
+                for (ddouble y = 1; y <= double.ScaleB(1, 256); y *= double.ScaleB(1, 32)) {
+                    for (ddouble x = 1; x <= double.ScaleB(1, 256); x *= double.ScaleB(1, 32)) {
                         Console.WriteLine($"{x},{y},{z}");
 
                         ddouble v1 = ddouble.CarlsonRD(x, y, z);
@@ -68,7 +68,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble v = Math.ScaleB(1, -64); v > 0; v *= Math.ScaleB(1, -16)) {
+            for (ddouble v = double.ScaleB(1, -64); v > 0; v *= double.ScaleB(1, -16)) {
                 ddouble y = ddouble.CarlsonRD(v, v, v);
 
                 Console.WriteLine(y);
@@ -76,7 +76,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y > 1, "eps");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRD(v, v, v);
 
                 Console.WriteLine(y);
@@ -130,8 +130,8 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble y = Math.ScaleB(1, -256); y <= 1; y *= Math.ScaleB(1, 32)) {
-                for (ddouble x = Math.ScaleB(1, -256); x <= 1; x *= Math.ScaleB(1, 32)) {
+            for (ddouble y = double.ScaleB(1, -256); y <= 1; y *= double.ScaleB(1, 32)) {
+                for (ddouble x = double.ScaleB(1, -256); x <= 1; x *= double.ScaleB(1, 32)) {
                     Console.WriteLine($"{x},{y}");
 
                     ddouble z = ddouble.Sqrt(x * y);
@@ -150,8 +150,8 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble y = Math.ScaleB(1, -256); y <= 1; y *= Math.ScaleB(1, 32)) {
-                for (ddouble x = Math.ScaleB(1, -256); x <= 1; x *= Math.ScaleB(1, 32)) {
+            for (ddouble y = double.ScaleB(1, -256); y <= 1; y *= double.ScaleB(1, 32)) {
+                for (ddouble x = double.ScaleB(1, -256); x <= 1; x *= double.ScaleB(1, 32)) {
                     Console.WriteLine($"{x},{y}");
 
                     ddouble z = ddouble.Sqrt(x * y);
@@ -170,8 +170,8 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble y = 1; y <= Math.ScaleB(1, 256); y *= Math.ScaleB(1, 32)) {
-                for (ddouble x = 1; x <= Math.ScaleB(1, 256); x *= Math.ScaleB(1, 32)) {
+            for (ddouble y = 1; y <= double.ScaleB(1, 256); y *= double.ScaleB(1, 32)) {
+                for (ddouble x = 1; x <= double.ScaleB(1, 256); x *= double.ScaleB(1, 32)) {
                     Console.WriteLine($"{x},{y}");
 
                     ddouble z = ddouble.Sqrt(x * y);
@@ -190,7 +190,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble v = Math.ScaleB(1, -64); v > 0; v *= Math.ScaleB(1, -16)) {
+            for (ddouble v = double.ScaleB(1, -64); v > 0; v *= double.ScaleB(1, -16)) {
                 ddouble y = ddouble.CarlsonRC(v, v);
 
                 Console.WriteLine(y);
@@ -198,7 +198,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y > 1, "eps");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRC(v, v);
 
                 Console.WriteLine(y);
@@ -260,9 +260,9 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble z = Math.ScaleB(1, -256); z <= 1; z *= Math.ScaleB(1, 32)) {
-                for (ddouble y = Math.ScaleB(1, -256); y <= 1; y *= Math.ScaleB(1, 32)) {
-                    for (ddouble x = Math.ScaleB(1, -256); x <= 1; x *= Math.ScaleB(1, 32)) {
+            for (ddouble z = double.ScaleB(1, -256); z <= 1; z *= double.ScaleB(1, 32)) {
+                for (ddouble y = double.ScaleB(1, -256); y <= 1; y *= double.ScaleB(1, 32)) {
+                    for (ddouble x = double.ScaleB(1, -256); x <= 1; x *= double.ScaleB(1, 32)) {
                         Console.WriteLine($"{x},{y},{z}");
 
                         ddouble w = (x * y) / z;
@@ -282,9 +282,9 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble z = 1; z <= Math.ScaleB(1, 256); z *= Math.ScaleB(1, 32)) {
-                for (ddouble y = 1; y <= Math.ScaleB(1, 256); y *= Math.ScaleB(1, 32)) {
-                    for (ddouble x = 1; x <= Math.ScaleB(1, 256); x *= Math.ScaleB(1, 32)) {
+            for (ddouble z = 1; z <= double.ScaleB(1, 256); z *= double.ScaleB(1, 32)) {
+                for (ddouble y = 1; y <= double.ScaleB(1, 256); y *= double.ScaleB(1, 32)) {
+                    for (ddouble x = 1; x <= double.ScaleB(1, 256); x *= double.ScaleB(1, 32)) {
                         Console.WriteLine($"{x},{y},{z}");
 
                         ddouble w = (x * y) / z;
@@ -304,7 +304,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble v = Math.ScaleB(1, -64); v > 0; v *= Math.ScaleB(1, -16)) {
+            for (ddouble v = double.ScaleB(1, -64); v > 0; v *= double.ScaleB(1, -16)) {
                 ddouble y = ddouble.CarlsonRF(v, v, v);
 
                 Console.WriteLine(y);
@@ -312,7 +312,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y > 1, "eps");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRF(v, v, v);
 
                 Console.WriteLine(y);
@@ -394,7 +394,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble v = Math.ScaleB(1, -64); v > 0; v *= Math.ScaleB(1, -16)) {
+            for (ddouble v = double.ScaleB(1, -64); v > 0; v *= double.ScaleB(1, -16)) {
                 ddouble y = ddouble.CarlsonRJ(v, v, v, v);
 
                 Console.WriteLine(y);
@@ -402,7 +402,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y > 1, "eps");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRJ(v, v, v, v);
 
                 Console.WriteLine(y);
@@ -455,7 +455,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
+            for (ddouble v = double.ScaleB(1, -96); v > 0; v *= double.ScaleB(1, -4)) {
                 ddouble y = ddouble.CarlsonRG(4, v, v);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
@@ -463,7 +463,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(1, y, 1e-20);
             }
 
-            for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
+            for (ddouble v = double.ScaleB(1, -96); v > 0; v *= double.ScaleB(1, -4)) {
                 ddouble y = ddouble.CarlsonRG(v, 4, v);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
@@ -471,7 +471,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(1, y, 1e-20);
             }
 
-            for (ddouble v = Math.ScaleB(1, -96); v > 0; v *= Math.ScaleB(1, -4)) {
+            for (ddouble v = double.ScaleB(1, -96); v > 0; v *= double.ScaleB(1, -4)) {
                 ddouble y = ddouble.CarlsonRG(v, v, 4);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
@@ -479,23 +479,23 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(1, y, 1e-20);
             }
 
-            for (ddouble v = Math.ScaleB(1, -80); v > 0; v *= Math.ScaleB(1, -4)) {
-                ddouble y = ddouble.CarlsonRG(Math.ScaleB(1, -80), v, 4);
+            for (ddouble v = double.ScaleB(1, -80); v > 0; v *= double.ScaleB(1, -4)) {
+                ddouble y = ddouble.CarlsonRG(double.ScaleB(1, -80), v, 4);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
 
                 PrecisionAssert.AlmostEqual(1, y, 1e-20);
             }
 
-            for (ddouble v = Math.ScaleB(1, -80); v > 0; v *= Math.ScaleB(1, -4)) {
-                ddouble y = ddouble.CarlsonRG(v, Math.ScaleB(1, -80), 4);
+            for (ddouble v = double.ScaleB(1, -80); v > 0; v *= double.ScaleB(1, -4)) {
+                ddouble y = ddouble.CarlsonRG(v, double.ScaleB(1, -80), 4);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
 
                 PrecisionAssert.AlmostEqual(1, y, 1e-20);
             }
 
-            for (ddouble v = Math.ScaleB(1, -80); v > 0; v *= Math.ScaleB(1, -4)) {
+            for (ddouble v = double.ScaleB(1, -80); v > 0; v *= double.ScaleB(1, -4)) {
                 ddouble y = ddouble.CarlsonRG(v * 16, v, 4);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
@@ -503,7 +503,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(1, y, 1e-20);
             }
 
-            for (ddouble v = Math.ScaleB(1, -80); v > 0; v *= Math.ScaleB(1, -4)) {
+            for (ddouble v = double.ScaleB(1, -80); v > 0; v *= double.ScaleB(1, -4)) {
                 ddouble y = ddouble.CarlsonRG(v, v * 16, 4);
 
                 Console.WriteLine($"{ddouble.Frexp(v).exp},{y}");
@@ -511,7 +511,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(1, y, 1e-20);
             }
 
-            for (ddouble v = Math.ScaleB(1, -64); v > 0; v *= Math.ScaleB(1, -16)) {
+            for (ddouble v = double.ScaleB(1, -64); v > 0; v *= double.ScaleB(1, -16)) {
                 ddouble y = ddouble.CarlsonRG(v, v, v);
 
                 Console.WriteLine(y);
@@ -519,7 +519,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y < 1, "eps");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRG(v, v, v);
 
                 Console.WriteLine(y);
@@ -527,7 +527,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y > 1, "largeval");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRG(v, v, 1);
 
                 Console.WriteLine(y);
@@ -535,7 +535,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y > 1, "largeval");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRG(v, 1, 1);
 
                 Console.WriteLine(y);
@@ -543,7 +543,7 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(y > 1, "largeval");
             }
 
-            for (ddouble v = Math.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= Math.ScaleB(1, 32)) {
+            for (ddouble v = double.ScaleB(1, 32); v < ddouble.PositiveInfinity; v *= double.ScaleB(1, 32)) {
                 ddouble y = ddouble.CarlsonRG(v, v, 0);
 
                 Console.WriteLine(y);

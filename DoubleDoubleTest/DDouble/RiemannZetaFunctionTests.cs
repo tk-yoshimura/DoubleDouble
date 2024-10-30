@@ -1348,8 +1348,8 @@ namespace DoubleDoubleTest.DDouble {
             ddouble v = ddouble.DirichletEta(1 - ddouble.Consts.RiemannZeta.Eps);
             ddouble w = ddouble.Ln2;
 
-            Assert.IsTrue(ddouble.Ln2 > ddouble.DirichletEta(1 - Math.ScaleB(1, -32)));
-            Assert.IsTrue(ddouble.Ln2 < ddouble.DirichletEta(1 + Math.ScaleB(1, -32)));
+            Assert.IsTrue(ddouble.Ln2 > ddouble.DirichletEta(1 - double.ScaleB(1, -32)));
+            Assert.IsTrue(ddouble.Ln2 < ddouble.DirichletEta(1 + double.ScaleB(1, -32)));
 
             PrecisionAssert.IsNaN(ddouble.DirichletEta(ddouble.NaN));
             PrecisionAssert.AreEqual(1, ddouble.DirichletEta(ddouble.PositiveInfinity));

@@ -16,7 +16,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log2(v);
 
-                PrecisionAssert.AreEqual(Math.Log2((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log2((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -28,7 +28,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log2(v);
 
-                PrecisionAssert.AreEqual(Math.Log2((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log2((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -47,7 +47,7 @@ namespace DoubleDoubleTest.DDouble {
             ddouble near2 = 2;
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near2);
-                PrecisionAssert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log2(2), (double)u, 1e-12);
 
                 Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -56,7 +56,7 @@ namespace DoubleDoubleTest.DDouble {
             }
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near2);
-                PrecisionAssert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log2(2), (double)u, 1e-12);
 
                 Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -65,7 +65,7 @@ namespace DoubleDoubleTest.DDouble {
             }
             for (int i = 0; i < 256; i++) {
                 ddouble u = ddouble.Log2(near2);
-                PrecisionAssert.AreEqual(Math.Log2(2), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log2(2), (double)u, 1e-12);
 
                 Console.WriteLine($"{near2} {near2.Hi} {near2.Lo}");
                 Console.WriteLine($"{u} {u.Hi} {u.Lo}");
@@ -108,7 +108,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log10(v);
 
-                PrecisionAssert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log10((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -120,7 +120,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log10(v);
 
-                PrecisionAssert.AreEqual(Math.Log10((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log10((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -152,7 +152,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log(v);
 
-                PrecisionAssert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -164,7 +164,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log(v);
 
-                PrecisionAssert.AreEqual(Math.Log((double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log((double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -224,7 +224,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Log1p(v);
 
-                PrecisionAssert.AreEqual(Math.Log(1 + (double)d), (double)u, 1e-12);
+                PrecisionAssert.AreEqual(double.Log(1 + (double)d), (double)u, 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 

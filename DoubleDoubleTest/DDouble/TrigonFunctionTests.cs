@@ -17,7 +17,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.SinPIHalf(v);
 
-                PrecisionAssert.AreEqual(Math.Sin((double)d * Math.PI / 2), (double)u, 1e-14);
+                PrecisionAssert.AreEqual(double.Sin((double)d * double.Pi / 2), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -30,7 +30,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nearn} {nearn.Hi} {nearn.Lo}");
                     Console.WriteLine($"{u} {u.Hi} {u.Lo}");
 
-                    PrecisionAssert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
+                    PrecisionAssert.AreEqual(double.Sin(n * double.Pi / 2), (double)u, 1e-12, n.ToString());
 
                     nearn = ddouble.BitDecrement(nearn);
                 }
@@ -43,7 +43,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{nearn} {nearn.Hi} {nearn.Lo}");
                     Console.WriteLine($"{u} {u.Hi} {u.Lo}");
 
-                    PrecisionAssert.AreEqual(Math.Sin(n * Math.PI / 2), (double)u, 1e-12, n.ToString());
+                    PrecisionAssert.AreEqual(double.Sin(n * double.Pi / 2), (double)u, 1e-12, n.ToString());
 
                     nearn = ddouble.BitIncrement(nearn);
                 }
@@ -77,7 +77,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.SinPI(v);
 
-                PrecisionAssert.AreEqual(Math.Sin((double)d * Math.PI), (double)u, 1e-14);
+                PrecisionAssert.AreEqual(double.Sin((double)d * double.Pi), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -105,7 +105,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.CosPI(v);
 
-                PrecisionAssert.AreEqual(Math.Cos((double)d * Math.PI), (double)u, 1e-14);
+                PrecisionAssert.AreEqual(double.Cos((double)d * double.Pi), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -130,16 +130,16 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void TanPITest() {
             for (decimal d = -10m; d <= +10m; d += 0.01m) {
-                if (Math.Abs(d) % 1m == 0.5m) {
+                if (decimal.Abs(d) % 1m == 0.5m) {
                     continue;
                 }
 
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.TanPI(v);
 
-                double w = Math.Tan((double)d * Math.PI);
+                double w = double.Tan((double)d * double.Pi);
 
-                PrecisionAssert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13));
+                PrecisionAssert.AreEqual(w, (double)u, double.Max(1e-14, double.Abs(w) * 1e-13));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -162,7 +162,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Sin(v);
 
-                PrecisionAssert.AreEqual(Math.Sin((double)d), (double)u, 1e-14);
+                PrecisionAssert.AreEqual(double.Sin((double)d), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -201,7 +201,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Cos(v);
 
-                PrecisionAssert.AreEqual(Math.Cos((double)d), (double)u, 1e-14);
+                PrecisionAssert.AreEqual(double.Cos((double)d), (double)u, 1e-14);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -232,9 +232,9 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Tan(v);
 
-                double w = Math.Tan((double)d);
+                double w = double.Tan((double)d);
 
-                PrecisionAssert.AreEqual(w, (double)u, Math.Max(1e-14, Math.Abs(w) * 1e-13));
+                PrecisionAssert.AreEqual(w, (double)u, double.Max(1e-14, double.Abs(w) * 1e-13));
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -274,7 +274,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble u = ddouble.Asin(v);
                 ddouble w = ddouble.AsinPI(v);
 
-                PrecisionAssert.AreEqual(Math.Asin((double)d), (double)u, 1e-15);
+                PrecisionAssert.AreEqual(double.Asin((double)d), (double)u, 1e-15);
                 PrecisionAssert.AreEqual(double.AsinPi((double)d), (double)w, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -292,10 +292,10 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AlmostEqual("0.0002441406274253192697799412915520836753299", ddouble.Asin(ddouble.Rcp(4096)), 1e-31);
             PrecisionAssert.AlmostEqual("0.00003051757812973695157371923471036862626770", ddouble.Asin(ddouble.Rcp(32768)), 1e-31);
             PrecisionAssert.AlmostEqual("7.629394531324014868310282473922313774258e-6", ddouble.Asin(ddouble.Rcp(131072)), 1e-31);
-            PrecisionAssert.AlmostEqual("2.328306436538696289083536290805893648145e-10", ddouble.Asin(Math.ScaleB(1, -32)), 1e-31);
-            PrecisionAssert.AlmostEqual("5.421010862427522170037264004349708557132e-20", ddouble.Asin(Math.ScaleB(1, -64)), 1e-31);
-            PrecisionAssert.AlmostEqual("8.636168555094444625386351862800399571116e-78", ddouble.Asin(Math.ScaleB(1, -256)), 1e-31);
-            PrecisionAssert.AlmostEqual("8.900295434028805532360930869329616256877e-308", ddouble.Asin(Math.ScaleB(1, -1020)), 1e-31);
+            PrecisionAssert.AlmostEqual("2.328306436538696289083536290805893648145e-10", ddouble.Asin(double.ScaleB(1, -32)), 1e-31);
+            PrecisionAssert.AlmostEqual("5.421010862427522170037264004349708557132e-20", ddouble.Asin(double.ScaleB(1, -64)), 1e-31);
+            PrecisionAssert.AlmostEqual("8.636168555094444625386351862800399571116e-78", ddouble.Asin(double.ScaleB(1, -256)), 1e-31);
+            PrecisionAssert.AlmostEqual("8.900295434028805532360930869329616256877e-308", ddouble.Asin(double.ScaleB(1, -1020)), 1e-31);
 
             PrecisionAssert.AlmostEqual(ddouble.PI / 6, ddouble.Asin(ddouble.Rcp(2)), 1e-31);
             PrecisionAssert.AlmostEqual("1.11976951499863418668667705584539962", ddouble.Asin((ddouble)9 / 10), 1e-31);
@@ -328,7 +328,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble u = ddouble.Acos(v);
                 ddouble w = ddouble.AcosPI(v);
 
-                PrecisionAssert.AreEqual(Math.Acos((double)d), (double)u, 1e-15);
+                PrecisionAssert.AreEqual(double.Acos((double)d), (double)u, 1e-15);
                 PrecisionAssert.AreEqual(double.AcosPi((double)d), (double)w, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -353,7 +353,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble u = ddouble.Atan(v);
                 ddouble w = ddouble.AtanPI(v);
 
-                PrecisionAssert.AreEqual(Math.Atan((double)d), (double)u, 1e-15);
+                PrecisionAssert.AreEqual(double.Atan((double)d), (double)u, 1e-15);
                 PrecisionAssert.AreEqual(double.AtanPi((double)d), (double)w, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -386,12 +386,12 @@ namespace DoubleDoubleTest.DDouble {
                         continue;
                     }
 
-                    double v = Math.Atan2((double)y, (double)x);
+                    double v = double.Atan2((double)y, (double)x);
                     ddouble u = ddouble.Atan2((ddouble)y, (ddouble)x);
                     ddouble w = ddouble.Atan2PI((ddouble)y, (ddouble)x);
 
                     if (u == ddouble.PI) {
-                        PrecisionAssert.AreEqual(Math.PI, Math.Abs(v));
+                        PrecisionAssert.AreEqual(double.Pi, double.Abs(v));
                     }
                     else {
                         PrecisionAssert.AreEqual(v, (double)u, 1e-15, $"{y}, {x}");
@@ -418,7 +418,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Sinh(v);
 
-                PrecisionAssert.AreEqual(Math.Sinh((double)d), (double)u, Math.Abs(Math.Sinh((double)d)) * 1e-15);
+                PrecisionAssert.AreEqual(double.Sinh((double)d), (double)u, double.Abs(double.Sinh((double)d)) * 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -441,7 +441,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Cosh(v);
 
-                PrecisionAssert.AreEqual(Math.Cosh((double)d), (double)u, Math.Abs(Math.Cosh((double)d)) * 1e-12);
+                PrecisionAssert.AreEqual(double.Cosh((double)d), (double)u, double.Abs(double.Cosh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -464,7 +464,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Tanh(v);
 
-                PrecisionAssert.AreEqual(Math.Tanh((double)d), (double)u, 1e-15);
+                PrecisionAssert.AreEqual(double.Tanh((double)d), (double)u, 1e-15);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -487,7 +487,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Arsinh(v);
 
-                PrecisionAssert.AreEqual(Math.Asinh((double)d), (double)u, Math.Abs(Math.Asinh((double)d)) * 1e-12);
+                PrecisionAssert.AreEqual(double.Asinh((double)d), (double)u, double.Abs(double.Asinh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -510,7 +510,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Arcosh(v);
 
-                PrecisionAssert.AreEqual(Math.Acosh((double)d), (double)u, Math.Abs(Math.Acosh((double)d)) * 1e-12);
+                PrecisionAssert.AreEqual(double.Acosh((double)d), (double)u, double.Abs(double.Acosh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
@@ -533,7 +533,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble v = (ddouble)d;
                 ddouble u = ddouble.Artanh(v);
 
-                PrecisionAssert.AreEqual(Math.Atanh((double)d), (double)u, Math.Abs(Math.Atanh((double)d)) * 1e-12);
+                PrecisionAssert.AreEqual(double.Atanh((double)d), (double)u, double.Abs(double.Atanh((double)d)) * 1e-12);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 

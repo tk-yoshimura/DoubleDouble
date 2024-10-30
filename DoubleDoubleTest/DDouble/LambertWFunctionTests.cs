@@ -411,10 +411,10 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsFinite(ddouble.LambertW(ddouble.MaxValue));
 
             PrecisionAssert.AlmostEqual("7.0045838920868939868016508375916341696918104269217e2",
-                              ddouble.LambertW(Math.ScaleB(1, 1020)),
+                              ddouble.LambertW(double.ScaleB(1, 1020)),
                               1e-28d);
 
-            PrecisionAssert.IsNaN(ddouble.LambertW(-ddouble.RcpE - Math.ScaleB(1, -104)));
+            PrecisionAssert.IsNaN(ddouble.LambertW(-ddouble.RcpE - double.ScaleB(1, -104)));
             PrecisionAssert.IsNaN(ddouble.LambertW(ddouble.NaN));
             PrecisionAssert.IsPositiveInfinity(ddouble.LambertW(ddouble.PositiveInfinity));
         }
@@ -435,7 +435,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AreEqual(y, w, ddouble.Abs(x) * 2e-31d);
             }
 
-            for (ddouble x = -31 / 32d; x > (ddouble)(-1) + Math.ScaleB(1, -104); x = (x + 1) / 2 - 1) {
+            for (ddouble x = -31 / 32d; x > (ddouble)(-1) + double.ScaleB(1, -104); x = (x + 1) / 2 - 1) {
                 ddouble y = x * ddouble.Exp(x);
                 ddouble z = ddouble.LambertW(y);
                 ddouble w = z * ddouble.Exp(z);

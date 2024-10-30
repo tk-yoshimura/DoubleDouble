@@ -46,9 +46,11 @@ namespace DoubleDouble {
         static int INumberBase<ddouble>.Radix => 2;
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        static ddouble IFloatingPointConstants<ddouble>.E => ddouble.E;
+        public static ddouble Pi => ddouble.PI;
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        static ddouble IFloatingPointConstants<ddouble>.Pi => ddouble.PI;
+        static ddouble IFloatingPointConstants<ddouble>.E => ddouble.E;
+        
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         static ddouble IFloatingPointConstants<ddouble>.Tau => ddouble.Ldexp(ddouble.PI, 1);
 

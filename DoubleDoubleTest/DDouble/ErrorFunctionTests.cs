@@ -488,7 +488,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(v, z, 1e-30d);
             }
 
-            for (ddouble v = Math.ScaleB(1, -8); v > Math.ScaleB(1, -968); v /= 2) {
+            for (ddouble v = double.ScaleB(1, -8); v > double.ScaleB(1, -968); v /= 2) {
                 ddouble y = ddouble.Erf(v);
                 ddouble z = ddouble.InverseErf(y);
 
@@ -507,7 +507,7 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(v, z_inc, 1e-29, $"exponent: {ddouble.Frexp(v).exp}");
             }
 
-            for (ddouble y = Math.ScaleB(1, -8); y > Math.ScaleB(1, -20); y /= 2) {
+            for (ddouble y = double.ScaleB(1, -8); y > double.ScaleB(1, -20); y /= 2) {
                 ddouble z = ddouble.InverseErf(y);
 
                 ddouble y_dec = ddouble.BitDecrement(y);
@@ -529,11 +529,11 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsNaN(ddouble.InverseErf(-2), "x = -2");
             PrecisionAssert.IsNaN(ddouble.InverseErf(+2), "x = +2");
 
-            PrecisionAssert.IsNaN(ddouble.InverseErf(Math.BitDecrement(-1)), "x = -1-eps");
-            PrecisionAssert.IsNaN(ddouble.InverseErf(Math.BitIncrement(+1)), "x = +1+eps");
+            PrecisionAssert.IsNaN(ddouble.InverseErf(double.BitDecrement(-1)), "x = -1-eps");
+            PrecisionAssert.IsNaN(ddouble.InverseErf(double.BitIncrement(+1)), "x = +1+eps");
 
-            PrecisionAssert.IsFinite(ddouble.InverseErf(Math.BitIncrement(-1)), "x = -1+eps");
-            PrecisionAssert.IsFinite(ddouble.InverseErf(Math.BitDecrement(+1)), "x = +1-eps");
+            PrecisionAssert.IsFinite(ddouble.InverseErf(double.BitIncrement(-1)), "x = -1+eps");
+            PrecisionAssert.IsFinite(ddouble.InverseErf(double.BitDecrement(+1)), "x = +1-eps");
 
             PrecisionAssert.IsNaN(ddouble.InverseErf(ddouble.PositiveInfinity), "x = +inf");
             PrecisionAssert.IsNaN(ddouble.InverseErf(ddouble.NegativeInfinity), "x = -inf");
@@ -542,7 +542,7 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void InverseErfcTest() {
-            for (ddouble v = 1; v >= Math.ScaleB(1, -968); v /= 2) {
+            for (ddouble v = 1; v >= double.ScaleB(1, -968); v /= 2) {
                 ddouble y = ddouble.InverseErfc(v);
                 ddouble z = ddouble.Erfc(y);
 
@@ -567,11 +567,11 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsNaN(ddouble.InverseErfc(-1), "x = -1");
             PrecisionAssert.IsNaN(ddouble.InverseErfc(3), "x = 3");
 
-            PrecisionAssert.IsNaN(ddouble.InverseErfc(Math.BitDecrement(0)), "x = 0-eps");
-            PrecisionAssert.IsNaN(ddouble.InverseErfc(Math.BitIncrement(2)), "x = 2+eps");
+            PrecisionAssert.IsNaN(ddouble.InverseErfc(double.BitDecrement(0)), "x = 0-eps");
+            PrecisionAssert.IsNaN(ddouble.InverseErfc(double.BitIncrement(2)), "x = 2+eps");
 
-            PrecisionAssert.IsFinite(ddouble.InverseErfc(Math.BitIncrement(0)), "x = 0+eps");
-            PrecisionAssert.IsFinite(ddouble.InverseErfc(Math.BitDecrement(2)), "x = 2-eps");
+            PrecisionAssert.IsFinite(ddouble.InverseErfc(double.BitIncrement(0)), "x = 0+eps");
+            PrecisionAssert.IsFinite(ddouble.InverseErfc(double.BitDecrement(2)), "x = 2-eps");
 
             PrecisionAssert.IsNaN(ddouble.InverseErfc(ddouble.PositiveInfinity), "x = +inf");
             PrecisionAssert.IsNaN(ddouble.InverseErfc(ddouble.NegativeInfinity), "x = -inf");

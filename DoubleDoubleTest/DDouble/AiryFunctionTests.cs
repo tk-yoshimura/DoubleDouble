@@ -562,8 +562,8 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AreEqual(0, ddouble.AiryAi(ddouble.PositiveInfinity));
             PrecisionAssert.AreEqual(0, ddouble.AiryAi(ddouble.NegativeInfinity));
 
-            PrecisionAssert.AreEqual(0, ddouble.AiryAi(Math.ScaleB(1, 128)));
-            PrecisionAssert.AreEqual(0, ddouble.AiryAi(-Math.ScaleB(1, 128)));
+            PrecisionAssert.AreEqual(0, ddouble.AiryAi(double.ScaleB(1, 128)));
+            PrecisionAssert.AreEqual(0, ddouble.AiryAi(-double.ScaleB(1, 128)));
         }
 
         [TestMethod]
@@ -1123,8 +1123,8 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsPositiveInfinity(ddouble.AiryBi(ddouble.PositiveInfinity));
             PrecisionAssert.AreEqual(0, ddouble.AiryBi(ddouble.NegativeInfinity));
 
-            PrecisionAssert.IsPositiveInfinity(ddouble.AiryBi(Math.ScaleB(1, 128)));
-            PrecisionAssert.AreEqual(0, ddouble.AiryBi(-Math.ScaleB(1, 128)));
+            PrecisionAssert.IsPositiveInfinity(ddouble.AiryBi(double.ScaleB(1, 128)));
+            PrecisionAssert.AreEqual(0, ddouble.AiryBi(-double.ScaleB(1, 128)));
         }
     }
 }

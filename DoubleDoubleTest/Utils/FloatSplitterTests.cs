@@ -12,7 +12,7 @@ namespace DoubleDoubleTest.Utils {
                 double.MaxValue, double.MinValue,
                 1 / (double.MaxValue / 8), 1 / (double.MinValue / 8),
                 0d, -0d,
-                Math.BitDecrement(2d), 2, Math.BitIncrement(2d),
+                double.BitDecrement(2d), 2, double.BitIncrement(2d),
                 double.PositiveInfinity, double.NegativeInfinity,
                 double.NaN
             }) {
@@ -22,11 +22,11 @@ namespace DoubleDoubleTest.Utils {
                 Console.WriteLine(v);
                 Console.WriteLine($"  {sign} {exponent} 0x{mantissa:X14} iszero:{iszero}");
 
-                Assert.AreEqual((int)Math.CopySign(1, v), sign, nameof(sign));
+                Assert.AreEqual((int)double.CopySign(1, v), sign, nameof(sign));
 
                 Assert.AreEqual(v == 0, iszero);
 
-                if (Math.Abs((long)Math.ILogB(v)) < 10L) {
+                if (long.Abs((long)double.ILogB(v)) < 10L) {
                     Assert.AreEqual(mantissa, FloatSplitter.Split(v * 2d).mantissa, nameof(mantissa));
                     Assert.AreEqual(mantissa, FloatSplitter.Split(v / 2d).mantissa, nameof(mantissa));
                     Assert.AreEqual(mantissa, FloatSplitter.Split(-v * 2d).mantissa, nameof(mantissa));
@@ -57,11 +57,11 @@ namespace DoubleDoubleTest.Utils {
                 Console.WriteLine(v);
                 Console.WriteLine($"  {sign} {exponent} 0x{mantissa:X27} iszero:{iszero}");
 
-                Assert.AreEqual((int)Math.CopySign(1, v.Hi), sign, nameof(sign));
+                Assert.AreEqual((int)double.CopySign(1, v.Hi), sign, nameof(sign));
 
                 Assert.AreEqual(v == 0, iszero);
 
-                if (Math.Abs((long)Math.ILogB(v.Hi)) < 10L) {
+                if (long.Abs((long)double.ILogB(v.Hi)) < 10L) {
                     Assert.AreEqual(mantissa, FloatSplitter.Split(v * 2d).mantissa, nameof(mantissa));
                     Assert.AreEqual(mantissa, FloatSplitter.Split(v / 2d).mantissa, nameof(mantissa));
                     Assert.AreEqual(mantissa, FloatSplitter.Split(-v * 2d).mantissa, nameof(mantissa));
@@ -90,7 +90,7 @@ namespace DoubleDoubleTest.Utils {
                 Assert.AreEqual(1, xdec_split.sign);
 
                 Assert.AreEqual(exp, x_split.exponent);
-                Assert.AreEqual(Math.Max(-1073, exp), xinc_split.exponent);
+                Assert.AreEqual(int.Max(-1073, exp), xinc_split.exponent);
 
                 if (double.BitDecrement(x) > 0) {
                     Assert.AreEqual(exp - 1, xdec_split.exponent);
@@ -102,14 +102,14 @@ namespace DoubleDoubleTest.Utils {
                 }
 
                 {
-                    int sfts = Math.Max(0, -(exp + 1022));
+                    int sfts = int.Max(0, -(exp + 1022));
                     UInt64 mantissa_expected = (1uL << sfts) | mantissa_topbit;
 
                     Assert.AreEqual(mantissa_expected, xinc_split.mantissa, $"{exp}");
                 }
 
                 if (double.BitDecrement(x) > 0) {
-                    int sfts = Math.Max(0, -(exp + 1021));
+                    int sfts = int.Max(0, -(exp + 1021));
                     UInt64 mantissa_expected = ((mantissa_mask >> sfts) << sfts) | mantissa_topbit;
 
                     Assert.AreEqual(mantissa_expected, xdec_split.mantissa, $"{exp}");

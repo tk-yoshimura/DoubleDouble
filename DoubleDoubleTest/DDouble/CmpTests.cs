@@ -114,7 +114,7 @@ namespace DoubleDoubleTest.DDouble {
         public void DoubleCmpTest() {
             ddouble prcp3 = ddouble.Rcp(3);
             double prcp3_bitdec = prcp3.Hi;
-            double prcp3_bitinc = Math.BitIncrement(prcp3_bitdec);
+            double prcp3_bitinc = double.BitIncrement(prcp3_bitdec);
             ddouble nrcp3 = -prcp3;
             double nrcp3_bitdec = -prcp3_bitdec;
             double nrcp3_bitinc = -prcp3_bitinc;

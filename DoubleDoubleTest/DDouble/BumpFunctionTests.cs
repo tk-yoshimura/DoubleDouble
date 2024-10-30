@@ -285,9 +285,9 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void BumpMonotoneTest() {
             for (ddouble x = 0; x <= 1; x += 1d / 16384) {
-                ddouble yn = ddouble.Bump(x - Math.ScaleB(1, -32));
+                ddouble yn = ddouble.Bump(x - double.ScaleB(1, -32));
                 ddouble yz = ddouble.Bump(x);
-                ddouble yp = ddouble.Bump(x + Math.ScaleB(1, -32));
+                ddouble yp = ddouble.Bump(x + double.ScaleB(1, -32));
 
                 Console.WriteLine($"x={x}\n{yz}");
 

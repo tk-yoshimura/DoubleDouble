@@ -738,7 +738,7 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void HurwitzZetaLimitTest() {
             for (ddouble a = 1d / 32; a <= 8; a += 1d / 32) {
-                for (ddouble x = 0.5; x >= Math.ScaleB(1, 102); x /= 2) {
+                for (ddouble x = 0.5; x >= double.ScaleB(1, 102); x /= 2) {
                     ddouble yn = ddouble.HurwitzZeta(1 + x - x / 2, a);
                     ddouble yz = ddouble.HurwitzZeta(1 + x, a);
                     ddouble yp = ddouble.HurwitzZeta(1 + x + x / 2, a);

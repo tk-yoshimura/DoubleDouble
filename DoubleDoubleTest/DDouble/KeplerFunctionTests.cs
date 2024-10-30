@@ -28,7 +28,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble e = 1d / 32; e > Math.ScaleB(1, -128); e /= 2) {
+            for (ddouble e = 1d / 32; e > double.ScaleB(1, -128); e /= 2) {
                 Console.WriteLine(e);
 
                 for (ddouble m = -16; m <= 16; m += 1d / 32) {
@@ -48,7 +48,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble e = 31d / 32; e < (ddouble)1 - Math.ScaleB(1, -108); e = (e - 1) / 2 + 1) {
+            for (ddouble e = 31d / 32; e < (ddouble)1 - double.ScaleB(1, -108); e = (e - 1) / 2 + 1) {
                 Console.WriteLine(e);
 
                 for (ddouble m = -16; m <= 16; m += 1d / 32) {
@@ -59,15 +59,15 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
                 }
 
-                for (ddouble m = 1d / 64; m > Math.ScaleB(1, -72); m /= 2) {
+                for (ddouble m = 1d / 64; m > double.ScaleB(1, -72); m /= 2) {
                     ddouble x = ddouble.KeplerE(m, e);
                     ddouble y = x - e * ddouble.Sin(x);
 
-                    if (e < (ddouble)1 - Math.ScaleB(1, -18)) {
+                    if (e < (ddouble)1 - double.ScaleB(1, -18)) {
                         PrecisionAssert.AlmostEqual(m, y, 1e-25, 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
                         Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
                     }
-                    else if (e < (ddouble)1 - Math.ScaleB(1, -36)) {
+                    else if (e < (ddouble)1 - double.ScaleB(1, -36)) {
                         PrecisionAssert.AlmostEqual(m, y, 1e-20, 1e-120, $"{m},{e}"); // x - e sin(x) digits loss
                         Assert.IsTrue(ddouble.Abs(m - x) <= 1, $"{m},{e}");
                     }
@@ -77,7 +77,7 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
 
-                for (ddouble m = Math.ScaleB(1, -72); m > 0; m /= 2) {
+                for (ddouble m = double.ScaleB(1, -72); m > 0; m /= 2) {
                     ddouble x1 = ddouble.KeplerE(m, e);
                     ddouble x2 = ddouble.KeplerE(m * 2, e);
 
@@ -181,7 +181,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            for (ddouble e = 33d / 32; e > (ddouble)1 + Math.ScaleB(1, -108); e = (e - 1) / 2 + 1) {
+            for (ddouble e = 33d / 32; e > (ddouble)1 + double.ScaleB(1, -108); e = (e - 1) / 2 + 1) {
                 Console.WriteLine(e);
 
                 for (ddouble m = -16; m <= 64; m += 1d / 8) {
@@ -203,14 +203,14 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
 
-                for (ddouble m = 1d / 64; m > Math.ScaleB(1, -72); m /= 2) {
+                for (ddouble m = 1d / 64; m > double.ScaleB(1, -72); m /= 2) {
                     ddouble x = ddouble.KeplerE(m, e);
                     ddouble y = e * ddouble.Sinh(x) - x;
 
-                    if (e > (ddouble)1 + Math.ScaleB(1, -18)) {
+                    if (e > (ddouble)1 + double.ScaleB(1, -18)) {
                         PrecisionAssert.AlmostEqual(m, y, 1e-25, 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
                     }
-                    else if (e > (ddouble)1 + Math.ScaleB(1, -36)) {
+                    else if (e > (ddouble)1 + double.ScaleB(1, -36)) {
                         PrecisionAssert.AlmostEqual(m, y, 1e-20, 1e-250, $"{m},{e}"); // e sinh(x) - x digits loss
                     }
                     else {
@@ -218,7 +218,7 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
 
-                for (ddouble m = Math.ScaleB(1, -72); m > 0; m /= 2) {
+                for (ddouble m = double.ScaleB(1, -72); m > 0; m /= 2) {
                     ddouble x1 = ddouble.KeplerE(m, e);
                     ddouble x2 = ddouble.KeplerE(m * 2, e);
 

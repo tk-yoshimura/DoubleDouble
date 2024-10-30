@@ -1868,7 +1868,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 for ((int i, int p) = (0, -20); i < expecteds.Length; i++, p++) {
                     ddouble u = ((p & 1) == 0) ? ddouble.Ldexp(1, p / 2) : ddouble.Sqrt2 * ddouble.Ldexp(1, (p > 0) ? p / 2 : (p - 1) / 2);
-                    ddouble q = Math.Max(1, n * n) * ddouble.Sqrt(u);
+                    ddouble q = int.Max(1, n * n) * ddouble.Sqrt(u);
 
                     ddouble expected = expecteds[i];
 
@@ -3669,7 +3669,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 for ((int i, int p) = (0, -20); i < expecteds.Length; i++, p++) {
                     ddouble u = ((p & 1) == 0) ? ddouble.Ldexp(1, p / 2) : ddouble.Sqrt2 * ddouble.Ldexp(1, (p > 0) ? p / 2 : (p - 1) / 2);
-                    ddouble q = Math.Max(1, n * n) * ddouble.Sqrt(u);
+                    ddouble q = int.Max(1, n * n) * ddouble.Sqrt(u);
 
                     ddouble expected = expecteds[i];
 
@@ -4506,16 +4506,16 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             foreach ((ddouble q, int x, ddouble[] expecteds) in new (ddouble, int, ddouble[])[] {
-                (Math.ScaleB(1, -52), 1, qpow2p52x1_expecteds),
-                (Math.ScaleB(1, -51), 1, qpow2p51x1_expecteds),
-                (Math.ScaleB(1, -50), 1, qpow2p50x1_expecteds),
-                (Math.ScaleB(1, -49), 1, qpow2p49x1_expecteds),
-                (Math.ScaleB(1, -24), 1, qpow2p24x1_expecteds),
-                (Math.ScaleB(1, -12), 1, qpow2p12x1_expecteds),
-                (Math.ScaleB(1, -6), 1, qpow2p6x1_expecteds),
-                (Math.ScaleB(1, -3), 1, q0p125x1_expecteds),
-                (Math.ScaleB(1, -2), 1, q0p25x1_expecteds),
-                (Math.ScaleB(1, -1), 1, q0p5x1_expecteds),
+                (double.ScaleB(1, -52), 1, qpow2p52x1_expecteds),
+                (double.ScaleB(1, -51), 1, qpow2p51x1_expecteds),
+                (double.ScaleB(1, -50), 1, qpow2p50x1_expecteds),
+                (double.ScaleB(1, -49), 1, qpow2p49x1_expecteds),
+                (double.ScaleB(1, -24), 1, qpow2p24x1_expecteds),
+                (double.ScaleB(1, -12), 1, qpow2p12x1_expecteds),
+                (double.ScaleB(1, -6), 1, qpow2p6x1_expecteds),
+                (double.ScaleB(1, -3), 1, q0p125x1_expecteds),
+                (double.ScaleB(1, -2), 1, q0p25x1_expecteds),
+                (double.ScaleB(1, -1), 1, q0p5x1_expecteds),
                 (1, 1, q1x1_expecteds),
                 (2, 1, q2x1_expecteds),
                 (4, 1, q4x1_expecteds),
@@ -5249,16 +5249,16 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             foreach ((ddouble q, int x, ddouble[] expecteds) in new (ddouble, int, ddouble[])[] {
-                (Math.ScaleB(1, -52), 1, qpow2p52x1_expecteds),
-                (Math.ScaleB(1, -51), 1, qpow2p51x1_expecteds),
-                (Math.ScaleB(1, -50), 1, qpow2p50x1_expecteds),
-                (Math.ScaleB(1, -49), 1, qpow2p49x1_expecteds),
-                (Math.ScaleB(1, -24), 1, qpow2p24x1_expecteds),
-                (Math.ScaleB(1, -12), 1, qpow2p12x1_expecteds),
-                (Math.ScaleB(1, -6), 1, qpow2p6x1_expecteds),
-                (Math.ScaleB(1, -3), 1, q0p125x1_expecteds),
-                (Math.ScaleB(1, -2), 1, q0p25x1_expecteds),
-                (Math.ScaleB(1, -1), 1, q0p5x1_expecteds),
+                (double.ScaleB(1, -52), 1, qpow2p52x1_expecteds),
+                (double.ScaleB(1, -51), 1, qpow2p51x1_expecteds),
+                (double.ScaleB(1, -50), 1, qpow2p50x1_expecteds),
+                (double.ScaleB(1, -49), 1, qpow2p49x1_expecteds),
+                (double.ScaleB(1, -24), 1, qpow2p24x1_expecteds),
+                (double.ScaleB(1, -12), 1, qpow2p12x1_expecteds),
+                (double.ScaleB(1, -6), 1, qpow2p6x1_expecteds),
+                (double.ScaleB(1, -3), 1, q0p125x1_expecteds),
+                (double.ScaleB(1, -2), 1, q0p25x1_expecteds),
+                (double.ScaleB(1, -1), 1, q0p5x1_expecteds),
                 (1, 1, q1x1_expecteds),
                 (2, 1, q2x1_expecteds),
                 (4, 1, q4x1_expecteds),

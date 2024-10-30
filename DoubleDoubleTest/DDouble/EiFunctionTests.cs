@@ -1125,8 +1125,8 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsFinite(ddouble.Ein(ddouble.Epsilon));
             PrecisionAssert.IsFinite(ddouble.Ein(-ddouble.Epsilon));
 
-            PrecisionAssert.IsFinite(ddouble.Ein(Math.ScaleB(1, -256)));
-            PrecisionAssert.IsFinite(ddouble.Ein(-Math.ScaleB(1, -256)));
+            PrecisionAssert.IsFinite(ddouble.Ein(double.ScaleB(1, -256)));
+            PrecisionAssert.IsFinite(ddouble.Ein(-double.ScaleB(1, -256)));
 
             PrecisionAssert.IsNaN(ddouble.Ein(ddouble.NaN));
             PrecisionAssert.IsPositiveInfinity(ddouble.Ein(ddouble.PositiveInfinity));

@@ -70,7 +70,7 @@ namespace DoubleDouble {
                     ddouble m_pi = m * PI;
 
                     if (ILogB(m) > -32 || ILogB(e - 1d) > -16) {
-                        double ed = Math.Min(1, e.Hi);
+                        double ed = double.Min(1d, e.Hi);
                         double xd = InitValue(m.Hi, ed);
 
                         for (int i = 0; i < 4; i++) {
@@ -232,7 +232,7 @@ namespace DoubleDouble {
                     Debug.Assert(e >= 1d, nameof(e));
 
                     if (ILogB(m) > -32 || ILogB(1d - e) > -16) {
-                        double md = m.Hi, ed = Math.Max(1, e.Hi);
+                        double md = m.Hi, ed = double.Max(1d, e.Hi);
                         double xd = InitValue(md, ed);
 
                         for (int i = 0; i < 8; i++) {

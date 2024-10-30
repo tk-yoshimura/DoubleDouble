@@ -937,7 +937,7 @@ namespace DoubleDoubleTest.DDouble {
             };
 
             foreach ((double a, ddouble[] expecteds) in new[] {
-                (Math.ScaleB(1, -64), anz_expecteds),
+                (double.ScaleB(1, -64), anz_expecteds),
                 (0.25, ap25_expecteds),
                 (0.5d, ap5_expecteds),
                 (1, a1_expecteds),
@@ -1448,7 +1448,7 @@ namespace DoubleDoubleTest.DDouble {
             };
 
             foreach ((double h, ddouble[] expecteds) in new[] {
-                (Math.ScaleB(1, -64), hnz_expecteds),
+                (double.ScaleB(1, -64), hnz_expecteds),
                 (0.125, hp125_expecteds ),
                 (0.25,  hp25_expecteds  ),
                 (0.5,   hp5_expecteds   ),

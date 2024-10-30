@@ -15560,7 +15560,7 @@ namespace DoubleDoubleTest.DDouble {
         public void BesselIScaledTest() {
             for (int n = -16; n <= 16; n++) {
                 foreach (ddouble u in new ddouble[] {
-                    0, Math.ScaleB(-1, -4), Math.ScaleB(-1, -8), Math.ScaleB(-1, -16), Math.ScaleB(1, -4), Math.ScaleB(1, -8), Math.ScaleB(1, -16) }) {
+                    0, double.ScaleB(-1, -4), double.ScaleB(-1, -8), double.ScaleB(-1, -16), double.ScaleB(1, -4), double.ScaleB(1, -8), double.ScaleB(1, -16) }) {
 
                     ddouble nu = n + u;
 
@@ -15586,7 +15586,7 @@ namespace DoubleDoubleTest.DDouble {
         public void BesselKScaledTest() {
             for (int n = -16; n <= 16; n++) {
                 foreach (ddouble u in new ddouble[] {
-                    0, Math.ScaleB(-1, -4), Math.ScaleB(-1, -8), Math.ScaleB(-1, -16), Math.ScaleB(1, -4), Math.ScaleB(1, -8), Math.ScaleB(1, -16) }) {
+                    0, double.ScaleB(-1, -4), double.ScaleB(-1, -8), double.ScaleB(-1, -16), double.ScaleB(1, -4), double.ScaleB(1, -8), double.ScaleB(1, -16) }) {
 
                     ddouble nu = n + u;
 

@@ -698,7 +698,7 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void PolylogLimitTest() {
             for (int n = 0; n <= 8; n++) {
-                for (ddouble r = 0.5; r >= Math.ScaleB(1, 102); r /= 2) {
+                for (ddouble r = 0.5; r >= double.ScaleB(1, 102); r /= 2) {
                     ddouble x = 1 - r;
 
                     ddouble yn = ddouble.Polylog(n, x - r / 2);

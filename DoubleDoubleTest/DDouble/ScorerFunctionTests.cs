@@ -3208,7 +3208,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsPositiveInfinity(ddouble.ScorerHi(ddouble.PositiveInfinity));
             PrecisionAssert.AreEqual(0, ddouble.ScorerHi(ddouble.NegativeInfinity));
 
-            PrecisionAssert.IsPositiveInfinity(ddouble.ScorerHi(Math.ScaleB(1, 128)));
+            PrecisionAssert.IsPositiveInfinity(ddouble.ScorerHi(double.ScaleB(1, 128)));
         }
 
         [TestMethod]
