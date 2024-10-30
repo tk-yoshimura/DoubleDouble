@@ -17,8 +17,8 @@ namespace DoubleDouble {
 
             (int n, ddouble v) = Frexp(x);
 
-            int index = (int)Floor((v - 1d) * Log2TableN);
-            ddouble v_offset = 1d + Log2TableDx * index;
+            int index = (int)Floor(Ldexp(v - 1d, Log2Level));
+            ddouble v_offset = 1d + Ldexp(index, -Log2Level);
 
             ddouble u = v / v_offset;
 
@@ -92,7 +92,8 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Log {
-                public const int Log2TableN = 2048;
+                public const int Log2Level = 11;
+                public const int Log2TableN = 1 << Log2Level;
 
                 public const int LogBaseRoundingExponent = -101;
                 public const int LogBaseTruncationBits = 103;
@@ -100,16 +101,13 @@ namespace DoubleDouble {
 
                 public static readonly ReadOnlyCollection<ddouble> Log2Table = GenerateLog2Table();
 
-                public static readonly ddouble Log2TableDx = Rcp(Log2TableN);
-
                 public static ReadOnlyCollection<ddouble> GenerateLog2Table() {
                     Debug.WriteLine($"Log2 initialize.");
 
-                    ddouble dx = Rcp(Log2TableN);
                     ddouble[] table = new ddouble[Log2TableN + 1];
 
                     for (int i = 0; i <= Log2TableN; i++) {
-                        ddouble x = dx * i;
+                        ddouble x = Ldexp(i, -Log2Level);
                         table[i] = Log2Prime(x);
                     }
 
