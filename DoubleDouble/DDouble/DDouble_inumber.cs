@@ -50,7 +50,7 @@ namespace DoubleDouble {
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         static ddouble IFloatingPointConstants<ddouble>.E => ddouble.E;
-        
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         static ddouble IFloatingPointConstants<ddouble>.Tau => ddouble.Ldexp(ddouble.PI, 1);
 
