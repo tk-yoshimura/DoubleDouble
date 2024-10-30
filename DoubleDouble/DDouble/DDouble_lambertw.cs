@@ -24,7 +24,7 @@ namespace DoubleDouble {
                 double xd = x.hi, yd;
 
                 if (x < 8d) {
-                    yd = xd * (60.0 + xd * (114.0 + xd * 17.0)) / (60.0 + xd * (174.0 + xd * 101.0));
+                    yd = xd * (60d + xd * (114d + xd * 17d)) / (60d + xd * (174d + xd * 101d));
                 }
                 else {
                     double logx = double.Log(xd), loglogx = double.Log(logx);
