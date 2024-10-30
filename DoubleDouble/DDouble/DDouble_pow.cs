@@ -52,8 +52,8 @@ namespace DoubleDouble {
             int exp = (int)Floor(x);
             ddouble s = x - exp;
 
-            int index = (int)Floor(s * (Pow2TableN * Pow2TableN));
-            ddouble v = s - Pow2TableDx * index;
+            int index = (int)Floor(Ldexp(s, 2 * Pow2Level));
+            ddouble v = s - Ldexp(index, -2 * Pow2Level);
             ddouble r0 = Pow2Table[index / Pow2TableN];
             ddouble r1 = Pow2Table[index % Pow2TableN + Pow2TableN + 1];
 
@@ -206,10 +206,10 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Pow {
-                public const int Pow2TableN = 1024;
+                public const int Pow2Level = 10;
+                public const int Pow2TableN = 1 << Pow2Level;
 
                 public static readonly ReadOnlyCollection<ddouble> Pow2Table = GeneratePow2Table();
-                public static readonly ddouble Pow2TableDx = Rcp(Pow2TableN * Pow2TableN);
                 public static readonly ddouble Pow2C1 = Ln2;
                 public static readonly ddouble Pow2C2 = (+1, -3, 0xF5FDEFFC162C7543uL, 0x78B583764B9AFE55uL);
                 public static readonly ddouble Pow2C3 = (+1, -5, 0xE35846B82505FC59uL, 0x9D3B15D995E96F74uL);
@@ -220,15 +220,14 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ddouble> Pow10NTable = GeneratePow10NTable();
 
                 public static ReadOnlyCollection<ddouble> GeneratePow2Table() {
-                    ddouble dx = Rcp(Pow2TableN), ddx = Rcp(Pow2TableN * Pow2TableN);
                     ddouble[] table = new ddouble[Pow2TableN * 2 + 1];
 
                     for (int i = 0; i <= Pow2TableN; i++) {
-                        ddouble x = dx * i;
+                        ddouble x = Ldexp(i, -Pow2Level);
                         table[i] = Pow2Prime(x);
                     }
                     for (int i = 0; i < Pow2TableN; i++) {
-                        ddouble x = ddx * i;
+                        ddouble x = Ldexp(i, -2 * Pow2Level);
                         table[i + Pow2TableN + 1] = Pow2Prime(x);
                     }
 
