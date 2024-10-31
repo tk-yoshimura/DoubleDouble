@@ -52,7 +52,7 @@ namespace DoubleDouble {
             int exp = (int)Floor(x);
             ddouble s = x - exp;
 
-            int index = (int)Floor(Ldexp(s, 2 * Pow2Level));
+            int index = (int)double.Truncate(Ldexp(s, 2 * Pow2Level).hi);
             ddouble v = s - Ldexp(index, -2 * Pow2Level);
             ddouble r0 = Pow2Table[index / Pow2TableN];
             ddouble r1 = Pow2Table[index % Pow2TableN + Pow2TableN + 1];

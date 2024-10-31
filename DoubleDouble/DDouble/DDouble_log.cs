@@ -17,7 +17,7 @@ namespace DoubleDouble {
 
             (int n, ddouble v) = Frexp(x);
 
-            int index = (int)Floor(Ldexp(v - 1d, Log2Level));
+            int index = (int)double.Truncate(Ldexp(v - 1d, Log2Level).hi);
             ddouble v_offset = 1d + Ldexp(index, -Log2Level);
 
             ddouble u = v / v_offset;

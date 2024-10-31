@@ -90,7 +90,7 @@ namespace DoubleDouble {
 
             Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
-            int index = (((int)Floor(Ldexp(x, SinPiHalfLevel + 1))) + 1) >> 1;
+            int index = (((int)double.Truncate(Ldexp(x, SinPiHalfLevel + 1).hi)) + 1) >> 1;
             ddouble v = x - Ldexp(index, -SinPiHalfLevel);
             ddouble sna = SinPiHalfTable[index];
             ddouble cna = SinPiHalfTable[SinPiHalfTableN - index];
