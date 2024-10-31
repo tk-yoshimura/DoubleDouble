@@ -158,7 +158,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -191,7 +191,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble y = sc / sd;
 
@@ -244,7 +244,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble delta = sc / sd;
                 if (IsZero(u0)) {
@@ -283,7 +283,7 @@ namespace DoubleDouble {
                     sd = sd * v + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble delta = sc / sd;
                 if (IsZero(u0)) {
@@ -381,12 +381,12 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (double.ILogB(cs[m - 1].Hi) > 0) {
+                    if (ILogB(cs[m - 1]) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
 
-                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => ILogB(c)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
@@ -397,10 +397,10 @@ namespace DoubleDouble {
                         ddouble rm, d;
 
                         if ((n & 1) == 0) {
-                            (scs, rm, d) = SolveCoef(a, q, m, 2, 0, 0, cs[m]);
+                            (scs, rm, d) = SolveCoef(a, q, m, 2, 0, 0d, cs[m]);
                         }
                         else {
-                            (scs, rm, d) = SolveCoef(a, q, m, 1, 1, 1 + q, cs[m]);
+                            (scs, rm, d) = SolveCoef(a, q, m, 1, 1, 1d + q, cs[m]);
                         }
 
                         if (m <= 2 + n / 2 || d < 1d) {
@@ -426,7 +426,7 @@ namespace DoubleDouble {
                     cs[0] = 1d;
 
                     if (n == 0) {
-                        cs[1] = -t * (2 + sq_t * -3.5);
+                        cs[1] = -t * (2d + sq_t * -3.5);
                         cs[2] = sq_t * (0.5 + sq_t * -(ddouble)10 / 9);
                         cs[3] = -t * sq_t * ((ddouble)1 / 18 + sq_t * -(ddouble)13 / 96);
                     }
@@ -488,7 +488,7 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (double.ILogB(cs[m - 1].Hi) > 0) {
+                    if (ILogB(cs[m - 1]) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
@@ -498,7 +498,7 @@ namespace DoubleDouble {
                     cs[m - 1] = c;
                 }
 
-                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => ILogB(c)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
@@ -553,12 +553,12 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (double.ILogB(cs[m - 1].Hi) > 0) {
+                    if (ILogB(cs[m - 1]) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
 
-                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => ILogB(c)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
@@ -569,10 +569,10 @@ namespace DoubleDouble {
                         ddouble rm, d;
 
                         if ((n & 1) == 0) {
-                            (scs, rm, d) = SolveCoef(b, q, m, 1, 2, 4, cs[m]);
+                            (scs, rm, d) = SolveCoef(b, q, m, 1, 2, 4d, cs[m]);
                         }
                         else {
-                            (scs, rm, d) = SolveCoef(b, q, m, 1, 1, 1 - q, cs[m]);
+                            (scs, rm, d) = SolveCoef(b, q, m, 1, 1, 1d - q, cs[m]);
                         }
 
                         if (m <= 2 + n / 2 || d < 1d) {
@@ -655,7 +655,7 @@ namespace DoubleDouble {
 
                     cs[m - 1] = c;
 
-                    if (double.ILogB(cs[m - 1].Hi) > 0) {
+                    if (ILogB(cs[m - 1]) > 0) {
                         cs = ScaleAndTruncateCoef(cs, checked((int)m));
                     }
                 }
@@ -665,7 +665,7 @@ namespace DoubleDouble {
                     cs[m - 1] = c;
                 }
 
-                int scale = cs.Select(c => double.ILogB(c.Hi)).Max();
+                int scale = cs.Select(c => ILogB(c)).Max();
                 for (int m = 0; m < cs.Length; m++) {
                     cs[m] = Ldexp(cs[m], -scale);
                 }
@@ -763,7 +763,7 @@ namespace DoubleDouble {
 
             private static ddouble[] ScaleAndTruncateCoef(ddouble[] cs, int m) {
                 for (int j = m - 1; j < cs.Length; j++) {
-                    if (double.ILogB(cs[j - 1].Hi) < -128 && double.ILogB(cs[j].Hi) < -128 && m >= MathieuUtil.MaxN * 2) {
+                    if (ILogB(cs[j - 1]) < -128 && ILogB(cs[j]) < -128 && m >= MathieuUtil.MaxN * 2) {
                         cs = cs[..j];
                         cs[^1] = 0d;
                         break;
@@ -798,7 +798,7 @@ namespace DoubleDouble {
                         sd = sd * q + d;
                     }
 
-                    Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+                    Debug.Assert(sd > 0.5d, $"[Mathieu q={q}] Too small pade denom!!");
 
                     ddouble a = q * q * sc / sd;
                     int s = ((n & 1) == 0) ? 0 : 1;
@@ -838,7 +838,7 @@ namespace DoubleDouble {
                     sd = sd * q + d;
                 }
 
-                Debug.Assert(sd > 0.0625d, $"[Mathieu q={q}] Too small pade denom!!");
+                Debug.Assert(sd > 0.5d, $"[Mathieu q={q}] Too small pade denom!!");
 
                 ddouble b = q * q * sc / sd;
                 int s = ((n & 1) == 0) ? 2 : 1;
