@@ -359,6 +359,26 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AlmostEqual(double.Log10P1(0.5), ddouble.Log10P1(0.5), 1e-15);
             PrecisionAssert.AlmostEqual(double.Log10P1(1), ddouble.Log10P1(1), 1e-15);
             PrecisionAssert.AlmostEqual(double.Log10P1(2), ddouble.Log10P1(2), 1e-15);
+
+            PrecisionAssert.AreEqual(double.Exp2M1(-1), ddouble.Exp2M1(-1));
+            PrecisionAssert.AreEqual(double.Exp2M1(0), ddouble.Exp2M1(0));
+            PrecisionAssert.AlmostEqual(double.Exp2M1(0.25), ddouble.Exp2M1(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp2M1(0.5), ddouble.Exp2M1(0.5), 1e-15);
+            PrecisionAssert.AreEqual(double.Exp2M1(1), ddouble.Exp2M1(1));
+
+            PrecisionAssert.AlmostEqual(double.Exp10M1(-1), ddouble.Exp10M1(-1), 1e-15);
+            PrecisionAssert.AreEqual(double.Exp10M1(0), ddouble.Exp10M1(0));
+            PrecisionAssert.AlmostEqual(double.Exp10M1(0.25), ddouble.Exp10M1(0.25), 1e-15);
+            PrecisionAssert.AlmostEqual(double.Exp10M1(0.5), ddouble.Exp10M1(0.5), 1e-15);
+            PrecisionAssert.AreEqual(double.Exp10M1(1), ddouble.Exp10M1(1));
+
+            PrecisionAssert.AlmostEqual("-2.501057910695717338568327143157314851812e-1", ddouble.Exp10M1(-0.125 - double.ScaleB(1, -32)), 5e-32);
+            PrecisionAssert.AlmostEqual("-2.501057906675441726978157243848635615581e-1", ddouble.Exp10M1(-0.125), 5e-32);
+            PrecisionAssert.AlmostEqual("-2.501057902655166113232667860715777686238e-1", ddouble.Exp10M1(-0.125 + double.ScaleB(1, -32)), 5e-32);
+
+            PrecisionAssert.AlmostEqual("3.335214314484066913986880274109580594160e-1", ddouble.Exp10M1(0.125 - double.ScaleB(1, -32)), 5e-32);
+            PrecisionAssert.AlmostEqual("3.335214321633240256759317152953310924157e-1", ddouble.Exp10M1(0.125), 5e-32);
+            PrecisionAssert.AlmostEqual("3.335214328782413603364514291937297356126e-1", ddouble.Exp10M1(0.125 + double.ScaleB(1, -32)), 5e-32);
         }
 
         [TestMethod]

@@ -74,6 +74,9 @@ namespace DoubleDouble {
 
         public static ddouble Exp10(ddouble x) => Pow10(x);
         public static ddouble Exp2(ddouble x) => Pow2(x);
+        public static ddouble Exp10M1(ddouble x) => ILogB(x) < -3 ? Pow2m1(x * Lb10) : Pow10(x) - 1d;
+        public static ddouble Exp2M1(ddouble x) => Pow2m1(x);
+
 
         public static (ddouble Sin, ddouble Cos) SinCos(ddouble x) => (Sin(x), Cos(x));
         public static (ddouble SinPi, ddouble CosPi) SinCosPi(ddouble x) => (SinPi(x), CosPi(x));
