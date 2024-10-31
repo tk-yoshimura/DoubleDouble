@@ -11,7 +11,7 @@ namespace DoubleDouble {
                 return NaN;
             }
             if (IsNegative(x)) {
-                return -Erf(Abs(x));
+                return -Erf(-x);
             }
 
             if (x < 0.5d) {

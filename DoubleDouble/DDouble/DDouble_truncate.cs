@@ -17,7 +17,7 @@
         }
 
         public static ddouble Truncate(ddouble x) {
-            return (IsNegative(x)) ? Ceiling(x) : Floor(x);
+            return IsNegative(x) ? Ceiling(x) : Floor(x);
         }
 
         public static ddouble TruncateMantissa(ddouble x, int keep_bits) {

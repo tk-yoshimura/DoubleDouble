@@ -8,7 +8,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble InverseErf(ddouble x) {
             if (IsNegative(x)) {
-                return -InverseErf(Abs(x));
+                return -InverseErf(-x);
             }
 
             if (x < 0.5d) {

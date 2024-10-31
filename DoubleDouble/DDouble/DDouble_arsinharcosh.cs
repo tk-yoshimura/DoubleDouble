@@ -2,7 +2,7 @@
     public partial struct ddouble {
         public static ddouble Asinh(ddouble x) {
             if (IsNegative(x)) {
-                return -Asinh(Abs(x));
+                return -Asinh(-x);
             }
 
             ddouble y = Log1p(x + (Sqrt(x * x + 1d) - 1d));

@@ -1347,7 +1347,7 @@ namespace DoubleDouble {
                             return y;
                         }
                         else {
-                            if (ddouble.IsNegative(nu) && NearlyInteger(nu + 0.5d, out int n_p5)) {
+                            if (IsNegative(nu) && NearlyInteger(nu + 0.5d, out int n_p5)) {
                                 ddouble y = BesselJKernel(-nu, x, m);
 
                                 return (n_p5 & 1) == 0 ? y : -y;
