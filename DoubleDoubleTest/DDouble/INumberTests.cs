@@ -352,6 +352,7 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.AlmostEqual(double.Log2P1(0.25), ddouble.Log2P1(0.25), 1e-15);
             PrecisionAssert.AlmostEqual(double.Log2P1(0.5), ddouble.Log2P1(0.5), 1e-15);
+            PrecisionAssert.AreEqual(double.Log2P1(-0.5), ddouble.Log2P1(-0.5));
             PrecisionAssert.AreEqual(double.Log2P1(1), ddouble.Log2P1(1));
             PrecisionAssert.AlmostEqual(double.Log2P1(2), ddouble.Log2P1(2), 1e-15);
             PrecisionAssert.AreEqual(double.Log2P1(3), ddouble.Log2P1(3));
