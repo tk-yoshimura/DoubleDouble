@@ -46,9 +46,9 @@
 |ddouble.Sin(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Cos(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Tan(x)|&#40;-inf,+inf&#41;|3||
-|ddouble.SinPI(x)|&#40;-inf,+inf&#41;|1| sin(&pi;x) |
-|ddouble.CosPI(x)|&#40;-inf,+inf&#41;|1| cos(&pi;x) |
-|ddouble.TanPI(x)|&#40;-inf,+inf&#41;|2| tan(&pi;x) |
+|ddouble.SinPi(x)|&#40;-inf,+inf&#41;|1| sin(&pi;x) |
+|ddouble.CosPi(x)|&#40;-inf,+inf&#41;|1| cos(&pi;x) |
+|ddouble.TanPi(x)|&#40;-inf,+inf&#41;|2| tan(&pi;x) |
 |ddouble.Sinh(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Cosh(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Tanh(x)|&#40;-inf,+inf&#41;|2||
@@ -56,6 +56,10 @@
 |ddouble.Acos(x)|&#91;-1,1&#93;|2|Accuracy deteriorates near x=-1,1.|
 |ddouble.Atan(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Atan2(y, x)|&#40;-inf,+inf&#41;|2||
+|ddouble.AsinPi(x)|&#91;-1,1&#93;|3|Accuracy deteriorates near x=-1,1.|
+|ddouble.AcosPi(x)|&#91;-1,1&#93;|3|Accuracy deteriorates near x=-1,1.|
+|ddouble.AtanPi(x)|&#40;-inf,+inf&#41;|3||
+|ddouble.Atan2Pi(y, x)|&#40;-inf,+inf&#41;|3||
 |ddouble.Asinh(x)|&#40;-inf,+inf&#41;|2||
 |ddouble.Acosh(x)|&#91;1,+inf&#41;|2||
 |ddouble.Atanh(x)|&#40;-1,1&#41;|4|Accuracy deteriorates near x=-1,1.|
