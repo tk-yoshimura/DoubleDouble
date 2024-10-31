@@ -16,7 +16,7 @@
 
 |type|mantissa bits|significant digits|
 |----|----|----|
-|ddouble|104|30|
+|ddouble|106|31|
 
 |limit|bin|dec|
 |---|---|---|
