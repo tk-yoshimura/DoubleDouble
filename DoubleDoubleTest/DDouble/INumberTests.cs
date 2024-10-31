@@ -352,13 +352,17 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.AlmostEqual(double.Log2P1(0.25), ddouble.Log2P1(0.25), 1e-15);
             PrecisionAssert.AlmostEqual(double.Log2P1(0.5), ddouble.Log2P1(0.5), 1e-15);
-            PrecisionAssert.AlmostEqual(double.Log2P1(1), ddouble.Log2P1(1), 1e-15);
+            PrecisionAssert.AreEqual(double.Log2P1(1), ddouble.Log2P1(1));
             PrecisionAssert.AlmostEqual(double.Log2P1(2), ddouble.Log2P1(2), 1e-15);
+            PrecisionAssert.AreEqual(double.Log2P1(3), ddouble.Log2P1(3));
+            PrecisionAssert.AreEqual(double.Log2P1(7), ddouble.Log2P1(7));
 
             PrecisionAssert.AlmostEqual(double.Log10P1(0.25), ddouble.Log10P1(0.25), 1e-15);
             PrecisionAssert.AlmostEqual(double.Log10P1(0.5), ddouble.Log10P1(0.5), 1e-15);
             PrecisionAssert.AlmostEqual(double.Log10P1(1), ddouble.Log10P1(1), 1e-15);
             PrecisionAssert.AlmostEqual(double.Log10P1(2), ddouble.Log10P1(2), 1e-15);
+            PrecisionAssert.AreEqual(double.Log10P1(9), ddouble.Log10P1(9));
+            PrecisionAssert.AreEqual(double.Log10P1(99), ddouble.Log10P1(99));
 
             PrecisionAssert.AreEqual(double.Exp2M1(-1), ddouble.Exp2M1(-1));
             PrecisionAssert.AreEqual(double.Exp2M1(0), ddouble.Exp2M1(0));

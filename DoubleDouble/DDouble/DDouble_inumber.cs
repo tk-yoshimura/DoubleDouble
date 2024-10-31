@@ -82,8 +82,8 @@ namespace DoubleDouble {
         public static (ddouble SinPi, ddouble CosPi) SinCosPi(ddouble x) => (SinPi(x), CosPi(x));
 
         public static ddouble LogP1(ddouble x) => Log1p(x);
-        public static ddouble Log2P1(ddouble x) => Log1p(x) * LbE;
-        public static ddouble Log10P1(ddouble x) => Log1p(x) * LbE * Lg2;
+        public static ddouble Log2P1(ddouble x) => x < 0.5d ? Log1p(x) * LbE : Log2(1d + x);
+        public static ddouble Log10P1(ddouble x) => x < 0.5d ? Log1p(x) * LbE * Lg2 : Log10(1d + x);
 
         public static ddouble Parse(string s, NumberStyles style, IFormatProvider provider) => Parse(s);
         public static bool TryParse(string s, NumberStyles style, IFormatProvider provider, out ddouble result) => TryParse(s, out result);
