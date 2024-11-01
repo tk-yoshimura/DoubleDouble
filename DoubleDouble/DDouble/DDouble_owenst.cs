@@ -14,7 +14,7 @@ namespace DoubleDouble {
             h = Abs(h);
 
             if (h <= OwenTIntegrate.Eps) {
-                return Atan(a) / Ldexp(Pi, 1);
+                return Atan(a) * Ldexp(RcpPi, -1);
             }
             if (h > 36d) {
                 return 0d;
@@ -89,10 +89,10 @@ namespace DoubleDouble {
                     }
                 }
 
-                ddouble y = (ig - sp * ap - sd * ad) / Ldexp(Pi, 1);
+                ddouble y = (ig - sp * ap - sd * ad) * Ldexp(RcpPi, -1);
 
                 if (y < Epsilon) {
-                    return a * Exp(n_half_h2) / Ldexp(Pi, 1);
+                    return a * Exp(n_half_h2) * Ldexp(RcpPi, -1);
                 }
 
                 return y;
