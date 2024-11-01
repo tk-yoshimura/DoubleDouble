@@ -54,9 +54,9 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AlmostEqual((ddouble)"9.87688340595137726190040247693437261e-1", ddouble.SinPiHalf(9 * ddouble.Rcp(10)), 1e-31);
             PrecisionAssert.AlmostEqual(0.5d, ddouble.SinPiHalf(ddouble.Rcp(3)), 1e-31);
             PrecisionAssert.AlmostEqual(ddouble.Sqrt(3) / 2, ddouble.SinPiHalf(2 * ddouble.Rcp(3)), 1e-31);
-            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2) / 2, ddouble.SinPiHalf(0.5d), 1e-34);
-            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2) / 2, ddouble.SinPiHalf(ddouble.BitDecrement(0.5d)), 1e-31);
-            PrecisionAssert.AlmostEqual(ddouble.Sqrt(2) / 2, ddouble.SinPiHalf(ddouble.BitIncrement(0.5d)), 1e-31);
+            PrecisionAssert.AreEqual(ddouble.Sqrt2 / 2, ddouble.SinPiHalf(0.5d));
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt2 / 2, ddouble.SinPiHalf(ddouble.BitDecrement(0.5d)), 1e-31);
+            PrecisionAssert.AlmostEqual(ddouble.Sqrt2 / 2, ddouble.SinPiHalf(ddouble.BitIncrement(0.5d)), 1e-31);
 
             ddouble sin_pzero = ddouble.SinPiHalf(0d);
             ddouble sin_mzero = ddouble.SinPiHalf(-0d);

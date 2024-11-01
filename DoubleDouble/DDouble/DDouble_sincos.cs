@@ -137,7 +137,7 @@ namespace DoubleDouble {
                     Debug.Assert((x >= 0d && x <= 1d), nameof(x));
 
                     if (x == 0.5d) {
-                        return Ldexp(Sqrt(2), -1);
+                        return Ldexp(Sqrt2, -1);
                     }
 
                     if (x < 0.5d) {
