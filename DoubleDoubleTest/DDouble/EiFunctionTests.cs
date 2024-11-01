@@ -2432,11 +2432,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 8e-32d);
 
                 if (x != 0 && x != 1) {
-                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
-                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 8e-32d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 8e-32d);
                 }
             }
 
@@ -2450,11 +2450,11 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-30d);
+                PrecisionAssert.AlmostEqual(expected, y, 8e-31d);
 
                 if (x != 0 && x != 1) {
-                    PrecisionAssert.AlmostEqual(expected, y_dec, 1e-30d);
-                    PrecisionAssert.AlmostEqual(expected, y_inc, 1e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y_dec, 8e-31d);
+                    PrecisionAssert.AlmostEqual(expected, y_inc, 8e-31d);
                 }
             }
 
