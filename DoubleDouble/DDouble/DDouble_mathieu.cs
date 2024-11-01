@@ -229,7 +229,7 @@ namespace DoubleDouble {
                 for (int i = 1; i < limit_coef.Count; i++) {
                     asymp = asymp * invh + limit_coef[i];
                 }
-                asymp = 2 * (s * h - q) - asymp;
+                asymp = 2d * (s * h - q) - asymp;
 
                 ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = PadeATables[n];
                 (ddouble u0, ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef) = PadeABParam(u, pade_table);
@@ -268,7 +268,7 @@ namespace DoubleDouble {
                 for (int i = 1; i < limit_coef.Count; i++) {
                     asymp = asymp * invh + limit_coef[i];
                 }
-                asymp = 2 * (s * h - q) - asymp;
+                asymp = 2d * (s * h - q) - asymp;
 
                 ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> pade_table = PadeBTables[n];
                 (ddouble u0, ReadOnlyCollection<(ddouble c, ddouble d)> pade_coef) = PadeABParam(u, pade_table);
