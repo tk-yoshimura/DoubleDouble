@@ -154,6 +154,11 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsNaN(tan_pinf, nameof(tan_pinf));
             PrecisionAssert.IsNaN(tan_ninf, nameof(tan_ninf));
             PrecisionAssert.IsNaN(tan_nan, nameof(tan_nan));
+
+            for (int n = 1; n <= 32; n++) {
+                Assert.AreEqual(double.Sign(double.TanPi(n)), ddouble.Sign(ddouble.TanPi(n)), "tan intn");
+                Assert.AreEqual(double.Sign(double.TanPi(-n)), ddouble.Sign(ddouble.TanPi(-n)), "tan intn");
+            }
         }
 
         [TestMethod]
