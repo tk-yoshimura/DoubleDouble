@@ -250,6 +250,52 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.AreEqual(0, ddouble.Ldexp(2, long.MinValue));
             PrecisionAssert.IsPositiveInfinity(ddouble.Ldexp(2, long.MaxValue));
+
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, 4)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, -4)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, -1000)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, 1000)));
+
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, -2000)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, 2000)));
+
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ldexp(ddouble.PositiveInfinity, 2));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ldexp(ddouble.PositiveInfinity, -2));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ldexp(ddouble.MaxValue, 2));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.MaxValue, -2)));
+
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ldexp(ddouble.NegativeInfinity, 2));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ldexp(ddouble.NegativeInfinity, -2));
+            PrecisionAssert.IsNegativeInfinity(ddouble.Ldexp(ddouble.MinValue, 2));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.MinValue, -2)));
+
+            PrecisionAssert.IsPlusZero(ddouble.Ldexp(+0d, 2));
+            PrecisionAssert.IsMinusZero(ddouble.Ldexp(-0d, 2));
+
+            PrecisionAssert.IsPlusZero(ddouble.Ldexp(+0d, -2));
+            PrecisionAssert.IsMinusZero(ddouble.Ldexp(-0d, -2));
+
+            
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, -2)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, 2)));
+
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi * ddouble.Epsilon, -2)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi * ddouble.Epsilon, 2)));
+
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.Epsilon, -2)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.Epsilon, 2)));
+                        
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, -20)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, 20)));
+
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi * ddouble.Epsilon, -20)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi * ddouble.Epsilon, 20)));
+
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.Epsilon, -20)));
+            Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.Epsilon, 20)));
+
+            PrecisionAssert.IsNaN(ddouble.Ldexp(ddouble.NaN, 2));
+            PrecisionAssert.IsNaN(ddouble.Ldexp(ddouble.NaN, -2));
         }
 
         [TestMethod]

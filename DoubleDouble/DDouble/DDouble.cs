@@ -25,6 +25,16 @@ namespace DoubleDouble {
             this.lo = 0d;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal ddouble(ddouble v, int n) {
+            this.hi = double.ScaleB(v.hi, n);
+            this.lo = double.ScaleB(v.lo, n);
+
+            if (!double.IsFinite(this.lo)) {
+                this.lo = 0d;
+            }
+        }
+
         public static int Sign(ddouble value) => double.Sign(value.hi);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -79,6 +89,10 @@ namespace DoubleDouble {
         public const int NormalMinExponent = -968;
 
         internal static bool IsRegulared(ddouble v) {
+            if (!double.IsFinite(v.hi)) {
+                return v.lo == 0d;
+            }
+
             if (v.lo < 0) {
                 double vd = double.BitDecrement(v.hi) - v.hi;
                 return vd < v.lo;

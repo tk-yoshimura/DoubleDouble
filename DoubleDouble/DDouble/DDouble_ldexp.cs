@@ -4,11 +4,7 @@ namespace DoubleDouble {
     public partial struct ddouble {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble Ldexp(ddouble x, int n) {
-            if (IsZero(x) || !IsFinite(x)) {
-                return x;
-            }
-
-            return new ddouble(double.ScaleB(x.hi, n), double.ScaleB(x.lo, n));
+            return new ddouble(x, n);
         }
 
         public static ddouble Ldexp(ddouble x, long n) => Ldexp(x, (int)long.Clamp(n, int.MinValue, int.MaxValue));
