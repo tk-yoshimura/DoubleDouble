@@ -124,7 +124,7 @@ namespace DoubleDouble {
 
                         Debug.Assert(sd > 0.5d, $"[InverseDigamma x={x}] Too small pade denom!!");
 
-                        ddouble y = (sc / sd) / x;
+                        ddouble y = sc / (sd * x);
 
                         return y;
                     }
