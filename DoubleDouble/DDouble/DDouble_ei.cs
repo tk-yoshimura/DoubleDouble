@@ -62,6 +62,14 @@ namespace DoubleDouble {
         }
 
         public static ddouble Li(ddouble x) {
+            if (IsFinite(x) && x >= 2d) {
+                ddouble lnx = Log(x);
+                ddouble g = EiPade.Coef(lnx) + lnx;
+                ddouble y = x / g;
+
+                return y;
+            }
+
             return Ei(Log(x));
         }
 
