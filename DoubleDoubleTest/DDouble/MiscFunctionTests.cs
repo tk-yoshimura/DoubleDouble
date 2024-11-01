@@ -275,7 +275,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsPlusZero(ddouble.Ldexp(+0d, -2));
             PrecisionAssert.IsMinusZero(ddouble.Ldexp(-0d, -2));
 
-            
+
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, -2)));
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, 2)));
 
@@ -284,7 +284,7 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.Epsilon, -2)));
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.Epsilon, 2)));
-                        
+
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, -20)));
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi / ddouble.MaxValue, 20)));
 

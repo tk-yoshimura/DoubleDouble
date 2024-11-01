@@ -49,9 +49,9 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
-            PrecisionAssert.AlmostEqual((ddouble)"6.13588464915447535964023459037258092e-3", ddouble.SinPiHalf(ddouble.Rcp(256)), 1e-31);
-            PrecisionAssert.AlmostEqual((ddouble)"1.56434465040230869010105319467166892e-1", ddouble.SinPiHalf(ddouble.Rcp(10)), 1e-31);
-            PrecisionAssert.AlmostEqual((ddouble)"9.87688340595137726190040247693437261e-1", ddouble.SinPiHalf(9 * ddouble.Rcp(10)), 1e-31);
+            PrecisionAssert.AlmostEqual("6.13588464915447535964023459037258092e-3", ddouble.SinPiHalf(ddouble.Rcp(256)), 1e-31);
+            PrecisionAssert.AlmostEqual("1.56434465040230869010105319467166892e-1", ddouble.SinPiHalf(ddouble.Rcp(10)), 1e-31);
+            PrecisionAssert.AlmostEqual("9.87688340595137726190040247693437261e-1", ddouble.SinPiHalf(9 * ddouble.Rcp(10)), 1e-31);
             PrecisionAssert.AlmostEqual(0.5d, ddouble.SinPiHalf(ddouble.Rcp(3)), 1e-31);
             PrecisionAssert.AlmostEqual(ddouble.Sqrt(3) / 2, ddouble.SinPiHalf(2 * ddouble.Rcp(3)), 1e-31);
             PrecisionAssert.AreEqual(ddouble.Sqrt2 / 2, ddouble.SinPiHalf(0.5d));
@@ -360,10 +360,10 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.AlmostEqual(ddouble.Pi / 4, ddouble.Atan(1), 1e-31);
             PrecisionAssert.AlmostEqual(-ddouble.Pi / 4, ddouble.Atan(-1), 1e-31);
-            PrecisionAssert.AlmostEqual((ddouble)"1.10714871779409050301706546017853704", ddouble.Atan(2), 1e-31);
-            PrecisionAssert.AlmostEqual((ddouble)"-1.10714871779409050301706546017853704", ddouble.Atan(-2), 1e-31);
-            PrecisionAssert.AlmostEqual((ddouble)"1.24904577239825442582991707728109012", ddouble.Atan(3), 1e-31);
-            PrecisionAssert.AlmostEqual((ddouble)"-1.24904577239825442582991707728109012", ddouble.Atan(-3), 1e-31);
+            PrecisionAssert.AlmostEqual("1.10714871779409050301706546017853704", ddouble.Atan(2), 1e-31);
+            PrecisionAssert.AlmostEqual("-1.10714871779409050301706546017853704", ddouble.Atan(-2), 1e-31);
+            PrecisionAssert.AlmostEqual("1.24904577239825442582991707728109012", ddouble.Atan(3), 1e-31);
+            PrecisionAssert.AlmostEqual("-1.24904577239825442582991707728109012", ddouble.Atan(-3), 1e-31);
 
             ddouble atan_pzero = ddouble.Atan(0d);
             ddouble atan_mzero = ddouble.Atan(-0d);

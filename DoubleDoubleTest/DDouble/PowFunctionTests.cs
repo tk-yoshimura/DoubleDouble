@@ -10,7 +10,7 @@ namespace DoubleDoubleTest.DDouble {
         public void PowNTest() {
             ddouble v = ddouble.Pow(5, 308);
 
-            PrecisionAssert.AlmostEqual((ddouble)"1.917614634881924434803035919916513923037e215", v, 1e-31);
+            PrecisionAssert.AlmostEqual("1.917614634881924434803035919916513923037e215", v, 1e-31);
         }
 
         [TestMethod]

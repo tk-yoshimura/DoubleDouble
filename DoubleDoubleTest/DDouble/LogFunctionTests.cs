@@ -190,10 +190,10 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble err = p - y;
                     if (ddouble.IsInteger(p)) {
-                        PrecisionAssert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AreEqual(p, y, $"log_{b}({x}) err={err}");
                     }
                     else {
-                        PrecisionAssert.AlmostEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AlmostEqual(p, y, 1e-31, $"log_{b}({x}) err={err}");
                     }
                 }
             }
@@ -205,10 +205,10 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble err = p - y;
                     if (ddouble.IsInteger(p)) {
-                        PrecisionAssert.AreEqual((ddouble)p, y, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AreEqual(p, y, $"log_{b}({x}) err={err}");
                     }
                     else {
-                        PrecisionAssert.AlmostEqual((ddouble)p, y, 1e-31, $"log_{b}({x}) err={err}");
+                        PrecisionAssert.AlmostEqual(p, y, 1e-31, $"log_{b}({x}) err={err}");
                     }
                 }
             }
