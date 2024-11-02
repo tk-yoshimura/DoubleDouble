@@ -29,6 +29,29 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
+            PrecisionAssert.AreEqual(0d, ddouble.Binomial(2, 3));
+            PrecisionAssert.AreEqual(0d, ddouble.Binomial(2, -1));
+
+            PrecisionAssert.AreEqual(0d, ddouble.Binomial(3, 4));
+            PrecisionAssert.AreEqual(0d, ddouble.Binomial(3, -1));
+
+            PrecisionAssert.AreEqual(0d, ddouble.Binomial(4, 5));
+            PrecisionAssert.AreEqual(0d, ddouble.Binomial(4, -1));
+
+            PrecisionAssert.AreEqual(-1d, ddouble.Binomial(-1, 1));
+            PrecisionAssert.AreEqual(1, ddouble.Binomial(-2, 0));
+            PrecisionAssert.AreEqual(-2d, ddouble.Binomial(-2, 1));
+            PrecisionAssert.AreEqual(3d, ddouble.Binomial(-2, 2));
+            PrecisionAssert.AreEqual(1d, ddouble.Binomial(-3, 0));
+            PrecisionAssert.AreEqual(-3d, ddouble.Binomial(-3, 1));
+            PrecisionAssert.AreEqual(6d, ddouble.Binomial(-3, 2));
+            PrecisionAssert.AreEqual(-10d, ddouble.Binomial(-3, 3));
+            PrecisionAssert.AreEqual(1d, ddouble.Binomial(-4, 0));
+            PrecisionAssert.AreEqual(-4d, ddouble.Binomial(-4, 1));
+            PrecisionAssert.AreEqual(10d, ddouble.Binomial(-4, 2));
+            PrecisionAssert.AreEqual(-20d, ddouble.Binomial(-4, 3));
+            PrecisionAssert.AreEqual(35d, ddouble.Binomial(-4, 4));
+
             PrecisionAssert.IsFinite(ddouble.Binomial(999, 499));
             PrecisionAssert.IsFinite(ddouble.Binomial(999, 500));
             PrecisionAssert.IsFinite(ddouble.Binomial(1000, 500));
