@@ -1,6 +1,10 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Binomial(int n, int k) {
+            if (k < 0) {
+                return 0d;
+            }
+
             if (n < 0) {
                 ddouble neg_binom = Binomial(checked(-n + k - 1), k);
                 return ((k & 1) == 0) ? neg_binom : -neg_binom;
@@ -8,10 +12,6 @@
 
             if (k > n / 2) {
                 return Binomial(n, checked(n - k));
-            }
-
-            if (k < 0) {
-                return 0d;
             }
 
             if (n > 1000) {
