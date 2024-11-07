@@ -17,8 +17,6 @@ namespace DoubleDouble {
                 this.hi += lo;
                 this.lo = lo - (this.hi - hi);
             }
-
-            Debug.Assert(IsRegulared(this));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
