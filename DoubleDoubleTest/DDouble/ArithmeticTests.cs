@@ -403,6 +403,36 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(ddouble.IsPositive(x * y));
                 }
             }
+
+            for (ddouble x = -ddouble.Ldexp(1, -250); x < 0; x *= 0.15) {
+                for (ddouble y = -ddouble.Ldexp(1, -250); y < 0; y *= 0.17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x * y) || ddouble.IsPositive(x * y));
+                }
+            }
+
+            for (ddouble x = ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) {
+                for (ddouble y = ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x * y) || ddouble.IsPositive(x * y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) {
+                for (ddouble y = ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x * y) || ddouble.IsNegative(x * y));
+                }
+            }
+
+            for (ddouble x = ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) {
+                for (ddouble y = -ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x * y) || ddouble.IsNegative(x * y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) {
+                for (ddouble y = -ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x * y) || ddouble.IsPositive(x * y));
+                }
+            }
         }
 
         [TestMethod]
