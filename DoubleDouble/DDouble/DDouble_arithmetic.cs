@@ -157,8 +157,8 @@ namespace DoubleDouble {
             ddouble y = MultiplyAdd(0d, a.hi, b);
             y = MultiplyAdd(y, a.lo, b);
 
-            if (IsZero(y)) {
-                return Sign(a) == Sign(b) ? PlusZero : MinusZero;
+            if (IsZero(y)) { // special case of fused multiply-add
+                return a.hi * b;
             }
 
             return y;
@@ -234,8 +234,8 @@ namespace DoubleDouble {
             y = MultiplyAdd(y, a.lo, b.hi);
             y = MultiplyAdd(y, a.lo, b.lo);
 
-            if (IsZero(y)) {
-                return Sign(a) == Sign(b) ? PlusZero : MinusZero;
+            if (IsZero(y)) { // special case of fused multiply-add
+                return a.hi * b.hi;
             }
 
             return y;
