@@ -13,10 +13,12 @@ namespace DoubleDouble {
             this.hi = hi;
             this.lo = 0d;
 
-            if (double.IsFinite(lo) && lo != 0d) {
+            if (double.IsFinite(hi) & double.IsFinite(lo) & lo != 0d) {
                 this.hi += lo;
                 this.lo = lo - (this.hi - hi);
             }
+
+            Debug.Assert(IsRegulared(this));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -101,6 +103,7 @@ namespace DoubleDouble {
                 double vi = double.BitIncrement(v.hi) - v.hi;
                 return vi > v.lo;
             }
+
             return true;
         }
     }
