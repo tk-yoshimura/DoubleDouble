@@ -86,6 +86,12 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsZero(double.MinValue + ddouble.MaxValue));
             Assert.IsTrue(ddouble.IsZero(double.MaxValue + ddouble.MinValue));
 
+            Assert.AreEqual(double.CopySign(1, 0d + double.NegativeZero), ddouble.CopySign(1, ddouble.PlusZero + ddouble.MinusZero));
+            Assert.AreEqual(double.CopySign(1, double.NegativeZero + 0d), ddouble.CopySign(1, ddouble.MinusZero + ddouble.PlusZero));
+
+            // ignore:
+            //Assert.AreEqual(double.CopySign(1, double.NegativeZero + double.NegativeZero), ddouble.CopySign(1, ddouble.MinusZero + ddouble.MinusZero));
+
             foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x + (ddouble)y, x + y);
@@ -187,6 +193,11 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsNegativeInfinity(double.MinValue - ddouble.MaxValue));
             Assert.IsTrue(ddouble.IsPositiveInfinity(double.MaxValue - ddouble.MinValue));
 
+            Assert.AreEqual(double.CopySign(1, 0d - double.NegativeZero), ddouble.CopySign(1, ddouble.PlusZero - ddouble.MinusZero));
+            // ignore:
+            //Assert.AreEqual(double.CopySign(1, double.NegativeZero - 0d), ddouble.CopySign(1, ddouble.MinusZero - ddouble.PlusZero));
+            Assert.AreEqual(double.CopySign(1, double.NegativeZero - double.NegativeZero), ddouble.CopySign(1, ddouble.MinusZero - ddouble.MinusZero));
+
             foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x - (ddouble)y, x - y);
@@ -260,6 +271,10 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.IsTrue(ddouble.IsPlusZero(ddouble.Pi * ddouble.PlusZero));
             Assert.IsTrue(ddouble.IsMinusZero(ddouble.Pi * ddouble.MinusZero));
+
+            Assert.AreEqual(double.CopySign(1, 0d * double.NegativeZero), ddouble.CopySign(1, ddouble.PlusZero * ddouble.MinusZero));
+            Assert.AreEqual(double.CopySign(1, double.NegativeZero * 0d), ddouble.CopySign(1, ddouble.MinusZero * ddouble.PlusZero));
+            Assert.AreEqual(double.CopySign(1, double.NegativeZero * double.NegativeZero), ddouble.CopySign(1, ddouble.MinusZero * ddouble.MinusZero));
 
             foreach (int n in new int[] { -7, -13, -17, -257, 7, 13, 17, 257 }) {
                 ddouble u = (ddouble.Rcp(n)) * (double)n;

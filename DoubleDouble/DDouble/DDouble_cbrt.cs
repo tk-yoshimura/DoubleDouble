@@ -3,14 +3,14 @@
 namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Cbrt(ddouble x) {
-            if (IsNaN(x)) {
-                return NaN;
+            if (IsZero(x)) {
+                return x;
             }
             if (IsNegative(x)) {
                 return -Cbrt(-x);
             }
-            if (IsZero(x)) {
-                return 0d;
+            if (IsNaN(x)) {
+                return NaN;
             }
             if (IsInfinity(x)) {
                 return PositiveInfinity;

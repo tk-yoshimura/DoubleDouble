@@ -34,7 +34,8 @@ namespace DoubleDoubleTest.DDouble {
             ddouble sqrt_nan = ddouble.Sqrt(double.NaN);
 
             PrecisionAssert.IsPlusZero(sqrt_pzero, nameof(sqrt_pzero));
-            PrecisionAssert.IsNaN(sqrt_mzero, nameof(sqrt_mzero));
+            PrecisionAssert.IsMinusZero(sqrt_mzero, nameof(sqrt_mzero));
+            PrecisionAssert.IsMinusZero(double.Sqrt(-0.0), nameof(sqrt_mzero));
             PrecisionAssert.IsPositiveInfinity(sqrt_pinf, nameof(sqrt_pinf));
             PrecisionAssert.IsNaN(sqrt_ninf, nameof(sqrt_ninf));
             PrecisionAssert.IsNaN(sqrt_nan, nameof(sqrt_nan));
@@ -154,7 +155,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble nroot_nan = ddouble.RootN(double.NaN, n);
 
                 PrecisionAssert.IsPlusZero(nroot_pzero, nameof(nroot_pzero));
-                PrecisionAssert.IsNaN(nroot_mzero, nameof(nroot_mzero));
+                PrecisionAssert.IsMinusZero(nroot_mzero, nameof(nroot_mzero));
                 PrecisionAssert.IsPositiveInfinity(nroot_pinf, nameof(nroot_pinf));
                 PrecisionAssert.IsNaN(nroot_ninf, nameof(nroot_ninf));
                 PrecisionAssert.IsNaN(nroot_nan, nameof(nroot_nan));

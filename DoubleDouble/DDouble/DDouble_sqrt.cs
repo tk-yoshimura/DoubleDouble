@@ -1,11 +1,11 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble Sqrt(ddouble x) {
+            if (IsZero(x)) {
+                return x;
+            }
             if (IsNegative(x) || IsNaN(x)) {
                 return NaN;
-            }
-            if (IsZero(x)) {
-                return 0d;
             }
             if (IsInfinity(x)) {
                 return PositiveInfinity;

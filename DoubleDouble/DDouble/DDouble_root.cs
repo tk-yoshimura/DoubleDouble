@@ -17,7 +17,7 @@ namespace DoubleDouble {
                 6 => Sqrt(Cbrt(x)),
                 8 => Sqrt(Sqrt(Sqrt(x))),
                 9 => Cbrt(Cbrt(x)),
-                <= 256 => ((n_abs & 1) == 0) ? RootNUtil.Value(x, n) : CopySign(RootNUtil.Value(Abs(x), n), x),
+                <= 256 => RootNUtil.Value(x, n),
                 _ => ((n_abs & 1) == 0) ? Pow(x, Rcp(n)) : CopySign(Pow(Abs(x), Rcp(n)), x)
             };
 
@@ -54,11 +54,14 @@ namespace DoubleDouble {
             public static ddouble Value(ddouble x, int n) {
                 Debug.Assert((n > 4 && n <= 256), nameof(n));
 
-                if (IsNegative(x) || IsNaN(x)) {
-                    return NaN;
-                }
                 if (IsZero(x)) {
-                    return 0d;
+                    return x;
+                }
+                if (IsNegative(x)) {
+                    return ((n & 1) == 0) ? NaN : -Value(-x, n);
+                }
+                if (IsNaN(x)) {
+                    return NaN;
                 }
                 if (IsInfinity(x)) {
                     return PositiveInfinity;
