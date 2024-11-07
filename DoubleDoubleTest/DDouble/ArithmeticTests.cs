@@ -88,7 +88,6 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.AreEqual(double.CopySign(1, 0d + double.NegativeZero), ddouble.CopySign(1, ddouble.PlusZero + ddouble.MinusZero));
             Assert.AreEqual(double.CopySign(1, double.NegativeZero + 0d), ddouble.CopySign(1, ddouble.MinusZero + ddouble.PlusZero));
-
             // ignore:
             //Assert.AreEqual(double.CopySign(1, double.NegativeZero + double.NegativeZero), ddouble.CopySign(1, ddouble.MinusZero + ddouble.MinusZero));
 
