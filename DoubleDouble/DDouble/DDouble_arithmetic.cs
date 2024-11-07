@@ -427,8 +427,6 @@ namespace DoubleDouble {
             double t = s - a;
             double c = (a - (s - t)) + (b - t);
 
-            double v = double.CopySign(1, s);
-
             return (s, c);
         }
 
