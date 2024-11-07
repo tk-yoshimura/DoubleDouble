@@ -88,8 +88,7 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.AreEqual(double.CopySign(1, 0d + double.NegativeZero), ddouble.CopySign(1, ddouble.PlusZero + ddouble.MinusZero));
             Assert.AreEqual(double.CopySign(1, double.NegativeZero + 0d), ddouble.CopySign(1, ddouble.MinusZero + ddouble.PlusZero));
-            // ignore:
-            //Assert.AreEqual(double.CopySign(1, double.NegativeZero + double.NegativeZero), ddouble.CopySign(1, ddouble.MinusZero + ddouble.MinusZero));
+            Assert.AreEqual(double.CopySign(1, double.NegativeZero + double.NegativeZero), ddouble.CopySign(1, ddouble.MinusZero + ddouble.MinusZero));
 
             foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
                 foreach (int y in new int[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
@@ -193,8 +192,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.IsPositiveInfinity(double.MaxValue - ddouble.MinValue));
 
             Assert.AreEqual(double.CopySign(1, 0d - double.NegativeZero), ddouble.CopySign(1, ddouble.PlusZero - ddouble.MinusZero));
-            // ignore:
-            //Assert.AreEqual(double.CopySign(1, double.NegativeZero - 0d), ddouble.CopySign(1, ddouble.MinusZero - ddouble.PlusZero));
+            Assert.AreEqual(double.CopySign(1, double.NegativeZero - 0d), ddouble.CopySign(1, ddouble.MinusZero - ddouble.PlusZero));
             Assert.AreEqual(double.CopySign(1, double.NegativeZero - double.NegativeZero), ddouble.CopySign(1, ddouble.MinusZero - ddouble.MinusZero));
 
             foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {
@@ -382,6 +380,29 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
 
+            for (ddouble x = ddouble.Ldexp(1, -250); x > 0; x *= 0.15) { 
+                for (ddouble y = ddouble.Ldexp(1, -250); y > 0; y *= 0.17) {
+                    Assert.IsTrue(ddouble.IsPositive(x * y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, -250); x < 0; x *= 0.15) { 
+                for (ddouble y = ddouble.Ldexp(1, -250); y > 0; y *= 0.17) {
+                    Assert.IsTrue(ddouble.IsNegative(x * y));
+                }
+            }
+
+            for (ddouble x = ddouble.Ldexp(1, -250); x > 0; x *= 0.15) { 
+                for (ddouble y = -ddouble.Ldexp(1, -250); y < 0; y *= 0.17) {
+                    Assert.IsTrue(ddouble.IsNegative(x * y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, -250); x < 0; x *= 0.15) { 
+                for (ddouble y = -ddouble.Ldexp(1, -250); y < 0; y *= 0.17) {
+                    Assert.IsTrue(ddouble.IsPositive(x * y));
+                }
+            }
         }
 
         [TestMethod]
@@ -534,6 +555,54 @@ namespace DoubleDoubleTest.DDouble {
                 foreach (double y in new double[] { int.MinValue, int.MinValue + 1, -65535, -32, 0, 1, 32, 65535, int.MaxValue - 1, int.MaxValue }) {
                     Assert.AreEqual(x / (ddouble)y, x / y);
                     Assert.AreEqual((ddouble)y / x, y / x);
+                }
+            }
+
+            for (ddouble x = ddouble.Ldexp(1, -250); x > 0; x *= 0.15) { 
+                for (ddouble y = ddouble.Ldexp(1, -250); y > 0; y *= 0.17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsPositive(x / y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, -250); x < 0; x *= 0.15) { 
+                for (ddouble y = ddouble.Ldexp(1, -250); y > 0; y *= 0.17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsNegative(x / y));
+                }
+            }
+
+            for (ddouble x = ddouble.Ldexp(1, -250); x > 0; x *= 0.15) { 
+                for (ddouble y = -ddouble.Ldexp(1, -250); y < 0; y *= 0.17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsNegative(x / y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, -250); x < 0; x *= 0.15) { 
+                for (ddouble y = -ddouble.Ldexp(1, -250); y < 0; y *= 0.17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsPositive(x / y));
+                }
+            }
+
+            for (ddouble x = ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) { 
+                for (ddouble y = ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsPositive(x / y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) { 
+                for (ddouble y = ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsNegative(x / y));
+                }
+            }
+
+            for (ddouble x = ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) { 
+                for (ddouble y = -ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsNegative(x / y));
+                }
+            }
+
+            for (ddouble x = -ddouble.Ldexp(1, 250); ddouble.IsFinite(x); x *= 15) { 
+                for (ddouble y = -ddouble.Ldexp(1, 250); ddouble.IsFinite(y); y *= 17) {
+                    Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsPositive(x / y));
                 }
             }
         }

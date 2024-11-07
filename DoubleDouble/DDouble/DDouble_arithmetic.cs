@@ -230,6 +230,10 @@ namespace DoubleDouble {
             y = MultiplyAdd(y, a.lo, b.hi);
             y = MultiplyAdd(y, a.lo, b.lo);
 
+            if (IsZero(y)) {
+                return Sign(a) == Sign(b) ? PlusZero : MinusZero;
+            }
+
             return y;
         }
 

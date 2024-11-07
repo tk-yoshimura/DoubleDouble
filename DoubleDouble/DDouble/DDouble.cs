@@ -10,12 +10,12 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal ddouble(double hi, double lo) {
-            this.hi = hi + lo;
-            this.lo = lo - (this.hi - hi);
+            this.hi = hi;
+            this.lo = 0d;
 
-            if (!double.IsFinite(this.lo)) {
-                this.hi = hi;
-                this.lo = 0d;
+            if (double.IsFinite(lo) && lo != 0d) {
+                this.hi += lo;
+                this.lo = lo - (this.hi - hi);
             }
         }
 
