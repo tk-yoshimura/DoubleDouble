@@ -157,6 +157,10 @@ namespace DoubleDouble {
             ddouble y = MultiplyAdd(0d, a.hi, b);
             y = MultiplyAdd(y, a.lo, b);
 
+            if (IsZero(y)) {
+                return Sign(a) == Sign(b) ? PlusZero : MinusZero;
+            }
+
             return y;
         }
 
