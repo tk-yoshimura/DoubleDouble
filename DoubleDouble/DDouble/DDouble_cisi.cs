@@ -20,7 +20,7 @@ namespace DoubleDouble {
                 if (x <= CiSiPade.PadeApproxMax) {
                     (f, g) = CiSiPade.Coef(x);
                 }
-                else if (x <= double.ScaleB(1, 256)) {
+                else if (x <= CiSiPade.ExtremelyLarge) {
                     (f, g) = CiSiLimit.Coef(x);
                 }
                 else {
@@ -52,7 +52,7 @@ namespace DoubleDouble {
                 if (x <= CiSiPade.PadeApproxMax) {
                     (f, g) = CiSiPade.Coef(x);
                 }
-                else if (x <= double.ScaleB(1, 256)) {
+                else if (x <= CiSiPade.ExtremelyLarge) {
                     (f, g) = CiSiLimit.Coef(x);
                 }
                 else {
@@ -217,6 +217,7 @@ namespace DoubleDouble {
 
         private static class CiSiPade {
             public const double PadeApproxMin = 1d, PadeApproxMax = 511d;
+            public static readonly double ExtremelyLarge = double.ScaleB(1, 256);
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
 
             static CiSiPade() {
