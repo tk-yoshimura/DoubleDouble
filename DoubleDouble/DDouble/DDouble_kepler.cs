@@ -189,10 +189,10 @@ namespace DoubleDouble {
                     (ddouble f, ddouble g) pade(ddouble x, ddouble e) {
                         ddouble x2 = x * x;
 
-                        ddouble r = r0 + x2 * ((r2) + x2 * (r4));
-                        ddouble gr = x * ((r2 * 2d) + x2 * (r4 * 4d));
+                        ddouble r = r0 + x2 * (r2 + x2 * r4);
+                        ddouble gr = x * (Ldexp(r2, 1) + x2 * Ldexp(r4, 2));
 
-                        ddouble s = x * ((s1) + x2 * (s3));
+                        ddouble s = x * (s1 + x2 * s3);
                         ddouble gs = s1 + x2 * (s3 * 3d);
 
                         return (s / r, (gs * r - s * gr) / (r * r));
@@ -341,10 +341,10 @@ namespace DoubleDouble {
                     (ddouble f, ddouble g) pade(ddouble x, ddouble e) {
                         ddouble x2 = x * x;
 
-                        ddouble r = r0 + x2 * ((r2) + x2 * (r4));
-                        ddouble gr = x * ((r2 * 2d) + x2 * (r4 * 4d));
+                        ddouble r = r0 + x2 * (r2 + x2 * r4);
+                        ddouble gr = x * (Ldexp(r2, 1) + x2 * Ldexp(r4, 2));
 
-                        ddouble s = x * ((s1) + x2 * (s3));
+                        ddouble s = x * (s1 + x2 * s3);
                         ddouble gs = s1 + x2 * (s3 * 3d);
 
                         return (s / r, (gs * r - s * gr) / (r * r));

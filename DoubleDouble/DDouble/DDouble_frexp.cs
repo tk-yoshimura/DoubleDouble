@@ -17,7 +17,7 @@ namespace DoubleDouble {
 
             if (f.hi == 1d && f.lo < 0d) {
                 n -= 1;
-                f = new ddouble(2d, f.lo * 2d);
+                f = new ddouble(2d, double.ScaleB(f.lo, 1));
             }
 
             return (n, f);

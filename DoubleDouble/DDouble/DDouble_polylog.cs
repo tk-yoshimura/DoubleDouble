@@ -166,8 +166,8 @@ namespace DoubleDouble {
             static ReadOnlyCollection<Func<ddouble, ddouble>> mlimit_bias = new(new Func<ddouble, ddouble>[] {
                (logx) => throw new NotImplementedException(),
                (logx) => throw new NotImplementedException(),
-               (logx) => (pi2 + 3d * Square(logx)) / 6,
-               (logx) => logx * (pi2 + Square(logx)) / 6,
+               (logx) => (pi2 + 3d * Square(logx)) / 6d,
+               (logx) => logx * (pi2 + Square(logx)) / 6d,
                (logx) => {
                    ddouble logx2 = Square(logx);
                    return (7d * pi4 + logx2 * (30d * pi2 + 15d * logx2)) / 360d;

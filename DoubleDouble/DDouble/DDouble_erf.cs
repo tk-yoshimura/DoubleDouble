@@ -373,9 +373,9 @@ namespace DoubleDouble {
                 const int n = 5;
                 for (int k = 4 * n - 3; k >= 1; k -= 4) {
                     ddouble c0 = (k + 2) * f;
-                    ddouble c1 = w * ((k + 3) + f * 2d);
+                    ddouble c1 = w * ((k + 3) + Ldexp(f, 1));
                     ddouble d0 = (k + 1) * (k + 3) + (4 * k + 6) * f;
-                    ddouble d1 = c1 * 2d;
+                    ddouble d1 = Ldexp(c1, 1);
 
                     f = w + k * (c0 + c1) / (d0 + d1);
                 }

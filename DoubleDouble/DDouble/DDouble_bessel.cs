@@ -1155,7 +1155,7 @@ namespace DoubleDouble {
 
                         ddouble c = hankel.BesselICoef(x);
 
-                        ddouble y = Sqrt(1d / (2d * Pi * x)) * c;
+                        ddouble y = Sqrt(1d / Ldexp(Pi * x, 1)) * c;
 
                         if (IsPositiveInfinity(x) || IsZero(y)) {
                             return scale ? PlusZero : PositiveInfinity;
@@ -1179,7 +1179,7 @@ namespace DoubleDouble {
 
                         ddouble c = hankel.BesselKCoef(x);
 
-                        ddouble y = Sqrt(Pi / (2d * x)) * c;
+                        ddouble y = Sqrt(Pi / Ldexp(x, 1)) * c;
 
                         if (IsPositiveInfinity(x) || IsZero(y)) {
                             return PlusZero;
@@ -1212,7 +1212,7 @@ namespace DoubleDouble {
                         }
 
                         public ddouble Omega(ddouble x) {
-                            ddouble omega = x - Ldexp(2d * Nu + 1d, -2) * Pi;
+                            ddouble omega = x - Ldexp(Ldexp(Nu, 1) + 1d, -2) * Pi;
 
                             return omega;
                         }
@@ -2111,13 +2111,13 @@ namespace DoubleDouble {
 
                     private static ddouble BesselKNearZeroNu(ddouble alpha, ddouble x, int terms) {
                         ddouble alpha2 = alpha * alpha;
-                        ddouble s = 1d / x, t = Log(2d * s), mu = alpha * t;
+                        ddouble s = 1d / x, t = Log(Ldexp(s, 1)), mu = alpha * t;
                         (ddouble g1, ddouble g2) = Gamma12(alpha);
                         (ddouble gp, ddouble gm) = GammaPM(alpha);
 
                         ddouble f = (g1 * Cosh(mu) + g2 * t * Sinhc(mu)) / Sinc(alpha);
-                        ddouble r = Pow(x / 2d, alpha);
-                        ddouble p = gp / (r * 2d), q = gm * r * 0.5d;
+                        ddouble r = Pow(Ldexp(x, -1), alpha);
+                        ddouble p = gp / Ldexp(r, 1), q = gm * Ldexp(r, -1);
 
                         ddouble c = f, v = Ldexp(x * x, -2), u = v;
 
@@ -2139,13 +2139,13 @@ namespace DoubleDouble {
 
                     private static ddouble BesselKNearOneNu(ddouble alpha, ddouble x, int terms) {
                         ddouble alpha2 = alpha * alpha;
-                        ddouble s = 1d / x, t = Log(2d * s), mu = alpha * t;
+                        ddouble s = 1d / x, t = Log(Ldexp(s, 1)), mu = alpha * t;
                         (ddouble g1, ddouble g2) = Gamma12(alpha);
                         (ddouble gp, ddouble gm) = GammaPM(alpha);
 
                         ddouble f = (g1 * Cosh(mu) + g2 * t * Sinhc(mu)) / Sinc(alpha);
-                        ddouble r = Pow(x / 2d, alpha);
-                        ddouble p = gp / (r * 2d), q = gm * r * 0.5d;
+                        ddouble r = Pow(Ldexp(x, -1), alpha);
+                        ddouble p = gp / Ldexp(r, 1), q = gm * Ldexp(r, -1);
 
                         ddouble c = p, v = Ldexp(x * x, -2), u = v;
 
@@ -2162,20 +2162,20 @@ namespace DoubleDouble {
                             u *= v / (k + 1);
                         }
 
-                        c *= 2d * s;
+                        c *= Ldexp(s, 1);
 
                         return c;
                     }
 
                     private static ddouble BesselKNearIntNu(int n, ddouble alpha, ddouble x, int terms) {
                         ddouble alpha2 = alpha * alpha;
-                        ddouble s = 1d / x, t = Log(2d * s), mu = alpha * t;
+                        ddouble s = 1d / x, t = Log(Ldexp(s, 1)), mu = alpha * t;
                         (ddouble g1, ddouble g2) = Gamma12(alpha);
                         (ddouble gp, ddouble gm) = GammaPM(alpha);
 
                         ddouble f = (g1 * Cosh(mu) + g2 * t * Sinhc(mu)) / Sinc(alpha);
-                        ddouble r = Pow(x / 2d, alpha);
-                        ddouble p = gp / (r * 2d), q = gm * r * 0.5d;
+                        ddouble r = Pow(Ldexp(x, -1), alpha);
+                        ddouble p = gp / Ldexp(r, 1), q = gm * Ldexp(r, -1);
 
                         ddouble c0 = f, c1 = p, v = Ldexp(x * x, -2), u = v;
 
@@ -2193,7 +2193,7 @@ namespace DoubleDouble {
                             u *= v / (k + 1);
                         }
 
-                        c1 *= 2d * s;
+                        c1 *= Ldexp(s, 1);
 
                         for (int k = 1; k < n; k++) {
                             (c1, c0) = (Ldexp(k + alpha, 1) * s * c1 + c0, c1);
@@ -2216,7 +2216,7 @@ namespace DoubleDouble {
                                 g1 = g1 * nu2 + g1_coef[i];
                             }
 
-                            ddouble g2 = (1d / gm + 1d / gp) / 2d;
+                            ddouble g2 = 0.5d / gm + 0.5d / gp;
 
                             g = (g1, g2);
 
@@ -2442,7 +2442,7 @@ namespace DoubleDouble {
                         y = Ldexp(y, (int)long.Max(-exp_sum, int.MinValue));
 
                         if (IsNegative(nu) && !IsInteger(nu_abs)) {
-                            ddouble bk = 2d * RcpPi * SinCosPiCache.SinPi(nu_abs) * Recurrence.BesselK(nu_abs, x, scale: false);
+                            ddouble bk = Ldexp(RcpPi, 1) * SinCosPiCache.SinPi(nu_abs) * Recurrence.BesselK(nu_abs, x, scale: false);
 
                             y += scale ? (bk * Exp(-x)) : bk;
                         }

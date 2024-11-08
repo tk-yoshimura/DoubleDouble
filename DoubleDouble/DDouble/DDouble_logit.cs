@@ -7,7 +7,7 @@
                 return y;
             }
             else {
-                ddouble s = 2d * (x - 0.5d);
+                ddouble s = Ldexp(x - 0.5d, 1);
                 ddouble y = Log1p(s) - Log1p(-s);
 
                 return y;
