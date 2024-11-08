@@ -7,7 +7,7 @@ namespace DoubleDouble {
                 return NaN;
             }
 
-            int n_abs = int.Abs(n);
+            long n_abs = long.Abs(n);
 
             ddouble y = n_abs switch {
                 1 => x,

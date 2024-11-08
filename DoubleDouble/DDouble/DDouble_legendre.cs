@@ -55,7 +55,7 @@ namespace DoubleDouble {
                 return LegendreP(n, x);
             }
 
-            if (n < int.Abs(m)) {
+            if (n < m || -n > m) {
                 return 0d;
             }
 
@@ -68,11 +68,13 @@ namespace DoubleDouble {
                 s = s * x2 + coefs[i];
             }
 
-            if (((n - int.Abs(m)) & 1) == 1) {
+            int m_abs = int.Abs(m);
+
+            if (((n - m_abs) & 1) == 1) {
                 s *= x;
             }
 
-            s = Ldexp(s, -n) * Pow(1d - x2, int.Abs(m) / 2);
+            s = Ldexp(s, -n) * Pow(1d - x2, m_abs / 2);
 
             if ((m & 1) != 0) {
                 s *= Sqrt(1d - x2);
@@ -137,11 +139,13 @@ namespace DoubleDouble {
                 }
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n, int m) {
-                    if (n - 2 >= int.Abs(m)) {
+                    int m_abs = int.Abs(m);
+
+                    if (n - 2 >= m_abs) {
                         ReadOnlyCollection<ddouble> p0 = Table(n - 2, m);
                         ReadOnlyCollection<ddouble> p1 = Table(n - 1, m);
 
-                        int c = n - int.Abs(m);
+                        int c = n - m_abs;
 
                         ddouble[] p2 = new ddouble[c / 2 + 1];
 
@@ -162,7 +166,7 @@ namespace DoubleDouble {
 
                         return new ReadOnlyCollection<ddouble>(p2);
                     }
-                    else if (n - 1 >= int.Abs(m)) {
+                    else if (n - 1 >= m_abs) {
                         ReadOnlyCollection<ddouble> p1 = Table(n - 1, m);
 
                         ddouble[] p2 = new ddouble[1] {
