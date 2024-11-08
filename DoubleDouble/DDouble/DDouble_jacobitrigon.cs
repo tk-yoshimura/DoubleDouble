@@ -22,7 +22,7 @@ namespace DoubleDouble {
 
             ddouble period = JacobiTrigon.Period(m);
 
-            int n = (int)Floor(x / period);
+            long n = (long)Floor(x / period);
             ddouble v = x - n * period;
 
             ddouble y = ((n & 1) == 0) ? JacobiTrigon.SnLeqOneK(v, m) : JacobiTrigon.SnLeqOneK(period - v, m);
@@ -52,7 +52,7 @@ namespace DoubleDouble {
 
             ddouble period = JacobiTrigon.Period(m);
 
-            int n = (int)Floor(x / period);
+            long n = (long)Floor(x / period);
             ddouble v = x - n * period;
 
             n &= 3;
@@ -84,7 +84,7 @@ namespace DoubleDouble {
 
             ddouble period = Ldexp(JacobiTrigon.Period(m), 1);
 
-            int n = (int)Floor(x / period);
+            long n = (long)Floor(x / period);
             ddouble v = x - n * period;
 
             ddouble y = ((n & 1) == 0) ? JacobiTrigon.DnLeqOneK(v, m) : JacobiTrigon.DnLeqOneK(period - v, m);

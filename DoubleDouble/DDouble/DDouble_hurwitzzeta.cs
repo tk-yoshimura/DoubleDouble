@@ -36,7 +36,7 @@
             ddouble r = Pow(a, x);
             ddouble u = x / (Ldexp(a, 1) * r), a2 = a * a;
 
-            y += (a / (x - 1d) + 0.5d) / r + u / 6;
+            y += (a / (x - 1d) + 0.5d) / r + u / 6d;
 
             for (int k = 2; k < BernoulliSequence.Count - 1;) {
                 u *= (x + (2 * k - 2)) * (x + (2 * k - 3)) / (a2 * (2 * k * (2 * k - 1)));
