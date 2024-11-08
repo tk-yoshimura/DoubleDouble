@@ -31,7 +31,7 @@ namespace DoubleDouble {
                 return (0, IsPositive(x) ? 0d : -0d);
             }
 
-            int n = (exp - ILogB(x));
+            int n = exp - ILogB(x);
             ddouble v = Ldexp(x, n);
 
             return (n, v);
@@ -50,7 +50,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = (exp - ILogB(x));
+            int n = exp - ILogB(x);
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n)));
         }
@@ -69,7 +69,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = (exp - ILogB(x));
+            int n = exp - ILogB(x);
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n)));
         }
@@ -89,7 +89,7 @@ namespace DoubleDouble {
                 );
             }
 
-            int n = (exp - ILogB(x));
+            int n = exp - ILogB(x);
 
             return (n, (Ldexp(v.a, n), Ldexp(v.b, n), Ldexp(v.c, n), Ldexp(v.d, n)));
         }
