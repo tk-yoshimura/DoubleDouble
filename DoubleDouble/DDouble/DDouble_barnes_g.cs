@@ -248,7 +248,7 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> SterlingTable, PolyXNegativeTable;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> LogTables;
-                public static readonly ddouble Rcp12 = 1.0 / (ddouble)12;
+                public static readonly ddouble Rcp12 = Rcp(12);
                 public static readonly ddouble LogBias = (-1, -3, 0xA96429090A9A04E6uL, 0xF323011BFAF4EC40uL);
 
                 static BarnesG() {
