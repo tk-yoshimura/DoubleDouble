@@ -6,7 +6,7 @@ using System.Globalization;
 namespace DoubleDouble {
     public partial struct ddouble : IFormattable {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static int DecimalDigits => 30;
+        public const int DecimalDigits = 31;
 
         public override string ToString() {
             if (!IsFinite(this)) {
@@ -16,7 +16,7 @@ namespace DoubleDouble {
                 return IsPositive(this) ? double.PositiveInfinity.ToString() : double.NegativeInfinity.ToString();
             }
 
-            (int sign, int exponent_dec, UInt128 mantissa_dec) = ToStringCore(DecimalDigits);
+            (int sign, int exponent_dec, UInt128 mantissa_dec) = ToStringCore(DecimalDigits - 1);
 
             if (mantissa_dec.IsZero) {
                 return IsPositive(this) ? "0" : "-0";
@@ -93,7 +93,7 @@ namespace DoubleDouble {
         }
 
         internal (int sign, int exponent_dec, UInt128 mantissa_dec) ToStringCore(int digits) {
-            const int presicion = 4;
+            const int precision = 4;
 
             if (digits > DecimalDigits) {
                 throw new ArgumentOutOfRangeException(
@@ -117,14 +117,14 @@ namespace DoubleDouble {
 
             Debug.Assert(log10_frac >= 1d && log10_frac < 10d, "invalid frac");
 
-            mantissa = UInt128.MulShift(mantissa, Consts.Dec.Decimals[digits + presicion], FloatSplitter.MantissaBits * 2);
+            mantissa = UInt128.MulShift(mantissa, Consts.Dec.Decimals[digits + precision], FloatSplitter.MantissaBits * 2);
             mantissa = UInt128.MulShift(mantissa, mantissa_frac, FloatSplitter.MantissaBits * 2 - exponent_frac);
 
             int mantissa_length = mantissa.ToString().Length;
 
             if (mantissa_length > (digits + 1)) {
                 int trunc_digits = mantissa_length - (digits + 1);
-                exponent_dec = checked(exponent_dec + trunc_digits - presicion);
+                exponent_dec = checked(exponent_dec + trunc_digits - precision);
                 mantissa = UInt128.RoundDiv(mantissa, Consts.Dec.Decimals[trunc_digits]);
             }
             if (mantissa == Consts.Dec.Decimals[digits + 1]) {

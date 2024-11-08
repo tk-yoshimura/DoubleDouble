@@ -47,6 +47,8 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void ToStringFormatTest() {
             ddouble v1 = ddouble.Rcp(3);
+            ddouble v2 = ddouble.One - "1e-31";
+            ddouble v3 = ddouble.One - "1e-32";
 
             Console.WriteLine($"{v1:e30}");
             Console.WriteLine($"{v1:E30}");
@@ -63,20 +65,65 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual($"{v1:e20}", v1.ToString("e20"));
             Assert.AreEqual($"{v1:E20}", v1.ToString("E20"));
 
+            Console.WriteLine($"{v1:e31}");
+            Console.WriteLine($"{v1:E31}");
+            Console.WriteLine(v1.ToString("e31"));
+            Console.WriteLine(v1.ToString("E31"));
+
+            Console.WriteLine($"{v2:e30}");
+            Console.WriteLine($"{v2:E30}");
+            Console.WriteLine(v2.ToString("e30"));
+            Console.WriteLine(v2.ToString("E30"));
+
+            Console.WriteLine($"{v2:e20}");
+            Console.WriteLine($"{v2:E20}");
+            Console.WriteLine(v2.ToString("e20"));
+            Console.WriteLine(v2.ToString("E20"));
+
+            Assert.AreEqual($"{v2:e30}", v2.ToString("e30"));
+            Assert.AreEqual($"{v2:E30}", v2.ToString("E30"));
+            Assert.AreEqual($"{v2:e20}", v2.ToString("e20"));
+            Assert.AreEqual($"{v2:E20}", v2.ToString("E20"));
+
+            Console.WriteLine($"{v2:e31}");
+            Console.WriteLine($"{v2:E31}");
+            Console.WriteLine(v2.ToString("e31"));
+            Console.WriteLine(v2.ToString("E31"));
+
+            Console.WriteLine($"{v3:e30}");
+            Console.WriteLine($"{v3:E30}");
+            Console.WriteLine(v3.ToString("e30"));
+            Console.WriteLine(v3.ToString("E30"));
+
+            Console.WriteLine($"{v3:e20}");
+            Console.WriteLine($"{v3:E20}");
+            Console.WriteLine(v3.ToString("e20"));
+            Console.WriteLine(v3.ToString("E20"));
+
+            Assert.AreEqual($"{v3:e30}", v3.ToString("e30"));
+            Assert.AreEqual($"{v3:E30}", v3.ToString("E30"));
+            Assert.AreEqual($"{v3:e20}", v3.ToString("e20"));
+            Assert.AreEqual($"{v3:E20}", v3.ToString("E20"));
+
+            Console.WriteLine($"{v3:e31}");
+            Console.WriteLine($"{v3:E31}");
+            Console.WriteLine(v3.ToString("e31"));
+            Console.WriteLine(v3.ToString("E31"));
+
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
-                Console.WriteLine($"{v1:e31}");
+                Console.WriteLine($"{v1:e32}");
             });
 
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
-                Console.WriteLine($"{v1:E31}");
+                Console.WriteLine($"{v1:E32}");
             });
 
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
-                Console.WriteLine(v1.ToString("e31"));
+                Console.WriteLine(v1.ToString("e32"));
             });
 
             Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
-                Console.WriteLine(v1.ToString("E31"));
+                Console.WriteLine(v1.ToString("E32"));
             });
 
             Assert.ThrowsException<FormatException>(() => {
