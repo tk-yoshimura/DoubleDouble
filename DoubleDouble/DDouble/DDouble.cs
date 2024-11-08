@@ -13,9 +13,14 @@ namespace DoubleDouble {
             this.hi = hi;
             this.lo = 0d;
 
-            if (double.IsFinite(hi) & double.IsFinite(lo) & lo != 0d) {
-                this.hi += lo;
-                this.lo = lo - (this.hi - hi);
+            if (double.IsFinite(hi) & lo != 0d) {
+                double s = hi + lo;
+                this.hi = s;
+                this.lo = lo - (s - hi);
+
+                if (!double.IsFinite(this.lo)) {
+                    this.lo = 0d;
+                }
             }
         }
 
@@ -56,9 +61,9 @@ namespace DoubleDouble {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble Epsilon { get; } = double.ScaleB(1, NormalMinExponent);
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static ddouble MaxValue { get; } = double.MaxValue;
+        public static ddouble MaxValue { get; } = new ddouble(double.MaxValue, double.ScaleB(double.MaxValue, -(FloatSplitter.MantissaBits + 2)));
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public static ddouble MinValue { get; } = double.MinValue;
+        public static ddouble MinValue { get; } = -MaxValue;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static ddouble NaN { get; } = double.NaN;
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]

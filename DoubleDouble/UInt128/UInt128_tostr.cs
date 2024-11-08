@@ -2,7 +2,7 @@
 using System.Globalization;
 
 namespace DoubleDouble {
-    internal readonly partial struct UInt128 {
+    internal readonly partial struct UInt128 : IFormattable {
 
         public override string ToString() {
             UInt32 carry, dec0, dec1, dec2, dec3, dec4;

@@ -8,13 +8,12 @@
         private const UInt64 mantissa_topbit = 0x0010000000000000uL;
         private const UInt64 mantissa_mask = 0x000FFFFFFFFFFFFFuL;
 
+        public const UInt64 MantissaTopBit = mantissa_topbit;
+        public const int MantissaBits = exponent_shiftbits + 32;
+
         private static UInt64 ToUInt64(double v) {
             return unchecked((UInt64)BitConverter.DoubleToInt64Bits(v));
         }
-
-        public static UInt64 MantissaTopBit => mantissa_topbit;
-
-        public static int MantissaBits => exponent_shiftbits + 32;
 
         public static (int sign, int exponent, UInt64 mantissa, bool iszero) Split(double v, bool hidden_bit = false) {
             UInt64 val = ToUInt64(v);

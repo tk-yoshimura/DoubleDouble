@@ -8,8 +8,31 @@ namespace DoubleDoubleTest.DDouble {
     public class ConstantTests {
         [TestMethod]
         public void BasicTest() {
-            Assert.IsTrue(ddouble.One == 1);
-            Assert.IsTrue(ddouble.MinusOne == -1);
+            PrecisionAssert.AreEqual(1, ddouble.One);
+            PrecisionAssert.AreEqual(-1, ddouble.MinusOne);
+            PrecisionAssert.IsPlusZero(ddouble.PlusZero);
+            PrecisionAssert.IsMinusZero(ddouble.MinusZero);
+        }
+
+        [TestMethod]
+        public void MaxValueTest() {
+            PrecisionAssert.IsFinite(ddouble.MaxValue);
+            PrecisionAssert.IsPositive(ddouble.MaxValue);
+            PrecisionAssert.IsFinite(ddouble.MinValue);
+            PrecisionAssert.IsNegative(ddouble.MinValue);
+            PrecisionAssert.AreEqual(double.MaxValue, ddouble.MaxValue.Hi);
+            Assert.IsTrue(ddouble.MaxValue.Lo > 0d);
+            Assert.IsTrue(double.MaxValue < ddouble.MaxValue);
+            PrecisionAssert.AreEqual(-ddouble.MinValue, ddouble.MaxValue);
+            Assert.AreNotEqual(ddouble.MaxValue, ddouble.BitIncrement(ddouble.MaxValue));
+            Assert.AreNotEqual(ddouble.MinValue, ddouble.BitDecrement(ddouble.MinValue));
+
+            PrecisionAssert.IsPositiveInfinity(ddouble.BitIncrement(ddouble.MaxValue));
+            PrecisionAssert.IsNegativeInfinity(ddouble.BitDecrement(ddouble.MinValue));
+
+            Console.WriteLine(double.MaxValue);
+            Console.WriteLine(ddouble.MaxValue);
+            Console.WriteLine($"{FloatSplitter.Split(ddouble.MaxValue).mantissa:X14}");
         }
 
         [TestMethod]

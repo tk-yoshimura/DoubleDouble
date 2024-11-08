@@ -158,6 +158,20 @@ namespace DoubleDoubleTest.Utils {
             Assert.AreEqual("0033b2e3c9fd0803ce8000000", v5.ToString("x25"));
             Assert.AreEqual("00033B2E3C9FD0803CE8000000", v5.ToString("X26"));
             Assert.AreEqual("33b2e3c9fd0803ce8000000", v5.ToString("x22"));
+
+            Assert.AreEqual("0", $"{v0:D}");
+            Assert.AreEqual("00", $"{v0:D2}");
+            Assert.AreEqual("1", $"{v1:D}");
+            Assert.AreEqual("0001", $"{v1:D4}");
+            Assert.AreEqual("100", $"{v3:d}");
+            Assert.AreEqual("100", $"{v3:d2}");
+            Assert.AreEqual("100", $"{v3:D3}");
+            Assert.AreEqual("0100", $"{v3:D4}");
+            Assert.AreEqual("33b2e3c9fd0803ce8000000", $"{v5:x}");
+            Assert.AreEqual("33B2E3C9FD0803CE8000000", $"{v5:X}");
+            Assert.AreEqual("0033b2e3c9fd0803ce8000000", $"{v5:x25}");
+            Assert.AreEqual("00033B2E3C9FD0803CE8000000", $"{v5:X26}");
+            Assert.AreEqual("33b2e3c9fd0803ce8000000", $"{v5:x22}");
         }
 
         [TestMethod]
