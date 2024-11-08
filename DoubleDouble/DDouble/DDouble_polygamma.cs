@@ -44,7 +44,7 @@ namespace DoubleDouble {
             }
 
             public static ddouble Polygamma(int n, ddouble x) {
-                if (x <= double.ScaleB(1, -96)) {
+                if (ILogB(x) < -96) {
                     return ((n & 1) == 1) ? PositiveInfinity : NaN;
                 }
                 if (x <= 64d) {
@@ -131,7 +131,7 @@ namespace DoubleDouble {
 
         private static class PolygammaMinusX {
             public static ddouble Polygamma(int n, ddouble x) {
-                if (Abs(x - Round(x)) <= double.ScaleB(1, -96)) {
+                if (ILogB(x - Round(x)) < -96) {
                     return ((n & 1) == 1) ? PositiveInfinity : NaN;
                 }
 

@@ -114,7 +114,7 @@ namespace DoubleDouble {
             public static ddouble EllipticKCore(ddouble m) {
                 ddouble y;
 
-                if (m > double.ScaleB(1, -8)) {
+                if (m > 3.90625e-3) {
                     ddouble c = Sqrt(1d - m), cp1 = 1d + c, cm1 = 1d - c;
 
                     y = 2d / cp1 * EllipticKCore(Square(cm1 / cp1));

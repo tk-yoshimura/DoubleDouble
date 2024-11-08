@@ -23,7 +23,7 @@ namespace DoubleDouble {
                 if (x <= FresnelPade.PadeApproxMax) {
                     (f, g) = FresnelPade.Coef(x);
                 }
-                else if (x <= double.ScaleB(1, 256)) {
+                else if (x <= FresnelPade.ExtremelyLarge) {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {
@@ -56,7 +56,7 @@ namespace DoubleDouble {
                 if (x <= FresnelPade.PadeApproxMax) {
                     (f, g) = FresnelPade.Coef(x);
                 }
-                else if (x <= double.ScaleB(1, 256)) {
+                else if (x <= FresnelPade.ExtremelyLarge) {
                     (f, g) = FresnelLimit.Coef(x);
                 }
                 else {
@@ -327,6 +327,7 @@ namespace DoubleDouble {
         private static class FresnelPade {
             const int max_exponent = 4;
             public const double PadeApproxMin = 0.85d, PadeApproxMax = 32d;
+            public static readonly double ExtremelyLarge = double.ScaleB(1, 256);
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble fc, ddouble fd, ddouble gc, ddouble gd)>> PadeTables;
             public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeFTables, PadeGTables;
 

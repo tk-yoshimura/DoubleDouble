@@ -225,7 +225,7 @@ namespace DoubleDouble {
             }
 
             ddouble x_zsft = x - DigammaZero;
-            if (Abs(x_zsft) < double.ScaleB(1, -3)) {
+            if (Abs(x_zsft) < 0.125) {
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = Consts.Digamma.PadeZeroPointTable;
 
                 (ddouble sc, ddouble sd) = table[0];

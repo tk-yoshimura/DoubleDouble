@@ -2,7 +2,7 @@
     public partial struct ddouble {
         public static ddouble Sinc(ddouble x, bool normalized = true) {
             if (normalized) {
-                if (Abs(x) < double.ScaleB(1, -64)) {
+                if (ILogB(x) < -64) {
                     return 1d - Square(x * Pi) / 6d;
                 }
 
@@ -15,7 +15,7 @@
                 return SinPi(x) / c;
             }
             else {
-                if (Abs(x) < double.ScaleB(1, -64)) {
+                if (ILogB(x) < -64) {
                     return 1d - x * x / 6d;
                 }
 
@@ -28,7 +28,7 @@
         }
 
         public static ddouble Sinhc(ddouble x) {
-            if (Abs(x) < double.ScaleB(1, -64)) {
+            if (ILogB(x) < -64) {
                 return 1d + x * x / 6d;
             }
 
@@ -42,11 +42,11 @@
         }
 
         public static ddouble Jinc(ddouble x) {
-            ddouble x_abs = Abs(x);
-
-            if (x_abs < double.ScaleB(1, -64)) {
+            if (ILogB(x) < -64) {
                 return 0.5d - Ldexp(x * x, -4);
             }
+
+            ddouble x_abs = Abs(x);
 
             ddouble j1 = BesselJ(1, x_abs);
 
