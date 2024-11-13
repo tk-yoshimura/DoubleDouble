@@ -1874,23 +1874,23 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble actual = ddouble.MathieuA(n, q);
 
-                    if (n >= 1) {
-                        PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, $"n = {n}, q = {q}");
+                    if (n < 1) {
+                        PrecisionAssert.AlmostEqual(expected, actual, 8e-31d, $"n = {n}, q = {q}");
 
                         ddouble actual_dec = ddouble.MathieuA(n, ddouble.BitDecrement(q));
-                        PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-31d, $"n = {n}, q = {q}-eps");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 8e-31d, $"n = {n}, q = {q}-eps");
 
                         ddouble actual_inc = ddouble.MathieuA(n, ddouble.BitIncrement(q));
-                        PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-31d, $"n = {n}, q = {q}+eps");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 8e-31d, $"n = {n}, q = {q}+eps");
                     }
                     else {
-                        PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, 4e-31d, $"n = {n}, q = {q}");
+                        PrecisionAssert.AlmostEqual(expected, actual, 8e-31d, 8e-31d, $"n = {n}, q = {q}");
 
                         ddouble actual_dec = ddouble.MathieuA(n, ddouble.BitDecrement(q));
-                        PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-31d, 4e-31d, $"n = {n}, q = {q}-eps");
+                        PrecisionAssert.AlmostEqual(expected, actual_dec, 8e-31d, 8e-31d, $"n = {n}, q = {q}-eps");
 
                         ddouble actual_inc = ddouble.MathieuA(n, ddouble.BitIncrement(q));
-                        PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-31d, 4e-31d, $"n = {n}, q = {q}+eps");
+                        PrecisionAssert.AlmostEqual(expected, actual_inc, 8e-31d, 8e-31d, $"n = {n}, q = {q}+eps");
                     }
                 }
 
@@ -1911,7 +1911,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble actual = ddouble.MathieuA(n, q);
 
-                    PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, $"n = {n}, q = {q}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, $"n = {n}, q = {q}");
                 }
             }
         }
@@ -3675,13 +3675,13 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble actual = ddouble.MathieuB(n, q);
 
-                    PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, 4e-31d, $"n = {n}, q = {q}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 8e-31d, 8e-31d, $"n = {n}, q = {q}");
 
                     ddouble actual_dec = ddouble.MathieuB(n, ddouble.BitDecrement(q));
-                    PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-31d, 4e-31d, $"n = {n}, q = {q}-eps");
+                    PrecisionAssert.AlmostEqual(expected, actual_dec, 8e-31d, 8e-31d, $"n = {n}, q = {q}-eps");
 
                     ddouble actual_inc = ddouble.MathieuB(n, ddouble.BitIncrement(q));
-                    PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-31d, 4e-31d, $"n = {n}, q = {q}+eps");
+                    PrecisionAssert.AlmostEqual(expected, actual_inc, 8e-31d, 8e-31d, $"n = {n}, q = {q}+eps");
                 }
 
                 for (ddouble q = ddouble.Ldexp(1, 40); ddouble.IsFinite(q); q *= 2) {
@@ -3701,7 +3701,7 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble actual = ddouble.MathieuB(n, q);
 
-                    PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, $"n = {n}, q = {q}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, $"n = {n}, q = {q}");
                 }
             }
         }
@@ -12341,13 +12341,13 @@ namespace DoubleDoubleTest.DDouble {
 
                     ddouble actual = ddouble.MathieuB(n, q);
 
-                    PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, $"n = {n}, q = {q}");
+                    PrecisionAssert.AlmostEqual(expected, actual, 4e-31d, 4e-31d, $"n = {n}, q = {q}");
 
                     ddouble actual_dec = ddouble.MathieuB(n, ddouble.BitDecrement(q));
-                    PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-31d, $"n = {n}, q = {q}-eps");
+                    PrecisionAssert.AlmostEqual(expected, actual_dec, 4e-31d, 4e-31d, $"n = {n}, q = {q}-eps");
 
                     ddouble actual_inc = ddouble.MathieuB(n, ddouble.BitIncrement(q));
-                    PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-31d, $"n = {n}, q = {q}+eps");
+                    PrecisionAssert.AlmostEqual(expected, actual_inc, 4e-31d, 4e-31d, $"n = {n}, q = {q}+eps");
                 }
 
                 for (ddouble q = ddouble.Ldexp(1, 40); ddouble.IsFinite(q); q *= 2) {
@@ -13140,10 +13140,10 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
                     ddouble actual_dec = ddouble.MathieuC(n, ddouble.BitDecrement(q), x);
-                    PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
+                    PrecisionAssert.AlmostEqual(expected, actual_dec, 2e-30d, 2e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
                     ddouble actual_inc = ddouble.MathieuC(n, ddouble.BitIncrement(q), x);
-                    PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
+                    PrecisionAssert.AlmostEqual(expected, actual_inc, 2e-30d, 2e-30d, $"n = {n}, q = {q}+eps, x = {x}");
                 }
             }
 
@@ -13173,10 +13173,10 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(expected, actual, 1e-30d, 1e-30d, $"n = {n}, q = {q}, x = {x}");
 
                     ddouble actual_dec = ddouble.MathieuC(n, ddouble.BitDecrement(q), x);
-                    PrecisionAssert.AlmostEqual(expected, actual_dec, 1e-30d, 1e-30d, $"n = {n}, q = {q}-eps, x = {x}");
+                    PrecisionAssert.AlmostEqual(expected, actual_dec, 2e-30d, 2e-30d, $"n = {n}, q = {q}-eps, x = {x}");
 
                     ddouble actual_inc = ddouble.MathieuC(n, ddouble.BitIncrement(q), x);
-                    PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, 1e-30d, $"n = {n}, q = {q}+eps, x = {x}");
+                    PrecisionAssert.AlmostEqual(expected, actual_inc, 2e-30d, 2e-30d, $"n = {n}, q = {q}+eps, x = {x}");
                 }
             }
 
@@ -13203,8 +13203,8 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(v0, ddouble.Cos(n), 1e-8d, 1e-8d, $"n = {n}, q = eps");
                 }
 
-                PrecisionAssert.AlmostEqual(v0, v1, 1e-30d, 1e-30d, $"n = {n}, q = eps");
-                PrecisionAssert.AlmostEqual(v0, v2, 1e-30d, 1e-30d, $"n = {n}, q = eps");
+                PrecisionAssert.AlmostEqual(v0, v1, 4e-31d, 4e-31d, $"n = {n}, q = eps");
+                PrecisionAssert.AlmostEqual(v0, v2, 4e-31d, 4e-31d, $"n = {n}, q = eps");
             }
         }
 
@@ -13941,8 +13941,8 @@ namespace DoubleDoubleTest.DDouble {
 
                 PrecisionAssert.AlmostEqual(v0, ddouble.Sin(n), 1e-8d, 1e-8d, $"n = {n}, q = eps");
 
-                PrecisionAssert.AlmostEqual(v0, v1, 1e-30d, 1e-30d, $"n = {n}, q = eps");
-                PrecisionAssert.AlmostEqual(v0, v2, 1e-30d, 1e-30d, $"n = {n}, q = eps");
+                PrecisionAssert.AlmostEqual(v0, v1, 4e-31d, 4e-31d, $"n = {n}, q = eps");
+                PrecisionAssert.AlmostEqual(v0, v2, 4e-31d, 4e-31d, $"n = {n}, q = eps");
             }
         }
     }

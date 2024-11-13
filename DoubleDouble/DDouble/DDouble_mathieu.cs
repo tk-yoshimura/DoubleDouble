@@ -143,11 +143,10 @@ namespace DoubleDouble {
             public static (ddouble m, ddouble d) NearZeroPade(int n, ddouble q) {
                 Debug.Assert(q >= 0d, nameof(q));
 
-                ddouble u = Square((n <= 1) ? q : q / (n * n));
+                int n2 = n * n;
+                ddouble u = Square((n <= 1) ? q : q / n2);
 
                 (ddouble mv, ddouble dv, int table_index) = PadeMDParam(n, u);
-
-                Trace.WriteLine($"PadeMD table {n}, {table_index}");
 
                 Debug.Assert(mv >= 0d);
                 Debug.Assert(dv >= 0d);
@@ -167,7 +166,7 @@ namespace DoubleDouble {
                 ddouble my = m_sc / m_sd;
 
                 if (n >= 2) {
-                    my *= n * n;
+                    my *= n2;
                 }
 
                 if (n < 1) {
@@ -207,7 +206,7 @@ namespace DoubleDouble {
                         2
                     ) :
                     (u <= 0.28125d) ? (
-                        (n != 13 && n != 16 ? u - 0.25d : 0.28125d - u),
+                        (n <= 12 ? u - 0.25d : 0.28125d - u),
                         (n <= 14 ? u - 0.25d : 0.28125d - u),
                         3
                     ) :
@@ -253,8 +252,6 @@ namespace DoubleDouble {
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeATables[n][table_index];
 
-                Trace.WriteLine($"PadeA table {n}, {table_index}");
-
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
                     (ddouble c, ddouble d) = table[i];
@@ -292,8 +289,6 @@ namespace DoubleDouble {
                 Debug.Assert(v >= 0d);
 
                 ReadOnlyCollection<(ddouble c, ddouble d)> table = PadeBTables[n][table_index];
-
-                Trace.WriteLine($"PadeB table {n}, {table_index}");
 
                 (ddouble sc, ddouble sd) = table[0];
                 for (int i = 1; i < table.Count; i++) {
@@ -389,13 +384,13 @@ namespace DoubleDouble {
 
                 terms = (terms > 0) ? terms : int.Max(128, checked((int)(double.Pow(q.Hi, 0.2475) * (0.100 * n + 12.056))));
 
-                ddouble inv_q = 1d / q;
+                ddouble invq = 1d / q;
 
                 ddouble[] cs = new ddouble[terms];
                 (cs[^2], cs[^1]) = (Epsilon, 0d);
 
-                for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
-                    ddouble c = (a - k * k) * cs[m] * inv_q - cs[m + 1];
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)); m > 2; m--, k -= 2) {
+                    ddouble c = (a - k * k) * cs[m] * invq - cs[m + 1];
 
                     cs[m - 1] = c;
 
@@ -439,19 +434,19 @@ namespace DoubleDouble {
 
             private static ReadOnlyCollection<ddouble> QNearZeroCCoef(int n, ddouble q) {
                 if (n <= 1) {
-                    ddouble t = Ldexp(q, -2), sq_t = t * t;
+                    ddouble t = Ldexp(q, -2), t2 = t * t;
                     ddouble[] cs = new ddouble[4];
                     cs[0] = 1d;
 
                     if (n == 0) {
-                        cs[1] = -t * (2d + sq_t * -3.5);
-                        cs[2] = sq_t * (0.5 + sq_t * -(ddouble)10 / 9);
-                        cs[3] = -t * sq_t * ((ddouble)1 / 18 + sq_t * -(ddouble)13 / 96);
+                        cs[1] = -t * (2d + t2 * -3.5);
+                        cs[2] = t2 * (0.5 + t2 * -(ddouble)10 / 9);
+                        cs[3] = -t * t2 * ((ddouble)1 / 18 + t2 * -(ddouble)13 / 96);
                     }
                     else {
                         cs[1] = -t * (0.5 + t * (0.25 + t * (ddouble)1 / 24));
-                        cs[2] = sq_t * ((ddouble)1 / 12 + t * ((ddouble)1 / 18 + t * (ddouble)1 / 96));
-                        cs[3] = -t * sq_t * ((ddouble)1 / 144 + t * ((ddouble)1 / 192 + t * (ddouble)1 / 960));
+                        cs[2] = t2 * ((ddouble)1 / 12 + t * ((ddouble)1 / 18 + t * (ddouble)1 / 96));
+                        cs[3] = -t * t2 * ((ddouble)1 / 144 + t * ((ddouble)1 / 192 + t * (ddouble)1 / 960));
                     }
 
                     cs = NormalizeAndTruncateCoef(n, (n & 1) == 0 ? 2 : 1, cs);
@@ -493,16 +488,16 @@ namespace DoubleDouble {
                     return QNearZeroCCoef(n, q);
                 }
 
-                int sq_n = checked(n * n);
+                int n2 = checked(n * n);
                 (ddouble a_sft, ReadOnlyCollection<ddouble> arms) = AZeroShift(n, q);
 
-                ddouble inv_q = 1d / q;
+                ddouble invq = 1d / q;
 
                 ddouble[] cs = new ddouble[128];
                 (cs[^2], cs[^1]) = (Epsilon, 0d);
 
-                for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)), sq_k0 = checked(k * k); m >= arms.Count; m--, k -= 2) {
-                    ddouble c = (a_sft - (k * k - sq_n)) * cs[m] * inv_q - cs[m + 1];
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + (n & 1)); m >= arms.Count; m--, k -= 2) {
+                    ddouble c = (a_sft - (k * k - n2)) * cs[m] * invq - cs[m + 1];
 
                     cs[m - 1] = c;
 
@@ -511,7 +506,7 @@ namespace DoubleDouble {
                     }
                 }
                 for (int m = arms.Count - 1; m > 2; m--) {
-                    ddouble c = arms[m] * cs[m] * inv_q - cs[m + 1];
+                    ddouble c = arms[m] * cs[m] * invq - cs[m + 1];
 
                     cs[m - 1] = c;
                 }
@@ -561,13 +556,13 @@ namespace DoubleDouble {
 
                 terms = (terms > 0) ? terms : int.Max(128, checked((int)(double.Pow(q.Hi, 0.2475) * (0.094 * n + 11.830))));
 
-                ddouble inv_q = 1d / q;
+                ddouble invq = 1d / q;
 
                 ddouble[] cs = new ddouble[terms];
                 (cs[^2], cs[^1]) = (Epsilon, 0d);
 
-                for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m > 2; m--, k -= 2) {
-                    ddouble c = (b - k * k) * cs[m] * inv_q - cs[m + 1];
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)); m > 2; m--, k -= 2) {
+                    ddouble c = (b - k * k) * cs[m] * invq - cs[m + 1];
 
                     cs[m - 1] = c;
 
@@ -611,19 +606,19 @@ namespace DoubleDouble {
 
             private static ReadOnlyCollection<ddouble> QNearZeroSCoef(int n, ddouble q) {
                 if (n <= 2) {
-                    ddouble t = Ldexp(q, -2), sq_t = t * t;
+                    ddouble t = Ldexp(q, -2), t2 = t * t;
                     ddouble[] cs = new ddouble[4];
                     cs[0] = 1d;
 
                     if (n == 1) {
                         cs[1] = -t * (0.5 + t * (-0.25 + t * (ddouble)1 / 24));
-                        cs[2] = sq_t * ((ddouble)1 / 12 + t * (-(ddouble)1 / 18 + t * (ddouble)1 / 96));
-                        cs[3] = -t * sq_t * ((ddouble)1 / 144 + t * (-(ddouble)1 / 192 + t * (ddouble)1 / 960));
+                        cs[2] = t2 * ((ddouble)1 / 12 + t * (-(ddouble)1 / 18 + t * (ddouble)1 / 96));
+                        cs[3] = -t * t2 * ((ddouble)1 / 144 + t * (-(ddouble)1 / 192 + t * (ddouble)1 / 960));
                     }
                     else {
-                        cs[1] = -t * ((ddouble)1 / 3 + sq_t * -(ddouble)5 / 216);
-                        cs[2] = sq_t * ((ddouble)1 / 24 + sq_t * -(ddouble)37 / 8640);
-                        cs[3] = -t * sq_t * ((ddouble)1 / 360 + sq_t * -(ddouble)11 / 32400);
+                        cs[1] = -t * ((ddouble)1 / 3 + t2 * -(ddouble)5 / 216);
+                        cs[2] = t2 * ((ddouble)1 / 24 + t2 * -(ddouble)37 / 8640);
+                        cs[3] = -t * t2 * ((ddouble)1 / 360 + t2 * -(ddouble)11 / 32400);
                     }
 
                     cs = NormalizeAndTruncateCoef(n, 1, cs);
@@ -660,16 +655,16 @@ namespace DoubleDouble {
                     return QNearZeroSCoef(n, q);
                 }
 
-                int sq_n = checked(n * n);
+                int n2 = checked(n * n);
                 (ddouble b_sft, ReadOnlyCollection<ddouble> brms) = BZeroShift(n, q);
 
-                ddouble inv_q = 1d / q;
+                ddouble invq = 1d / q;
 
                 ddouble[] cs = new ddouble[128];
                 (cs[^2], cs[^1]) = (Epsilon, 0d);
 
-                for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)), sq_k0 = checked(k * k); m >= brms.Count; m--, k -= 2) {
-                    ddouble c = (b_sft - (k * k - sq_n)) * cs[m] * inv_q - cs[m + 1];
+                for (long m = cs.Length - 2, k = checked(2 * (long)m + 2 - (n & 1)); m >= brms.Count; m--, k -= 2) {
+                    ddouble c = (b_sft - (k * k - n2)) * cs[m] * invq - cs[m + 1];
 
                     cs[m - 1] = c;
 
@@ -678,7 +673,7 @@ namespace DoubleDouble {
                     }
                 }
                 for (int m = brms.Count - 1; m > 2; m--) {
-                    ddouble c = brms[m] * cs[m] * inv_q - cs[m + 1];
+                    ddouble c = brms[m] * cs[m] * invq - cs[m + 1];
 
                     cs[m - 1] = c;
                 }
@@ -715,14 +710,14 @@ namespace DoubleDouble {
                 Debug.Assert(m >= 2);
 
                 ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
-                ddouble sq_q = q * q;
+                ddouble q2 = q * q;
 
-                (ts[0], ts[1], ts[2]) = (1d, a - r0, (a - r0) * (a - checked((2 + s) * (2 + s))) - k * q * q);
-                (qs[0], qs[1]) = (cn * q, cn * sq_q);
+                (ts[0], ts[1], ts[2]) = (1d, a - r0, (a - r0) * (a - checked((2 + s) * (2 + s))) - k * q2);
+                (qs[0], qs[1]) = (cn * q, cn * q2);
 
                 for (int i = 2; i < m; i++) {
                     qs[i] = qs[i - 1] * q;
-                    ts[i + 1] = ts[i] * (a - checked((2 * i + s) * (2 * i + s))) - ts[i - 1] * sq_q;
+                    ts[i + 1] = ts[i] * (a - checked((2 * i + s) * (2 * i + s))) - ts[i - 1] * q2;
                 }
 
                 for (int i = 0; i < cs.Length; i++) {
@@ -738,14 +733,14 @@ namespace DoubleDouble {
                 Debug.Assert(m >= 2);
 
                 ddouble[] cs = new ddouble[m], ts = new ddouble[m + 1], qs = new ddouble[m];
-                ddouble sq_q = q * q;
+                ddouble q2 = q * q;
 
-                (ts[0], ts[1], ts[2]) = (1d, arms[0], arms[0] * arms[1] - k * q * q);
-                (qs[0], qs[1]) = (cn * q, cn * sq_q);
+                (ts[0], ts[1], ts[2]) = (1d, arms[0], arms[0] * arms[1] - k * q2);
+                (qs[0], qs[1]) = (cn * q, cn * q2);
 
                 for (int i = 2; i < m; i++) {
                     qs[i] = qs[i - 1] * q;
-                    ts[i + 1] = ts[i] * arms[i] - ts[i - 1] * sq_q;
+                    ts[i + 1] = ts[i] * arms[i] - ts[i - 1] * q2;
                 }
 
                 for (int i = 0; i < cs.Length; i++) {
@@ -1000,14 +995,16 @@ namespace DoubleDouble {
                         Dictionary<int, ReadOnlyCollection<ddouble>> limit_table = new();
 
                         for (long s = 1; s <= MathieuUtil.MaxN * 2 + 1; s += 2) {
-                            ReadOnlyCollection<ddouble> coef = new(Array.AsReadOnly(new ddouble[] {
-                                Ldexp(1 + s * s, -3),
-                                Ldexp(s * (3 + s * s), -7),
-                                Ldexp(9 + s * s * (34 + s * s * 5), -12),
-                                Ldexp(s * (405 + s * s * (410 + s * s * 33)), -17),
-                                Ldexp(486 + s * s * (2943 + s * s * (1260 + s * s * 63)), -20),
-                                Ldexp(checked(s * (41607 + s * s * (69001 + s * s * (15617 + s * s * 527)))), -25),
-                            }.Reverse().ToArray()));
+                            long s2 = checked(s * s);
+
+                            ReadOnlyCollection<ddouble> coef = new(Array.AsReadOnly((new ddouble[] {
+                                Ldexp(1 + s2, -3),
+                                Ldexp(s * (3 + s2), -7),
+                                Ldexp(9 + s2 * (34 + s2 * 5), -12),
+                                Ldexp(s * (405 + s2 * (410 + s2 * 33)), -17),
+                                Ldexp(486 + s2 * (2943 + s2 * (1260 + s2 * 63)), -20),
+                                Ldexp(checked(s * (41607 + s2 * (69001 + s2 * (15617 + s2 * 527)))), -25),
+                            }).Reverse().ToArray()));
 
                             limit_table.Add((int)s, coef);
                         }
