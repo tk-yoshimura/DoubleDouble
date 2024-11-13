@@ -76,8 +76,8 @@ namespace DoubleDouble {
                 private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
 
                 static ChebyshevT() {
-                    table[0] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d });
-                    table[1] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d });
+                    table[0] = new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
+                    table[1] = new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
                 }
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
@@ -119,8 +119,8 @@ namespace DoubleDouble {
                 private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
 
                 static ChebyshevU() {
-                    table[0] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d });
-                    table[1] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 2d });
+                    table[0] = new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
+                    table[1] = new ReadOnlyCollection<ddouble>(new ddouble[] { 2d });
                 }
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
