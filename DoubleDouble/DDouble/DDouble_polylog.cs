@@ -1,4 +1,5 @@
 ﻿using DoubleDouble.Utils;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -88,7 +89,7 @@ namespace DoubleDouble {
             private static readonly ddouble RegardedOneThreshold = 1 - (ddouble)double.ScaleB(1, -100);
 
             public static class CoefTable {
-                private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
+                private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
 
                 public static ReadOnlyCollection<ddouble> Coef(int n) {
                     if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
@@ -192,7 +193,7 @@ namespace DoubleDouble {
 
             public static class CoefTable {
                 public const int Terms = 201;
-                private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
+                private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
 
                 public static ReadOnlyCollection<ddouble> Coef(int n) {
                     if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {

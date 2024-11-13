@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -85,10 +86,12 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class LegendreP {
-                private static readonly Dictionary<(int n, int m), ReadOnlyCollection<ddouble>> table = new Dictionary<(int n, int m), ReadOnlyCollection<ddouble>>{
-                    { (0, 0), new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
-                    { (1, 0), new ReadOnlyCollection<ddouble>(new ddouble[]{ 2d })},
-                };
+                private static readonly ConcurrentDictionary<(int n, int m), ReadOnlyCollection<ddouble>> table = [];
+
+                static LegendreP() {
+                    table[(0, 0)] = new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });
+                    table[(1, 0)] = new ReadOnlyCollection<ddouble>(new ddouble[] { 2d });
+                }
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
                     if (!table.TryGetValue((n, 0), out ReadOnlyCollection<ddouble> coef)) {

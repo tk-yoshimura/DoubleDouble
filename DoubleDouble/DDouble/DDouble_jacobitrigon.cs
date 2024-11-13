@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -112,9 +113,8 @@ namespace DoubleDouble {
             public static readonly ddouble NearOne = (+1, -1, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFF000000uL);
             public static readonly double Eps = double.ScaleB(1, -51);
 
-            private static Dictionary<ddouble, ddouble> period_table = new();
-
-            private static Dictionary<ddouble, (ddouble a, ReadOnlyCollection<ddouble> ds)> phi_table = new();
+            private static ConcurrentDictionary<ddouble, ddouble> period_table = [];
+            private static ConcurrentDictionary<ddouble, (ddouble a, ReadOnlyCollection<ddouble> ds)> phi_table = [];
 
             public static ddouble SnLeqOneK(ddouble x, ddouble m) {
                 if (m < Eps) {

@@ -1,4 +1,5 @@
 ﻿using DoubleDouble.Utils;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.Bessel;
@@ -237,8 +238,7 @@ namespace DoubleDouble {
                 }
 
                 public static class SinCosPiCache {
-                    private static readonly Dictionary<ddouble, ddouble> cospi_table = [];
-                    private static readonly Dictionary<ddouble, ddouble> sinpi_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, ddouble> cospi_table = [], sinpi_table = [];
 
                     public static ddouble CosPi(ddouble theta) {
                         if (!cospi_table.TryGetValue(theta, out ddouble cospi)) {
@@ -261,15 +261,15 @@ namespace DoubleDouble {
 
                 public class PowerSeries {
                     public const int NearZeroExponent = -950;
-                    private static readonly Dictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = [];
-                    private static readonly Dictionary<ddouble, X2DenomTable> x2denom_coef_table = [];
-                    private static readonly Dictionary<ddouble, GammaDenomTable> gammadenom_coef_table = [];
-                    private static readonly Dictionary<ddouble, GammaTable> gamma_coef_table = [];
-                    private static readonly Dictionary<ddouble, GammaPNTable> gammapn_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, X2DenomTable> x2denom_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, GammaDenomTable> gammadenom_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, GammaTable> gamma_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, GammaPNTable> gammapn_coef_table = [];
                     private static readonly YCoefTable y_coef_table = new();
                     private static readonly Y0CoefTable y0_coef_table = new();
-                    private static readonly Dictionary<int, YNCoefTable> yn_coef_table = [];
-                    private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> yn_finitecoef_table = [];
+                    private static readonly ConcurrentDictionary<int, YNCoefTable> yn_coef_table = [];
+                    private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> yn_finitecoef_table = [];
                     private static readonly KCoefTable k_coef_table = new();
                     private static readonly K0CoefTable k0_coef_table = new();
                     private static readonly K1CoefTable k1_coef_table = new();
@@ -1119,7 +1119,7 @@ namespace DoubleDouble {
                 }
 
                 public static class Limit {
-                    static readonly Dictionary<ddouble, HankelExpansion> table = [];
+                    static readonly ConcurrentDictionary<ddouble, HankelExpansion> table = [];
 
                     public static ddouble BesselJ(ddouble nu, ddouble x) {
                         Debug.Assert(IsPositive(x));
@@ -1316,9 +1316,9 @@ namespace DoubleDouble {
                 public class MillerBackward {
                     public const int BesselYEpsExponent = -12;
 
-                    private static readonly Dictionary<ddouble, BesselJPhiTable> phi_coef_table = [];
-                    private static readonly Dictionary<ddouble, BesselYEtaTable> eta_coef_table = [];
-                    private static readonly Dictionary<ddouble, BesselYXiTable> xi_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, BesselJPhiTable> phi_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, BesselYEtaTable> eta_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, BesselYXiTable> xi_coef_table = [];
                     private static readonly ReadOnlyCollection<ddouble> eta0_coef, xi1_coef;
 
                     static MillerBackward() {
@@ -1974,7 +1974,7 @@ namespace DoubleDouble {
                     const int m = 32;
 
                     private static readonly ReadOnlyCollection<ReadOnlyCollection<ddouble>> ess_coef_table;
-                    private static readonly Dictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> cds_coef_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, ReadOnlyCollection<(ddouble c, ddouble s)>> cds_coef_table = [];
 
                     static YoshidaPade() {
                         Dictionary<string, ReadOnlyCollection<ddouble>> tables =
@@ -2100,12 +2100,12 @@ namespace DoubleDouble {
                 public static class AmosPowerSeries {
                     private static readonly ReadOnlyCollection<ddouble> g1_coef;
 
-                    private static readonly Dictionary<ddouble, (ddouble, ddouble)> gammapm_table = [];
-                    private static readonly Dictionary<ddouble, (ddouble, ddouble)> gamma12_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, (ddouble, ddouble)> gammapm_table = [];
+                    private static readonly ConcurrentDictionary<ddouble, (ddouble, ddouble)> gamma12_table = [];
 
                     static AmosPowerSeries() {
                         Dictionary<string, ReadOnlyCollection<ddouble>> tables =
-                        ResourceUnpack.NumTable(Resource.BesselKTable, reverse: true);
+                            ResourceUnpack.NumTable(Resource.BesselKTable, reverse: true);
 
                         g1_coef = tables["G1Table"];
                     }

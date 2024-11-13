@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -28,7 +29,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class JacobiP {
-                private static readonly Dictionary<(int n, ddouble alpha, ddouble beta), ReadOnlyCollection<ddouble>> table = new();
+                private static readonly ConcurrentDictionary<(int n, ddouble alpha, ddouble beta), ReadOnlyCollection<ddouble>> table = [];
 
                 public static ReadOnlyCollection<ddouble> Table(int n, ddouble alpha, ddouble beta) {
                     if (!table.TryGetValue((n, alpha, beta), out ReadOnlyCollection<ddouble> coef)) {

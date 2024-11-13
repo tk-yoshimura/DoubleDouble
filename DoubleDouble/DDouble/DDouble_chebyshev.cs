@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -72,10 +73,12 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class ChebyshevT {
-                private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
-                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
-                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
-                };
+                private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
+
+                static ChebyshevT() {
+                    table[0] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d });
+                    table[1] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d });
+                }
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
                     if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
@@ -113,10 +116,12 @@ namespace DoubleDouble {
             }
 
             public static class ChebyshevU {
-                private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
-                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
-                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 2d })},
-                };
+                private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
+
+                static ChebyshevU() {
+                    table[0] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d });
+                    table[1] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 2d });
+                }
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
                     if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {

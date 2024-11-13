@@ -1,4 +1,5 @@
 ﻿using DoubleDouble.Utils;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using static DoubleDouble.ddouble.Consts.Mathieu;
@@ -138,7 +139,7 @@ namespace DoubleDouble {
             public const double NZThreshold = 0.25;
 
             public static double NearZeroLimit(int n) => 128 * int.Max(1, n * n);
-            private static readonly Dictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
+            private static readonly ConcurrentDictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
 
             public static (ddouble m, ddouble d) NearZeroPade(int n, ddouble q) {
                 Debug.Assert(q >= 0d, nameof(q));
@@ -992,7 +993,7 @@ namespace DoubleDouble {
                     }
 
                     {
-                        Dictionary<int, ReadOnlyCollection<ddouble>> limit_table = new();
+                        Dictionary<int, ReadOnlyCollection<ddouble>> limit_table = [];
 
                         for (long s = 1; s <= MathieuUtil.MaxN * 2 + 1; s += 2) {
                             long s2 = checked(s * s);

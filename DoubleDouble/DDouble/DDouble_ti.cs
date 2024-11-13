@@ -53,10 +53,10 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<(ddouble c, ddouble d)> PadeTable;
 
                 static Ti() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> pade_tables =
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                         ResourceUnpack.NumTableX2(Resource.TiTable, reverse: true);
 
-                    PadeTable = pade_tables["PadeTable"];
+                    PadeTable = tables["PadeTable"];
                 }
             }
         }

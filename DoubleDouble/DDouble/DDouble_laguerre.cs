@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -70,10 +71,12 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class LaguerreL {
-                private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new Dictionary<int, ReadOnlyCollection<ddouble>>{
-                    { 0, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d })},
-                    { 1, new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d, -1d })},
-                };
+                private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
+
+                static LaguerreL() {
+                    table[0] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d });
+                    table[1] = new ReadOnlyCollection<ddouble>(new ddouble[]{ 1d, -1d });
+                }
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
                     if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
@@ -105,7 +108,7 @@ namespace DoubleDouble {
             }
 
             public static class AssociatedLaguerreL {
-                private static readonly Dictionary<(int n, ddouble alpha), ReadOnlyCollection<ddouble>> table = new();
+                private static readonly ConcurrentDictionary<(int n, ddouble alpha), ReadOnlyCollection<ddouble>> table = [];
 
                 public static ReadOnlyCollection<ddouble> Table(int n, ddouble alpha) {
                     if (!table.TryGetValue((n, alpha), out ReadOnlyCollection<ddouble> coef)) {

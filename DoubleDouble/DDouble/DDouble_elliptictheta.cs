@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace DoubleDouble {
     public partial struct ddouble {
@@ -147,9 +148,11 @@ namespace DoubleDouble {
 
             public const int EpsExponent = -994;
 
-            private static readonly Dictionary<ddouble, ddouble> q0_table = new() {
-                { 0d, 1d }
-            };
+            private static readonly ConcurrentDictionary<ddouble, ddouble> q0_table = [];
+
+            static EllipticThetaUtil() {
+                q0_table[0] = 1d;
+            }
 
             public static ddouble Q0(ddouble q) {
                 Debug.Assert(IsPositive(q) && q <= 1d, nameof(q));

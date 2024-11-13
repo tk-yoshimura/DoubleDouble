@@ -64,23 +64,23 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>> PadeTables;
 
                 static EulerQ() {
-                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> pade_tables =
+                    Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                         ResourceUnpack.NumTableX2(Resource.EulerQTable, reverse: true);
 
                     PadeTables = Array.AsReadOnly(new ReadOnlyCollection<(ddouble c, ddouble d)>[] {
-                        pade_tables["Mp05PadeTable"],
-                        pade_tables["Mp075PadeTable"],
-                        pade_tables["Mp0875PadeTable"],
-                        pade_tables["Mp09375PadeTable"],
-                        pade_tables["Mp0984375PadeTable"],
-                        pade_tables["Mp1PadeTable"],
+                        tables["Mp05PadeTable"],
+                        tables["Mp075PadeTable"],
+                        tables["Mp0875PadeTable"],
+                        tables["Mp09375PadeTable"],
+                        tables["Mp0984375PadeTable"],
+                        tables["Mp1PadeTable"],
 
-                        pade_tables["Mn05PadeTable"],
-                        pade_tables["Mn075PadeTable"],
-                        pade_tables["Mn0875PadeTable"],
-                        pade_tables["Mn09375PadeTable"],
-                        pade_tables["Mn0984375PadeTable"],
-                        pade_tables["Mn1PadeTable"],
+                        tables["Mn05PadeTable"],
+                        tables["Mn075PadeTable"],
+                        tables["Mn0875PadeTable"],
+                        tables["Mn09375PadeTable"],
+                        tables["Mn0984375PadeTable"],
+                        tables["Mn1PadeTable"],
                     });
                 }
             }

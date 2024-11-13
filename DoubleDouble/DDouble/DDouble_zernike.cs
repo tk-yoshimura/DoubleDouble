@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace DoubleDouble {
@@ -50,7 +51,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class ZernikeR {
-                private static readonly Dictionary<(int n, int m), ReadOnlyCollection<ddouble>> table = new();
+                private static readonly ConcurrentDictionary<(int n, int m), ReadOnlyCollection<ddouble>> table = [];
 
                 public static ReadOnlyCollection<ddouble> Table(int n, int m) {
                     if (!table.TryGetValue((n, m), out ReadOnlyCollection<ddouble> coef)) {
