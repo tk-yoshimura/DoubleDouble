@@ -2002,7 +2002,6 @@ namespace DoubleDouble {
                         cds_coef_table[0] = Array.AsReadOnly(cd0.ToArray());
                         cds_coef_table[1] = Array.AsReadOnly(cd1.ToArray());
 
-
                         List<ReadOnlyCollection<ddouble>> es = new();
 
                         for (int i = 0; i <= m; i++) {
