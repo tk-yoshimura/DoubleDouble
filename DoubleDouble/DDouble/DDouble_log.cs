@@ -51,12 +51,7 @@ namespace DoubleDouble {
         }
 
         public static ddouble Log(ddouble x, ddouble b) {
-            if (b != LogCache.B) {
-                LogCache.B = b;
-                LogCache.RcpLbB = Rcp(Log2(b));
-            }
-
-            ddouble y = Log2(x) * LogCache.RcpLbB;
+            ddouble y = Log2(x) / Log2(b);
 
             if (IsFinite(y) && ILogB(y) < 10) {
                 int n = (int)Round(y);
@@ -177,10 +172,6 @@ namespace DoubleDouble {
                     return y;
                 }
             }
-        }
-
-        internal static class LogCache {
-            public static ddouble B = NaN, RcpLbB = NaN;
         }
     }
 }

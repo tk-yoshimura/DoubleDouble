@@ -125,24 +125,36 @@ namespace DoubleDouble {
 
             public static ddouble NzGammaDenom(int n) {
                 if (n >= 0) {
-                    for (int k = nz_gamma_pos.Count; k <= n; k++) {
-                        ddouble c = nz_gamma_pos[^2] / (k * 0.5d - 1d);
-
-                        nz_gamma_pos.Add(c);
+                    if (n < nz_gamma_pos.Count) {
+                        return nz_gamma_pos[n];
                     }
 
-                    return nz_gamma_pos[n];
+                    lock (nz_gamma_pos) {
+                        for (int k = nz_gamma_pos.Count; k <= n; k++) {
+                            ddouble c = nz_gamma_pos[^2] / (k * 0.5d - 1d);
+
+                            nz_gamma_pos.Add(c);
+                        }
+
+                        return nz_gamma_pos[n];
+                    }
                 }
                 else {
                     n = -n;
 
-                    for (int k = nz_gamma_neg.Count; k <= n; k++) {
-                        ddouble c = nz_gamma_neg[^2] * -(k * 0.5d);
-
-                        nz_gamma_neg.Add(c);
+                    if (n < nz_gamma_neg.Count) {
+                        return nz_gamma_neg[n];
                     }
 
-                    return nz_gamma_neg[n];
+                    lock (nz_gamma_neg) {
+                        for (int k = nz_gamma_neg.Count; k <= n; k++) {
+                            ddouble c = nz_gamma_neg[^2] * -(k * 0.5d);
+
+                            nz_gamma_neg.Add(c);
+                        }
+
+                        return nz_gamma_neg[n];
+                    }
                 }
             }
         }

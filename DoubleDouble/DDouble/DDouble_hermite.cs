@@ -51,7 +51,7 @@ namespace DoubleDouble {
                     if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
                         ReadOnlyCollection<ddouble> coefs = GenerateTable(n);
                         value = coefs;
-                        table.Add(n, value);
+                        table[n] = value;
                     }
 
                     return value;

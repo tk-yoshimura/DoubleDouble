@@ -160,7 +160,7 @@ namespace DoubleDouble {
 
                 ddouble q0 = EulerQ(q * q);
 
-                q0_table.Add(q, q0);
+                q0_table[q] = q0;
                 return q0;
             }
         }

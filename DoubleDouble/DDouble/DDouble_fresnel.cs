@@ -181,14 +181,16 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp((8 * m + 1));
-                        ddouble q = Rcp((4 * (8 * m + 5) * (4 * m + 1) * (4 * m + 2)));
+                    lock (table) {
+                        for (long m = table.Count; m <= n; m++) {
+                            ddouble p = Rcp((8 * m + 1));
+                            ddouble q = Rcp((4 * (8 * m + 5) * (4 * m + 1) * (4 * m + 2)));
 
-                        table.Add((p, q));
+                            table.Add((p, q));
+                        }
+
+                        return table[n];
                     }
-
-                    return table[n];
                 }
             }
 
@@ -202,14 +204,16 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp((8 * m + 3));
-                        ddouble q = Rcp((4 * (8 * m + 7) * (4 * m + 2) * (4 * m + 3)));
+                    lock (table) {
+                        for (long m = table.Count; m <= n; m++) {
+                            ddouble p = Rcp((8 * m + 3));
+                            ddouble q = Rcp((4 * (8 * m + 7) * (4 * m + 2) * (4 * m + 3)));
 
-                        table.Add((p, q));
+                            table.Add((p, q));
+                        }
+
+                        return table[n];
                     }
-
-                    return table[n];
                 }
             }
         };
@@ -314,12 +318,14 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (int m = table.Count; m <= n; m++) {
-                        v *= 2 * m - 1;
-                        table.Add(v);
-                    }
+                    lock (table) {
+                        for (int m = table.Count; m <= n; m++) {
+                            v *= 2 * m - 1;
+                            table.Add(v);
+                        }
 
-                    return table[n];
+                        return table[n];
+                    }
                 }
             }
         };

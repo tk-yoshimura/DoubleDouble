@@ -154,14 +154,16 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp((4 * m + 2));
-                        ddouble q = Rcp(((4 * m + 3) * (4 * m + 4) * (4 * m + 4)));
+                    lock (table) {
+                        for (long m = table.Count; m <= n; m++) {
+                            ddouble p = Rcp((4 * m + 2));
+                            ddouble q = Rcp(((4 * m + 3) * (4 * m + 4) * (4 * m + 4)));
 
-                        table.Add((p, q));
+                            table.Add((p, q));
+                        }
+
+                        return table[n];
                     }
-
-                    return table[n];
                 }
             }
 
@@ -175,14 +177,16 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (long m = table.Count; m <= n; m++) {
-                        ddouble p = Rcp((4 * m + 1));
-                        ddouble q = Rcp(((4 * m + 2) * (4 * m + 3) * (4 * m + 3)));
+                    lock (table) {
+                        for (long m = table.Count; m <= n; m++) {
+                            ddouble p = Rcp((4 * m + 1));
+                            ddouble q = Rcp(((4 * m + 2) * (4 * m + 3) * (4 * m + 3)));
 
-                        table.Add((p, q));
+                            table.Add((p, q));
+                        }
+
+                        return table[n];
                     }
-
-                    return table[n];
                 }
             }
         };

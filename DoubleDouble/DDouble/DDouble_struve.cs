@@ -149,13 +149,15 @@ namespace DoubleDouble {
                     return table[k];
                 }
 
-                for (int i = table.Count; i <= k; i++) {
-                    ddouble g = Ldexp(table[^1], 1) / (2 * i - 1);
+                lock (table) {
+                    for (int i = table.Count; i <= k; i++) {
+                        ddouble g = Ldexp(table[^1], 1) / (2 * i - 1);
 
-                    table.Add(g);
+                        table.Add(g);
+                    }
+
+                    return table[k];
                 }
-
-                return table[k];
             }
         }
 
@@ -254,13 +256,15 @@ namespace DoubleDouble {
                         return table[k];
                     }
 
-                    for (int i = table.Count; i <= k; i++) {
-                        ddouble f = Rcp(2 * i + 3);
+                    lock (table) {
+                        for (int i = table.Count; i <= k; i++) {
+                            ddouble f = Rcp(2 * i + 3);
 
-                        table.Add(f);
+                            table.Add(f);
+                        }
+
+                        return table[k];
                     }
-
-                    return table[k];
                 }
             }
         }

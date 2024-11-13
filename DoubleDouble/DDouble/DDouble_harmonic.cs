@@ -25,18 +25,20 @@
                         return a_table[n];
                     }
 
-                    for (int k = a_table.Count; k <= n; k++) {
-                        ddouble v = Rcp(k);
-                        ddouble d = v - carry;
-                        ddouble acc_next = acc + d;
+                    lock (a_table) {
+                        for (int k = a_table.Count; k <= n; k++) {
+                            ddouble v = Rcp(k);
+                            ddouble d = v - carry;
+                            ddouble acc_next = acc + d;
 
-                        carry = (acc_next - acc) - d;
-                        acc = acc_next;
+                            carry = (acc_next - acc) - d;
+                            acc = acc_next;
 
-                        a_table.Add(acc);
+                            a_table.Add(acc);
+                        }
+
+                        return a_table[n];
                     }
-
-                    return a_table[n];
                 }
             }
         }

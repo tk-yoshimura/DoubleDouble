@@ -193,7 +193,7 @@ namespace DoubleDouble {
             public static ddouble Period(ddouble m) {
                 if (!period_table.TryGetValue(m, out ddouble value)) {
                     value = EllipticK(m);
-                    period_table.Add(m, value);
+                    period_table[m] = value;
                 }
 
                 return value;
@@ -202,7 +202,7 @@ namespace DoubleDouble {
             public static (ddouble a, ReadOnlyCollection<ddouble> ds) Phi(ddouble m) {
                 if (!phi_table.TryGetValue(m, out (ddouble a, ReadOnlyCollection<ddouble> ds) value)) {
                     value = GeneratePhiTable(m);
-                    phi_table.Add(m, value);
+                    phi_table[m] = value;
                 }
 
                 return value;

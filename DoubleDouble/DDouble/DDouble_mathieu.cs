@@ -333,7 +333,7 @@ namespace DoubleDouble {
                         }
                     }
 
-                    c_coef_cache.Add((n, q), coef);
+                    c_coef_cache[(n, q)] = coef;
                 }
 
                 return coef;
@@ -356,7 +356,7 @@ namespace DoubleDouble {
                         }
                     }
 
-                    s_coef_cache.Add((n, q), coef);
+                    s_coef_cache[(n, q)] = coef;
                 }
 
                 return coef;

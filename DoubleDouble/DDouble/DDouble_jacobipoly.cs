@@ -33,7 +33,7 @@ namespace DoubleDouble {
                 public static ReadOnlyCollection<ddouble> Table(int n, ddouble alpha, ddouble beta) {
                     if (!table.TryGetValue((n, alpha, beta), out ReadOnlyCollection<ddouble> coef)) {
                         coef = GenerateTable(n, alpha, beta);
-                        table.Add((n, alpha, beta), coef);
+                        table[(n, alpha, beta)] = coef;
                     }
 
                     return coef;

@@ -360,11 +360,11 @@ namespace DoubleDouble {
                     private static ddouble BesselJKernel(ddouble nu, ddouble x, int terms) {
                         if (!dfactdenom_coef_table.TryGetValue(nu, out DoubleFactDenomTable r)) {
                             r = new DoubleFactDenomTable(nu);
-                            dfactdenom_coef_table.Add(nu, r);
+                            dfactdenom_coef_table[nu] = r;
                         }
                         if (!x2denom_coef_table.TryGetValue(nu, out X2DenomTable d)) {
                             d = new X2DenomTable(nu);
-                            x2denom_coef_table.Add(nu, d);
+                            x2denom_coef_table[nu] = d;
                         }
 
                         ddouble x2 = x * x, x4 = x2 * x2;
@@ -401,11 +401,11 @@ namespace DoubleDouble {
                     private static ddouble BesselYKernel(ddouble nu, ddouble x, int terms) {
                         if (!gamma_coef_table.TryGetValue(nu, out GammaTable g)) {
                             g = new GammaTable(nu);
-                            gamma_coef_table.Add(nu, g);
+                            gamma_coef_table[nu] = g;
                         }
                         if (!gammapn_coef_table.TryGetValue(nu, out GammaPNTable gpn)) {
                             gpn = new GammaPNTable(nu);
-                            gammapn_coef_table.Add(nu, gpn);
+                            gammapn_coef_table[nu] = gpn;
                         }
 
                         YCoefTable r = y_coef_table;
@@ -473,11 +473,11 @@ namespace DoubleDouble {
                     private static ddouble BesselY0Kernel(ddouble x, int terms) {
                         if (!dfactdenom_coef_table.TryGetValue(0, out DoubleFactDenomTable r)) {
                             r = new DoubleFactDenomTable(0);
-                            dfactdenom_coef_table.Add(0, r);
+                            dfactdenom_coef_table[0] = r;
                         }
                         if (!x2denom_coef_table.TryGetValue(0, out X2DenomTable d)) {
                             d = new X2DenomTable(0);
-                            x2denom_coef_table.Add(0, d);
+                            x2denom_coef_table[0] = d;
                         }
 
                         Y0CoefTable q = y0_coef_table;
@@ -509,15 +509,15 @@ namespace DoubleDouble {
                     private static ddouble BesselY1Kernel(ddouble x, int terms) {
                         if (!dfactdenom_coef_table.TryGetValue(1, out DoubleFactDenomTable r)) {
                             r = new DoubleFactDenomTable(1);
-                            dfactdenom_coef_table.Add(1, r);
+                            dfactdenom_coef_table[1] = r;
                         }
                         if (!x2denom_coef_table.TryGetValue(1, out X2DenomTable d)) {
                             d = new X2DenomTable(1);
-                            x2denom_coef_table.Add(1, d);
+                            x2denom_coef_table[1] = d;
                         }
                         if (!yn_coef_table.TryGetValue(1, out YNCoefTable q)) {
                             q = new YNCoefTable(1);
-                            yn_coef_table.Add(1, q);
+                            yn_coef_table[1] = q;
                         }
 
                         ddouble h = Ldexp(Log(Ldexp(x, -1)) + EulerGamma, 1);
@@ -547,19 +547,19 @@ namespace DoubleDouble {
                     private static ddouble BesselYNKernel(int n, ddouble x, int terms) {
                         if (!dfactdenom_coef_table.TryGetValue(n, out DoubleFactDenomTable r)) {
                             r = new DoubleFactDenomTable(n);
-                            dfactdenom_coef_table.Add(n, r);
+                            dfactdenom_coef_table[n] = r;
                         }
                         if (!x2denom_coef_table.TryGetValue(n, out X2DenomTable d)) {
                             d = new X2DenomTable(n);
-                            x2denom_coef_table.Add(n, d);
+                            x2denom_coef_table[n] = d;
                         }
                         if (!yn_coef_table.TryGetValue(n, out YNCoefTable q)) {
                             q = new YNCoefTable(n);
-                            yn_coef_table.Add(n, q);
+                            yn_coef_table[n] = q;
                         }
                         if (!yn_finitecoef_table.TryGetValue(n, out ReadOnlyCollection<ddouble> f)) {
                             f = YNFiniteCoefTable.Value(n);
-                            yn_finitecoef_table.Add(n, f);
+                            yn_finitecoef_table[n] = f;
                         }
 
                         ddouble h = Ldexp(Log(Ldexp(x, -1)) + EulerGamma, 1);
@@ -602,11 +602,11 @@ namespace DoubleDouble {
                     private static ddouble BesselIKernel(ddouble nu, ddouble x, int terms) {
                         if (!dfactdenom_coef_table.TryGetValue(nu, out DoubleFactDenomTable r)) {
                             r = new DoubleFactDenomTable(nu);
-                            dfactdenom_coef_table.Add(nu, r);
+                            dfactdenom_coef_table[nu] = r;
                         }
                         if (!x2denom_coef_table.TryGetValue(nu, out X2DenomTable d)) {
                             d = new X2DenomTable(nu);
-                            x2denom_coef_table.Add(nu, d);
+                            x2denom_coef_table[nu] = d;
                         }
 
                         ddouble x2 = x * x, x4 = x2 * x2;
@@ -643,11 +643,11 @@ namespace DoubleDouble {
                     private static ddouble BesselKKernel(ddouble nu, ddouble x, int terms) {
                         if (!gammadenom_coef_table.TryGetValue(nu, out GammaDenomTable gp)) {
                             gp = new GammaDenomTable(nu);
-                            gammadenom_coef_table.Add(nu, gp);
+                            gammadenom_coef_table[nu] = gp;
                         }
                         if (!gammadenom_coef_table.TryGetValue(-nu, out GammaDenomTable gn)) {
                             gn = new GammaDenomTable(-nu);
-                            gammadenom_coef_table.Add(-nu, gn);
+                            gammadenom_coef_table[-nu] = gn;
                         }
 
                         KCoefTable r = k_coef_table;
@@ -781,13 +781,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (long i = table.Count; i <= k; i++) {
-                                c *= checked((nu + 2 * i) * (nu + (2 * i - 1)) * (32 * i * (2 * i - 1)));
+                            lock (table) {
+                                for (long i = table.Count; i <= k; i++) {
+                                    c *= checked((nu + 2 * i) * (nu + (2 * i - 1)) * (32 * i * (2 * i - 1)));
 
-                                table.Add(Rcp(c));
+                                    table.Add(Rcp(c));
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -799,7 +801,7 @@ namespace DoubleDouble {
                             ddouble a = Rcp(4d * (nu + 1d));
 
                             this.nu = nu;
-                            this.table.Add(a);
+                            table.Add(a);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -811,13 +813,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (long i = table.Count; i <= k; i++) {
-                                ddouble a = Rcp(checked(4d * (2 * i + 1) * (2 * i + 1 + nu)));
+                            lock (table) {
+                                for (long i = table.Count; i <= k; i++) {
+                                    ddouble a = Rcp(checked(4d * (2 * i + 1) * (2 * i + 1 + nu)));
 
-                                table.Add(a);
+                                    table.Add(a);
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -829,7 +833,7 @@ namespace DoubleDouble {
                         public GammaDenomTable(ddouble nu) {
                             this.c = Gamma(nu + 1d);
                             this.nu = nu;
-                            this.table.Add(Rcp(c));
+                            table.Add(Rcp(c));
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -841,13 +845,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                c *= nu + i;
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    c *= nu + i;
 
-                                table.Add(Rcp(c));
+                                    table.Add(Rcp(c));
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -859,7 +865,7 @@ namespace DoubleDouble {
                         public GammaTable(ddouble nu) {
                             this.c = Gamma(nu + 1d);
                             this.nu = nu;
-                            this.table.Add(c);
+                            table.Add(c);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -871,13 +877,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                c *= nu + i;
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    c *= nu + i;
 
-                                table.Add(c);
+                                    table.Add(c);
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -901,13 +909,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                ddouble c = r * positive_table[i] / negative_table[i];
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    ddouble c = r * positive_table[i] / negative_table[i];
 
-                                table.Add(c);
+                                    table.Add(c);
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -917,7 +927,7 @@ namespace DoubleDouble {
 
                         public YCoefTable() {
                             this.c = 1d;
-                            this.table.Add(1d);
+                            table.Add(1d);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -929,13 +939,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (long i = table.Count; i <= k; i++) {
-                                c *= checked(32 * i * (2 * i - 1));
+                            lock (table) {
+                                for (long i = table.Count; i <= k; i++) {
+                                    c *= checked(32 * i * (2 * i - 1));
 
-                                table.Add(Rcp(c));
+                                    table.Add(Rcp(c));
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -943,7 +955,7 @@ namespace DoubleDouble {
                         private readonly List<ddouble> table = [];
 
                         public Y0CoefTable() {
-                            this.table.Add(Rcp(4));
+                            table.Add(Rcp(4));
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -955,13 +967,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (long i = table.Count; i <= k; i++) {
-                                ddouble c = Rcp(checked(4 * (2 * i + 1) * (2 * i + 1) * (2 * i + 1)));
+                            lock (table) {
+                                for (long i = table.Count; i <= k; i++) {
+                                    ddouble c = Rcp(checked(4 * (2 * i + 1) * (2 * i + 1) * (2 * i + 1)));
 
-                                table.Add(c);
+                                    table.Add(c);
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -982,14 +996,16 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (long i = table.Count; i <= k; i++) {
-                                ddouble c = (ddouble)(n + 4 * i + 2) /
-                                    (ddouble)checked(4 * (2 * i + 1) * (2 * i + 1) * (n + 2 * i + 1) * (n + 2 * i + 1));
+                            lock (table) {
+                                for (long i = table.Count; i <= k; i++) {
+                                    ddouble c = (ddouble)(n + 4 * i + 2) /
+                                        (ddouble)checked(4 * (2 * i + 1) * (2 * i + 1) * (n + 2 * i + 1) * (n + 2 * i + 1));
 
-                                table.Add(c);
+                                    table.Add(c);
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -1017,7 +1033,7 @@ namespace DoubleDouble {
 
                         public KCoefTable() {
                             this.c = 1d;
-                            this.table.Add(1d);
+                            table.Add(1d);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -1029,13 +1045,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (long i = table.Count; i <= k; i++) {
-                                c *= 4 * i;
+                            lock (table) {
+                                for (long i = table.Count; i <= k; i++) {
+                                    c *= 4 * i;
 
-                                table.Add(Rcp(c));
+                                    table.Add(Rcp(c));
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -1045,7 +1063,7 @@ namespace DoubleDouble {
 
                         public K0CoefTable() {
                             this.c = 1d;
-                            this.table.Add(1d);
+                            table.Add(1d);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -1057,13 +1075,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (long i = table.Count; i <= k; i++) {
-                                c *= checked(4 * i * i);
+                            lock (table) {
+                                for (long i = table.Count; i <= k; i++) {
+                                    c *= checked(4 * i * i);
 
-                                table.Add(Rcp(c));
+                                    table.Add(Rcp(c));
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -1073,7 +1093,7 @@ namespace DoubleDouble {
 
                         public K1CoefTable() {
                             this.c = 1d;
-                            this.table.Add(1d);
+                            table.Add(1d);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -1085,13 +1105,15 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                c *= checked(4 * i * (i + 1));
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    c *= checked(4 * i * (i + 1));
 
-                                table.Add(Rcp(c));
+                                    table.Add(Rcp(c));
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
                 }
@@ -1104,7 +1126,7 @@ namespace DoubleDouble {
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
-                            table.Add(nu, hankel);
+                            table[nu] = hankel;
                         }
 
                         if (IsPositiveInfinity(x)) {
@@ -1127,7 +1149,7 @@ namespace DoubleDouble {
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
-                            table.Add(nu, hankel);
+                            table[nu] = hankel;
                         }
 
                         if (IsPositiveInfinity(x)) {
@@ -1150,7 +1172,7 @@ namespace DoubleDouble {
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
-                            table.Add(nu, hankel);
+                            table[nu] = hankel;
                         }
 
                         ddouble c = hankel.BesselICoef(x);
@@ -1174,7 +1196,7 @@ namespace DoubleDouble {
 
                         if (!table.TryGetValue(nu, out HankelExpansion hankel)) {
                             hankel = new HankelExpansion(nu);
-                            table.Add(nu, hankel);
+                            table[nu] = hankel;
                         }
 
                         ddouble c = hankel.BesselKCoef(x);
@@ -1203,12 +1225,20 @@ namespace DoubleDouble {
                         }
 
                         private ddouble ACoef(int n) {
-                            for (int k = a_coef.Count; k <= n; k++) {
-                                ddouble a = a_coef.Last() * (4d * Nu * Nu - checked((2 * k - 1) * (2 * k - 1))) / (k * 8);
-                                a_coef.Add(a);
+                            Debug.Assert(n >= 0);
+
+                            if (n < a_coef.Count) {
+                                return a_coef[n];
                             }
 
-                            return a_coef[n];
+                            lock (a_coef) {
+                                for (int k = a_coef.Count; k <= n; k++) {
+                                    ddouble a = a_coef.Last() * (4d * Nu * Nu - checked((2 * k - 1) * (2 * k - 1))) / (k * 8);
+                                    a_coef.Add(a);
+                                }
+
+                                return a_coef[n];
+                            }
                         }
 
                         public ddouble Omega(ddouble x) {
@@ -1400,7 +1430,7 @@ namespace DoubleDouble {
 
                         if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi)) {
                             phi = new BesselJPhiTable(alpha);
-                            phi_coef_table.Add(alpha, phi);
+                            phi_coef_table[alpha] = phi;
                         }
 
                         ddouble f0 = 1e-256d, f1 = 0d, lambda = 0d;
@@ -1542,15 +1572,15 @@ namespace DoubleDouble {
 
                         if (!eta_coef_table.TryGetValue(alpha, out BesselYEtaTable eta)) {
                             eta = new BesselYEtaTable(alpha);
-                            eta_coef_table.Add(alpha, eta);
+                            eta_coef_table[alpha] = eta;
                         }
                         if (!xi_coef_table.TryGetValue(alpha, out BesselYXiTable xi)) {
                             xi = new BesselYXiTable(alpha, eta);
-                            xi_coef_table.Add(alpha, xi);
+                            xi_coef_table[alpha] = xi;
                         }
                         if (!phi_coef_table.TryGetValue(alpha, out BesselJPhiTable phi)) {
                             phi = new BesselJPhiTable(alpha);
-                            phi_coef_table.Add(alpha, phi);
+                            phi_coef_table[alpha] = phi;
                         }
 
                         ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
@@ -1646,7 +1676,7 @@ namespace DoubleDouble {
 
                         if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta)) {
                             eta = new BesselYEtaTable(0);
-                            eta_coef_table.Add(0, eta);
+                            eta_coef_table[0] = eta;
                         }
 
                         ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
@@ -1676,11 +1706,11 @@ namespace DoubleDouble {
                         if (!xi_coef_table.TryGetValue(0, out BesselYXiTable xi)) {
                             if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta)) {
                                 eta = new BesselYEtaTable(0);
-                                eta_coef_table.Add(0, eta);
+                                eta_coef_table[0] = eta;
                             }
 
                             xi = new BesselYXiTable(0, eta);
-                            xi_coef_table.Add(0, xi);
+                            xi_coef_table[0] = xi;
                         }
 
                         ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
@@ -1710,11 +1740,11 @@ namespace DoubleDouble {
 
                         if (!eta_coef_table.TryGetValue(0, out BesselYEtaTable eta)) {
                             eta = new BesselYEtaTable(0);
-                            eta_coef_table.Add(0, eta);
+                            eta_coef_table[0] = eta;
                         }
                         if (!xi_coef_table.TryGetValue(0, out BesselYXiTable xi)) {
                             xi = new BesselYXiTable(0, eta);
-                            xi_coef_table.Add(0, xi);
+                            xi_coef_table[0] = xi;
                         }
 
                         ddouble f0 = 1e-256, f1 = 0d, lambda = 0d;
@@ -1766,8 +1796,8 @@ namespace DoubleDouble {
 
                             this.g = phi0;
 
-                            this.table.Add(phi0);
-                            this.table.Add(phi1);
+                            table.Add(phi0);
+                            table.Add(phi1);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -1779,15 +1809,17 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                g = g * (alpha + i - 1d) / i;
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    g = g * (alpha + i - 1d) / i;
 
-                                ddouble phi = g * (alpha + 2 * i);
+                                    ddouble phi = g * (alpha + 2 * i);
 
-                                table.Add(phi);
+                                    table.Add(phi);
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -1807,8 +1839,8 @@ namespace DoubleDouble {
 
                             this.g = Ldexp(psi0, 1);
 
-                            this.table.Add(psi0);
-                            this.table.Add(psi1);
+                            table.Add(psi0);
+                            table.Add(psi1);
                         }
 
                         public ddouble this[int k] => Value(k);
@@ -1820,15 +1852,17 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                g = g * (Ldexp(alpha, 1) + i - 1d) / i;
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    g = g * (Ldexp(alpha, 1) + i - 1d) / i;
 
-                                ddouble phi = g * (alpha + i);
+                                    ddouble phi = g * (alpha + i);
 
-                                table.Add(phi);
+                                    table.Add(phi);
+                                }
+
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -1842,7 +1876,7 @@ namespace DoubleDouble {
                             Debug.Assert(alpha > -1d && alpha < 1d, nameof(alpha));
 
                             this.alpha = alpha;
-                            this.table.Add(NaN);
+                            table.Add(NaN);
 
                             if (alpha != 0d) {
                                 ddouble c = Gamma(1d + alpha);
@@ -1851,7 +1885,7 @@ namespace DoubleDouble {
 
                                 ddouble eta1 = (alpha + 2d) * g;
 
-                                this.table.Add(eta1);
+                                table.Add(eta1);
                             }
                         }
 
@@ -1864,22 +1898,24 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                if (alpha != 0d) {
-                                    g = -g * (alpha + i - 1) * (Ldexp(alpha, 1) + i - 1d) / (i * (i - alpha));
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    if (alpha != 0d) {
+                                        g = -g * (alpha + i - 1) * (Ldexp(alpha, 1) + i - 1d) / (i * (i - alpha));
 
-                                    ddouble eta = g * (alpha + 2 * i);
+                                        ddouble eta = g * (alpha + 2 * i);
 
-                                    table.Add(eta);
+                                        table.Add(eta);
+                                    }
+                                    else {
+                                        ddouble eta = (ddouble)2d / i;
+
+                                        table.Add((i & 1) == 1 ? eta : -eta);
+                                    }
                                 }
-                                else {
-                                    ddouble eta = (ddouble)2d / i;
 
-                                    table.Add((i & 1) == 1 ? eta : -eta);
-                                }
+                                return table[k];
                             }
-
-                            return table[k];
                         }
                     }
 
@@ -1892,8 +1928,8 @@ namespace DoubleDouble {
                             Debug.Assert(alpha >= -1d && alpha < 1d, nameof(alpha));
 
                             this.alpha = alpha;
-                            this.table.Add(NaN);
-                            this.table.Add(NaN);
+                            table.Add(NaN);
+                            table.Add(NaN);
 
                             this.eta = eta;
                         }
@@ -1907,27 +1943,29 @@ namespace DoubleDouble {
                                 return table[k];
                             }
 
-                            for (int i = table.Count; i <= k; i++) {
-                                if (alpha != 0d) {
-                                    if ((i & 1) == 0) {
-                                        table.Add(eta[i / 2]);
+                            lock (table) {
+                                for (int i = table.Count; i <= k; i++) {
+                                    if (alpha != 0d) {
+                                        if ((i & 1) == 0) {
+                                            table.Add(eta[i / 2]);
+                                        }
+                                        else {
+                                            table.Add((eta[i / 2] - eta[i / 2 + 1]) / 2);
+                                        }
                                     }
                                     else {
-                                        table.Add((eta[i / 2] - eta[i / 2 + 1]) / 2);
+                                        if ((i & 1) == 1) {
+                                            ddouble xi = (ddouble)(2 * (i / 2) + 1) / (i / 2 * (i / 2 + 1));
+                                            table.Add((i & 2) > 0 ? xi : -xi);
+                                        }
+                                        else {
+                                            table.Add(NaN);
+                                        }
                                     }
                                 }
-                                else {
-                                    if ((i & 1) == 1) {
-                                        ddouble xi = (ddouble)(2 * (i / 2) + 1) / (i / 2 * (i / 2 + 1));
-                                        table.Add((i & 2) > 0 ? xi : -xi);
-                                    }
-                                    else {
-                                        table.Add(NaN);
-                                    }
-                                }
-                            }
 
-                            return table[k];
+                                return table[k];
+                            }
                         }
                     }
                 }
@@ -1961,8 +1999,8 @@ namespace DoubleDouble {
                         cd0.Reverse();
                         cd1.Reverse();
 
-                        cds_coef_table.Add(0, Array.AsReadOnly(cd0.ToArray()));
-                        cds_coef_table.Add(1, Array.AsReadOnly(cd1.ToArray()));
+                        cds_coef_table[0] = Array.AsReadOnly(cd0.ToArray());
+                        cds_coef_table[1] = Array.AsReadOnly(cd1.ToArray());
 
 
                         List<ReadOnlyCollection<ddouble>> es = new();
@@ -1978,7 +2016,7 @@ namespace DoubleDouble {
                         if (nu < 2d) {
                             if (!cds_coef_table.TryGetValue(nu, out ReadOnlyCollection<(ddouble c, ddouble s)> cds_table)) {
                                 cds_table = Table(nu);
-                                cds_coef_table.Add(nu, cds_table);
+                                cds_coef_table[nu] = cds_table;
                             }
 
                             ReadOnlyCollection<(ddouble, ddouble)> cds = cds_table;
@@ -2220,7 +2258,7 @@ namespace DoubleDouble {
 
                             g = (g1, g2);
 
-                            gamma12_table.Add(nu, g);
+                            gamma12_table[nu] = g;
                         }
 
                         return g;
@@ -2232,7 +2270,7 @@ namespace DoubleDouble {
                         if (!gammapm_table.TryGetValue(nu, out (ddouble gp, ddouble gm) g)) {
                             g = (Gamma(1d + nu), Gamma(1d - nu));
 
-                            gammapm_table.Add(nu, g);
+                            gammapm_table[nu] = g;
                         }
 
                         return g;

@@ -91,19 +91,19 @@ namespace DoubleDouble {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
 
                 public static ReadOnlyCollection<ddouble> Coef(int n) {
-                    if (table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
-                        return value;
+                    if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
+
+                        List<ddouble> coef = new List<ddouble>();
+                        coef.Add(RiemannZeta(n));
+                        for (int k = 1; k < TaylorSequence.Count; k++) {
+                            coef.Add(RiemannZeta(n - k) * TaylorSequence[k]);
+                        }
+
+                        value = new ReadOnlyCollection<ddouble>(coef);
+                        table[n] = value;
                     }
 
-                    List<ddouble> coef = new List<ddouble>();
-                    coef.Add(RiemannZeta(n));
-                    for (int k = 1; k < TaylorSequence.Count; k++) {
-                        coef.Add(RiemannZeta(n - k) * TaylorSequence[k]);
-                    }
-
-                    table.Add(n, new ReadOnlyCollection<ddouble>(coef));
-
-                    return table[n];
+                    return value;
                 }
             }
         }
@@ -195,18 +195,18 @@ namespace DoubleDouble {
                 private static readonly Dictionary<int, ReadOnlyCollection<ddouble>> table = new();
 
                 public static ReadOnlyCollection<ddouble> Coef(int n) {
-                    if (table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
-                        return value;
+                    if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
+
+                        List<ddouble> coef = new List<ddouble>();
+                        for (int k = 1; k < Terms; k++) {
+                            coef.Add(Pow(k, -n));
+                        }
+
+                        value = new ReadOnlyCollection<ddouble>(coef);
+                        table[n] = value;
                     }
 
-                    List<ddouble> coef = new List<ddouble>();
-                    for (int k = 1; k < Terms; k++) {
-                        coef.Add(Pow(k, -n));
-                    }
-
-                    table.Add(n, new ReadOnlyCollection<ddouble>(coef));
-
-                    return table[n];
+                    return value;
                 }
             }
         }

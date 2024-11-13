@@ -130,12 +130,14 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (int k = table.Count; k <= n; k++) {
-                        v += Rcp((2 * k + 1));
-                        table.Add(v);
-                    }
+                    lock (table) {
+                        for (int k = table.Count; k <= n; k++) {
+                            v += Rcp((2 * k + 1));
+                            table.Add(v);
+                        }
 
-                    return table[n];
+                        return table[n];
+                    }
                 }
             }
 
@@ -149,11 +151,13 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (int k = table.Count; k <= n; k++) {
-                        table.Add(Rcp((4 * k + 4)));
-                    }
+                    lock (table) {
+                        for (int k = table.Count; k <= n; k++) {
+                            table.Add(Rcp((4 * k + 4)));
+                        }
 
-                    return table[n];
+                        return table[n];
+                    }
                 }
             }
 
@@ -167,13 +171,15 @@ namespace DoubleDouble {
                         return table[n];
                     }
 
-                    for (int k = table.Count; k <= n; k++) {
-                        ddouble r1 = Rcp((2 * k + 1));
-                        ddouble r2 = Rcp(((2 * k + 2) * (2 * k + 2)));
-                        table.Add((r1, r2));
-                    }
+                    lock (table) {
+                        for (int k = table.Count; k <= n; k++) {
+                            ddouble r1 = Rcp((2 * k + 1));
+                            ddouble r2 = Rcp(((2 * k + 2) * (2 * k + 2)));
+                            table.Add((r1, r2));
+                        }
 
-                    return table[n];
+                        return table[n];
+                    }
                 }
             }
         }
