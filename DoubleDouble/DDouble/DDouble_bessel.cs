@@ -237,28 +237,6 @@ namespace DoubleDouble {
                     return ILogB(nu - n) < EpsExponent;
                 }
 
-                public static class SinCosPiCache {
-                    private static readonly ConcurrentDictionary<ddouble, ddouble> cospi_table = [], sinpi_table = [];
-
-                    public static ddouble CosPi(ddouble theta) {
-                        if (!cospi_table.TryGetValue(theta, out ddouble cospi)) {
-                            cospi = ddouble.CosPi(theta);
-                            cospi_table[theta] = cospi;
-                        }
-
-                        return cospi;
-                    }
-
-                    public static ddouble SinPi(ddouble theta) {
-                        if (!sinpi_table.TryGetValue(theta, out ddouble sinpi)) {
-                            sinpi = ddouble.SinPi(theta);
-                            sinpi_table[theta] = sinpi;
-                        }
-
-                        return sinpi;
-                    }
-                }
-
                 public class PowerSeries {
                     public const int NearZeroExponent = -950;
                     private static readonly ConcurrentDictionary<ddouble, DoubleFactDenomTable> dfactdenom_coef_table = [];
@@ -410,7 +388,7 @@ namespace DoubleDouble {
 
                         YCoefTable r = y_coef_table;
 
-                        ddouble cos = SinCosPiCache.CosPi(nu), sin = SinCosPiCache.SinPi(nu);
+                        ddouble cos = CosPi(nu), sin = SinPi(nu);
                         ddouble p = IsZero(cos) ? 0d : Pow(x, Ldexp(nu, 1)) * cos;
                         ddouble s = Ldexp(Pow(Ldexp(x, 1), nu), 2);
                         ddouble x2 = x * x, x4 = x2 * x2;
@@ -1119,7 +1097,7 @@ namespace DoubleDouble {
                 }
 
                 public static class Limit {
-                    static readonly ConcurrentDictionary<ddouble, HankelExpansion> table = [];
+                    private static readonly ConcurrentDictionary<ddouble, HankelExpansion> table = [];
 
                     public static ddouble BesselJ(ddouble nu, ddouble x) {
                         Debug.Assert(IsPositive(x));
@@ -2477,7 +2455,7 @@ namespace DoubleDouble {
                         y = Ldexp(y, (int)long.Max(-exp_sum, int.MinValue));
 
                         if (IsNegative(nu) && !IsInteger(nu_abs)) {
-                            ddouble bk = Ldexp(RcpPi, 1) * SinCosPiCache.SinPi(nu_abs) * Recurrence.BesselK(nu_abs, x, scale: false);
+                            ddouble bk = Ldexp(RcpPi, 1) * SinPi(nu_abs) * Recurrence.BesselK(nu_abs, x, scale: false);
 
                             y += scale ? (bk * Exp(-x)) : bk;
                         }
