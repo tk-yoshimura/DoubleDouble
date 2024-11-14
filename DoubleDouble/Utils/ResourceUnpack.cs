@@ -9,7 +9,7 @@ namespace DoubleDouble.Utils {
         const UInt64 MantissaMaskLo = ~MantissaMaskHi;
 
         public static Dictionary<string, ReadOnlyCollection<ddouble>> NumTable(byte[] resource, bool reverse = false) {
-            Dictionary<string, ReadOnlyCollection<ddouble>> table = new();
+            Dictionary<string, ReadOnlyCollection<ddouble>> table = [];
 
             MemoryStream stream = new MemoryStream(resource);
             using (BinaryReader sr = new(stream)) {
@@ -17,7 +17,7 @@ namespace DoubleDouble.Utils {
                     string key = sr.ReadString();
                     UInt32 n = sr.ReadUInt32();
 
-                    List<ddouble> vals = new();
+                    List<ddouble> vals = [];
 
                     for (int i = 0; i < n; i++) {
                         (UInt64 hi, UInt64 lo) = (sr.ReadUInt64(), sr.ReadUInt64());
@@ -45,7 +45,7 @@ namespace DoubleDouble.Utils {
         }
 
         public static Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> NumTableX2(byte[] resource, bool reverse = false) {
-            Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> table = new();
+            Dictionary<string, ReadOnlyCollection<(ddouble, ddouble)>> table = [];
 
             MemoryStream stream = new MemoryStream(resource);
             using (BinaryReader sr = new(stream)) {
@@ -53,7 +53,7 @@ namespace DoubleDouble.Utils {
                     string key = sr.ReadString();
                     UInt32 n = sr.ReadUInt32();
 
-                    List<(ddouble, ddouble)> vals = new();
+                    List<(ddouble, ddouble)> vals = [];
 
                     for (int i = 0; i < n; i++) {
                         (UInt64 hi0, UInt64 lo0) = (sr.ReadUInt64(), sr.ReadUInt64());
@@ -83,7 +83,7 @@ namespace DoubleDouble.Utils {
         }
 
         public static Dictionary<string, ReadOnlyCollection<(ddouble, ddouble, ddouble, ddouble)>> NumTableX4(byte[] resource, bool reverse = false) {
-            Dictionary<string, ReadOnlyCollection<(ddouble, ddouble, ddouble, ddouble)>> table = new();
+            Dictionary<string, ReadOnlyCollection<(ddouble, ddouble, ddouble, ddouble)>> table = [];
 
             MemoryStream stream = new MemoryStream(resource);
             using (BinaryReader sr = new(stream)) {
@@ -91,7 +91,7 @@ namespace DoubleDouble.Utils {
                     string key = sr.ReadString();
                     UInt32 n = sr.ReadUInt32();
 
-                    List<(ddouble, ddouble, ddouble, ddouble)> vals = new();
+                    List<(ddouble, ddouble, ddouble, ddouble)> vals = [];
 
                     for (int i = 0; i < n; i++) {
                         (UInt64 hi0, UInt64 lo0) = (sr.ReadUInt64(), sr.ReadUInt64());

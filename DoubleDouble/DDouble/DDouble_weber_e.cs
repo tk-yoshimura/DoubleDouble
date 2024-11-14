@@ -40,8 +40,8 @@ namespace DoubleDouble {
             public const double NZThreshold = 4d;
             public static readonly ddouble RcpPi2 = Ldexp(RcpPi, 1);
 
-            static readonly List<ddouble> nz_gamma_neg = new() { 0d, -1d / Ldexp(Sqrt(Pi), 1), 0d };
-            static readonly List<ddouble> nz_gamma_pos = new() { 0d, 1d / Sqrt(Pi), 1d };
+            static readonly List<ddouble> nz_gamma_neg = [0d, -1d / Ldexp(Sqrt(Pi), 1), 0d];
+            static readonly List<ddouble> nz_gamma_pos = [0d, 1d / Sqrt(Pi), 1d];
 
             public static ddouble WeberENearZero(int n, ddouble x) {
                 Debug.Assert(n >= 2, nameof(n));

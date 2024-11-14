@@ -121,7 +121,7 @@ namespace DoubleDouble {
 
             internal class FSeries {
                 private static ddouble v = 0d;
-                private static readonly List<ddouble> table = new();
+                private static readonly List<ddouble> table = [];
 
                 public static ddouble Value(int n) {
                     Debug.Assert(n >= 0);
@@ -142,7 +142,7 @@ namespace DoubleDouble {
             }
 
             internal class K4Series {
-                private static readonly List<ddouble> table = new();
+                private static readonly List<ddouble> table = [];
 
                 public static ddouble Value(int n) {
                     Debug.Assert(n >= 0);
@@ -162,7 +162,7 @@ namespace DoubleDouble {
             }
 
             internal class NRcpSeries {
-                private static readonly List<(ddouble, ddouble)> table = new();
+                private static readonly List<(ddouble, ddouble)> table = [];
 
                 public static (ddouble r1, ddouble r2) Value(int n) {
                     Debug.Assert(n >= 0);

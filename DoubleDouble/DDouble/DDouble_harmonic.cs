@@ -8,7 +8,7 @@
 
         internal static partial class Consts {
             public static class Harmonic {
-                private static readonly List<ddouble> a_table = new();
+                private static readonly List<ddouble> a_table = [];
                 private static ddouble acc, carry;
 
                 static Harmonic() {

@@ -145,7 +145,7 @@ namespace DoubleDouble {
             }
 
             private static class CRcpTable {
-                private static readonly List<(ddouble, ddouble)> table = new();
+                private static readonly List<(ddouble, ddouble)> table = [];
 
                 public static (ddouble p, ddouble q) Value(int n) {
                     Debug.Assert(n >= 0);
@@ -168,7 +168,7 @@ namespace DoubleDouble {
             }
 
             private static class SRcpTable {
-                private static readonly List<(ddouble, ddouble)> table = new();
+                private static readonly List<(ddouble, ddouble)> table = [];
 
                 public static (ddouble p, ddouble q) Value(int n) {
                     Debug.Assert(n >= 0);

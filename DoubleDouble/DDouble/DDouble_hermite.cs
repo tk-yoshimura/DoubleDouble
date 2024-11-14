@@ -43,7 +43,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class HermiteH {
-                private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = new();
+                private static readonly ConcurrentDictionary<int, ReadOnlyCollection<ddouble>> table = [];
 
                 static HermiteH() {
                     table[0] = new ReadOnlyCollection<ddouble>(new ddouble[] { 1d });

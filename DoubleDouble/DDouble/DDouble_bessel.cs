@@ -1987,7 +1987,7 @@ namespace DoubleDouble {
                             throw new IOException("The format of resource file is invalid.");
                         }
 
-                        List<(ddouble c, ddouble s)> cd0 = new(), cd1 = new();
+                        List<(ddouble c, ddouble s)> cd0 = [], cd1 = [];
 
                         for (int i = 0; i < cs0.Count; i++) {
                             cd0.Add((cs0[i], ds0[i]));
@@ -2002,7 +2002,7 @@ namespace DoubleDouble {
                         cds_coef_table[0] = Array.AsReadOnly(cd0.ToArray());
                         cds_coef_table[1] = Array.AsReadOnly(cd1.ToArray());
 
-                        List<ReadOnlyCollection<ddouble>> es = new();
+                        List<ReadOnlyCollection<ddouble>> es = [];
 
                         for (int i = 0; i <= m; i++) {
                             es.Add(tables[$"ES{i}Table"]);

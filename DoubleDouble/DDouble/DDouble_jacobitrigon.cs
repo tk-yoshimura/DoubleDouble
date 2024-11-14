@@ -211,9 +211,9 @@ namespace DoubleDouble {
             private static (ddouble a, ReadOnlyCollection<ddouble> ds) GeneratePhiTable(ddouble m) {
                 ddouble a = 1d, b = Sqrt(1d - m), c = Sqrt(m);
 
-                List<ddouble> a_list = new() { a };
-                List<ddouble> c_list = new() { c };
-                List<ddouble> d_list = new();
+                List<ddouble> a_list = [a];
+                List<ddouble> c_list = [c];
+                List<ddouble> d_list = [];
 
                 for (int n = 1; n < 32; n++) {
                     (a, b, c) = (Ldexp(a + b, -1), GeometricMean(a, b), Ldexp(a - b, -1));

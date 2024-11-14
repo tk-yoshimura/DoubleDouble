@@ -121,8 +121,6 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ddouble> SinPiHalfTable = GenerateSinPiTable();
 
                 public static ReadOnlyCollection<ddouble> GenerateSinPiTable() {
-                    Debug.WriteLine($"SinCos initialize.");
-
                     ddouble[] table = new ddouble[SinPiHalfTableN + 1];
 
                     for (int i = 0; i <= SinPiHalfTableN; i++) {

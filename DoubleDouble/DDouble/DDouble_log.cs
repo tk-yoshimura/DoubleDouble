@@ -97,8 +97,6 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ddouble> Log2Table = GenerateLog2Table();
 
                 public static ReadOnlyCollection<ddouble> GenerateLog2Table() {
-                    Debug.WriteLine($"Log2 initialize.");
-
                     ddouble[] table = new ddouble[Log2TableN + 1];
 
                     for (int i = 0; i <= Log2TableN; i++) {

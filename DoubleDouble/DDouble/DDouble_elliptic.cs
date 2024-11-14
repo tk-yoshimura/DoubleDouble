@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using static DoubleDouble.ddouble.Consts.SinCos;
+﻿using static DoubleDouble.ddouble.Consts.SinCos;
 
 namespace DoubleDouble {
 
@@ -191,13 +190,7 @@ namespace DoubleDouble {
 
         internal static partial class Consts {
             public static class Elliptic {
-                private static readonly List<ddouble> k_table;
-
-                static Elliptic() {
-                    k_table = new() { 1d };
-
-                    Debug.WriteLine($"Elliptic initialized.");
-                }
+                private static readonly List<ddouble> k_table = [1d];
 
                 public static ddouble KTable(int n) {
                     if (n < k_table.Count) {

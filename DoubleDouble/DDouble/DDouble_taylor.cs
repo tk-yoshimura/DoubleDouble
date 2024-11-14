@@ -12,10 +12,7 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ddouble> TaylorTable;
 
                 static Taylor() {
-                    List<ddouble> table = new() {
-                        1d,
-                        1d
-                    };
+                    List<ddouble> table = [1d, 1d];
 
                     BigInteger v = 2;
 

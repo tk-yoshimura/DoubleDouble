@@ -11,10 +11,7 @@ namespace DoubleDouble {
                 public static readonly ReadOnlyCollection<ddouble> FactorialTable;
 
                 static Factorial() {
-                    List<ddouble> table = new() {
-                        1d,
-                        1d
-                    };
+                    List<ddouble> table = [1d, 1d];
 
                     for (int i = 2; i <= 256; i++) {
                         ddouble t = i * table[^1];

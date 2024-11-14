@@ -138,11 +138,7 @@ namespace DoubleDouble {
         }
 
         internal static class StruveGTable {
-            private static readonly List<ddouble> table = new();
-
-            static StruveGTable() {
-                table.Add(1);
-            }
+            private static readonly List<ddouble> table = [1d];
 
             public static ddouble Value(int k) {
                 if (k < table.Count) {
@@ -249,7 +245,7 @@ namespace DoubleDouble {
             }
 
             public static class FTable {
-                private static readonly List<ddouble> table = new();
+                private static readonly List<ddouble> table = [];
 
                 public static ddouble Value(int k) {
                     if (k < table.Count) {

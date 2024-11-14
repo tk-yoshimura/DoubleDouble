@@ -139,7 +139,7 @@ namespace DoubleDouble {
             public const double NZThreshold = 0.25;
 
             public static double NearZeroLimit(int n) => 128 * int.Max(1, n * n);
-            private static readonly ConcurrentDictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = new(), s_coef_cache = new();
+            private static readonly ConcurrentDictionary<(int n, ddouble q), ReadOnlyCollection<ddouble>> c_coef_cache = [], s_coef_cache = [];
 
             public static (ddouble m, ddouble d) NearZeroPade(int n, ddouble q) {
                 Debug.Assert(q >= 0d, nameof(q));
@@ -892,10 +892,10 @@ namespace DoubleDouble {
                         Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                             ResourceUnpack.NumTableX2(Resource.MathieuMTable, reverse: true);
 
-                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = new();
+                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = [];
 
                         for (int n = 0; n <= MathieuUtil.MaxN; n++) {
-                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
+                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = [];
 
                             for (int i = 0; i < 18; i++) {
                                 coef.Add(tables[$"PadeM{n}Table_{i}"]);
@@ -911,12 +911,12 @@ namespace DoubleDouble {
                         Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                             ResourceUnpack.NumTableX2(Resource.MathieuDTable, reverse: true);
 
-                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = new() {
+                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = [
                             Array.AsReadOnly(Enumerable.Empty<ReadOnlyCollection<(ddouble c, ddouble d)>>().ToArray())
-                        };
+                        ];
 
                         for (int n = 1; n <= MathieuUtil.MaxN; n++) {
-                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
+                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = [];
 
                             for (int i = 0; i < 18; i++) {
                                 coef.Add(tables[$"PadeD{n}Table_{i}"]);
@@ -932,10 +932,10 @@ namespace DoubleDouble {
                         Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                             ResourceUnpack.NumTableX2(Resource.MathieuATable, reverse: true);
 
-                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = new();
+                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = [];
 
                         for (int n = 0; n <= MathieuUtil.MaxN; n++) {
-                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
+                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = [];
 
                             for (int i = 0; i < 4; i++) {
                                 coef.Add(tables[$"PadeA{n}Table_{i}"]);
@@ -951,12 +951,12 @@ namespace DoubleDouble {
                         Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                             ResourceUnpack.NumTableX2(Resource.MathieuBTable, reverse: true);
 
-                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = new() {
+                        List<ReadOnlyCollection<ReadOnlyCollection<(ddouble c, ddouble d)>>> table = [
                             Array.AsReadOnly(Enumerable.Empty<ReadOnlyCollection<(ddouble c, ddouble d)>>().ToArray())
-                        };
+                        ];
 
                         for (int n = 1; n <= MathieuUtil.MaxN; n++) {
-                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = new();
+                            List<ReadOnlyCollection<(ddouble c, ddouble d)>> coef = [];
 
                             for (int i = 0; i < 4; i++) {
                                 coef.Add(tables[$"PadeB{n}Table_{i}"]);
@@ -972,12 +972,12 @@ namespace DoubleDouble {
                         Dictionary<string, ReadOnlyCollection<(ddouble c, ddouble d)>> tables =
                             ResourceUnpack.NumTableX2(Resource.MathieuNZTable, reverse: true);
 
-                        List<ReadOnlyCollection<(ddouble c, ddouble d)>> az_table = new() {
+                        List<ReadOnlyCollection<(ddouble c, ddouble d)>> az_table = [
                             Array.AsReadOnly(Enumerable.Empty<(ddouble c, ddouble d)>().ToArray())
-                        };
-                        List<ReadOnlyCollection<(ddouble c, ddouble d)>> bz_table = new() {
+                        ];
+                        List<ReadOnlyCollection<(ddouble c, ddouble d)>> bz_table = [
                             Array.AsReadOnly(Enumerable.Empty<(ddouble c, ddouble d)>().ToArray())
-                        };
+                        ];
 
                         for (int n = 1; n <= 12; n++) {
                             az_table.Add(tables[$"PadeAz{n}Table"]);
