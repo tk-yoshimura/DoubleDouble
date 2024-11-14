@@ -200,12 +200,12 @@ namespace DoubleDouble {
             }
 
             public static (ddouble a, ReadOnlyCollection<ddouble> ds) Phi(ddouble m) {
-                if (!phi_table.TryGetValue(m, out (ddouble a, ReadOnlyCollection<ddouble> ds) value)) {
-                    value = GeneratePhiTable(m);
-                    phi_table[m] = value;
+                if (!phi_table.TryGetValue(m, out (ddouble a, ReadOnlyCollection<ddouble> ds) coef)) {
+                    coef = GeneratePhiTable(m);
+                    phi_table[m] = coef;
                 }
 
-                return value;
+                return coef;
             }
 
             private static (ddouble a, ReadOnlyCollection<ddouble> ds) GeneratePhiTable(ddouble m) {

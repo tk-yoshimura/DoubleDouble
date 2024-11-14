@@ -51,13 +51,12 @@ namespace DoubleDouble {
                 }
 
                 public static ReadOnlyCollection<ddouble> Table(int n) {
-                    if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> value)) {
-                        ReadOnlyCollection<ddouble> coefs = GenerateTable(n);
-                        value = coefs;
-                        table[n] = value;
+                    if (!table.TryGetValue(n, out ReadOnlyCollection<ddouble> coef)) {
+                        coef = GenerateTable(n);
+                        table[n] = coef;
                     }
 
-                    return value;
+                    return coef;
                 }
 
                 public static ReadOnlyCollection<ddouble> GenerateTable(int n) {

@@ -2013,12 +2013,10 @@ namespace DoubleDouble {
 
                     public static ddouble BesselK(ddouble nu, ddouble x, bool scale = false) {
                         if (nu < 2d) {
-                            if (!cds_coef_table.TryGetValue(nu, out ReadOnlyCollection<(ddouble c, ddouble s)> cds_table)) {
-                                cds_table = Table(nu);
-                                cds_coef_table[nu] = cds_table;
+                            if (!cds_coef_table.TryGetValue(nu, out ReadOnlyCollection<(ddouble c, ddouble s)> cds)) {
+                                cds = Table(nu);
+                                cds_coef_table[nu] = cds;
                             }
-
-                            ReadOnlyCollection<(ddouble, ddouble)> cds = cds_table;
 
                             ddouble y = Value(x, cds, scale);
 
