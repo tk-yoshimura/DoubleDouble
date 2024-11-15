@@ -1113,9 +1113,9 @@ namespace DoubleDouble {
 
                         (ddouble c_even, ddouble c_odd) = hankel.BesselJYCoef(x);
 
-                        ddouble omega = hankel.Omega(x);
+                        ddouble omega = hankel.OmegaPi(x);
 
-                        ddouble cos = Cos(omega), sin = Sin(omega);
+                        ddouble cos = CosPi(omega), sin = SinPi(omega);
 
                         ddouble y = Sqrt(2d / (Pi * x)) * (cos * c_even - sin * c_odd);
 
@@ -1136,9 +1136,9 @@ namespace DoubleDouble {
 
                         (ddouble c_even, ddouble c_odd) = hankel.BesselJYCoef(x);
 
-                        ddouble omega = hankel.Omega(x);
+                        ddouble omega = hankel.OmegaPi(x);
 
-                        ddouble cos = Cos(omega), sin = Sin(omega);
+                        ddouble cos = CosPi(omega), sin = SinPi(omega);
 
                         ddouble y = Sqrt(2d / (Pi * x)) * (sin * c_even + cos * c_odd);
 
@@ -1195,11 +1195,13 @@ namespace DoubleDouble {
                     private class HankelExpansion {
                         public ddouble Nu { get; }
 
+                        private readonly ddouble omega_bias;
                         private readonly List<ddouble> a_coef;
 
                         public HankelExpansion(ddouble nu) {
                             Nu = nu;
                             a_coef = [1];
+                            omega_bias = Ldexp(Ldexp(nu, 1) + 1d, -2);
                         }
 
                         private ddouble ACoef(int n) {
@@ -1219,8 +1221,8 @@ namespace DoubleDouble {
                             }
                         }
 
-                        public ddouble Omega(ddouble x) {
-                            ddouble omega = x - Ldexp(Ldexp(Nu, 1) + 1d, -2) * Pi;
+                        public ddouble OmegaPi(ddouble x) {
+                            ddouble omega = x * RcpPi - omega_bias;
 
                             return omega;
                         }
