@@ -22,7 +22,7 @@ namespace DoubleDouble {
                 return 1d;
             }
 
-            return InverseIncompleteBetaUtil.Kernel(a, b, x, Log(x), Log(1d - x));
+            return InverseIncompleteBetaUtil.Kernel(a, b, x, Log(x), Log1p(-x));
         }
 
         internal static class InverseIncompleteBetaUtil {

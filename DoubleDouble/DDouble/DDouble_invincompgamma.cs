@@ -22,7 +22,7 @@ namespace DoubleDouble {
                 return 0d;
             }
 
-            return InverseIncompleteGammaUtil.Kernel(nu, x, Log(x), Log(1d - x));
+            return InverseIncompleteGammaUtil.Kernel(nu, x, Log(x), Log1p(-x));
         }
 
         public static ddouble InverseUpperIncompleteGamma(ddouble nu, ddouble x) {
@@ -45,7 +45,7 @@ namespace DoubleDouble {
                 return 0d;
             }
 
-            return InverseIncompleteGammaUtil.Kernel(nu, 1d - x, Log(1d - x), Log(x));
+            return InverseIncompleteGammaUtil.Kernel(nu, 1d - x, Log1p(-x), Log(x));
         }
 
 

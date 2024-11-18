@@ -317,7 +317,7 @@ namespace DoubleDouble {
                 ddouble y;
 
                 if (n == 1) {
-                    y = -Log(1d - x);
+                    y = -Log1p(-x);
 
                     return IsNaN(y) ? NegativeInfinity : y;
                 }
