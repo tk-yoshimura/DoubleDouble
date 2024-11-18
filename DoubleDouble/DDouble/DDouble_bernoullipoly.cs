@@ -93,11 +93,11 @@ namespace DoubleDouble {
                 public static ReadOnlyCollection<ddouble> Table(int n, bool centered) {
                     List<ReadOnlyCollection<ddouble>> table = centered ? center_table : normal_table;
 
-                    lock (table) {
-                        if (n < table.Count) {
-                            return table[n];
-                        }
+                    if (n < table.Count) {
+                        return table[n];
+                    }
 
+                    lock (table) {
                         ReadOnlyCollection<ddouble> coefs = GenerateTable(n, centered);
                         table.Add(coefs);
 
