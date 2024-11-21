@@ -81,7 +81,7 @@ namespace DoubleDouble {
                     f *= -x / k;
                     s = SeriesUtil.Add(s, f, ds, out bool convergence);
 
-                    if (k > n && convergence) {
+                    if ((k > n && convergence) || IsZero(f)) {
                         break;
                     }
                 }
