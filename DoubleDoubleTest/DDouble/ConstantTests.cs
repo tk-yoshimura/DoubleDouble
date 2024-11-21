@@ -7,6 +7,43 @@ namespace DoubleDoubleTest.DDouble {
     [TestClass]
     public class ConstantTests {
         [TestMethod]
+        public void ConstantsTest() {
+            Console.WriteLine($"Pi={ddouble.Pi}");
+            Console.WriteLine($"RcpPi={ddouble.RcpPi}");
+            Console.WriteLine($"E={ddouble.E}");
+            Console.WriteLine($"RcpE={ddouble.RcpE}");
+            Console.WriteLine($"DigammaZero={ddouble.DigammaZero}");
+            Console.WriteLine($"EulerGamma={ddouble.EulerGamma}");
+            Console.WriteLine($"Zeta3={ddouble.Zeta3}");
+            Console.WriteLine($"Zeta5={ddouble.Zeta5}");
+            Console.WriteLine($"Zeta7={ddouble.Zeta7}");
+            Console.WriteLine($"Zeta9={ddouble.Zeta9}");
+            Console.WriteLine($"Ln2={ddouble.Ln2}");
+            Console.WriteLine($"LbE={ddouble.LbE}");
+            Console.WriteLine($"Lg2={ddouble.Lg2}");
+            Console.WriteLine($"Lb10={ddouble.Lb10}");
+            Console.WriteLine($"Sqrt2={ddouble.Sqrt2}");
+            Console.WriteLine($"Point5={ddouble.Point5}");
+            Console.WriteLine($"ErdosBorwein={ddouble.ErdosBorwein}");
+            Console.WriteLine($"FeigenbaumDelta={ddouble.FeigenbaumDelta}");
+            Console.WriteLine($"LemniscatePi={ddouble.LemniscatePi}");
+            Console.WriteLine($"GlaisherA={ddouble.GlaisherA}");
+            Console.WriteLine($"CatalanG={ddouble.CatalanG}");
+            Console.WriteLine($"FransenRobinson={ddouble.FransenRobinson}");
+            Console.WriteLine($"KhinchinK={ddouble.KhinchinK}");
+            Console.WriteLine($"MeisselMertens={ddouble.MeisselMertens}");
+            Console.WriteLine($"LambertOmega={ddouble.LambertOmega}");
+            Console.WriteLine($"LandauRamanujan={ddouble.LandauRamanujan}");
+            Console.WriteLine($"MillsTheta={ddouble.MillsTheta}");
+            Console.WriteLine($"SoldnerMu={ddouble.SoldnerMu}");
+            Console.WriteLine($"SierpinskiK={ddouble.SierpinskiK}");
+            Console.WriteLine($"RcpFibonacci={ddouble.RcpFibonacci}");
+            Console.WriteLine($"Niven={ddouble.Niven}");
+            Console.WriteLine($"GolombDickman={ddouble.GolombDickman}");
+            Console.WriteLine($"GoldenRatio={ddouble.GoldenRatio}");
+        }
+
+        [TestMethod]
         public void BasicTest() {
             PrecisionAssert.AreEqual(1, ddouble.One);
             PrecisionAssert.AreEqual(-1, ddouble.MinusOne);
@@ -100,6 +137,49 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble.LemniscatePi,
                 1e-31
             );
+        }
+
+        [TestMethod]
+        public void GoldenRatioTest() {
+            PrecisionAssert.AlmostEqual(
+                "1.6180339887498948482045868343656381177203091798057628621354486227",
+                ddouble.GoldenRatio,
+                1e-31
+            );
+        }
+
+        [TestMethod]
+        public void ConstantsExpectedTest() {
+            PrecisionAssert.AreEqual(3.141592653589793238462, ddouble.Pi, 1e-15);
+            PrecisionAssert.AreEqual(2.718281828459045235360, ddouble.E, 1e-15);
+            PrecisionAssert.AreEqual(1.414213562373095048801, ddouble.Sqrt2, 1e-15);
+            PrecisionAssert.AreEqual(0.301029995663981195213, ddouble.Lg2, 1e-15);
+            PrecisionAssert.AreEqual(3.321928094887362347870, ddouble.Lb10, 1e-15);
+            PrecisionAssert.AreEqual(0.693147180559945309417, ddouble.Ln2, 1e-15);
+            PrecisionAssert.AreEqual(1.442695040888963407359, ddouble.LbE, 1e-15);
+            PrecisionAssert.AreEqual(0.577215664901532860606, ddouble.EulerGamma, 1e-15);
+            PrecisionAssert.AreEqual(1.202056903159594285399, ddouble.Zeta3, 1e-15);
+            PrecisionAssert.AreEqual(1.036927755143369926331, ddouble.Zeta5, 1e-15);
+            PrecisionAssert.AreEqual(1.008349277381922826839, ddouble.Zeta7, 1e-15);
+            PrecisionAssert.AreEqual(1.002008392826082214418, ddouble.Zeta9, 1e-15);
+            PrecisionAssert.AreEqual(1.461632144968362341263, ddouble.DigammaZero, 1e-15);
+            PrecisionAssert.AreEqual(1.606695152415291763783, ddouble.ErdosBorwein, 1e-15);
+            PrecisionAssert.AreEqual(4.669201609102990671853, ddouble.FeigenbaumDelta, 1e-15);
+            PrecisionAssert.AreEqual(2.622057554292119810465, ddouble.LemniscatePi, 1e-15);
+            PrecisionAssert.AreEqual(1.282427129100622636875, ddouble.GlaisherA, 1e-15);
+            PrecisionAssert.AreEqual(0.915965594177219015055, ddouble.CatalanG, 1e-15);
+            PrecisionAssert.AreEqual(2.807770242028519365222, ddouble.FransenRobinson, 1e-15);
+            PrecisionAssert.AreEqual(2.685452001065306445310, ddouble.KhinchinK, 1e-15);
+            PrecisionAssert.AreEqual(0.261497212847642783755, ddouble.MeisselMertens, 1e-15);
+            PrecisionAssert.AreEqual(0.567143290409783873000, ddouble.LambertOmega, 1e-15);
+            PrecisionAssert.AreEqual(0.764223653589220662991, ddouble.LandauRamanujan, 1e-15);
+            PrecisionAssert.AreEqual(1.306377883863080690469, ddouble.MillsTheta, 1e-15);
+            PrecisionAssert.AreEqual(1.451369234883381050284, ddouble.SoldnerMu, 1e-15);
+            PrecisionAssert.AreEqual(0.822825249678847032995, ddouble.SierpinskiK, 1e-15);
+            PrecisionAssert.AreEqual(3.359885666243177553172, ddouble.RcpFibonacci, 1e-15);
+            PrecisionAssert.AreEqual(1.705211140105367764289, ddouble.Niven, 1e-15);
+            PrecisionAssert.AreEqual(0.624329988543550870992, ddouble.GolombDickman, 1e-15);
+            PrecisionAssert.AreEqual(1.618033988749894848204, ddouble.GoldenRatio, 1e-15);
         }
     }
 }
