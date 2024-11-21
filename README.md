@@ -107,7 +107,7 @@
 |ddouble.EllipticK(x, m)|&#91;0,2&pi;&#93;|4|k: elliptic modulus, m=k^2|
 |ddouble.EllipticE(x, m)|&#91;0,2&pi;&#93;|4|k: elliptic modulus, m=k^2, incomplete elliptic integral|
 |ddouble.EllipticPi(n, x, m)|&#91;0,2&pi;&#93;|4|k: elliptic modulus, m=k^2<br/>Argument order follows wolfram. incomplete elliptic integral|
-|ddouble.EllipticTheta(a, x, q)|&#40;-inf,+inf&#41;|4|a=1...4, q &leq; 0.995, incomplete elliptic integral|
+|ddouble.EllipticTheta(a, x, q)|&#40;-inf,+inf&#41;|4|incomplete elliptic integral, a=1...4, q &leq; 0.995|
 |ddouble.KeplerE(m, e, centered)|&#40;-inf,+inf&#41;|6|inverse kepler's equation, e(eccentricity) &leq; 256|
 |ddouble.Agm(a, b)|&#91;0,+inf&#41;|2||
 |ddouble.FresnelC(x)|&#40;-inf,+inf&#41;|4||
