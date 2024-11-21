@@ -26,6 +26,7 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine($"Point5={ddouble.Point5}");
             Console.WriteLine($"ErdosBorwein={ddouble.ErdosBorwein}");
             Console.WriteLine($"FeigenbaumDelta={ddouble.FeigenbaumDelta}");
+            Console.WriteLine($"FeigenbaumAlpha={ddouble.FeigenbaumAlpha}");
             Console.WriteLine($"LemniscatePi={ddouble.LemniscatePi}");
             Console.WriteLine($"GlaisherA={ddouble.GlaisherA}");
             Console.WriteLine($"CatalanG={ddouble.CatalanG}");
@@ -165,6 +166,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AreEqual(1.461632144968362341263, ddouble.DigammaZero, 1e-15);
             PrecisionAssert.AreEqual(1.606695152415291763783, ddouble.ErdosBorwein, 1e-15);
             PrecisionAssert.AreEqual(4.669201609102990671853, ddouble.FeigenbaumDelta, 1e-15);
+            PrecisionAssert.AreEqual(2.502907875095892822283, ddouble.FeigenbaumAlpha, 1e-15);
             PrecisionAssert.AreEqual(2.622057554292119810465, ddouble.LemniscatePi, 1e-15);
             PrecisionAssert.AreEqual(1.282427129100622636875, ddouble.GlaisherA, 1e-15);
             PrecisionAssert.AreEqual(0.915965594177219015055, ddouble.CatalanG, 1e-15);

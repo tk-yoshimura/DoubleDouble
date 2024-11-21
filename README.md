@@ -205,6 +205,7 @@
 |ddouble.DigammaZero|1.461632144968362341263...|Positive root of digamma|
 |ddouble.ErdosBorwein|1.606695152415291763783...|Erdös Borwein constant|
 |ddouble.FeigenbaumDelta|4.669201609102990671853...|Feigenbaum constant|
+|ddouble.FeigenbaumAlpha|2.502907875095892822283...|Feigenbaum constant|
 |ddouble.LemniscatePi|2.622057554292119810465...|Lemniscate constant|
 |ddouble.GlaisherA|1.282427129100622636875...|Glaisher–Kinkelin constant|
 |ddouble.CatalanG|0.915965594177219015055...|Catalan's constant|
