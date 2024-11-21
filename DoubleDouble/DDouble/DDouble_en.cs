@@ -13,7 +13,7 @@ namespace DoubleDouble {
             if (n > max_n) {
                 throw new ArgumentOutOfRangeException(
                     nameof(n),
-                    $"In the calculation of the En function, nu with an absolute value greater than {max_n} is not supported."
+                    $"In the calculation of the En function, {nameof(n)} greater than {max_n} is not supported."
                 );
             }
 
