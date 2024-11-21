@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using static DoubleDouble.ddouble.Consts;
-
-namespace DoubleDouble {
+﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble En(int n, ddouble x) {
             const int max_n = 256, max_iter = 4096;
