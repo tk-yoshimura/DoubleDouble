@@ -38,10 +38,8 @@ namespace DoubleDouble {
                 ddouble s = a1 / b1;
 
                 for (int k = 0; k < max_iter; k++) {
-                    double c = n + k;
-
-                    (a0, a1) = (a1, c * a0 + a1);
-                    (b0, b1) = (b1, c * b0 + b1);
+                    (a0, a1) = (a1, (k + n) * a0 + a1);
+                    (b0, b1) = (b1, (k + n) * b0 + b1);
                     (a0, a1) = (a1, (k + 1) * a0 + x * a1);
                     (b0, b1) = (b1, (k + 1) * b0 + x * b1);
 
