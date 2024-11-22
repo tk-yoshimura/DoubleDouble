@@ -116,6 +116,7 @@
 |ddouble.FresnelG(x)|&#40;-inf,+inf&#41;|4||
 |ddouble.Ei(x)|&#40;-inf,+inf&#41;|4|exponential integral|
 |ddouble.Ein(x)|&#40;-inf,+inf&#41;|4|complementary exponential integral|
+|ddouble.En(n, x)|&#91;0,+inf&#41;|4|exponential integral, n &leq; 256|
 |ddouble.Li(x)|&#91;0,+inf&#41;|5|logarithmic integral li(x)=ei(log(x))|
 |ddouble.Si(x, limit_zero)|&#40;-inf,+inf&#41;|4|sin integral, limit_zero=true: si(x)|
 |ddouble.Ci(x)|&#91;0,+inf&#41;|4|cos integral|
