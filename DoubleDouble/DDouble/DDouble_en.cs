@@ -42,7 +42,7 @@
 
                     if (convergenced || (k > 0 && (k & 3) == 0)) {
                         s = a1 / b1;
-                        
+
                         ddouble r0 = a0 * b1, r1 = a1 * b0;
                         if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 5e-31)) {
                             if (convergenced) {
