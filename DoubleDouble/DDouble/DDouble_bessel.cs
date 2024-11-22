@@ -2284,19 +2284,27 @@ namespace DoubleDouble {
 
                             ddouble s = 1d;
 
+                            bool convergenced = false;
                             for (int i = 1; i <= 1024; i++) {
                                 r = Ldexp((nu_abs + i) * v, 1);
 
                                 (a0, b0, a1, b1) = (a1, b1, r * a1 - a0, r * b1 - b0);
-                                s = a1 / b1;
 
                                 (int exp, (a1, b1)) = AdjustScale(0, (a1, b1));
                                 (a0, b0) = (Ldexp(a0, exp), Ldexp(b0, exp));
 
-                                if (i > 0 && (i & 3) == 0) {
+                                if (convergenced || (i > 0 && (i & 3) == 0)) {
+                                    s = a1 / b1;
+
                                     ddouble r0 = a0 * b1, r1 = a1 * b0;
                                     if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-30)) {
-                                        break;
+                                        if (convergenced) {
+                                            break;
+                                        }
+                                        convergenced = true;
+                                    }
+                                    else {
+                                        convergenced = false;
                                     }
                                 }
                             }
@@ -2408,21 +2416,30 @@ namespace DoubleDouble {
                         ddouble v = 1d / x;
 
                         (ddouble a0, ddouble b0, ddouble a1, ddouble b1) = (1d, 0d, 0d, 1d);
+
                         ddouble s = 1d;
 
+                        bool convergenced = false;
                         for (int i = 0; i <= 1024; i++) {
                             ddouble r = Ldexp((nu_abs + i) * v, 1);
 
                             (a0, b0, a1, b1) = (a1, b1, r * a1 + a0, r * b1 + b0);
-                            s = a1 / b1;
 
                             (int exp, (a1, b1)) = AdjustScale(0, (a1, b1));
                             (a0, b0) = (Ldexp(a0, exp), Ldexp(b0, exp));
 
-                            if (i > 0 && (i & 3) == 0) {
+                            if (convergenced || (i > 0 && (i & 3) == 0)) {
+                                s = a1 / b1;
+
                                 ddouble r0 = a0 * b1, r1 = a1 * b0;
                                 if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-30)) {
-                                    break;
+                                    if (convergenced) {
+                                        break;
+                                    }
+                                    convergenced = true;
+                                }
+                                else {
+                                    convergenced = false;
                                 }
                             }
                         }
