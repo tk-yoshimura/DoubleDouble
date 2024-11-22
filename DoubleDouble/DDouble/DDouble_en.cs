@@ -1,7 +1,7 @@
 ﻿namespace DoubleDouble {
     public partial struct ddouble {
         public static ddouble En(int n, ddouble x) {
-            const int max_n = 256, max_iter = 4096;
+            const int max_n = 256, max_iter = 512;
 
             if (n < 0 || IsNaN(x) || IsNegative(x)) {
                 return NaN;
@@ -14,10 +14,6 @@
                 );
             }
 
-            if (ILogB(x) < -105) {
-                return Rcp(n - 1);
-            }
-
             ddouble t = Exp(-x);
 
             if (n == 0) {
@@ -28,27 +24,34 @@
                 return 0d;
             }
 
-            if (x >= 1d) {
-                (ddouble a0, ddouble a1) = (0d, 1d);
-                (ddouble b0, ddouble b1) = (1d, x);
+            if (ILogB(x) < -105) {
+                return Rcp(n - 1);
+            }
+            else if (x >= 1d) {
+                (ddouble a0, ddouble a1, ddouble b0, ddouble b1) = (0d, 1d, 1d, x);
 
                 ddouble s = a1 / b1;
 
+                bool convergenced = false;
                 for (int k = 0; k < max_iter; k++) {
-                    (a0, a1) = (a1, (k + n) * a0 + a1);
-                    (b0, b1) = (b1, (k + n) * b0 + b1);
-                    (a0, a1) = (a1, (k + 1) * a0 + x * a1);
-                    (b0, b1) = (b1, (k + 1) * b0 + x * b1);
-
-                    s = a1 / b1;
+                    (a0, a1, b0, b1) = (a1, (k + n) * a0 + a1, b1, (k + n) * b0 + b1);
+                    (a0, a1, b0, b1) = (a1, (k + 1) * a0 + x * a1, b1, (k + 1) * b0 + x * b1);
 
                     (int exp, (a1, b1)) = AdjustScale(0, (a1, b1));
                     (a0, b0) = (Ldexp(a0, exp), Ldexp(b0, exp));
 
-                    if (k > 0 && (k & 3) == 0) {
+                    if (convergenced || (k > 0 && (k & 3) == 0)) {
+                        s = a1 / b1;
+                        
                         ddouble r0 = a0 * b1, r1 = a1 * b0;
-                        if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 1e-30)) {
-                            break;
+                        if (!(Abs(r0 - r1) > Min(Abs(r0), Abs(r1)) * 5e-31)) {
+                            if (convergenced) {
+                                break;
+                            }
+                            convergenced = true;
+                        }
+                        else {
+                            convergenced = false;
                         }
                     }
                 }
