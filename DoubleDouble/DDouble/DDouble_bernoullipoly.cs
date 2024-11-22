@@ -98,8 +98,10 @@ namespace DoubleDouble {
                     }
 
                     lock (table) {
-                        ReadOnlyCollection<ddouble> coefs = GenerateTable(n, centered);
-                        table.Add(coefs);
+                        for (int k = table.Count; k <= n; k++) {
+                            ReadOnlyCollection<ddouble> coefs = GenerateTable(k, centered);
+                            table.Add(coefs);
+                        }
 
                         return table[n];
                     }
