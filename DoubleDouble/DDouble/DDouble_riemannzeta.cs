@@ -31,7 +31,7 @@ namespace DoubleDouble {
                 Debug.Assert(d > 0.5d, $"[RiemannZeta x={x}] Too small pade denom!!");
 
                 return c / d;
-            };
+            }
 
             if (x < 1d) {
                 ddouble y = 1d + pade(1d - x, PadeX0Table) / (1d - x);
