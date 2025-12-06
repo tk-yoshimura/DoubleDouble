@@ -100,7 +100,7 @@ namespace DoubleDoubleTest.Utils {
 
         [TestMethod]
         public void MaxDigitTest() {
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 UInt128 _ = UInt128.MaxDigit * 10;
             }, $"maxdigit * 10");
 
@@ -194,25 +194,25 @@ namespace DoubleDoubleTest.Utils {
             Assert.AreEqual("10000000000000000000000000000000000", v6.ToString());
             Assert.AreEqual("340282366920938463463374607431768211455", v7.ToString());
 
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 UInt128 v7 = "340282366920938463463374607431768211456";
             });
 
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 UInt128 v7 = "3402823669209384634633746074317682114560";
             });
 
-            Assert.ThrowsException<FormatException>(() => {
+            Assert.ThrowsExactly<FormatException>(() => {
 #pragma warning disable CS8604
                 UInt128 v7 = null;
 #pragma warning restore CS8604
             });
 
-            Assert.ThrowsException<FormatException>(() => {
+            Assert.ThrowsExactly<FormatException>(() => {
                 UInt128 v7 = "abc";
             });
 
-            Assert.ThrowsException<FormatException>(() => {
+            Assert.ThrowsExactly<FormatException>(() => {
                 UInt128 v7 = "";
             });
         }
@@ -297,7 +297,7 @@ namespace DoubleDoubleTest.Utils {
                 Assert.AreEqual(u.ToString(), w.ToString(), $"{sft}");
             }
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 UInt128 b = new(0u, 0u, 0u, 123456u);
 
                 UInt128 c = b >> -1;
@@ -323,7 +323,7 @@ namespace DoubleDoubleTest.Utils {
                 Assert.AreEqual(u.ToString(), w.ToString(), $"{sft}");
             }
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 UInt128 b = new(0u, 0u, 0u, 123456u);
 
                 UInt128 c = b << -1;
@@ -343,28 +343,28 @@ namespace DoubleDoubleTest.Utils {
                     Console.WriteLine($"{i0} + {i1}");
 
                     if (testcases[i] + testcases[j] > maxvalue) {
-                        Assert.ThrowsException<OverflowException>(() => {
+                        Assert.ThrowsExactly<OverflowException>(() => {
                             UInt128 _ = i0 + i1;
                         }, $"{i0} + {i1}");
 
                         if (i0 <= UInt64.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0.Lo + i1;
                             }, $"{i0} + {i1}");
                         }
                         if (i0 <= UInt32.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0.E0 + i1;
                             }, $"{i0} + {i1}");
                         }
 
                         if (i1 <= UInt64.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0 + i1.Lo;
                             }, $"{i0} + {i1}");
                         }
                         if (i1 <= UInt32.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0 + i1.E0;
                             }, $"{i0} + {i1}");
                         }
@@ -396,7 +396,7 @@ namespace DoubleDoubleTest.Utils {
 
             Assert.AreEqual((UInt128)1, v1 - v2);
 
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 UInt128 _ = v1 - v3;
             });
 
@@ -407,28 +407,28 @@ namespace DoubleDoubleTest.Utils {
                     Console.WriteLine($"{i0} - {i1}");
 
                     if (i0 < i1) {
-                        Assert.ThrowsException<OverflowException>(() => {
+                        Assert.ThrowsExactly<OverflowException>(() => {
                             UInt128 _ = i0 - i1;
                         }, $"{i0} - {i1}");
 
                         if (i0 <= UInt64.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0.Lo - i1;
                             }, $"{i0} - {i1}");
                         }
                         if (i0 <= UInt32.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0.E0 - i1;
                             }, $"{i0} - {i1}");
                         }
 
                         if (i1 <= UInt64.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0 - i1.Lo;
                             }, $"{i0} - {i1}");
                         }
                         if (i1 <= UInt32.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0 - i1.E0;
                             }, $"{i0} - {i1}");
                         }
@@ -467,28 +467,28 @@ namespace DoubleDoubleTest.Utils {
                     Console.WriteLine($"{i0} * {i1}");
 
                     if (testcases[i] * testcases[j] > maxvalue) {
-                        Assert.ThrowsException<OverflowException>(() => {
+                        Assert.ThrowsExactly<OverflowException>(() => {
                             UInt128 _ = i0 * i1;
                         }, $"{i0} * {i1}");
 
                         if (i0 <= UInt64.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0.Lo * i1;
                             }, $"{i0} * {i1}");
                         }
                         if (i0 <= UInt32.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0.E0 * i1;
                             }, $"{i0} * {i1}");
                         }
 
                         if (i1 <= UInt64.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0 * i1.Lo;
                             }, $"{i0} * {i1}");
                         }
                         if (i1 <= UInt32.MaxValue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = i0 * i1.E0;
                             }, $"{i0} * {i1}");
                         }
@@ -527,7 +527,7 @@ namespace DoubleDoubleTest.Utils {
                     Console.WriteLine($"{i0} / {i1}");
 
                     if (testcases[j] <= 0) {
-                        Assert.ThrowsException<DivideByZeroException>(() => {
+                        Assert.ThrowsExactly<DivideByZeroException>(() => {
                             UInt128 _ = i0 / i1;
                         }, $"{i0} / {i1}");
                     }
@@ -565,7 +565,7 @@ namespace DoubleDoubleTest.Utils {
                     Console.WriteLine($"{i0} % {i1}");
 
                     if (testcases[j] <= 0) {
-                        Assert.ThrowsException<DivideByZeroException>(() => {
+                        Assert.ThrowsExactly<DivideByZeroException>(() => {
                             UInt128 _ = i0 % i1;
                         }, $"{i0} % {i1}");
                     }
@@ -617,7 +617,7 @@ namespace DoubleDoubleTest.Utils {
                         Console.WriteLine($"{i0} * {i1}");
 
                         if (n > maxvalue) {
-                            Assert.ThrowsException<OverflowException>(() => {
+                            Assert.ThrowsExactly<OverflowException>(() => {
                                 UInt128 _ = UInt128.MulShift(i0, i1, sft);
                             }, $"({i0} * {i1}) >> sft");
                         }

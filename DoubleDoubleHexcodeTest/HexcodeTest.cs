@@ -10,13 +10,13 @@ namespace DoubleDoubleHexcodeTest {
 
             Assert.AreEqual((0x0000000000000000uL, 0x0000000000000000uL), hex);
 
-            Assert.ThrowsException<ArgumentException>(() => {
+            Assert.ThrowsExactly<ArgumentException>(() => {
                 Hexcode _ = (0, 1, 0x0000000000000000uL, 0x0000000000000000uL);
             });
-            Assert.ThrowsException<ArgumentException>(() => {
+            Assert.ThrowsExactly<ArgumentException>(() => {
                 Hexcode _ = (0, 0, 0x1000000000000000uL, 0x0000000000000000uL);
             });
-            Assert.ThrowsException<ArgumentException>(() => {
+            Assert.ThrowsExactly<ArgumentException>(() => {
                 Hexcode _ = (0, 0, 0x0000000000000000uL, 0x1000000000000000uL);
             });
         }
@@ -44,16 +44,16 @@ namespace DoubleDoubleHexcodeTest {
             Assert.AreEqual((0xFFE8000000000000uL, 0x0000000000000000uL), hex_maxexp_minus);
             Assert.AreEqual((0x8018000000000000uL, 0x0000000000000000uL), hex_minexp_minus);
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Hexcode _ = (1, 1024, 0x8000000000000000uL, 0x0000000000000000uL);
             });
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Hexcode _ = (1, -1023, 0x8000000000000000uL, 0x0000000000000000uL);
             });
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Hexcode _ = (-1, 1024, 0x8000000000000000uL, 0x0000000000000000uL);
             });
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Hexcode _ = (-1, -1023, 0x8000000000000000uL, 0x0000000000000000uL);
             });
         }
@@ -82,20 +82,20 @@ namespace DoubleDoubleHexcodeTest {
             Assert.AreEqual((0x4008000000000000uL, 0x0000000000000000uL), hex8);
             Assert.AreEqual((0x7FEFFFFFFFFFFFFFuL, 0xFFFFFFFFFFFFFFFFuL), hex9);
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Hexcode _ = (1, 1023, 0xFFFFFFFFFFFFFFFFuL, 0xFFFFFFFFFFFFF800uL);
             });
         }
 
         [TestMethod]
         public void InvalidMantissaTest() {
-            Assert.ThrowsException<ArgumentException>(() => {
+            Assert.ThrowsExactly<ArgumentException>(() => {
                 Hexcode _ = (1, 1, 0x7000000000000000uL, 0x0000000000000000uL);
             });
-            Assert.ThrowsException<ArgumentException>(() => {
+            Assert.ThrowsExactly<ArgumentException>(() => {
                 Hexcode _ = (1, 2, 0x7000000000000000uL, 0x7000000000000000uL);
             });
-            Assert.ThrowsException<ArgumentException>(() => {
+            Assert.ThrowsExactly<ArgumentException>(() => {
                 Hexcode _ = (1, 3, 0x0000000000000000uL, 0x7000000000000000uL);
             });
         }

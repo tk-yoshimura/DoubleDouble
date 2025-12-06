@@ -18,11 +18,11 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(double.Sign(double.PositiveInfinity), ddouble.Sign(double.PositiveInfinity));
             Assert.AreEqual(double.Sign(double.NegativeInfinity), ddouble.Sign(double.NegativeInfinity));
 
-            Assert.ThrowsException<ArithmeticException>(() => {
+            Assert.ThrowsExactly<ArithmeticException>(() => {
                 _ = double.Sign(double.NaN);
             });
 
-            Assert.ThrowsException<ArithmeticException>(() => {
+            Assert.ThrowsExactly<ArithmeticException>(() => {
                 _ = ddouble.Sign(double.NaN);
             });
         }
@@ -411,13 +411,13 @@ namespace DoubleDoubleTest.DDouble {
         public void TryConvertToChecked() {
             Assert.IsTrue(ddouble.TryConvertToChecked(3, out int v1));
             Assert.AreEqual((int)3, v1);
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 _ = ddouble.TryConvertToChecked(ddouble.MaxValue, out int _);
             });
 
             Assert.IsTrue(ddouble.TryConvertToChecked(3, out long v2));
             Assert.AreEqual((long)3, v2);
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 _ = ddouble.TryConvertToChecked(ddouble.MaxValue, out long _);
             });
 
@@ -433,7 +433,7 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.IsTrue(ddouble.TryConvertToChecked(3, out decimal v5));
             Assert.AreEqual((decimal)3, v5);
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 _ = ddouble.TryConvertToChecked(ddouble.MaxValue, out decimal _);
             });
         }

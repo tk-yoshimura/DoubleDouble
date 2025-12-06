@@ -58,19 +58,19 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual((ddouble)0, ((ddouble)long.MaxValue) - ddouble.Floor((ddouble)long.MaxValue));
             Assert.AreEqual((ddouble)0, ((ddouble)long.MinValue) - ddouble.Floor((ddouble)long.MinValue));
 
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 long n = (long)ddouble.PositiveInfinity;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 long n = (long)ddouble.NegativeInfinity;
             });
-            Assert.ThrowsException<InvalidCastException>(() => {
+            Assert.ThrowsExactly<InvalidCastException>(() => {
                 long n = (long)ddouble.NaN;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 long n = (long)(((ddouble)long.MaxValue) + 1);
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 long n = (long)(((ddouble)long.MinValue) - 1);
             });
         }
@@ -92,19 +92,19 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual((ddouble)0, ((ddouble)ulong.MaxValue) - ddouble.Floor((ddouble)ulong.MaxValue));
             Assert.AreEqual((ddouble)0, ((ddouble)ulong.MinValue) - ddouble.Floor((ddouble)ulong.MinValue));
 
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 ulong n = (ulong)ddouble.PositiveInfinity;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 ulong n = (ulong)ddouble.NegativeInfinity;
             });
-            Assert.ThrowsException<InvalidCastException>(() => {
+            Assert.ThrowsExactly<InvalidCastException>(() => {
                 ulong n = (ulong)ddouble.NaN;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 ulong n = (ulong)(((ddouble)ulong.MaxValue) + 1);
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 ulong n = (ulong)(((ddouble)ulong.MinValue) - 1);
             });
         }
@@ -133,19 +133,19 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual((ddouble)0, ((ddouble)int.MaxValue) - ddouble.Floor((ddouble)int.MaxValue));
             Assert.AreEqual((ddouble)0, ((ddouble)int.MinValue) - ddouble.Floor((ddouble)int.MinValue));
 
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 int n = (int)ddouble.PositiveInfinity;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 int n = (int)ddouble.NegativeInfinity;
             });
-            Assert.ThrowsException<InvalidCastException>(() => {
+            Assert.ThrowsExactly<InvalidCastException>(() => {
                 int n = (int)ddouble.NaN;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 int n = (int)(((ddouble)int.MaxValue) + 1);
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 int n = (int)(((ddouble)int.MinValue) - 1);
             });
 
@@ -178,19 +178,19 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual((ddouble)0, ((ddouble)uint.MaxValue) - ddouble.Floor((ddouble)uint.MaxValue));
             Assert.AreEqual((ddouble)0, ((ddouble)uint.MinValue) - ddouble.Floor((ddouble)uint.MinValue));
 
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 uint n = (uint)ddouble.PositiveInfinity;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 uint n = (uint)ddouble.NegativeInfinity;
             });
-            Assert.ThrowsException<InvalidCastException>(() => {
+            Assert.ThrowsExactly<InvalidCastException>(() => {
                 uint n = (uint)ddouble.NaN;
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 uint n = (uint)(((ddouble)uint.MaxValue) + 1);
             });
-            Assert.ThrowsException<OverflowException>(() => {
+            Assert.ThrowsExactly<OverflowException>(() => {
                 uint n = (uint)(((ddouble)uint.MinValue) - 1);
             });
         }

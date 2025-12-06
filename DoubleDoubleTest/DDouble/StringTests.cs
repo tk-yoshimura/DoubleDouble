@@ -110,27 +110,27 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine(v3.ToString("e31"));
             Console.WriteLine(v3.ToString("E31"));
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Console.WriteLine($"{v1:e32}");
             });
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Console.WriteLine($"{v1:E32}");
             });
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Console.WriteLine(v1.ToString("e32"));
             });
 
-            Assert.ThrowsException<ArgumentOutOfRangeException>(() => {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => {
                 Console.WriteLine(v1.ToString("E32"));
             });
 
-            Assert.ThrowsException<FormatException>(() => {
+            Assert.ThrowsExactly<FormatException>(() => {
                 Console.WriteLine($"{v1:f30}");
             });
 
-            Assert.ThrowsException<FormatException>(() => {
+            Assert.ThrowsExactly<FormatException>(() => {
                 Console.WriteLine($"{v1:f30}");
             });
         }

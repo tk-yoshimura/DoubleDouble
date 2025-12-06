@@ -754,11 +754,11 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             checked {
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = ddouble.Ldexp(1, 103);
                     x++;
                 });
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49);
                     x++;
                 });
@@ -767,11 +767,11 @@ namespace DoubleDoubleTest.DDouble {
                     x++;
                 }
 
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = -ddouble.Ldexp(1, 103);
                     x++;
                 });
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = -(ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49));
                     x++;
                 });
@@ -793,11 +793,11 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             checked {
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = ddouble.Ldexp(1, 103);
                     x--;
                 });
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49);
                     x--;
                 });
@@ -806,11 +806,11 @@ namespace DoubleDoubleTest.DDouble {
                     x--;
                 }
 
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = -ddouble.Ldexp(1, 103);
                     x--;
                 });
-                Assert.ThrowsException<ArithmeticException>(() => {
+                Assert.ThrowsExactly<ArithmeticException>(() => {
                     ddouble x = -(ddouble.Ldexp(1, 103) - ddouble.Ldexp(1, 49));
                     x--;
                 });
