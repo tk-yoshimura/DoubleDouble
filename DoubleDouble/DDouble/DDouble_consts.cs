@@ -37,6 +37,7 @@ namespace DoubleDouble {
             RcpFibonacci = (+1, 1, 0xD7085DE3B412547AuL, 0x6E1D157303AB3415uL),
             Niven = (+1, 0, 0xDA445BCFC382C748uL, 0xBAA1D4C214E3C4ADuL),
             GolombDickman = (+1, -1, 0x9FD41712B4E41BD4uL, 0x26B9F2F254BA047AuL),
-            GoldenRatio = (+1, 0, 0xCF1BBCDCBFA53E0AuL, 0xF9CE60302E76E41AuL);
+            GoldenRatio = (+1, 0, 0xCF1BBCDCBFA53E0AuL, 0xF9CE60302E76E41AuL), 
+            MalardiTheta = (+1, 0, 0xF48FA1402B8AE691uL, 0x2F3DFFAF80B92CFAuL);
     }
 }

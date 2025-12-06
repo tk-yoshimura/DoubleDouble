@@ -42,6 +42,7 @@ namespace DoubleDoubleTest.DDouble {
             Console.WriteLine($"Niven={ddouble.Niven}");
             Console.WriteLine($"GolombDickman={ddouble.GolombDickman}");
             Console.WriteLine($"GoldenRatio={ddouble.GoldenRatio}");
+            Console.WriteLine($"MalardiTheta={ddouble.MalardiTheta}");
         }
 
         [TestMethod]
@@ -150,6 +151,15 @@ namespace DoubleDoubleTest.DDouble {
         }
 
         [TestMethod]
+        public void MalardiThetaTest() {
+            PrecisionAssert.AlmostEqual(
+                -(ddouble)1 / 3,
+                ddouble.Cos(ddouble.MalardiTheta),
+                2e-31
+            );
+        }
+
+        [TestMethod]
         public void ConstantsExpectedTest() {
             PrecisionAssert.AreEqual(3.141592653589793238462, ddouble.Pi, 1e-15);
             PrecisionAssert.AreEqual(2.718281828459045235360, ddouble.E, 1e-15);
@@ -182,6 +192,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AreEqual(1.705211140105367764289, ddouble.Niven, 1e-15);
             PrecisionAssert.AreEqual(0.624329988543550870992, ddouble.GolombDickman, 1e-15);
             PrecisionAssert.AreEqual(1.618033988749894848204, ddouble.GoldenRatio, 1e-15);
+            PrecisionAssert.AreEqual(1.910633236249018556327, ddouble.MalardiTheta, 1e-15);
         }
     }
 }

@@ -221,6 +221,7 @@
 |ddouble.RcpFibonacci|3.359885666243177553172...|Reciprocal Fibonacci constant|
 |ddouble.Niven|1.705211140105367764289...|Niven's constant|
 |ddouble.GolombDickman|0.624329988543550870992...|Golomb–Dickman constant|
+|ddouble.MalardiTheta|1.910633236249018556327...|Malardi's angle|
 
 ## Sequence
 
