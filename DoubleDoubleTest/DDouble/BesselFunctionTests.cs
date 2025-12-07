@@ -16540,7 +16540,7 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.IsNotNaN(actual);
 
                     if (ddouble.ILogB(expected) < -950) {
-                        Assert.IsTrue(ddouble.ILogB(actual) < -949);
+                        Assert.IsLessThan(-949, ddouble.ILogB(actual));
                         continue;
                     }
                     if (ddouble.IsInfinity(expected)) {
@@ -17486,7 +17486,7 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.IsNotNaN(actual);
 
                     if (ddouble.ILogB(expected) < -950) {
-                        Assert.IsTrue(ddouble.ILogB(actual) < -949);
+                        Assert.IsLessThan(-949, ddouble.ILogB(actual));
                         continue;
                     }
                     if (ddouble.IsInfinity(expected)) {
@@ -18434,7 +18434,7 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.IsNotNaN(actual);
 
                     if (ddouble.ILogB(expected) < -950) {
-                        Assert.IsTrue(ddouble.ILogB(actual) < -949);
+                        Assert.IsLessThan(-949, ddouble.ILogB(actual));
                         continue;
                     }
                     if (ddouble.IsInfinity(expected)) {
@@ -18926,7 +18926,7 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.IsNotNaN(actual);
 
                     if (ddouble.ILogB(expected) < -950) {
-                        Assert.IsTrue(ddouble.ILogB(actual) < -949);
+                        Assert.IsLessThan(-949, ddouble.ILogB(actual));
                         continue;
                     }
                     if (ddouble.IsInfinity(expected)) {

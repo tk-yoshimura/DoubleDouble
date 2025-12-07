@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
+    <NoWarn>MSTEST0025;MSTEST0032</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

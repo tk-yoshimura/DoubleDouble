@@ -60,7 +60,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsFinite(ddouble.MinValue);
             PrecisionAssert.IsNegative(ddouble.MinValue);
             PrecisionAssert.AreEqual(double.MaxValue, ddouble.MaxValue.Hi);
-            Assert.IsTrue(ddouble.MaxValue.Lo > 0d);
+            Assert.IsGreaterThan(0d, ddouble.MaxValue.Lo);
             Assert.IsTrue(double.MaxValue < ddouble.MaxValue);
             PrecisionAssert.AreEqual(-ddouble.MinValue, ddouble.MaxValue);
             Assert.AreNotEqual(ddouble.MaxValue, ddouble.BitIncrement(ddouble.MaxValue));

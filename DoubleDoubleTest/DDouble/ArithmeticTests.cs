@@ -22,7 +22,7 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(ddouble.IsRegulared(su));
                 }
 
-                Assert.IsTrue(double.Abs(100 - (double)su) <= double.Abs(100 - sv));
+                Assert.IsLessThanOrEqualTo(double.Abs(100 - sv), double.Abs(100 - (double)su));
                 PrecisionAssert.AreEqual(100, su, 2e-28);
             }
 
@@ -150,7 +150,7 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(ddouble.IsRegulared(su));
                 }
 
-                Assert.IsTrue(double.Abs(-100 - (double)su) <= double.Abs(-100 - sv));
+                Assert.IsLessThanOrEqualTo(double.Abs(-100 - sv), double.Abs(-100 - (double)su));
                 PrecisionAssert.AreEqual(-100, su, 2e-28);
             }
 
@@ -257,7 +257,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble u = (ddouble.Rcp(n)) * (ddouble)n;
                 double v = (1d / n) * n;
 
-                Assert.IsTrue(double.Abs((double)(1 - u)) <= double.Abs(1 - v));
+                Assert.IsLessThanOrEqualTo(double.Abs(1 - v), double.Abs((double)(1 - u)));
                 PrecisionAssert.AreEqual(0, 1 - u, 1e-30);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -297,7 +297,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble u = (ddouble.Rcp(n)) * (double)n;
                 double v = (1d / n) * n;
 
-                Assert.IsTrue(double.Abs((double)(1 - u)) <= double.Abs(1 - v));
+                Assert.IsLessThanOrEqualTo(double.Abs(1 - v), double.Abs((double)(1 - u)));
                 PrecisionAssert.AreEqual(0, 1 - u, 1e-30);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
@@ -316,7 +316,7 @@ namespace DoubleDoubleTest.DDouble {
                 ddouble u = (double)n * (ddouble.Rcp(n));
                 double v = (1d / n) * n;
 
-                Assert.IsTrue(double.Abs((double)(1 - u)) <= double.Abs(1 - v));
+                Assert.IsLessThanOrEqualTo(double.Abs(1 - v), double.Abs((double)(1 - u)));
                 PrecisionAssert.AreEqual(0, 1 - u, 1e-30);
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }

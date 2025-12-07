@@ -203,7 +203,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 Console.WriteLine(y);
                 Assert.AreEqual(x, z, x.ToString());
-                Assert.IsTrue(y.ToString().Length <= 8);
+                Assert.IsLessThanOrEqualTo(8, y.ToString().Length);
 
             }
 
@@ -213,7 +213,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 Console.WriteLine(y);
                 Assert.AreEqual(x, z, x.ToString());
-                Assert.IsTrue(y.ToString().Length <= 5);
+                Assert.IsLessThanOrEqualTo(5, y.ToString().Length);
             }
 
             for (decimal x = -10000m; x <= 10000m; x += 10m) {
@@ -222,7 +222,7 @@ namespace DoubleDoubleTest.DDouble {
 
                 Console.WriteLine(y);
                 Assert.AreEqual(x, z, x.ToString());
-                Assert.IsTrue(y.ToString().Length <= 6);
+                Assert.IsLessThanOrEqualTo(6, y.ToString().Length);
             }
 
             for (int i = 1; i <= 1000; i++) {

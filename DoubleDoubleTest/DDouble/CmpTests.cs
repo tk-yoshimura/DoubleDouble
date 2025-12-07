@@ -106,7 +106,7 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(prcp3.Equals(prcp3));
             Assert.IsFalse(prcp3.Equals((object)null));
 
-            Assert.IsTrue(prcp3.GetHashCode() == ddouble.Rcp(3).GetHashCode());
+            Assert.AreEqual(ddouble.Rcp(3).GetHashCode(), prcp3.GetHashCode());
         }
 
         [TestMethod]
