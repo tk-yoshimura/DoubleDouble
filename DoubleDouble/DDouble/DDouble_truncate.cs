@@ -14,7 +14,7 @@
 
         public static ddouble Round(ddouble x) {
             if (ddouble.IsNegative(x)) {
-                ddouble n = ddouble.Ceiling(x);
+                ddouble n = Ceiling(x);
                 ddouble f = x - n;
 
                 if (f < -0.5) {
@@ -30,7 +30,7 @@
                 return is_odd ? n - 1d : n;
             }
             else {
-                ddouble n = ddouble.Floor(x);
+                ddouble n = Floor(x);
                 ddouble f = x - n;
 
                 if (f > 0.5) {
