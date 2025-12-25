@@ -13,7 +13,38 @@
         }
 
         public static ddouble Round(ddouble x) {
-            return Floor(x + 0.5d);
+            if (ddouble.IsNegative(x)) {
+                ddouble n = ddouble.Ceiling(x);
+                ddouble f = x - n;
+
+                if (f < -0.5) {
+                    return n - 1d;
+                }
+                if (f > -0.5) {
+                    return n;
+                }
+
+                double nhi_half = double.ScaleB(n.Hi, -1), nlo_half = double.ScaleB(n.Lo, -1);
+                bool is_odd = (nhi_half != double.Truncate(nhi_half)) ^ (nlo_half != double.Truncate(nlo_half));
+
+                return is_odd ? n - 1d : n;
+            }
+            else {
+                ddouble n = ddouble.Floor(x);
+                ddouble f = x - n;
+
+                if (f > 0.5) {
+                    return n + 1d;
+                }
+                if (f < 0.5) {
+                    return n;
+                }
+
+                double nhi_half = double.ScaleB(n.Hi, -1), nlo_half = double.ScaleB(n.Lo, -1);
+                bool is_odd = (nhi_half != double.Truncate(nhi_half)) ^ (nlo_half != double.Truncate(nlo_half));
+
+                return is_odd ? n + 1d : n;
+            }
         }
 
         public static ddouble Truncate(ddouble x) {

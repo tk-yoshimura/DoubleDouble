@@ -101,41 +101,58 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void RoundTest() {
-            Assert.AreEqual((ddouble)(0), ddouble.Round(0));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(0)));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(0)));
+            for (ddouble x = -32; x <= 32; x += 0.25) {
+                ddouble y = ddouble.Round(x);
+                double z = double.Round(x.Hi);
 
-            Assert.AreEqual((ddouble)(1), ddouble.Round(1));
-            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.BitDecrement(1)));
-            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.BitIncrement(1)));
+                Assert.AreEqual((ddouble)z, y);
+            }
 
-            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.Rcp(2)));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(ddouble.Rcp(2))));
-            Assert.AreEqual((ddouble)(1), ddouble.Round(ddouble.BitIncrement(ddouble.Rcp(2))));
+            for (int n = -16; n <= 16; n++) {
+                Assert.AreEqual((ddouble)(n), ddouble.Round(ddouble.BitDecrement(n)));
+                Assert.AreEqual((ddouble)(n), ddouble.Round(ddouble.BitIncrement(n)));
+            }
 
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.Rcp(3)));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(ddouble.Rcp(3))));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(ddouble.Rcp(3))));
+            for (int n = -16; n <= 16; n++) {
+                Assert.AreEqual((ddouble)(n), ddouble.Round(ddouble.BitDecrement(n + 0.5)));
+                Assert.AreEqual((ddouble)(n + 1), ddouble.Round(ddouble.BitIncrement(n + 0.5)));
+            }
 
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.Rcp(7)));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(ddouble.Rcp(7))));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(ddouble.Rcp(7))));
+            for (int exp = 4; exp <= 100; exp++) {
+                ddouble x = ddouble.ScaleB(1, exp);
 
-            Assert.AreEqual((ddouble)(-1), ddouble.Round(-1));
-            Assert.AreEqual((ddouble)(-1), ddouble.Round(ddouble.BitDecrement(-1)));
-            Assert.AreEqual((ddouble)(-1), ddouble.Round(ddouble.BitIncrement(-1)));
+                Assert.AreEqual((ddouble)x, ddouble.Round(x));
+                Assert.AreEqual((ddouble)x, ddouble.Round(x + 0.5));
+                Assert.AreEqual((ddouble)x + 2, ddouble.Round(x + 1.5));
 
-            Assert.AreEqual((ddouble)(0), ddouble.Round(-ddouble.Rcp(2)));
-            Assert.AreEqual((ddouble)(-1), ddouble.Round(ddouble.BitDecrement(-ddouble.Rcp(2))));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(-ddouble.Rcp(2))));
+                Assert.AreEqual((ddouble)(-x), ddouble.Round(-x));
+                Assert.AreEqual((ddouble)(-x), ddouble.Round(-x - 0.5));
+                Assert.AreEqual((ddouble)(-x - 2), ddouble.Round(-x - 1.5));
+            }
 
-            Assert.AreEqual((ddouble)(0), ddouble.Round(-ddouble.Rcp(3)));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(-ddouble.Rcp(3))));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(-ddouble.Rcp(3))));
+            for (int exp = 4; exp <= 100; exp++) {
+                ddouble x = ddouble.ScaleB(1, exp);
 
-            Assert.AreEqual((ddouble)(0), ddouble.Round(-ddouble.Rcp(7)));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitDecrement(-ddouble.Rcp(7))));
-            Assert.AreEqual((ddouble)(0), ddouble.Round(ddouble.BitIncrement(-ddouble.Rcp(7))));
+                Assert.AreEqual((ddouble)x, ddouble.Round(ddouble.BitDecrement(x)));
+                Assert.AreEqual((ddouble)x, ddouble.Round(x + 0.4));
+                Assert.AreEqual((ddouble)x + 1, ddouble.Round(x + 1.4));
+
+                Assert.AreEqual((ddouble)(-x), ddouble.Round(ddouble.BitIncrement(-x)));
+                Assert.AreEqual((ddouble)(-x), ddouble.Round(-x - 0.4));
+                Assert.AreEqual((ddouble)(-x - 1), ddouble.Round(-x - 1.4));
+            }
+
+            for (int exp = 4; exp <= 100; exp++) {
+                ddouble x = ddouble.ScaleB(1, exp);
+
+                Assert.AreEqual((ddouble)x, ddouble.Round(ddouble.BitDecrement(x)));
+                Assert.AreEqual((ddouble)x + 1, ddouble.Round(x + 0.6));
+                Assert.AreEqual((ddouble)x + 2, ddouble.Round(x + 1.6));
+
+                Assert.AreEqual((ddouble)(-x), ddouble.Round(ddouble.BitIncrement(-x)));
+                Assert.AreEqual((ddouble)(-x - 1), ddouble.Round(-x - 0.6));
+                Assert.AreEqual((ddouble)(-x - 2), ddouble.Round(-x - 1.6));
+            }
         }
 
         [TestMethod]
