@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PrecisionTestTools;
 using System.Linq;
 
 namespace DoubleDoubleTest.DDouble {
@@ -8,11 +9,19 @@ namespace DoubleDoubleTest.DDouble {
         [TestMethod]
         public void EnumStatsTest() {
             ddouble[] xs = new ddouble[] { 1, 3, 6, 2, 4 };
+            ddouble[] xs_withnan = new ddouble[] { 1, 3, 6, 2, 4, double.NaN };
+            ddouble[] xs_none = Enumerable.Empty<ddouble>().ToArray();
 
             Assert.AreEqual(16, xs.Sum());
             Assert.AreEqual(16 / 5.0, (double)xs.Average(), 1e-10);
             Assert.AreEqual(1, xs.Min());
             Assert.AreEqual(6, xs.Max());
+
+            PrecisionAssert.IsNaN(xs_withnan.Min());
+            PrecisionAssert.IsNaN(xs_withnan.Max());
+
+            PrecisionAssert.IsNaN(xs_none.Min());
+            PrecisionAssert.IsNaN(xs_none.Max());
         }
 
         [TestMethod]

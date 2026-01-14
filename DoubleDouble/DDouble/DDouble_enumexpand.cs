@@ -23,7 +23,7 @@
             ddouble min = ddouble.NaN;
 
             foreach (var v in source) {
-                min = !(min <= v) ? v : min;
+                min = (min <= v) ? min : v;
             }
 
             return min;
@@ -33,7 +33,7 @@
             ddouble max = ddouble.NaN;
 
             foreach (var v in source) {
-                max = !(max >= v) ? v : max;
+                max = (max >= v) ? max : v;
             }
 
             return max;
