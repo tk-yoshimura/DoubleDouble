@@ -225,11 +225,37 @@ namespace DoubleDoubleTest.DDouble {
             ddouble v3 = "0.0000";
             ddouble v4 = "0";
             ddouble v5 = "0.0";
+            ddouble v6 = "-0";
+            ddouble v7 = "-0.0";
+            ddouble v8 = "0e1";
+            ddouble v9 = "0.0e1";
+            ddouble v10 = "-0e1";
+            ddouble v11 = "-0.0e1";
+            ddouble v12 = "0e-1";
+            ddouble v13 = "0.0e-1";
+            ddouble v14 = "-0e-1";
+            ddouble v15 = "-0.0e-1";
 
             Assert.AreEqual(0, v2);
             Assert.AreEqual(0, v3);
             Assert.AreEqual(0, v4);
             Assert.AreEqual(0, v5);
+            Assert.AreEqual(0, v6);
+            Assert.AreEqual(0, v7);
+            Assert.IsTrue(ddouble.IsNegative(v6));
+            Assert.IsTrue(ddouble.IsNegative(v7));
+            Assert.AreEqual(0, v8);
+            Assert.AreEqual(0, v9);
+            Assert.AreEqual(0, v10);
+            Assert.AreEqual(0, v11);
+            Assert.IsTrue(ddouble.IsNegative(v10));
+            Assert.IsTrue(ddouble.IsNegative(v11));
+            Assert.AreEqual(0, v12);
+            Assert.AreEqual(0, v13);
+            Assert.AreEqual(0, v14);
+            Assert.AreEqual(0, v15);
+            Assert.IsTrue(ddouble.IsNegative(v14));
+            Assert.IsTrue(ddouble.IsNegative(v15));
         }
 
         [TestMethod]

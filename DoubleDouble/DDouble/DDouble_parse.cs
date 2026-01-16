@@ -40,7 +40,7 @@ namespace DoubleDouble {
             string mantissa = s[..exponent_symbol_index].TrimStart('0');
 
             if (string.IsNullOrEmpty(mantissa)) {
-                return sign == +1 ? 0 : -1;
+                return sign == +1 ? Zero : MinusZero;
             }
 
             int point_symbol_index = mantissa.Contains('.') ? (mantissa.IndexOf('.') - 1) : (mantissa.Length - 1);
