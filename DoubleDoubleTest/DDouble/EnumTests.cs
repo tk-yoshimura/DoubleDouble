@@ -8,8 +8,8 @@ namespace DoubleDoubleTest.DDouble {
     public partial class EnumTests {
         [TestMethod]
         public void EnumStatsTest() {
-            ddouble[] xs = new ddouble[] { 1, 3, 6, 2, 4 };
-            ddouble[] xs_withnan = new ddouble[] { 1, 3, 6, 2, 4, double.NaN };
+            ddouble[] xs = new ddouble[] { 3, 1, 6, 2, 4 };
+            ddouble[] xs_withnan = new ddouble[] { 3, 1, 6, 2, 4, double.NaN };
             ddouble[] xs_none = Enumerable.Empty<ddouble>().ToArray();
 
             Assert.AreEqual(16, xs.Sum());
@@ -22,6 +22,15 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.IsNaN(xs_none.Min());
             PrecisionAssert.IsNaN(xs_none.Max());
+
+            Assert.AreEqual(1, xs.MinIndex());
+            Assert.AreEqual(2, xs.MaxIndex());
+
+            Assert.AreEqual(-1, xs_withnan.MinIndex());
+            Assert.AreEqual(-1, xs_withnan.MaxIndex());
+
+            Assert.AreEqual(-1, xs_none.MinIndex());
+            Assert.AreEqual(-1, xs_none.MaxIndex());
         }
 
         [TestMethod]

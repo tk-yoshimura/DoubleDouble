@@ -1,5 +1,4 @@
 using DoubleDoubleHexcode;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DoubleDoubleHexcodeTest {
     [TestClass]
