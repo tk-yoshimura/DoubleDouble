@@ -13,7 +13,7 @@ namespace DoubleDouble {
             }
 
             int n = ILogB(x);
-            ddouble f = new ddouble(double.ScaleB(x.hi, -n), double.ScaleB(x.lo, -n));
+            ddouble f = new ddouble((double.ScaleB(x.hi, -n), double.ScaleB(x.lo, -n)));
 
             if (f.hi == 1d && f.lo < 0d) {
                 n -= 1;

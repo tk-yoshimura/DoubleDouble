@@ -11,7 +11,7 @@
             double hi = reader.ReadDouble();
             double lo = reader.ReadDouble();
 
-            return new ddouble(hi, lo);
+            return new ddouble((hi, lo));
         }
     }
 }

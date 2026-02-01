@@ -25,6 +25,12 @@ namespace DoubleDouble {
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal ddouble((double hi, double lo) v) {
+            this.hi = v.hi;
+            this.lo = v.lo;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal ddouble(double v) {
             this.hi = v;
             this.lo = 0d;
@@ -35,7 +41,7 @@ namespace DoubleDouble {
             this.hi = double.ScaleB(v.hi, n);
             this.lo = double.ScaleB(v.lo, n);
 
-            if (!double.IsFinite(this.lo)) {
+            if (!double.IsFinite(this.hi)) {
                 this.lo = 0d;
             }
         }

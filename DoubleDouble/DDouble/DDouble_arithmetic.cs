@@ -9,7 +9,7 @@ namespace DoubleDouble {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ddouble operator -(ddouble v) {
-            return new ddouble(-v.hi, -v.lo);
+            return new ddouble((-v.hi, -v.lo));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -154,7 +154,7 @@ namespace DoubleDouble {
                 return a.hi * b;
             }
 
-            ddouble y = MultiplyAdd(0d, a.hi, b);
+            ddouble y = Multiply(a.hi, b);
             y = MultiplyAdd(y, a.lo, b);
 
             if (IsZero(y)) { // special case of fused multiply-add
@@ -429,7 +429,7 @@ namespace DoubleDouble {
             double hi = a * b;
             double lo = double.FusedMultiplyAdd(a, b, -hi);
 
-            return new ddouble(hi, lo);
+            return new ddouble((hi, lo));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
