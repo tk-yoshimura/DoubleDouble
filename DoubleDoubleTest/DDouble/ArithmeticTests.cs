@@ -571,6 +571,11 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.AreEqual(ddouble.One, -x / -x);
                 Assert.AreEqual(ddouble.MinusOne, -x / x);
                 Assert.AreEqual(ddouble.MinusOne, x / -x);
+
+                Assert.IsTrue(ddouble.One < x / (x - 1e-30));
+                Assert.IsTrue(ddouble.One > x / (x + 1e-30));
+                Assert.IsTrue(ddouble.One > (x - 1e-30) / x);
+                Assert.IsTrue(ddouble.One < (x + 1e-30) / x);
             }
 
             foreach (ddouble x in new ddouble[] { long.MinValue, int.MinValue, -10, 1, ddouble.Pi, 65535, 65536, 65537, int.MaxValue, long.MaxValue }) {

@@ -247,16 +247,17 @@ namespace DoubleDouble {
             }
 
             double hi = a.hi / b;
+            
+            if (double.IsInfinity(hi)) {
+                return hi;
+            }
+
             ddouble hirem = a - Multiply(hi, b);
 
             double lo = hirem.hi / b;
             ddouble lorem = hirem - Multiply(lo, b);
 
             lo += lorem.hi / b;
-
-            if (double.IsInfinity(hi)) {
-                return hi;
-            }
 
             return new ddouble(hi, lo);
         }
@@ -305,16 +306,17 @@ namespace DoubleDouble {
             }
 
             double hi = a / b.hi;
+            
+            if (double.IsInfinity(hi)) {
+                return hi;
+            }
+
             ddouble hirem = a - hi * b;
 
             double lo = hirem.hi / b.hi;
             ddouble lorem = hirem - lo * b;
 
             lo += lorem.hi / b.hi;
-
-            if (double.IsInfinity(hi)) {
-                return hi;
-            }
 
             return new ddouble(hi, lo);
         }
@@ -342,16 +344,17 @@ namespace DoubleDouble {
             }
 
             double hi = a.hi / b.hi;
+            
+            if (double.IsInfinity(hi)) {
+                return hi;
+            }
+
             ddouble hirem = a - hi * b;
 
             double lo = hirem.hi / b.hi;
             ddouble lorem = hirem - lo * b;
 
             lo += lorem.hi / b.hi;
-
-            if (double.IsInfinity(hi)) {
-                return hi;
-            }
 
             return new ddouble(hi, lo);
         }
