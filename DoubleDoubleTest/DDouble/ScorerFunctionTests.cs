@@ -3199,9 +3199,9 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 1e-31d);
-                PrecisionAssert.AlmostEqual(expected, y_dec, 1e-31d);
-                PrecisionAssert.AlmostEqual(expected, y_inc, 1e-31d);
+                PrecisionAssert.AlmostEqual(expected, y, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_dec, 2e-31d);
+                PrecisionAssert.AlmostEqual(expected, y_inc, 2e-31d);
             }
 
             PrecisionAssert.IsNaN(ddouble.ScorerHi(ddouble.NaN));

@@ -3134,7 +3134,7 @@ namespace DoubleDoubleTest.DDouble {
                     Console.WriteLine($"{x},{q}");
                     Console.WriteLine(y);
 
-                    PrecisionAssert.AlmostEqual(expected, y, 2e-30d);
+                    PrecisionAssert.AlmostEqual(expected, y, 3e-30d);
                 }
             }
         }

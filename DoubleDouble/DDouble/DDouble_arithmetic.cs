@@ -252,13 +252,13 @@ namespace DoubleDouble {
             double lo = hirem.hi / b;
             ddouble lorem = hirem - Multiply(lo, b);
 
-            double c = lorem.hi / b;
+            lo += lorem.hi / b;
 
             if (double.IsInfinity(hi)) {
                 return hi;
             }
 
-            return new ddouble(hi, lo) + c;
+            return new ddouble(hi, lo);
         }
 
         public static ddouble operator /(ddouble a, int b) {
@@ -310,13 +310,13 @@ namespace DoubleDouble {
             double lo = hirem.hi / b.hi;
             ddouble lorem = hirem - lo * b;
 
-            double c = lorem.hi / b.hi;
+            lo += lorem.hi / b.hi;
 
             if (double.IsInfinity(hi)) {
                 return hi;
             }
 
-            return new ddouble(hi, lo) + c;
+            return new ddouble(hi, lo);
         }
 
         public static ddouble operator /(int a, ddouble b) {
@@ -347,13 +347,13 @@ namespace DoubleDouble {
             double lo = hirem.hi / b.hi;
             ddouble lorem = hirem - lo * b;
 
-            double c = lorem.hi / b.hi;
+            lo += lorem.hi / b.hi;
 
             if (double.IsInfinity(hi)) {
                 return hi;
             }
 
-            return new ddouble(hi, lo) + c;
+            return new ddouble(hi, lo);
         }
 
         public static ddouble operator %(ddouble a, double b) {

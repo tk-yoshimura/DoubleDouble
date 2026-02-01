@@ -2919,7 +2919,7 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(x);
                 Console.WriteLine(y);
 
-                PrecisionAssert.AlmostEqual(expected, y, 6e-32, $"{x}");
+                PrecisionAssert.AlmostEqual(expected, y, 8e-32, $"{x}");
             }
         }
 

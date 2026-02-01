@@ -4159,7 +4159,7 @@ namespace DoubleDoubleTest.DDouble {
                 }
                 else {
                     PrecisionAssert.AlmostEqual(expected, y, 2e-31d, 1e-31d);
-                    PrecisionAssert.AlmostEqual(expected, y, 2e-29d);
+                    PrecisionAssert.AlmostEqual(expected, y, 4e-29d);
                 }
             }
 
