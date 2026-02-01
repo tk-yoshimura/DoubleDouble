@@ -247,7 +247,7 @@ namespace DoubleDouble {
             }
 
             double hi = a.hi / b;
-            
+
             if (double.IsInfinity(hi)) {
                 return hi;
             }
@@ -306,7 +306,7 @@ namespace DoubleDouble {
             }
 
             double hi = a / b.hi;
-            
+
             if (double.IsInfinity(hi)) {
                 return hi;
             }
@@ -344,7 +344,7 @@ namespace DoubleDouble {
             }
 
             double hi = a.hi / b.hi;
-            
+
             if (double.IsInfinity(hi)) {
                 return hi;
             }
