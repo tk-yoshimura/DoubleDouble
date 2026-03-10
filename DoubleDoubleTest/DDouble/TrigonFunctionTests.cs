@@ -473,6 +473,19 @@ namespace DoubleDoubleTest.DDouble {
                 Assert.IsTrue(ddouble.IsRegulared(u));
             }
 
+            PrecisionAssert.AlmostEqual("-9.9999999999999999999714967183451813e-1", ddouble.Tanh(-24), 1e-31);
+            PrecisionAssert.AlmostEqual("-9.9999999999999999150329148941682205e-1", ddouble.Tanh(-20), 1e-31);
+            PrecisionAssert.AlmostEqual("-9.9999999999999953609543395128622994e-1", ddouble.Tanh(-18), 1e-31);
+            PrecisionAssert.AlmostEqual("-9.9999999999997467166890181196931593e-1", ddouble.Tanh(-16), 1e-31);
+            PrecisionAssert.AlmostEqual("-9.9999977492967588981001883295636839e-1", ddouble.Tanh(-8), 1e-31);
+            PrecisionAssert.AlmostEqual("-3.9062301319063400810727111844135273e-3", ddouble.Tanh(-1d / 256), 1e-31);
+            PrecisionAssert.AlmostEqual("3.9062301319063400810727111844135273e-3", ddouble.Tanh(1d / 256), 1e-31);
+            PrecisionAssert.AlmostEqual("9.9999977492967588981001883295636839e-1", ddouble.Tanh(8), 1e-31);
+            PrecisionAssert.AlmostEqual("9.9999999999997467166890181196931593e-1", ddouble.Tanh(16), 1e-31);
+            PrecisionAssert.AlmostEqual("9.9999999999999953609543395128622994e-1", ddouble.Tanh(18), 1e-31);
+            PrecisionAssert.AlmostEqual("9.9999999999999999150329148941682205e-1", ddouble.Tanh(20), 1e-31);
+            PrecisionAssert.AlmostEqual("9.9999999999999999999714967183451813e-1", ddouble.Tanh(24), 1e-31);
+       
             ddouble tanh_pzero = ddouble.Tanh(0d);
             ddouble tanh_mzero = ddouble.Tanh(-0d);
             ddouble tanh_pinf = ddouble.Tanh(double.PositiveInfinity);

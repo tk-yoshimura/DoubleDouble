@@ -17,14 +17,19 @@
                 return NaN;
             }
 
-            ddouble x2 = Ldexp(x, 1);
-            ddouble x2_expm1 = Expm1(x2), x2_expp1 = Exp(x2) + 1d;
+            ddouble abs_x = Abs(x);
 
-            if (IsFinite(x2_expm1) && IsFinite(x2_expp1)) {
+            if (abs_x < 18.25d) {
+                ddouble x2 = Ldexp(x, 1);
+                ddouble x2_expm1 = Expm1(x2), x2_expp1 = Exp(x2) + 1d;
+
                 return x2_expm1 / x2_expp1;
             }
+            else if (abs_x < 353.4d) {
+                return Sign(x) * (1d - Ldexp(Exp(-Ldexp(abs_x, 1)), 1));
+            }
             else {
-                return 1d;
+                return Sign(x);
             }
         }
     }
