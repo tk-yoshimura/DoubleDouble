@@ -787,6 +787,9 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AreEqual(0d, hz_pinf, nameof(hz_pinf));
                 }
             }
+
+            PrecisionAssert.IsNaN(ddouble.HurwitzZeta(0.5, 1));
+            PrecisionAssert.IsNaN(ddouble.HurwitzZeta(2, -1));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PrecisionTestTools;
+using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -1509,6 +1510,16 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
             }
+        }
+
+        [TestMethod]
+        public void WeberEAbnormalTest() {
+            foreach (int n in new[] { -1, 9 }) {
+                Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.WeberE(n, 1));
+            }
+
+            PrecisionAssert.IsNaN(ddouble.WeberE(2, ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.WeberE(2, ddouble.PositiveInfinity));
         }
     }
 }

@@ -69,6 +69,12 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BernoulliPolyTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.Bernoulli(65, 0));
+            PrecisionAssert.IsNaN(ddouble.Bernoulli(2, -0.1, centered: false));
+            PrecisionAssert.IsNaN(ddouble.Bernoulli(2, 1.1, centered: false));
+            PrecisionAssert.IsNaN(ddouble.Bernoulli(2, -0.6, centered: true));
+            PrecisionAssert.IsNaN(ddouble.Bernoulli(2, 0.6, centered: true));
+
             for (int n = 64; n >= BernoulliPolynomials.Count; n--) {
                 for (ddouble x = 0; x <= 1; x += 1d / 32) {
                     ddouble actual = ddouble.Bernoulli(n, x, centered: false);

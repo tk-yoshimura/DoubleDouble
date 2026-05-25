@@ -1492,5 +1492,12 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
         }
+
+        [TestMethod]
+        public void OwenTAbnormalTest() {
+            PrecisionAssert.IsNaN(ddouble.OwenT(ddouble.NaN, 1));
+            PrecisionAssert.IsNaN(ddouble.OwenT(1, ddouble.NaN));
+            PrecisionAssert.IsPlusZero(ddouble.OwenT(37, 1));
+        }
     }
 }

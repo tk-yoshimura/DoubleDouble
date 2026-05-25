@@ -212,6 +212,11 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
             }
+
+            PrecisionAssert.AlmostEqual(2048, ddouble.Log(2, ddouble.Pow2(ddouble.Rcp(2048))), 1e-27);
+            PrecisionAssert.IsNaN(ddouble.Log(1, 1));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Log(2, 1));
+            PrecisionAssert.IsNaN(ddouble.Log(-1, 2));
         }
 
         [TestMethod]

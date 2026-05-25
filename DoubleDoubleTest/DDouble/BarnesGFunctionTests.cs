@@ -2244,6 +2244,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsPositiveInfinity(pg_pinf, nameof(pg_pinf));
             PrecisionAssert.IsNaN(pg_ninf, nameof(pg_ninf));
             PrecisionAssert.IsNaN(pg_nan, nameof(pg_nan));
+            PrecisionAssert.IsNaN(ddouble.BarnesG(-64.5));
         }
 
         [TestMethod]

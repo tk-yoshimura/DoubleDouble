@@ -31,6 +31,10 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void JacobiPTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.JacobiP(65, 0, 0, 0));
+            PrecisionAssert.IsNaN(ddouble.JacobiP(1, -1, 0, 0));
+            PrecisionAssert.IsNaN(ddouble.JacobiP(1, 0, -1, 0));
+
             for (int n = 64; n >= 0; n--) {
                 for (ddouble alpha = -0.75; alpha <= 4; alpha += 0.25) {
                     for (ddouble beta = -0.75; beta <= 4; beta += 0.25) {

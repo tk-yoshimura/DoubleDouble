@@ -481,6 +481,8 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsNaN(ddouble.En(1, -1));
             PrecisionAssert.IsNaN(ddouble.En(2, -1));
             PrecisionAssert.IsNaN(ddouble.En(3, -1));
+
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.En(257, 1));
         }
     }
 }

@@ -39,6 +39,10 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void GegenbauerCTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.GegenbauerC(65, 1, 0));
+            PrecisionAssert.IsNaN(ddouble.GegenbauerC(1, ddouble.PositiveInfinity, 0));
+            PrecisionAssert.IsNaN(ddouble.GegenbauerC(1, ddouble.NaN, 0));
+
             for (int n = 64; n >= 0; n--) {
                 for (ddouble alpha = -4; alpha <= 4; alpha += 0.25) {
                     for (ddouble x = -1; x <= 1; x += 0.125) {

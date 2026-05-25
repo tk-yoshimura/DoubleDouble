@@ -403,8 +403,23 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(ddouble.TryConvertFromChecked((BigInteger)3, out ddouble v5));
             Assert.AreEqual((ddouble)3, v5);
 
-            Assert.IsFalse(ddouble.TryConvertFromChecked((char)3, out ddouble v6));
-            Assert.AreEqual((ddouble)0, v6);
+            Assert.IsTrue(ddouble.TryConvertFromChecked(1m, out ddouble v6));
+            Assert.AreEqual((ddouble)1, v6);
+
+            Assert.IsFalse(ddouble.TryConvertFromChecked((char)3, out ddouble v7));
+            Assert.AreEqual((ddouble)0, v7);
+        }
+
+        [TestMethod]
+        public void TryConvertFromSaturating() {
+            Assert.IsTrue(ddouble.TryConvertFromSaturating(1.5, out ddouble v));
+            Assert.AreEqual((ddouble)1.5, v);
+        }
+
+        [TestMethod]
+        public void TryConvertFromTruncating() {
+            Assert.IsTrue(ddouble.TryConvertFromTruncating(1.5, out ddouble v));
+            Assert.AreEqual((ddouble)1.5, v);
         }
 
         [TestMethod]
@@ -436,6 +451,8 @@ namespace DoubleDoubleTest.DDouble {
             Assert.ThrowsExactly<OverflowException>(() => {
                 _ = ddouble.TryConvertToChecked(ddouble.MaxValue, out decimal _);
             });
+
+            Assert.IsFalse(ddouble.TryConvertToChecked<BigInteger>(1, out _));
         }
 
         [TestMethod]
@@ -474,6 +491,14 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual(decimal.MaxValue, vmax5);
             Assert.IsTrue(ddouble.TryConvertToSaturating(ddouble.MinValue, out decimal vmin5));
             Assert.AreEqual(decimal.MinValue, vmin5);
+
+            Assert.IsFalse(ddouble.TryConvertToSaturating<BigInteger>(1, out _));
+        }
+
+        [TestMethod]
+        public void TryConvertToTruncating() {
+            Assert.IsTrue(ddouble.TryConvertToTruncating(1.5, out int v));
+            Assert.AreEqual(1, v);
         }
     }
 }

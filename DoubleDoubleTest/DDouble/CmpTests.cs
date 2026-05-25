@@ -1,5 +1,6 @@
 using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -446,6 +447,25 @@ namespace DoubleDoubleTest.DDouble {
             Assert.IsTrue(pn_bitdec <= pn);
             Assert.IsFalse(pn_bitinc < pn);
             Assert.IsTrue(pn_bitinc >= pn);
+        }
+
+        [TestMethod]
+        public void ClampTest() {
+            Assert.AreEqual((ddouble)1, ddouble.Clamp(0, 1, 2));
+            Assert.AreEqual((ddouble)1.5, ddouble.Clamp(1.5, 1, 2));
+            Assert.AreEqual((ddouble)2, ddouble.Clamp(3, 1, 2));
+            Assert.ThrowsExactly<ArgumentException>(() => _ = ddouble.Clamp(0, 2, 1));
+        }
+
+        [TestMethod]
+        public void CompareToTest() {
+            Assert.IsLessThan(0, ((ddouble)1).CompareTo((ddouble)2));
+            Assert.IsGreaterThan(0, ((ddouble)2).CompareTo((ddouble)1));
+            Assert.AreEqual(0, ((ddouble)1).CompareTo((ddouble)1));
+            Assert.IsGreaterThan(0, ((ddouble)1).CompareTo(ddouble.NaN));
+            Assert.IsLessThan(0, ddouble.NaN.CompareTo((ddouble)1));
+            Assert.IsLessThan(0, ((IComparable)(ddouble)1).CompareTo((ddouble)2));
+            Assert.ThrowsExactly<ArgumentException>(() => _ = ((IComparable)(ddouble)1).CompareTo(1d));
         }
     }
 }

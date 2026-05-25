@@ -61,6 +61,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsFinite(ddouble.Binomial(999, 499));
             PrecisionAssert.IsFinite(ddouble.Binomial(999, 500));
             PrecisionAssert.IsFinite(ddouble.Binomial(1000, 500));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.Binomial(1001, 500));
 
             for (int n = -8; n <= 8; n++) {
                 for (int k = -8; k <= 8; k++) {

@@ -1,6 +1,7 @@
 ﻿using DoubleDouble;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PrecisionTestTools;
+using System;
 
 namespace DoubleDoubleTest.DDouble {
     [TestClass]
@@ -2455,6 +2456,36 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(expected, actual_inc, 1e-30d, $"{x}+eps,{n}");
                 }
             }
+        }
+
+        [TestMethod]
+        public void StruveAbnormalTest() {
+            foreach (int n in new[] { -1, 9 }) {
+                Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.StruveH(n, 1));
+                Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.StruveK(n, 1));
+                Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.StruveL(n, 1));
+                Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.StruveM(n, 1));
+            }
+
+            PrecisionAssert.IsNaN(ddouble.StruveH(0, ddouble.NaN));
+            PrecisionAssert.AreEqual(0d, ddouble.StruveH(0, ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(ddouble.Ldexp(ddouble.Rcp(ddouble.Pi), 1), ddouble.StruveH(1, ddouble.PositiveInfinity));
+            PrecisionAssert.IsPositiveInfinity(ddouble.StruveH(2, ddouble.PositiveInfinity));
+
+            PrecisionAssert.IsNaN(ddouble.StruveK(0, -1));
+            PrecisionAssert.IsNaN(ddouble.StruveK(0, ddouble.NaN));
+            PrecisionAssert.AreEqual(0d, ddouble.StruveK(0, ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(ddouble.Ldexp(ddouble.Rcp(ddouble.Pi), 1), ddouble.StruveK(1, ddouble.PositiveInfinity));
+            PrecisionAssert.IsPositiveInfinity(ddouble.StruveK(2, ddouble.PositiveInfinity));
+
+            PrecisionAssert.IsNaN(ddouble.StruveL(0, ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.StruveL(0, ddouble.PositiveInfinity));
+
+            PrecisionAssert.IsNaN(ddouble.StruveM(0, -1));
+            PrecisionAssert.IsNaN(ddouble.StruveM(0, ddouble.NaN));
+            PrecisionAssert.IsMinusZero(ddouble.StruveM(0, ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(-ddouble.Ldexp(ddouble.Rcp(ddouble.Pi), 1), ddouble.StruveM(1, ddouble.PositiveInfinity));
+            PrecisionAssert.IsPositiveInfinity(ddouble.StruveM(2, ddouble.PositiveInfinity));
         }
     }
 }

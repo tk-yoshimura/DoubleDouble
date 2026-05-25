@@ -112,6 +112,9 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.IsNaN(nroot_nan, nameof(nroot_nan));
             }
 
+            PrecisionAssert.IsNaN(ddouble.RootN(2, 0));
+            PrecisionAssert.AreEqual(ddouble.Rcp(2), ddouble.RootN(8, -3));
+
             for (int n = 9; n <= 951; n += 2) {
                 ddouble p = ddouble.Ldexp(1, +n);
                 foreach (ddouble v in new ddouble[] { p - 1, ddouble.BitDecrement(p), p, ddouble.BitIncrement(p), p + 1 }) {
@@ -160,6 +163,8 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.IsNaN(nroot_ninf, nameof(nroot_ninf));
                 PrecisionAssert.IsNaN(nroot_nan, nameof(nroot_nan));
             }
+
+            PrecisionAssert.AreEqual(ddouble.Rcp(4), ddouble.RootN(16, -2));
 
             for (int n = 10; n <= 952; n += 2) {
                 ddouble p = ddouble.Ldexp(1, +n);
@@ -212,6 +217,8 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.IsNaN(ddouble.Hypot(0, ddouble.NaN));
             PrecisionAssert.IsNaN(ddouble.Hypot(0, 0, ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Hypot(ddouble.PositiveInfinity, 1));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Hypot(1, ddouble.PositiveInfinity));
         }
     }
 }

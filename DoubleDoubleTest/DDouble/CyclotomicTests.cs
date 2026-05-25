@@ -8,6 +8,9 @@ namespace DoubleDoubleTest.DDouble {
     public class CyclotomicTests {
         [TestMethod]
         public void CyclotomicTest() {
+            PrecisionAssert.IsNaN(ddouble.Cyclotomic(0, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.Cyclotomic(33, 1));
+
             for (int n = 1; n <= 32; n++) {
                 Console.WriteLine($"n = {n}");
 

@@ -133,6 +133,19 @@ namespace DoubleDoubleTest.DDouble {
 
             (int exp, ddouble value) = ddouble.Frexp(ddouble.BitDecrement(1));
             Assert.AreEqual(ddouble.BitDecrement(1), ddouble.Ldexp(value, exp));
+
+            (exp, value) = ddouble.Frexp(ddouble.NaN);
+            Assert.AreEqual(0, exp);
+            PrecisionAssert.IsNaN(value);
+            (exp, value) = ddouble.Frexp(ddouble.PositiveInfinity);
+            Assert.AreEqual(0, exp);
+            PrecisionAssert.IsNaN(value);
+            (exp, value) = ddouble.Frexp(0d);
+            Assert.AreEqual(0, exp);
+            PrecisionAssert.IsPlusZero(value);
+            (exp, value) = ddouble.Frexp(-0d);
+            Assert.AreEqual(0, exp);
+            PrecisionAssert.IsMinusZero(value);
         }
 
         [TestMethod]
@@ -229,6 +242,35 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.AreEqual((-7, (0.1875d, 0.0234375d, 0.09375d, 0.046875d)), ddouble.AdjustScale(-3, (24, 3, 12, 6d)));
             Assert.AreEqual((-1, (12d, 1.5d, 6d, 3d)), ddouble.AdjustScale(3, (24, 3, 12, 6d)));
+
+            (int exp, ddouble value) = ddouble.AdjustScale(1, ddouble.NaN);
+            Assert.AreEqual(0, exp);
+            PrecisionAssert.IsNaN(value);
+            (exp, value) = ddouble.AdjustScale(1, -0d);
+            Assert.AreEqual(0, exp);
+            PrecisionAssert.IsMinusZero(value);
+
+            (int exp2, (ddouble a, ddouble b) scaled2) = ddouble.AdjustScale(1, (ddouble.NaN, 1));
+            Assert.AreEqual(0, exp2);
+            PrecisionAssert.IsNaN(scaled2.a);
+            PrecisionAssert.IsNaN(scaled2.b);
+            (exp2, scaled2) = ddouble.AdjustScale(1, (0d, -0d));
+            Assert.AreEqual(0, exp2);
+            PrecisionAssert.IsPlusZero(scaled2.a);
+            PrecisionAssert.IsMinusZero(scaled2.b);
+
+            (int exp3, (ddouble a, ddouble b, ddouble c) scaled3) = ddouble.AdjustScale(1, (ddouble.NaN, 1, 2));
+            Assert.AreEqual(0, exp3);
+            PrecisionAssert.IsNaN(scaled3.a);
+            PrecisionAssert.IsNaN(scaled3.b);
+            PrecisionAssert.IsNaN(scaled3.c);
+
+            (int exp4, (ddouble a, ddouble b, ddouble c, ddouble d) scaled4) = ddouble.AdjustScale(1, (0d, -0d, 0d, -0d));
+            Assert.AreEqual(0, exp4);
+            PrecisionAssert.IsPlusZero(scaled4.a);
+            PrecisionAssert.IsMinusZero(scaled4.b);
+            PrecisionAssert.IsPlusZero(scaled4.c);
+            PrecisionAssert.IsMinusZero(scaled4.d);
         }
 
         [TestMethod]
@@ -239,6 +281,12 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AlmostEqual(65 * ddouble.Pi / (4 * ddouble.EllipticK(3969 * ddouble.Rcp(4225))), ddouble.Agm(64, 1), 1e-31);
             Assert.IsTrue(ddouble.Agm(1, double.Epsilon) > 0);
             PrecisionAssert.AreEqual(0d, ddouble.Agm(1, 0));
+            PrecisionAssert.IsNaN(ddouble.Agm(-1, 1));
+            PrecisionAssert.IsNaN(ddouble.Agm(1, -1));
+            PrecisionAssert.IsNaN(ddouble.Agm(ddouble.NaN, 1));
+            PrecisionAssert.IsNaN(ddouble.Agm(1, ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Agm(ddouble.PositiveInfinity, 1));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Agm(1, ddouble.PositiveInfinity));
         }
 
         [TestMethod]
@@ -250,6 +298,8 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.AreEqual(0, ddouble.Ldexp(2, long.MinValue));
             PrecisionAssert.IsPositiveInfinity(ddouble.Ldexp(2, long.MaxValue));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Ldexp(1, (long)int.MaxValue + 1));
+            PrecisionAssert.IsPlusZero(ddouble.Ldexp(1, (long)int.MinValue - 1));
 
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, 4)));
             Assert.IsTrue(ddouble.IsRegulared(ddouble.Ldexp(ddouble.Pi, -4)));
@@ -308,6 +358,10 @@ namespace DoubleDoubleTest.DDouble {
 
             PrecisionAssert.AreEqual(double.ScaleB(1, 950), ddouble.GeometricMean(double.ScaleB(1, 950), double.ScaleB(1, 950)));
             PrecisionAssert.AreEqual(double.ScaleB(1, -950), ddouble.GeometricMean(double.ScaleB(1, -950), double.ScaleB(1, -950)));
+            PrecisionAssert.IsNaN(ddouble.GeometricMean(ddouble.NaN, 1));
+            PrecisionAssert.IsNaN(ddouble.GeometricMean(1, ddouble.NaN));
+            PrecisionAssert.AreEqual(0, ddouble.GeometricMean(0, 1));
+            PrecisionAssert.AreEqual(0, ddouble.GeometricMean(1, 0));
 
             for (ddouble a = 0.125; a < 20; a *= 1.5) {
                 for (ddouble b = 0.125; b < 20; b *= 1.5) {

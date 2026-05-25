@@ -415,6 +415,16 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AreEqual(1d, ddouble.Atan2Pi(0d, -0d));
             PrecisionAssert.IsMinusZero(ddouble.Atan2Pi(-0d, 0d));
             PrecisionAssert.AreEqual(-1d, ddouble.Atan2Pi(-0d, -0d));
+
+            foreach ((ddouble y, ddouble x) in new (ddouble, ddouble)[] {
+                (1, ddouble.PositiveInfinity),
+                (ddouble.PositiveInfinity, 1),
+                (ddouble.NaN, 1),
+                (1, ddouble.NaN),
+            }) {
+                PrecisionAssert.IsNaN(ddouble.Atan2(y, x));
+                PrecisionAssert.IsNaN(ddouble.Atan2Pi(y, x));
+            }
         }
 
         [TestMethod]
@@ -485,7 +495,7 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AlmostEqual("9.9999999999999953609543395128622994e-1", ddouble.Tanh(18), 1e-31);
             PrecisionAssert.AlmostEqual("9.9999999999999999150329148941682205e-1", ddouble.Tanh(20), 1e-31);
             PrecisionAssert.AlmostEqual("9.9999999999999999999714967183451813e-1", ddouble.Tanh(24), 1e-31);
-       
+
             ddouble tanh_pzero = ddouble.Tanh(0d);
             ddouble tanh_mzero = ddouble.Tanh(-0d);
             ddouble tanh_pinf = ddouble.Tanh(double.PositiveInfinity);

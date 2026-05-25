@@ -724,6 +724,9 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void PolylogAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.Polylog(-5, 0));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.Polylog(9, 0));
+
             for (int n = 2; n <= 8; n++) {
                 Console.WriteLine(n);
 

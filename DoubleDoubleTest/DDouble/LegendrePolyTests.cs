@@ -114,6 +114,8 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void LegendreTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.LegendreP(65, 0));
+
             for (int n = 64; n >= LegendrePolynomials.Count; n--) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.LegendreP(n, x);
@@ -134,6 +136,12 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void AssociatedLegendreTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.LegendreP(65, 0, 0));
+            PrecisionAssert.IsNaN(ddouble.LegendreP(2, 1, -2));
+            PrecisionAssert.IsNaN(ddouble.LegendreP(2, 1, 2));
+            PrecisionAssert.AreEqual(0, ddouble.LegendreP(2, 3, 0));
+            PrecisionAssert.AreEqual(0, ddouble.LegendreP(2, -3, 0));
+
             for (int n = 64; n >= 0; n--) {
                 for (int m = -n; m <= n; m++) {
                     for (ddouble x = -1; x <= 1; x += 0.0625) {

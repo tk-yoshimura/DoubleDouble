@@ -41,6 +41,12 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void ZernikeRTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.ZernikeR(65, 0, 0.5));
+            PrecisionAssert.IsNaN(ddouble.ZernikeR(2, 0, -0.1));
+            PrecisionAssert.IsNaN(ddouble.ZernikeR(2, 0, 1.1));
+            PrecisionAssert.AreEqual(0, ddouble.ZernikeR(2, 3, 0.5));
+            PrecisionAssert.AreEqual(0, ddouble.ZernikeR(2, -3, 0.5));
+
             for (int n = 64; n >= 0; n--) {
                 for (int m = -n; m <= n; m++) {
                     for (ddouble x = 0; x <= 1; x += 0.0625) {

@@ -257,5 +257,18 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(m, y, 1e-30, $"{m},centered");
             }
         }
+
+        [TestMethod]
+        public void KeplerEAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.KeplerE(1, 257));
+
+            PrecisionAssert.IsNaN(ddouble.KeplerE(ddouble.NaN, 0));
+            PrecisionAssert.IsNaN(ddouble.KeplerE(1, -1));
+            PrecisionAssert.IsNaN(ddouble.KeplerE(1, ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.KeplerE(1, ddouble.PositiveInfinity));
+            PrecisionAssert.IsPositiveInfinity(ddouble.KeplerE(ddouble.PositiveInfinity, 0.5, centered: false));
+            PrecisionAssert.IsNaN(ddouble.KeplerE(ddouble.PositiveInfinity, 0.5, centered: true));
+            PrecisionAssert.IsPositiveInfinity(ddouble.KeplerE(ddouble.PositiveInfinity, 2, centered: false));
+        }
     }
 }

@@ -104,6 +104,9 @@ namespace DoubleDoubleTest.DDouble {
             Assert.AreEqual($"{v3:E30}", v3.ToString("E30"));
             Assert.AreEqual($"{v3:e20}", v3.ToString("e20"));
             Assert.AreEqual($"{v3:E20}", v3.ToString("E20"));
+            Assert.AreEqual("0.00e0", ((ddouble)0).ToString("e2"));
+            Assert.AreEqual(double.NaN.ToString(), ddouble.NaN.ToString("e2"));
+            Assert.AreEqual(double.PositiveInfinity.ToString(), ddouble.PositiveInfinity.ToString("e2"));
 
             Console.WriteLine($"{v3:e31}");
             Console.WriteLine($"{v3:E31}");
@@ -133,6 +136,22 @@ namespace DoubleDoubleTest.DDouble {
             Assert.ThrowsExactly<FormatException>(() => {
                 Console.WriteLine($"{v1:f30}");
             });
+
+            Assert.ThrowsExactly<FormatException>(() => {
+                Console.WriteLine(((ddouble)1).ToString("e"));
+            });
+
+            Assert.ThrowsExactly<FormatException>(() => {
+                Console.WriteLine(((ddouble)1).ToString("e1"));
+            });
+
+            Span<char> empty = stackalloc char[0];
+            Assert.IsFalse(((ddouble)1).TryFormat(empty, out int charsWritten, ReadOnlySpan<char>.Empty, null));
+            Assert.AreEqual(0, charsWritten);
+
+            Span<char> shortBuffer = stackalloc char[2];
+            Assert.IsFalse(((ddouble)1).TryFormat(shortBuffer, out charsWritten, "e2".AsSpan(), null));
+            Assert.AreEqual(0, charsWritten);
         }
 
         [TestMethod]
@@ -282,6 +301,16 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void ParseTest() {
+            Assert.IsTrue(ddouble.TryParse("1.25", out ddouble parsed));
+            Assert.AreEqual((ddouble)1.25, parsed);
+            Assert.IsFalse(ddouble.TryParse("abc", out ddouble invalid));
+            Assert.AreEqual((ddouble)0, invalid);
+            Assert.IsFalse(ddouble.TryParse("", out _));
+            Assert.AreEqual((ddouble)100, ddouble.Parse("1E2"));
+            Assert.ThrowsExactly<FormatException>(() => _ = ddouble.Parse("abc"));
+            Assert.ThrowsExactly<FormatException>(() => _ = ddouble.Parse(""));
+            Assert.ThrowsExactly<FormatException>(() => _ = ddouble.Parse("1e999999999999999999999"));
+
             Random random = new Random(1234);
             for (int i = 0; i < 2048; i++) {
                 string v =

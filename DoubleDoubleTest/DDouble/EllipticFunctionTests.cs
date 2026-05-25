@@ -3684,5 +3684,31 @@ namespace DoubleDoubleTest.DDouble {
                 }
             }
         }
+
+        [TestMethod]
+        public void EllipticAbnormalTest() {
+            PrecisionAssert.IsNaN(ddouble.EllipticK(ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.EllipticK(-2));
+            PrecisionAssert.IsNaN(ddouble.EllipticK(2));
+            PrecisionAssert.IsPositiveInfinity(ddouble.EllipticK(1));
+
+            PrecisionAssert.IsNaN(ddouble.EllipticE(ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.EllipticE(-2));
+            PrecisionAssert.IsNaN(ddouble.EllipticE(2));
+
+            PrecisionAssert.IsNaN(ddouble.EllipticPi(0.5, ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.EllipticPi(0.5, -2));
+            PrecisionAssert.IsNaN(ddouble.EllipticPi(0.5, 2));
+            PrecisionAssert.IsNaN(ddouble.EllipticPi(2, 0.5));
+            PrecisionAssert.IsPositiveInfinity(ddouble.EllipticPi(0.5, 1));
+
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.EllipticTheta(0, 0, 0.5));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.EllipticTheta(5, 0, 0.5));
+
+            for (int a = 1; a <= 4; a++) {
+                PrecisionAssert.IsNaN(ddouble.EllipticTheta(a, 0, ddouble.NaN));
+                PrecisionAssert.IsNaN(ddouble.EllipticTheta(a, 0, 1));
+            }
+        }
     }
 }

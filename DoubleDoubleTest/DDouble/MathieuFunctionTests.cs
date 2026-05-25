@@ -13945,5 +13945,19 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(v0, v2, 4e-31d, 4e-31d, $"n = {n}, q = eps");
             }
         }
+
+        [TestMethod]
+        public void MathieuAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.MathieuA(17, 0));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.MathieuB(17, 0));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.MathieuC(17, 0, 0));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.MathieuS(17, 0, 0));
+
+            PrecisionAssert.IsNaN(ddouble.MathieuA(0, ddouble.NaN));
+            PrecisionAssert.IsNegativeInfinity(ddouble.MathieuA(0, ddouble.PositiveInfinity));
+            PrecisionAssert.AreEqual(ddouble.MathieuA(0, 0), ddouble.MathieuB(0, 0));
+            PrecisionAssert.IsNaN(ddouble.MathieuB(1, ddouble.NaN));
+            PrecisionAssert.IsNegativeInfinity(ddouble.MathieuB(1, ddouble.PositiveInfinity));
+        }
     }
 }

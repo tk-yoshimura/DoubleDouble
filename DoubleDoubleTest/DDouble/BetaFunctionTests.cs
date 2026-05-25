@@ -31,6 +31,9 @@ namespace DoubleDoubleTest.DDouble {
                 PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(b, 1), 8e-29);
                 PrecisionAssert.AlmostEqual(1d / b, ddouble.Beta(1, b), 8e-29);
             }
+
+            PrecisionAssert.IsNaN(ddouble.Beta(0, 1));
+            PrecisionAssert.IsNaN(ddouble.Beta(1, 0));
         }
 
         [TestMethod]
@@ -92,6 +95,13 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(v);
                 PrecisionAssert.IsFinite(v);
             }
+
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.IncompleteBeta(0.5, 513, 513));
+
+            PrecisionAssert.IsNaN(ddouble.IncompleteBeta(-0.1, 1, 1));
+            PrecisionAssert.IsNaN(ddouble.IncompleteBeta(1.1, 1, 1));
+            PrecisionAssert.IsNaN(ddouble.IncompleteBeta(0.5, 0, 1));
+            PrecisionAssert.IsNaN(ddouble.IncompleteBeta(0.5, 1, 0));
         }
 
         [TestMethod]
@@ -104,6 +114,9 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(expected, actual, 2e-29, $"{a}, {b}");
                 }
             }
+
+            PrecisionAssert.IsNaN(ddouble.LogBeta(0, 1));
+            PrecisionAssert.IsNaN(ddouble.LogBeta(1, 0));
         }
 
         [TestMethod]
@@ -125,6 +138,13 @@ namespace DoubleDoubleTest.DDouble {
                 Console.WriteLine(v);
                 PrecisionAssert.IsFinite(v);
             }
+
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.IncompleteBetaRegularized(0.5, 8193, 8193));
+
+            PrecisionAssert.IsNaN(ddouble.IncompleteBetaRegularized(-0.1, 1, 1));
+            PrecisionAssert.IsNaN(ddouble.IncompleteBetaRegularized(1.1, 1, 1));
+            PrecisionAssert.IsNaN(ddouble.IncompleteBetaRegularized(0.5, 0, 1));
+            PrecisionAssert.IsNaN(ddouble.IncompleteBetaRegularized(0.5, 1, 0));
         }
 
         [TestMethod]
@@ -157,6 +177,15 @@ namespace DoubleDoubleTest.DDouble {
                     }
                 }
             }
+
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.InverseIncompleteBeta(0.5, 8193, 8193));
+
+            PrecisionAssert.IsNaN(ddouble.InverseIncompleteBeta(-0.1, 1, 1));
+            PrecisionAssert.IsNaN(ddouble.InverseIncompleteBeta(1.1, 1, 1));
+            PrecisionAssert.IsNaN(ddouble.InverseIncompleteBeta(0.5, 0, 1));
+            PrecisionAssert.IsNaN(ddouble.InverseIncompleteBeta(0.5, 1, 0));
+            PrecisionAssert.IsPlusZero(ddouble.InverseIncompleteBeta(0, 1, 1));
+            PrecisionAssert.AreEqual(1, ddouble.InverseIncompleteBeta(1, 1, 1));
         }
     }
 }

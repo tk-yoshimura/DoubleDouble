@@ -3164,6 +3164,11 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(expected, actual, 2e-29, $"{nu},{x}");
                 }
             }
+
+            ddouble small_nu = ddouble.Ldexp(1, -20);
+
+            PrecisionAssert.IsPlusZero(ddouble.LowerIncompleteGammaRegularized(small_nu, 0));
+            PrecisionAssert.IsPositive(ddouble.LowerIncompleteGammaRegularized(small_nu, 1));
         }
 
         [TestMethod]
@@ -3176,6 +3181,11 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(expected, actual, 2e-29, $"{nu},{x}");
                 }
             }
+
+            ddouble small_nu = ddouble.Ldexp(1, -20);
+
+            PrecisionAssert.AreEqual(1, ddouble.UpperIncompleteGammaRegularized(small_nu, 0));
+            PrecisionAssert.IsPositive(ddouble.UpperIncompleteGammaRegularized(small_nu, 1));
         }
 
         [TestMethod]
@@ -3286,6 +3296,32 @@ namespace DoubleDoubleTest.DDouble {
                     PrecisionAssert.AlmostEqual(x, z, 4e-27, $"{nu},{x}");
                 }
             }
+        }
+
+        [TestMethod]
+        public void IncompleteGammaAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.LowerIncompleteGamma(172, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.UpperIncompleteGamma(172, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.LowerIncompleteGammaRegularized(8193, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.UpperIncompleteGammaRegularized(8193, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.InverseLowerIncompleteGamma(8193, 0.5));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.InverseUpperIncompleteGamma(8193, 0.5));
+
+            PrecisionAssert.IsNaN(ddouble.LowerIncompleteGamma(-1, 1));
+            PrecisionAssert.IsNaN(ddouble.LowerIncompleteGamma(1, -1));
+            PrecisionAssert.IsNaN(ddouble.UpperIncompleteGamma(-1, 1));
+            PrecisionAssert.IsNaN(ddouble.UpperIncompleteGamma(1, -1));
+            PrecisionAssert.IsNaN(ddouble.LowerIncompleteGammaRegularized(-1, 1));
+            PrecisionAssert.IsNaN(ddouble.LowerIncompleteGammaRegularized(1, -1));
+            PrecisionAssert.IsNaN(ddouble.UpperIncompleteGammaRegularized(-1, 1));
+            PrecisionAssert.IsNaN(ddouble.UpperIncompleteGammaRegularized(1, -1));
+
+            PrecisionAssert.IsNaN(ddouble.InverseLowerIncompleteGamma(-1, 0.5));
+            PrecisionAssert.IsNaN(ddouble.InverseLowerIncompleteGamma(1, -0.1));
+            PrecisionAssert.IsNaN(ddouble.InverseLowerIncompleteGamma(1, 1.1));
+            PrecisionAssert.IsNaN(ddouble.InverseUpperIncompleteGamma(-1, 0.5));
+            PrecisionAssert.IsNaN(ddouble.InverseUpperIncompleteGamma(1, -0.1));
+            PrecisionAssert.IsNaN(ddouble.InverseUpperIncompleteGamma(1, 1.1));
         }
     }
 }

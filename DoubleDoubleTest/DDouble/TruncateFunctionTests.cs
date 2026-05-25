@@ -196,6 +196,10 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void TruncateMantissaTest() {
+            Assert.IsTrue(ddouble.IsNaN(ddouble.TruncateMantissa(ddouble.NaN, 10)));
+            Assert.IsTrue(ddouble.IsPositiveInfinity(ddouble.TruncateMantissa(ddouble.PositiveInfinity, 10)));
+            Assert.IsTrue(ddouble.IsPlusZero(ddouble.TruncateMantissa(0d, 10)));
+
             for (int hi_exp = -1090; hi_exp <= 1024; hi_exp += 4) {
                 ddouble hi = ddouble.Ldexp(1d, hi_exp);
 

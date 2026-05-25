@@ -75,6 +75,9 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void HermiteTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.HermiteH(65, 0));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.HermiteH(-1, 0));
+
             for (int n = 64; n >= HermitePolynomials.Count; n--) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.HermiteH(n, x);

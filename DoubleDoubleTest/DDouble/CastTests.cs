@@ -54,6 +54,8 @@ namespace DoubleDoubleTest.DDouble {
 
             Assert.AreEqual(long.MaxValue, (long)(ddouble)long.MaxValue);
             Assert.AreEqual(long.MinValue, (long)(ddouble)long.MinValue);
+            Assert.AreEqual(0L, (long)(ddouble)0);
+            Assert.AreEqual(-1L, (long)(ddouble)(-1));
 
             Assert.AreEqual((ddouble)0, ((ddouble)long.MaxValue) - ddouble.Floor((ddouble)long.MaxValue));
             Assert.AreEqual((ddouble)0, ((ddouble)long.MinValue) - ddouble.Floor((ddouble)long.MinValue));
@@ -251,6 +253,9 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void Bits128Test() {
+            Assert.AreEqual((ddouble)0, (ddouble)(0, 0, 0ul, 0ul));
+            Assert.ThrowsExactly<ArgumentException>(() => _ = (ddouble)(0, 1, 0ul, 0ul));
+
             ddouble v1 = (+1, 0, 0x8000000000000000uL, 0x0000000000000000uL);
             ddouble v2 = (+1, 0, 0x8000000000000000uL, 0x0000000000800000uL);
             ddouble v3 = (+1, 0, 0x8000000000000000uL, 0x00000000007FFFFFuL);

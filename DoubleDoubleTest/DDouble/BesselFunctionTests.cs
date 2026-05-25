@@ -15508,6 +15508,14 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselJAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselJ(257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselJ(-257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselJ((ddouble)257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselJ((ddouble)(-257), 1));
+
+            PrecisionAssert.IsNaN(ddouble.BesselJ(0, ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.BesselJ(0, -1));
+
             for (ddouble nu = -256; nu <= 256; nu += 0.125) {
                 PrecisionAssert.AreEqual(0d, ddouble.BesselJ(nu, ddouble.PositiveInfinity));
                 PrecisionAssert.IsFinite(ddouble.BesselJ(nu, ddouble.MaxValue));
@@ -15518,6 +15526,14 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselYAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselY(257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselY(-257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselY((ddouble)257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselY((ddouble)(-257), 1));
+
+            PrecisionAssert.IsNaN(ddouble.BesselY(0, ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.BesselY(0, -1));
+
             for (ddouble nu = -256; nu <= 256; nu += 0.125) {
                 PrecisionAssert.AreEqual(0d, ddouble.BesselY(nu, ddouble.PositiveInfinity));
                 PrecisionAssert.IsFinite(ddouble.BesselY(nu, ddouble.MaxValue));
@@ -15528,6 +15544,14 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselIAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselI(257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselI(-257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselI((ddouble)257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselI((ddouble)(-257), 1));
+
+            PrecisionAssert.IsNaN(ddouble.BesselI(0, ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.BesselI(0, -1));
+
             for (ddouble nu = -256; nu <= 256; nu += 0.125) {
                 PrecisionAssert.IsPositiveInfinity(ddouble.BesselI(nu, ddouble.PositiveInfinity));
                 PrecisionAssert.IsPositive(ddouble.BesselI(nu, ddouble.MaxValue));
@@ -15543,6 +15567,14 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void BesselKAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselK(257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselK(-257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselK((ddouble)257, 1));
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.BesselK((ddouble)(-257), 1));
+
+            PrecisionAssert.IsNaN(ddouble.BesselK(0, ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.BesselK(0, -1));
+
             for (ddouble nu = 0; nu <= 16; nu += 0.125) {
                 PrecisionAssert.IsPlusZero(ddouble.BesselK(nu, ddouble.PositiveInfinity));
                 PrecisionAssert.IsFinite(ddouble.BesselK(nu, ddouble.MaxValue));

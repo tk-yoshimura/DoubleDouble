@@ -424,6 +424,9 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AlmostEqual(1 / ddouble.Sqrt(2) + ddouble.Log(1 + ddouble.Sqrt(2)) / 2, ddouble.CarlsonRG(1, 1, 2), 1e-31);
             PrecisionAssert.AlmostEqual(ddouble.Pi / 4 + 0.5, ddouble.CarlsonRG(1, 2, 2), 1e-31);
             PrecisionAssert.IsNaN(ddouble.CarlsonRG(ddouble.NaN, ddouble.NaN, ddouble.NaN));
+            PrecisionAssert.IsPositiveInfinity(ddouble.CarlsonRG(ddouble.PositiveInfinity, 1, 1));
+            PrecisionAssert.IsPositiveInfinity(ddouble.CarlsonRG(1, ddouble.PositiveInfinity, 1));
+            PrecisionAssert.IsPositiveInfinity(ddouble.CarlsonRG(1, 1, ddouble.PositiveInfinity));
 
             for (ddouble z = 0; z <= 4; z += 0.25) {
                 for (ddouble y = 0; y <= 4; y += 0.25) {

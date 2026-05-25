@@ -553,6 +553,8 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.IsMinusZero(rcpgamma_mzero, nameof(rcpgamma_mzero));
             PrecisionAssert.IsPlusZero(rcpgamma_pinf, nameof(rcpgamma_pinf));
             PrecisionAssert.IsFinite(rcpgamma_pmax, nameof(rcpgamma_pmax));
+            PrecisionAssert.IsNaN(ddouble.RcpGamma(ddouble.NaN));
+            PrecisionAssert.IsNaN(ddouble.RcpGamma(ddouble.NegativeInfinity));
         }
 
         [TestMethod]

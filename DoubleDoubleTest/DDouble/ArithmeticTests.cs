@@ -132,6 +132,8 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.AreEqual((ddouble)y + x, y + x);
                 }
             }
+
+            Assert.AreEqual((ddouble)1, +(ddouble)1);
         }
 
         [TestMethod]
@@ -660,6 +662,9 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(!ddouble.IsFinite(x / y) || ddouble.IsPositive(x / y));
                 }
             }
+
+            PrecisionAssert.IsPositiveInfinity(ddouble.MaxValue / double.Epsilon);
+            PrecisionAssert.IsPositiveInfinity(ddouble.MaxValue / ddouble.Epsilon);
         }
 
         [TestMethod]

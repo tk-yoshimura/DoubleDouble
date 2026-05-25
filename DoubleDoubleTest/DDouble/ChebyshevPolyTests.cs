@@ -69,6 +69,8 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void ChebyshevTTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.ChebyshevT(65, 0));
+
             for (int n = 64; n >= ChebyshevTPolynomials.Count; n--) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.ChebyshevT(n, x);
@@ -89,6 +91,8 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void ChebyshevUTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.ChebyshevU(65, 0));
+
             for (int n = 64; n >= ChebyshevUPolynomials.Count; n--) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.ChebyshevU(n, x);

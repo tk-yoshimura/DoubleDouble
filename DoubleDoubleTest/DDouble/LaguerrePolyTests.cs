@@ -62,6 +62,8 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void LaguerreTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.LaguerreL(65, 0));
+
             for (int n = 64; n >= LaguerrePolynomials.Count; n--) {
                 for (ddouble x = -8; x <= 8; x += 0.125) {
                     ddouble actual = ddouble.LaguerreL(n, x);
@@ -82,6 +84,10 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void AssociatedLaguerreTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.LaguerreL(65, 0, 0));
+            PrecisionAssert.IsNaN(ddouble.LaguerreL(1, ddouble.PositiveInfinity, 0));
+            PrecisionAssert.IsNaN(ddouble.LaguerreL(1, ddouble.NaN, 0));
+
             for (int n = 64; n >= 0; n--) {
                 for (ddouble alpha = 0; alpha <= 4; alpha += 0.25) {
                     for (ddouble x = 0; x <= 1; x += 0.0625) {

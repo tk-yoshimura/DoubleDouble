@@ -613,6 +613,8 @@ namespace DoubleDoubleTest.DDouble {
 
         [TestMethod]
         public void PolygammaAbnormalTest() {
+            Assert.ThrowsExactly<ArgumentOutOfRangeException>(() => _ = ddouble.Polygamma(17, 1));
+
             for (int n = 1; n <= 16; n++) {
                 Console.WriteLine(n);
 
