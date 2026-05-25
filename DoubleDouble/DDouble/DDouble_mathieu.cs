@@ -79,6 +79,10 @@ namespace DoubleDouble {
                 );
             }
 
+            if (IsNaN(q)) {
+                return NaN;
+            }
+
             ReadOnlyCollection<ddouble> coef = MathieuUtil.CCoef(n, q);
 
             if (coef.Count < 1) {
@@ -109,6 +113,10 @@ namespace DoubleDouble {
                     nameof(n),
                     $"In the calculation of the MathieuS function, n greater than {MathieuUtil.MaxN} is not supported."
                 );
+            }
+
+            if (IsNaN(q)) {
+                return NaN;
             }
 
             ReadOnlyCollection<ddouble> coef = MathieuUtil.SCoef(n, q);
