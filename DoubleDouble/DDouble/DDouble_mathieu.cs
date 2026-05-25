@@ -79,7 +79,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (IsNaN(q)) {
+            if (!IsFinite(q)) {
                 return NaN;
             }
 
@@ -115,7 +115,7 @@ namespace DoubleDouble {
                 );
             }
 
-            if (IsNaN(q)) {
+            if (!IsFinite(q)) {
                 return NaN;
             }
 

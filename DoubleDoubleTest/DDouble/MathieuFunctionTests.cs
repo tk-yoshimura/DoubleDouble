@@ -13958,6 +13958,10 @@ namespace DoubleDoubleTest.DDouble {
             PrecisionAssert.AreEqual(ddouble.MathieuA(0, 0), ddouble.MathieuB(0, 0));
             PrecisionAssert.IsNaN(ddouble.MathieuB(1, ddouble.NaN));
             PrecisionAssert.IsNegativeInfinity(ddouble.MathieuB(1, ddouble.PositiveInfinity));
+            PrecisionAssert.IsNaN(ddouble.MathieuC(0, ddouble.NaN, 0));
+            PrecisionAssert.IsNaN(ddouble.MathieuC(0, ddouble.PositiveInfinity, 0));
+            PrecisionAssert.IsNaN(ddouble.MathieuS(1, ddouble.NaN, 0));
+            PrecisionAssert.IsNaN(ddouble.MathieuS(1, ddouble.PositiveInfinity, 0));
         }
     }
 }

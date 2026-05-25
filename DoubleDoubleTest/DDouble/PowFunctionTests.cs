@@ -106,6 +106,17 @@ namespace DoubleDoubleTest.DDouble {
                     Assert.IsTrue(ddouble.IsRegulared(u));
                 }
             }
+
+            ddouble y_min = (ddouble)long.MinValue;
+            ddouble y_max = (ddouble)long.MaxValue;
+
+            PrecisionAssert.AreEqual(1, ddouble.Pow(1, y_min));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Pow(0.5, y_min));
+            PrecisionAssert.IsPlusZero(ddouble.Pow(2, y_min));
+
+            PrecisionAssert.AreEqual(1, ddouble.Pow(1, y_max));
+            PrecisionAssert.IsPlusZero(ddouble.Pow(0.5, y_max));
+            PrecisionAssert.IsPositiveInfinity(ddouble.Pow(2, y_max));
         }
 
         [TestMethod]

@@ -3251,6 +3251,12 @@ namespace DoubleDoubleTest.DDouble {
                 xs.Add(x);
             }
 
+            ddouble small_nu = ddouble.Ldexp(1, -20);
+
+            PrecisionAssert.IsPlusZero(ddouble.InverseLowerIncompleteGamma(1, 0));
+            PrecisionAssert.IsPositiveInfinity(ddouble.InverseLowerIncompleteGamma(1, 1));
+            PrecisionAssert.IsPlusZero(ddouble.InverseLowerIncompleteGamma(small_nu, 0.5));
+
             for (int nu_exp = -10; nu_exp <= 13; nu_exp++) {
                 ddouble nu = ddouble.Ldexp(1, nu_exp);
 
@@ -3279,6 +3285,12 @@ namespace DoubleDoubleTest.DDouble {
             for (ddouble x = 0.5; x > ddouble.Epsilon; x = (x > 0.125) ? x / 2 : (x > 0.03125) ? x / 4 : x / 8) {
                 xs.Add(x);
             }
+
+            ddouble small_nu = ddouble.Ldexp(1, -20);
+
+            PrecisionAssert.IsPositiveInfinity(ddouble.InverseUpperIncompleteGamma(1, 0));
+            PrecisionAssert.IsPlusZero(ddouble.InverseUpperIncompleteGamma(1, 1));
+            PrecisionAssert.IsPlusZero(ddouble.InverseUpperIncompleteGamma(small_nu, 0.5));
 
             for (int nu_exp = -10; nu_exp <= 13; nu_exp++) {
                 ddouble nu = ddouble.Ldexp(1, nu_exp);

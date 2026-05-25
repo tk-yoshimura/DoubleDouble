@@ -85,6 +85,9 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             PrecisionAssert.IsNaN(ddouble.CarlsonRD(ddouble.NaN, ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRD(ddouble.PositiveInfinity, 1, 1), "inf_x");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRD(1, ddouble.PositiveInfinity, 1), "inf_y");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRD(1, 1, ddouble.PositiveInfinity), "inf_z");
             PrecisionAssert.IsNotNaN(ddouble.CarlsonRD(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon), "eps");
             PrecisionAssert.IsFinite(ddouble.CarlsonRD(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
@@ -207,6 +210,8 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             PrecisionAssert.IsNaN(ddouble.CarlsonRC(ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRC(ddouble.PositiveInfinity, 1), "inf_x");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRC(1, ddouble.PositiveInfinity), "inf_y");
             PrecisionAssert.IsNotNaN(ddouble.CarlsonRC(ddouble.Epsilon, ddouble.Epsilon), "eps");
             PrecisionAssert.IsFinite(ddouble.CarlsonRC(ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
@@ -321,6 +326,12 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             PrecisionAssert.IsNaN(ddouble.CarlsonRF(ddouble.NaN, ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRF(ddouble.PositiveInfinity, 1, 1), "inf_x");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRF(1, ddouble.PositiveInfinity, 1), "inf_y");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRF(1, 1, ddouble.PositiveInfinity), "inf_z");
+            PrecisionAssert.IsPositiveInfinity(ddouble.CarlsonRF(0, 0, 1), "zero_xy");
+            PrecisionAssert.IsPositiveInfinity(ddouble.CarlsonRF(0, 1, 0), "zero_xz");
+            PrecisionAssert.IsPositiveInfinity(ddouble.CarlsonRF(1, 0, 0), "zero_yz");
             PrecisionAssert.IsNotNaN(ddouble.CarlsonRF(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon), "eps");
             PrecisionAssert.IsFinite(ddouble.CarlsonRF(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
@@ -411,6 +422,10 @@ namespace DoubleDoubleTest.DDouble {
             }
 
             PrecisionAssert.IsNaN(ddouble.CarlsonRJ(ddouble.NaN, ddouble.NaN, ddouble.NaN, ddouble.NaN), "nan");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRJ(ddouble.PositiveInfinity, 1, 1, 1), "inf_x");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRJ(1, ddouble.PositiveInfinity, 1, 1), "inf_y");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRJ(1, 1, ddouble.PositiveInfinity, 1), "inf_z");
+            PrecisionAssert.IsPlusZero(ddouble.CarlsonRJ(1, 1, 1, ddouble.PositiveInfinity), "inf_p");
             PrecisionAssert.IsNotNaN(ddouble.CarlsonRJ(ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon, ddouble.Epsilon), "eps");
             PrecisionAssert.IsFinite(ddouble.CarlsonRJ(ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue, ddouble.MaxValue), "largeval");
         }
